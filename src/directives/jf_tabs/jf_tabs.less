@@ -1,0 +1,121 @@
+.nav-tabs {
+  width: 100%;
+  left: 0;
+  position: relative;
+  z-index: 200;
+
+  > li {
+    position: relative;
+    top: 1px;
+    margin-bottom: 0;
+
+    > a:hover, &.active > a, &.active > a:hover, .active > a:focus {
+      background: transparent;
+      border: none;
+      padding-top: 1px;
+    }
+
+    &:not(.license-required):not(.disabled) {
+      > a:hover, &.active > a, &.active > a:hover, .active > a:focus {
+        border-bottom: 1px solid @greenBGDark;
+        color: @greenBGDark;
+        cursor: pointer;
+        z-index: 3;
+      }
+
+      &.active > a, &.active > a:hover, .active > a:focus {
+        position: relative;
+
+        &::before {
+          content: '';
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-width: 6px 6px 0 6px;
+          border-color: @greenBGDark transparent transparent transparent;
+          position: absolute;
+          bottom: -6px;
+          left: 50%;
+          margin-left: -6px;
+        }
+
+        &::after {
+          content: '';
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-width: 4px 4px 0 4px;
+          border-color: @white transparent transparent transparent;
+          position: absolute;
+          bottom: -4px;
+          left: 50%;
+          margin-left: -4px;
+        }
+      }
+    }
+
+    &.license-required {
+      &::after {
+        content: "";
+      }
+
+      a span {
+        position: relative;
+
+        .license-required-icon;
+
+        &::after {
+          top: -2px;
+          right: -24px;
+        }
+      }
+    }
+  }
+
+  > li:first-child {
+    margin-left: 35px;
+  }
+
+  li {
+    width: 165px;
+    text-align: center;
+
+    &.action-expand {
+      width: 50px;
+    }
+
+    > a {
+      padding: 0 0 8px 0;
+      margin-right: 0;
+
+      color: @grayFontGeneral;
+    }
+  }
+
+  .dropdown-menu {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    right: -15px;
+    margin-top: 3px;
+    top: auto;
+
+    .dropdown-item {
+      cursor: pointer;
+    }
+  }
+}
+
+.nav-tabs-more {
+  display: block;
+  color: @grayFontGeneral;
+  font-size: 24px;
+  padding: 0 25px;
+  margin-top: -8px;
+
+  &:hover, &:focus, .dropdown.open & {
+    background-color: transparent !important;
+    color: @greenFontHeader;
+    text-decoration: none;
+  }
+}

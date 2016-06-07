@@ -1,0 +1,11 @@
+target
+*.iml
+*.ipr
+cobertura.ser
+.DS_Store
+atlassian-ide-plugin.xml
+.idea
+.idea/*
+node_modules
+components
+

@@ -1,0 +1,47 @@
+<!-- When there are no results, we push an element with _emptyRow propery -->
+<div ng-if="row.entity._emptyRow">
+    <div
+            ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name"
+            class="ui-grid-cell grid-cell-empty"
+            ui-grid-cell>
+    </div>
+</div>
+<!-- When there are results -->
+<div ng-if="!row.entity._emptyRow" ng-class="{'special-row': row.entity._specialRow, 'sub-row': row.entity.$parentRow}">
+    <div class="grid-action-bar"
+         ng-if="!row.groupHeader">
+        <a ng-repeat="button in grid.appScope.grids[grid.id].buttons"
+           ng-if="!button.visibleWhen || grid.options.checkVisibleWhen(button,row)"
+           class="btn btn-action"
+           ng-click="grid.options.callActionCallback(button, row)"
+           jf-tooltip="{{button.tooltip}}">
+            <i class="icon-2x {{button.icon}}"></i>
+        </a>
+    </div>
+
+    <div
+            ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name"
+            class="ui-grid-cell"
+            ng-class="{ 'ui-grid-row-header-cell': col.isRowHeader,'expandedRow':row.expandedState.state==='expanded',
+                        'grouped-column': (col.grouping.groupPriority >= 0 && (row.groupLevel === null || row.groupLevel === undefined) ) }"
+            ui-grid-cell>
+        <span class="grid-row-expander"
+              ng-if="grid.options.subRowsEnabled && !col.isRowHeader && colRenderIndex === 0 && ((row.entity.$subRows && row.entity.$subRows.length) || row.entity.$parentRow)"
+              ng-click="grid.options.toggleExpansion(row.entity)">
+            <i ng-if="row.entity.$subRows && row.entity.$subRows.length"
+               ng-class="{'ui-grid-icon-plus-squared': !row.entity.$expanded, 'ui-grid-icon-minus-squared': row.entity.$expanded}"></i>
+        </span>
+
+        <div class="grid-action-bar"
+         ng-if="!row.groupHeader">
+            <a ng-repeat="action in col.colDef.customActions"
+               ng-if="!action.visibleWhen || grid.options.checkVisibleWhen(action,row)"
+               class="btn btn-action"
+               ng-click="grid.options.callActionCallback(action, row)"
+               jf-tooltip="{{action.tooltip}}"
+               ng-href="{{grid.options.getActionHref(action,row)}}">
+                <i class="{{action.icon}}"></i>
+            </a>
+        </div>
+    </div>
+</div>

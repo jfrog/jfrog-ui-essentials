@@ -1,0 +1,31 @@
+<div id="show-all-modal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="close" aria-label="Close" ng-click="$dismiss()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="popup-header">{{items.length}} {{colName}} For {{objectName}} '{{rowName}}'</h4>
+    </div>
+    <div class="modal-body clearfix">
+        <input type="text"
+               name="filter"
+               class="input-text"
+               ng-model="filter.text"
+               placeholder="Filter"/>
+
+
+        <div class="group-list-wrapper" ng-if="!noResults()">
+            <ul class="group-list">
+                <li class="group-list-item"
+                    ng-repeat="item in items"
+                    ng-if="filterItem(item)">
+                    {{item}}
+                </li>
+            </ul>
+        </div>
+
+        <div class="alert alert-warning margin-top-10" ng-if="noResults()">
+            No results match the provided filter
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="$dismiss()" id="popup-cancel">Close</button>
+    </div>
+</div>

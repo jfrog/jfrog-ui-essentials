@@ -1,0 +1,22 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">{{title}}</h4>
+</div>
+<div class="modal-body">
+    <p ng-if="beforeMessage" ng-bind-html="beforeMessage"></p>
+    <div class="clearfix">
+        <jf-clip-copy text-to-copy="content"
+                      class="code-mirror-copy"
+                      object-name="{{objectName || 'Content'}}"></jf-clip-copy>
+
+    </div>
+    <jf-code-mirror height="400px"
+                    mime-type="{{mode.name}}"
+                    model="content">
+    </jf-code-mirror>
+</div>
+<div class="modal-footer">
+    <div class="pull-right">
+        <button class="btn btn-default" ng-click="closeModal()">Close</button>
+    </div>
+</div>

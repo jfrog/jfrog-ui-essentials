@@ -1,0 +1,36 @@
+<ul class="list-inline" ng-show="jfActions.getActiveActionsCount()">
+    <li ng-show="jfActions.fixedActions.length"
+        ng-repeat="actionObj in jfActions.fixedActions"
+        ng-click="jfActions.doAction(actionObj)"
+        class="action-button"
+        ng-if="!actionObj.visibleWhen || actionObj.visibleWhen()">
+
+        <a ng-href="{{ actionObj.href }}">
+            <i class="action-icon icon" ng-class="actionObj.icon"></i> {{actionObj.title}}
+        </a>
+    </li>
+    <li ng-show="jfActions.dynamicActions.length" class="action-button">
+        <span class="dropdown" dropdown is-open="jfActions.isDropdownOpen">
+          <a href class="dropdown-toggle actions-more" dropdown-toggle>
+              <i class="action-icon icon icon-more"></i> {{jfActions.label}}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right actions-dropdown text-left">
+              <li ng-repeat="actionObj in jfActions.dynamicActions"
+                  class="action-item menu-item-{{actionObj.icon}}"
+                  ng-if="!actionObj.visibleWhen || actionObj.visibleWhen()">
+                  <a href="" class="action-container" ng-click="jfActions.doAction(actionObj)">
+                      <span class="action-icon icon"
+                            ng-class="actionObj.icon"></span>
+                      <span class="action-name">{{actionObj.title}}</span>
+                  </a>
+              </li>
+          </ul>
+        </span>
+
+    </li>
+</ul>
+
+<!--<li ng-repeat="action in jfActions.actions">-->
+    <!--<a><span class="glyphicon glyphicon-refresh"></span>{{action.name}}</a></li>-->
+<!--<li><a><span class="glyphicon glyphicon-trash"></span>Delete Content</a></li>-->
+<!--<li><a><span class="glyphicon glyphicon-cloud-upload"></span>Upload to Bintray</a></li>-->

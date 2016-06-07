@@ -1,0 +1,51 @@
+.modal {
+  overflow: auto;
+
+  .modal-dialog{
+    width: auto !important;
+    max-width: 875px;
+    margin: 70px auto;
+  }
+  
+  .modal-header {
+    padding: 0 0 0 35px;
+    line-height: 50px;
+
+    .close {
+      margin: 0 20px;
+      line-height: 50px;
+      font-size: 26px;
+    }
+  }
+
+  .modal-content {
+    border-radius: 0;
+  }
+
+  .modal-title {
+    color: @blueMain;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 48px;
+    padding-top: 2px;
+  }
+
+  .modal-body {
+    max-height: 575px;
+    padding: 20px 34px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .modal-footer {
+    background: @grayBGLight;
+    border-top: 0 none;
+  }
+}
+
+.copy-to-clip.code-mirror-copy {
+  position: absolute;
+  z-index: 100;
+  right: 54px;
+  margin-top: 2px;
+}

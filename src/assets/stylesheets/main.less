@@ -1,0 +1,37 @@
+@import "../../../components/bootstrap/less/variables.less";
+
+.license-required-icon {}
+
+@import "variables.less";
+@import "artifactory-icons.less";
+
+@import "general/input-text.less";
+@import "general/buttons.less";
+@import "general/dropdowns.less";
+@import "general/modals.less";
+@import "general/tooltipster.less";
+@import "general/toaster.less";
+
+// Fix ui-grid font problem
+@font-face{
+  font-family:'ui-grid';
+  src:url('fonts/ui-grid.eot');
+  src:url('fonts/ui-grid.eot#iefix')
+  format('embedded-opentype'),
+  url('fonts/ui-grid.woff')
+  format('woff'),
+  url('fonts/ui-grid.ttf?')
+  format('truetype'),
+  url('fonts/ui-grid.svg?#ui-grid')
+  format('svg');
+  font-weight:normal;
+  font-style:normal
+}
+
+body, html {
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+
+// injector
+// endinjector

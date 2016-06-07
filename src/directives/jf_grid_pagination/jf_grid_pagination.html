@@ -1,0 +1,17 @@
+<div class="grid-pagination text-right" ng-if="jfGridPagination.gridApi.pagination.getTotalPages()">
+    <p>
+        <a href
+           ng-click="jfGridPagination.prevPage()"
+           ng-class="{disabled: jfGridPagination.currentPage === 1}">&lsaquo;</a>
+        Page <input type="text"
+                    class="grid-page-box"
+                    ng-style="{'width': (14 + jfGridPagination.getTotalPages().toString().length * 7) + 'px'}"
+                    jf-tooltip="Jump to Page"
+                    ng-model="jfGridPagination.currentPage"
+                    ng-change="jfGridPagination.pageChanged()"/>
+        of {{ jfGridPagination.getTotalPages() }}
+        <a href
+           ng-click="jfGridPagination.nextPage()"
+           ng-class="{disabled: jfGridPagination.currentPage === jfGridPagination.gridApi.pagination.getTotalPages()}">&rsaquo;</a>
+    </p>
+</div>

@@ -1,0 +1,37 @@
+<div class="jf-list-maker">
+    <div class="list-new-value">
+        <jf-field>
+            <label>{{jfListMaker.label}}</label>
+            <jf-help-tooltip
+                    ng-if="jfListMaker.helpTooltip"
+                    html="jfListMaker.helpTooltip"></jf-help-tooltip>
+            <input
+                    type="text"
+                    class="input-text"
+                    ng-model="jfListMaker.newValue"
+                    placeholder="New {{jfListMaker.objectName}}"
+                    id="newValueField"
+                    name="newValueField"
+                    jf-enter-press="jfListMaker.addValue()"
+                    ng-disabled="jfListMaker.ngDisabled">
+        </jf-field>
+        <div class="list-new-value-button">
+            <i class="icon icon-new"
+               ng-click="!(jfListMaker.ngDisabled || !jfListMaker.newValue.length) && jfListMaker.addValue()"
+               ng-disabled="jfListMaker.ngDisabled || !jfListMaker.newValue.length"></i>
+        </div>
+    </div>
+    <div class="jf-validation">{{jfListMaker.errorMessage}}</div>
+
+    <div id="{{jfListMaker.listId}}" class="list-maker-list" ng-if="jfListMaker.values.length">
+        <div class="list-maker-list-row" ng-repeat="value in jfListMaker.values track by $index">
+            <div>{{value}}</div>
+            <div class="list-maker-list-buttons">
+                <a href="" class="icon icon-clear"
+                   ng-click="jfListMaker.removeValue($index)"
+                   ng-if="jfListMaker.values.length > jfListMaker.minLength"
+                   ng-disabled="jfListMaker.ngDisabled"></a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="grid-container" ng-if="gridOptions.data">
+    <div class="wrapper-grid-actions" ng-show="!noPagination || !noCount || gridOptions.batchActions.length || filterField">
+
+        <div ng-if="!noCount" class="grid-counter">{{ getTotalRecords() }}<span ng-if="getSelectedRecords()"> ({{getSelectedRecords()}} Selected)</span></div>
+
+        <div ng-if="filterField" class="filter-group">
+            <jf-grid-filter
+                    auto-focus="{{autoFocus}}"
+                    filter-grid="gridOptions"
+                    filter-field="{{ filterField }}"
+                    filter-field2="{{ filterField2 }}"
+                    filter-on-change="{{ filterOnChange }}">
+            </jf-grid-filter>
+        </div>
+
+        <jf-grid-pagination ng-show="!noPagination"
+                            grid-api="gridOptions.api"
+                            class="pull-right">
+        </jf-grid-pagination>
+
+        <jf-grid-batch-actions ng-if="gridOptions.batchActions.length"
+                               grid-api="gridOptions.api"
+                               actions="gridOptions.batchActions">
+        </jf-grid-batch-actions>
+    </div>
+    <div ui-grid="gridOptions"
+         ui-grid-draggable-rows
+         ui-grid-selection
+         ui-grid-pagination
+         ui-grid-grouping
+         ui-grid-edit
+         ui-grid-resize-columns
+         class="grid"></div>
+</div>

@@ -1,0 +1,42 @@
+.jf-switch {
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 100;
+
+  .jf-switch-title {
+    color: @grayFontDarker;
+    margin-right: 10px;
+  }
+
+  .jf-switch-options {
+    display: inline-block;
+
+    li {
+      display: inline-block;
+      padding: 0;
+
+      &:not(:first-child)::before {
+        content: "|";
+        color: @grayFontGeneral;
+        padding: 0px 4px 0 6px;
+      }
+    }
+  }
+
+  .jf-switch-option {
+    font-weight: 400;
+    color: @grayFontGeneral;
+
+
+    &:hover, &.active {
+      color: @greenFontHeader;
+    }
+    &.disabled {
+      color: @grayFontGeneral;
+      cursor: default;
+      &.active {
+        color: @greenFontHeader;
+      }
+    }
+  }
+}

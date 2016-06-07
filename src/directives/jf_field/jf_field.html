@@ -1,0 +1,8 @@
+<div ng-class="{'input-label': animated}" class="jf-field">
+    <ng-transclude></ng-transclude>
+</div>
+<jf-validation ng-if="formField.showErrors || alwaysShowErrors || (formField.initialValue && !formField.$error.required)"
+               field="formField"
+               dont-push-down="dontPushDownErrors"
+               dictionary="{{validations}}">
+</jf-validation>

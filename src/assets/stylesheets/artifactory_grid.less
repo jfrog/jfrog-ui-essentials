@@ -1,0 +1,634 @@
+//-----ui grid----//
+.ui-grid-filter-input {
+  display: none;
+}
+
+.grid-pagination {
+  margin: 23px 10px 0 10px;
+  padding-bottom: 5px;
+  color: @grayFontGeneral;
+
+  p {
+    margin-bottom: 0;
+  }
+
+  a {
+    color: @grayFontGeneral;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: 100;
+    line-height: 18px;
+    vertical-align: top;
+
+    &.disabled {
+      color: @grayBorderDark;
+    }
+  }
+
+  .grid-page-box {
+    border: 1px solid @grayBorderDark;
+    background-color: @grayBGLight;
+    padding: 0 5px;
+    margin: 2px 0 0 0;
+    width: 28px;
+    height: 20px;
+    font-size: 13px;
+    outline: none;
+    text-align: center;
+  }
+}
+
+.grid-container {
+  margin: 20px auto;
+  width: 100%;
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+
+  .ui-grid a {
+    color: @blueMain;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .grid-items-container {
+    height: 40px;
+    overflow: auto;
+  }
+
+  .item {
+    display: inline-block;
+    background: transparent;
+    border-radius: 3px;
+    padding: 0 8px;
+    margin: 6px 0 0 8px;
+    height: 26px;
+    line-height: 24px;
+    border: 1px solid @blueMain;
+    color: @grayFontGeneral;
+  }
+
+  a.grid-column-button {
+    display: inline-block;
+    background: transparent;
+    border: 0 none;
+    font-size: 24px;
+    color: @grayFontGeneral;
+
+    &:not([disabled]):hover {
+      color: @greenFontHeader;
+    }
+
+    &[disabled] {
+      color: @grayFontLighter;
+    }
+  }
+
+  .btn {
+    min-width: inherit !important;
+
+    &:hover {
+      background-color: @grayBGMedium;
+    }
+  }
+
+  .ui-grid-header-cell-wrapper, .ui-grid-header-canvas {
+    height: 40px;
+  }
+
+  .ui-grid {
+    position: relative;
+    clear: both;
+    visibility: hidden;
+    border-radius: 0;
+    border: 0 none;
+
+    .ui-grid-canvas {
+      padding-top: 0;
+    }
+
+    .ui-grid-viewport {
+      border-right: 0 none;
+    }
+
+    .ui-grid-top-panel {
+      background: none !important;
+    }
+
+    .ui-grid-cell, .ui-grid-header-cell {
+      border-left: 1px solid @grayGridHeader !important;
+
+      &:not(:last-child) {
+        border-right: 0 none transparent !important;
+      }
+      &:last-child {
+        border-right: 1px solid @grayGridHeader !important;
+      }
+      /* breaks the cell overflow (ellipsis)
+      .ui-grid-cell-contents {
+        white-space: normal;
+      }
+      */
+    }
+
+    .ui-grid-header-cell:last-child .ui-grid-column-resizer.right {
+      border-right: 0 none transparent !important;
+    }
+
+    .ui-grid-header {
+      border: 0 none !important;
+      border-bottom: 0 none !important;
+    }
+
+    .ui-grid-row {
+      position: relative;
+
+      &:nth-child(odd) .ui-grid-cell {
+        background-color: @white;
+      }
+      &:nth-child(even) .ui-grid-cell {
+        background-color: @grayGridRow;
+      }
+
+      &:last-child .ui-grid-cell {
+        border-bottom: 1px solid @grayGridHeader;
+      }
+
+      .grid-action-bar {
+        position: absolute;
+        z-index: 1000;
+        right: 0;
+        display: none;
+
+        .btn-action {
+          color: @grayFontGeneral;
+
+          &:hover {
+            color: @greenFontHeader;
+            
+            .icon-clear:before {
+              color: @redError;
+            }
+          }
+
+          i {
+            font-size: 16px;
+
+            &:before {
+              line-height: 40px;
+            }
+          }
+        }
+      }
+
+      .ui-grid-row-header-cell {
+        border-bottom: none;
+      }
+    }
+
+    .ui-grid-render-container-body .ui-grid-row.hovered {
+      .grid-actions, .grid-action-bar {
+        display: block;
+      }
+
+      .ui-grid-cell, .ui-grid-viewport, .grid-action-bar {
+        background: @grayGridRowHover;
+      }
+
+      .ui-grid-draggable-row {
+        &:before {
+          font-family: "artifactory" !important;
+          font-size: 26px;
+          content: "\\";
+          position: absolute;
+          z-index: 10;
+          top: 2px;
+          left: -7px;
+          color: #bbb;
+        }
+      }
+    }
+
+    .ui-grid-header-cell {
+      .ui-grid-cell-contents {
+        font-weight: normal;
+        font-size: 16px;
+        color: @grayFontGeneral;
+        background-color: @grayGridHeader;
+      }
+
+      .sorting-active .ui-grid-cell-contents {
+        background: #cdd2d4;
+      }
+    }
+
+    .ui-grid-cell {
+      position: relative;
+    }
+
+    .ui-grid-cell-contents {
+      height: 40px;
+      line-height: 40px;
+      padding: 0 5px 0 15px;
+
+      a::before {
+        line-height: 40px;
+      }
+
+      .group-button {
+        position: relative;
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        top: 7px;
+        left: 4px;
+      }
+
+      .repo-type-icon {
+        float: left;
+        margin: 1px 10px 0 0;
+        
+        &.icon- {
+          display: none;
+        }
+      }
+    }
+
+    .ui-grid-group-header-row {
+      .ui-grid-cell {
+        background: #fff !important;
+        color: @greenBGDark;
+        border-left: 1px solid transparent !important;
+        border-top: 1px solid @grayGridHeader;
+
+        &.expandedRow {
+          background: @greenBGSmallHover !important;
+        }
+      }
+    }
+
+    .ui-grid-pinned-container {
+      .ui-grid-viewport {
+        .ui-grid-cell:last-child {
+          border-right: 0 none !important;
+        }
+      }
+
+      .ui-grid-group-header-row .ui-grid-cell:first-child {
+        border-left-color: @grayGridHeader !important;
+      }
+
+      .ui-grid-cell-contents {
+        padding: 0;
+      }
+
+      .ui-grid-header-cell {
+        display: inline-block;
+      }
+    }
+
+    .ui-grid-group-header-row .ui-grid-selection-row-header-buttons {
+      visibility: hidden !important;
+    }
+
+    &.grouped {
+      .grouped-column .ui-grid-cell-contents {
+        padding: 12px 5px 10px 40px;
+      }
+
+      .ui-grid-cell {
+        background: @white;
+      }
+
+      .ui-grid-row .ui-grid-row-header-cell {
+        background: @white !important;
+        border-left: none !important;
+      }
+
+      .ui-grid-pinned-container.ui-grid-pinned-container-left {
+        .ui-grid-group-header-row {
+          .ui-grid-row-header-cell {
+            background: @white !important;
+            border-bottom: 1px solid @grayBorderDark;
+          }
+        }
+
+        .ui-grid-header-cell:nth-child(2) {
+          border-right: none !important;
+        }
+
+        .ui-grid-grouping-row-header-buttons.ui-grid-icon-plus-squared,
+        .ui-grid-grouping-row-header-buttons.ui-grid-icon-minus-squared {
+          visibility: hidden;
+        }
+      }
+    }
+  }
+
+  .ui-grid-icon-down-dir, .ui-grid-icon-up-dir {
+    position: absolute;
+    right: 0;
+    font-size: 19px;
+  }
+
+  .ui-grid-selection-row-header-buttons {
+    opacity: 1;
+    line-height: 40px;
+  }
+
+  // selection checkbox icons
+  .ui-grid-header-cell.ui-grid-col0 .ui-grid-cell-contents {
+    //padding: 10px 5px 10px 5px;
+  }
+
+  .ui-grid-icon-ok {
+    .icon-datagrid-v;
+
+    &:before {
+      font-family: "artifactory" !important;
+
+      width: 40px;
+      height: 40px;
+      display: block;
+      position: relative;
+      margin-left: 0;
+      top: 13px;
+      font-size: 16px;
+      color: @grayBGDarker;
+    }
+  }
+
+  .ui-grid-header-cell .ui-grid-icon-ok:before {
+    color: @grayFontLighter;
+  }
+  .ui-grid-cell-contents:hover .ui-grid-icon-ok:not(.ui-grid-row-selected):not(.ui-grid-all-selected):before {
+    color: @grayFontGeneral;
+  }
+
+  .ui-grid-row-selected.ui-grid-icon-ok:before, .ui-grid-all-selected.ui-grid-icon-ok:before {
+    color: @greenFontHeader;
+  }
+
+  .ui-grid-icon-plus-squared, .ui-grid-icon-minus-squared {
+    &:before {
+      font-family: 'ui-grid', 'serif';
+      color: @greenFontDarker;
+      font-size: 18px;
+      margin: 0;
+      width: 30px;
+      height: 40px;
+      line-height: 40px;
+    }
+  }
+
+  .ui-grid-icon-plus-squared {
+    &:before {
+      content: "\c358";
+      transform: rotate(-90deg);
+    }
+  }
+  .ui-grid-icon-minus-squared {
+    &:before {
+      content: "\c358";
+    }
+  }
+
+  .ui-grid-header-viewport .ui-grid-grouping-row-header-buttons {
+    display: none;
+  }
+
+  .ui-grid-render-container-left .grid-action-bar {
+    display: none !important;
+  }
+
+  .expandedRow {
+    background: @greenBGSmallHover !important;
+    color: @greenBGDark;
+  }
+
+  .panel-container & {
+    margin: 0 auto !important;
+  }
+
+  .grid-cell-checkbox {
+    line-height: 40px;
+    text-align: center;
+  }
+
+  .ui-grid-draggable-row {
+    height: 40px;
+    overflow: hidden;
+
+    //.grid-action-bar + .ui-grid-cell .ui-grid-cell-contents {
+    //  padding-left: 20px;
+    //}
+  }
+
+  .ui-grid-draggable-row-over {
+    position: relative;
+
+    &.ui-grid-draggable-row-over--above {
+      border-top: 1px solid @blueMain;
+
+      .ui-grid-cell-contents {
+        line-height: 38px !important;
+      }
+    }
+    &.ui-grid-draggable-row-over--below {
+      border-bottom: 1px solid @blueMain;
+    }
+  }
+
+  .ui-grid-draggable-row-over:before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+
+  }
+
+  .ui-grid-draggable-row-over--above:before {
+    top: 0;
+  }
+
+  .ui-grid-draggable-row-over--below:before {
+    bottom: 0;
+  }
+}
+
+div.ui-grid-cell input.ng-valid {
+  height: 36px;
+  margin-top: 2px;
+}
+
+.grid-cell-empty .ui-grid-cell-contents {
+  visibility: hidden;
+}
+
+.grid-checkbox {
+  padding: 0;
+  text-align: center;
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  input[type="checkbox"] + span {
+    display: none;
+    font-size: 17px;
+    color: @blueMain;
+
+    &:before {
+      line-height: 40px;
+    }
+  }
+
+  input[type="checkbox"]:checked + span {
+    display: inline-block;
+  }
+}
+
+.grid-icon {
+  padding: 0;
+  text-align: center;
+
+  i {
+    font-size: 17px;
+    &:before {
+      line-height: 40px;
+    }
+  }
+}
+
+.wrapper-grid-actions {
+  height: 50px;
+}
+
+.grid-batch-actions {
+  padding-top: 20px;
+
+  .btn {
+    height: 30px;
+    line-height: 30px;
+
+    &, i:before {
+      color: @grayFontGeneral;
+    }
+
+    &.disabled {
+      &, i:before {
+        color: @grayFontLighter;
+      }
+    }
+
+    img {
+      margin-right: 2px;
+    }
+
+    &:hover {
+      background-color: transparent;
+      &, i:before {
+        color: @greenFontHeader;
+      }
+    }
+    
+    &.batch-action-clear:hover {
+      &, i:before {
+        color: @redError;
+      }
+    }
+  }
+
+  i {
+    float: left;
+    margin: 2px 5px 0 0;
+    font-size: 16px;
+  }
+}
+
+.icon.clear-group {
+  color: @grayFontLighter;
+}
+
+
+.ui-grid-disable-selection {
+
+  //override (enable) selection to handle the stupid ui-grid bug when not setting grid's row selection
+  -webkit-touch-callout: default;
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  cursor: auto;
+
+}
+
+
+.grid-counter {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 28px;
+}
+
+.ui-grid-cell-contents {
+  .gridcell-showall {
+    position: absolute;
+    right: 0px;
+    padding: 0 10px;
+  }
+  &.overflow:hover,
+  &.always-show:hover {
+    padding-right: 66px;
+  }
+  &:not(:hover) {
+    .gridcell-showall {
+      visibility: hidden !important;
+    }
+  }
+}
+
+//override non releveant icons defined in jQuery.contextMenu.css (vendor)
+.context-menu-item.icon-edit {
+  background-image: inherit;
+}
+.context-menu-item.icon-cut {
+  background-image: inherit;
+}
+.context-menu-item.icon-copy {
+  background-image: inherit;
+}
+.context-menu-item.icon-paste {
+  background-image: inherit;
+}
+.context-menu-item.icon-delete {
+  background-image: inherit;
+}
+.context-menu-item.icon-add {
+  background-image: inherit;
+}
+.context-menu-item.icon-quit {
+  background-image: inherit;
+}
+
+
+//special-row class is used in storage summary grid for TOTAL and TRASH CAN rows (RTFACT-9187)
+.ui-grid-row.special-row {
+
+  font-weight: 600;
+  &:first-child {
+    border-top: 1px solid @greenFontHeader;
+  }
+  &:nth-child(2) {
+    border-top: 1px solid @grayGridHeader;
+    border-bottom: 1px solid @greenFontHeader;
+  }
+
+  background-color: white !important;
+  * {
+    background-color: transparent !important;
+  }
+}

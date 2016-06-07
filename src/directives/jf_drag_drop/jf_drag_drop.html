@@ -1,0 +1,110 @@
+<div class="dnd-panel" ng-keydown="jfDragDrop.onKeyDown($event)" tabindex="0">
+    <div class="row dnd-filter-wrapper">
+        <div class="col-lg-5">
+            <input type="text"
+                   ng-style="{color:jfDragDrop.noMatches ? 'red' : 'black'}"
+                   ng-model="jfDragDrop.filterList"
+                   ng-change="jfDragDrop.updateFilter(true)"
+                   ng-model-options="{debounce: 200}"
+                   placeholder="Filter..."
+                   ng-disabled="jfDragDrop.disabled"
+                   class="input-text dnd-filter">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-5">
+            <h5 class="text-primary" ng-if="jfDragDrop.headers.leftTitle">
+                {{jfDragDrop.headers.leftTitle}}
+            </h5>
+            <div id="{{jfDragDrop.excludeListId}}"
+                 class="dnd-list-wrapper"
+                 ng-mouseenter="jfDragDrop.mouseIsInExclude(true)"
+                 ng-mouseleave="jfDragDrop.mouseIsInExclude(false)">
+                <ul class="dnd-list">
+                    <li ng-repeat="item in jfDragDrop.getViewableExcludes() track by $index"
+                        class="drag-item"
+                        ng-class="{'drag-placeholder':item===jfDragDrop.PLACEHOLDER, 'active' : jfDragDrop.isSelected(item)}"
+                        data-index="exc-{{$index}}"
+                        ng-click="jfDragDrop.toggleSelection(item)"
+                        ng-dblclick="jfDragDrop.includeSpecific(item)"
+                        ng-mouseenter="jfDragDrop.mouseOver(item)"
+                        ng-mouseleave="jfDragDrop.mouseOver(null)">
+                        <div class="drag-item-text" ng-if="item !== jfDragDrop.PLACEHOLDER && !jfDragDrop.customTemplate">
+                            <i ng-if= "item._iconClass" class = "{{item._iconClass}}"></i>
+                            {{jfDragDrop.excludeDisplayField && item[jfDragDrop.excludeDisplayField] ? item[jfDragDrop.excludeDisplayField] : item}}
+                        </div>
+                        <div class="drag-item-text" ng-if="item !== jfDragDrop.PLACEHOLDER && jfDragDrop.customTemplate">
+                            <i ng-if= "item._iconClass" class = "{{item._iconClass}}"></i>
+                            <div ng-if="jfDragDrop.customTemplate" class="custom-template" ng-init="jfDragDrop.compileCustomTemplate(item,'exc')"></div>
+                        </div>
+                        <div class="drag-item-text" ng-if="item === jfDragDrop.PLACEHOLDER"></div>
+                    </li>
+                </ul>
+            </div>
+            <jf-drag-drop-pagination pagination-api="jfDragDrop.excludesPaginationApi"></jf-drag-drop-pagination>
+        </div>
+
+        <div class="col-lg-2">
+            <h5 class="text-primary" ng-if="jfDragDrop.headers.leftTitle || jfDragDrop.headers.rightTitle">&nbsp;</h5>
+            <ul class="dnd-actions">
+                <li>
+                    <span ng-click="jfDragDrop.excludeAll()"
+                          ng-disabled="jfDragDrop.isIncludeListEmpty() || jfDragDrop.isIncludeListFixed() || jfDragDrop.disabled">&laquo;
+                    </span>
+                </li>
+                <li>
+                    <span ng-click="jfDragDrop.excludeSelected()"
+                          ng-disabled="!jfDragDrop.isIncludeListItemSelected() || jfDragDrop.disabled">&lsaquo;
+                    </span>
+                </li>
+                <li>
+                    <span ng-click="jfDragDrop.includeSelected()"
+                          ng-disabled="!jfDragDrop.isExcludeListItemSelected() || jfDragDrop.disabled">&rsaquo;
+                    </span>
+                </li>
+                <li>
+                    <span ng-click="jfDragDrop.includeAll()"
+                          ng-disabled="jfDragDrop.isExcludeListEmpty() || jfDragDrop.disabled">&raquo;
+                    </span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-lg-5">
+            <h5 class="text-primary"
+                ng-if="jfDragDrop.headers.rightTitle">{{jfDragDrop.headers.rightTitle}}
+            </h5>
+            <div id="{{jfDragDrop.includeListId}}"
+                 class="dnd-list-wrapper"
+                 ng-mouseenter="jfDragDrop.mouseIsInInclude(true)"
+                 ng-mouseleave="jfDragDrop.mouseIsInInclude(false)">
+                <ul class="dnd-list dnd-list-fullheight">
+                    <li ng-repeat="item in jfDragDrop.getViewableIncludes() track by $index"
+                        class="drag-item dropped-item"
+                        ng-class="{'drag-placeholder':item===jfDragDrop.PLACEHOLDER, 'active' : jfDragDrop.isSelected(item)}"
+                        data-index="inc-{{$index}}"
+                        ng-click="!$event.defaultPrevented ? (jfDragDrop.toggleSelection(item)) : ''"
+                        ng-dblclick="jfDragDrop.excludeSpecific(item)"
+                        ng-mouseenter="jfDragDrop.mouseOver(item)"
+                        ng-mouseleave="jfDragDrop.mouseOver(null)">
+                        <div class="drag-item-text" ng-if="item !== jfDragDrop.PLACEHOLDER && !jfDragDrop.customTemplate">
+                            <i ng-if= "item._iconClass" class = "{{item._iconClass}}"></i>
+                            {{jfDragDrop.includeDisplayField && item[jfDragDrop.includeDisplayField] ? item[jfDragDrop.includeDisplayField] : item}}
+                        </div>
+                        <div class="drag-item-text" ng-if="item !== jfDragDrop.PLACEHOLDER && jfDragDrop.customTemplate">
+                            <i ng-if= "item._iconClass" class = "{{item._iconClass}}"></i>
+                            <div ng-if="jfDragDrop.customTemplate" class="custom-template" ng-init="jfDragDrop.compileCustomTemplate(item,'inc')"></div>
+                        </div>
+                        <div class="drag-item-text" ng-if="item === jfDragDrop.PLACEHOLDER"></div>
+                        <a ng-if="item && item !== jfDragDrop.PLACEHOLDER && !item['__fixed__'] && !jfDragDrop.disabled"
+                           href=""
+                           class="delete-drop-item"
+                           ng-click="jfDragDrop.excludeSpecific(item);$event.stopPropagation();$event.preventDefault();">&#10005;</a>
+                    </li>
+                </ul>
+            </div>
+            <jf-drag-drop-pagination pagination-api="jfDragDrop.includesPaginationApi"></jf-drag-drop-pagination>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>

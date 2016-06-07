@@ -1,0 +1,133 @@
+.push-to-bintray {
+  select {
+    width: 100%;
+  }
+
+  .bintray-info-container {
+    margin-bottom: 20px;
+  }
+  .bintray-info {
+    display: block;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 100;
+  }
+}
+
+.modal-dialog{
+  width: auto !important;
+  max-width: 875px;
+  margin: 70px auto;
+}
+
+.inline {
+  display: inline;
+}
+
+.select-repo-icon {
+  position: relative;
+  margin-right: 10px;
+  top: 2px;
+}
+
+.select-target-path {
+  min-height: 300px;
+}
+
+#property-set-list {
+  width: 492px;
+  border-top: 1px solid @grayBGMedium;
+  border-bottom: 1px solid @grayBGMedium;
+
+  .property-set-row {
+    display: table;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+
+    &:nth-child(even) {
+      background-color: @white;
+    }
+    &:nth-child(odd) {
+      background-color: @grayGridRow;
+    }
+
+    div {
+      display: table-cell;
+
+      &:first-child {
+        padding-left: 10px;
+        width: 340px;
+      }
+
+      a {
+        color: @grayFontLighter;
+        font-size: 16px;
+        position: relative;
+        top: 2px;
+
+        &:hover {
+          color: @greenFontHeader;
+        }
+      }
+
+      jf-checkbox {
+        float: right;
+        margin-right: 20px;
+
+        label {
+          margin-bottom: 0;
+        }
+      }
+      
+      &.property-set-buttons {
+        text-align: right;
+        padding-right: 20px;
+        
+        a {
+          &[disabled]:hover {
+            color: @grayFontLighter;
+            cursor: default;
+          }
+          &.icon-clear:hover {
+            color: @redError;
+          }
+        }
+      }
+    }
+  }
+}
+
+#smart-remote-repository {
+  .sync-checkbox {
+    p {
+      margin-left: 25px;
+    }
+  }
+  ul {
+    margin-left: 25px;
+    
+    li {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+#show-all-modal {
+  .modal-body {
+    height: 412px;
+  }
+
+  .group-list-wrapper {
+    max-height: 322px;
+    overflow-y: auto;
+    margin-bottom: 0;
+  }
+}
+
+.modal-body {
+  .highlight-alert {
+    color: @redError;
+    font-weight: 700;
+  }
+}

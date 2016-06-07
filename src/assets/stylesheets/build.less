@@ -1,0 +1,196 @@
+//.builds {
+#jf-builds {
+  .breadcrumb {
+    padding: 18px 60px;
+    margin: 0;
+    background: rgba(245, 245, 245, 1);
+    border-bottom: 1px solid @grayBGMedium;
+    border-radius: 4px;
+    display: block;
+
+    li {
+      font-size: 14px;
+      position: relative;
+    }
+
+    a {
+      color: @blackFontDark;
+
+      &:hover {
+        color: rgba(42, 100, 150, 1);
+      }
+    }
+
+    & > .active {
+      color: rgba(153, 153, 153, 1);
+    }
+
+    & > li + li {
+      margin-left: 56px;
+
+      &:before {
+        color: @greenBGDark;
+        margin: 0px 28px;
+        content: "›";
+        font-size: 28px;
+        font-weight: 300;
+        position: absolute;
+        left: -60px;
+        top: -12px;
+      }
+    }
+  }
+
+  .card-side-pad {
+    padding-right: 35px;
+    padding-left: 35px;
+  }
+
+  .main-view {
+    padding: 20px 35px;
+    position: absolute;
+    top: 130px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    overflow-y: auto;
+  }
+
+  h2 {
+    color: #006CAB;
+    font-size: 22px;
+    font-weight: 400;
+    margin: 0;
+    padding: 35px 0 10px;
+  }
+
+  .build-info h2 {
+    padding-bottom: 30px;
+    padding-left: 35px;
+  }
+
+  .builds-diff,
+  .builds-published-modules {
+    .grid-container {
+      margin-top: 0;
+    }
+    .compare-selection {
+      margin-top: 20px;
+      margin-bottom: -10px;
+      select {
+        margin-right: 20px;
+        margin-left: 10px;
+      }
+    }
+
+    .status-unchanged {
+      color: @grayFontDark;
+    }
+    .status-updated {
+      color: @blueLinkBasic;
+    }
+    .status-new {
+      color: green;
+    }
+    .status-removed {
+      color: @grayFontLighter;
+    }
+
+    &.license-required {
+      &::after {
+        content: "";
+      }
+
+      h4 span {
+        position: relative;
+
+        .license-required-icon;
+
+        &::after {
+          top: -2px;
+          right: -24px;
+        }
+      }
+    }
+  }
+
+  .builds-diff  {
+    min-height: 100px;
+  }
+
+  .scopes-options {
+    margin: 15px 0 0 25px;
+  }
+
+  .general-summary {
+    .summary-ok {
+
+    }
+    .summary-warn {
+      color: @redError;
+    }
+
+    i {
+      font-size: 20px;
+      float: left;
+      margin: -1px 10px 0 0;
+    }
+
+    span {
+      padding-right: 10px;
+    }
+  }
+
+
+  .licenses-tab {
+    .licenses-summary {
+      padding: 20px 0;
+    }
+  }
+
+  .governance-tab {
+    .status-pending {
+      color: red;
+    }
+    .status-approved {
+      color: green;
+    }
+
+    .not-in-build {
+      color: red;
+    }
+  }
+
+}
+
+.found-license-container {
+  margin-bottom: 20px;
+
+  button {
+    margin-left: 20px;
+  }
+}
+
+.push-to-bintray-btn {
+  float: right;
+  font-size: 16px;
+  font-weight: 700;
+  color: @grayFontGeneral;
+  cursor: pointer;
+  margin-right: 20px;
+
+  &:hover {
+    color: @greenFontHeader;
+  }
+
+  span {
+    display: block;
+    height: 46px;
+    font-size: 40px;
+    text-align: center;
+  }
+}
+
+.back-to-modules {
+  margin-right: 10px;
+}

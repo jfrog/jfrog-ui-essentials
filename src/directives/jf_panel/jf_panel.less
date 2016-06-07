@@ -1,0 +1,83 @@
+.panel-container {
+  position: relative;
+  margin: 0 0 14px;
+
+  .panel-heading {
+    background: @white;
+    border: none;
+    position: relative;
+    top: 10px;
+    left: 4px;
+    color: @greenBGDark;
+    width: auto;
+    padding: 0 4px 0 4px;
+    font-size: 16px;
+    font-weight: 600;
+    z-index: 300;
+
+    .panel-container .panel &, .wizard-content &, &.borderless {
+      left: 0;
+      padding-left: 0;
+    }
+  }
+
+  .panel-body {
+    padding: 0;
+  }
+
+  .panel {
+    padding: 21px 21px 12px;
+    margin-bottom: 0;
+    border-radius: 0;
+    box-shadow: 0 0 0;
+    margin-right: 15px;
+    &.clearfix {
+      margin-right: 0;
+    }
+
+    .panel-container .panel &, .wizard-content &, &.borderless {
+      border-width: 0;
+      border-top-width: 1px;
+      padding-right: 0;
+      padding-left: 0;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+jf-panel.license-required {
+  .panel-container::before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    //background: rgba(0, 0, 0, 0.1);
+  }
+  &::after {
+    content: "";
+  }
+
+  .panel-heading {
+    padding-right: 25px;
+
+    .license-required-icon;
+
+    &::after {
+      right: 0;
+    }
+  }
+}
+
+.generate-panel-z-order(10);
+
+.generate-panel-z-order(@n, @i: 1) when (@i =< @n) {
+  jf-panel:nth-child(@{i}) .panel-container {
+    z-index: (200 - @i);
+  }
+  .generate-panel-z-order(@n, (@i + 1));
+}

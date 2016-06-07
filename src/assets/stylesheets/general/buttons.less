@@ -1,0 +1,120 @@
+.btn {
+  border-radius: 0;
+  border: none;
+  color: @blackFontDark;
+  font-weight: normal;
+  padding: 0 12px;
+  height: 40px;
+  line-height: 40px;
+  min-width: 100px;
+  opacity: 1 !important;
+  outline: none;
+
+  &:focus, &:visited, &:hover, &:active {
+    outline: none;
+    border: none;
+    box-shadow: none;
+  }
+
+  &:active:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &.btn-primary {
+    background: @greenBGPrimary;
+    color: @white;
+
+    &:focus, &:visited {
+      background: @greenBGPrimary;
+    }
+
+    &:hover {
+      background: @greenBGPrimaryHover;
+    }
+
+    &:active {
+      background: @greenBGPrimaryHover;
+    }
+
+    &[disabled] {
+      background: @grayBGDisabled;
+    }
+  }
+
+  &.btn-primary-light {
+    background: @greenBGSmallHover;
+    color: @greenFontDarker;
+
+    &:hover {
+      color: @greenFontDarker;
+      background: @greenBGSmall;
+    }
+
+    &:active {
+      background: @greenBGSmallActive;
+      color: @white;
+    }
+
+    &[disabled] {
+      background: @grayBGDisabled;
+    }
+  }
+
+  &.btn-secondary {
+    background: @greenBGSecondary;
+    color: @greenBGPrimary;
+
+    &:focus, &:visited {
+      background: @greenBGSecondary;
+    }
+
+    &:hover {
+      background: @greenBGSecondaryHover;
+    }
+
+    &:active {
+      background: @greenBGSecondaryHover;
+    }
+
+    &[disabled] {
+      background: @grayButtonSecondaryDisabled;
+    }
+  }
+
+  &.btn-small {
+    height: 36px; //temporary !
+    background: @greenBGSmall;
+    color: @greenFontDarker;
+    padding: 0;
+    //padding: 3px 12px;
+
+    &:hover {
+      color: @greenFontDarker;
+      background: @greenBGSmallHover;
+    }
+
+    &:active {
+      background: @greenBGSmallActive;
+      color: @white;
+    }
+
+    &[disabled] {
+      background: @grayBGDisabled;
+      color: @white;
+    }
+  }
+
+  &.btn-default {
+    background: transparent;
+    color: @grayFontGeneral;
+
+    &:hover {
+      color: @greenFontDarker;
+    }
+  }
+
+  &.btn-wide {
+    min-width: 155px;
+  }
+}
