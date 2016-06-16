@@ -1,5 +1,7 @@
 <div class="panel-container">
-    <span class="panel-heading" ng-if="jfPanelHeading" ng-bind="jfPanelHeading"></span>
+    <span class="panel-heading" ng-if="jfPanelHeading">
+        {{jfPanelHeading}} <jf-help-tooltip html="jfPanelHelpTooltip" ng-if="jfPanelHelpTooltip"></jf-help-tooltip>
+    </span>
     <div class="panel-body">
         <div class="panel panel-default clearfix {{ jfPanelClasses }}">
             <ng-transclude></ng-transclude>

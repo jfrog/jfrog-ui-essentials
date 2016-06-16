@@ -2,7 +2,8 @@ export function jfPanel() {
     return {
         scope: {
             jfPanelHeading: '@',
-            jfPanelClasses: '@'
+            jfPanelHelpTooltip: '@',
+            jfPanelClasses: '@',
         },
         templateUrl: 'directives/jf_panel/jf_panel.html',
         transclude: true
