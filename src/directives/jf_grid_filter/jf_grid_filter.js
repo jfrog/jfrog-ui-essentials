@@ -19,6 +19,11 @@ class jfGridFilterController {
 
         this.grid.enableFiltering = true;
 
+        this.grid.setFilter = (filterString) => {
+            this.gridFilter = filterString;
+            this.doFilter();
+        };
+
         if (this.filterField.indexOf('.') !== -1) {
             let splitted = this.filterField.split('.');
             this.filterField = splitted[0];
