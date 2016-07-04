@@ -53,6 +53,7 @@ class jfGridFilterController {
             this.column.filter = {
                 term: '*' + this.gridFilter + '*',
                 condition: (searchTerm, cellValue, row, column)=> {
+                    cellValue = cellValue !== undefined ? cellValue : '';
                     let regex = new RegExp('.*' + searchTerm.split('\\*').join('.*') + '.*', "i");
                     let subsVisible = this._isSubVisible(cellValue,column,regex);
                     if (cellValue && cellValue.$value) cellValue = cellValue.$value;
@@ -64,8 +65,10 @@ class jfGridFilterController {
             this.column.filter = {
                 term: '*' + this.gridFilter + '*',
                 condition: (searchTerm, cellValue, row, column)=> {
+                    cellValue = cellValue !== undefined ? cellValue : '';
                     let regex = new RegExp('.*' + searchTerm.split('\\*').join('.*') + '.*', "i");
                     let cell2Value = row.entity[this.column2.field];
+                    cell2Value = cell2Value !== undefined ? cell2Value : '';
                     let subsVisible = this._isSubVisible(cellValue,column,regex) || this._isSubVisible(cell2Value,this.column2,regex);
                     if (cellValue && cellValue.$value) cellValue = cellValue.$value;
                     if (cell2Value && cell2Value.$value) cell2Value = cell2Value.$value;
