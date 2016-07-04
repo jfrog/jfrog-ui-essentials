@@ -20,3 +20,17 @@
     top: 2px;
   }
 }
+
+.action-button, .action-item {
+  &.disabled {
+    a {
+      cursor: not-allowed !important;
+      color: lightgrey !important;
+      span.action-name,
+      span.action-icon:before,
+      i.action-icon:before {
+        color: lightgrey !important;
+      }
+    }
+  }
+}

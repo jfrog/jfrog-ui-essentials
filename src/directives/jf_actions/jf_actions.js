@@ -28,7 +28,12 @@ class jfActionsController {
         this._transformActionsData();
     }
 
-    doAction(actionObj) {
+    doAction(actionObj,e) {
+        if (actionObj.disabled) {
+            e.stopPropagation();
+            e.preventDefault();
+            return;
+        }
         if (this.actionsHandler) {
             if (!actionObj.href) this.actionsHandler.perform(actionObj, this.currentEntity);
         }

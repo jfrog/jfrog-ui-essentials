@@ -1,7 +1,8 @@
 <ul class="list-inline" ng-show="jfActions.getActiveActionsCount()">
     <li ng-show="jfActions.fixedActions.length"
         ng-repeat="actionObj in jfActions.fixedActions"
-        ng-click="jfActions.doAction(actionObj)"
+        ng-click="jfActions.doAction(actionObj,$event)"
+        ng-class="{disabled: actionObj.disabled}"
         class="action-button"
         ng-if="!actionObj.visibleWhen || actionObj.visibleWhen()">
 
@@ -17,8 +18,9 @@
           <ul class="dropdown-menu dropdown-menu-right actions-dropdown text-left">
               <li ng-repeat="actionObj in jfActions.dynamicActions"
                   class="action-item menu-item-{{actionObj.icon}}"
+                  ng-class="{disabled: actionObj.disabled}"
                   ng-if="!actionObj.visibleWhen || actionObj.visibleWhen()">
-                  <a href="" class="action-container" ng-click="jfActions.doAction(actionObj)">
+                  <a href="" class="action-container" ng-click="jfActions.doAction(actionObj,$event)">
                       <span class="action-icon icon"
                             ng-class="actionObj.icon"></span>
                       <span class="action-name">{{actionObj.title}}</span>
