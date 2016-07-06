@@ -1,9 +1,14 @@
 <ui-select jf-disable-ng-animate ng-model="jfUiSelect.jfSelectModel" on-select="jfUiSelect.onSelect($item,$model)" ng-disabled="jfUiSelect.jfSelectDisabled">
-    <ui-select-match id="select-header" placeholder="{{ jfUiSelect.jfSelectPlaceholder }}">
+    <ui-select-match id="select-header" placeholder="{{ jfUiSelect.jfSelectPlaceholder }}" ng-click="jfUiSelect.onOpenList()">
         {{ jfUiSelect.displayLabel($select.selected) }}
     </ui-select-match>
-    <ui-select-choices
-            repeat="item in jfUiSelect.jfSelectOptions | filter: (!jfUiSelect.jfSelectFilterAttr ? $select.search : { {{jfUiSelect.jfSelectFilterAttr || 'dummyfield'}}: $select.search}) track by $index">
-        <div name="select-item" ng-bind-html="jfUiSelect.displayLabel(item) | highlight: $select.search"></div>
+    <ui-select-choices refresh-delay="100"
+            refresh="jfUiSelect.refresh($select.search)"
+            repeat="item in jfUiSelect[jfUiSelect.jfSelectOptionsView ? 'jfSelectOptionsView' : 'jfSelectOptions'] | filter: (!jfUiSelect.jfSelectFilterAttr ? $select.search : { {{jfUiSelect.jfSelectFilterAttr || 'dummyfield'}}: $select.search}) track by $index">
+        <div class="jf-ui-select-item"
+             name="select-item"
+             ng-class="{'more-ph': jfUiSelect.isMorePlaceholder(item)}"
+             ng-click="jfUiSelect.onClick(item,$event)"
+             ng-bind-html="jfUiSelect.displayLabel(item) | highlight: $select.search"></div>
     </ui-select-choices>
 </ui-select>
