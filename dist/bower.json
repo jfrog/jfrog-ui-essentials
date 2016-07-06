@@ -1,6 +1,6 @@
 {
   "name": "jfrog-ui-essentials",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "homepage": "http://www.jfrog.com",
   "description": "JFrog UI Essentials",
   "license": "Apache-2.0",
@@ -24,6 +24,7 @@
     "angular-bootstrap": "0.12.1",
     "angular-ui-grid": "500tech/bower-ui-grid#v3.0.0-rc.21-patch4",
     "angular-resource": "1.4.8",
+    "angular-mocks": "1.4.8",
     "angular-animate": "1.4.8",
     "animate.css": "3.2.1",
     "angularjs-toaster": "*",
