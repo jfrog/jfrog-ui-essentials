@@ -7,7 +7,7 @@
  */
 export class JFrogModal {
 
-    constructor($modal, $rootScope, $q, $sce, $timeout, JFrogEventBus, JFrogUILibConfig) {
+    constructor($modal, $rootScope, $q, $sce, $timeout, JFrogEventBus, JFrogUILibConfig, JFrogUIUtils) {
         this.modal = $modal;
         this.$rootScope = $rootScope;
         this.$q = $q;
@@ -16,6 +16,7 @@ export class JFrogModal {
         this.templatesBaseUrl = 'ui_components/jfrog_modal/templates/';
         this.JFrogUILibConfig = JFrogUILibConfig;
         this.JFrogEventBus = JFrogEventBus;
+        this.JFrogUIUtils = JFrogUIUtils;
 
         this.EVENTS = JFrogEventBus.getEventsDefinition();
 
@@ -72,12 +73,15 @@ export class JFrogModal {
      * @returns {{Modal instance}}
      */
     launchCodeModal(title, content, mode, beforeMessage = undefined,objectName = undefined) {
+
+        title = this.JFrogUIUtils.getSafeHtml(title);
+
         let modalInstance;
         let modalScope = this.$rootScope.$new();
         modalScope.closeModal = () => modalInstance.close();
         modalScope.content = content;
         modalScope.mode = mode;
-        modalScope.title = title;
+        modalScope.title = this.$sce.trustAsHtml(title);
         modalScope.beforeMessage = beforeMessage;
         modalScope.objectName = objectName;
         return modalInstance = this.launchModal('@code_modal', modalScope);
@@ -93,6 +97,10 @@ export class JFrogModal {
      * @returns promise - resolved if the user confirmed, rejected otherwise
      */
     confirm(content, title, buttons, checkboxLabel, checkBoxChangeListener) {
+
+        content = this.JFrogUIUtils.getSafeHtml(content);
+        title = this.JFrogUIUtils.getSafeHtml(title);
+
         buttons = buttons || {};
         buttons.confirm = buttons.confirm || 'Confirm';
         buttons.cancel = buttons.cancel || 'Cancel';
@@ -103,7 +111,7 @@ export class JFrogModal {
 
         modalScope.buttons = buttons;
         modalScope.content = this.$sce.trustAsHtml(content);
-        modalScope.title = title;
+        modalScope.title = this.$sce.trustAsHtml(title);
         modalScope.checkboxLabel = checkboxLabel;
         modalScope.checkbox = {checked: false};
         modalScope.onCheckboxStateChange = (state) => {
