@@ -74,14 +74,12 @@ export class JFrogModal {
      */
     launchCodeModal(title, content, mode, beforeMessage = undefined,objectName = undefined) {
 
-        title = this.JFrogUIUtils.getSafeHtml(title);
-
         let modalInstance;
         let modalScope = this.$rootScope.$new();
         modalScope.closeModal = () => modalInstance.close();
         modalScope.content = content;
         modalScope.mode = mode;
-        modalScope.title = this.$sce.trustAsHtml(title);
+        modalScope.title = title;//this.$sce.trustAsHtml(title);
         modalScope.beforeMessage = beforeMessage;
         modalScope.objectName = objectName;
         return modalInstance = this.launchModal('@code_modal', modalScope);
@@ -98,9 +96,6 @@ export class JFrogModal {
      */
     confirm(content, title, buttons, checkboxLabel, checkBoxChangeListener) {
 
-        content = this.JFrogUIUtils.getSafeHtml(content);
-        title = this.JFrogUIUtils.getSafeHtml(title);
-
         buttons = buttons || {};
         buttons.confirm = buttons.confirm || 'Confirm';
         buttons.cancel = buttons.cancel || 'Cancel';
@@ -110,8 +105,8 @@ export class JFrogModal {
         let modalScope = this.$rootScope.$new();
 
         modalScope.buttons = buttons;
-        modalScope.content = this.$sce.trustAsHtml(content);
-        modalScope.title = this.$sce.trustAsHtml(title);
+        modalScope.content = content;//this.$sce.trustAsHtml(content);
+        modalScope.title = title;//this.$sce.trustAsHtml(title);
         modalScope.checkboxLabel = checkboxLabel;
         modalScope.checkbox = {checked: false};
         modalScope.onCheckboxStateChange = (state) => {
