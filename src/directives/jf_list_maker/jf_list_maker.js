@@ -10,6 +10,9 @@ export function jfListMaker() {
             ngDisabled: '=',
             noSort: '=?',
             minLength: '@',
+            inputType: '@?',
+            predefinedValues: '=?',
+            placeholder: '@?',
             listId: '@'
         },
         templateUrl: 'directives/jf_list_maker/jf_list_maker.html',

@@ -1,20 +1,28 @@
 <div class="jf-list-maker">
-    <div class="list-new-value">
-        <jf-field>
-            <label>{{jfListMaker.label}}</label>
-            <jf-help-tooltip
-                    ng-if="jfListMaker.helpTooltip"
-                    html="jfListMaker.helpTooltip"></jf-help-tooltip>
-            <input
-                    type="text"
-                    class="input-text"
-                    ng-model="jfListMaker.newValue"
-                    placeholder="New {{jfListMaker.objectName}}"
-                    id="newValueField"
-                    name="newValueField"
-                    jf-enter-press="jfListMaker.addValue()"
-                    ng-disabled="jfListMaker.ngDisabled">
-        </jf-field>
+    <div class="list-new-value" ng-class="{dropdown: jfListMaker.predefinedValues}">
+        <form>
+            <jf-field validations="common" dont-push-down-errors="true" delayed-init="true">
+                <label>{{jfListMaker.label}}</label>
+                <jf-help-tooltip
+                        ng-if="jfListMaker.helpTooltip"
+                        html="jfListMaker.helpTooltip"></jf-help-tooltip>
+                <input  ng-if="!jfListMaker.predefinedValues"
+                        type="{{jfListMaker.inputType || 'text'}}"
+                        class="input-text"
+                        ng-model="jfListMaker.newValue"
+                        placeholder="{{jfListMaker.placeholder || 'New ' + (jfListMaker.objectName || 'Value')}}"
+                        id="newValueField"
+                        name="newValueField"
+                        jf-enter-press="jfListMaker.addValue()"
+                        ng-disabled="jfListMaker.ngDisabled">
+                <jf-ui-select ng-if="jfListMaker.predefinedValues"
+                              jf-select-model="jfListMaker.newValue"
+                              jf-select-placeholder="{{jfListMaker.placeholder || 'New ' + (jfListMaker.objectName || 'Value')}}"
+                              jf-select-disabled="jfListMaker.ngDisabled"
+                              jf-select-options="jfListMaker.predefinedValues"></jf-ui-select>
+
+            </jf-field>
+        </form>
         <div class="list-new-value-button">
             <i class="icon icon-new"
                ng-click="!(jfListMaker.ngDisabled || !jfListMaker.newValue.length) && jfListMaker.addValue()"
