@@ -109,6 +109,10 @@ class jfTabsController {
     _getCollapsedTab(tab) {
         return _.findWhere(this.tabsCollapsed, {name: tab.name})
     }
+
+    getTabWidthForStyle() {
+        return this.tabWidth.endsWith('%') ? this.tabWidth : this.tabWidth + 'px';
+    }
 }
 
 export function jfTabs() {

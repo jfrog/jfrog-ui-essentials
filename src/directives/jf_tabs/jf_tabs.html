@@ -2,6 +2,7 @@
     <li ng-repeat="tab in jfTabs.tabsVisible"
         ng-class="{active:jfTabs.isActiveTab(tab), disabled:tab.isDisabled}"
         class="jf-tabs-tab-header"
+        ng-style="{width: jfTabs.getTabWidthForStyle()}"
         jf-disable-feature="{{ tab.feature }}">
         <a ng-click="jfTabs.onClickTab(tab)" style="z-index: 999999"><span>{{jfTabs.dictionary[tab.name]}}</span></a>
     </li>
