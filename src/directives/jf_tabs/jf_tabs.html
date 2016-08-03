@@ -4,8 +4,7 @@
         class="jf-tabs-tab-header"
         ng-style="{width: jfTabs.getTabWidthForStyle()}"
         jf-disable-feature="{{ tab.feature }}">
-        <a ng-if="jfTabs.ellipsis" ng-click="jfTabs.onClickTab(tab)" style="z-index: 999999"><div class="jf-tab-header-container" jf-tooltip-on-overflow><span>{{jfTabs.dictionary[tab.name]}}</span></div></a>
-        <a ng-if="!jfTabs.ellipsis" ng-click="jfTabs.onClickTab(tab)" style="z-index: 999999"><span>{{jfTabs.dictionary[tab.name]}}</span></a>
+        <a ng-click="jfTabs.onClickTab(tab)" style="z-index: 999999"><div class="jf-tab-header-container" jf-tooltip-on-overflow><span>{{jfTabs.dictionary[tab.name]}}</span></div></a>
     </li>
     <li class="action-expand" ng-show="jfTabs.tabsCollapsed.length">
         <span class="dropdown" dropdown is-open="jfTabs.isDropdownOpen">

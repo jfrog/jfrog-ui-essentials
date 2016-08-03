@@ -122,8 +122,7 @@ export function jfTabs() {
             dictionary: '=',
             onTabChange: '&',
             tabWidth: '@',
-            containerMargin: '@',
-            ellipsis: '=?'
+            containerMargin: '@'
         },
         transclude: true,
         controller: jfTabsController,
