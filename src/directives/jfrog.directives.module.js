@@ -22,6 +22,7 @@ import {jfEnterPress}   from './jf_enter_press/jf_enter_press';
 import {jfTooltipOnOverflow} from './jf_tooltip_on_overflow/jf_tooltip_on_overflow';
 import {jfClipCopy} from './jf_clip_copy/jf_clip_copy';
 import {jfValidation}   from './jf_validation/jf_validation';
+import {jfSidebar}       from './jf_sidebar/jf_sidebar';
 
 angular.module('jfrog.ui.essentials.directives', [])
     .directive({
@@ -48,5 +49,6 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfDisableNgAnimate': jfDisableNgAnimate,
         'jfEnterPress': jfEnterPress,
         'jfTooltipOnOverflow': jfTooltipOnOverflow,
-        'jfClipCopy': jfClipCopy
+        'jfClipCopy': jfClipCopy,
+        'jfSidebar': jfSidebar
     });
