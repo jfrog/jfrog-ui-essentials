@@ -56,7 +56,7 @@
                                       'current' : jfSidebar.isCurrentItem(subItem)}"
                            ng-if="!subItem.isDisabled"
                            ui-sref="{{ subItem.state }} ({{ subItem.stateParams }})"
-                           ng-click="jfSidebar.adminItemClick()"
+                           ng-click="jfSidebar.adminItemClick(subItem)"
                            ng-keydown="jfSidebar.navigateInMenu($event)"
                            data-state="{{ subItem.state }}"
                            data-params="{{ subItem.stateParams }}"

@@ -1,20 +1,19 @@
 class jfSidebarController {
 
-    constructor($state, $timeout, $interval, $window, $rootScope, JFrogEventBus, ArtifactoryStorage, ArtifactoryState) {
+    constructor($state, $timeout, $interval, $window, $rootScope, JFrogEventBus) {
         $rootScope.jfSidebar = this;
         this.driver.setMenu(this);
+        this.driver.registerEvents();
         this.currentTab = "Home";
         this.$state = $state;
         this.$timeout = $timeout;
         this.$interval = $interval;
         this.$window = $window;
-        this.originalAdminMenuItems = this.driver.getAdminMenuItems();
+        this.adminMenuItems = this.driver.getAdminMenuItems();
         this.adminMenuItems = [];
         this.JFrogEventBus = JFrogEventBus;
         this.EVENTS = JFrogEventBus.getEventsDefinition();
-        this.storage = ArtifactoryStorage;
         this.pinMenuStatus = JSON.parse(localStorage.pinMenu || "false");
-        this.artifactoryState = ArtifactoryState;
 
         this.currentFocus = $(':focus');
         this.skip = false;
@@ -22,6 +21,9 @@ class jfSidebarController {
         this.menu = {
             "transition-duration" : ".3s"
         };
+
+        this.driver.getFooterData().then(footerData => this.footerData = footerData);
+
 
         this._init();
 
@@ -122,37 +124,17 @@ class jfSidebarController {
         return this.currentTab === tab.label;
     }
 
-    goBack(state) {
-        let prevState = this.storage.getItem('stateBeforeAdmin');
-        if (prevState) {
-            this.$state.go(prevState.name, prevState.params);
-        }
-        else {
-            this.$state.go('home');
-        }
-    }
-
     setCurrentTab(tab) {
         this.currentTab === tab.label ? this.currentTab = '' : this.currentTab = tab.label;
     }
 
     refreshMenu() {
         this.menuItems = this._getMenuItems();
-        this._fixAdminMenuItems();
+        this.adminMenuItems = this.driver.getAdminMenuItems();
     }
 
     goToState(item) {
-        // Fix browser param according to user preference
-        if (item.stateParams && item.stateParams.browser) {
-            let storedBrowser = this.storage.getItem('BROWSER');
-            item.stateParams.browser = storedBrowser || 'tree';
-            item.stateParams.tab = storedBrowser === 'stash' ? 'StashInfo' : 'General';
-        }
-
-        // If we're going into admin - save the state
-        if (item.state == 'admin' && this.$state.current.name.indexOf('admin') === -1 && !_.contains(['not_found_404','forbidden_403'],this.$state.current.name)) {
-            this.storage.setItem('stateBeforeAdmin', {name: this.$state.current.name, params: this.$state.params});
-        }
+        this.driver.onBeforeStateSwitch(item);
 
         this.$state.go(item.state, item.stateParams);
     }
@@ -294,10 +276,6 @@ class jfSidebarController {
         }
 
     }
-    _fixAdminMenuItems() {
-        angular.copy(this.originalAdminMenuItems, this.adminMenuItems);
-        this.driver.fixAdminMenuItems(this.adminMenuItems);
-    }
 
     _updateTabIndex() {
         if (this.menu.width != '900px') {
@@ -346,6 +324,7 @@ class jfSidebarController {
     chooseSingleChoice() {
         let elem = $('.single-choice');
         if (elem.length) {
+            this.driver.onBeforeStateSwitch({state: elem.data('state'), stateParams: elem.data('params')});
             this.$state.go(elem.data('state'), elem.data('params'));
             this.menuSearchQuery = '';
             this._updateMenuObject(this.defaultWidth(),'.3s');
@@ -354,8 +333,7 @@ class jfSidebarController {
             return false;
         }
     }
-    adminItemClick() {
-        this.artifactoryState.setState('saveAdminState',true);
+    adminItemClick(subItem) {
         this.menuSearchQuery = '';
         this._updateMenuObject(this.defaultWidth(),'.3s');
         this._updateTabIndex();
@@ -363,6 +341,10 @@ class jfSidebarController {
         this.$timeout(() => {
             this.skip = false;
         }, 400);
+
+        this.driver.onBeforeStateSwitch(subItem);
+        this.$state.go(subItem.state, subItem.stateParams);
+
     }
 
     navigateInMenu(e) {
