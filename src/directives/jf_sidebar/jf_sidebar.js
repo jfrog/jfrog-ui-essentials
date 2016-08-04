@@ -2,15 +2,14 @@ class jfSidebarController {
 
     constructor($state, $timeout, $interval, $window, $rootScope, JFrogEventBus) {
         $rootScope.jfSidebar = this;
-        this.driver.setMenu(this);
-        this.driver.registerEvents();
+        if (this.driver.setMenu) this.driver.setMenu(this);
+        if (this.driver.registerEvents) this.driver.registerEvents();
         this.currentTab = "Home";
         this.$state = $state;
         this.$timeout = $timeout;
         this.$interval = $interval;
         this.$window = $window;
-        this.adminMenuItems = this.driver.getAdminMenuItems();
-        this.adminMenuItems = [];
+        this.adminMenuItems = this.driver.getAdminMenuItems ? this.driver.getAdminMenuItems() : [];
         this.JFrogEventBus = JFrogEventBus;
         this.EVENTS = JFrogEventBus.getEventsDefinition();
         this.pinMenuStatus = JSON.parse(localStorage.pinMenu || "false");
@@ -22,7 +21,7 @@ class jfSidebarController {
             "transition-duration" : ".3s"
         };
 
-        this.driver.getFooterData().then(footerData => this.footerData = footerData);
+        if (this.driver.getFooterData) this.driver.getFooterData().then(footerData => this.footerData = footerData);
 
 
         this._init();
@@ -130,17 +129,17 @@ class jfSidebarController {
 
     refreshMenu() {
         this.menuItems = this._getMenuItems();
-        this.adminMenuItems = this.driver.getAdminMenuItems();
+        this.adminMenuItems = this.driver.getAdminMenuItems ? this.driver.getAdminMenuItems() : [];
     }
 
     goToState(item) {
-        this.driver.onBeforeStateSwitch(item);
+        if (this.driver.onBeforeStateSwitch) this.driver.onBeforeStateSwitch(item);
 
         this.$state.go(item.state, item.stateParams);
     }
 
     _getMenuItems() {
-        return this.driver.getMenuItems();
+        return this.driver.getMenuItems ? this.driver.getMenuItems() : [];
     }
 
     defaultWidth() {
@@ -324,7 +323,7 @@ class jfSidebarController {
     chooseSingleChoice() {
         let elem = $('.single-choice');
         if (elem.length) {
-            this.driver.onBeforeStateSwitch({state: elem.data('state'), stateParams: elem.data('params')});
+            if (this.driver.onBeforeStateSwitch) this.driver.onBeforeStateSwitch({state: elem.data('state'), stateParams: elem.data('params')});
             this.$state.go(elem.data('state'), elem.data('params'));
             this.menuSearchQuery = '';
             this._updateMenuObject(this.defaultWidth(),'.3s');
@@ -342,7 +341,7 @@ class jfSidebarController {
             this.skip = false;
         }, 400);
 
-        this.driver.onBeforeStateSwitch(subItem);
+        if (this.driver.onBeforeStateSwitch) this.driver.onBeforeStateSwitch(subItem);
         this.$state.go(subItem.state, subItem.stateParams);
 
     }
