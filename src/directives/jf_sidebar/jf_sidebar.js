@@ -2,6 +2,10 @@ class jfSidebarController {
 
     constructor($state, $timeout, $interval, $window, $rootScope, JFrogEventBus) {
         $rootScope.jfSidebar = this;
+        if (!this.driver) {
+            console.error('jf-sidebar: No driver is provided');
+            this.driver = {};
+        }
         if (this.driver.setMenu) this.driver.setMenu(this);
         if (this.driver.registerEvents) this.driver.registerEvents();
         this.currentTab = "Home";
