@@ -19,10 +19,12 @@
 ul.sidebar-wrapper-inner {
   height: ~"calc(100% - 95px)";
 
+  padding: 0;
 
   a {
     color: @menu-text-default;
     transition: color .25s ease-out;
+    text-decoration: none;
     &:hover,
     &.highlight {
       background-color: transparent;
@@ -55,6 +57,7 @@ ul.sidebar-wrapper-inner {
     width: 200px;
     & > a.menu-item {
       display: block;
+      cursor: pointer;
       color: @menu-text-default;
       border-bottom: 1px solid #454545;
       box-shadow:inset 0 -1px 0 0 #2c2c2c;
@@ -176,6 +179,7 @@ ul.sidebar-wrapper-inner {
     }
     a {
       line-height: 2em;
+      cursor: pointer;
       border: 1px solid transparent;
       &:before {
         content: '\2022';
@@ -285,6 +289,7 @@ ul.sidebar-wrapper-inner {
   position: absolute;
   right: 8px;
   top: 1px;
+  color: #707070;
   transition: all .2s ease-in-out .2s;
   &.menu-arrow-close {
     transform: rotate(-180deg);

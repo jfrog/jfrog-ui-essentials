@@ -5,7 +5,9 @@ let events = {
     FORM_CLEAR_FIELD_VALIDATION:    'form:clear:field',
     FORM_SUBMITTED:                 'form:submitted',
 
-    CLOSE_MODAL:                    'modal:close'
+    CLOSE_MODAL:                    'modal:close',
+
+    SIDEBAR_SIZE_CHANGE:      'sidebar:size:change'
 };
 
 export default events;

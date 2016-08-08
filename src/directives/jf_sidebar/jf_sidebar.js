@@ -213,7 +213,7 @@ class jfSidebarController {
                     return;
                 }, 2000)
             } else {
-                if (!this.skip) {
+                if (!this.skip && this.menu.width !== '900px') {
                     this._updateMenuObject('900px','0.3s','0s');
                     this._setAdminMenuFocus();
                     if(angular.isDefined(this.adminMenuDelay)) {

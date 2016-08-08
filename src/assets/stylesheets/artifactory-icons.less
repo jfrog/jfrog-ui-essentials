@@ -37,11 +37,30 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.icon-plus:before {
+
+.icon-home:before {
+  content: "\e915";
+}
+.icon-builds:before {
+  content: "\e914";
+}
+.icon-artifacts:before {
+  content: "\e913";
+}
+.icon-admin:before {
+  content: "\e912";
+}
+.icon-search:before {
+  content: "\e90e";
+}
+.icon-plus-sign:before {
   content: "\e90f";
 }
 .icon-trash:before {
   content: "\e901";
+}
+.icon-gz:before {
+  content: "\e90d";
 }
 .icon-tar:before {
   content: "\e90c";
@@ -52,338 +71,235 @@
 .icon-unpin:before {
   content: "\e90b";
 }
-.icon-admin:before {
-  content: "z";
+.icon-revoke-api:before {
+  content: "\e907";
 }
-.icon-css:before {
-  content: "f";
+.icon-unexpire:before {
+  content: "\e908";
 }
-.icon-deb:before {
-  content: "g";
+.icon-expire:before {
+  content: "\e909";
 }
-.icon-docker:before {
-  content: "j";
+.icon-cocoapods:before {
+  content: "\e906";
 }
-.icon-groovy:before {
-  content: "k";
+.icon-go:before {
+  content: "\e905";
 }
-.icon-html:before {
-  content: "l";
-}
-.icon-java:before {
-  content: "m";
-}
-.icon-json:before {
-  content: "n";
-}
-.icon-nuget:before {
-  content: "q";
-}
-.icon-pdf:before {
-  content: "r";
-}
-.icon-txt:before {
-  content: "u";
-}
-.icon-xml:before {
-  content: "w";
-}
-.icon-zip:before {
-  content: "x";
-}
-.icon-artifacts:before {
-  content: "y";
-}
-.icon-builds:before {
-  content: "\e00d";
-}
-.icon-rpm:before {
-  content: "H";
-}
-.icon-ruby-gems:before {
-  content: "I";
-}
-.icon-scala:before {
-  content: "J";
-}
-.icon-general:before {
-  content: "K";
-}
-.icon-archive:before {
-  content: "d";
-}
-.icon-c-1:before {
-  content: "N";
-}
-.icon-c:before {
-  content: "P";
-}
-.icon-c-2:before {
-  content: "B";
-}
-.icon-cached-repo:before {
-  content: "e";
-}
-.icon-copy:before {
-  content: "i";
-}
-.icon-group:before {
-  content: "p";
-}
-.icon-go-to-build:before {
-  content: "t";
-}
-.icon-folder:before {
-  content: "v";
-}
-.icon-arrow:before {
-  content: "A";
-}
-.icon-download:before {
-  content: "G";
-}
-.icon-delete-content:before {
-  content: "M";
-}
-.icon-delete-versions:before {
-  content: "O";
-}
-.icon-local-repo:before {
-  content: "R";
-}
-.icon-move:before {
-  content: "T";
-}
-.icon-simple-browser:before {
-  content: "U";
-}
-.icon-re-index:before {
-  content: "W";
-}
-.icon-virtual-repo:before {
-  content: "X";
-}
-.icon-v:before {
-  content: "Y";
-}
-.icon-unview:before {
-  content: "Z";
-}
-.icon-show-in-tree:before {
-  content: "1";
-}
-.icon-show-in-ci-server:before {
-  content: "2";
-}
-.icon-show-build-json:before {
-  content: "3";
-}
-.icon-search-specific:before {
-  content: "4";
-}
-.icon-search:before {
-  content: "5";
-}
-.icon-run:before {
-  content: "6";
-}
-.icon-zap:before {
-  content: "7";
-}
-.icon-refresh:before {
-  content: "8";
-}
-.icon-view:before {
-  content: "9";
-}
-.icon-archive-2:before {
-  content: "\"";
-}
-.icon-delete-recursive:before {
-  content: "L";
-}
-.icon-home:before {
-  content: "\e00c";
-}
-.icon-gradle:before {
-  content: "$";
-}
-.icon-filter:before {
-  content: "(";
-}
-.icon-upload-hover-old:before {
-  content: ")";
-}
-.icon-set-me-up:before {
-  content: "*";
-}
-.icon-notif-success:before {
-  content: ",";
-}
-.icon-notif-error:before {
-  content: "-";
-}
-.icon-copy-to-clipboard:before {
-  content: "/";
-}
-.icon-arrow2:before {
-  content: ":";
-}
-.icon-edit:before {
-  content: "o";
-}
-.icon-artifactory-edit:before {
-  content: "C";
-}
-.icon-js:before {
-  content: ";";
-}
-.icon-bintray:before {
-  content: "c";
-}
-.icon-bintray-old:before {
-  content: "o";
-}
-.icon-jar:before {
-  content: "E";
-}
-.icon-vagrant:before {
-  content: "<";
-}
-.icon-yum:before {
-  content: ">";
-}
-.icon-sbt:before {
-  content: "?";
-}
-.icon-blackduck:before {
-  content: "@";
-}
-.icon-pypi:before {
-  content: "[";
-}
-.icon-git-lfs:before {
-  content: "]";
-}
-.icon-remote-repo:before {
-  content: "!";
-}
-.icon-deploy:before {
-  content: "s";
-}
-.icon-datagrid-v {
-  &:before {
-    content: "V";
-  }
-}
-.icon-more:before {
-  content: "#";
-}
-.icon-bower:before {
-  content: "&";
-}
-.icon-import:before {
-  content: "'";
-}
-/*.icon-padlock:before {
-  content: "+";
-}*/
-.icon-p2:before {
-  content: "^";
-}
-.icon-npm:before {
-  content: "_";
-}
-.icon-notif-icon:before {
-  content: "`";
-}
-.icon-notif-warning:before {
-  content: "{";
-}
-.icon-generic:before {
-  content: "|";
-}
-.icon-export:before {
-  content: "}";
-}
-.icon-duplicate:before {
-  content: "~";
-}
-.icon-drag:before {
-  content: "\\";
-}
-.icon-new:before {
-  content: "\e000";
-}
-.icon-ivy:before {
-  content: "\e001";
-}
-.icon-info:before {
-  content: "\e002";
-}
-
-.icon-clear:before, .icon-clear2:before {
-  content: "\e003";
-}
-.icon-pro:before {
-  content: "\e004";
-}
-.icon-upload-small:before {
-  content: "\e005";
-}
-.icon-upload-hover:before {
-  content: "\e006";
-}
-.icon-upload:before {
-  content: "\e90e";
-}
-.icon-vcs:before {
-  content: "\e007";
-}
-.icon-pom:before {
-  content: "\e008";
-}
-.icon-not-view-nor-watch:before {
-  content: "\e009";
-}
-.icon-re-index-new:before {
-  content: "a";
-}
-.icon-megaphone:before {
-  content: "S";
-}
-.icon-megaphone-on:before {
-  content: "0";
-}
-.icon-unwatch:before {
-  content: "D";
-}
-.icon-watch:before {
-  content: "Q";
-}
-.icon-docker-id:before {
-  content: "h";
-}
-.icon-docker-tags:before {
-  content: "%";
-}
-.icon-docker-command:before {
-  content: ".";
-}
-.icon-docker-created:before {
-  content: "=";
-}
-.icon-docker-size:before {
-  content: "\e00a";
-}
-.icon-docker-digest:before {
-  content: "\e00b";
+.icon-trashcan-restore:before {
+  content: "\e903";
 }
 .icon-trashcan:before {
   content: "\e900";
 }
-.icon-trashcan-restore:before {
-  content: "\e903";
+.icon-css:before {
+  content: "\66";
+}
+.icon-deb:before {
+  content: "\67";
+}
+.icon-docker:before {
+  content: "\6a";
+}
+.icon-groovy:before {
+  content: "\6b";
+}
+.icon-html:before {
+  content: "\6c";
+}
+.icon-java:before {
+  content: "\6d";
+}
+.icon-json:before {
+  content: "\6e";
+}
+.icon-nuget:before {
+  content: "\71";
+}
+.icon-pdf:before {
+  content: "\72";
+}
+.icon-txt:before {
+  content: "\75";
+}
+.icon-xml:before {
+  content: "\77";
+}
+.icon-zip:before {
+  content: "\78";
+}
+.icon-artifacts-new:before {
+  content: "\79";
+}
+.icon-rpm:before {
+  content: "\48";
+}
+.icon-ruby-gems:before {
+  content: "\49";
+}
+.icon-scala:before {
+  content: "\4a";
+}
+.icon-general:before {
+  content: "\4b";
+}
+.icon-archive:before {
+  content: "\64";
+}
+.icon-c-1:before {
+  content: "\4e";
+}
+.icon-c:before {
+  content: "\50";
+}
+.icon-c-2:before {
+  content: "\42";
+}
+.icon-cached-repo:before {
+  content: "\65";
+}
+.icon-distribution-repo:before {
+  content: "\e910";
+}
+.icon-copy:before {
+  content: "\69";
+}
+.icon-group:before {
+  content: "\70";
+}
+.icon-go-to-build:before {
+  content: "\74";
+}
+.icon-folder:before {
+  content: "\76";
+}
+.icon-arrow:before {
+  content: "\41";
+}
+.icon-delete-content:before {
+  content: "\4d";
+}
+.icon-delete-versions:before {
+  content: "\4f";
+}
+.icon-local-repo:before {
+  content: "\52";
+}
+.icon-move:before {
+  content: "\54";
+}
+.icon-simple-browser:before {
+  content: "\55";
+}
+.icon-re-index:before {
+  content: "\57";
+}
+.icon-virtual-repo:before {
+  content: "\58";
+}
+.icon-v:before {
+  content: "\59";
+}
+.icon-unview:before {
+  content: "\5a";
+}
+.icon-show-in-tree:before {
+  content: "\31";
+}
+.icon-show-in-ci-server:before {
+  content: "\32";
+}
+.icon-show-build-json:before {
+  content: "\33";
+}
+.icon-search-specific:before {
+  content: "\34";
+}
+.icon-menu-search:before {
+  content: "\35";
+}
+.icon-run:before {
+  content: "\36";
+}
+.icon-zap:before {
+  content: "\37";
+}
+.icon-refresh:before {
+  content: "\38";
+}
+.icon-view:before {
+  content: "\39";
+}
+.icon-archive-2:before {
+  content: "\22";
+}
+.icon-delete-recursive:before {
+  content: "\4c";
+}
+.icon-gradle:before {
+  content: "\24";
+}
+.icon-filter:before {
+  content: "\28";
+}
+.icon-set-me-up:before {
+  content: "\2a";
+}
+.icon-notif-success:before {
+  content: "\2c";
+}
+.icon-notif-error:before {
+  content: "\2d";
+}
+.icon-copy-to-clipboard:before {
+  content: "\2f";
+}
+.icon-arrow2:before {
+  content: "\3a";
+}
+.icon-artifactory-edit:before {
+  content: "\43";
+}
+.icon-jar:before {
+  content: "\45";
+}
+.icon-vagrant:before {
+  content: "\3c";
+}
+.icon-yum:before {
+  content: "\3e";
+}
+.icon-sbt:before {
+  content: "\3f";
+}
+.icon-blackduck:before {
+  content: "\40";
+}
+.icon-pypi:before {
+  content: "\5b";
+}
+.icon-git-lfs:before {
+  content: "\5d";
+}
+.icon-remote-repo:before {
+  content: "\21";
+}
+.icon-deploy:before {
+  content: "\73";
+}
+.icon-datagrid-v {
+  &:before {
+    content: "\56";
+  }
+}
+.icon-more:before {
+  content: "\23";
+}
+.icon-opkg:before {
+  content: "\e918";
+}
+.icon-import:before {
+  content: "\27";
 }
 .icon-unlock:before {
   content: "\e902";
@@ -394,39 +310,127 @@
 .icon-lock:before {
   content: "\2b";
 }
-.icon-opkg:before {
+.icon-p2:before {
+  content: "\5e";
+}
+.icon-npm:before {
+  content: "\5f";
+}
+.icon-notif-icon:before {
+  content: "\60";
+}
+.icon-notif-warning:before {
+  content: "\7b";
+}
+.icon-generic:before {
+  content: "\7c";
+}
+.icon-export:before {
+  content: "\7d";
+}
+.icon-duplicate:before {
+  content: "\7e";
+}
+.icon-drag:before {
+  content: "\5c";
+}
+.icon-new:before {
+  content: "\e000";
+}
+.icon-ivy:before {
+  content: "\e001";
+}
+.icon-info:before {
+  content: "\e002";
+}
+.icon-clear:before {
+  content: "\e003";
+}
+.icon-pro:before {
+  content: "\e004";
+}
+.icon-upload-small:before {
+  content: "\e005";
+}
+.icon-upload:before {
+  content: "\e91a";
+}
+.icon-download:before {
+  content: "\47";
+}
+.icon-vcs:before {
+  content: "\e007";
+}
+.icon-pom:before {
+  content: "\e008";
+}
+.icon-unwatch:before {
+  content: "\44";
+}
+.icon-watch:before {
+  content: "\51";
+}
+.icon-megaphone:before {
+  content: "\53";
+}
+.icon-megaphone-on:before {
+  content: "\30";
+}
+.icon-docker-id:before {
+  content: "\68";
+}
+.icon-docker-tags:before {
+  content: "\25";
+}
+.icon-docker-command:before {
+  content: "\2e";
+}
+.icon-docker-created:before {
+  content: "\3d";
+}
+.icon-docker-size:before {
+  content: "\e00a";
+}
+.icon-builds-new:before {
+  content: "\e00d";
+}
+.icon-home-new:before {
+  content: "\e00c";
+}
+.icon-docker-digest:before {
+  content: "\e00b";
+}
+.icon-admin-new:before {
+  content: "\7a";
+}
+.icon-bintray:before {
+  content: "\63";
+}
+.icon-xray-alert:before {
   content: "\e904";
 }
-.icon-go:before {
-  content: "\e905";
+.icon-xray:before {
+  content: "\e911";
 }
-.icon-cocoapods:before {
-  content: "\e906";
+.icon-xray-scanning:before {
+  content: "\e916";
 }
-.icon-revoke-api:before {
-  content: "\e907";
+.icon-xray-impact-analysis:before {
+  content: "\e917";
 }
-.icon-unexpire:before {
-  content: "\e908";
-}
-.icon-expire:before {
-  content: "\e909";
+.icon-menu-arrow:before {
+  content: "\e919";
 }
 
-.icon-locked-unlock:before {
-  content: "\e902";
-}
-.icon-lock:hover:before {
-  content: "\e902";
-}
+////////////////////////////////////
+//      Custom modifications      //
+////////////////////////////////////
 .context-menu-item {
   &.icon-locked-unlock:before {
     content: "\e902";
     color: red !important;
   }
 }
-
-
 
 .icon-angle-double-up:before {
   content: "\21E7";
