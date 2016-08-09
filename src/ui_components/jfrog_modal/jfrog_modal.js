@@ -31,7 +31,7 @@ export class JFrogModal {
      * @param scope
      * @returns {{Modal instance}}
      */
-    launchModal(template, scope, size) {
+    launchModal(template, scope, size, cancelable = true) {
         if (!size) size = 'lg';
 
         let customTemplate = true;
@@ -45,11 +45,16 @@ export class JFrogModal {
 
         let templateUrl = (customTemplate ? customTemplatesBaseUrl : this.templatesBaseUrl) + template + '.html';
 
-        let modalInstance =  this.modal.open({
+        let modalObj = {
             templateUrl: templateUrl,
             scope: scope,
             size: size
-        });
+        };
+        if (!cancelable) {
+            modalObj.backdrop = 'static';
+            modalObj.keyboard = false;
+        }
+        let modalInstance =  this.modal.open(modalObj);
         this.JFrogEventBus.registerOnScope(this.$rootScope, this.EVENTS.CLOSE_MODAL, () => {
             modalInstance.dismiss();
         });
