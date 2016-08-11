@@ -430,7 +430,8 @@ class jfSidebarController {
 export function jfSidebar() {
     return {
         scope: {
-            driver: '='
+            driver: '=',
+            footerTemplate: '@'
         },
         controller: jfSidebarController,
         bindToController: true,
