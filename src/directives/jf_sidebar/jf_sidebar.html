@@ -7,7 +7,7 @@
     <ul class="sidebar-wrapper-inner">
         <li ng-repeat="item in jfSidebar.menuItems"
             ng-click="jfSidebar.itemClick(item)"
-            ng-class="{disabled: item.isDisabled, active: (item.stateParent | includedByState), 'icon-arrow-left':item.children }">
+            ng-class="{disabled: item.isDisabled, active: (item.stateParent | includedByState) || jfSidebar.isCurrentItem(item), 'icon-arrow-left':item.children }">
 
             <a ng-if="item.isDisabled"
                class="menu-item disabled"
