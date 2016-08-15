@@ -1,6 +1,7 @@
 class jfSidebarController {
 
     constructor($state, $timeout, $interval, $window, $rootScope, JFrogEventBus) {
+        this.openAdminSize = this.openAdminSize || '900px';
         $rootScope.jfSidebar = this;
         if (!this.driver) {
             console.error('jf-sidebar: No driver is provided');
@@ -8,6 +9,8 @@ class jfSidebarController {
         }
         if (this.driver.setMenu) this.driver.setMenu(this);
         if (this.driver.registerEvents) this.driver.registerEvents();
+        this.refreshMenu();
+
         this.currentTab = "Home";
         this.$state = $state;
         this.$timeout = $timeout;
@@ -49,7 +52,7 @@ class jfSidebarController {
             }
 
             // ESC click or Ctrl+left to close admin menu       TODO: Fix the function to work
-            if ((e.keyCode === 27 || (e.keyCode === 37 && (e.ctrlKey || e.metaKey))) && this.menu.width === '900px' && $('.admin-menu').length > 0) {
+            if ((e.keyCode === 27 || (e.keyCode === 37 && (e.ctrlKey || e.metaKey))) && this.menu.width === this.openAdminSize && $('.admin-menu').length > 0) {
                 this.$timeout(() => {
                     this.menuSearchQuery = '';
                     $('#menuSearchQuery').blur();
@@ -62,7 +65,7 @@ class jfSidebarController {
     }
 
     mouseOverMenu() {
-        if (this.menu.width === '900px' && $('.menu-item:hover').length && $('a#admin:hover').length < 1) {
+        if (this.menu.width === this.openAdminSize && $('.menu-item:hover').length && $('a#admin:hover').length < 1) {
             if (!angular.isDefined(this.closeAdminDelay) && !$('.admin-menu:hover').length) { // TODO:
                 this.closeAdminDelay = this.$timeout(() => {
                     this.closeAdminMenu();
@@ -72,7 +75,7 @@ class jfSidebarController {
 
         } else if (this.menu.width != '200px' && !$('.pin-menu').is(':hover') && ($('.admin-menu:hover').length < 1)) {     // if menu isn't open
             if (!angular.isDefined(this.openMenu)) {
-                let widthToOpen = ($('.admin-menu').length > 0 && $('a#admin:hover').length) ? '900px' : '200px';
+                let widthToOpen = ($('.admin-menu').length > 0 && $('a#admin:hover').length) ? this.openAdminSize : '200px';
                 this.openMenu = this.$timeout(() => {
                     if (($('.admin-menu:hover').length || $('#admin:hover').length) && angular.isDefined(this.openMenu)) {
                             this.$timeout.cancel(this.openMenu);
@@ -86,7 +89,7 @@ class jfSidebarController {
     }
 
     mouseLeaveMenu() {
-        if (this.menu.width != '900px') {     // if admin menu isn't open
+        if (this.menu.width != this.openAdminSize) {     // if admin menu isn't open
             this._updateMenuObject(this.defaultWidth(),'.3s')
         }
         this.closeAdminMenu();
@@ -213,8 +216,8 @@ class jfSidebarController {
                     return;
                 }, 2000)
             } else {
-                if (!this.skip && this.menu.width !== '900px') {
-                    this._updateMenuObject('900px','0.3s','0s');
+                if (!this.skip && this.menu.width !== this.openAdminSize) {
+                    this._updateMenuObject(this.openAdminSize,'0.3s','0s');
                     this._setAdminMenuFocus();
                     if(angular.isDefined(this.adminMenuDelay)) {
                         this._adminMenuDelayStop();
@@ -238,6 +241,7 @@ class jfSidebarController {
     }
     closeAdminMenu() {
         if ($('.admin-menu:hover').length || $('#admin:hover').length || ($('.admin-menu').find('a').is(':focus') || ($('#menuSearchQuery').is(':focus') && $('#menuSearchQuery').val().length > 0))) {
+
             return;
         } else if (this.adminMenuItemDelay) {
             this.adminMenuItemDelayTimer = this.$timeout(() => {
@@ -281,7 +285,7 @@ class jfSidebarController {
     }
 
     _updateTabIndex() {
-        if (this.menu.width != '900px') {
+        if (this.menu.width != this.openAdminSize) {
             $('.admin-menu').find('a,input').attr('tabindex', -1);
             $('.admin-menu').find('a,input').blur();
         } else {
@@ -431,7 +435,9 @@ export function jfSidebar() {
     return {
         scope: {
             driver: '=',
-            footerTemplate: '@'
+            footerTemplate: '@',
+            openAdminSize: '@?',
+            noSearchBox: '@?'
         },
         controller: jfSidebarController,
         bindToController: true,

@@ -23,13 +23,13 @@
                  class="menu-item"
                  id="{{item.id}}"
                  ng-mouseover="jfSidebar.openAdminMenu(true)"
-                 ng-mouseleave="jfSidebar.adminMenuItemDelay = true; jfSidebar.closeAdminMenu();"
+                 ng-mouseleave="jfSidebar._adminMenuDelayStop(); jfSidebar.adminMenuItemDelay = true; jfSidebar.closeAdminMenu();"
                  ng-if="!item.isDisabled && item.label == 'Admin'"><i class="{{item.icon}}"></i><span>{{item.label}}</span>
             </a>
 
             <div class="admin-menu" ng-if="item.label === 'Admin' && !item.isDisabled" ng-mouseover="jfSidebar.menuAdminOver()" ng-mouseleave="jfSidebar.adminMenuItemDelay = true; jfSidebar.closeAdminMenu()">
 
-                <div class="searchbox-wrapper">
+                <div class="searchbox-wrapper" ng-if="jfSidebar.noSearchBox === undefined">
                     <input type="text"
                            class="input-text"
                            id="menuSearchQuery"
@@ -45,7 +45,7 @@
                               ng-class="{'disabled': !jfSidebar.menuSearchQuery}">&times;</span>
                 </div>
 
-                <div class="masonry" tabindex="-1">
+                <div class="masonry" ng-class="{'no-search-box': jfSidebar.noSearchBox !== undefined}" tabindex="-1">
                     <div>
                         <div ng-repeat="item in jfSidebar.adminMenuItems" class="section" ng-if="!item.isHidden">
                             <h3>{{item.label}}</h3>
