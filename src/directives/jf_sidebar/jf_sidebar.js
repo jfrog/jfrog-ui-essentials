@@ -42,6 +42,9 @@ class jfSidebarController {
         this.pinMenuStatus ? this.menu.transitionDelay = '.2s' : this.menu.transitionDelay = '.3s';
 
         $('body').on('keydown', (e) => {
+
+            if (this.driver.onKeyDown) this.driver.onKeyDown(e);
+
             // Ctrl + right arrow to open the admin menu
             if (e.keyCode === 39 && (e.ctrlKey || e.metaKey) && $('.admin-menu').length) {
                 this.$timeout(() => {
