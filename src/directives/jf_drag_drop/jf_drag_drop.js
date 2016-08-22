@@ -101,16 +101,25 @@ class jfDragDropController {
     excludeAll() {
         if (this.disabled || this.isIncludeListEmpty() || this.isIncludeListFixed()) return;
 
-        let staying = [];
+        let filteredOut = [];
         this.includeList.forEach((item)=> {
-            if (!_.isObject(item) || !item["__fixed__"]) {
-                this.excludeList.push(item);
+            if (_.isObject(item)) {
+                item["__fixed__"] = undefined;
+            }
+
+            if (this.filterIncludeList) {
+                if (this._isExcludeFilteredOut(item)) {
+                    filteredOut.push(item);
+                }
+                else {
+                    this.excludeList.push(item);
+                }
             } else {
-                staying.push(item);
+                this.excludeList.push(item);
             }
         });
-        this.includeList.splice(0, this.includeList.length);
-        this.includeList = this.includeList.concat(staying);
+        this.includeList = filteredOut;
+
         this._clearSelectedItems();
         this.updateFilter();
         this._updatePagination();
@@ -197,8 +206,8 @@ class jfDragDropController {
             if (_.isObject(item)) {
                 item["__fixed__"] = undefined;
             }
-            if (this.filterList) {
-                if (this._isFilteredOut(item)) {
+            if (this.filterExcludeList) {
+                if (this._isIncludeFilteredOut(item)) {
                     filteredOut.push(item);
                 }
                 else {
@@ -327,7 +336,7 @@ class jfDragDropController {
 
         for (let i in this.excludeList) {
             let item = this.excludeList[i];
-            if (!this._isFilteredOut(item) && item !== this.PLACEHOLDER) {
+            if (!this._isIncludeFilteredOut(item) && item !== this.PLACEHOLDER) {
                 empty = false;
                 break;
             }
@@ -348,7 +357,7 @@ class jfDragDropController {
 
         for (let i in this.includeList) {
             let item = this.includeList[i];
-            if (item !== this.PLACEHOLDER) {
+            if (!this._isExcludeFilteredOut(item) && item !== this.PLACEHOLDER) {
                 empty = false;
                 break;
             }
@@ -416,29 +425,44 @@ class jfDragDropController {
         this.selectedItems = [];
     }
 
-    _isFilteredOut(item) {
-        if (!this.filterList || item === '' || item === this.PLACEHOLDER) return false;
-        let regex = new RegExp('.*' + this.filterList.split('*').join('.*') + '.*','i');
+    _isIncludeFilteredOut(item) {
+        if (!this.filterExcludeList || item === '' || item === this.PLACEHOLDER) return false;
+        let regex = new RegExp('.*' + this.filterExcludeList.split('*').join('.*') + '.*','i');
         return !regex.test(this.excludeDisplayField && item[this.excludeDisplayField] ? item[this.excludeDisplayField] : item);
+    }
+    _isExcludeFilteredOut(item) {
+        if (!this.filterIncludeList || item === '' || item === this.PLACEHOLDER) return false;
+        let regex = new RegExp('.*' + this.filterIncludeList.split('*').join('.*') + '.*','i');
+        return !regex.test(this.includeDisplayField && item[this.includeDisplayField] ? item[this.includeDisplayField] : item);
+    }
+
+
+    updateExcludeFilter(fromEdit = false) {
+        this.filterExcludeCache = _.filter(this.excludeList,(item)=>!this._isIncludeFilteredOut(item));
+        if (fromEdit) this._updatePagination();
+    }
+    updateIncludeFilter(fromEdit = false) {
+        this.filterIncludeCache = _.filter(this.includeList,(item)=>!this._isExcludeFilteredOut(item));
+        if (fromEdit) this._updatePagination();
     }
 
     updateFilter(fromEdit = false) {
-        this.filterCache = _.filter(this.excludeList,(item)=>!this._isFilteredOut(item));
+        this.filterExcludeCache = _.filter(this.excludeList,(item)=>!this._isIncludeFilteredOut(item));
+        this.filterIncludeCache = _.filter(this.includeList,(item)=>!this._isExcludeFilteredOut(item));
         if (fromEdit) this._updatePagination();
     }
 
     getFilteredExcludeList() {
-        let ret = this.filterCache || this.excludeList;
-        this.noMatches = this.excludeList && this.excludeList.length && !ret.length;
+        let ret = this.filterExcludeCache || this.excludeList;
+        this.noExcludeMatches = this.excludeList && this.excludeList.length && !ret.length;
         return ret;
     }
-/*
-    getFilteredExcludeList() {
-        let ret = _.filter(this.excludeList,(item)=>!this._isFilteredOut(item));
-        this.noMatches = this.excludeList && this.excludeList.length && !ret.length;
+
+    getFilteredIncludeList() {
+        let ret = this.filterIncludeCache || this.includeList;
+        this.noIncludeMatches = this.includeList && this.includeList.length && !ret.length;
         return ret;
     }
-*/
 
 
 
@@ -832,10 +856,10 @@ class jfDragDropController {
 
     getViewableIncludes() {
         if (!this.usePagination) {
-            return this.includeList;
+            return this.getFilteredIncludeList();
         }
         else {
-            let all = this.includeList;
+            let all = this.getFilteredIncludeList();
             return _.slice(all, this.currIncludesPage * this.itemsPerPage, (this.currIncludesPage+1) * this.itemsPerPage)
         }
     }
@@ -865,7 +889,7 @@ class PaginationApi {
             return Math.ceil(this.dndCtrl.getFilteredExcludeList().length / this.dndCtrl.itemsPerPage);
         }
         else if (this.listType === 'inc') {
-            return this.dndCtrl.includeList ? Math.ceil(this.dndCtrl.includeList.length / this.dndCtrl.itemsPerPage) : 0;
+            return Math.ceil(this.dndCtrl.getFilteredIncludeList().length / this.dndCtrl.itemsPerPage);
         }
     }
 

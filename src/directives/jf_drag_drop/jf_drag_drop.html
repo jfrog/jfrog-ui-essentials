@@ -3,8 +3,19 @@
         <div class="col-lg-5">
             <input type="text"
                    ng-style="{color:jfDragDrop.noMatches ? 'red' : 'black'}"
-                   ng-model="jfDragDrop.filterList"
-                   ng-change="jfDragDrop.updateFilter(true)"
+                   ng-model="jfDragDrop.filterExcludeList"
+                   ng-change="jfDragDrop.updateExcludeFilter(true)"
+                   ng-model-options="{debounce: 200}"
+                   placeholder="Filter..."
+                   ng-disabled="jfDragDrop.disabled"
+                   class="input-text dnd-filter">
+        </div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-5">
+            <input type="text"
+                   ng-style="{color:jfDragDrop.noIncludeMatches ? 'red' : 'black'}"
+                   ng-model="jfDragDrop.filterIncludeList"
+                   ng-change="jfDragDrop.updateIncludeFilter(true)"
                    ng-model-options="{debounce: 200}"
                    placeholder="Filter..."
                    ng-disabled="jfDragDrop.disabled"
