@@ -43,7 +43,8 @@ export function jfSwitch() {
             ngModel: '=',
             controller: '=',
             disabled: '=ngDisabled',
-            helpTooltip: '='
+            helpTooltip: '=',
+            jfSwitchClass: '@'
         },
         link: ($scope, attrs, $element, ngModelCtrl) => {
             $scope.jfSwitch.ngModelCtrl = ngModelCtrl;
