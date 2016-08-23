@@ -68,6 +68,9 @@ class jfSidebarController {
     }
 
     mouseOverMenu() {
+        if (this.mouseIsOver) return;
+        this.mouseIsOver = true;
+
         if (this.menu.width === this.openAdminSize && $('.menu-item:hover').length && $('a#admin:hover').length < 1) {
             if (!angular.isDefined(this.closeAdminDelay) && !$('.admin-menu:hover').length) { // TODO:
                 this.closeAdminDelay = this.$timeout(() => {
@@ -92,6 +95,7 @@ class jfSidebarController {
     }
 
     mouseLeaveMenu() {
+        this.mouseIsOver = false;
         if (this.menu.width != this.openAdminSize) {     // if admin menu isn't open
             this._updateMenuObject(this.defaultWidth(),'.3s')
         }
@@ -195,11 +199,18 @@ class jfSidebarController {
         },1)
     }
     itemClick(item) {
-        if (item.label != 'Admin' && (this.menu.width === '55px' || this.menu.width === '200px')) {
-            this._openMenuStop();
-            this._adminMenuDelayStop();
-        } else if (item.label === 'Admin') {
-            this.openAdminMenu();
+        if (!item.children ) {
+            this.closeAdminMenu(0,true);
+            if (this.menu.width === '55px' || this.menu.width === '200px') {
+                this._openMenuStop();
+                this._adminMenuDelayStop();
+            }
+            if (!item.isDisabled) this.$timeout(()=>this.goToState(item),200);
+        } else if (item.children) {
+            if (!this._isAdminOpen()) this.openAdminMenu();
+            else {
+                this.closeAdminMenu(0,true,true);
+            }
         }
     }
     openAdminMenu(delay = false) {
@@ -230,7 +241,13 @@ class jfSidebarController {
             }
             this._updateTabIndex();
         }
+
     }
+
+    _isAdminOpen() {
+        return this.menu.width === this.openAdminSize;
+    }
+
     clickOffMenu() {
         if ($('.admin-menu').length > 0
             && !$('.menu-item:hover').length
@@ -242,8 +259,18 @@ class jfSidebarController {
             }
         }
     }
-    closeAdminMenu() {
-        if ($('.admin-menu:hover').length || $('#admin:hover').length || ($('.admin-menu').find('a').is(':focus') || ($('#menuSearchQuery').is(':focus') && $('#menuSearchQuery').val().length > 0))) {
+    test() {
+        console.log('&&&&&&&')
+    }
+    closeAdminMenu(delay, force = false, expand = false) {
+        if (delay) {
+            this.$timeout(()=>{
+                this.closeAdminMenu(0,force,expand);
+            },delay)
+            return;
+        }
+
+        if (!force && ($('.admin-menu:hover').length || $('#admin:hover').length || ($('.admin-menu').find('a').is(':focus') || ($('#menuSearchQuery').is(':focus') && $('#menuSearchQuery').val().length > 0)))) {
 
             return;
         } else if (this.adminMenuItemDelay) {
@@ -251,12 +278,12 @@ class jfSidebarController {
                 this.adminMenuItemDelay = false;
                 delete this.adminMenuItemDelayTimer;
                 if (!$('.admin-menu:hover').length) {
-                    this.closeAdminMenu();
+                    this.closeAdminMenu(delay,force,expand);
                 }
             }, 100);
             return;
         } else {
-            if ($('#jf-main-nav:hover').length) {
+            if (expand && $('#jf-main-nav:hover').length) {
                 this.menu.width = '200px'
             } else {
                 this.menu.width = this.defaultWidth();

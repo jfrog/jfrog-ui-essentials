@@ -4,30 +4,30 @@
      ng-mouseover="jfSidebar.mouseOverMenu()">
 
     <span class="pin-menu" ng-click="jfSidebar.pinMenu()"><i class="icon-menu-arrow" ng-class="{'menu-arrow-close' : jfSidebar.pinMenuStatus}"></i></span>
-    <ul class="sidebar-wrapper-inner">
+    <ul class="sidebar-wrapper-inner" ng-click="jfSidebar.closeAdminMenu(0,true,true)">
         <li ng-repeat="item in jfSidebar.menuItems"
-            ng-click="jfSidebar.itemClick(item)"
+            ng-click="$event.stopPropagation(); jfSidebar.itemClick(item)"
             ng-class="{disabled: item.isDisabled, active: (item.stateParent | includedByState) || jfSidebar.isCurrentItem(item), 'icon-arrow-left':item.children }">
 
             <a ng-if="item.isDisabled"
                class="menu-item disabled"
                id="{{item.id}}"><i class="{{item.icon}}"></i><span>{{item.label}}</span></a>
 
-            <a ng-click="jfSidebar.goToState(item)"
+            <a
                class="menu-item"
                id="{{item.id}}"
-               ng-mouseover="jfSidebar.mouseOverMenu()"
-               ng-if="!item.isDisabled && item.label != 'Admin'"><i class="{{item.icon}}"></i><span>{{item.label}}</span></a>
+               ng-mouseover="jfSidebar.closeAdminMenu(1800,true,true)"
+               ng-if="!item.isDisabled && !item.children"><i class="{{item.icon}}"></i><span>{{item.label}}</span></a>
 
             <a href
                  class="menu-item"
-                 id="{{item.id}}"
+                 id="admin"
                  ng-mouseover="jfSidebar.openAdminMenu(true)"
-                 ng-mouseleave="jfSidebar._adminMenuDelayStop(); jfSidebar.adminMenuItemDelay = true; jfSidebar.closeAdminMenu();"
-                 ng-if="!item.isDisabled && item.label == 'Admin'"><i class="{{item.icon}}"></i><span>{{item.label}}</span>
+                 ng-mouseleave="jfSidebar.test();jfSidebar._adminMenuDelayStop(); jfSidebar.adminMenuItemDelay = true; jfSidebar.closeAdminMenu(1800,true,true)"
+                 ng-if="!item.isDisabled && item.children"><i class="{{item.icon}}"></i><span>{{item.label}}</span>
             </a>
 
-            <div class="admin-menu" ng-if="item.label === 'Admin' && !item.isDisabled" ng-mouseover="jfSidebar.menuAdminOver()" ng-mouseleave="jfSidebar.adminMenuItemDelay = true; jfSidebar.closeAdminMenu()">
+            <div class="admin-menu" ng-if="item.children && !item.isDisabled" ng-mouseover="jfSidebar.menuAdminOver()">
 
                 <div class="searchbox-wrapper" ng-if="jfSidebar.noSearchBox === undefined">
                     <input type="text"
