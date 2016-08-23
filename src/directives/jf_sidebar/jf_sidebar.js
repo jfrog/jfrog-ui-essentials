@@ -259,9 +259,6 @@ class jfSidebarController {
             }
         }
     }
-    test() {
-        console.log('&&&&&&&')
-    }
     closeAdminMenu(delay, force = false, expand = false) {
         if (delay) {
             this.$timeout(()=>{
