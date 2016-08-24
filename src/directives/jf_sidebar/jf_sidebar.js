@@ -214,6 +214,11 @@ class jfSidebarController {
         }
     }
     openAdminMenu(delay = false) {
+        if (this.adminMenuCloseDelay) {
+            this.$timeout.cancel(this.adminMenuCloseDelay);
+            delete this.adminMenuCloseDelay;
+        }
+
         if ($('.admin-menu').length > 0) {
             this._openMenuStop();
             this._adminMenuDelayStop();
@@ -245,7 +250,7 @@ class jfSidebarController {
     }
 
     _isAdminOpen() {
-        return this.menu.width === this.openAdminSize;
+        return $('#jf-main-nav').css('width') === this.openAdminSize;
     }
 
     clickOffMenu() {
@@ -261,7 +266,11 @@ class jfSidebarController {
     }
     closeAdminMenu(delay, force = false, expand = false) {
         if (delay) {
-            this.$timeout(()=>{
+            this.adminMenuCloseDelay = this.$timeout(()=>{
+                if (this.adminMenuCloseDelay) {
+                    this.$timeout.cancel(this.adminMenuCloseDelay);
+                    delete this.adminMenuCloseDelay;
+                }
                 this.closeAdminMenu(0,force,expand);
             },delay)
             return;
