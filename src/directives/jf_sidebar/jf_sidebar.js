@@ -199,17 +199,25 @@ class jfSidebarController {
         },1)
     }
     itemClick(item) {
+        if (this.adminMenuCloseDelay) {
+            this.$timeout.cancel(this.adminMenuCloseDelay);
+            delete this.adminMenuCloseDelay;
+        }
+
         if (!item.children ) {
             this.closeAdminMenu(0,true);
             if (this.menu.width === '55px' || this.menu.width === '200px') {
                 this._openMenuStop();
                 this._adminMenuDelayStop();
             }
-            if (!item.isDisabled) this.$timeout(()=>this.goToState(item),200);
+            if (!item.isDisabled) this.$timeout(()=>this.goToState(item),20);
         } else if (item.children) {
-            if (!this._isAdminOpen()) this.openAdminMenu();
+            if (!this._isAdminOpen()) {
+                this.openAdminMenu();
+            }
             else {
                 this.closeAdminMenu(0,true,true);
+                this._adminMenuDelayStop();
             }
         }
     }
