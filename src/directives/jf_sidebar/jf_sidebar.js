@@ -1,6 +1,6 @@
 class jfSidebarController {
 
-    constructor($state, $timeout, $interval, $window, $rootScope, JFrogEventBus) {
+    constructor($scope, $state, $timeout, $interval, $window, $rootScope, JFrogEventBus) {
         this.openAdminSize = this.openAdminSize || '900px';
         $rootScope.jfSidebar = this;
         if (!this.driver) {
@@ -31,22 +31,27 @@ class jfSidebarController {
         if (this.driver.getFooterData) this.driver.getFooterData().then(footerData => this.footerData = footerData);
 
 
+        $scope.$on('$destroy',()=>{
+            $('body').off('keydown');
+
+        })
+
         this._init();
 
     }
 
 
     _init() {
-
         this.pinMenuStatus ? this.menu.width = '200px' : this.menu.width = '55px';
         this.pinMenuStatus ? this.menu.transitionDelay = '.2s' : this.menu.transitionDelay = '.3s';
 
         $('body').on('keydown', (e) => {
+            console.log('keydown')
 
             if (this.driver.onKeyDown) this.driver.onKeyDown(e);
 
             // Ctrl + right arrow to open the admin menu
-            if (e.keyCode === 39 && (e.ctrlKey || e.metaKey) && $('.admin-menu').length) {
+            if (e.keyCode === 39 && e.ctrlKey && e.altKey && $('.admin-menu').length) {
                 this.$timeout(() => {
                     this.openAdminMenu();
                 });
@@ -55,7 +60,7 @@ class jfSidebarController {
             }
 
             // ESC click or Ctrl+left to close admin menu       TODO: Fix the function to work
-            if ((e.keyCode === 27 || (e.keyCode === 37 && (e.ctrlKey || e.metaKey))) && this.menu.width === this.openAdminSize && $('.admin-menu').length > 0) {
+            if ((e.keyCode === 27 || (e.keyCode === 37 && e.ctrlKey && e.altKey)) && this.menu.width === this.openAdminSize && $('.admin-menu').length > 0) {
                 this.$timeout(() => {
                     this.menuSearchQuery = '';
                     $('#menuSearchQuery').blur();
