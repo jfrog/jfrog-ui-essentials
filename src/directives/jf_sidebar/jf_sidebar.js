@@ -46,7 +46,6 @@ class jfSidebarController {
         this.pinMenuStatus ? this.menu.transitionDelay = '.2s' : this.menu.transitionDelay = '.3s';
 
         $('body').on('keydown', (e) => {
-            console.log('keydown')
 
             if (this.driver.onKeyDown) this.driver.onKeyDown(e);
 
@@ -86,8 +85,8 @@ class jfSidebarController {
 
         } else if (this.menu.width != '200px' && !$('.pin-menu').is(':hover') && ($('.admin-menu:hover').length < 1)) {     // if menu isn't open
             if (!angular.isDefined(this.openMenu)) {
-                let widthToOpen = ($('.admin-menu').length > 0 && $('a#admin:hover').length) ? this.openAdminSize : '200px';
                 this.openMenu = this.$timeout(() => {
+                    let widthToOpen = ($('.admin-menu').length > 0 && $('a#admin:hover').length) ? this.openAdminSize : '200px';
                     if (($('.admin-menu:hover').length || $('#admin:hover').length) && angular.isDefined(this.openMenu)) {
                             this.$timeout.cancel(this.openMenu);
                             delete this.openMenu;
