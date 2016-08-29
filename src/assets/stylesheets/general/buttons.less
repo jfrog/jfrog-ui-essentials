@@ -1,15 +1,18 @@
 .btn {
   border-radius: 0;
-  border: none;
+  border: 1px solid transparent;
   color: @blackFontDark;
-  font-weight: normal;
+  font-weight: 700;
   padding: 0 12px;
   height: 40px;
   line-height: 40px;
   min-width: 100px;
   opacity: 1 !important;
   outline: none;
-
+  transition: all .2s ease-in-out;
+  & + .btn {  // Add space between two suite buttons
+    margin-left: 10px;
+  }
   &:focus, &:visited, &:hover, &:active {
     outline: none;
     border: none;
@@ -20,27 +23,21 @@
     outline: none;
     box-shadow: none;
   }
-
+  &.btn-default {
+    border: 1px solid transparent;
+  }
   &.btn-primary {
     background: @greenBGPrimary;
-    color: @white;
-
-    &:focus, &:visited {
-      background: @greenBGPrimary;
-    }
-
-    &:hover {
+    color: @greenBGPrimaryText;
+    &:hover, &:focus {
       background: @greenBGPrimaryHover;
-    }
-
-    &:active {
-      background: @greenBGPrimaryHover;
-    }
-
-    &[disabled] {
-      background: @grayBGDisabled;
+      border: 1px solid @greenBGPrimaryHoverBorder;
+      box-shadow: 0 0 12px -2px rgba(40,40,40,.6);
     }
   }
+
+
+
 
   &.btn-primary-light {
     background: @greenBGSmallHover;
@@ -61,24 +58,14 @@
     }
   }
 
+
   &.btn-secondary {
     background: @greenBGSecondary;
-    color: @greenBGPrimary;
-
-    &:focus, &:visited {
-      background: @greenBGSecondary;
-    }
-
-    &:hover {
+    border: 1px solid @greenBGSecondaryBorder;
+    color: @greenBGSecondaryText;
+    &:hover, &:focus {
       background: @greenBGSecondaryHover;
-    }
-
-    &:active {
-      background: @greenBGSecondaryHover;
-    }
-
-    &[disabled] {
-      background: @grayButtonSecondaryDisabled;
+      border: 1px solid @greenBGSecondaryHover;
     }
   }
 
@@ -117,4 +104,34 @@
   &.btn-wide {
     min-width: 155px;
   }
+
+  // Disabled
+  &[disabled] {
+    &.btn-default {
+
+    }
+    &.btn-primary {
+      background: @greenBGPrimaryDisabled;
+      border-color: @greenBGPrimaryDisabledBorder;
+    }
+    &.btn-secondary {
+      background: @greenBGSecondaryDisabled;
+      border-color: @greenBGSecondaryBorder;
+      color: @greenBGSecondaryTextDisabled;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+.btn {
+
+
+
+
 }
