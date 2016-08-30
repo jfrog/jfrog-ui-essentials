@@ -25,6 +25,12 @@
   }
   &.btn-default {
     border: 1px solid transparent;
+    background: transparent;
+    color: @grayFontGeneral;
+
+    &:hover {
+      color: @greenFontDarker;
+    }
   }
   &.btn-primary {
     background: @greenBGPrimary;
@@ -35,9 +41,6 @@
       box-shadow: 0 0 12px -2px rgba(40,40,40,.6);
     }
   }
-
-
-
 
   &.btn-primary-light {
     background: @greenBGSmallHover;
@@ -52,10 +55,6 @@
       background: @greenBGSmallActive;
       color: @white;
     }
-
-    &[disabled] {
-      background: @grayBGDisabled;
-    }
   }
 
 
@@ -66,6 +65,7 @@
     &:hover, &:focus {
       background: @greenBGSecondaryHover;
       border: 1px solid @greenBGSecondaryHoverBorder;
+      box-shadow: 0 0 10px -4px rgba(40,40,40,.6);
     }
   }
 
@@ -92,21 +92,13 @@
     }
   }
 
-  &.btn-default {
-    background: transparent;
-    color: @grayFontGeneral;
-
-    &:hover {
-      color: @greenFontDarker;
-    }
-  }
-
   &.btn-wide {
     min-width: 155px;
   }
 
   // Disabled
   &[disabled] {
+    background: @grayBGDisabled;
     &.btn-default {
 
     }
