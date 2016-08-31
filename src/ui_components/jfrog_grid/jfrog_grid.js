@@ -54,17 +54,17 @@ class JFrogGrid {
 
     getPagination() {
         let pagination = {
-            pageNum: this.paginationCurrentPage,
-            numOfRows: this.paginationPageSize
+            page_num: this.paginationCurrentPage,
+            num_of_rows: this.paginationPageSize
         };
         let sortColumn = this.getSortColumn();
         if (sortColumn) {
             pagination.direction = sortColumn.sort.direction;
-            pagination.orderBy = sortColumn.field || sortColumn.name;
+            pagination.order_by = sortColumn.field || sortColumn.name;
         }
         else {
             pagination.direction = 'asc';
-            pagination.orderBy = this.columnDefs[0].field;
+            pagination.order_by = this.columnDefs[0].field;
         }
         return pagination;
     }
@@ -103,8 +103,8 @@ class JFrogGrid {
         }
         this.paginationCallback(this.getPagination())
                 .then((pagedResponse) => {
-                    this.totalItems = pagedResponse.totalItems;
-                    this.setGridData(pagedResponse.pagingData);
+                    this.totalItems = pagedResponse.total_count;
+                    this.setGridData(pagedResponse.data);
                 });
     }
 

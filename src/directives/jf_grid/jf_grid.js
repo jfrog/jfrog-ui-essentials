@@ -76,7 +76,7 @@
                 if (!$scope.gridOptions.api) return 0;
 
                 let visRows = $scope.gridOptions.api.grid.getVisibleRows();
-                let totalRows = $scope.gridOptions.api.grid.rows.length;
+                let totalRows = $scope.gridOptions.totalItems || $scope.gridOptions.api.grid.rows.length;
                 if (_.findWhere(visRows,{entity:{_emptyRow:true}}))
                     count = totalRows - 1;
                 else
