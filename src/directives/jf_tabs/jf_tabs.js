@@ -44,7 +44,7 @@ class jfTabsController {
         let visibleTabs = _.filter(this.tabs, (tab) => {return tab.isVisible !== false});
         let container = $(this.$element).children().eq(0);
         let containerWidth = container.width();
-        let tabWidth = parseInt(this.tabWidth);
+        let tabWidth = this.getTabWidthForStyle().endsWith('px') ? parseInt(this.tabWidth) : containerWidth * parseInt(this.tabWidth)/100;
         let containerMargin = parseInt(this.containerMargin);
 
         let expanderWidth = $('.action-expand').eq(0).outerWidth(true);
@@ -111,7 +111,7 @@ class jfTabsController {
     }
 
     getTabWidthForStyle() {
-        return this.tabWidth.endsWith('%') ? this.tabWidth : this.tabWidth + 'px';
+        return this.tabWidth.endsWith('%') ? this.tabWidth : (this.tabWidth.endsWith('px') ? this.tabWidth : this.tabWidth + 'px');
     }
 }
 

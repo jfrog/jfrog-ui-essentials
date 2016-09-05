@@ -12,7 +12,7 @@
             <ul class="dropdown-menu dropdown-menu-right dropdown-container text-left">
                 <li class="dropdown-item" ng-repeat="tab in jfTabs.tabsCollapsed"
                     jf-disable-feature="{{ tab.feature }}">
-                    <a ng-click="jfTabs.onClickTab(tab)"><span>{{jfTabs.dictionary[tab.name]}}</span></a>
+                    <a ng-click="jfTabs.onClickTab(tab)" jf-tooltip-on-overflow><span>{{jfTabs.dictionary[tab.name]}}</span></a>
                 </li>
             </ul>
         </span>
