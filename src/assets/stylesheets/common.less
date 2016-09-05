@@ -1072,136 +1072,136 @@ h5 {
   to {right: -370px;}
 }
 
-#toast-container {
-  top: 80px;
-  right: 20px;
-
-  .toast {
-    display: table;
-    height: 100px;
-    background: #eee !important;
-    border-radius: 0;
-    color: @grayFontGeneral;
-    padding: 0;
-    width: 340px;
-    opacity: 1;
-    filter: alpha(opacity=100);
-    float: right;
-    clear: both;
-    cursor: auto;
-
-    position: relative;
-
-    //    animation: toaster-in 0.5s ease, toaster-out 0.5s ease 4.5s;
-
-    &.ng-enter {
-      opacity: 1 !important;
-      right: -370px !important;
-      transition: right .3s ease !important;
-    }
-    &.ng-enter.ng-enter-active {
-      opacity: 1 !important;
-      right: 0 !important;
-    }
-    &.ng-leave {
-      opacity: 1 !important;
-      right: 0 !important;
-      transition: right .3s ease-out !important;
-    }
-    &.ng-leave.ng-leave-active {
-      opacity: 1 !important;
-      right: -370px !important;
-    }
-
-
-    .toast-message {
-      display: table-cell;
-      vertical-align: middle;
-      font-size: 14px;
-      padding: 20px;
-      background-color: #fff;
-    }
-
-    .toast-close-button {
-      color: @grayFontGeneral;
-      position: absolute;
-      right: 12px;
-      top: 0;
-      font-size: 22px;
-      font-weight: normal;
-
-      &:hover {
-        color: inherit;
-      }
-    }
-
-    .toast-title {
-      display: table-cell;
-      background-color: @grayBorderLight;
-      width: 80px;
-      text-align: center;
-      vertical-align: middle;
-      padding: 0 25px;
-
-      &::before {
-        font-family: "artifactory" !important;
-        font-size: 30px;
-        font-weight: normal;
-      }
-    }
-
-    &.toast-success {
-      &, & a {
-        color: @greenFontHeader;
-      }
-
-      .toast-title::before {
-        content: ",";
-      }
-    }
-    &.toast-error {
-      //      animation: toaster-in 0.5s ease; //, toaster-out 0.5s ease;
-
-      &, & a {
-        color: @redError;
-      }
-
-      .toast-title::before {
-        content: "-";
-      }
-    }
-    &.toast-warning {
-      &, & a {
-        color: @yellowWarning;
-      }
-
-      .toast-title::before {
-        content: "{";
-      }
-    }
-    &.toast-info {
-      &, & a {
-        color: @blueMain;
-      }
-
-      .toast-title::before {
-        content: "\e002";
-      }
-    }
-
-    a {
-      text-decoration: underline;
-
-      &:hover {
-        text-decoration: none;
-      }
-    }
-
-    &:hover {
-      box-shadow: 0 0 12px #999999;
-    }
-  }
-}
+//#toast-container {
+//  top: 80px;
+//  right: 20px;
+//
+//  .toast {
+//    display: table;
+//    height: 100px;
+//    background: #eee !important;
+//    border-radius: 0;
+//    color: @grayFontGeneral;
+//    padding: 0;
+//    width: 340px;
+//    opacity: 1;
+//    filter: alpha(opacity=100);
+//    float: right;
+//    clear: both;
+//    cursor: auto;
+//
+//    position: relative;
+//
+//    //    animation: toaster-in 0.5s ease, toaster-out 0.5s ease 4.5s;
+//
+//    &.ng-enter {
+//      opacity: 1 !important;
+//      right: -370px !important;
+//      transition: right .3s ease !important;
+//    }
+//    &.ng-enter.ng-enter-active {
+//      opacity: 1 !important;
+//      right: 0 !important;
+//    }
+//    &.ng-leave {
+//      opacity: 1 !important;
+//      right: 0 !important;
+//      transition: right .3s ease-out !important;
+//    }
+//    &.ng-leave.ng-leave-active {
+//      opacity: 1 !important;
+//      right: -370px !important;
+//    }
+//
+//
+//    .toast-message {
+//      display: table-cell;
+//      vertical-align: middle;
+//      font-size: 14px;
+//      padding: 20px;
+//      background-color: #fff;
+//    }
+//
+//    .toast-close-button {
+//      color: @grayFontGeneral;
+//      position: absolute;
+//      right: 12px;
+//      top: 0;
+//      font-size: 22px;
+//      font-weight: normal;
+//
+//      &:hover {
+//        color: inherit;
+//      }
+//    }
+//
+//    .toast-title {
+//      display: table-cell;
+//      background-color: @grayBorderLight;
+//      width: 80px;
+//      text-align: center;
+//      vertical-align: middle;
+//      padding: 0 25px;
+//
+//      &::before {
+//        font-family: "artifactory" !important;
+//        font-size: 30px;
+//        font-weight: normal;
+//      }
+//    }
+//
+//    &.toast-success {
+//      &, & a {
+//        color: @greenFontHeader;
+//      }
+//
+//      .toast-title::before {
+//        content: ",";
+//      }
+//    }
+//    &.toast-error {
+//      //      animation: toaster-in 0.5s ease; //, toaster-out 0.5s ease;
+//
+//      &, & a {
+//        color: @redError;
+//      }
+//
+//      .toast-title::before {
+//        content: "-";
+//      }
+//    }
+//    &.toast-warning {
+//      &, & a {
+//        color: @yellowWarning;
+//      }
+//
+//      .toast-title::before {
+//        content: "{";
+//      }
+//    }
+//    &.toast-info {
+//      &, & a {
+//        color: @blueMain;
+//      }
+//
+//      .toast-title::before {
+//        content: "\e002";
+//      }
+//    }
+//
+//    a {
+//      text-decoration: underline;
+//
+//      &:hover {
+//        text-decoration: none;
+//      }
+//    }
+//
+//    &:hover {
+//      box-shadow: 0 0 12px #999999;
+//    }
+//  }
+//}
 
 //----------------------------- licenses -------------------------//
 
