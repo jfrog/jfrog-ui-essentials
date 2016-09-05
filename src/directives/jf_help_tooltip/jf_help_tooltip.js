@@ -3,7 +3,8 @@ export function jfHelpTooltip() {
         scope: {
             placement: '@?',
             text: '@?',
-            html: '='
+            html: '=',
+            maxWidth: '@'
         },
         restrict: 'E',
         templateUrl: 'directives/jf_help_tooltip/jf_help_tooltip.html',
@@ -21,6 +22,7 @@ export function jfHelpTooltip() {
                 onlyOne: 'true',
                 interactive: 'true',
                 interactiveTolerance: 500,
+                maxWidth: $scope.maxWidth || 600,
                 position: $element.placement,
                 theme: "tooltipster-default " + $element.placement,
                 content: content,
