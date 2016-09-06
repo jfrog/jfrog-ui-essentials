@@ -117,7 +117,8 @@ export function jfUiSelect() {
             jfSelectFilterAttr: '@',
             jfSelectPlaceholder: '@',
             jfSelectLoadChunks: '@?',
-            jfSelectLoadMoreLabel: '@?'
+            jfSelectLoadMoreLabel: '@?',
+            jfSelectHelpTooltips: '&?'
         },
         templateUrl: 'directives/jf_ui_select/jf_ui_select.html'
     }

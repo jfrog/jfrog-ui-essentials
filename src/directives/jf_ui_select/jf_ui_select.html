@@ -5,10 +5,21 @@
     <ui-select-choices refresh-delay="100"
             refresh="jfUiSelect.refresh($select.search)"
             repeat="item in jfUiSelect[jfUiSelect.jfSelectOptionsView ? 'jfSelectOptionsView' : 'jfSelectOptions'] | filter: (!jfUiSelect.jfSelectFilterAttr ? $select.search : { {{jfUiSelect.jfSelectFilterAttr || 'dummyfield'}}: $select.search}) track by $index">
-        <div class="jf-ui-select-item"
-             name="select-item"
-             ng-class="{'more-ph': jfUiSelect.isMorePlaceholder(item)}"
-             ng-click="jfUiSelect.onClick(item,$event)"
-             ng-bind-html="jfUiSelect.displayLabel(item) | highlight: $select.search"></div>
+        <div  ng-if="!jfUiSelect.jfSelectHelpTooltips"
+              class="jf-ui-select-item"
+              name="select-item"
+              ng-class="{'more-ph': jfUiSelect.isMorePlaceholder(item)}"
+              ng-click="jfUiSelect.onClick(item,$event)"
+              ng-bind-html="jfUiSelect.displayLabel(item) | highlight: $select.search"></div>
+        <div  ng-if="jfUiSelect.jfSelectHelpTooltips">
+            <span class="jf-ui-select-item"
+                  name="select-item"
+                  ng-class="{'more-ph': jfUiSelect.isMorePlaceholder(item)}"
+                  ng-click="jfUiSelect.onClick(item,$event)"
+                  ng-bind-html="jfUiSelect.displayLabel(item) | highlight: $select.search"></span>
+            <span ng-if="jfUiSelect.jfSelectHelpTooltips({$item: item})">
+                <jf-help-tooltip text="{{jfUiSelect.jfSelectHelpTooltips({$item: item})}}"></jf-help-tooltip>
+            </span>
+        </div>
     </ui-select-choices>
 </ui-select>
