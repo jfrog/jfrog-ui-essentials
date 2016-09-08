@@ -186,7 +186,7 @@ describe('unit test: jfrog_grid ui component', () => {
     beforeEach(() => {
       spyOn(gridOptions, 'setGridData').and.callThrough();
       spyOn(gridOptions, 'getPage').and.callThrough();
-      whenPagingComplete = q.when({totalItems: 10, pagingData: data});
+      whenPagingComplete = q.when({total_count: 10, data: data});
       paginationCallback = jasmine.createSpy().and.returnValue(whenPagingComplete);
       gridOptions.setColumns([{field: 'name'}]);
       result = gridOptions.setExternalPagination(paginationCallback);
@@ -217,10 +217,10 @@ describe('unit test: jfrog_grid ui component', () => {
       });
       it('should call the pagination callback', () => {
         expect(paginationCallback).toHaveBeenCalledWith({
-          pageNum: 1,
-          numOfRows: 25,
+          page_num: 1,
+          num_of_rows: 25,
           direction: 'asc',
-          orderBy: 'name'
+          order_by: 'name'
         });
       });
       it('should set the data and total items', (done) => {
