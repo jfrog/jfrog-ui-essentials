@@ -23,6 +23,7 @@ import {jfTooltipOnOverflow} from './jf_tooltip_on_overflow/jf_tooltip_on_overfl
 import {jfClipCopy} from './jf_clip_copy/jf_clip_copy';
 import {jfValidation}   from './jf_validation/jf_validation';
 import {jfSidebar}       from './jf_sidebar/jf_sidebar';
+import {jfMultiDropdown}       from './jf_multi_dropdown/jf_multi_dropdown';
 
 angular.module('jfrog.ui.essentials.directives', [])
     .directive({
@@ -50,5 +51,6 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfEnterPress': jfEnterPress,
         'jfTooltipOnOverflow': jfTooltipOnOverflow,
         'jfClipCopy': jfClipCopy,
-        'jfSidebar': jfSidebar
+        'jfSidebar': jfSidebar,
+        'jfMultiDropdown': jfMultiDropdown
     });

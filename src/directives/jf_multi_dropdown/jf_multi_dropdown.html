@@ -1,0 +1,33 @@
+<div class="jf-multi-dropdown">
+    <div class="main-box"
+         ng-click="jfMultiDropdown.onClick()">
+        {{jfMultiDropdown.title}}
+        <i class="caret pull-right"></i>
+    </div>
+    <div ng-if="jfMultiDropdown.opened"
+         class="drop-down-container">
+        <div class="filter-container">
+            <form>
+                <jf-field autofocus="true">
+                    <input type="text"
+                           name="items-filter"
+                           class="input-text"
+                           ng-model="jfMultiDropdown.filterText"
+                           placeholder="{{jfMultiDropdown.filterPlaceholder}}"/>
+                </jf-field>
+            </form>
+        </div>
+        <div class="list-container">
+            <div class="drop-down-item"
+                 ng-repeat="item in jfMultiDropdown.items | filter:{text: jfMultiDropdown.filterText} track by $index"
+                 ng-class="{'last-selected': $index === jfMultiDropdown.lastSelectedIndex && !jfMultiDropdown.filterText}">
+                <label class="jf-checkbox">
+                    <input type="checkbox"
+                           ng-change="jfMultiDropdown.onSelection()"
+                           ng-model="item.isSelected">
+                    <span></span> <i ng-if="item.iconClass" class="item-icon" ng-class="item.iconClass"></i> {{ item.text }}
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

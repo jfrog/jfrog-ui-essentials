@@ -1,0 +1,54 @@
+.jf-multi-dropdown {
+  position: relative;
+  .main-box {
+    width: 280px;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 10px;
+    border: 1px solid @grayBorderLighter;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    .caret {
+      position: absolute;
+      height: 10px;
+      top: 50%;
+      right: 10px;
+      margin-top: -2px;
+    }
+  }
+  .drop-down-container {
+    position: absolute;
+    background-color: white;
+    top: 40px;
+    left: 0;
+    width: 280px;
+    border: 1px solid @grayBorderLighter;
+    border-top: none;
+    .filter-container {
+      padding: 10px;
+      border-bottom: 1px solid @grayBorderLighter;
+    }
+    .list-container {
+      max-height: 200px;
+      overflow: hidden;
+      overflow-y: auto;
+      .drop-down-item {
+        height: 40px;
+        line-height: 40px;
+        padding: 0 10px;
+        border-bottom: 1px solid @grayBorderLighter;
+        .item-icon:before {
+          margin: 0 8px;
+          vertical-align: middle;
+        }
+        &:hover {
+          background: @greenBGDropdownHover !important;
+        }
+        &.last-selected {
+          border-bottom: 2px solid @blackBGDark;
+        }
+      }
+    }
+  }
+}
