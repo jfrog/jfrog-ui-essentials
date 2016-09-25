@@ -1,12 +1,12 @@
 .jf-multi-dropdown {
   position: relative;
+  display: inline-block;
   .main-box {
     width: 280px;
     height: 40px;
     line-height: 40px;
     padding: 0 10px;
     border: 1px solid @grayBorderLighter;
-    display: inline-block;
     position: relative;
     cursor: pointer;
     .caret {
@@ -25,6 +25,7 @@
     width: 280px;
     border: 1px solid @grayBorderLighter;
     border-top: none;
+    z-index: 99;
     .filter-container {
       padding: 10px;
       border-bottom: 1px solid @grayBorderLighter;

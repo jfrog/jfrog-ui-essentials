@@ -27,6 +27,7 @@ class jfMultiDropdownController {
     }
 
     onClick() {
+        if (!this.items) return;
         this.opened = !this.opened;
         if (!this.opened) this.sortItems();
         this.filterText = '';
@@ -36,6 +37,7 @@ class jfMultiDropdownController {
     }
 
     sortItems() {
+        if (!this.items) return;
         let selected = _.sortBy(_.filter(this.items, (item) => item.isSelected), 'text');
         let unSelected = _.sortBy(_.filter(this.items, (item) => !item.isSelected), 'text');
         this.lastSelectedIndex = selected.length-1;
