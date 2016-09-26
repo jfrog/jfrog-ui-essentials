@@ -64,7 +64,11 @@ export class JFrogModal {
                 $('.modal-dialog').css('max-width', size)
             });
         }
-
+        this.$timeout(() => {
+            let windowOffset = window.innerHeight - 70;
+            let maxHeight = windowOffset - 134 - 80;
+            $('.modal-body').css('max-height', maxHeight);
+        }, 100);
         return modalInstance;
     }
 
