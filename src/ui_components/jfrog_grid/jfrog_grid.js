@@ -186,7 +186,7 @@ class JFrogGrid {
     }
 
     _isElementVisible(e) {
-        if(e.css('display') === 'none') return false;
+        if(!e.length || e.css('display') === 'none') return false;
         else if (e.parent()[0] !== document) {
             return this._isElementVisible(e.parent());
         }
