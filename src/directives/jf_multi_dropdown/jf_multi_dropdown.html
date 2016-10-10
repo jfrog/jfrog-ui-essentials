@@ -1,7 +1,7 @@
 <div class="jf-multi-dropdown">
     <div class="main-box"
          ng-click="jfMultiDropdown.onClick()">
-        {{jfMultiDropdown.title}}
+        {{jfMultiDropdown.title}} <small><b>({{jfMultiDropdown.getSelectedCount()}})</b></small>
         <i class="caret pull-right"></i>
     </div>
     <div ng-if="jfMultiDropdown.opened"

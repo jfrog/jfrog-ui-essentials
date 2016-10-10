@@ -39,6 +39,10 @@ class jfMultiDropdownController {
     onSelection() {
         if (this.onChange) this.onChange();
     }
+    getSelectedCount() {
+        let selected = _.filter(this.items, (item) => item.isSelected);
+        return selected.length;
+    }
 
     sortItems() {
         if (!this.items) return;
