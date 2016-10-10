@@ -7,7 +7,11 @@ class jfMultiDropdownController {
 
         this.handleOutsideClick();
 
-        this.sortItems();
+        this.$scope.$watch('jfMultiDropdown.items', (newVal, oldVal) => {
+            if (newVal) {
+                this.sortItems();
+            }
+        });
 
     }
 
