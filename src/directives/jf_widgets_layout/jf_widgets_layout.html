@@ -8,7 +8,9 @@
                  class="widget-wrapper">
                 <div class="widget-container">
                     <div ng-if="widget.template">
-                        <div class="compile-children" ng-bind-html="widget.template"></div>
+                        <div class="compile-children"
+                             id="{{widget.id}}"
+                             ng-bind-html="widget.template"></div>
                     </div>
                 </div>
             </div>

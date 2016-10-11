@@ -8,7 +8,7 @@ class jfWidgetsLayoutController {
             $timeout(()=>this.compileDirectives());
         };
         $scope.$watch('jfWidgetsLayout.layout', onChange, true);
-        $scope.$watch('jfWidgetsLayout.options', onChange, true);
+//        $scope.$watch('jfWidgetsLayout.options', onChange, true);
     }
 
 
@@ -41,9 +41,34 @@ class jfWidgetsLayoutController {
     }
 
     compileDirectives() {
-        let scope = this.$scope.$new();
-        let elems = $('.compile-children').children();
-        this.$compile(elems)(scope);
+        let elems = $('.compile-children');
+        for (let i = 0; i< elems.length; i++) {
+            let elem = $(elems[i]);
+            let widget = this._getWidgetById(elem.prop('id'));
+
+            let scope = this.$scope.$new();
+            if (widget.model) _.extend(scope,widget.model);
+
+            let children = elem.children();
+            for (let i = 0; i< children.length; i++) {
+                let elem = $(children[i]);
+                if (!elem.prop('compiled')) {
+                    this.$compile(elem)(scope);
+                    elem.prop('compiled',true);
+                }
+            }
+        }
+    }
+    _getWidgetById(id) {
+        let widget;
+
+        for (let i in this.layout) {
+            let row = this.layout[i];
+            widget = _.find(row, {id: id});
+            if (widget) break;
+        }
+
+        return widget;
     }
 }
 
