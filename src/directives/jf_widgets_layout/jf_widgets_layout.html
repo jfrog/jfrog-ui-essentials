@@ -1,0 +1,17 @@
+<div class="jf-widgets-layout-container">
+    <div class="widgets-padder"
+         ng-style="jfWidgetsLayout.padderCss">
+        <div ng-repeat="row in jfWidgetsLayout.layout"
+             class="widgets-row">
+            <div ng-repeat="widget in row"
+                 ng-style="jfWidgetsLayout.cssRules[widget.id]"
+                 class="widget-wrapper">
+                <div class="widget-container">
+                    <div ng-if="widget.template">
+                        <div class="compile-children" ng-bind-html="widget.template"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
