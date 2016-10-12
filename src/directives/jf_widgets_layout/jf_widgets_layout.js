@@ -1,17 +1,58 @@
 class jfWidgetsLayoutController {
-    constructor($scope,$compile,$timeout) {
+    constructor($scope,$compile,$timeout,$q,$templateRequest,$sce, $injector) {
+        this.$q = $q;
+        this.$sce = $sce;
         this.$scope = $scope;
+        this.$injector = $injector;
         this.$compile = $compile;
+        this.$templateRequest = $templateRequest;
 
-        let onChange = () => {
+        let onChange = (newval,oldval) => {
+            if (this.templatesLoadStarted && !this.templatesLoaded) return;
             this.updateCss();
-            $timeout(()=>this.compileDirectives());
+            this.loadTemplates().then(()=>{
+                $timeout(()=>this.compileDirectives());
+            })
         };
-        $scope.$watch('jfWidgetsLayout.layout', onChange, true);
+        $scope.$watch('jfWidgetsLayout.layout', onChange);
 //        $scope.$watch('jfWidgetsLayout.options', onChange, true);
     }
 
 
+    loadTemplates() {
+        let defer = this.$q.defer();
+
+        if (this.templatesLoaded) {
+            defer.resolve();
+            return defer.promise;
+        }
+
+        this.templatesLoadStarted = true;
+        let fired = 0, completed = 0;
+        this.layout.forEach((row) => {
+            row.forEach((widget) => {
+                if (widget.templateUrl && !widget.template) {
+                    fired++;
+                    this.$templateRequest(widget.templateUrl)
+                        .then((template) => {
+                            widget.template = this.$sce.trustAsHtml(template);
+                        })
+                        .finally(()=>{
+                            completed++;
+//                            console.log('completed ' + completed + ' out of ' + fired);
+                            if (fired === completed) {
+                                this.templatesLoaded = true;
+                                defer.resolve();
+                            }
+                        })
+                }
+                else if (widget.template) widget.template = this.$sce.trustAsHtml(widget.template)
+            });
+        });
+
+        if (!fired) defer.resolve();
+        return defer.promise;
+    }
     updateCss() {
         this.cssRules = {};
         let currentX, currentY = 0;
@@ -47,7 +88,23 @@ class jfWidgetsLayoutController {
             let widget = this._getWidgetById(elem.prop('id'));
 
             let scope = this.$scope.$new();
-            if (widget.model) _.extend(scope,widget.model);
+
+            if (widget.model) {
+                _.extend(scope,widget.model);
+            }
+            if (widget.controller) {
+                widget.controller.prototype.$scope = scope;
+                widget.controller.prototype.$widgetObject = widget;
+                widget.controller.prototype.$widgetLayoutManager = this;
+
+                let controllerInstance = this.$injector.instantiate(widget.controller);
+
+
+                let controllerObject = {};
+                controllerObject[widget.controllerAs || 'ctrl'] = controllerInstance;
+
+                _.extend(scope,controllerObject);
+            }
 
             let children = elem.children();
             for (let i = 0; i< children.length; i++) {
@@ -57,6 +114,7 @@ class jfWidgetsLayoutController {
                     elem.prop('compiled',true);
                 }
             }
+            widget.$compiled=true;
         }
     }
     _getWidgetById(id) {

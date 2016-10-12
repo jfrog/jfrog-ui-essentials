@@ -7,7 +7,7 @@
                  ng-style="jfWidgetsLayout.cssRules[widget.id]"
                  class="widget-wrapper">
                 <div class="widget-container">
-                    <div ng-if="widget.template">
+                    <div ng-if="widget.template" ng-show="widget.$compiled || (!widget.model && !widget.controller)">
                         <div class="compile-children"
                              id="{{widget.id}}"
                              ng-bind-html="widget.template"></div>
