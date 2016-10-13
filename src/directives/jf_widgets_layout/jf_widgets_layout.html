@@ -16,7 +16,7 @@
                             <div class="icon-hourglass"></div>
                         </div>
                     </div>
-                    <div ng-if="widget.template" ng-show="widget.$compiled || (!widget.model && !widget.controller)">
+                    <div ng-if="widget && widget.template" ng-show="widget.$compiled || (!widget.model && !widget.controller)">
                         <div class="compile-children"
                              id="{{layoutObj.widget}}"
                              ng-bind-html="widget.template"></div>
