@@ -54,7 +54,7 @@ gulp.task('build:common',
             'concatAllJS',
             'preprocessJS',
             'preprocessBowerJSON',
-            'checkBuildVersion',
+            'writeBuildVersion',
 //            'concatAllCSS',
             'cleanTemp',
             callback
@@ -93,11 +93,9 @@ gulp.task('clean', function() {
 });
 
 
-gulp.task('checkBuildVersion', function() {
-    if (!process.env.BUILD_VERSION) {
-        return file('.dev-version', '', { src: true })
-            .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET));
-    }
+gulp.task('writeBuildVersion', function() {
+    return file('.build-version', process.env.BUILD_VERSION || 'UNKNOWN', { src: true })
+        .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET));
 });
 
 // Set watchers and run relevant tasks - then reload (when running under browsersync)

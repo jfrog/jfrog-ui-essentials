@@ -7,7 +7,6 @@
   "ignore": [
     "*",
     "!dist/*",
-    "!dist/.dev-version",
     "!dist/fonts/*",
     "!dist/images/*",
     "!bower.json",
