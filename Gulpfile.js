@@ -95,7 +95,7 @@ gulp.task('clean', function() {
 
 gulp.task('checkBuildVersion', function() {
     if (!process.env.BUILD_VERSION) {
-        return file('.dev-version', '', { src: false })
+        return file('.dev-version', '', { src: true })
             .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET));
     }
 });
