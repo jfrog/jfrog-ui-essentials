@@ -6,7 +6,8 @@
             <div ng-repeat="widget in row"
                  ng-style="jfWidgetsLayout.cssRules[widget.id]"
                  class="widget-wrapper">
-                <div class="widget-container">
+                <div class="widget-container"
+                     ng-style="{overflow: widget.scroll ? 'auto' : 'hidden'}">
                     <div ng-if="widget.template" ng-show="widget.$compiled || (!widget.model && !widget.controller)">
                         <div class="compile-children"
                              id="{{widget.id}}"

@@ -4,6 +4,7 @@ class jfWidgetsLayoutController {
         this.$sce = $sce;
         this.$scope = $scope;
         this.$injector = $injector;
+        this.$timeout = $timeout;
         this.$compile = $compile;
         this.$templateRequest = $templateRequest;
 
@@ -114,7 +115,9 @@ class jfWidgetsLayoutController {
                     elem.prop('compiled',true);
                 }
             }
-            widget.$compiled=true;
+            this.$timeout(()=>{
+                widget.$compiled=true;
+            })
         }
     }
     _getWidgetById(id) {
