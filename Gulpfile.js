@@ -23,6 +23,7 @@ var revNapkin = require('gulp-rev-napkin');
 var rimraf = require('gulp-rimraf');
 var clean = require('gulp-clean');
 var preprocess = require('gulp-preprocess');
+var file = require('gulp-file');
 require("any-promise/register")("bluebird");
 var inject = require('gulp-inject');
 var karma = require('karma');
@@ -53,6 +54,7 @@ gulp.task('build:common',
             'concatAllJS',
             'preprocessJS',
             'preprocessBowerJSON',
+            'checkBuildVersion',
 //            'concatAllCSS',
             'cleanTemp',
             callback
@@ -88,6 +90,14 @@ gulp.task("build:dev",
 gulp.task('clean', function() { 
     return gulp.src(CONFIG.DESTINATIONS.TARGET, { read: false })
         .pipe(rimraf({ force: true }));
+});
+
+
+gulp.task('checkBuildVersion', function() {
+    if (!process.env.BUILD_VERSION) {
+        return file('.dev-version', '', { src: false })
+            .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET));
+    }
 });
 
 // Set watchers and run relevant tasks - then reload (when running under browsersync)
