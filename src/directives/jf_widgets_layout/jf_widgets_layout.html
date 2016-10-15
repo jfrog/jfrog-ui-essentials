@@ -2,13 +2,14 @@
      ng-style="jfWidgetsLayout.containerCss">
     <div class="widgets-padder"
          ng-style="jfWidgetsLayout.padderCss">
-        <div ng-repeat="row in jfWidgetsLayout.layout"
+        <div ng-repeat="row in jfWidgetsLayout.transformedLayout"
              class="widgets-row">
             <div ng-repeat="layoutObj in row"
                  ng-init="widget=jfWidgetsLayout.widgets[layoutObj.widget]"
                  ng-style="jfWidgetsLayout.cssRules[layoutObj.widget]"
                  class="widget-wrapper">
                 <div class="widget-container"
+                     ng-if="!layoutObj.subLayout"
                      ng-style="{overflow: jfWidgetsLayout.widgets[layoutObj.widget].scroll ? 'auto' : 'hidden'}">
                     <div ng-if="widget.showSpinner"
                          class="widget-spinner">
@@ -21,6 +22,11 @@
                              id="{{layoutObj.widget}}"
                              ng-bind-html="widget.template"></div>
                     </div>
+                </div>
+                <div ng-if="layoutObj.subLayout">
+                    <jf-widgets-layout layout="layoutObj.subLayout"
+                                       widgets="jfWidgetsLayout.widgets"
+                                       options="jfWidgetsLayout.options"></jf-widgets-layout>
                 </div>
             </div>
         </div>
