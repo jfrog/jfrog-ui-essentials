@@ -10,7 +10,7 @@
                  class="widget-wrapper">
                 <div class="widget-container"
                      ng-if="!layoutObj.subLayout"
-                     ng-style="{overflow: jfWidgetsLayout.widgets[layoutObj.widget].scroll ? 'auto' : 'hidden'}">
+                     ng-style="{overflow: widget.scroll ? 'auto' : 'hidden'}">
                     <div ng-if="widget.showSpinner"
                          class="widget-spinner">
                         <div class="spinner-msg">
@@ -26,7 +26,7 @@
                 <div ng-if="layoutObj.subLayout">
                     <jf-widgets-layout layout="layoutObj.subLayout"
                                        widgets="jfWidgetsLayout.widgets"
-                                       options="jfWidgetsLayout.options"></jf-widgets-layout>
+                                       options="jfWidgetsLayout.subOptions"></jf-widgets-layout>
                 </div>
             </div>
         </div>

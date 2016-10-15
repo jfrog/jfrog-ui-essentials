@@ -29,6 +29,10 @@ class jfWidgetsLayoutController {
         if (!this.options.minHeight) this.options.minHeight = 'initial';
         if (!this.options.backColor) this.options.backColor = 'transparent';
         if (this.options.outerPadding === undefined) this.options.outerPadding = true;
+
+        this.subOptions = _.cloneDeep(this.options);
+        this.subOptions.minHeight = 'initial';
+        this.subOptions.isSub = true;
     }
 
     transformLayout() {
@@ -164,7 +168,7 @@ class jfWidgetsLayoutController {
             else if (this.mainAxis === 'columns') currentX += topSize;
         })
 
-        let pad = this.options.outerPadding ? this.options.padding/2 : -this.options.padding/2;
+        let pad = this.options.isSub ? 0 : (this.options.outerPadding ? this.options.padding/2 : -this.options.padding/2);
         this.padderCss = {
             top: pad + 'px',
             left: pad + 'px',
