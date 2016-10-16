@@ -1,3 +1,20 @@
+export function jfWidgetsLayout(recursiveDirective) {
+    return {
+        controller: jfWidgetsLayoutController,
+        controllerAs: 'jfWidgetsLayout',
+        bindToController: true,
+        scope: {
+            widgets: '=',
+            layout: '=',
+            options: '='
+        },
+        templateUrl: 'directives/jf_widgets_layout/jf_widgets_layout.html',
+        compile: (element) => {
+            return recursiveDirective.compile(element);
+        }
+    }
+}
+
 class jfWidgetsLayoutController {
     constructor($scope,$compile,$timeout,$q,$templateRequest,$sce, $injector) {
         this.$q = $q;
@@ -53,6 +70,7 @@ class jfWidgetsLayoutController {
         };
 
         this.transformedLayout = [];
+        this.flatCells = [];
 
         let theLayout = this.layout.main || this.layout;
 
@@ -73,17 +91,18 @@ class jfWidgetsLayoutController {
                 let height = this.mainAxis === 'rows' ? rowOrColumn.size : _getSizeFromCell(cell);
                 let width = this.mainAxis === 'columns' ? rowOrColumn.size : _getSizeFromCell(cell);
                 let subLayoutName = _getSubLayoutFromCell(cell);
-                tRowOrColumn.push({
+                let tCell = {
                     widget: _getWidgetNameFromCell(cell),
                     subLayout: subLayoutName ? this.layout[subLayoutName] : undefined,
                     percentWidth: parseInt(width),
                     percentHeight: parseInt(height)
-                })
+                };
+                tRowOrColumn.push(tCell);
+                this.flatCells.push(tCell);
             })
             this.transformedLayout.push(tRowOrColumn);
         })
 
-        console.log(this.transformedLayout)
 
     }
     loadTemplates() {
@@ -186,39 +205,40 @@ class jfWidgetsLayoutController {
         let elems = $('.compile-children');
         for (let i = 0; i< elems.length; i++) {
             let elem = $(elems[i]);
-            let widget = this._getWidgetById(elem.prop('id'));
+            let widgetId = elem.prop('id');
+            if (this._isWidgetInUse(widgetId)) {
+                let widget = this._getWidgetById(widgetId);
+                let scope = this.$scope.$new();
 
-            let scope = this.$scope.$new();
-
-            if (widget.model) {
-                _.extend(scope,widget.model);
-            }
-            if (widget.controller) {
-                widget.controller.prototype.$scope = scope;
-                widget.controller.prototype.$widgetObject = widget;
-                widget.controller.prototype.$layoutObject = this._getLayoutByWidget(elem.prop('id'));
-                widget.controller.prototype.$widgetLayoutManager = this;
-
-                let controllerInstance = this.$injector.instantiate(widget.controller);
-
-
-                let controllerObject = {};
-                controllerObject[widget.controllerAs || 'ctrl'] = controllerInstance;
-
-                _.extend(scope,controllerObject);
-            }
-
-            let children = elem.children();
-            for (let i = 0; i< children.length; i++) {
-                let elem = $(children[i]);
-                if (!elem.prop('compiled')) {
-                    this.$compile(elem)(scope);
-                    elem.prop('compiled',true);
+                if (widget.model) {
+                    _.extend(scope,widget.model);
                 }
+                if (widget.controller) {
+                    widget.controller.prototype.$scope = scope;
+                    widget.controller.prototype.$widgetObject = widget;
+                    widget.controller.prototype.$layoutObject = this._getLayoutByWidget(elem.prop('id'));
+                    widget.controller.prototype.$widgetLayoutManager = this;
+
+                    let controllerInstance = this.$injector.instantiate(widget.controller);
+
+                    let controllerObject = {};
+                    controllerObject[widget.controllerAs || 'ctrl'] = controllerInstance;
+
+                    _.extend(scope,controllerObject);
+                }
+
+                let children = elem.children();
+
+                //We compile only first child, templates should have only one root element!
+                let rootChild = $(children[0]);
+                if (!rootChild.prop('compiled')) {
+                    this.$compile(rootChild)(scope);
+                    rootChild.prop('compiled',true);
+                }
+                this.$timeout(()=>{
+                    widget.$compiled=true;
+                })
             }
-            this.$timeout(()=>{
-                widget.$compiled=true;
-            })
         }
     }
     _getWidgetById(id) {
@@ -236,21 +256,9 @@ class jfWidgetsLayoutController {
 
         return layout;
     }
-}
 
-export function jfWidgetsLayout(recursiveDirective) {
-    return {
-        controller: jfWidgetsLayoutController,
-        controllerAs: 'jfWidgetsLayout',
-        bindToController: true,
-        scope: {
-            widgets: '=',
-            layout: '=',
-            options: '='
-        },
-        templateUrl: 'directives/jf_widgets_layout/jf_widgets_layout.html',
-        compile: (element) => {
-            return recursiveDirective.compile(element);
-        }
+    _isWidgetInUse(widgetId) {
+        return !!_.find(this.flatCells,{widget: widgetId});
     }
 }
+
