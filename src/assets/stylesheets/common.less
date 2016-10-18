@@ -1441,12 +1441,16 @@ h5 {
 
 .drop-zone-wrapper {
   .drop-zone {
-    border: 2px dashed @grayBorderLighter;
-    height: 80px;
-    padding-top: 10px;
-    line-height: 24px;
+    display: inline-block;
+    position: relative;
+    width: 380px;
+    min-height: 40px;
+    line-height: 36px;
+    font-size: 15px;
+    text-align: center;
+    border: 1px dashed @grayFontGeneral;
+    -webkit-transition: all .3s ease-in-out;
     transition: all .3s ease-in-out;
-
     .icon {
       font-size: 28px;
     }
