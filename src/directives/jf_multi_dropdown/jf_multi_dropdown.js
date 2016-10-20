@@ -12,6 +12,20 @@ class jfMultiDropdownController {
                 this.sortItems();
             }
         });
+        this.$scope.$watch('jfMultiDropdown.dropdownOpened', (val) => {
+            if (val === true) {
+                if (!this.items) return;
+                this.opened = true;
+                this.filterText = '';
+            }
+            else if (val === false) {
+                this.opened = false;
+                this.filterText = '';
+            }
+            else {
+
+            }
+        });
 
     }
 
@@ -63,8 +77,10 @@ export function jfMultiDropdown() {
         scope: {
             title: '@',
             filterPlaceholder: '@',
+            noItemsMessage: '@',
             items: '=',
-            onChange: '&?'
+            onChange: '&?',
+            dropdownOpened: '='
         },
         templateUrl: 'directives/jf_multi_dropdown/jf_multi_dropdown.html'
     }

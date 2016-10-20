@@ -10,6 +10,12 @@
     position: relative;
     cursor: pointer;
     background-color: white;
+    .selected-counter {
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 10px;
+      vertical-align: top;
+    }
     .caret {
       position: absolute;
       height: 10px;
@@ -35,6 +41,12 @@
       max-height: 200px;
       overflow: hidden;
       overflow-y: auto;
+      .no-items-message {
+        text-align: center;
+        color: @redError;
+        font-size: 12px;
+        font-weight: 800;
+      }
       .drop-down-item {
         position: relative;
         height: 40px;
@@ -49,7 +61,7 @@
           background: @greenBGDropdownHover !important;
         }
         &.last-selected {
-          border-bottom: 2px solid @blackBGDark;
+          border-bottom: 1px solid @blackBGDark;
         }
       }
     }

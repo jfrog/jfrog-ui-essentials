@@ -1,7 +1,7 @@
 <div class="jf-multi-dropdown">
     <div class="main-box"
          ng-click="jfMultiDropdown.onClick()">
-        {{jfMultiDropdown.title}} <small><b>({{jfMultiDropdown.getSelectedCount()}})</b></small>
+        {{jfMultiDropdown.title}} <span class="selected-counter">({{jfMultiDropdown.getSelectedCount()}})</span>
         <i class="caret pull-right"></i>
     </div>
     <div ng-if="jfMultiDropdown.opened"
@@ -17,7 +17,7 @@
                 </jf-field>
             </form>
         </div>
-        <div class="list-container">
+        <div ng-if="jfMultiDropdown.items.length" class="list-container">
             <div class="drop-down-item"
                  ng-repeat="item in jfMultiDropdown.items | filter:{text: jfMultiDropdown.filterText} track by $index"
                  ng-class="{'last-selected': $index === jfMultiDropdown.lastSelectedIndex && !jfMultiDropdown.filterText}">
@@ -27,6 +27,12 @@
                            ng-model="item.isSelected">
                     <span></span> <i ng-if="item.iconClass" class="item-icon" ng-class="item.iconClass"></i> {{ item.text }}
                 </label>
+            </div>
+        </div>
+        <div ng-if="!jfMultiDropdown.items.length && jfMultiDropdown.noItemsMessage"
+             class="list-container">
+            <div class="no-items-message">
+                {{jfMultiDropdown.noItemsMessage}}
             </div>
         </div>
     </div>
