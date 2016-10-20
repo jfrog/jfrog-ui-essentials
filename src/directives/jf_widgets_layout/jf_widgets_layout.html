@@ -1,5 +1,8 @@
 <div class="jf-widgets-layout-container"
-     ng-style="jfWidgetsLayout.containerCss">
+     ng-style="jfWidgetsLayout.containerCss"
+     ng-mousemove="jfWidgetsLayout.onMouseMove($event)"
+     ng-mousedown="jfWidgetsLayout.onMouseDown($event)"
+     ng-mouseup="jfWidgetsLayout.onMouseUp($event)">
     <div class="widgets-padder"
          ng-style="jfWidgetsLayout.padderCss">
         <div ng-repeat="row in jfWidgetsLayout.transformedLayout"
