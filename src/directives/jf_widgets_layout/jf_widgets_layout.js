@@ -16,10 +16,11 @@ export function jfWidgetsLayout(recursiveDirective) {
 }
 
 class jfWidgetsLayoutController {
-    constructor($scope,$compile,$timeout,$q,$templateRequest,$sce, $injector) {
+    constructor($scope,$compile,$timeout,$q,$templateRequest,$sce, $injector,$element) {
         this.$q = $q;
         this.$sce = $sce;
         this.$scope = $scope;
+        this.$element = $element;
         this.$injector = $injector;
         this.$timeout = $timeout;
         this.$compile = $compile;
@@ -31,6 +32,7 @@ class jfWidgetsLayoutController {
             if (!newval || this.templatesLoadStarted && !this.templatesLoaded) return;
             this.transformLayout();
             this.updateCss();
+            this.updateDragLines();
             this.loadTemplates().then(()=>{
                 $timeout(()=>this.compileElements());
             })
@@ -45,11 +47,13 @@ class jfWidgetsLayoutController {
         if (!this.options.padding) this.options.padding = 10;
         if (!this.options.minHeight) this.options.minHeight = 'initial';
         if (!this.options.backColor) this.options.backColor = 'transparent';
+        if (this.options.allowResize === undefined) this.options.allowResize = false;
         if (this.options.outerPadding === undefined) this.options.outerPadding = true;
 
         this.subOptions = _.cloneDeep(this.options);
         this.subOptions.minHeight = 'initial';
         this.subOptions.isSub = true;
+        this.subOptions.parent = this;
     }
 
     transformLayout() {
@@ -172,7 +176,8 @@ class jfWidgetsLayoutController {
                     bottom: (100 - (currentY + layoutDef.percentHeight)) + '%',
                     right: (100 - (currentX + layoutDef.percentWidth)) + '%',
                     padding: (this.options.padding/2) + 'px'
-                }
+                };
+
                 if (this.mainAxis === 'rows') {
                     currentX += layoutDef.percentWidth;
                     if (layoutDef.percentHeight > topSize) topSize = layoutDef.percentHeight;
@@ -199,6 +204,26 @@ class jfWidgetsLayoutController {
             'min-height': this.options.minHeight + 'px',
             'background-color': this.options.backColor
         }
+    }
+
+    updateDragLines() {
+        this.dragLines = [];
+        for (let key in this.cssRules) {
+            let rules = this.cssRules[key];
+            let top = parseFloat(rules.top);
+            let bottom = parseFloat(rules.bottom);
+            let left = parseFloat(rules.left);
+            let right = parseFloat(rules.right);
+            this.addLinesFromRect({
+                x1: left,
+                y1: top,
+                x2: 100-right,
+                y2: 100-bottom,
+                cssRules: rules,
+                widget: key
+            });
+        }
+
     }
 
     compileElements() {
@@ -259,6 +284,254 @@ class jfWidgetsLayoutController {
 
     _isWidgetInUse(widgetId) {
         return !!_.find(this.flatCells,{widget: widgetId});
+    }
+
+
+    onMouseMove(e) {
+
+        if (!this.options.allowResize) return;
+        if (this.draggingLines) {
+            this.onDrag(e);
+            e.preventDefault();
+        }
+        else {
+
+            let container = $(this.$element).find('.jf-widgets-layout-container');
+
+            let containerWidth = container.innerWidth();
+            let containerHeight = container.innerHeight();
+
+            let mouseX = e.pageX - container.offset().left;
+            let mouseY = e.pageY - container.offset().top;
+
+            let xprec = Math.round((mouseX / containerWidth) * 100);
+            let yprec = Math.round((mouseY / containerHeight) * 100);
+
+            this.mousePrecPt = {x:xprec,y:yprec};
+            this.closestLines = this.getClosestLines(xprec,yprec);
+            if (this.closestLines.length) {
+                let directions = _.map(this.closestLines,'cssRelevantRule');
+
+                let cursor;
+                if (_.includes(directions,'right') && _.includes(directions,'left') && _.includes(directions,'top') && _.includes(directions,'bottom')) {
+                    cursor = 'all-scroll';
+                    this.setSubIsOnEdge(true);
+                }
+                else if (_.includes(directions,'top') && _.includes(directions,'bottom')) {
+                    cursor = 'row-resize';
+                    this.setSubIsOnEdge(true);
+                }
+                else if (_.includes(directions,'right') && _.includes(directions,'left')) {
+                    cursor = 'col-resize';
+                    this.setSubIsOnEdge(true);
+                }
+                else {
+                    cursor = 'default';
+                    this.setSubIsOnEdge(false);
+                }
+                container.css('cursor',cursor);
+            }
+            else {
+                if (!this.subIsOnEdge) {
+                    container.css('cursor','default');
+                    this.setSubIsOnEdge(false);
+                }
+            }
+        }
+
+    }
+    onMouseLeave(e) {
+        if (!this.options.allowResize) return;
+        this.onMouseUp(e);
+        this.setSubIsOnEdge(false);
+    }
+
+    onDrag(e) {
+        let container = $(this.$element).find('.jf-widgets-layout-container');
+        let containerWidth = container.innerWidth();
+        let containerHeight = container.innerHeight();
+
+        let mouseX = e.pageX - container.offset().left;
+        let mouseY = e.pageY - container.offset().top;
+
+        let xprec = Math.round((mouseX / containerWidth) * 100);
+        let yprec = Math.round((mouseY / containerHeight) * 100);
+
+        let xDiff = xprec - this.dragStartPt.x;
+        let yDiff = yprec - this.dragStartPt.y;
+
+        let okToDrag = true;
+
+        for (let i in this.closestLines) {
+            let line = this.closestLines[i];
+            let origLine = this.dragStartLines[i];
+            let top = parseFloat(origLine.cssRules.top);
+            let bottom = parseFloat(origLine.cssRules.bottom);
+            let left = parseFloat(origLine.cssRules.left);
+            let right = parseFloat(origLine.cssRules.right);
+            let originalHeight = this._getLayoutByWidget(line.widget).percentHeight;
+            let originalWidth = this._getLayoutByWidget(line.widget).percentWidth;
+            if (line.cssRelevantRule === 'top') {
+                let newTop = top + yDiff;
+                let newHeight = (100 - bottom) - newTop;
+                if (newHeight < 0.2 * originalHeight) {
+                    okToDrag = false;
+                    break;
+                }
+            }
+            else if (line.cssRelevantRule === 'bottom') {
+                let newBottom = bottom - yDiff;
+                let newHeight = (100 - newBottom) - top;
+                if (newHeight < 0.2 * originalHeight) {
+                    okToDrag = false;
+                    break;
+                }
+            }
+            else if (line.cssRelevantRule === 'left') {
+                let newLeft = left + xDiff;
+                let newWidth = (100 - right) - newLeft;
+                if (newWidth < 0.2 * originalWidth) {
+                    okToDrag = false;
+                    break;
+                }
+            }
+            else if (line.cssRelevantRule === 'right') {
+                let newRight = right - xDiff;
+                let newWidth = (100 - newRight) - left;
+                if (newWidth < 0.2 * originalWidth) {
+                    okToDrag = false;
+                    break;
+                }
+            }
+        }
+
+        if (okToDrag) {
+            for (let i in this.closestLines) {
+                let line = this.closestLines[i];
+                let origLine = this.dragStartLines[i];
+                if (line.cssRelevantRule === 'top') {
+                    let top = parseFloat(origLine.cssRules.top);
+                    line.cssRules.top = (top+yDiff) + '%';
+                }
+                else if (line.cssRelevantRule === 'bottom') {
+                    let bottom = parseFloat(origLine.cssRules.bottom);
+                    line.cssRules.bottom = (bottom-yDiff) + '%';
+                }
+                else if (line.cssRelevantRule === 'left') {
+                    let left = parseFloat(origLine.cssRules.left);
+                    line.cssRules.left = (left+xDiff) + '%';
+                }
+                else if (line.cssRelevantRule === 'right') {
+                    let right = parseFloat(origLine.cssRules.right);
+                    line.cssRules.right = (right-xDiff) + '%';
+                }
+            }
+        }
+    }
+
+    onMouseDown(e) {
+        if (!this.options.allowResize) return;
+        if (this.closestLines && this.closestLines.length) {
+            this.draggingLines = true;
+            this.dragStartPt = _.cloneDeep(this.mousePrecPt);
+            this.dragStartLines = _.cloneDeep(this.closestLines);
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    }
+
+    onMouseUp(e) {
+        if (!this.options.allowResize) return;
+
+        this.updateDragLines();
+        this.draggingLines = false;
+        this.dragStartPt = null;
+        this.dragStartLines = null;
+    }
+    onWidgetMouseMove(e) {
+        if (!this.options.allowResize) return;
+        if (this.draggingLines || this.isParentDragging()) return;
+
+        let container = $(this.$element).find('.jf-widgets-layout-container');
+        if (!this.subIsOnEdge) {
+            container.css('cursor','default');
+            this.setSubIsOnEdge(false);
+        }
+        e.stopPropagation();
+    }
+    addLinesFromRect(rect) {
+        this.dragLines.push({x1: rect.x1, y1: rect.y1, x2: rect.x2, y2: rect.y1, cssRules: rect.cssRules, widget: rect.widget, cssRelevantRule: 'top'});
+        this.dragLines.push({x1: rect.x2, y1: rect.y1, x2: rect.x2, y2: rect.y2, cssRules: rect.cssRules, widget: rect.widget, cssRelevantRule: 'right'});
+        this.dragLines.push({x1: rect.x1, y1: rect.y2, x2: rect.x2, y2: rect.y2, cssRules: rect.cssRules, widget: rect.widget, cssRelevantRule: 'bottom'});
+        this.dragLines.push({x1: rect.x1, y1: rect.y1, x2: rect.x1, y2: rect.y2, cssRules: rect.cssRules, widget: rect.widget, cssRelevantRule: 'left'});
+    }
+
+    getClosestLines(x,y) {
+        let closest = [];
+
+        this.dragLines.forEach((line)=>{
+            let infinite = ((line.cssRelevantRule === 'bottom' || line.cssRelevantRule === 'top') && this.mainAxis === 'rows') ||
+                           ((line.cssRelevantRule === 'right' || line.cssRelevantRule === 'left') && this.mainAxis === 'columns')
+            let dist = this.getPointDistToLine({x:x,y:y},line,infinite);
+            if (dist<=1) closest.push(line);
+        });
+
+        let filtered = [];
+
+        let top = _.filter(closest,{cssRelevantRule: 'top'});
+        let bottom = _.filter(closest,{cssRelevantRule: 'bottom'});
+        let left = _.filter(closest,{cssRelevantRule: 'left'});
+        let right = _.filter(closest,{cssRelevantRule: 'right'});
+
+        top.forEach((line)=>{
+            let matches = this.mainAxis === 'rows' ? _.filter(bottom,{y1:line.y1}) : _.filter(bottom,{x1:line.x1,x2:line.x2});
+
+            if (matches.length) {
+                filtered.push(line);
+                matches.forEach((match)=>filtered.push(match));
+            }
+        });
+        left.forEach((line)=>{
+            let matches = this.mainAxis === 'columns' ? _.filter(right,{x1:line.x1}) : _.filter(right,{y1:line.y1,y2:line.y2});
+
+            if (matches.length) {
+                filtered.push(line);
+                matches.forEach((match)=>filtered.push(match));
+            }
+        });
+
+        return filtered;
+    }
+
+    getPointDistToLine(pt,line, infiniteLine) {
+        if (line.x1 === line.x2) {
+            if (infiniteLine) return Math.abs(pt.x - line.x1);
+            else if (pt.y < line.y1) return this.getPointDistToPoint(pt,{x:line.x1,y:line.y1});
+            else if (pt.y > line.y2) return this.getPointDistToPoint(pt,{x:line.x2,y:line.y2});
+            else return Math.abs(pt.x - line.x1);
+        }
+        else if (line.y1 === line.y2) {
+            if (infiniteLine) return Math.abs(pt.y - line.y1);
+            if (pt.x < line.x1) return this.getPointDistToPoint(pt,{x:line.x1,y:line.y1});
+            else if (pt.x > line.x2) return this.getPointDistToPoint(pt,{x:line.x2,y:line.y2});
+            else return Math.abs(pt.y - line.y1);
+        }
+    }
+    getPointDistToPoint(pt1,pt2) {
+        return Math.sqrt(Math.pow(pt1.x-pt2.x,2) + Math.pow(pt1.y-pt2.y,2))
+    }
+
+    setSubIsOnEdge(onEdge) {
+        let parent = this.options.parent;
+        while (parent) {
+            parent.subIsOnEdge = onEdge;
+            parent = parent.options.parent;
+        }
+    }
+    isParentDragging(recurse=false) {
+        let parent = this.options.parent;
+        if (parent) return parent.draggingLines || parent.isParentDragging(true);
+        else return recurse ? this.draggingLines : false;
     }
 }
 
