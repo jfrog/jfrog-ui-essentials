@@ -1,0 +1,17 @@
+
+.jf-marquee-container {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  &.overflowing {
+    &.animating {
+      span {
+        position: relative;
+      }
+    }
+    &:hover {
+      text-overflow: clip;
+    }
+  }
+
+}

@@ -25,6 +25,7 @@ import {jfValidation}   from './jf_validation/jf_validation';
 import {jfSidebar}       from './jf_sidebar/jf_sidebar';
 import {jfMultiDropdown}       from './jf_multi_dropdown/jf_multi_dropdown';
 import {jfWidgetsLayout}       from './jf_widgets_layout/jf_widgets_layout';
+import {jfMarquee}       from './jf_marquee/jf_marquee';
 
 angular.module('jfrog.ui.essentials.directives', [])
     .directive({
@@ -54,5 +55,6 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfClipCopy': jfClipCopy,
         'jfSidebar': jfSidebar,
         'jfMultiDropdown': jfMultiDropdown,
-        'jfWidgetsLayout': jfWidgetsLayout
+        'jfWidgetsLayout': jfWidgetsLayout,
+        'jfMarquee': jfMarquee
     });
