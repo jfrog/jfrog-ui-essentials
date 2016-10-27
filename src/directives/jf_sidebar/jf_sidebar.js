@@ -335,7 +335,7 @@ class jfSidebarController {
     _updateTabIndex() {
         if (this.menu.width != this.openAdminSize) {
             $('.admin-menu').find('a,input').attr('tabindex', -1);
-            $('.admin-menu').find('a,input').blur();
+            //$('.admin-menu').find('a,input').blur();
         } else {
             let highlighted = $('.admin-menu').find('a.highlight');
             if (highlighted.length) {
