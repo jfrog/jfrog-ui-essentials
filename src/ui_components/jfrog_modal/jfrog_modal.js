@@ -7,7 +7,7 @@
  */
 export class JFrogModal {
 
-    constructor($modal, $rootScope, $q, $sce, $timeout, JFrogEventBus, JFrogUILibConfig, JFrogUIUtils) {
+    constructor($modal, $rootScope, $injector, $q, $sce, $timeout, JFrogEventBus, JFrogUILibConfig, JFrogUIUtils) {
         this.modal = $modal;
         this.$rootScope = $rootScope;
         this.$q = $q;
@@ -17,7 +17,7 @@ export class JFrogModal {
         this.JFrogUILibConfig = JFrogUILibConfig;
         this.JFrogEventBus = JFrogEventBus;
         this.JFrogUIUtils = JFrogUIUtils;
-
+        this.$injector = $injector;
         this.EVENTS = JFrogEventBus.getEventsDefinition();
 
     }
@@ -125,5 +125,62 @@ export class JFrogModal {
         return this.launchModal('@confirm_modal', modalScope, 'sm').result;
     }
 
+
+    launchWizard(wizardDefinitionObject) {
+
+        let wizardModalScope = this.$rootScope.$new();
+
+        wizardModalScope.$wizardDef = wizardDefinitionObject;
+        wizardModalScope.$wizardCtrl = new WizardController(wizardDefinitionObject);
+
+        wizardDefinitionObject.controller.prototype.$wizardCtrl = wizardModalScope.$wizardCtrl;
+
+        let controllerInstance = this.$injector.instantiate(wizardDefinitionObject.controller);
+
+        let controllerObject = {};
+        controllerObject[wizardDefinitionObject.controllerAs || 'ctrl'] = controllerInstance;
+
+        _.extend(wizardModalScope,controllerObject);
+
+        wizardModalScope.$wizardCtrl.$userCtrl = controllerInstance;
+
+        let modalInstance = this.launchModal('@wizard_modal', wizardModalScope, 'lg', wizardDefinitionObject.cancelable);
+
+        wizardModalScope.$wizardCtrl.$modalInstance = modalInstance;
+
+        modalInstance.result.catch((reason) => {
+            if (reason) wizardModalScope.$wizardCtrl.cancel();
+        })
+
+        return modalInstance.result;
+    }
+
 }
 
+class WizardController {
+    constructor(wizardDefinitionObject, modalInstance) {
+        this.currentStep = 1;
+        this.wizardDefinitionObject = wizardDefinitionObject;
+        this.totalSteps = wizardDefinitionObject.steps.length;
+    }
+
+    cancel() {
+        if (this.$userCtrl.onCancel) this.$userCtrl.onCancel();
+        this.$modalInstance.dismiss();
+    }
+
+    nextStep() {
+        if (this.$userCtrl.onStepChange) this.$userCtrl.onStepChange(this.wizardDefinitionObject.steps[this.currentStep], this.wizardDefinitionObject.steps[this.currentStep-1]);
+        this.currentStep++;
+    }
+
+    prevStep() {
+        if (this.$userCtrl.onStepChange) this.$userCtrl.onStepChange(this.wizardDefinitionObject.steps[this.currentStep-2], this.wizardDefinitionObject.steps[this.currentStep-1]);
+        this.currentStep--;
+    }
+
+    finish() {
+        if (this.$userCtrl.onComplete) this.$userCtrl.onComplete();
+        this.$modalInstance.close();
+    }
+}
