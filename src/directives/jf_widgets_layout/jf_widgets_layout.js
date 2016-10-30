@@ -31,12 +31,18 @@ class jfWidgetsLayoutController {
         let onChange = (newval,oldval) => {
             if (!newval || this.templatesLoadStarted && !this.templatesLoaded) return;
             this.transformLayout();
+            this.updateFlatCells();
             this.updateCss();
             this.updateDragLines();
             this.loadTemplates().then(()=>{
                 $timeout(()=>this.compileElements());
             })
         };
+        $scope.$watch('jfWidgetsLayout.options.editMode', (editMode) => {
+            this.editMode = editMode === undefined ? false : editMode;
+            this.subOptions.editMode = this.editMode;
+            console.log('Edit Mode: ' + this.editMode);
+        });
 
         $scope.$watch('jfWidgetsLayout.layout', onChange);
 //        $scope.$watch('jfWidgetsLayout.options', onChange, true);
@@ -49,6 +55,7 @@ class jfWidgetsLayoutController {
         if (!this.options.backColor) this.options.backColor = 'transparent';
         if (this.options.allowResize === undefined) this.options.allowResize = false;
         if (this.options.outerPadding === undefined) this.options.outerPadding = true;
+        if (this.options.editMode === undefined) this.options.editMode = false;
 
         this.subOptions = _.cloneDeep(this.options);
         this.subOptions.minHeight = 'initial';
@@ -74,7 +81,6 @@ class jfWidgetsLayoutController {
         };
 
         this.transformedLayout = [];
-        this.flatCells = [];
 
         let theLayout = this.layout.main || this.layout;
 
@@ -102,13 +108,22 @@ class jfWidgetsLayoutController {
                     percentHeight: parseInt(height)
                 };
                 tRowOrColumn.push(tCell);
-                this.flatCells.push(tCell);
             })
             this.transformedLayout.push(tRowOrColumn);
         })
 
+        this.normalizeSizes();
 
     }
+    updateFlatCells() {
+        this.flatCells = [];
+        this.transformedLayout.forEach((rowOrColumn) => {
+            rowOrColumn.forEach((cell)=> {
+                this.flatCells.push(cell);
+            })
+        })
+    }
+
     loadTemplates() {
         let defer = this.$q.defer();
 
@@ -158,7 +173,7 @@ class jfWidgetsLayoutController {
     updateCss() {
         this.cssRules = {};
         let currentX = 0, currentY = 0;
-        let emptyWidgetNextIndex = 0;
+        let cssRunningId = 0;
 
         this.transformedLayout.forEach((rowOrColumn) => {
             if (this.mainAxis === 'rows') currentX = 0;
@@ -166,11 +181,13 @@ class jfWidgetsLayoutController {
             let topSize = 0;
             rowOrColumn.forEach((layoutDef) => {
                 let widget = this.widgets[layoutDef.widget];
+                layoutDef.cssId = cssRunningId;
                 if (!widget) {
-                    layoutDef.widget = '$$widget'+emptyWidgetNextIndex;
-                    emptyWidgetNextIndex++;
+                    layoutDef.widget = '$$widget'+cssRunningId;
                 }
-                this.cssRules[layoutDef.widget] = {
+                cssRunningId++;
+
+                this.cssRules[layoutDef.cssId] = {
                     top: currentY + '%',
                     left: currentX + '%',
                     bottom: (100 - (currentY + layoutDef.percentHeight)) + '%',
@@ -214,14 +231,17 @@ class jfWidgetsLayoutController {
             let bottom = parseFloat(rules.bottom);
             let left = parseFloat(rules.left);
             let right = parseFloat(rules.right);
+            let cell = _.find(this.flatCells,{cssId: parseInt(key)});
             this.addLinesFromRect({
                 x1: left,
                 y1: top,
                 x2: 100-right,
                 y2: 100-bottom,
                 cssRules: rules,
-                widget: key
+                widget: cell.widget
             });
+            cell.percentWidth = (100-right) - left;
+            cell.percentHeight = (100-bottom) - top;
         }
 
     }
@@ -274,8 +294,8 @@ class jfWidgetsLayoutController {
         let layout;
 
         for (let i in this.transformedLayout) {
-            let row = this.transformedLayout[i];
-            layout = _.find(row, {widget: id});
+            let rowOrColumn = this.transformedLayout[i];
+            layout = _.find(rowOrColumn, {widget: id});
             if (layout) break;
         }
 
@@ -289,7 +309,7 @@ class jfWidgetsLayoutController {
 
     onMouseMove(e) {
 
-        if (!this.options.allowResize) return;
+        if (!this.options.allowResize && !this.editMode) return;
         if (this.draggingLines) {
             this.onDrag(e);
             e.preventDefault();
@@ -341,7 +361,7 @@ class jfWidgetsLayoutController {
 
     }
     onMouseLeave(e) {
-        if (!this.options.allowResize) return;
+        if (!this.options.allowResize && !this.editMode) return;
         this.onMouseUp(e);
         this.setSubIsOnEdge(false);
     }
@@ -430,7 +450,7 @@ class jfWidgetsLayoutController {
     }
 
     onMouseDown(e) {
-        if (!this.options.allowResize) return;
+        if (!this.options.allowResize && !this.editMode) return;
         if (this.closestLines && this.closestLines.length) {
             this.draggingLines = true;
             this.dragStartPt = _.cloneDeep(this.mousePrecPt);
@@ -441,15 +461,16 @@ class jfWidgetsLayoutController {
     }
 
     onMouseUp(e) {
-        if (!this.options.allowResize) return;
+        if (!this.options.allowResize && !this.editMode) return;
 
         this.updateDragLines();
+        this.closestLines = null;
         this.draggingLines = false;
         this.dragStartPt = null;
         this.dragStartLines = null;
     }
     onWidgetMouseMove(e) {
-        if (!this.options.allowResize) return;
+        if (!this.options.allowResize && !this.editMode) return;
         if (this.draggingLines || this.isParentDragging()) return;
 
         let container = $(this.$element).find('.jf-widgets-layout-container');
@@ -532,6 +553,104 @@ class jfWidgetsLayoutController {
         let parent = this.options.parent;
         if (parent) return parent.draggingLines || parent.isParentDragging(true);
         else return recurse ? this.draggingLines : false;
+    }
+
+    removeWidget(layoutObj) {
+        let rowOrColumnToRemove = null;
+        this.transformedLayout.forEach((rowOrColumn) => {
+            let index = _.indexOf(rowOrColumn,layoutObj);
+            if (index !== -1) {
+                rowOrColumn.splice(index,1);
+                if (rowOrColumn.length === 0) {
+                    rowOrColumnToRemove = rowOrColumn;
+                }
+            }
+        });
+        if (rowOrColumnToRemove) {
+            let index = _.indexOf(this.transformedLayout,rowOrColumnToRemove);
+            this.transformedLayout.splice(index,1);
+        }
+        if (this.transformedLayout.length === 0) {
+            if (this.options.isSub) {
+                let parentLayoutObj = _.find(this.options.parent.flatCells,{subLayout: this.layout});
+                this.options.parent.removeWidget(parentLayoutObj);
+            }
+        }
+        this.megaRefresh();
+    }
+
+    normalizeSizes() {
+        let totalSizeMajor = 0;
+        this.transformedLayout.forEach((rowOrColumn) => {
+            let totalSizeMinor = 0;
+            let totalSizeMajorAdd = 0;
+            rowOrColumn.forEach((cell)=>{
+                totalSizeMinor += this.mainAxis === 'columns' ? cell.percentHeight : cell.percentWidth;
+                let major = this.mainAxis === 'columns' ? cell.percentWidth : cell.percentHeight;
+                totalSizeMajorAdd = major > totalSizeMajorAdd ? major : totalSizeMajorAdd;
+            })
+            totalSizeMajor += totalSizeMajorAdd;
+            if (totalSizeMinor !== 100) {
+                rowOrColumn.forEach((cell)=>{
+                    if (this.mainAxis === 'columns') {
+                        cell.percentHeight = 100*cell.percentHeight/totalSizeMinor;
+                    }
+                    else {
+                        cell.percentWidth = 100*cell.percentWidth/totalSizeMinor;
+                    }
+                })
+            }
+        });
+        if (totalSizeMajor !== 100) {
+            this.transformedLayout.forEach((rowOrColumn) => {
+                rowOrColumn.forEach((cell)=>{
+                    if (this.mainAxis === 'columns') {
+                        cell.percentWidth = 100*cell.percentWidth/totalSizeMajor;
+                    }
+                    else {
+                        cell.percentHeight = 100*cell.percentHeight/totalSizeMajor;
+                    }
+                });
+            });
+        }
+    }
+    splitCell(layoutObj,orientation) {
+        this.transformedLayout.forEach((rowOrColumn) => {
+            let index = _.indexOf(rowOrColumn,layoutObj);
+            if (index !== -1) {
+                let clone = angular.copy(layoutObj);
+                if ((orientation === 'h' && this.mainAxis === 'rows') || (orientation === 'v' && this.mainAxis === 'columns')) {
+                    let attr = orientation === 'h' ? 'percentWidth' : 'percentHeight';
+                    layoutObj[attr] /= 2;
+                    clone[attr] /= 2;
+                    rowOrColumn.splice(index + 1,0,clone);
+                }
+                else {
+                    delete layoutObj.widget;
+                    layoutObj.subLayout = {};
+                    let axis = this.mainAxis === 'columns' ? 'rows' : 'columns';
+                    layoutObj.subLayout[axis] = [
+                        {
+                            size: '100%',
+                            cells: ['50% @'+clone.widget,'50% @'+clone.widget]
+                        }
+                    ]
+
+                }
+            }
+        });
+
+        this.megaRefresh();
+    }
+
+    megaRefresh() {
+        this.updateFlatCells();
+        this.normalizeSizes();
+        this.updateCss();
+        this.updateDragLines();
+        this.loadTemplates().then(()=>{
+            this.$timeout(()=>this.compileElements());
+        })
     }
 }
 

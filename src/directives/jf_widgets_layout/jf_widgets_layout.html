@@ -1,4 +1,4 @@
-<div class="jf-widgets-layout-container"
+<div class="jf-widgets-layout-container" jf-disable-ng-animate
      ng-style="jfWidgetsLayout.containerCss"
      ng-mouseleave="jfWidgetsLayout.onMouseLeave($event)"
      ng-mousemove="jfWidgetsLayout.onMouseMove($event)"
@@ -10,13 +10,29 @@
              class="widgets-row">
             <div ng-repeat="layoutObj in row"
                  ng-init="widget=jfWidgetsLayout.widgets[layoutObj.widget]"
-                 ng-style="jfWidgetsLayout.cssRules[layoutObj.widget]"
+                 ng-style="jfWidgetsLayout.cssRules[layoutObj.cssId]"
                  class="widget-wrapper">
+                <div ng-if="!layoutObj.subLayout && jfWidgetsLayout.editMode"
+                     class="edit-mode-actions"
+                     ng-mousemove="jfWidgetsLayout.onWidgetMouseMove($event)">
+                    <i class="glyphicon glyphicon-asterisk"
+                       jf-tooltip="Change"
+                       ng-click="jfWidgetsLayout.changeWidget(layoutObj)"></i>
+                    <i class="glyphicon glyphicon-remove-circle"
+                       jf-tooltip="Remove"
+                       ng-click="jfWidgetsLayout.removeWidget(layoutObj)"></i>
+                    <i class="glyphicon glyphicon-resize-vertical"
+                       jf-tooltip="Vertical Split"
+                       ng-click="jfWidgetsLayout.splitCell(layoutObj,'v')"></i>
+                    <i class="glyphicon glyphicon-resize-horizontal"
+                       jf-tooltip="Horizontal Split"
+                       ng-click="jfWidgetsLayout.splitCell(layoutObj,'h')"></i>
+                </div>
                 <div class="widget-container"
                      ng-mousemove="jfWidgetsLayout.onWidgetMouseMove($event)"
                      ng-if="!layoutObj.subLayout"
                      ng-style="{overflow: widget.scroll ? 'auto' : 'hidden'}">
-                    <div ng-if="widget.showSpinner"
+                    <div ng-if="widget && widget.showSpinner"
                          class="widget-spinner">
                         <div class="spinner-msg">
                             <div class="icon-hourglass"></div>
