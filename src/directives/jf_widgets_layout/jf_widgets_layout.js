@@ -41,7 +41,6 @@ class jfWidgetsLayoutController {
         $scope.$watch('jfWidgetsLayout.options.editMode', (editMode) => {
             this.editMode = editMode === undefined ? false : editMode;
             this.subOptions.editMode = this.editMode;
-            console.log('Edit Mode: ' + this.editMode);
         });
 
         $scope.$watch('jfWidgetsLayout.layout', onChange);
@@ -224,8 +223,10 @@ class jfWidgetsLayoutController {
 
         this.containerCss = {
             'min-height': this.options.minHeight + 'px',
-            'background-color': this.options.backColor
+            'background-color': this.options.backColor,
+            'overflow': this.options.isSub && this.editMode ? 'visible' : 'hidden'
         }
+        if (this.options.parent) this.options.parent.updateCss();
     }
 
     updateDragLines() {
@@ -659,7 +660,8 @@ class jfWidgetsLayoutController {
     }
 
     changeWidget(layoutObj) {
-        layoutObj.selectWidgetMode = true;
+        layoutObj.selectWidgetMode = !layoutObj.selectWidgetMode;
+        this.updateCss();
     }
     onWidgetChange(layoutObj) {
         layoutObj.selectWidgetMode = false;
@@ -667,7 +669,7 @@ class jfWidgetsLayoutController {
         this.megaRefresh();
     }
     getWidgetName(key) {
-        return this.widgets[key].name || key;
+        return this.widgets[key] ? this.widgets[key].name || key : '';
     }
 }
 
