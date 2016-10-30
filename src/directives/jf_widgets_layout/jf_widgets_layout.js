@@ -45,7 +45,12 @@ class jfWidgetsLayoutController {
         });
 
         $scope.$watch('jfWidgetsLayout.layout', onChange);
-//        $scope.$watch('jfWidgetsLayout.options', onChange, true);
+
+        $scope.$watch('jfWidgetsLayout.widgets', (widgets) => {
+            if (widgets) {
+                this.widgetKeys = Object.keys(widgets);
+            }
+        });
     }
 
     setDefaultOptions() {
@@ -651,6 +656,18 @@ class jfWidgetsLayoutController {
         this.loadTemplates().then(()=>{
             this.$timeout(()=>this.compileElements());
         })
+    }
+
+    changeWidget(layoutObj) {
+        layoutObj.selectWidgetMode = true;
+    }
+    onWidgetChange(layoutObj) {
+        layoutObj.selectWidgetMode = false;
+        this.templatesLoaded = false;
+        this.megaRefresh();
+    }
+    getWidgetName(key) {
+        return this.widgets[key].name || key;
     }
 }
 

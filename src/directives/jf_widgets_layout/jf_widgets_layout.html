@@ -6,10 +6,9 @@
      ng-mouseup="jfWidgetsLayout.onMouseUp($event)">
     <div class="widgets-padder"
          ng-style="jfWidgetsLayout.padderCss">
-        <div ng-repeat="row in jfWidgetsLayout.transformedLayout"
+        <div ng-repeat="rowOrColumn in jfWidgetsLayout.transformedLayout"
              class="widgets-row">
-            <div ng-repeat="layoutObj in row"
-                 ng-init="widget=jfWidgetsLayout.widgets[layoutObj.widget]"
+            <div ng-repeat="layoutObj in rowOrColumn"
                  ng-style="jfWidgetsLayout.cssRules[layoutObj.cssId]"
                  class="widget-wrapper">
                 <div ng-if="!layoutObj.subLayout && jfWidgetsLayout.editMode"
@@ -28,20 +27,31 @@
                        jf-tooltip="Horizontal Split"
                        ng-click="jfWidgetsLayout.splitCell(layoutObj,'h')"></i>
                 </div>
+                <div ng-if="!layoutObj.subLayout && jfWidgetsLayout.editMode && layoutObj.selectWidgetMode"
+                     class="select-widget-mode"
+                     ng-mousemove="jfWidgetsLayout.onWidgetMouseMove($event)">
+                    <div class="widget-selector">
+                        <jf-ui-select jf-select-model="layoutObj.widget"
+                                      jf-select-display-func="jfWidgetsLayout.getWidgetName($item)"
+                                      jf-select-placeholder="Select A Widget"
+                                      jf-select-change="jfWidgetsLayout.onWidgetChange(layoutObj)"
+                                      jf-select-options="jfWidgetsLayout.widgetKeys"></jf-ui-select>
+                    </div>
+                </div>
                 <div class="widget-container"
                      ng-mousemove="jfWidgetsLayout.onWidgetMouseMove($event)"
                      ng-if="!layoutObj.subLayout"
-                     ng-style="{overflow: widget.scroll ? 'auto' : 'hidden'}">
-                    <div ng-if="widget && widget.showSpinner"
+                     ng-style="{overflow: jfWidgetsLayout.widgets[layoutObj.widget].scroll ? 'auto' : 'hidden'}">
+                    <div ng-if="jfWidgetsLayout.widgets[layoutObj.widget] && jfWidgetsLayout.widgets[layoutObj.widget].showSpinner"
                          class="widget-spinner">
                         <div class="spinner-msg">
                             <div class="icon-hourglass"></div>
                         </div>
                     </div>
-                    <div ng-if="widget && widget.template" ng-show="widget.$compiled || (!widget.model && !widget.controller)">
+                    <div ng-if="jfWidgetsLayout.widgets[layoutObj.widget] && jfWidgetsLayout.widgets[layoutObj.widget].template" ng-show="jfWidgetsLayout.widgets[layoutObj.widget].$compiled || (!jfWidgetsLayout.widgets[layoutObj.widget].model && !jfWidgetsLayout.widgets[layoutObj.widget].controller)">
                         <div class="compile-children"
                              id="{{layoutObj.widget}}"
-                             ng-bind-html="widget.template"></div>
+                             ng-bind-html="jfWidgetsLayout.widgets[layoutObj.widget].template"></div>
                     </div>
                 </div>
                 <div ng-if="layoutObj.subLayout">
