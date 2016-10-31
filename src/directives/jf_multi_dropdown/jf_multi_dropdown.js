@@ -1,8 +1,9 @@
 class jfMultiDropdownController {
-    constructor($scope) {
+    constructor($scope, $filter) {
 
         this.$scope = $scope;
 
+        this.filter = $filter('filter');
         this.opened = false;
 
         this.handleOutsideClick();
@@ -65,6 +66,12 @@ class jfMultiDropdownController {
         this.lastSelectedIndex = selected.length-1;
         let combined = selected.concat(unSelected);
         this.items.splice.apply(this.items, [0,this.items.length].concat(combined));
+    }
+    selectAll() {
+        this.filter(this.items, this.filterText).forEach((item)=>{item.isSelected = true;})
+    }
+    unSelectAll() {
+        this.filter(this.items, this.filterText).forEach((item)=>{item.isSelected = false;})
     }
 
 }

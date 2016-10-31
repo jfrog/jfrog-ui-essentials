@@ -15,6 +15,14 @@
                            ng-model="jfMultiDropdown.filterText"
                            placeholder="{{jfMultiDropdown.filterPlaceholder}}"/>
                 </jf-field>
+                <div class="batch-selection-wrapper">
+                    <div class="batch-selection">
+                        <a href
+                           ng-click="jfMultiDropdown.selectAll()">Select All</a>
+                        <a href
+                           ng-click="jfMultiDropdown.unSelectAll()">Unselect All</a>
+                    </div>
+                </div>
             </form>
         </div>
         <div ng-if="jfMultiDropdown.items.length" class="list-container">
