@@ -6,7 +6,8 @@ export function jfWidgetsLayout(recursiveDirective) {
         scope: {
             widgets: '=',
             layout: '=',
-            options: '='
+            options: '=',
+            parentCell: '=?'
         },
         templateUrl: 'directives/jf_widgets_layout/jf_widgets_layout.html',
         compile: (element) => {
@@ -41,6 +42,12 @@ class jfWidgetsLayoutController {
         $scope.$watch('jfWidgetsLayout.options.editMode', (editMode) => {
             this.editMode = editMode === undefined ? false : editMode;
             this.subOptions.editMode = this.editMode;
+
+            if (!editMode && !this.options.isSub) {
+                this.updateLayoutJSON();
+                if (this.options.onEditEnd && this.layoutJSON) this.options.onEditEnd(this.layoutJSON);
+            }
+
         });
 
         $scope.$watch('jfWidgetsLayout.layout', onChange);
@@ -50,7 +57,12 @@ class jfWidgetsLayoutController {
                 this.widgetKeys = Object.keys(widgets);
             }
         });
+
+        if (this.options.parent && this.parentCell) {
+            this.parentCell.$$childLayout = this;
+        }
     }
+
 
     setDefaultOptions() {
         if (!this.options) this.options = {}
@@ -671,5 +683,42 @@ class jfWidgetsLayoutController {
     getWidgetName(key) {
         return this.widgets[key] ? this.widgets[key].name || key : '';
     }
+
+    updateLayoutJSON() {
+        if (!this.transformedLayout) return;
+
+        this.layoutJSON = {};
+        this.layoutJSON.main = {};
+        this.layoutJSON.main[this.mainAxis] = [];
+        let subLayoutCounter = 0;
+
+        this.transformedLayout.forEach((rowOrColumn) => {
+            let rowOrColumnObject = {};
+            rowOrColumn.forEach((cell)=> {
+                if (!rowOrColumnObject.size) rowOrColumnObject.size = cell[this.mainAxis === 'columns' ? 'percentWidth' : 'percentHeight'] + '%';
+                if (!rowOrColumnObject.cells) rowOrColumnObject.cells = [];
+
+                let cellString = '';
+                cellString += cell[this.mainAxis === 'columns' ? 'percentHeight' : 'percentWidth'] + '%';
+                if (cell.widget && !cell.widget.startsWith('$$')) cellString += ' @' + cell.widget;
+
+                if (cell.$$childLayout) {
+                    cell.$$childLayout.updateLayoutJSON();
+
+                    let subName = 'sub' + subLayoutCounter;
+                    subLayoutCounter++;
+
+                    this.layoutJSON[subName] = cell.$$childLayout.layoutJSON;
+                    cellString += ' #' + subName;
+                }
+
+                rowOrColumnObject.cells.push(cellString);
+            })
+
+            this.layoutJSON.main[this.mainAxis].push(rowOrColumnObject);
+        });
+
+    }
+
 }
 
