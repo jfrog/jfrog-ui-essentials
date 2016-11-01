@@ -10,7 +10,8 @@
              class="widgets-row">
             <div ng-repeat="layoutObj in rowOrColumn"
                  ng-style="jfWidgetsLayout.cssRules[layoutObj.cssId]"
-                 class="widget-wrapper">
+                 class="widget-wrapper"
+                 ng-class="'widget-wrapper-' + widget.name.toLowerCase()">
                 <div ng-if="!layoutObj.subLayout && jfWidgetsLayout.editMode"
                      class="edit-mode-actions"
                      ng-mousemove="jfWidgetsLayout.onWidgetMouseMove($event)">
