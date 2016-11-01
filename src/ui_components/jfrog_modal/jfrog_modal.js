@@ -169,14 +169,45 @@ class WizardController {
         this.$modalInstance.dismiss();
     }
 
-    nextStep() {
-        if (this.$userCtrl.onStepChange) this.$userCtrl.onStepChange(this.wizardDefinitionObject.steps[this.currentStep], this.wizardDefinitionObject.steps[this.currentStep-1]);
-        this.currentStep++;
+    nextStep(skip) {
+        if (this.$userCtrl.onStepChange) {
+            let response = this.$userCtrl.onStepChange(this.wizardDefinitionObject.steps[this.currentStep], this.wizardDefinitionObject.steps[this.currentStep-1], skip ? 'skip' : 'next');
+            if (response && response.then) {
+                this.pending = true;
+                response.then((pRes)=>{
+                    if (pRes !== false) this.currentStep++
+                    this.pending = false;
+                })
+                    .catch(()=>{
+                        this.pending = false;
+                    });
+
+            }
+            else if (response !== false) this.currentStep++;
+        }
+        else {
+            this.currentStep++;
+        }
     }
 
     prevStep() {
-        if (this.$userCtrl.onStepChange) this.$userCtrl.onStepChange(this.wizardDefinitionObject.steps[this.currentStep-2], this.wizardDefinitionObject.steps[this.currentStep-1]);
-        this.currentStep--;
+        if (this.$userCtrl.onStepChange) {
+            let response = this.$userCtrl.onStepChange(this.wizardDefinitionObject.steps[this.currentStep-2], this.wizardDefinitionObject.steps[this.currentStep-1],'prev');
+            if (response && response.then) {
+                this.pending = true;
+                response.then((pRes)=>{
+                    if (pRes !== false) this.currentStep++
+                    this.pending = false;
+                })
+                    .catch(()=>{
+                        this.pending = false;
+                    });
+            }
+            else if (response !== false) this.currentStep--;
+        }
+        else {
+            this.currentStep--;
+        }
     }
 
     finish() {
