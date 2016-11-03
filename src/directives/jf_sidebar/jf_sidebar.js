@@ -278,6 +278,10 @@ class jfSidebarController {
     }
     closeAdminMenu(delay, force = false, expand = false) {
         if (delay) {
+            if (this.adminMenuCloseDelay) {
+                this.$timeout.cancel(this.adminMenuCloseDelay);
+                delete this.adminMenuCloseDelay;
+            }
             this.adminMenuCloseDelay = this.$timeout(()=>{
                 if (this.adminMenuCloseDelay) {
                     this.$timeout.cancel(this.adminMenuCloseDelay);
