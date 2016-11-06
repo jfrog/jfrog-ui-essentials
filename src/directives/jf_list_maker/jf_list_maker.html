@@ -14,6 +14,7 @@
                         id="newValueField"
                         name="newValueField"
                         jf-enter-press="jfListMaker.addValue()"
+                        ng-change="jfListMaker.errorMessage=null"
                         ng-disabled="jfListMaker.ngDisabled">
                 <jf-ui-select ng-if="jfListMaker.predefinedValues"
                               jf-select-model="jfListMaker.newValue"
