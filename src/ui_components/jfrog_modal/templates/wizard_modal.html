@@ -23,7 +23,7 @@
             ng-click="$wizardCtrl.cancel()"
             ng-disabled="$wizardCtrl.pending"
             id="wizard-popup-cancel">Cancel</button>
-    <button ng-if="$wizardCtrl.currentStep > 1"
+    <button ng-if="$wizardCtrl.currentStep > 1 && $wizardDef.steps[$wizardCtrl.currentStep-2].supportReturnTo !== false"
             class="btn btn-primary"
             ng-click="$wizardCtrl.prevStep()"
             ng-disabled="$wizardCtrl.pending"

@@ -196,7 +196,7 @@ class WizardController {
             if (response && response.then) {
                 this.pending = true;
                 response.then((pRes)=>{
-                    if (pRes !== false) this.currentStep++
+                    if (pRes !== false) this.currentStep--;
                     this.pending = false;
                 })
                     .catch(()=>{
