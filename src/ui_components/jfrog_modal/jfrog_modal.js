@@ -64,12 +64,26 @@ export class JFrogModal {
                 $('.modal-dialog').css('max-width', size)
             });
         }
-        this.$timeout(() => {
-            let windowOffset = window.innerHeight - 70;
-            let maxHeight = windowOffset - 134 - 80;
-            $('.modal-body').css('max-height', maxHeight);
-        }, 100);
+
+        this.$timeout(() => this._calculateMaxHeight(), 100);
+
+        modalInstance.result.finally(()=>{
+            $(window).off('resize', this._calculateMaxHeight());
+        });
+
+        $(window).resize(() => {
+            this._calculateMaxHeight();
+        });
+
         return modalInstance;
+    }
+
+
+
+    _calculateMaxHeight() {
+        let windowOffset = window.innerHeight - 70;
+        let maxHeight = windowOffset - 134 - 80;
+        $('.modal-body').css('max-height', maxHeight);
     }
 
     /**
