@@ -203,7 +203,6 @@ class jfSidebarController {
         },1)
     }
     itemClick(item) {
-        console.log('*****')
         if (this.adminMenuCloseDelay) {
             this.$timeout.cancel(this.adminMenuCloseDelay);
             delete this.adminMenuCloseDelay;
