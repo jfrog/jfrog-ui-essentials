@@ -41,7 +41,7 @@ export function jfSwitch() {
             jfSwitchTitle: '@',
             options: '=',
             ngModel: '=',
-            controller: '=',
+            controller: '=?',
             disabled: '=ngDisabled',
             helpTooltip: '=',
             jfSwitchClass: '@'

@@ -6,3 +6,16 @@
   font-size: 18px;
   font-style: italic !important;
 }
+
+
+//Work arround for ui-select bug #1652
+.ui-select-choices.ui-select-dropdown:not(.ng-hide) {
+  opacity: 1 !important;
+}
+
+
+
+//Work arround for ui-select bug #533
+.ui-select-container input.ui-select-search {
+  width: 100% !important;
+}

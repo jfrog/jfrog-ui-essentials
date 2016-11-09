@@ -1,10 +1,10 @@
-<ui-select jf-disable-ng-animate ng-model="jfUiSelect.jfSelectModel" on-select="jfUiSelect.onSelect($item,$model)" ng-disabled="jfUiSelect.jfSelectDisabled">
+<ui-select jf-disable-ng-animate ng-model="jfUiSelect.jfSelectModel" on-select="jfUiSelect.onSelect($item,$model)" ng-disabled="jfUiSelect.jfSelectDisabled" remove-selected="false">
     <ui-select-match id="select-header" placeholder="{{ jfUiSelect.jfSelectPlaceholder }}" ng-click="jfUiSelect.onOpenList()">
         {{ jfUiSelect.displayLabel($select.selected) }}
     </ui-select-match>
     <ui-select-choices refresh-delay="100"
-            refresh="jfUiSelect.refresh($select.search)"
-            repeat="item in jfUiSelect[jfUiSelect.jfSelectOptionsView ? 'jfSelectOptionsView' : 'jfSelectOptions'] | filter: (!jfUiSelect.jfSelectFilterAttr ? $select.search : { {{jfUiSelect.jfSelectFilterAttr || 'dummyfield'}}: $select.search}) track by $index">
+                       refresh="jfUiSelect.refresh($select.search)"
+                       repeat="item in jfUiSelect[jfUiSelect.jfSelectOptionsView ? 'jfSelectOptionsView' : 'jfSelectOptions'] | filter: (!jfUiSelect.jfSelectFilterAttr ? $select.search : { [jfUiSelect.jfSelectFilterAttr || 'dummyfield']: $select.search}) track by $index">
         <div  ng-if="!jfUiSelect.jfSelectHelpTooltips"
               class="jf-ui-select-item"
               name="select-item"

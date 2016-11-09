@@ -27,7 +27,7 @@
                  ng-if="!item.isDisabled && item.children"><i class="{{item.icon}}"></i><span>{{item.label}}</span>
             </a>
 
-            <div class="admin-menu" ng-if="item.children && !item.isDisabled" ng-mouseover="jfSidebar.menuAdminOver()">
+            <div class="admin-menu" ng-if="item.children && !item.isDisabled" ng-mouseover="jfSidebar.menuAdminOver()" ng-click="$event.stopPropagation()">
 
                 <div class="searchbox-wrapper" ng-if="jfSidebar.noSearchBox === undefined">
                     <input type="text"
@@ -49,26 +49,26 @@
                     <div>
                         <div ng-repeat="item in jfSidebar.adminMenuItems" class="section" ng-if="!item.isHidden">
                             <h3>{{item.label}}</h3>
-                        <span ng-repeat="subItem in item.subItems"
-                              jf-disable-feature="{{ subItem.feature }}"
-                              ng-if="!subItem.isHidden">
-                            <a ng-class="{'blocked': subItem.isDisabled}"
-                               ng-if="subItem.isDisabled">
-                                {{subItem.label}}
-                            </a>
-                            <a ng-class="{'highlight' : jfSidebar.searchHighlightCheck(subItem.label),
-                                          'not-active' : !jfSidebar.searchHighlightCheck(subItem.label) && jfSidebar.menuSearchQuery.length,
-                                          'current' : jfSidebar.isCurrentItem(subItem)}"
-                               ng-if="!subItem.isDisabled"
-                               ui-sref="{{ subItem.state }} ({{ subItem.stateParams }})"
-                               ng-click="jfSidebar.adminItemClick(subItem)"
-                               ng-keydown="jfSidebar.navigateInMenu($event)"
-                               data-state="{{ subItem.state }}"
-                               data-params="{{ subItem.stateParams }}"
-                               id="item-{{subItem.id}}">
-                                {{subItem.label}}
-                            </a>
-                        </span>
+                            <span ng-repeat="subItem in item.subItems"
+                                  jf-disable-feature="{{ subItem.feature }}"
+                                  ng-if="!subItem.isHidden">
+                                <a ng-class="{'blocked': subItem.isDisabled}"
+                                   ng-if="subItem.isDisabled">
+                                    {{subItem.label}}
+                                </a>
+                                <a ng-class="{'highlight' : jfSidebar.searchHighlightCheck(subItem.label),
+                                              'not-active' : !jfSidebar.searchHighlightCheck(subItem.label) && jfSidebar.menuSearchQuery.length,
+                                              'current' : jfSidebar.isCurrentItem(subItem)}"
+                                   ng-if="!subItem.isDisabled"
+                                   ui-sref="{{ subItem.state }} ({{ subItem.stateParams }})"
+                                   ng-click="jfSidebar.adminItemClick(subItem)"
+                                   ng-keydown="jfSidebar.navigateInMenu($event)"
+                                   data-state="{{ subItem.state }}"
+                                   data-params="{{ subItem.stateParams }}"
+                                   id="item-{{subItem.id}}">
+                                    {{subItem.label}}
+                                </a>
+                            </span>
                         </div>
                     </div>
                 </div>
