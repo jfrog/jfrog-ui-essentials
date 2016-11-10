@@ -49,3 +49,47 @@
   right: 54px;
   margin-top: 2px;
 }
+
+
+
+.wizard-modal {
+  .modal-header {
+    border-bottom: none;
+    padding: 40px 50px 35px 50px;
+    .close {
+      margin: -43px -32px;
+    }
+    .step-title {
+      font-weight: 700;
+      font-size: 35px;
+    }
+  }
+  .modal-body {
+    height: 380px;
+    padding: 0 50px 0 50px;
+  }
+  .modal-footer {
+    position: relative;
+    .progress-indicator {
+      width: 50%;
+      position: absolute;
+      left: 25%;
+      top: 35%;
+      text-align: center;
+      .progress-indicator-led {
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+        margin-right: 4px;
+        background-color: darkgrey;
+        &.current {
+          background-color: dimgrey;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}

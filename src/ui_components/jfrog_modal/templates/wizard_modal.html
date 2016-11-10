@@ -1,46 +1,60 @@
-<div class="modal-header">
-    <button ng-if="$wizardDef.cancelable" type="button" class="close" data-dismiss="close" aria-label="Close" ng-click="$wizardCtrl.cancel()"><span aria-hidden="true">&times;</span></button>
-    <h4 ng-if="$wizardDef.steps[$wizardCtrl.currentStep-1].name"
-        class="modal-title"
-        id="popup-header-1">
-        {{$wizardDef.title}} - Step {{$wizardCtrl.currentStep}}/{{$wizardCtrl.totalSteps}} - {{$wizardDef.steps[$wizardCtrl.currentStep-1].name}}
-    </h4>
-    <h4 ng-if="!$wizardDef.steps[$wizardCtrl.currentStep-1].name"
-        class="modal-title"
-        id="popup-header-2">
-        {{$wizardDef.title}} - Step {{$wizardCtrl.currentStep}}/{{$wizardCtrl.totalSteps}}
-    </h4>
-</div>
-<div class="modal-body clearfix">
+<div class="wizard-modal">
+    <div class="modal-header">
+        <button ng-if="$wizardDef.cancelable" type="button" class="close" data-dismiss="close" aria-label="Close" ng-click="$wizardCtrl.cancel()"><span aria-hidden="true">&times;</span></button>
 <!--
-    <div class="form-group" ng-bind-html="content"></div>
+        <h4 ng-if="$wizardDef.steps[$wizardCtrl.currentStep-1].name"
+            class="modal-title"
+            id="popup-header-1">
+            {{$wizardDef.title}} - Step {{$wizardCtrl.currentStep}}/{{$wizardCtrl.totalSteps}} - {{$wizardDef.steps[$wizardCtrl.currentStep-1].name}}
+        </h4>
+        <h4 ng-if="!$wizardDef.steps[$wizardCtrl.currentStep-1].name"
+            class="modal-title"
+            id="popup-header-2">
+            {{$wizardDef.title}} - Step {{$wizardCtrl.currentStep}}/{{$wizardCtrl.totalSteps}}
+        </h4>
 -->
-    <ng-include src="$wizardDef.steps[$wizardCtrl.currentStep-1].templateUrl"></ng-include>
-</div>
-<div class="modal-footer" jf-disable-ng-animate>
-    <button ng-if="$wizardDef.cancelable"
-            class="btn btn-default"
-            ng-click="$wizardCtrl.cancel()"
-            ng-disabled="$wizardCtrl.pending"
-            id="wizard-popup-cancel">Cancel</button>
-    <button ng-if="$wizardCtrl.currentStep > 1 && $wizardDef.steps[$wizardCtrl.currentStep-2].supportReturnTo !== false"
-            class="btn btn-primary"
-            ng-click="$wizardCtrl.prevStep()"
-            ng-disabled="$wizardCtrl.pending"
-            id="wizard-popup-prev">Back</button>
-    <button ng-if="$wizardCtrl.currentStep < $wizardCtrl.totalSteps && $wizardDef.steps[$wizardCtrl.currentStep-1].skippable && !$wizardCtrl.$userCtrl.isStepCompleted($wizardDef.steps[$wizardCtrl.currentStep-1])"
-            class="btn btn-primary"
-            ng-click="$wizardCtrl.nextStep(true)"
-            ng-disabled="$wizardCtrl.pending"
-            id="wizard-popup-skip">Skip</button>
-    <button ng-if="$wizardCtrl.currentStep < $wizardCtrl.totalSteps"
-            ng-disabled="$wizardCtrl.pending || !$wizardCtrl.$userCtrl.isStepCompleted($wizardDef.steps[$wizardCtrl.currentStep-1])"
-            class="btn btn-primary"
-            ng-click="$wizardCtrl.nextStep()"
-            id="wizard-popup-next">Next</button>
-    <button ng-if="$wizardCtrl.currentStep === $wizardCtrl.totalSteps"
-            ng-disabled="$wizardCtrl.pending || (!$wizardCtrl.$userCtrl.isStepCompleted($wizardDef.steps[$wizardCtrl.currentStep-1]) && !$wizardDef.steps[$wizardCtrl.currentStep-1].skippable)"
-            class="btn btn-primary"
-            ng-click="$wizardCtrl.finish()"
-            id="wizard-popup-finish">Finish</button>
+        <div class="step-title"
+             ng-if="$wizardDef.steps[$wizardCtrl.currentStep-1].name">{{$wizardDef.steps[$wizardCtrl.currentStep-1].name}}</div>
+    </div>
+    <div class="modal-body clearfix">
+        <!--
+            <div class="form-group" ng-bind-html="content"></div>
+        -->
+        <ng-include src="$wizardDef.steps[$wizardCtrl.currentStep-1].templateUrl"></ng-include>
+    </div>
+    <div class="modal-footer" jf-disable-ng-animate>
+        <div class="progress-indicator">
+            <div class="progress-indicator-led"
+                 ng-class="{current: $index === $wizardCtrl.currentStep-1}"
+                 ng-repeat="led in $wizardDef.steps"></div>
+        </div>
+
+<!--
+        <button ng-if="$wizardDef.cancelable"
+                class="btn btn-default"
+                ng-click="$wizardCtrl.cancel()"
+                ng-disabled="$wizardCtrl.pending"
+                id="wizard-popup-cancel">Cancel</button>
+-->
+        <button ng-if="$wizardCtrl.currentStep > 1 && $wizardDef.steps[$wizardCtrl.currentStep-2].supportReturnTo !== false"
+                class="btn btn-primary"
+                ng-click="$wizardCtrl.prevStep()"
+                ng-disabled="$wizardCtrl.pending"
+                id="wizard-popup-prev">Back</button>
+        <button ng-if="$wizardCtrl.currentStep < $wizardCtrl.totalSteps && $wizardDef.steps[$wizardCtrl.currentStep-1].skippable && !$wizardCtrl.$userCtrl.isStepCompleted($wizardDef.steps[$wizardCtrl.currentStep-1])"
+                class="btn btn-primary"
+                ng-click="$wizardCtrl.nextStep(true)"
+                ng-disabled="$wizardCtrl.pending"
+                id="wizard-popup-skip">Skip</button>
+        <button ng-if="$wizardCtrl.currentStep < $wizardCtrl.totalSteps"
+                ng-disabled="$wizardCtrl.pending || !$wizardCtrl.$userCtrl.isStepCompleted($wizardDef.steps[$wizardCtrl.currentStep-1])"
+                class="btn btn-primary"
+                ng-click="$wizardCtrl.nextStep()"
+                id="wizard-popup-next">Next</button>
+        <button ng-if="$wizardCtrl.currentStep === $wizardCtrl.totalSteps"
+                ng-disabled="$wizardCtrl.pending || (!$wizardCtrl.$userCtrl.isStepCompleted($wizardDef.steps[$wizardCtrl.currentStep-1]) && !$wizardDef.steps[$wizardCtrl.currentStep-1].skippable)"
+                class="btn btn-primary"
+                ng-click="$wizardCtrl.finish()"
+                id="wizard-popup-finish">Finish</button>
+    </div>
 </div>
