@@ -17,10 +17,11 @@ export function jfWidgetsLayout(recursiveDirective) {
 }
 
 class jfWidgetsLayoutController {
-    constructor($scope,$compile,$timeout,$q,$templateRequest,$sce, $injector,$element) {
+    constructor($scope,$rootScope, $compile,$timeout,$q,$templateRequest,$sce, $injector,$element) {
         this.$q = $q;
         this.$sce = $sce;
         this.$scope = $scope;
+        this.$rootScope = $rootScope;
         this.$element = $element;
         this.$injector = $injector;
         this.$timeout = $timeout;
@@ -271,7 +272,7 @@ class jfWidgetsLayoutController {
             let widgetId = elem.prop('id');
             if (this._isWidgetInUse(widgetId)) {
                 let widget = this._getWidgetById(widgetId);
-                let scope = this.$scope.$new();
+                let scope = this.$rootScope.$new();
 
                 if (widget.model) {
                     _.extend(scope,widget.model);
