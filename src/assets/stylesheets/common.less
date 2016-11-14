@@ -1063,13 +1063,13 @@ h5 {
 //------------------------toasts-----------------//
 
 @keyframes toaster-in {
-  from {right: -370px;}
-  to {right: 0;}
+  from {top: -20px;}
+  to {top: 0;}
 }
 
 @keyframes toaster-out {
-  from {right: 0;}
-  to {right: -370px;}
+  from {top: 0;}
+  to {top: -20px;}
 }
 
 #toast-container {
@@ -1086,7 +1086,6 @@ h5 {
     width: 340px;
     opacity: 1;
     filter: alpha(opacity=100);
-    float: right;
     clear: both;
     cursor: auto;
 
@@ -1094,7 +1093,7 @@ h5 {
 
     //    animation: toaster-in 0.5s ease, toaster-out 0.5s ease 4.5s;
 
-    &.ng-enter {
+    /*&.ng-enter {
       opacity: 1 !important;
       right: -370px !important;
       transition: right .3s ease !important;
@@ -1111,7 +1110,7 @@ h5 {
     &.ng-leave.ng-leave-active {
       opacity: 1 !important;
       right: -370px !important;
-    }
+    }*/
 
 
     .toast-message {
