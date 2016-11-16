@@ -17,7 +17,7 @@ export class JFrogNotifications {
             }
             this.toast.pop({
                 type: 'success',
-                timeout: message.timeout || 5000,
+                timeout: message.timeout || 0,
                 body: message.info,
                 showCloseButton: true,
                 bodyOutputType: allowHtml ? 'trustedHtml' : undefined,
@@ -27,7 +27,7 @@ export class JFrogNotifications {
             this.lastNotification = message.info;
             this.$timeout(() => {
                 this.lastNotification = null
-            }, message.timeout || 5000);
+            }, message.timeout || 0);
             //this.toast.create({animation:'fade',content:message.info});
         }
 
@@ -37,7 +37,7 @@ export class JFrogNotifications {
             }
             this.toast.pop({
                 type: 'error',
-                timeout: message.timeout || 10000,
+                timeout: message.timeout || 0,
                 body: message.error,
                 showCloseButton: true,
                 bodyOutputType: allowHtml ? 'trustedHtml' : undefined,
@@ -46,7 +46,7 @@ export class JFrogNotifications {
             this.lastNotification = message.error;
             this.$timeout(() => {
                 this.lastNotification = null
-            }, message.timeout || 5000);
+            }, message.timeout || 0);
             //this.toast.danger({animation:'fade',content:message.error});
         }
         if(message.warn) {
@@ -55,7 +55,7 @@ export class JFrogNotifications {
             }
             this.toast.pop({
                 type: 'warning',
-                timeout: message.timeout || 4000,
+                timeout: message.timeout || 0,
                 body: message.warn,
                 showCloseButton: true,
                 bodyOutputType: allowHtml ? 'trustedHtml' : undefined,
@@ -64,7 +64,7 @@ export class JFrogNotifications {
             this.lastNotification = message.warn;
             this.$timeout(() => {
                 this.lastNotification = null
-            }, message.timeout || 1000);
+            }, message.timeout || 0);
         }
     }
 
