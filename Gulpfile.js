@@ -101,6 +101,7 @@ gulp.task('writeBuildVersion', function() {
 // Set watchers and run relevant tasks - then reload (when running under browsersync)
 gulp.task('watch', function () {
     gulp.watch(CONFIG.SOURCES.APPLICATION_JS, sequence('build'));
+    gulp.watch(CONFIG.SOURCES.APPLICATION_TS, sequence('build'));
     gulp.watch(CONFIG.SOURCES.TEMPLATES, sequence('build'));
     gulp.watch(CONFIG.SOURCES.LESS, sequence('build'));
     gulp.watch(CONFIG.SOURCES.DIRECTIVES_LESS, sequence('build'));

@@ -1,3 +1,5 @@
+console.log('main.js')
+
 if (!String.prototype.endsWith) {
     String.prototype.endsWith = function (str) {
         return this.substr(this.length - str.length,str.length)===str;

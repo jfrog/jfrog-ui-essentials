@@ -4,6 +4,7 @@ module.exports = {
 
     SOURCES: {
         APPLICATION_JS: 'src/**/*.js',
+        APPLICATION_TS: 'src/ng2/**/*.ts',
         BOWER_JSON: 'bower.json',
         TEMPLATES: 'src/**/**/*.html',
         VENDOR_SCRIPTS : vendorPaths.JS,
