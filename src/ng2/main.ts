@@ -1,3 +1,7 @@
+import 'zone.js';
+import '../../vendor/draggable-rows'
+
+/*
 console.log('main.ts');
 import 'zone.js';
 import 'reflect-metadata';
@@ -13,9 +17,10 @@ import { TestComponent } from './components/test-component/test.component';
 
 declare var angular: any;
 
+/!*
 platformBrowserDynamic().bootstrapModule(AppModule).then(platformRef => {
 
-    angular.module('jfrog.ui.essentials').directive('testComp',
+    angular.module('jfrog.ui.essentials').directive('jf2TestComp',
         upgradeAdapter.downgradeNg2Component(TestComponent));
 
 //    upgradeAdapter.bootstrap(document.documentElement, ['jfrog.ui.essentials']);
@@ -24,4 +29,6 @@ platformBrowserDynamic().bootstrapModule(AppModule).then(platformRef => {
 
 });
 
+*!/
 
+*/
