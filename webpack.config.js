@@ -6,7 +6,7 @@ module.exports = {
     context: __dirname + '/src',
     entry: {
         'jfrog-ui-essentials': ['./main.js', './directives/jfrog.directives.module.js', './services/jfrog.services.module.js', './filters/jfrog.filters.module.js', './ui_components/ui_components.module.js'
-            , './ng2/main.ts']
+            , /*'./ng2/main.ts'*/]
     },
     output: {
         path: CONFIG.DESTINATIONS.TARGET,
@@ -18,7 +18,7 @@ module.exports = {
     module: {
         loaders: [
             {test: /\.js$/, loader: 'babel'},
-            {test: /\.ts$/, loader: 'babel!ts-loader'},
+//            {test: /\.ts$/, loader: 'babel!ts-loader'},
             {test: /src\/ng2\/.*\.html$/, loader: 'html-loader'},
             { test: /\.json$/, loader: 'json' }
         ]

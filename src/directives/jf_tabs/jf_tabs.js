@@ -83,7 +83,10 @@ class jfTabsController {
             return;
         }
         this._ensureTabVisible(tab);
-        this.state.go(this.state.current, {tab: tab.name},{notify: false});
+
+        if (this.state && !this.state.current.abstract) {
+            this.state.go(this.state.current, {tab: tab.name},{notify: false});
+        }
         this.currentTab.name = tab.name;
     }
 

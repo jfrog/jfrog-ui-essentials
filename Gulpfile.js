@@ -55,6 +55,7 @@ gulp.task('build:common',
             'preprocessJS',
             'preprocessBowerJSON',
             'writeBuildVersion',
+            'copyTypeScriptSources',
 //            'concatAllCSS',
             'cleanTemp',
             callback
@@ -100,18 +101,11 @@ gulp.task('writeBuildVersion', function() {
 
 // Set watchers and run relevant tasks - then reload (when running under browsersync)
 gulp.task('watch', function () {
-    gulp.watch(CONFIG.SOURCES.APPLICATION_JS, sequence('build'));
-    gulp.watch(CONFIG.SOURCES.APPLICATION_TS, sequence('build'));
+    gulp.watch(CONFIG.SOURCES.APPLICATION_JS, sequence('build','copyDistToExternalFolder'));
+    gulp.watch(CONFIG.SOURCES.APPLICATION_TS, sequence('copyTypeScriptSources','copyDistToExternalFolder'));
     gulp.watch(CONFIG.SOURCES.TEMPLATES, sequence('build'));
     gulp.watch(CONFIG.SOURCES.LESS, sequence('build'));
     gulp.watch(CONFIG.SOURCES.DIRECTIVES_LESS, sequence('build'));
-/*
-    gulp.watch(CONFIG.SOURCES.REQUIRED_TEMPLATES, sequence('webpack', 'reload'));
-    gulp.watch(CONFIG.SOURCES.VENDOR_JS, sequence(['vendorScripts', 'vendorStyles', 'vendorStylesAssets', 'vendorFonts'], 'reload'));
-    gulp.watch(CONFIG.SOURCES.VENDOR_CSS, sequence(['vendorStyles'], 'reloadCss'));
-    gulp.watch(CONFIG.SOURCES.FONTS, sequence('fonts', 'reload'));
-    gulp.watch(CONFIG.SOURCES.INDEX, sequence('copyHtml', 'reload'));
-*/
 });
 
 gulp.task('concatAllJS', function() {
@@ -155,6 +149,17 @@ function sequence() {
 gulp.task('copyBowerJson', function () {
     return gulp.src(CONFIG.SOURCES.BOWER_JSON)
         .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET))
+});
+
+// copy all ts (ng2/hybrid support) to dist
+gulp.task('copyTypeScriptSources', function () {
+    return gulp.src(CONFIG.SOURCES.APPLICATION_TS)
+        .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET+'/ts'))
+});
+
+gulp.task('copyDistToExternalFolder', function () {
+    return gulp.src(CONFIG.DESTINATIONS.TARGET+'/**/*')
+        .pipe(gulp.dest('/Users/dannyr/jfuie-dist-for-link/dist'))
 });
 
 

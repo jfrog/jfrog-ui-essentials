@@ -28,6 +28,7 @@
     "zone.js": "^0.6.25"
   },
   "devDependencies": {
+    "@types/node": "^6.0.51",
     "any-promise": "~1.1.0",
     "babel-core": "^4.7.12",
     "babel-loader": "^4.1.0",
