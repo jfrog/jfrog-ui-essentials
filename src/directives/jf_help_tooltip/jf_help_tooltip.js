@@ -8,9 +8,9 @@ export function jfHelpTooltip() {
         },
         restrict: 'E',
         templateUrl: 'directives/jf_help_tooltip/jf_help_tooltip.html',
-        transclude: true,
+//        transclude: true,
         link: function ($scope, $element, $attrs, ctrl, $transclude) {
-            let content = $scope.text || $scope.html || $transclude().html();
+            let content = $scope.text || $scope.html;// || $transclude().html();
             if (!content) return;
 
             content = content.replace(/\n/g, '<br>');

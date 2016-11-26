@@ -1,9 +1,13 @@
 class jfCheckboxController {
     constructor($element, $transclude, $timeout) {
         $transclude(function(clone) {
-            // (Adam) TODO: Find out why checkbox appears only when grid appears in jf_properties
             $timeout(function() {
-                $element.find('label').prepend(clone);
+                if (clone && clone[0] && clone[0].nodeName === 'NG-TRANSCLUDE') {
+                    $element.find('label').prepend(clone.find('input'));
+                }
+                else {
+                    $element.find('label').prepend(clone);
+                }
             }, 0, false);
         });
     }

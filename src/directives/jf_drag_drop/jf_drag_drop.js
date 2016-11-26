@@ -16,7 +16,7 @@ export function jfDragDrop() {
             customTemplateScope: '=?',
             usePagination: '=?',
             commObject: '=',
-            disabled: '=ngDisabled'
+            ngDisabled: '=ngDisabled'
         },
         templateUrl: 'directives/jf_drag_drop/jf_drag_drop.html',
         controller: jfDragDropController,
@@ -99,7 +99,7 @@ class jfDragDropController {
      * clear those items from the included list
      */
     excludeAll() {
-        if (this.disabled || this.isIncludeListEmpty() || this.isIncludeListFixed()) return;
+        if (this.ngDisabled || this.isIncludeListEmpty() || this.isIncludeListFixed()) return;
 
         let filteredOut = [];
         this.includeList.forEach((item)=> {
@@ -131,7 +131,7 @@ class jfDragDropController {
      * clear those items from the include list
      */
     excludeSelected() {
-        if (this.disabled || !this.isIncludeListItemSelected()) return;
+        if (this.ngDisabled || !this.isIncludeListItemSelected()) return;
 
         this._filterSelection('inc');
 
@@ -155,7 +155,7 @@ class jfDragDropController {
      * useful when clicking a per-item delete button
      */
     excludeSpecific(item) {
-        if (this.disabled || item["__fixed__"]) return;
+        if (this.ngDisabled || item["__fixed__"]) return;
         var picked;
         for (var i = this.includeList.length-1; i >= 0; i--) {
             if (this.includeList[i] == item) {
@@ -174,7 +174,7 @@ class jfDragDropController {
     }
 
     includeSpecific(item) {
-        if (this.disabled) return;
+        if (this.ngDisabled) return;
         var picked;
         for (var i = this.excludeList.length-1; i >= 0; i--) {
             if (this.excludeList[i] == item) {
@@ -200,7 +200,7 @@ class jfDragDropController {
      * clear those items from the exclude list
      */
     includeAll() {
-        if (this.disabled || this.isExcludeListEmpty()) return;
+        if (this.ngDisabled || this.isExcludeListEmpty()) return;
         let filteredOut = [];
         this.excludeList.forEach((item)=> {
             if (_.isObject(item)) {
@@ -232,7 +232,7 @@ class jfDragDropController {
      * clear those items from the exclude list
      */
     includeSelected() {
-        if (this.disabled || !this.isExcludeListItemSelected()) return;
+        if (this.ngDisabled || !this.isExcludeListItemSelected()) return;
 
         this._filterSelection('exc');
 
@@ -263,7 +263,7 @@ class jfDragDropController {
      * @param item
      */
     toggleSelection(item) {
-        if (this.disabled) return;
+        if (this.ngDisabled) return;
 
         let index = this._inSelectedItems(item);
 
@@ -468,7 +468,7 @@ class jfDragDropController {
 
     _dragStart(event,ui) {
         let dragObj=this._objectFromElement(event.target);
-        if (this.disabled || (dragObj.draggedFrom === this.includeList && _.isObject(dragObj.dataObject) && dragObj.dataObject["__fixed__"])) {
+        if (this.ngDisabled || (dragObj.draggedFrom === this.includeList && _.isObject(dragObj.dataObject) && dragObj.dataObject["__fixed__"])) {
             event.preventDefault();
             return;
         }

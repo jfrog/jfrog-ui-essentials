@@ -77,11 +77,13 @@ class jfTabsController {
     }
 
     onClickTab(tab) {
-        // if the tab is in the more section replace it
-        // with the last tab in the main tabs.
+
         if ((this.onTabChange({tab:tab}) === false) || tab.isDisabled) {
             return;
         }
+
+        // if the tab is in the more section replace it
+        // with the last tab in the main tabs.
         this._ensureTabVisible(tab);
 
         if (this.state && !this.state.current.abstract) {

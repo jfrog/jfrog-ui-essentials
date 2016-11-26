@@ -74,7 +74,7 @@ export function jfField($timeout, JFrogEventBus, $rootScope) {
             function focusInput() {
                 if (scope.autofocus && scope.autofocus != 'false') {
                     $timeout(() => {
-                        if (inputElement.scrollParent()) {
+                        if (inputElement.scrollParent && inputElement.scrollParent()) {
                             var y = inputElement.scrollParent().scrollTop();
                             inputElement.focus();
                             inputElement.scrollParent().scrollTop(y);

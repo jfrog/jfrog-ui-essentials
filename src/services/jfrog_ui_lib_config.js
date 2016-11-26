@@ -23,8 +23,16 @@ export class JFrogUILibConfig {
         return this;
     }
 
+    inject(injectable) {
+        return angular.element(document.body).injector().get(injectable);
+    }
+
     setConfig(config) {
-        _.extend(this.config,config);
+        angular.element(document).ready(() => {
+            _.extend(this.config,config);
+            let eventBus = this.inject('JFrogEventBus');
+            eventBus.updateCustomEvents();
+        })
     }
     getConfig() {
         return this.config;

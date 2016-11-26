@@ -11,16 +11,18 @@ export class JFrogEventBus {
         this._listeners = Object.create(null);
         this.JFrogUILibConfig = JFrogUILibConfig;
 
-        let events = LIBRARY_EVENTS;
-        _.extend(events,JFrogUILibConfig.getConfig().customEventsDefinition);
+        this.libraryEvents = LIBRARY_EVENTS;
+
+        this.updateCustomEvents();
+    }
+
+    updateCustomEvents() {
+        let events = _.cloneDeep(this.libraryEvents);
+        _.extend(events,this.JFrogUILibConfig.getConfig().customEventsDefinition);
         this.eventDef = events;
-
-
         let eventNames = {};
         Object.keys(events).forEach(key => eventNames[events[key]] = key);
-
         this.EVENTS = eventNames;
-
     }
 
     getEventsDefinition() {
@@ -92,7 +94,9 @@ export class JFrogEventBus {
     }
 
     _verifyEventExists(eventName) {
-        if (!this.EVENTS || !this.EVENTS[eventName]) throw new Error('There are no events registered under the name ' + eventName);
+        if (!this.EVENTS || !this.EVENTS[eventName]) {
+//            throw new Error('There are no events registered under the name ' + eventName);
+        }
     }
 
     /**

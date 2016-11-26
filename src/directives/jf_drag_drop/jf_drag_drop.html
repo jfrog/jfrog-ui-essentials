@@ -7,7 +7,7 @@
                    ng-change="jfDragDrop.updateExcludeFilter(true)"
                    ng-model-options="{debounce: 200}"
                    placeholder="Filter..."
-                   ng-disabled="jfDragDrop.disabled"
+                   ng-disabled="jfDragDrop.ngDisabled"
                    class="input-text dnd-filter">
         </div>
         <div class="col-lg-2"></div>
@@ -18,7 +18,7 @@
                    ng-change="jfDragDrop.updateIncludeFilter(true)"
                    ng-model-options="{debounce: 200}"
                    placeholder="Filter..."
-                   ng-disabled="jfDragDrop.disabled"
+                   ng-disabled="jfDragDrop.ngDisabled"
                    class="input-text dnd-filter">
         </div>
     </div>
@@ -60,22 +60,22 @@
             <ul class="dnd-actions">
                 <li>
                     <span ng-click="jfDragDrop.excludeAll()"
-                          ng-disabled="jfDragDrop.isIncludeListEmpty() || jfDragDrop.isIncludeListFixed() || jfDragDrop.disabled">&laquo;
+                          ng-disabled="jfDragDrop.isIncludeListEmpty() || jfDragDrop.isIncludeListFixed() || jfDragDrop.ngDisabled">&laquo;
                     </span>
                 </li>
                 <li>
                     <span ng-click="jfDragDrop.excludeSelected()"
-                          ng-disabled="!jfDragDrop.isIncludeListItemSelected() || jfDragDrop.disabled">&lsaquo;
+                          ng-disabled="!jfDragDrop.isIncludeListItemSelected() || jfDragDrop.ngDisabled">&lsaquo;
                     </span>
                 </li>
                 <li>
                     <span ng-click="jfDragDrop.includeSelected()"
-                          ng-disabled="!jfDragDrop.isExcludeListItemSelected() || jfDragDrop.disabled">&rsaquo;
+                          ng-disabled="!jfDragDrop.isExcludeListItemSelected() || jfDragDrop.ngDisabled">&rsaquo;
                     </span>
                 </li>
                 <li>
                     <span ng-click="jfDragDrop.includeAll()"
-                          ng-disabled="jfDragDrop.isExcludeListEmpty() || jfDragDrop.disabled">&raquo;
+                          ng-disabled="jfDragDrop.isExcludeListEmpty() || jfDragDrop.ngDisabled">&raquo;
                     </span>
                 </li>
             </ul>
@@ -107,7 +107,7 @@
                             <div ng-if="jfDragDrop.customTemplate" class="custom-template" ng-init="jfDragDrop.compileCustomTemplate(item,'inc')"></div>
                         </div>
                         <div class="drag-item-text" ng-if="item === jfDragDrop.PLACEHOLDER"></div>
-                        <a ng-if="item && item !== jfDragDrop.PLACEHOLDER && !item['__fixed__'] && !jfDragDrop.disabled"
+                        <a ng-if="item && item !== jfDragDrop.PLACEHOLDER && !item['__fixed__'] && !jfDragDrop.ngDisabled"
                            href=""
                            class="delete-drop-item"
                            ng-click="jfDragDrop.excludeSpecific(item);$event.stopPropagation();$event.preventDefault();">&#10005;</a>

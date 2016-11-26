@@ -1,3 +1,4 @@
+import "./bower.imports";
 import {NgModule, Component} from "@angular/core";
 import {UpgradeAdapter} from "@angular/upgrade";
 import {TestComponent} from "./components/test-component/test.component";
@@ -7,33 +8,43 @@ let angular = (window as any).angular;
 let _ = (window as any)._;
 let $ = (window as any).$;
 
-class JFrogUIEssentials {
-    public upgradeAdapter:UpgradeAdapter;
-    public wrappers = [];
+export class JFrogUIEssentials {
+    private upgradeAdapter:UpgradeAdapter;
+    private wrappers = [];
 
-    public getJFrogUIModule(_upgradeAdapter:any, mainDisplayComponent:Component, mainDisplaySelector:string) {
-
+    public constructor(_upgradeAdapter:any) {
         this.upgradeAdapter = _upgradeAdapter;
-
         angular.module(NG1_MODULE,['jfrog.ui.essentials']);
-        angular.module(NG1_MODULE).directive(mainDisplaySelector,this.upgradeAdapter.downgradeNg2Component(mainDisplayComponent as any));
+    }
+
+    public downgradeRootComponent(rootComponent:Component, selector?:string) {
+        angular.module(NG1_MODULE).directive(selector,this.upgradeAdapter.downgradeNg2Component(rootComponent as any));
+    }
+
+    public getJFrogUIModule() {
 
         this.createWrappers();
 
         this.createNg1FormWrapper();
 
-
         //Upgrade services
+        this.upgradeAdapter.upgradeNg1Provider('JFrogUILibConfig');
         this.upgradeAdapter.upgradeNg1Provider('JFrogGridFactory');
         this.upgradeAdapter.upgradeNg1Provider('JFrogNotifications');
-        this.upgradeAdapter.upgradeNg1Provider('JFrogUILibConfig');
+        this.upgradeAdapter.upgradeNg1Provider('JFrogEventBus');
+        this.upgradeAdapter.upgradeNg1Provider('JFrogUIUtils');
+        this.upgradeAdapter.upgradeNg1Provider('JFrogDownload');
+        this.upgradeAdapter.upgradeNg1Provider('JFrogIFrameDownload');
 
-        let self = this;// Really ???
+        let wrappers = this.wrappers
 
-        let components = [];
+        let components = [
+            TestComponent,
+//            this.upgradeAdapter.upgradeNg1Component('jfCheckbox')
+        ];
         @NgModule({
-            declarations: self.wrappers.concat(components),
-            exports: self.wrappers.concat(components)
+            declarations: wrappers.concat(components),
+            exports: wrappers.concat(components)
         })
         class JFrogUIModule {
         }
@@ -41,11 +52,12 @@ class JFrogUIEssentials {
         return JFrogUIModule
     }
 
-    public bootstrap(upgradeAdapter:any) {
-        angular.element(document).ready(function() {
-            upgradeAdapter.bootstrap(document.documentElement, [NG1_MODULE]);
+    public bootstrap() {
+        angular.element(document).ready(() => {
+            this.upgradeAdapter.bootstrap(document.documentElement, [NG1_MODULE]);
         })
     }
+
     private createNg1FormWrapper() {
 
         angular.module(NG1_MODULE).component('jfNg1Form',{
@@ -106,7 +118,7 @@ class JFrogUIEssentials {
             customTemplateScope: '=?',
             usePagination: '=?',
             commObject: '=',
-            disabled: '=ngDisabled'
+            ngDisabled: '='
         });
 
         this.createWrapper('jf-field','jf-field',{
@@ -118,6 +130,17 @@ class JFrogUIEssentials {
             dontValidateDisabled: '@',
             delayedInit: '=',
             dontPushDownErrors: '='
+        });
+
+        this.createWrapper('jf-checkbox','jf-checkbox',{
+            text: '@?'
+        });
+
+        this.createWrapper('jf-help-tooltip','jf-help-tooltip',{
+            placement: '@?',
+            text: '@?',
+            html: '=',
+            maxWidth: '@'
         });
 
         this.createWrapper('jf-grid','jf-grid',{
@@ -146,7 +169,7 @@ class JFrogUIEssentials {
         this.createWrapper('jf-tabs','jf-tabs',{
             tabs: '=',
             dictionary: '=',
-            onTabChange: '&',
+            onTabChange: '&(tab)',
             tabWidth: '@',
             containerMargin: '@'
         });
@@ -167,40 +190,60 @@ class JFrogUIEssentials {
             let bindExpr;
             switch (bindType) {
                 case '=': case '=?': {
-                bindExpr = `$ctrl.${bindKey}`;
-                break;
-            }
+                    bindExpr = `$ctrl.${bindKey}`;
+                    break;
+                }
                 case '@': case '@?': {
-                bindExpr = `{{$ctrl.${bindKey}}}`;
-                break;
-            }
+                    bindExpr = `{{$ctrl.${bindKey}}}`;
+                    break;
+                }
                 case '&': case '&?': {
-                bindExpr = `$ctrl.${bindKey}()`;
-                break;
-            }
+                    bindExpr = `$ctrl.${bindKey}()`;
+                    break;
+                }
                 default: {
-                    console.log(`Unhandled bind type for ${directiveName}: ${bindType}`)
+                    if (bindType.startsWith('&') || bindType.startsWith('&?')) {
+                        let params = bindType.match(/\((.*)\)/)[0];
+                        bindExpr = `$ctrl.${bindKey}${params}`;
+                    }
+                    else {
+                        console.log(`Unhandled bind type for ${directiveName}: ${bindType}`)
+                    }
                 }
             }
+
             templateBindings += ` ${_.kebabCase(bindKey)}="${bindExpr}"`
         }
 
         let template = `<${directiveName}${templateBindings}><ng-transclude></ng-transclude></${directiveName}>`
 
-        let controller = function() {
+        let controller = function($element) {
+
             this.$onInit = () => {
                 for (let bindKey in bindings) {
                     let bindType = bindings[bindKey];
                     if ((bindType === '=' || bindType === '=?') && typeof this[bindKey] === 'function') {
                         this[bindKey] = this[bindKey]() || undefined;
                     }
-//        console.log(`${bindKey} = ${this[bindKey]}`)
                 }
             }
         };
 
+        let cleanBindings = (bindings) => {
+            let clean = {};
+            for (let key in bindings) {
+                if (bindings[key].indexOf('(') !== -1) {
+                    clean[key] = bindings[key].substr(0,bindings[key].indexOf('('))
+                }
+                else {
+                    clean[key] = bindings[key];
+                }
+            }
+            return clean;
+        };
+
         let componentObject = {
-            bindings,
+            bindings: cleanBindings(bindings),
             template,
             controller,
             transclude: true
@@ -215,4 +258,3 @@ class JFrogUIEssentials {
     }
 }
 
-export const jfrogUIEssentials = new JFrogUIEssentials();
