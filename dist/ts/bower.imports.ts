@@ -29,7 +29,7 @@ import '../../../../bower_components/codemirror/addon/search/searchcursor.js';
 
 
 
-var $ = require("jquery");
+var $ = require("../../../../components/jquery/dist/jquery.min.js");
 (window as any).$ = (window as any).jQuery = (window as any).jquery = $;
 import "../../../../bower_components/jQuery-contextMenu/dist/jquery.contextMenu.min.js";
 
