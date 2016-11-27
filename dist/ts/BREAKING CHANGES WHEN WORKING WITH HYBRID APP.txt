@@ -1,3 +1,0 @@
-- jf-tab - not working from ng2 comp. (use *ngIf / ngSwitch on current tab)
-- jf-reveal-input - attribute 'jf-reveal-input' changed to input-id
-- jf-help-tooltip - does not support transclusion (was never used with transclusion anyway...)
