@@ -30,6 +30,7 @@ module.exports = {
         'components/codemirror/mode/javascript/javascript.js',
         'components/codemirror/mode/clike/clike.js',
         'components/codemirror/addon/dialog/dialog.js',
+        'components/codemirror/addon/search/search.js',
         'components/codemirror/addon/search/searchcursor.js',
         'components/angular-ui-codemirror/ui-codemirror.js',
         'components/x2js/xml2json.js',

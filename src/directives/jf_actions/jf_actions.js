@@ -94,7 +94,7 @@ export function jfActions($timeout) {
             initMethod: '@',
             fixedActionsNames: '='
         },
-        restrict: 'EA',
+        restrict: 'E',
         controller: jfActionsController,
         controllerAs: 'jfActions',
         templateUrl: 'directives/jf_actions/jf_actions.html',

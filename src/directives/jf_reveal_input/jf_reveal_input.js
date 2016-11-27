@@ -37,7 +37,7 @@ export function jfRevealInput() {
 		controllerAs: 'jfRevealInput',
 		bindToController: true,
 		scope: {
-			inputId: '@jfRevealInput',
+			inputId: '@',
 			objectName: '@'
 		}
     }

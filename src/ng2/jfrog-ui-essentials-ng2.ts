@@ -14,6 +14,7 @@ export class JFrogUIEssentials {
 
     public constructor(_upgradeAdapter:any) {
         this.upgradeAdapter = _upgradeAdapter;
+
         angular.module(NG1_MODULE,['jfrog.ui.essentials']);
     }
 
@@ -21,7 +22,7 @@ export class JFrogUIEssentials {
         angular.module(NG1_MODULE).directive(selector,this.upgradeAdapter.downgradeNg2Component(rootComponent as any));
     }
 
-    public getJFrogUIModule() {
+    public getJFrogUIModule() {  
 
         this.createWrappers();
 
@@ -32,11 +33,12 @@ export class JFrogUIEssentials {
         this.upgradeAdapter.upgradeNg1Provider('JFrogGridFactory');
         this.upgradeAdapter.upgradeNg1Provider('JFrogNotifications');
         this.upgradeAdapter.upgradeNg1Provider('JFrogEventBus');
+        this.upgradeAdapter.upgradeNg1Provider('JFrogModal');
         this.upgradeAdapter.upgradeNg1Provider('JFrogUIUtils');
         this.upgradeAdapter.upgradeNg1Provider('JFrogDownload');
         this.upgradeAdapter.upgradeNg1Provider('JFrogIFrameDownload');
 
-        let wrappers = this.wrappers
+        let wrappers = this.wrappers;
 
         let components = [
             TestComponent,
@@ -60,22 +62,22 @@ export class JFrogUIEssentials {
 
     private createNg1FormWrapper() {
 
-        angular.module(NG1_MODULE).component('jfNg1Form',{
+        angular.module(NG1_MODULE).component('jfrogNg1Form',{
             bindings: {
                 ng1Template: '@',
-                ng2Controller: '=',
+                ng2Controller: '='
             },
             template: `<ng-include src="$ctrl.ng1Template"></ng-include>`
         })
 
-        let wrapper = this.upgradeAdapter.upgradeNg1Component('jfNg1Form');
+        let wrapper = this.upgradeAdapter.upgradeNg1Component('jfrogNg1Form');
 
         this.wrappers.push(wrapper);
 
     }
 
     createWrappers() {
-        this.createWrapper('jf-list-maker','jf-list-maker',{
+        this.createWrapper('jf-list-maker','jfrog-list-maker',{
             values: '=',
             label: '@',
             helpTooltip: '=',
@@ -89,7 +91,7 @@ export class JFrogUIEssentials {
             listId: '@'
         });
 
-        this.createWrapper('jf-multi-dropdown','jf-multi-dropdown',{
+        this.createWrapper('jf-multi-dropdown','jfrog-multi-dropdown',{
             title: '@',
             filterPlaceholder: '@',
             noItemsMessage: '@',
@@ -98,13 +100,13 @@ export class JFrogUIEssentials {
             dropdownOpened: '='
         });
 
-        this.createWrapper('jf-panel','jf-panel',{
+        this.createWrapper('jf-panel','jfrog-panel',{
             jfPanelHeading: '@',
             jfPanelHelpTooltip: '@',
             jfPanelClasses: '@',
-        });
+        },true);
 
-        this.createWrapper('jf-drag-drop','jf-drag-drop', {
+        this.createWrapper('jf-drag-drop','jfrog-drag-drop', {
             includeList: '=',
             excludeList: '=',
             includeDisplayField: '@',
@@ -121,7 +123,7 @@ export class JFrogUIEssentials {
             ngDisabled: '='
         });
 
-        this.createWrapper('jf-field','jf-field',{
+        this.createWrapper('jf-field','jfrog-field',{
             animated: '@',
             validations: '@',
             autofocus: '=',
@@ -130,20 +132,20 @@ export class JFrogUIEssentials {
             dontValidateDisabled: '@',
             delayedInit: '=',
             dontPushDownErrors: '='
-        });
+        },true);
 
-        this.createWrapper('jf-checkbox','jf-checkbox',{
+        this.createWrapper('jf-checkbox','jfrog-checkbox',{
             text: '@?'
-        });
+        },true);
 
-        this.createWrapper('jf-help-tooltip','jf-help-tooltip',{
+        this.createWrapper('jf-help-tooltip','jfrog-help-tooltip',{
             placement: '@?',
             text: '@?',
             html: '=',
             maxWidth: '@'
         });
 
-        this.createWrapper('jf-grid','jf-grid',{
+        this.createWrapper('jf-grid','jfrog-grid',{
             gridOptions: '=',
             filterField: '@?',
             filterField2: '@?',
@@ -152,7 +154,7 @@ export class JFrogUIEssentials {
             objectName: '@'
         });
 
-        this.createWrapper('jf-ui-select','jf-ui-select',{
+        this.createWrapper('jf-ui-select','jfrog-ui-select',{
             jfSelectModel: '=',
             jfSelectOptions: '=',
             jfSelectDisabled: '=',
@@ -166,22 +168,56 @@ export class JFrogUIEssentials {
             jfSelectHelpTooltips: '&?'
         });
 
-        this.createWrapper('jf-tabs','jf-tabs',{
+        this.createWrapper('jf-tabs','jfrog-tabs',{
             tabs: '=',
             dictionary: '=',
             onTabChange: '&(tab)',
             tabWidth: '@',
             containerMargin: '@'
-        });
-        this.createWrapper('jf-tab','jf-tab',{
+        },true);
+
+        this.createWrapper('jf-tab','jfrog-tab',{ //does not work good
             name: '@'
         });
 
-        this.createWrapper('toaster-container','jf-toaster-container',{
+        this.createWrapper('jf-clip-copy','jfrog-clip-copy',{
+            textToCopy: '=',
+            objectName: '@'
+        });
+
+        this.createWrapper('jf-actions','jfrog-actions',{
+            parentController: '=',
+            label: '@',
+            initMethod: '@',
+            fixedActionsNames: '='
+        });
+
+        this.createWrapper('jf-code-mirror','jfrog-code-mirror',{
+            mimeType: '@',
+            mode: '@',
+            model: '=',
+            allowEdit: '@',
+            height: '@?',
+            apiAccess: '=',
+            autofocus: '@'
+        });
+
+        this.createWrapper('jf-sidebar','jfrog-sidebar', {
+            driver: '=',
+            footerTemplate: '@',
+            openAdminSize: '@?',
+            noSearchBox: '@?',
+            externalGotoRoute: '&?($event)'
+        })
+
+        this.createWrapper('jf-marquee','jfrog-marquee', {
+        },true)
+
+        this.createWrapper('toaster-container','jfrog-toaster-container',{
         });
     }
 
-    private createWrapper(directiveName:string, wrapperName:string, bindings:Object) {
+    private createWrapper(directiveName:string, wrapperName:string, bindings:Object, transclude:boolean = false) {
 
         let templateBindings = '';
 
@@ -215,7 +251,8 @@ export class JFrogUIEssentials {
             templateBindings += ` ${_.kebabCase(bindKey)}="${bindExpr}"`
         }
 
-        let template = `<${directiveName}${templateBindings}><ng-transclude></ng-transclude></${directiveName}>`
+        let transclusion = transclude ? '<ng-transclude></ng-transclude>' : '';
+        let template = `<${directiveName}${templateBindings}>${transclusion}</${directiveName}>`
 
         let controller = function($element) {
 
@@ -258,3 +295,14 @@ export class JFrogUIEssentials {
     }
 }
 
+/*
+let CodeMirror = (window as any).CodeMirror;
+
+function aliasMime(newMime, existingMime) {
+    CodeMirror.defineMIME(newMime, CodeMirror.mimeModes[existingMime]);
+}
+function defineCodeMirrorMimes() {
+    aliasMime('text/x-java-source', 'text/x-java');
+    aliasMime('pom', 'text/xml');
+}
+defineCodeMirrorMimes(); */

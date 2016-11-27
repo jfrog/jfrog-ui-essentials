@@ -1,7 +1,9 @@
 class jfSidebarController {
 
     constructor($scope, $state, $timeout, $interval, $window, $rootScope, JFrogEventBus) {
-        this.openAdminSize = this.openAdminSize || '900px';
+        if (!this.openAdminSize) {
+            $timeout(()=>this.openAdminSize = '900px');
+        }
         $rootScope.jfSidebar = this;
         if (!this.driver) {
             console.error('jf-sidebar: No driver is provided');
@@ -214,7 +216,15 @@ class jfSidebarController {
                 this._openMenuStop();
                 this._adminMenuDelayStop();
             }
-            if (!item.isDisabled) this.$timeout(()=>this.goToState(item),20);
+            if (!item.isDisabled) this.$timeout(()=>{
+                if (this.$state && !this.$state.current.abstract) {
+                    this.goToState(item);
+                }
+                else {
+                    if (this.externalGotoRoute) this.externalGotoRoute({$event:{state: item.state, params: item.stateParams}});
+                }
+            },20);
+
         } else if (item.children) {
             if (!this._isAdminOpen()) {
                 this.openAdminMenu();
@@ -402,7 +412,13 @@ class jfSidebarController {
         }, 400);
 
         if (this.driver.onBeforeStateSwitch) this.driver.onBeforeStateSwitch(subItem);
-        this.$state.go(subItem.state, subItem.stateParams);
+
+        if (this.$state && !this.$state.current.abstract) {
+            this.$state.go(subItem.state, subItem.stateParams);
+        }
+        else {
+            if (this.externalGotoRoute) this.externalGotoRoute({$event: {state: subItem.state, params:subItem.stateParams}})
+        }
 
     }
 
@@ -489,7 +505,8 @@ export function jfSidebar() {
             driver: '=',
             footerTemplate: '@',
             openAdminSize: '@?',
-            noSearchBox: '@?'
+            noSearchBox: '@?',
+            externalGotoRoute: '&?'
         },
         controller: jfSidebarController,
         bindToController: true,

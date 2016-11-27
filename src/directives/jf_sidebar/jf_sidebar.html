@@ -29,7 +29,7 @@
 
             <div class="admin-menu" ng-if="item.children && !item.isDisabled" ng-mouseover="jfSidebar.menuAdminOver()" ng-click="$event.stopPropagation()">
 
-                <div class="searchbox-wrapper" ng-if="jfSidebar.noSearchBox === undefined">
+                <div class="searchbox-wrapper" ng-if="!jfSidebar.noSearchBox">
                     <input type="text"
                            class="input-text"
                            id="menuSearchQuery"
@@ -45,7 +45,7 @@
                               ng-class="{'disabled': !jfSidebar.menuSearchQuery}">&times;</span>
                 </div>
 
-                <div class="masonry" ng-class="{'no-search-box': jfSidebar.noSearchBox !== undefined}" tabindex="-1">
+                <div class="masonry" ng-class="{'no-search-box': jfSidebar.noSearchBox === undefined}" tabindex="-1">
                     <div>
                         <div ng-repeat="item in jfSidebar.adminMenuItems" class="section" ng-if="!item.isHidden">
                             <h3>{{item.label}}</h3>
@@ -60,7 +60,6 @@
                                               'not-active' : !jfSidebar.searchHighlightCheck(subItem.label) && jfSidebar.menuSearchQuery.length,
                                               'current' : jfSidebar.isCurrentItem(subItem)}"
                                    ng-if="!subItem.isDisabled"
-                                   ui-sref="{{ subItem.state }} ({{ subItem.stateParams }})"
                                    ng-click="jfSidebar.adminItemClick(subItem)"
                                    ng-keydown="jfSidebar.navigateInMenu($event)"
                                    data-state="{{ subItem.state }}"

@@ -14,12 +14,10 @@ import '../../bower_components/angular-ui-utils/ui-utils.js';
 import '../../bower_components/angular-ui-select/dist/select.js';
 
 
-import '../../bower_components/clipboard/dist/clipboard.min.js';
 import '../../bower_components/ng-clip/src/ngClip.js';
 
 
-import '../../bower_components/codemirror/lib/codemirror.js';
-import '../../bower_components/codemirror/addon/runmode/runmode-standalone.js';
+(window as any).CodeMirror = require('../../bower_components/codemirror/lib/codemirror.js');
 import '../../bower_components/angular-ui-codemirror/ui-codemirror.js';
 import '../../bower_components/codemirror/addon/mode/overlay.js';
 import '../../bower_components/codemirror/mode/xml/xml.js';
@@ -30,7 +28,7 @@ import '../../bower_components/codemirror/addon/search/search.js';
 import '../../bower_components/codemirror/addon/search/searchcursor.js';
 
 
-(window as any).CodeMirror.commands = require('../../bower_components/codemirror/lib/codemirror.js');
+
 var $ = require("jquery");
 (window as any).$ = (window as any).jQuery = (window as any).jquery = $;
 import "../../bower_components/jQuery-contextMenu/dist/jquery.contextMenu.min.js";
@@ -40,7 +38,7 @@ import '../../bower_components/lodash/lodash.js';
 import '../../bower_components/tooltipster/js/jquery.tooltipster.min.js';
 
 (window as any).ZeroClipboard = require('../../bower_components/zeroclipboard/dist/ZeroClipboard.js');
-
+(window as any).Clipboard = require('../../bower_components/clipboard/dist/clipboard.min.js');
 
 import '../../bower_components/jfrog-ui-essentials/dist/vendorScripts';
 import '../../bower_components/jfrog-ui-essentials/dist/jfrog-ui-essentials';
