@@ -4,7 +4,7 @@ import '../../../../bower_components/angular-mocks/angular-mocks.js';
 import '../../../../bower_components/angular-cookies/angular-cookies.js';
 import '../../../../bower_components/angular-sanitize/angular-sanitize.js';
 import '../../../../bower_components/angular-messages/angular-messages.js';
-import '../../../../bower_components/angular-route/angular-route.min.js';
+//import '../../../../bower_components/angular-route/angular-route.min.js';
 import '../../../../bower_components/angular-ui-router/release/angular-ui-router.js';
 import '../../../../bower_components/angular-bootstrap/ui-bootstrap-tpls.js';
 import '../../../../bower_components/angular-ui-grid/ui-grid.js';
@@ -29,7 +29,7 @@ import '../../../../bower_components/codemirror/addon/search/searchcursor.js';
 
 
 
-var $ = require("../../../../components/jquery/dist/jquery.min.js");
+var $ = require("../../../../bower_components/jquery/dist/jquery.min.js");
 (window as any).$ = (window as any).jQuery = (window as any).jquery = $;
 import "../../../../bower_components/jQuery-contextMenu/dist/jquery.contextMenu.min.js";
 
