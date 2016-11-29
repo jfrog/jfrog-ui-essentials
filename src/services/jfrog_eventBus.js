@@ -19,7 +19,11 @@ export class JFrogEventBus {
     updateCustomEvents() {
         let events = _.cloneDeep(this.libraryEvents);
         _.extend(events,this.JFrogUILibConfig.getConfig().customEventsDefinition);
-        this.eventDef = events;
+        if (!this.eventDef) this.eventDef = events;
+        else {
+            for (var key in this.eventDef) delete this.eventDef[key];
+            _.extend(this.eventDef,events);
+        }
         let eventNames = {};
         Object.keys(events).forEach(key => eventNames[events[key]] = key);
         this.EVENTS = eventNames;
@@ -54,16 +58,17 @@ export class JFrogEventBus {
      }
 
     _registerSingleEvent(eventName, callback) {
-        this._verifyEventExists(eventName);
-        this._listeners[eventName] = this._listeners[eventName] || [];
-        let listener = {
-            _callback: callback,
-            _id: this._randomId()
-        };
-        this._listeners[eventName].push(listener);
+        if (this._verifyEventExists(eventName)) {
+            this._listeners[eventName] = this._listeners[eventName] || [];
+            let listener = {
+                _callback: callback,
+                _id: this._randomId()
+            };
+            this._listeners[eventName].push(listener);
 
-        return () => {
-            this._remove(eventName, listener._id);
+            return () => {
+                this._remove(eventName, listener._id);
+            }
         }
     }
 
@@ -87,16 +92,19 @@ export class JFrogEventBus {
      * @param {string} eventName
      */
     dispatch(eventName, payload) {
-        this._verifyEventExists(eventName);
-        if(this._listeners[eventName]) {
-            this._listeners[eventName].forEach( (listener) => listener._callback(payload) )
+        if (this._verifyEventExists(eventName)) {
+            if(this._listeners[eventName]) {
+                this._listeners[eventName].forEach( (listener) => listener._callback(payload) )
+            }
         }
     }
 
     _verifyEventExists(eventName) {
         if (!this.EVENTS || !this.EVENTS[eventName]) {
-//            throw new Error('There are no events registered under the name ' + eventName);
+            console.error('There are no events registered under the name ' + eventName);
+            return false;
         }
+        return true;
     }
 
     /**

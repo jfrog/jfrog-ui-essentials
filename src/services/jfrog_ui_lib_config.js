@@ -28,8 +28,8 @@ export class JFrogUILibConfig {
     }
 
     setConfig(config) {
+        _.extend(this.config,config);
         angular.element(document).ready(() => {
-            _.extend(this.config,config);
             let eventBus = this.inject('JFrogEventBus');
             eventBus.updateCustomEvents();
         })

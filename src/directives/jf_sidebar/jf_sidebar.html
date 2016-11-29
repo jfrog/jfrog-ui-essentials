@@ -45,7 +45,7 @@
                               ng-class="{'disabled': !jfSidebar.menuSearchQuery}">&times;</span>
                 </div>
 
-                <div class="masonry" ng-class="{'no-search-box': jfSidebar.noSearchBox === undefined}" tabindex="-1">
+                <div class="masonry" ng-class="{'no-search-box': jfSidebar.noSearchBox}" tabindex="-1">
                     <div>
                         <div ng-repeat="item in jfSidebar.adminMenuItems" class="section" ng-if="!item.isHidden">
                             <h3>{{item.label}}</h3>

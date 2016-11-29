@@ -217,7 +217,7 @@ class jfSidebarController {
                 this._adminMenuDelayStop();
             }
             if (!item.isDisabled) this.$timeout(()=>{
-                if (this.$state && !this.$state.current.abstract) {
+                if (this.$state && this.$state.current.name) {
                     this.goToState(item);
                 }
                 else {
@@ -413,7 +413,7 @@ class jfSidebarController {
 
         if (this.driver.onBeforeStateSwitch) this.driver.onBeforeStateSwitch(subItem);
 
-        if (this.$state && !this.$state.current.abstract) {
+        if (this.$state && this.$state.current.name) {
             this.$state.go(subItem.state, subItem.stateParams);
         }
         else {
