@@ -396,8 +396,8 @@ class JFrogGrid {
         let simple = {};
         for (let key in row) {
             if (!key.startsWith('$') && !key.startsWith('_')) {
-                if (!changeObject) simple[key] = row[key] && row[key].$value ? row[key].$value : row[key];
-                else row[key] = row[key] && row[key].$value ? row[key].$value : row[key];
+                if (!changeObject) simple[key] = row[key] && row[key].$value !== undefined ? row[key].$value : row[key];
+                else row[key] = row[key] && row[key].$value !== undefined ? row[key].$value : row[key];
             }
             else {
                 if (!changeObject) simple[key] = row[key];
@@ -409,8 +409,8 @@ class JFrogGrid {
         let complex = {};
         for (let key in row) {
             if (!key.startsWith('$') && !key.startsWith('_')) {
-                if (!changeObject) complex[key] = {$value: row[key] && row[key].$value ? row[key].$value : row[key], $row: complex};
-                else row[key] = {$value: row[key] && row[key].$value ? row[key].$value : row[key], $row: row};
+                if (!changeObject) complex[key] = {$value: row[key] && row[key].$value !== undefined ? row[key].$value : row[key], $row: complex};
+                else row[key] = {$value: row[key] && row[key].$value !== undefined ? row[key].$value : row[key], $row: row};
             }
             else {
                 if (!changeObject) complex[key] = row[key];
