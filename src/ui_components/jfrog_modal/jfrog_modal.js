@@ -67,9 +67,11 @@ export class JFrogModal {
 
         this.$timeout(() => this._calculateMaxHeight(), 100);
 
-        modalInstance.result.finally(()=>{
-            $(window).off('resize', this._calculateMaxHeight());
-        });
+        if (modalInstance.result) {
+            modalInstance.result.finally(()=>{
+                $(window).off('resize', this._calculateMaxHeight());
+            });
+        }
 
         $(window).resize(() => {
             this._calculateMaxHeight();
