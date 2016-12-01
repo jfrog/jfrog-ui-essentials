@@ -176,6 +176,10 @@ class WizardController {
         this.currentStep = 1;
         this.wizardDefinitionObject = wizardDefinitionObject;
         this.totalSteps = wizardDefinitionObject.steps.length;
+        if (this.wizardDefinitionObject.initialStep) {
+            let index = _.findIndex(wizardDefinitionObject.steps,{id: this.wizardDefinitionObject.initialStep});
+            this.currentStep = index + 1;
+        }
     }
 
     cancel() {
