@@ -228,4 +228,8 @@ class WizardController {
         if (this.$userCtrl.onComplete) this.$userCtrl.onComplete();
         this.$modalInstance.close();
     }
+
+    isFunction(val) {
+        return _.isFunction(val);
+    }
 }
