@@ -245,7 +245,7 @@ class jfSidebarController {
             this._openMenuStop();
             this._adminMenuDelayStop();
 
-            if (!$('#menuSearchQuery').is(':focus') || $('.menu-item').is(':focus')) {
+            if ($(':focus').length && $(':focus')[0].id != 'admin' && $(':focus')[0].id != 'menuSearchQuery') {
                 this.currentFocus = $(':focus');
             }
 
@@ -349,7 +349,7 @@ class jfSidebarController {
     _updateTabIndex() {
         if (this.menu.width != this.openAdminSize) {
             $('.admin-menu').find('a,input').attr('tabindex', -1);
-            //$('.admin-menu').find('a,input').blur();
+            $('.admin-menu').find('a,input').blur();
         } else {
             let highlighted = $('.admin-menu').find('a.highlight');
             if (highlighted.length) {

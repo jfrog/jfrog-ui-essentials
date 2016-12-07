@@ -51,25 +51,51 @@
 }
 
 
-
 .wizard-modal {
+  height: 530px;
   .modal-header {
-    border-bottom: none;
-    padding: 40px 50px 35px 50px;
+    border-bottom: 0;
+    padding: 40px 50px 0px 50px;
     .close {
       margin: -43px -32px;
     }
-    .step-title {
-      font-weight: 700;
-      font-size: 35px;
+    .step-icon {
+      display: inline-block;
+      margin-right: 40px;
+      vertical-align: top;
+      &:before {
+        font-size: 5.45em !important;
+      }
+    }
+    .step-header {
+      display: inline-block;
+      width: 80%;
+      .step-title {
+        font-weight: 700;
+        font-size: 35px;
+      }
+      .step-description {
+        font-size: 16px;
+        font-weight:600;
+        line-height: 28px
+      }
     }
   }
   .modal-body {
+    clear: both;
     height: 380px;
     padding: 0 50px 0 50px;
   }
   .modal-footer {
-    position: relative;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    .modal-footer-buttons-container {
+      position: absolute;
+      right: 25px;
+    }
     .progress-indicator {
       width: 50%;
       position: absolute;

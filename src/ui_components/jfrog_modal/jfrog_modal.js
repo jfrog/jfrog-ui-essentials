@@ -67,9 +67,11 @@ export class JFrogModal {
 
         this.$timeout(() => this._calculateMaxHeight(), 100);
 
-        modalInstance.result.finally(()=>{
-            $(window).off('resize', this._calculateMaxHeight());
-        });
+        if (modalInstance.result) {
+            modalInstance.result.finally(()=>{
+                $(window).off('resize', this._calculateMaxHeight());
+            });
+        }
 
         $(window).resize(() => {
             this._calculateMaxHeight();
@@ -176,6 +178,10 @@ class WizardController {
         this.currentStep = 1;
         this.wizardDefinitionObject = wizardDefinitionObject;
         this.totalSteps = wizardDefinitionObject.steps.length;
+        if (this.wizardDefinitionObject.initialStep) {
+            let index = _.findIndex(wizardDefinitionObject.steps,{id: this.wizardDefinitionObject.initialStep});
+            this.currentStep = index + 1;
+        }
     }
 
     cancel() {
@@ -227,5 +233,9 @@ class WizardController {
     finish() {
         if (this.$userCtrl.onComplete) this.$userCtrl.onComplete();
         this.$modalInstance.close();
+    }
+
+    isFunction(val) {
+        return _.isFunction(val);
     }
 }

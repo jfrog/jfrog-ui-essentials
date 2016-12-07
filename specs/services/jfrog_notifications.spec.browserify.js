@@ -35,7 +35,7 @@ describe('Unit test: JFrogNotifications', () => {
         let message = {error: 'my error message'};
         let messageOptions = {
             type: 'error',
-            timeout: 10000,
+            timeout: 0,
             body: 'my error message',
             showCloseButton: true,
             bodyOutputType: undefined,
@@ -48,7 +48,7 @@ describe('Unit test: JFrogNotifications', () => {
     it('should pop warn message with options', ()=> {
         let messageOptions = {
             type: 'warning',
-            timeout: 4000,
+            timeout: 5000,
             body: 'my message warn',
             showCloseButton: true,
             bodyOutputType: undefined,

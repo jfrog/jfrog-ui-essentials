@@ -17,7 +17,7 @@ export class JFrogNotifications {
             }
             this.toast.pop({
                 type: 'success',
-                timeout: message.timeout || 0,
+                timeout: message.timeout || 5000,
                 body: message.info,
                 showCloseButton: true,
                 bodyOutputType: allowHtml ? 'trustedHtml' : undefined,
@@ -27,7 +27,7 @@ export class JFrogNotifications {
             this.lastNotification = message.info;
             this.$timeout(() => {
                 this.lastNotification = null
-            }, message.timeout || 0);
+            }, message.timeout || 5000);
             //this.toast.create({animation:'fade',content:message.info});
         }
 
@@ -55,7 +55,7 @@ export class JFrogNotifications {
             }
             this.toast.pop({
                 type: 'warning',
-                timeout: message.timeout || 0,
+                timeout: message.timeout || 5000,
                 body: message.warn,
                 showCloseButton: true,
                 bodyOutputType: allowHtml ? 'trustedHtml' : undefined,
