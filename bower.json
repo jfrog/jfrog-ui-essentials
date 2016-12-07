@@ -8,7 +8,7 @@
     "*",
     "!dist/*",
     "!dist/fonts/*",
-    "!dist/images/*",
+    "!dist/images/**/*",
     "!dist/ts/**/*",
     "!bower.json",
     "!package.json",
