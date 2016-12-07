@@ -288,7 +288,7 @@ export class TestComponent {
         {name: 'Item1'}, {name: 'Item2'}
     ] ;
 
-    private codeMirrorXML=require('./test_codemirror.xml');
+    private codeMirrorXML=require('xml-loader!./test_codemirror.xml');
 
     onChangeDNDObject() {
         console.log(this.excludeObjects, this.includeObjects)
