@@ -1,4 +1,4 @@
-import "./bower.imports";
+//import "./bower.imports";
 import {NgModule, Component} from "@angular/core";
 import {UpgradeAdapter} from "@angular/upgrade";
 import {TestComponent} from "./components/test-component/test.component";

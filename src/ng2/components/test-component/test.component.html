@@ -1,0 +1,85 @@
+<jfrog-panel class="jf-panel" jfPanelHeading="Jfrog UI Essentials NG2 Test/Demo">
+
+    <div class="inner-demo-container">
+        <jfrog-tabs [tabs]="tabs"
+                    [dictionary]="tabsDict"
+                    tabWidth="170"
+                    (onTabChange)="onTabChange($event)"
+                    containerMargin="35">
+        </jfrog-tabs>
+        <div [ngSwitch]="currentTab" class="in-tab">
+
+            <div *ngSwitchCase="'jfListMaker'">
+                <jfrog-list-maker [(values)]="listVals" placeholder="Create New Value"></jfrog-list-maker>
+            </div>
+
+            <div *ngSwitchCase="'jfMultiDropdown'">
+                <jfrog-multi-dropdown [(items)]="multiList" (onChange)="onMultiSelection()" title="Multi Selection!" filterPlaceholder="Filter it!"></jfrog-multi-dropdown>
+            </div>
+
+            <div *ngSwitchCase="'jfGrid'">
+                <jfrog-grid [(gridOptions)]="gridOptions"
+                            filterField="name"></jfrog-grid>
+            </div>
+
+            <div *ngSwitchCase="'jfNg1Form'">
+                <jfrog-ng1-form ng1Template="app/ng1-form-example.html"
+                                [(ng2Controller)]="$ctrl"></jfrog-ng1-form>
+                <h1>{{myBindedVar}}</h1>
+            </div>
+
+            <div *ngSwitchCase="'jfUISelect'">
+                <jfrog-ui-select [jfSelectOptions]="[{name: 'Item 1'},{name: 'Item 2'},{name: 'Item 3'}]"
+                                 jfSelectDisplayAttr="name"
+                                 [(jfSelectModel)]="selectedItem">
+                </jfrog-ui-select>
+                <h1>{{selectedItem?.name}}</h1>
+                <jfrog-clip-copy [textToCopy]="selectedItem?.name" objectName="Text"></jfrog-clip-copy>
+            </div>
+
+            <div *ngSwitchCase="'jfDragDrop'">
+                <jfrog-drag-drop
+                        (onChange)="onChangeDNDObject()"
+                        [(excludeList)]="excludeObjects"
+                        excludeDisplayField="name"
+                        [(includeList)]="includeObjects"
+                        includeDisplayField="name"
+                        [ngDisabled]="dndDisabled"
+                        objectsName="Object">
+                </jfrog-drag-drop>
+
+                <div class="margin-top-25">
+              <span>
+                <jfrog-checkbox text="Disable Component">
+                  <input type="checkbox"
+                         [(ngModel)]="dndDisabled">
+                </jfrog-checkbox>
+              </span>
+                    <jfrog-help-tooltip text="This is help tooltip !"></jfrog-help-tooltip>
+                </div>
+
+            </div>
+
+            <div *ngSwitchCase="'jfActions'" class="action-container">
+                <jfrog-actions [(parentController)]="$ctrl" label="Actions Dropdown" initMethod="initActions"></jfrog-actions>
+            </div>
+
+            <div *ngSwitchCase="'jfCodeMirror'">
+                <jfrog-code-mirror [(model)]="codeMirrorXML" height="400px" mode="xml"></jfrog-code-mirror>
+            </div>
+
+            <div *ngSwitchCase="'jfSidebar'" class="sidebar-container">
+                <jfrog-sidebar [(driver)]="sbDriver" (externalGotoRoute)="onSidebarClick($event)"></jfrog-sidebar>
+            </div>
+
+            <div *ngSwitchCase="'JFrogModal'">
+                <div><button class="btn btn-primary" (click)="showConfirmModal()">Show Confirm Modal</button></div><br>
+                <div><button class="btn btn-primary" (click)="showCodeModal()">Show Code Modal</button></div><br>
+                <div><button class="btn btn-primary" (click)="showCustomModal(1)">Show Simple Modal Without Dynamic Data</button></div><br>
+                <div><button class="btn btn-primary" (click)="showCustomModal(2)">Show Modal With Dynamic Data</button></div><br>
+                <div><button class="btn btn-primary" (click)="showWizardModal()">Show Wizard Modal</button></div>
+            </div>
+
+        </div>
+    </div>
+</jfrog-panel>
