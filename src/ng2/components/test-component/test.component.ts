@@ -373,19 +373,19 @@ export class TestComponent {
                 {
                     name: 'Initialization',
                     id: 'init',
-                    templateUrl: 'app/custom_modal_templates/modal_wizard_example/step_1.html',
+                    templateUrl: 'custom_modal_templates/modal_wizard_example/step_1.html',
                     skippable: false
                 },
                 {
                     name: 'Middle Stage',
                     id: 'step2',
-                    templateUrl: 'app/custom_modal_templates/modal_wizard_example/step_2.html',
+                    templateUrl: 'custom_modal_templates/modal_wizard_example/step_2.html',
                     skippable: true
                 },
                 {
                     name: 'Final Stage',
                     id: 'final',
-                    templateUrl: 'app/custom_modal_templates/modal_wizard_example/step_3.html',
+                    templateUrl: 'custom_modal_templates/modal_wizard_example/step_3.html',
                     skippable: false
                 }
             ]
