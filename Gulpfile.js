@@ -56,6 +56,7 @@ gulp.task('build:common',
             'preprocessBowerJSON',
             'writeBuildVersion',
             'copyTypeScriptSources',
+            'copyVendorFontsToDistRoot',
 //            'concatAllCSS',
             'cleanTemp',
             callback
@@ -162,6 +163,10 @@ gulp.task('copyDistToExternalFolder', function () {
         .pipe(gulp.dest('/Users/dannyr/jfuie-dist-for-link/dist'))
 });
 
+gulp.task('copyVendorFontsToDistRoot', function () {
+    return gulp.src(CONFIG.SOURCES.VENDOR_FONTS)
+        .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET))
+});
 
 
 // install bower dependedencies
