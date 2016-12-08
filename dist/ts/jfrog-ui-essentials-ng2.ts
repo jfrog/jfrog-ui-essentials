@@ -1,7 +1,9 @@
 //import "./bower.imports";
-import {NgModule, Component} from "@angular/core";
+import {NgModule, Component, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {UpgradeAdapter} from "@angular/upgrade";
 import {TestComponent} from "./components/test-component/test.component";
+import {FormsModule} from "@angular/forms";
+import {BrowserModule} from "@angular/platform-browser";
 
 const NG1_MODULE = 'ng1module'
 let angular = (window as any).angular;
@@ -45,6 +47,11 @@ export class JFrogUIEssentials {
 //            this.upgradeAdapter.upgradeNg1Component('jfCheckbox')
         ];
         @NgModule({
+            schemas:[CUSTOM_ELEMENTS_SCHEMA],
+            imports: [
+                BrowserModule,
+                FormsModule
+            ],
             declarations: wrappers.concat(components),
             exports: wrappers.concat(components)
         })
