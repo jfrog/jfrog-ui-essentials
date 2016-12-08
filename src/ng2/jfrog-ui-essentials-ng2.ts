@@ -43,7 +43,7 @@ export class JFrogUIEssentials {
         let wrappers = this.wrappers;
 
         let components = [
-//            TestComponent,
+            TestComponent,
 //            this.upgradeAdapter.upgradeNg1Component('jfCheckbox')
         ];
         @NgModule({
