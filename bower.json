@@ -10,6 +10,7 @@
     "!dist/fonts/*",
     "!dist/images/**/*",
     "!dist/ts/**/*",
+    "!fonts/*",
     "!bower.json",
     "!package.json",
     "!README.md",
