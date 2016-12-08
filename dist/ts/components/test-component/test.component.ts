@@ -270,9 +270,6 @@ export class TestComponent {
     }
 
     ngOnInit() {
-        this.eventBus.register('some_custom_event',(eventParam)=>{
-            console.log('Catched event with param: ' + eventParam);
-        })
     }
 
     onSidebarClick($event) {
