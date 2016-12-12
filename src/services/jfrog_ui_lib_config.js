@@ -1,4 +1,5 @@
 //import bowerJSON     from '../../bower.json';
+import VALIDATION_MESSAGES from '../../constants/validation.constants.js';
 
 export class JFrogUILibConfig {
     constructor() {
@@ -14,7 +15,7 @@ export class JFrogUILibConfig {
 //        this.version = buildNumber ? (buildDev ? (buildVersion+'-dev.'+buildNumber) : buildVersion) : 'UNKNOWN.VERSION';
         this.version = buildVersion ? buildVersion : 'UNKNOWN.VERSION';
         this.buildNumber = buildNumber || 'N/A';
-        this.config = {};
+        this.config = {DEFAULT_VALIDATION_MESSAGES: VALIDATION_MESSAGES};
 
         if (this.version === 'UNKNOWN.VERSION') console.log("%cRunning with unknown version of jfrog-ui-essentials!","color: #ff0000;");
     }

@@ -1,7 +1,7 @@
-import {VALIDATION_ERRORS} from "../../constants/validation-error-messages.constants";
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, Inject} from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import {lodash} from "../../../third-parties";
+
+let lodash = (window as any)._;
 
 @Component({
     selector: 'jfrog-field',
@@ -18,12 +18,15 @@ export class JFrogFieldComponent implements OnInit {
     public validationErrors;
     public focused = false;
 
-    constructor() {
+    public VALIDATION_ERRORS = this.libConfig.getConfig().DEFAULT_VALIDATION_MESSAGES;
+
+    constructor(@Inject('JFrogUILibConfig') private libConfig) {
+        console.log(this.VALIDATION_ERRORS);
     }
 
     ngOnInit() {
-        this.validationErrors = lodash.cloneDeep(VALIDATION_ERRORS.common);
-        if (this.validations) lodash.extend(this.validationErrors,VALIDATION_ERRORS[this.validations]);
+        this.validationErrors = lodash.cloneDeep(this.VALIDATION_ERRORS.common);
+        if (this.validations) lodash.extend(this.validationErrors,this.VALIDATION_ERRORS[this.validations]);
     }
 
 }
