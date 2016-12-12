@@ -7,6 +7,7 @@ import {Component, Inject} from '@angular/core';
 
 @Component({
     selector: 'test-comp',
+    styles: [require('./test.component.less')],
     template: require('./test.component.html')
 })
 export class TestComponent {

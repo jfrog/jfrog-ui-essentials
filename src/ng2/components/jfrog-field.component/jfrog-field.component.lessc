@@ -1,0 +1,14 @@
+label,
+input {
+  display: block;
+}
+.text-input {
+  width: 200px;
+  height: 20px;
+}
+.field-validation-error {
+  color: red;
+  margin-top: -2px;
+  font-size: 12px;
+  width: 200px;
+}
