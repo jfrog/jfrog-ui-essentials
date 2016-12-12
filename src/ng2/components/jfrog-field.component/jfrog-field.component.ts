@@ -6,7 +6,7 @@ let lodash = (window as any)._;
 @Component({
     selector: 'jfrog-field',
     template: require('./jfrog-field.component.html'),
-    styles: [require('./jfrog-field.component.lessc')]
+    styles: [require('text-loader!less-loader!./jfrog-field.component.lessc')]
 })
 export class JFrogFieldComponent implements OnInit {
     @Input() public form:FormGroup;

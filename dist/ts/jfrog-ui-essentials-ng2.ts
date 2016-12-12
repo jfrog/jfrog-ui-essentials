@@ -2,7 +2,7 @@
 import {NgModule, Component, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {UpgradeAdapter} from "@angular/upgrade";
 import {TestComponent} from "./components/test-component/test.component";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
 import {JFrogFieldComponent} from "./components/jfrog-field.component/jfrog-field.component";
 
@@ -52,7 +52,8 @@ export class JFrogUIEssentials {
             schemas:[CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 BrowserModule,
-                FormsModule
+                FormsModule,
+                ReactiveFormsModule
             ],
             declarations: wrappers.concat(components),
             exports: wrappers.concat(components)
