@@ -5,6 +5,7 @@ import {TestComponent} from "./components/test-component/test.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
 import {JFrogFieldComponent} from "./components/jfrog-field.component/jfrog-field.component";
+import {ObjectKeysPipe} from "./pipes/object-keys.pipe";
 
 const NG1_MODULE = 'ng1module'
 let angular = (window as any).angular;
@@ -45,7 +46,9 @@ export class JFrogUIEssentials {
 
         let components = [
             TestComponent,
-            JFrogFieldComponent
+            JFrogFieldComponent,
+
+            ObjectKeysPipe
 //            this.upgradeAdapter.upgradeNg1Component('jfCheckbox')
         ];
         @NgModule({
