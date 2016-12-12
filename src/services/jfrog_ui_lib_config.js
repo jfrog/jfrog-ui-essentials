@@ -1,5 +1,5 @@
 //import bowerJSON     from '../../bower.json';
-import VALIDATION_MESSAGES from '../../constants/validation.constants.js';
+import VALIDATION_MESSAGES from '../constants/validation.constants.js';
 
 export class JFrogUILibConfig {
     constructor() {
