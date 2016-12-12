@@ -18,15 +18,16 @@ export class JFrogFieldComponent implements OnInit {
     public validationErrors;
     public focused = false;
 
-    public VALIDATION_ERRORS = this.libConfig.getConfig().DEFAULT_VALIDATION_MESSAGES;
+    public validationErrors = this.libConfig.getConfig().DEFAULT_VALIDATION_MESSAGES_FUNC(this.validations,this.libConfig);
 
     constructor(@Inject('JFrogUILibConfig') private libConfig) {
-        console.log(this.VALIDATION_ERRORS);
     }
 
     ngOnInit() {
+/*
         this.validationErrors = lodash.cloneDeep(this.VALIDATION_ERRORS.common);
         if (this.validations) lodash.extend(this.validationErrors,this.VALIDATION_ERRORS[this.validations]);
+*/
     }
 
 }
