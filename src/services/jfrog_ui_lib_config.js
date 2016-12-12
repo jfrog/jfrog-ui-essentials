@@ -15,7 +15,7 @@ export class JFrogUILibConfig {
 //        this.version = buildNumber ? (buildDev ? (buildVersion+'-dev.'+buildNumber) : buildVersion) : 'UNKNOWN.VERSION';
         this.version = buildVersion ? buildVersion : 'UNKNOWN.VERSION';
         this.buildNumber = buildNumber || 'N/A';
-        this.config = {DEFAULT_VALIDATION_MESSAGES: VALIDATION_MESSAGES};
+        this.config = {DEFAULT_VALIDATION_MESSAGES: VALIDATION_MESSAGES()};
 
         if (this.version === 'UNKNOWN.VERSION') console.log("%cRunning with unknown version of jfrog-ui-essentials!","color: #ff0000;");
     }

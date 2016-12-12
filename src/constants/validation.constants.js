@@ -1,5 +1,5 @@
 export default function (name, JFrogUILibConfig) {
-    let customMessages = JFrogUILibConfig.getConfig().customValidationMessages;
+    let customMessages = JFrogUILibConfig ? JFrogUILibConfig.getConfig().customValidationMessages : undefined;
     if (customMessages) return angular.extend(angular.copy(commonMessages), customMessages[name]);
     else return commonMessages;
 }
