@@ -4,6 +4,7 @@ import {UpgradeAdapter} from "@angular/upgrade";
 import {TestComponent} from "./components/test-component/test.component";
 import {FormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
+import {JFrogFieldComponent} from "./components/jfrog-field.component/jfrog-field.component";
 
 const NG1_MODULE = 'ng1module'
 let angular = (window as any).angular;
@@ -44,6 +45,7 @@ export class JFrogUIEssentials {
 
         let components = [
             TestComponent,
+            JFrogFieldComponent
 //            this.upgradeAdapter.upgradeNg1Component('jfCheckbox')
         ];
         @NgModule({
@@ -130,6 +132,7 @@ export class JFrogUIEssentials {
             ngDisabled: '='
         });
 
+/*
         this.createWrapper('jf-field','jfrog-field',{
             animated: '@',
             validations: '@',
@@ -140,6 +143,7 @@ export class JFrogUIEssentials {
             delayedInit: '=',
             dontPushDownErrors: '='
         },true);
+*/
 
         this.createWrapper('jf-checkbox','jfrog-checkbox',{
             text: '@?'
