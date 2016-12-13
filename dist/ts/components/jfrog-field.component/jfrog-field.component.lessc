@@ -23,7 +23,8 @@ input {
 }
 .field-validation-error {
   color: #D73F3F;
-  margin-top: -2px;
-  font-size: 12px;
   width: 200px;
+  height: 22px;
+  line-height: 22px;
+  padding-left: 3px;
 }
