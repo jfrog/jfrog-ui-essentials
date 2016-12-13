@@ -5,6 +5,7 @@
        [name]="field"
        (focus)="focused=true"
        (blur)="focused=false"
+       [class.invalid]="form.controls[field].errors && form.controls[field].touched && !focused"
        class="text-input">
 <div class="field-validation-error" *ngIf="form.controls[field].touched && !focused">
     <div *ngFor="let error of form.controls[field].errors | objectKeys">

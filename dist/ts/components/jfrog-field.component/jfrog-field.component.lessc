@@ -4,10 +4,25 @@ input {
 }
 .text-input {
   width: 200px;
-  height: 20px;
+  height: 40px;
+  transition: border-color .5s ease;
+  border: 1px solid #E9E9E9;
+  outline-width: 0;
+
+  &:focus {
+    border-color: #BCBCBC;
+    color: #585858;
+    box-shadow: none;
+  }
+
+  &.invalid:not([disabled]) {
+    border-color: #D73F3F;
+    box-shadow: none;
+  }
+
 }
 .field-validation-error {
-  color: red;
+  color: #D73F3F;
   margin-top: -2px;
   font-size: 12px;
   width: 200px;

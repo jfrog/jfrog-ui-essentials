@@ -57,6 +57,7 @@ gulp.task('build:common',
             'writeBuildVersion',
             'copyTypeScriptSources',
             'copyVendorFontsToDistRoot',
+            'copyDistToExternalFolder',
 //            'concatAllCSS',
             'cleanTemp',
             callback
@@ -102,8 +103,8 @@ gulp.task('writeBuildVersion', function() {
 
 // Set watchers and run relevant tasks - then reload (when running under browsersync)
 gulp.task('watch', function () {
-    gulp.watch(CONFIG.SOURCES.APPLICATION_JS, sequence('build','copyDistToExternalFolder'));
-    gulp.watch(CONFIG.SOURCES.APPLICATION_TS, sequence('copyTypeScriptSources','copyDistToExternalFolder'));
+    gulp.watch(CONFIG.SOURCES.APPLICATION_JS, sequence('build'));
+    gulp.watch(CONFIG.SOURCES.APPLICATION_TS, sequence('build'));
     gulp.watch(CONFIG.SOURCES.TEMPLATES, sequence('build'));
     gulp.watch(CONFIG.SOURCES.LESS, sequence('build'));
     gulp.watch(CONFIG.SOURCES.DIRECTIVES_LESS, sequence('build'));
@@ -158,15 +159,16 @@ gulp.task('copyTypeScriptSources', function () {
         .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET+'/ts'))
 });
 
-gulp.task('copyDistToExternalFolder', function () {
-    return gulp.src(CONFIG.DESTINATIONS.TARGET+'/**/*')
-        .pipe(gulp.dest('/Users/dannyr/jfuie-dist-for-link/dist'))
-});
-
 gulp.task('copyVendorFontsToDistRoot', function () {
     return gulp.src(CONFIG.SOURCES.VENDOR_FONTS)
         .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET))
 });
+
+gulp.task('copyDistToExternalFolder', function () {
+    return gulp.src(CONFIG.DESTINATIONS.TARGET+'/**/*')
+        .pipe(gulp.dest('/Users/dannyr/ang2-test2/bower_components/jfrog-ui-essentials/dist'))
+});
+
 
 
 // install bower dependedencies
