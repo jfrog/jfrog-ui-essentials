@@ -2,6 +2,12 @@ label,
 input {
   display: block;
 }
+label.mandatory {
+  &::after {
+    content: "*";
+    margin-left: 4px;
+  }
+}
 .text-input {
   width: 200px;
   height: 40px;

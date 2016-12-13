@@ -1,5 +1,5 @@
 import {Component, OnInit, Input, Inject} from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import {FormGroup, AbstractControl} from '@angular/forms';
 
 let lodash = (window as any)._;
 
@@ -24,6 +24,11 @@ export class JFrogFieldComponent implements OnInit {
 
     ngOnInit() {
         this.validationErrors = this.libConfig.getConfig().DEFAULT_VALIDATION_MESSAGES_FUNC((this.validations || 'common'),this.libConfig);
+    }
+
+    isRequired() {
+        let emptyValidState:any = this.form.controls[this.field].validator(({value:''} as AbstractControl));
+        return emptyValidState && emptyValidState.required;
     }
 
 }

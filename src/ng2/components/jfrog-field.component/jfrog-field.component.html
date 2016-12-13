@@ -1,4 +1,5 @@
-<label [for]="field">{{label}}</label>
+<label [for]="field"
+       [class.mandatory]="isRequired()">{{label}}</label>
 <input [type]="type || 'text'"
        [formControl]="form.controls[field]"
        [id]="field"
