@@ -1,0 +1,84 @@
+.wizard-modal {
+  color: #373737;
+  .modal-header {
+    padding: 0;
+    line-height: normal;
+    .close {margin: 0 20px;}
+  }
+  .modal-body {
+    .title-wrapper {
+      margin: 20px 0;
+      display: table;
+      border-bottom: 1px solid #f1f1f1;
+      width: 100%;
+      & > div {
+        display: table-cell;
+        &.icon {
+          padding-right: 30px;
+          width: 70px;
+          i.step-icon {
+
+          }
+        }
+        &.title {
+          vertical-align: top;
+        }
+      }
+      h1 {
+        color: #373737;
+        font-size: 28px;
+        font-weight: bold;
+        margin: 0 0 20px;
+      }
+      .description {
+        font-size: 14px;
+        margin-bottom: 32px;
+      }
+    }
+  }
+
+
+
+  // MODAL FOOTER
+  .modal-footer {
+    background-color: transparent;
+    border-top: 1px solid #f1f1f1;
+    height: 60px;
+    .progress-indicator {
+      width: 50%;
+      position: absolute;
+      left: 25%;
+      top: 35%;
+      text-align: center;
+      .progress-indicator-led {
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 4px;
+        background: #e6e6e6;
+        border: 1px solid #d2d2d2;
+        width: 12px;
+        height: 12px;
+        &.current {
+          background: #b8b8b8;
+          border-color: #b8b8b8;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    .modal-footer-buttons-container {
+      .btn {
+        min-width: 0;
+        height: auto;
+        line-height: 26px;
+        background-color: transparent;
+        border: 0;
+        &[disabled] {
+          color: #c9c9c9;
+        }
+      }
+    }
+  }
+}
