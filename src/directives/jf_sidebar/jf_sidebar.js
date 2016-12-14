@@ -1,10 +1,11 @@
 class jfSidebarController {
 
-    constructor($scope, $state, $timeout, $interval, $window, $rootScope, JFrogEventBus) {
+    constructor($scope, $state, $timeout, $interval, $window, $rootScope, JFrogEventBus, AppGlobalsService) {
         if (!this.openAdminSize) {
             $timeout(()=>this.openAdminSize = '900px');
         }
         $rootScope.jfSidebar = this;
+        AppGlobalsService.set('jfrogSidebar',this);
         if (!this.driver) {
             console.error('jf-sidebar: No driver is provided');
             this.driver = {};

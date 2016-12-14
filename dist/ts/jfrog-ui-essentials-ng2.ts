@@ -6,6 +6,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
 import {JFrogFieldComponent} from "./components/jfrog-field.component/jfrog-field.component";
 import {ObjectKeysPipe} from "./pipes/object-keys.pipe";
+import {AppGlobalsService} from "./services/app.globals.service";
 
 const NG1_MODULE = 'ng1module'
 let angular = (window as any).angular;
@@ -42,6 +43,11 @@ export class JFrogUIEssentials {
         this.upgradeAdapter.upgradeNg1Provider('JFrogDownload');
         this.upgradeAdapter.upgradeNg1Provider('JFrogIFrameDownload');
 
+
+        //Downgrade services
+        angular.module(NG1_MODULE).service('AppGlobalsService', this.upgradeAdapter.downgradeNg2Provider(AppGlobalsService));
+
+
         let wrappers = this.wrappers;
 
         let components = [
@@ -59,7 +65,10 @@ export class JFrogUIEssentials {
                 ReactiveFormsModule
             ],
             declarations: wrappers.concat(components),
-            exports: wrappers.concat(components)
+            exports: wrappers.concat(components),
+            providers: [
+                AppGlobalsService
+            ]
         })
         class JFrogUIModule {
         }
