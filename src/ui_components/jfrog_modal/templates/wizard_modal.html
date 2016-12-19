@@ -1,9 +1,7 @@
 <div class="wizard-modal">
     <div class="modal-header">
-        <button ng-if="$wizardDef.cancelable" type="button" class="close" data-dismiss="close" aria-label="Close" ng-click="$wizardCtrl.cancel()"><span aria-hidden="true">&times;</span></button>
-    </div>
-    <div class="modal-body clearfix">
-
+        <span ng-if="$wizardDef.cancelable" class="icon icon-clear" ng-click="$wizardCtrl.cancel()"></span>
+        <!--<button ng-if="$wizardDef.cancelable" type="button" class="close" data-dismiss="close" aria-label="Close" ng-click="$wizardCtrl.cancel()"><span aria-hidden="true">&times;</span></button>-->
         <div class="title-wrapper">
             <div class="icon" ng-if="$wizardDef.steps[$wizardCtrl.currentStep-1].icon">
                 <!--<i class="step-icon icon {{$wizardDef.steps[$wizardCtrl.currentStep-1].icon}}"></i>-->
@@ -14,9 +12,8 @@
                 <div class="description" ng-if="$wizardDef.steps[$wizardCtrl.currentStep-1].description" ng-bind-html="$wizardDef.steps[$wizardCtrl.currentStep-1].description"></div>
             </div>
         </div>
-
-
-
+    </div>
+    <div class="modal-body clearfix">
         <ng-include src="$wizardDef.steps[$wizardCtrl.currentStep-1].templateUrl"></ng-include>
     </div>
     <div class="modal-footer" jf-disable-ng-animate>
@@ -52,7 +49,7 @@
                         ng-click="$wizardCtrl.nextStep()"
                         id="wizard-popup-next">Next</button>
                 <button ng-if="$wizardCtrl.currentStep === $wizardCtrl.totalSteps"
-                        ng-disabled="$wizardCtrl.pending || (!$wizardCtrl.$userCtrl.isStepCompleted($wizardDef.steps[$wizardCtrl.currentStep-1]) && !$wizardDef.steps[$wizardCtrl.currentStep-1].skippable)"
+                        ng-disxabled="$wizardCtrl.pending || (!$wizardCtrl.$userCtrl.isStepCompleted($wizardDef.steps[$wizardCtrl.currentStep-1]) && !$wizardDef.steps[$wizardCtrl.currentStep-1].skippable)"
                         class="btn"
                         ng-click="$wizardCtrl.finish()"
                         id="wizard-popup-finish">Finish</button>

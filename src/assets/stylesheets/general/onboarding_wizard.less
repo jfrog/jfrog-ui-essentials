@@ -1,13 +1,23 @@
 .wizard-modal {
   color: #373737;
   .modal-header {
-    padding: 0;
+    padding: 0 50px;
     line-height: normal;
-    .close {margin: 0 20px;}
-  }
-  .modal-body {
+    .icon-clear {
+      margin: 0 -50px 0 0;
+      padding: 0 20px;
+      float: right;
+      line-height: 50px;
+      font-size: 25px;
+      color: #cccccc;
+      cursor: pointer;
+      &:hover {
+        color: #373737;
+      }
+    }
+
     .title-wrapper {
-      margin: 20px 0;
+      margin: 20px 0 0;
       display: table;
       border-bottom: 1px solid #f1f1f1;
       width: 100%;
@@ -35,6 +45,15 @@
         margin-bottom: 32px;
       }
     }
+
+  }
+  .modal-body {
+    padding: 20px 50px 0;
+    .form-group-cell {
+      @media screen and (max-width: 1679px) {
+        margin-bottom: 12px;
+      }
+    }
   }
 
 
@@ -44,6 +63,7 @@
     background-color: transparent;
     border-top: 1px solid #f1f1f1;
     height: 60px;
+    margin-top: 0;
     .progress-indicator {
       width: 50%;
       position: absolute;
@@ -75,6 +95,7 @@
         line-height: 26px;
         background-color: transparent;
         border: 0;
+        transition: none;
         &[disabled] {
           color: #c9c9c9;
         }

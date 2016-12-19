@@ -65,7 +65,7 @@ export class JFrogModal {
             });
         }
 
-        this.$timeout(() => this._calculateMaxHeight(), 100);
+        this._calculateMaxHeight();
 
         if (modalInstance.result) {
             modalInstance.result.finally(()=>{
@@ -83,9 +83,14 @@ export class JFrogModal {
 
 
     _calculateMaxHeight() {
-        let windowOffset = window.innerHeight - 70;
-        let maxHeight = windowOffset - 134 - 80;
-        $('.modal-body').css('max-height', maxHeight);
+        this.$timeout(() => {
+            let modalFooterOffsetTop = $('.modal-footer').offset().top;
+            let modalHeaderBottomOffsetTop = $('.modal-header').offset().top + $('.modal-header').outerHeight();
+
+            let maxHeight = modalFooterOffsetTop - modalHeaderBottomOffsetTop - 20;
+
+            $('.modal-body').css('max-height', maxHeight);
+        }, 100)
     }
 
     /**
@@ -147,6 +152,7 @@ export class JFrogModal {
         let wizardModalScope = this.$rootScope.$new();
 
         wizardModalScope.$wizardDef = wizardDefinitionObject;
+        WizardController.prototype.JFrogModal = this;
         wizardModalScope.$wizardCtrl = new WizardController(wizardDefinitionObject);
 
         wizardDefinitionObject.controller.prototype.$wizardCtrl = wizardModalScope.$wizardCtrl;
@@ -208,6 +214,7 @@ class WizardController {
         else {
             this.currentStep++;
         }
+        this.JFrogModal._calculateMaxHeight();
     }
 
     prevStep() {
@@ -228,6 +235,7 @@ class WizardController {
         else {
             this.currentStep--;
         }
+        this.JFrogModal._calculateMaxHeight();
     }
 
     finish() {
