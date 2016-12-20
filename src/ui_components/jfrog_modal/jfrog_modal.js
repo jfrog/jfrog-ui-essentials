@@ -84,7 +84,7 @@ export class JFrogModal {
 
     _calculateMaxHeight() {
         this.$timeout(() => {
-            if ($('.modal-footer') && $('.modal-header')) {
+            if ($('.modal-footer').length > 0 && $('.modal-header').length > 0) {
                 let modalFooterOffsetTop = $('.modal-footer').offset().top;
                 let modalHeaderBottomOffsetTop = $('.modal-header').offset().top + $('.modal-header').outerHeight();
 
