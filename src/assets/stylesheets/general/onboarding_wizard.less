@@ -1,5 +1,20 @@
 .wizard-modal {
   color: #373737;
+  a {
+    color: @blueLinkBasic;
+    i:before, .icon:before {
+      color: @blueLinkBasic;
+    }
+    &:hover,
+    &:focus,
+    &:active {
+      text-decoration: none;
+      color: @blueLinkBasic;
+      i:before, .icon:before {
+        color: @blueLinkBasic;
+      }
+    }
+  }
   .modal-header {
     padding: 0 50px;
     line-height: normal;

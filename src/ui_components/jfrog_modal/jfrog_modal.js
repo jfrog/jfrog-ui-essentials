@@ -84,12 +84,14 @@ export class JFrogModal {
 
     _calculateMaxHeight() {
         this.$timeout(() => {
-            let modalFooterOffsetTop = $('.modal-footer').offset().top;
-            let modalHeaderBottomOffsetTop = $('.modal-header').offset().top + $('.modal-header').outerHeight();
+            if ($('.modal-footer') && $('.modal-header')) {
+                let modalFooterOffsetTop = $('.modal-footer').offset().top;
+                let modalHeaderBottomOffsetTop = $('.modal-header').offset().top + $('.modal-header').outerHeight();
 
-            let maxHeight = modalFooterOffsetTop - modalHeaderBottomOffsetTop - 20;
+                let maxHeight = modalFooterOffsetTop - modalHeaderBottomOffsetTop - 20;
 
-            $('.modal-body').css('max-height', maxHeight);
+                $('.modal-body').css('max-height', maxHeight);
+            }
         }, 100)
     }
 
