@@ -84,19 +84,15 @@ export class JFrogModal {
 
     _calculateMaxHeight() {
         this.$timeout(() => {
-
-
             let VPH = window.innerHeight,                       // View port height
                 MOT = 110,                                      //Modal offset top
                 HH  = $('.modal-header').height() || 0,         // Header height
                 FH  = $('.modal-footer').outerHeight() || 0;    // Footer height
 
             // Calculate: MPH - (MOT*2) - HH - FH = maxHeight
-            console.log(VPH, (MOT * 2), HH, FH);
             let maxHeight = VPH - (MOT * 2) - HH - FH;
 
             $('.modal-body').css('max-height', maxHeight);
-
         }, 100)
     }
 
