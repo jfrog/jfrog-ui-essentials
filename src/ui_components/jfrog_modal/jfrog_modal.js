@@ -84,6 +84,20 @@ export class JFrogModal {
 
     _calculateMaxHeight() {
         this.$timeout(() => {
+
+            if ($('.wizard-modal').length > 0) {
+
+                // modal height - header - footer
+            let MH = $('.wizard-modal').height(),               // Modal height
+                HH  = $('.modal-header').height() || 0,         // Header height
+                FH  = $('.modal-footer').outerHeight() || 0;    // Footer height
+
+                let maxHeight = MH - HH - FH;
+                $('.modal-body').css('max-height', maxHeight);
+                return;
+            }
+
+
             let VPH = window.innerHeight,                       // View port height
                 MOT = 110,                                      //Modal offset top
                 HH  = $('.modal-header').height() || 0,         // Header height
