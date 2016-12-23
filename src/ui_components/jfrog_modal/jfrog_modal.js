@@ -89,7 +89,7 @@ export class JFrogModal {
 
                 // modal height - header - footer
             let MH = $('.wizard-modal').height(),               // Modal height
-                HH  = $('.modal-header').height() || 0,         // Header height
+                HH  = $('.modal-header').outerHeight() || 0,         // Header height
                 FH  = $('.modal-footer').outerHeight() || 0;    // Footer height
 
                 let maxHeight = MH - HH - FH;
@@ -100,7 +100,7 @@ export class JFrogModal {
 
             let VPH = window.innerHeight,                       // View port height
                 MOT = 110,                                      //Modal offset top
-                HH  = $('.modal-header').height() || 0,         // Header height
+                HH  = $('.modal-header').outerHeight() || 0,         // Header height
                 FH  = $('.modal-footer').outerHeight() || 0;    // Footer height
 
             // Calculate: MPH - (MOT*2) - HH - FH = maxHeight
