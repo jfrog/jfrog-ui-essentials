@@ -237,10 +237,13 @@ class jfWidgetsLayoutController {
 
         this.containerCss = {
             'min-height': this.options.minHeight + 'px',
-            'margin-bottom': this.options.marginBottom + 'px',
             'background-color': this.options.backColor,
             'overflow': this.options.isSub && this.editMode ? 'visible' : 'hidden'
         }
+        if (!this.options.isSub) {
+            this.containerCss['margin-bottom'] = this.options.marginBottom + 'px';
+        }
+
         if (this.options.parent) this.options.parent.updateCss();
     }
 
