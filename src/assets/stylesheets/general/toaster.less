@@ -265,7 +265,9 @@
   &.ng-leave ~ div:nth-child(6) {
     animation: showLastToaster .6s;
   }
-
+  &.toast-error + .ng-leave {
+    animation: hideBehindError .6s;
+  }
 }
 
 
@@ -323,5 +325,14 @@
   }
   to {
     margin-top: -72px;
+  }
+}
+
+@keyframes hideBehindError {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
