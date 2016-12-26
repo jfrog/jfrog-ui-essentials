@@ -3,7 +3,7 @@
         <span ng-if="$wizardDef.cancelable" class="icon icon-clear" ng-click="$wizardCtrl.cancel()"></span>
         <div class="title-wrapper" ng-class="{'no-border' : $wizardDef.steps[$wizardCtrl.currentStep-1].hideTitleBorder}">
             <div class="icon" ng-if="$wizardDef.steps[$wizardCtrl.currentStep-1].icon">
-                <img src="images/wizard-icons/{{$wizardDef.steps[$wizardCtrl.currentStep-1].icon}}" alt="">
+                <img src="{{$wizardDef.steps[$wizardCtrl.currentStep-1].icon}}" alt="">
             </div>
             <div class="title">
                 <h1 ng-if="$wizardDef.steps[$wizardCtrl.currentStep-1].name">{{$wizardDef.steps[$wizardCtrl.currentStep-1].name}}</h1>
