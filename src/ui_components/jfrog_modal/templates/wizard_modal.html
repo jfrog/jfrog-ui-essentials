@@ -1,4 +1,4 @@
-<div class="wizard-modal">
+<div class="wizard-modal{{' ' + $wizardDef.steps[$wizardCtrl.currentStep-1].class}}">
     <div class="modal-header">
         <span ng-if="$wizardDef.cancelable" class="icon icon-clear" ng-click="$wizardCtrl.cancel()"></span>
         <div class="title-wrapper" ng-class="{'no-border' : $wizardDef.steps[$wizardCtrl.currentStep-1].hideTitleBorder}">
