@@ -7,7 +7,7 @@
             </div>
             <div class="title">
                 <h1 ng-if="$wizardDef.steps[$wizardCtrl.currentStep-1].name">{{$wizardDef.steps[$wizardCtrl.currentStep-1].name}}</h1>
-                <div class="description" ng-if="$wizardDef.steps[$wizardCtrl.currentStep-1].description" ng-hide="$wizardDef.steps[$wizardCtrl.currentStep-1].hideDescription" ng-bind-html="$wizardDef.steps[$wizardCtrl.currentStep-1].description"></div>
+                <div class="description" ng-if="$wizardDef.steps[$wizardCtrl.currentStep-1].description" ng-bind-html="$wizardDef.steps[$wizardCtrl.currentStep-1].description"></div>
             </div>
         </div>
     </div>
