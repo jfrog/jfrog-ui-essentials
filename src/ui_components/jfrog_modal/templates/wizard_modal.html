@@ -36,7 +36,7 @@
                         ng-click="$wizardCtrl.prevStep()"
                         ng-disabled="$wizardCtrl.pending"
                         id="wizard-popup-prev">Back</button>
-                <button ng-if="$wizardCtrl.currentStep < $wizardCtrl.totalSteps && $wizardDef.steps[$wizardCtrl.currentStep-1].skippable && !$wizardCtrl.$userCtrl.isStepCompleted($wizardDef.steps[$wizardCtrl.currentStep-1])"
+                <button ng-if="$wizardCtrl.currentStep < $wizardCtrl.totalSteps && $wizardDef.steps[$wizardCtrl.currentStep-1].skippable"
                         class="btn"
                         ng-click="$wizardCtrl.nextStep(true)"
                         ng-disabled="$wizardCtrl.pending"
@@ -47,7 +47,7 @@
                         ng-click="$wizardCtrl.nextStep()"
                         id="wizard-popup-next">Next</button>
                 <button ng-if="$wizardCtrl.currentStep === $wizardCtrl.totalSteps"
-                        ng-disxabled="$wizardCtrl.pending || (!$wizardCtrl.$userCtrl.isStepCompleted($wizardDef.steps[$wizardCtrl.currentStep-1]) && !$wizardDef.steps[$wizardCtrl.currentStep-1].skippable)"
+                        ng-disabled="$wizardCtrl.pending || (!$wizardCtrl.$userCtrl.isStepCompleted($wizardDef.steps[$wizardCtrl.currentStep-1]) && !$wizardDef.steps[$wizardCtrl.currentStep-1].skippable)"
                         class="btn"
                         ng-click="$wizardCtrl.finish()"
                         id="wizard-popup-finish">Finish</button>
@@ -59,7 +59,7 @@
                             ng-click="$wizardCtrl.prevStep()"
                             ng-disabled="$wizardCtrl.pending"
                             id="wizard-popup-prev-custom">{{button.label}}</button>
-                    <button ng-if="button.action==='skip' && ($wizardCtrl.currentStep < $wizardCtrl.totalSteps && $wizardDef.steps[$wizardCtrl.currentStep-1].skippable && !$wizardCtrl.$userCtrl.isStepCompleted($wizardDef.steps[$wizardCtrl.currentStep-1]))"
+                    <button ng-if="button.action==='skip' && ($wizardCtrl.currentStep < $wizardCtrl.totalSteps && $wizardDef.steps[$wizardCtrl.currentStep-1].skippable"
                             class="btn"
                             ng-click="$wizardCtrl.nextStep(true)"
                             ng-disabled="$wizardCtrl.pending"
