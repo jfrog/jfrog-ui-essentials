@@ -31,7 +31,7 @@ export class JFrogModal {
      * @param scope
      * @returns {{Modal instance}}
      */
-    launchModal(template, scope, size, cancelable = true) {
+    launchModal(template, scope, size, cancelable = true, options) {
         if (!size) size = 'lg';
 
         let customTemplate = true;
@@ -54,6 +54,8 @@ export class JFrogModal {
             modalObj.backdrop = 'static';
             modalObj.keyboard = false;
         }
+        if (options && _.isObject(options)) _.extend(modalObj,options);
+
         let modalInstance =  this.modal.open(modalObj);
         this.JFrogEventBus.registerOnScope(this.$rootScope, this.EVENTS.CLOSE_MODAL, () => {
             modalInstance.dismiss();
@@ -183,7 +185,8 @@ export class JFrogModal {
 
         wizardModalScope.$wizardCtrl.$userCtrl = controllerInstance;
 
-        let modalInstance = this.launchModal('@wizard_modal', wizardModalScope, 'lg', wizardDefinitionObject.cancelable && wizardDefinitionObject.backdropCancelable);
+        let modalInstance = this.launchModal('@wizard_modal', wizardModalScope, 'lg', wizardDefinitionObject.cancelable && wizardDefinitionObject.backdropCancelable, wizardDefinitionObject.modalOptions);
+
 
         wizardModalScope.$wizardCtrl.$modalInstance = modalInstance;
 
