@@ -40,6 +40,7 @@
                         class="btn"
                         ng-click="$wizardCtrl.nextStep(true)"
                         ng-disabled="$wizardCtrl.pending"
+                        jf-clear-errors
                         id="wizard-popup-skip">Skip</button>
                 <button ng-if="$wizardCtrl.currentStep < $wizardCtrl.totalSteps"
                         ng-disabled="$wizardCtrl.pending || !$wizardCtrl.$userCtrl.isStepCompleted($wizardDef.steps[$wizardCtrl.currentStep-1])"
@@ -63,6 +64,7 @@
                             class="btn"
                             ng-click="$wizardCtrl.nextStep(true)"
                             ng-disabled="$wizardCtrl.pending"
+                            jf-clear-errors
                             id="wizard-popup-skip-custom">{{button.label}}</button>
                     <button ng-if="button.action==='next' && ($wizardCtrl.currentStep < $wizardCtrl.totalSteps)"
                             ng-disabled="$wizardCtrl.pending || !$wizardCtrl.$userCtrl.isStepCompleted($wizardDef.steps[$wizardCtrl.currentStep-1])"
