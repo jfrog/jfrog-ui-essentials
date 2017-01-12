@@ -12,10 +12,26 @@ export class JFrogNotifications {
         this.$rootScope = $rootScope;
         this.EVENTS = JFrogEventBus.getEventsDefinition();
 
+        this.errors = [];
+        this.MIN_ERROR_TIME = 6000;
+
+        this.registerEvents();
+    }
+
+    registerEvents() {
         this.JFrogEventBus.registerOnScope(this.$rootScope, this.EVENTS.CLOSE_NOTIFICATIONS, () => {
-            this.$timeout(() => {
-                this.toast.clear();
-            }, 1000)
+            this.errors.forEach(error => {
+                if (!error.closing) {
+                    error.closing = true;
+                    let now = (new Date()).getTime();
+                    let delay = now - error.time > this.MIN_ERROR_TIME ? 0 : this.MIN_ERROR_TIME - (now - error.time);
+                    this.$timeout(()=>{
+                        this.toast.clear(error.instance);
+                        let i = this.errors.indexOf(error);
+                        this.errors.splice(i,1);
+                    },delay)
+                }
+            })
         });
     }
 
@@ -44,7 +60,7 @@ export class JFrogNotifications {
             if (this.lastNotification == message.error) {
                 return false
             }
-            this.toast.pop({
+            let instance = this.toast.pop({
                 type: 'error',
                 timeout: message.timeout || 0,
                 body: message.error,
@@ -52,6 +68,7 @@ export class JFrogNotifications {
                 bodyOutputType: allowHtml ? 'trustedHtml' : undefined,
                 clickHandler: this.notifClickHandle
             });
+            this.errors.push({time: (new Date()).getTime(), instance});
             this.lastNotification = message.error;
             this.$timeout(() => {
                 this.lastNotification = null
