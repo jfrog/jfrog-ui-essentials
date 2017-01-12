@@ -4,10 +4,19 @@
  */
 export class JFrogNotifications {
 
-    constructor(toaster, $timeout) {
+    constructor(toaster, $timeout, $rootScope, JFrogEventBus) {
         this.toast = toaster;
         this.$timeout = $timeout;
         this.lastNotification = null;
+        this.JFrogEventBus = JFrogEventBus;
+        this.$rootScope = $rootScope;
+        this.EVENTS = JFrogEventBus.getEventsDefinition();
+
+        this.JFrogEventBus.registerOnScope(this.$rootScope, this.EVENTS.CLOSE_NOTIFICATIONS, () => {
+            this.$timeout(() => {
+                this.toast.clear();
+            }, 1000)
+        });
     }
 
     create(message, allowHtml = false) {
