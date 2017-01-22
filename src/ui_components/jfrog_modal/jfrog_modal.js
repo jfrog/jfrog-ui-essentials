@@ -222,6 +222,7 @@ class WizardController {
                 this.pending = true;
                 response.then((pRes)=>{
                     if (pRes !== false) this.currentStep++
+                    if (this.$userCtrl.afterStepChange) this.$userCtrl.afterStepChange(this.wizardDefinitionObject.steps[this.currentStep-2], skip ? 'skip' : 'next');
                     this.pending = false;
                 })
                     .catch(()=>{
@@ -229,7 +230,10 @@ class WizardController {
                     });
 
             }
-            else if (response !== false) this.currentStep++;
+            else if (response !== false) {
+                this.currentStep++;
+                if (this.$userCtrl.afterStepChange) this.$userCtrl.afterStepChange(this.wizardDefinitionObject.steps[this.currentStep-2], skip ? 'skip' : 'next');
+            }
         }
         else {
             this.currentStep++;
