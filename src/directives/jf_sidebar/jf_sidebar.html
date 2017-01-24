@@ -16,20 +16,20 @@
             <a
                class="menu-item"
                id="{{item.id}}"
-               ng-mouseover="jfSidebar.closeAdminMenu(1800,true,true)"
+               ng-mouseover="jfSidebar.onMouseOverSimpleItem(item)"
                ng-if="!item.isDisabled && !item.children"><i class="{{item.icon}}"></i><span>{{item.label}}</span></a>
 
             <a href
                  class="menu-item"
                  id="admin"
-                 ng-mouseover="jfSidebar.openAdminMenu(true)"
-                 ng-mouseleave="jfSidebar._adminMenuDelayStop(); jfSidebar.adminMenuItemDelay = true; jfSidebar.closeAdminMenu(1800,true,true)"
+                 ng-mouseover="jfSidebar.onMouseOverExtendedItem(item)"
+                 ng-mouseleave="jfSidebar.onMouseLeaveExtendedItem(item)"
                  ng-if="!item.isDisabled && item.children"><i class="{{item.icon}}"></i><span>{{item.label}}</span>
             </a>
 
             <div class="admin-menu" ng-if="item.children && !item.isDisabled" ng-mouseover="jfSidebar.menuAdminOver()" ng-click="$event.stopPropagation()">
 
-                <div class="searchbox-wrapper" ng-if="jfSidebar.noSearchBox === undefined">
+                <div class="searchbox-wrapper" ng-if="jfSidebar.noSearchBox === undefined && !jfSidebar.openSub.noSearchBox">
                     <input type="text"
                            class="input-text"
                            id="menuSearchQuery"
@@ -45,7 +45,7 @@
                               ng-class="{'disabled': !jfSidebar.menuSearchQuery}">&times;</span>
                 </div>
 
-                <div class="masonry" ng-class="{'no-search-box': jfSidebar.noSearchBox !== undefined}" tabindex="-1">
+                <div class="masonry" ng-class="{'no-search-box': jfSidebar.noSearchBox !== undefined || jfSidebar.openSub.noSearchBox}" tabindex="-1">
                     <div>
                         <div ng-repeat="item in jfSidebar.adminMenuItems" class="section" ng-if="!item.isHidden">
                             <h3>{{item.label}}</h3>

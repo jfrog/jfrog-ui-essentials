@@ -2,6 +2,7 @@ class jfSidebarController {
 
     constructor($scope, $state, $timeout, $interval, $window, $rootScope, JFrogEventBus) {
         this.openAdminSize = this.openAdminSize || '900px';
+        this.defaultSubSize = this.openAdminSize;
         $rootScope.jfSidebar = this;
         if (!this.driver) {
             console.error('jf-sidebar: No driver is provided');
@@ -217,6 +218,7 @@ class jfSidebarController {
         } else if (item.children) {
             if (!this._isAdminOpen()) {
                 this.adminMenuItems = item.children;
+                this.openAdminSize = item.subMenuWidth || this.defaultSubSize;
                 this.openSub = item;
                 this.openAdminMenu();
             }
@@ -263,6 +265,34 @@ class jfSidebarController {
             this._updateTabIndex();
         }
 
+    }
+
+    onMouseOverSimpleItem(item) {
+        this.closeAdminMenu(1800,true,true);
+    }
+
+    onMouseOverExtendedItem(item,delay = true) {
+        if (!this._isAdminOpen()) {
+            this.adminMenuItems = item.children;
+            this.openAdminSize = item.subMenuWidth || this.defaultSubSize;
+            this.openSub = item;
+            this.openAdminMenu(delay);
+        }
+        else {
+            this.closeAdminMenu(0,true,true);
+            this._adminMenuDelayStop();
+            if (this.openSub !== item) {
+                this.$timeout(()=>{this.onMouseOverExtendedItem(item,false)},500)
+            }
+        }
+
+//        this.openAdminMenu(true);
+    }
+
+    onMouseLeaveExtendedItem(item) {
+        this._adminMenuDelayStop();
+        this.adminMenuItemDelay = true;
+        this.closeAdminMenu(1800,true,true);
     }
 
     _isAdminOpen() {
