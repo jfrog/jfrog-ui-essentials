@@ -16,7 +16,6 @@ class jfSidebarController {
         this.$timeout = $timeout;
         this.$interval = $interval;
         this.$window = $window;
-        this.adminMenuItems = this.driver.getAdminMenuItems ? this.driver.getAdminMenuItems() : [];
         this.JFrogEventBus = JFrogEventBus;
         this.EVENTS = JFrogEventBus.getEventsDefinition();
         this.pinMenuStatus = JSON.parse(localStorage.pinMenu || "false");
@@ -147,7 +146,6 @@ class jfSidebarController {
 
     refreshMenu() {
         this.menuItems = this._getMenuItems();
-        this.adminMenuItems = this.driver.getAdminMenuItems ? this.driver.getAdminMenuItems() : [];
     }
 
     goToState(item) {
@@ -209,6 +207,7 @@ class jfSidebarController {
         }
 
         if (!item.children ) {
+            delete this.openSub;
             this.closeAdminMenu(0,true);
             if (this.menu.width === '55px' || this.menu.width === '200px') {
                 this._openMenuStop();
@@ -217,11 +216,16 @@ class jfSidebarController {
             if (!item.isDisabled) this.$timeout(()=>this.goToState(item),20);
         } else if (item.children) {
             if (!this._isAdminOpen()) {
+                this.adminMenuItems = item.children;
+                this.openSub = item;
                 this.openAdminMenu();
             }
             else {
                 this.closeAdminMenu(0,true,true);
                 this._adminMenuDelayStop();
+                if (this.openSub !== item) {
+                    this.$timeout(()=>{this.itemClick(item)},500)
+                }
             }
         }
     }
