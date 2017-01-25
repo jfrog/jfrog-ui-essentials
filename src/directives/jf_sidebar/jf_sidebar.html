@@ -13,21 +13,20 @@
                class="menu-item disabled"
                id="{{item.id}}"><i class="{{item.icon}}"></i><span>{{item.label}}</span></a>
 
-            <a
-               class="menu-item"
+            <a class="menu-item"
                id="{{item.id}}"
                ng-mouseover="jfSidebar.onMouseOverSimpleItem(item)"
                ng-if="!item.isDisabled && !item.children"><i class="{{item.icon}}"></i><span>{{item.label}}</span></a>
 
             <a href
-                 class="menu-item"
-                 id="admin"
+                 class="menu-item extended-item"
+                 id="{{item.id}}"
                  ng-mouseover="jfSidebar.onMouseOverExtendedItem(item)"
                  ng-mouseleave="jfSidebar.onMouseLeaveExtendedItem(item)"
                  ng-if="!item.isDisabled && item.children"><i class="{{item.icon}}"></i><span>{{item.label}}</span>
             </a>
 
-            <div class="admin-menu" ng-if="item.children && !item.isDisabled" ng-mouseover="jfSidebar.menuAdminOver()" ng-click="$event.stopPropagation()">
+            <div class="admin-menu" ng-if="jfSidebar.openSub === item && item.children && !item.isDisabled" ng-mouseover="jfSidebar.menuAdminOver()" ng-click="$event.stopPropagation()">
 
                 <div class="searchbox-wrapper" ng-if="jfSidebar.noSearchBox === undefined && !jfSidebar.openSub.noSearchBox">
                     <input type="text"
@@ -78,16 +77,4 @@
     </ul>
 
     <ng-include ng-if="jfSidebar.footerTemplate" src="jfSidebar.footerTemplate"></ng-include>
-<!--
-    <div class="sidebar-footer">
-        <div class="icon"><i class="icon-jfrog-logo"></i></div>
-        <div class="wrapper-footer-data">
-            {{jfSidebar.footerData.versionInfo}}<br />
-            {{jfSidebar.footerData.buildNumber}}<br ng-if="jfSidebar.footerData.buildNumber" />
-            {{jfSidebar.footerData.serverId}}<br ng-if="jfSidebar.footerData.serverId" />
-            {{jfSidebar.footerData.licenseInfo}}<br ng-if="jfSidebar.footerData.licenseInfo" />
-            <span>{{jfSidebar.footerData.copyRights}}</span>
-        </div>
-    </div>
--->
 </div>

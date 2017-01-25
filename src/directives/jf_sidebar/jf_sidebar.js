@@ -75,7 +75,7 @@ class jfSidebarController {
         if (this.mouseIsOver) return;
         this.mouseIsOver = true;
 
-        if (this.menu.width === this.openAdminSize && $('.menu-item:hover').length && $('a#admin:hover').length < 1) {
+        if (this.menu.width === this.openAdminSize && $('.menu-item:hover').length && $('a.menu-item.extended-item:hover').length < 1) {
             if (!angular.isDefined(this.closeAdminDelay) && !$('.admin-menu:hover').length) { // TODO:
                 this.closeAdminDelay = this.$timeout(() => {
                     this.closeAdminMenu();
@@ -86,8 +86,8 @@ class jfSidebarController {
         } else if (this.menu.width != '200px' && !$('.pin-menu').is(':hover') && ($('.admin-menu:hover').length < 1)) {     // if menu isn't open
             if (!angular.isDefined(this.openMenu)) {
                 this.openMenu = this.$timeout(() => {
-                    let widthToOpen = ($('.admin-menu').length > 0 && $('a#admin:hover').length) ? this.openAdminSize : '200px';
-                    if (($('.admin-menu:hover').length || $('#admin:hover').length) && angular.isDefined(this.openMenu)) {
+                    let widthToOpen = ($('.admin-menu').length > 0 && $('a.menu-item.extended-item:hover').length) ? this.openAdminSize : '200px';
+                    if (($('.admin-menu:hover').length || $('.menu-item.extended-item:hover').length) && angular.isDefined(this.openMenu)) {
                             this.$timeout.cancel(this.openMenu);
                             delete this.openMenu;
                             return;
@@ -279,10 +279,13 @@ class jfSidebarController {
             this.openAdminMenu(delay);
         }
         else {
-            this.closeAdminMenu(0,true,true);
-            this._adminMenuDelayStop();
             if (this.openSub !== item) {
+                this.closeAdminMenu(0,true,true);
+                this._adminMenuDelayStop();
                 this.$timeout(()=>{this.onMouseOverExtendedItem(item,false)},500)
+            }
+            else {
+                this.openAdminMenu(true);
             }
         }
 
@@ -326,7 +329,7 @@ class jfSidebarController {
             return;
         }
 
-        if (!force && ($('.admin-menu:hover').length || $('#admin:hover').length || ($('.admin-menu').find('a').is(':focus') || ($('#menuSearchQuery').is(':focus') && $('#menuSearchQuery').val().length > 0)))) {
+        if (!force && ($('.admin-menu:hover').length || $('.menu-item.extended-item:hover').length || ($('.admin-menu').find('a').is(':focus') || ($('#menuSearchQuery').is(':focus') && $('#menuSearchQuery').val().length > 0)))) {
 
             return;
         } else if (this.adminMenuItemDelay) {
