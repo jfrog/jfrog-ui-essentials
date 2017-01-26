@@ -3,11 +3,14 @@ class jfSidebarController {
     constructor($scope, $state, $timeout, $interval, $window, $rootScope, JFrogEventBus) {
         this.openAdminSize = this.openAdminSize || '900px';
         this.defaultSubSize = this.openAdminSize;
+
         $rootScope.jfSidebar = this;
         if (!this.driver) {
             console.error('jf-sidebar: No driver is provided');
             this.driver = {};
         }
+
+        this.legacyAdminMenuItems = this.driver.getAdminMenuItems ? this.driver.getAdminMenuItems() : [];
         if (this.driver.setMenu) this.driver.setMenu(this);
         if (this.driver.registerEvents) this.driver.registerEvents();
         this.refreshMenu();
@@ -147,6 +150,7 @@ class jfSidebarController {
 
     refreshMenu() {
         this.menuItems = this._getMenuItems();
+        this.legacyAdminMenuItems = this.driver.getAdminMenuItems ? this.driver.getAdminMenuItems() : [];
     }
 
     goToState(item) {
@@ -217,9 +221,7 @@ class jfSidebarController {
             if (!item.isDisabled) this.$timeout(()=>this.goToState(item),20);
         } else if (item.children) {
             if (!this._isAdminOpen()) {
-                this.adminMenuItems = item.children;
-                this.openAdminSize = item.subMenuWidth || this.defaultSubSize;
-                this.openSub = item;
+                this._setExtendedMenu(item);
                 this.openAdminMenu();
             }
             else {
@@ -229,6 +231,19 @@ class jfSidebarController {
                     this.$timeout(()=>{this.itemClick(item)},500)
                 }
             }
+        }
+    }
+    _setExtendedMenu(item) {
+        if (!item) return;
+        if (item.children === true && this.legacyAdminMenuItems) { //backward compatibility for single extended ('admin') menu
+            this.adminMenuItems = this.legacyAdminMenuItems;
+            this.openAdminSize = this.defaultSubSize;
+            this.openSub = item;
+        }
+        else {
+            this.adminMenuItems = item.children;
+            this.openAdminSize = item.subMenuWidth || this.defaultSubSize;
+            this.openSub = item;
         }
     }
     openAdminMenu(delay = false) {
@@ -273,9 +288,7 @@ class jfSidebarController {
 
     onMouseOverExtendedItem(item,delay = true) {
         if (!this._isAdminOpen()) {
-            this.adminMenuItems = item.children;
-            this.openAdminSize = item.subMenuWidth || this.defaultSubSize;
-            this.openSub = item;
+            this._setExtendedMenu(item);
             this.openAdminMenu(delay);
         }
         else {
