@@ -2,7 +2,7 @@
 
 
     let isNoTooltip = (cell) => {
-        return (cell.context.classList.contains('no-tooltip'));
+        return (cell[0] && cell[0].classList && cell[0].classList.contains('no-tooltip'));
     };
 
     return {
