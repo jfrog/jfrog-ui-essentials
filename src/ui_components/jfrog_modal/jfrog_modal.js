@@ -215,6 +215,10 @@ class WizardController {
         this.$modalInstance.dismiss();
     }
 
+    titleInit() {
+        if (this.$userCtrl.onWizardShow) this.$userCtrl.onWizardShow(this.wizardDefinitionObject.steps[this.currentStep-1]);
+    }
+
     nextStep(skip) {
         if (this.$userCtrl.onStepChange) {
             let response = this.$userCtrl.onStepChange(this.wizardDefinitionObject.steps[this.currentStep], this.wizardDefinitionObject.steps[this.currentStep-1], skip ? 'skip' : 'next');

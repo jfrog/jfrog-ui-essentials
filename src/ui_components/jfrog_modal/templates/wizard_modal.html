@@ -1,7 +1,7 @@
 <div class="wizard-modal{{' ' + $wizardDef.steps[$wizardCtrl.currentStep-1].class}}">
     <div class="modal-header">
         <span ng-if="$wizardDef.cancelable" class="icon icon-clear" ng-click="$wizardCtrl.cancel()"></span>
-        <div class="title-wrapper icon-hidden" ng-class="{'no-border' : $wizardDef.steps[$wizardCtrl.currentStep-1].hideTitleBorder}">
+        <div class="title-wrapper icon-hidden" ng-class="{'no-border' : $wizardDef.steps[$wizardCtrl.currentStep-1].hideTitleBorder}" ng-init="$wizardCtrl.titleInit()">
             <div class="icon"
                  ng-if="$wizardDef.steps[$wizardCtrl.currentStep-1].icon"
                  ng-class="{'build-animation' : $wizardDef.steps[$wizardCtrl.currentStep-1].buildIcon}">
