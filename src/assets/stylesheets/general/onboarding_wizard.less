@@ -47,13 +47,22 @@
       display: table;
       border-bottom: 1px solid #e3e4e5;
       width: 100%;
+      &.icon-hidden > div.icon {visibility: hidden;}
       & > div {
         display: table-cell;
         &.icon {
           padding-right: 30px;
           width: 70px;
-          i.step-icon {
-
+          position: relative;
+          &.build-animation {
+            .build {
+              background: #ffffff;
+              position: absolute;
+              top: 0;
+            }
+          }
+          &.hide-build-animation {
+            .build {display: none;}
           }
         }
         &.title {
