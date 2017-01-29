@@ -4,6 +4,8 @@ class jfSidebarController {
         this.openAdminSize = this.openAdminSize || '900px';
         this.defaultSubSize = this.openAdminSize;
 
+        this.defaultExtendedId = this.defaultExtendedId || 'admin';
+
         $rootScope.jfSidebar = this;
         if (!this.driver) {
             console.error('jf-sidebar: No driver is provided');
@@ -55,6 +57,8 @@ class jfSidebarController {
             // Ctrl + right arrow to open the admin menu
             if (e.keyCode === 39 && e.ctrlKey && e.altKey && $('.admin-menu').length) {
                 this.$timeout(() => {
+                    let defaultItem = _.find(this.menuItems, {id: this.defaultExtendedId});
+                    if (defaultItem) this._setExtendedMenu(defaultItem);
                     this.openAdminMenu();
                 });
                 e.preventDefault();
@@ -539,7 +543,8 @@ export function jfSidebar() {
             driver: '=',
             footerTemplate: '@',
             openAdminSize: '@?',
-            noSearchBox: '@?'
+            noSearchBox: '@?',
+            defaultExtendedId: '@'
         },
         controller: jfSidebarController,
         bindToController: true,
