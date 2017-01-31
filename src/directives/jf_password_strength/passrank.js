@@ -47,11 +47,11 @@ export function passrank(pass) {
         CONTAINS_LOWER_CASE: '[a-z]',
         CONTAINS_UPPER_CASE: '[A-Z]',
         CONTAINS_NUMBERS: '[0-9]',
-        CONTAINS_SYMBOLS: '[!,.@#$%^&*?_~()[]{} ]',
+        CONTAINS_SYMBOLS: '[^A-Za-z0-9]',
 
         MIXES_CASING: '((?=[a-z][A-Z]+|[A-Z][a-z]+))',
         MIXES_LETTERS_NUMBERS: '((?=[a-zA-Z][0-9]+|[0-9][a-zA-Z]+))',
-        MIXES_SIGNS: '((?=[a-zA-Z0-9][!,.@#$%^&*?_~()[]{} ]+|[!,.@#$%^&*?_~()[]{} ][a-zA-Z0-9]+))',
+        MIXES_SIGNS: '((?=[a-zA-Z0-9][^A-Za-z0-9]+|[^A-Za-z0-9][a-zA-Z0-9]+))',
     }
 
     let checks = {};
@@ -74,14 +74,14 @@ export function passrank(pass) {
         checks.CONTAINS_LOWER_CASE.pass &&
         checks.CONTAINS_UPPER_CASE.pass) {
 
-        rank += (Math.pow(uniques,1.3) * Math.pow(Math.max(1,mixBonus),1.35) * Math.pow(pass.length,1.35));
+        rank += (Math.pow(uniques,1.6) * Math.pow(Math.max(1,mixBonus),1.8) * Math.pow(pass.length,1.6));
 
     }
     else if (checks.CONTAINS_NUMBERS.pass &&
         checks.CONTAINS_SYMBOLS.pass &&
         (checks.CONTAINS_LOWER_CASE.pass || checks.CONTAINS_UPPER_CASE.pass)) {
 
-        rank += (Math.pow(uniques,1.25) * Math.pow(Math.max(1,mixBonus),1.25) * Math.pow(pass.length,1.25));
+        rank += (Math.pow(uniques,1.3) * Math.pow(Math.max(1,mixBonus),1.3) * Math.pow(pass.length,1.3));
 
     }
     else if (checks.CONTAINS_LOWER_CASE.pass && checks.CONTAINS_UPPER_CASE.pass && checks.CONTAINS_SYMBOLS.pass) {
@@ -103,11 +103,11 @@ export function passrank(pass) {
     }
     else if (checks.CONTAINS_LOWER_CASE.pass && checks.CONTAINS_UPPER_CASE.pass) {
 
-        rank += (Math.pow(uniques,1.15) * Math.pow(Math.max(1,mixBonus),1.15) * Math.pow(pass.length,1.2));
+        rank += (Math.pow(uniques,1.15) * Math.pow(Math.max(1,mixBonus),1.15) * Math.pow(pass.length,1));
 
     }
     else {
-        rank += Math.pow(uniques,1.1) * Math.pow(Math.max(1,mixBonus),1.1) * Math.pow(pass.length,1.1);
+        rank += Math.pow(uniques,1.1) * Math.pow(Math.max(1,mixBonus),1.1) * Math.pow(pass.length,0.2);
     }
 
 
