@@ -260,7 +260,7 @@ class jfSidebarController {
             this._openMenuStop();
             this._subMenuDelayStop();
 
-            if ($(':focus').length && $(':focus')[0].id != 'menuSearchQuery') {
+            if ($(':focus').length && $(':focus')[0].id != 'admin' && $(':focus')[0].id != 'menuSearchQuery') {
                 this.currentFocus = $(':focus');
             }
 
