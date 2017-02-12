@@ -26,7 +26,7 @@
                  ng-if="!item.isDisabled && item.children"><i class="{{item.icon}}"></i><span>{{item.label}}</span>
             </a>
 
-            <div class="sub-menu" ng-show="jfSidebar.openSub === item && item.children && !item.isDisabled" ng-mouseover="jfSidebar.subMenuOver()" ng-click="$event.stopPropagation()">
+            <div class="sub-menu" ng-show="jfSidebar.openSub === item" ng-if="item.children && !item.isDisabled" ng-mouseover="jfSidebar.subMenuOver()" ng-click="$event.stopPropagation()">
 
                 <div class="searchbox-wrapper" ng-if="jfSidebar.noSearchBox === undefined && !jfSidebar.openSub.noSearchBox">
                     <input type="text"
