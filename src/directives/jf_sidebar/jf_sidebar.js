@@ -65,7 +65,7 @@ class jfSidebarController {
 
             }
 
-            // ESC click or Ctrl+left to close default sub menu       TODO: Fix the function to work
+            // ESC click or Ctrl+left to close default sub menu
             if ((e.keyCode === 27 || (e.keyCode === 37 && e.ctrlKey && e.altKey)) && this.menu.width === this.subMenuWidth && $('.sub-menu').length > 0) {
                 this.$timeout(() => {
                     this.menuSearchQuery = '';
