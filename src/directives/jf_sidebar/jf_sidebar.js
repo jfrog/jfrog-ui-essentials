@@ -216,7 +216,7 @@ class jfSidebarController {
         }
 
         if (!item.children ) {
-            delete this.openSub;
+//            delete this.openSub;
             this.closeAdminMenu(0,true);
             if (this.menu.width === '55px' || this.menu.width === '200px') {
                 this._openMenuStop();
@@ -244,7 +244,7 @@ class jfSidebarController {
             this.openAdminSize = this.defaultSubSize;
             this.openSub = item;
         }
-        else {
+        else if (item.children) {
             this.adminMenuItems = item.children;
             this.openAdminSize = item.subMenuWidth || this.defaultSubSize;
             this.openSub = item;
@@ -305,8 +305,6 @@ class jfSidebarController {
                 this.openAdminMenu(true);
             }
         }
-
-//        this.openAdminMenu(true);
     }
 
     onMouseLeaveExtendedItem(item) {
