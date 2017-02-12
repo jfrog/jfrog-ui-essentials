@@ -47,11 +47,11 @@ export function passrank(pass) {
         CONTAINS_LOWER_CASE: '[a-z]',
         CONTAINS_UPPER_CASE: '[A-Z]',
         CONTAINS_NUMBERS: '[0-9]',
-        CONTAINS_SYMBOLS: '[!,.@#$%^&*?_~()[]{} ]',
+        CONTAINS_SYMBOLS: '[^A-Za-z0-9]',
 
         MIXES_CASING: '((?=[a-z][A-Z]+|[A-Z][a-z]+))',
         MIXES_LETTERS_NUMBERS: '((?=[a-zA-Z][0-9]+|[0-9][a-zA-Z]+))',
-        MIXES_SIGNS: '((?=[a-zA-Z0-9][!,.@#$%^&*?_~()[]{} ]+|[!,.@#$%^&*?_~()[]{} ][a-zA-Z0-9]+))',
+        MIXES_SIGNS: '((?=[a-zA-Z0-9][^A-Za-z0-9]+|[^A-Za-z0-9][a-zA-Z0-9]+))',
     }
 
     let checks = {};
@@ -69,68 +69,99 @@ export function passrank(pass) {
 
     let mixBonus = checks.MIXES_CASING.n + checks.MIXES_LETTERS_NUMBERS.n + checks.MIXES_SIGNS.n;
 
+    let debugStr = '';
+
     if (checks.CONTAINS_NUMBERS.pass &&
         checks.CONTAINS_SYMBOLS.pass &&
         checks.CONTAINS_LOWER_CASE.pass &&
         checks.CONTAINS_UPPER_CASE.pass) {
 
-        rank += (Math.pow(uniques,1.3) * Math.pow(Math.max(1,mixBonus),1.35) * Math.pow(pass.length,1.35));
+        debugStr += 'N+S+L+U';
+
+        rank += (Math.pow(uniques,4) * Math.pow(Math.max(1,mixBonus),4) * Math.pow(pass.length,2));
 
     }
     else if (checks.CONTAINS_NUMBERS.pass &&
         checks.CONTAINS_SYMBOLS.pass &&
         (checks.CONTAINS_LOWER_CASE.pass || checks.CONTAINS_UPPER_CASE.pass)) {
 
-        rank += (Math.pow(uniques,1.25) * Math.pow(Math.max(1,mixBonus),1.25) * Math.pow(pass.length,1.25));
+        debugStr += 'N+S+(L|U)';
+
+        rank += (Math.pow(uniques,3) * Math.pow(Math.max(1,mixBonus),3) * Math.pow(pass.length,2.5));
 
     }
     else if (checks.CONTAINS_LOWER_CASE.pass && checks.CONTAINS_UPPER_CASE.pass && checks.CONTAINS_SYMBOLS.pass) {
 
-        rank += (Math.pow(uniques,1.25) * Math.pow(Math.max(1,mixBonus),1.25) * Math.pow(pass.length,1.25));
+        debugStr += 'S+L+U';
+
+        rank += (Math.pow(uniques,3) * Math.pow(Math.max(1,mixBonus),4) * Math.pow(pass.length,3));
+
+    }
+    else if (checks.CONTAINS_LOWER_CASE.pass && checks.CONTAINS_UPPER_CASE.pass && checks.CONTAINS_NUMBERS.pass) {
+
+        debugStr += 'N+L+U';
+
+        rank += (Math.pow(uniques,3) * Math.pow(Math.max(1,mixBonus),3) * Math.pow(pass.length,3));
 
     }
     else if (checks.CONTAINS_NUMBERS.pass &&
         checks.CONTAINS_SYMBOLS.pass) {
 
-        rank += (Math.pow(uniques,1.2) * Math.pow(Math.max(1,mixBonus),1.2) * Math.pow(pass.length,1.2));
+        debugStr += 'N+S';
+
+        rank += (Math.pow(uniques,2) * Math.pow(Math.max(1,mixBonus),2) * Math.pow(pass.length,2));
 
     }
     else if ((checks.CONTAINS_LOWER_CASE.pass || checks.CONTAINS_UPPER_CASE.pass) &&
              checks.CONTAINS_SYMBOLS.pass) {
 
-        rank += (Math.pow(uniques,1.15) * Math.pow(Math.max(1,mixBonus),1.15) * Math.pow(pass.length,1.2));
+        debugStr += 'S+(L|U)';
+
+        rank += (Math.pow(uniques,1.5) * Math.pow(Math.max(1,mixBonus),1.5) * Math.pow(pass.length,1.5));
+
+    }
+    else if ((checks.CONTAINS_LOWER_CASE.pass || checks.CONTAINS_UPPER_CASE.pass) &&
+             checks.CONTAINS_NUMBERS.pass) {
+
+        debugStr += 'N+(L|U)';
+
+        rank += (Math.pow(uniques,1.5) * Math.pow(Math.max(1,mixBonus),1.5) * Math.pow(pass.length,1.2));
 
     }
     else if (checks.CONTAINS_LOWER_CASE.pass && checks.CONTAINS_UPPER_CASE.pass) {
 
-        rank += (Math.pow(uniques,1.15) * Math.pow(Math.max(1,mixBonus),1.15) * Math.pow(pass.length,1.2));
+        debugStr += 'L+U';
+
+        rank += (Math.pow(uniques,1.25) * Math.pow(Math.max(1,mixBonus),1.25) * Math.pow(pass.length,1.1));
 
     }
     else {
-        rank += Math.pow(uniques,1.1) * Math.pow(Math.max(1,mixBonus),1.1) * Math.pow(pass.length,1.1);
+        debugStr += '0000';
+
+        rank += Math.pow(uniques,1.1) * Math.pow(Math.max(1,mixBonus),1.1) * Math.pow(pass.length,0.5);
     }
 
+    debugStr += ' * ' + `u: ${uniques} mb: ${mixBonus} l: ${pass.length} *`;
 
 
 
 ////////////////////////////
 
-    rank=Math.round(Math.log(rank)*Math.sqrt((uniques >= 3 ? uniques : 1)*(pass.length >= 8 ? Math.sqrt(pass.length) : 1)));
-    if (pass.length >= 15) rank = rank * Math.pow((pass.length-14),1.02)
-    if (pass.length >= 8 && uniques >= 6) rank = rank * Math.pow((pass.length-7),1.02)
+    //Length and Uniqueness bonus
+    if (mixBonus >= 1) rank = rank * Math.pow(pass.length,Math.log(Math.pow(pass.length*uniques,1.5)));
+    else rank = rank * Math.pow(pass.length,Math.log(Math.pow(pass.length*uniques,1.2)));
+    //log
+    rank = Math.round(Math.log(rank));
 
-/*
-    let triviaMatch = matchTrivials(pass);
-    if (triviaMatch.count) {
-        console.log(triviaMatch)
-        rank = rank/(triviaMatch.count / (pass.length/triviaMatch.len) )
-    }
-*/
+    debugStr += ` r: ${rank}`;
 
     //Normalize
-    if (rank >= 450) rank = 100;
-    else if (rank >= 50) rank = 50 + 50*((rank-50)/400);
-    else rank = rank;
+    if (rank >= 38) rank = 100;
+    else rank = Math.round((rank/38) * 100);
+
+    debugStr += ` rN: ${rank}`;
+
+//    console.log(debugStr);
 
     return Math.round(rank);
 }

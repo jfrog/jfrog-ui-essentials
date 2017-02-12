@@ -1,9 +1,19 @@
 <div class="wizard-modal{{' ' + $wizardDef.steps[$wizardCtrl.currentStep-1].class}}">
     <div class="modal-header">
         <span ng-if="$wizardDef.cancelable" class="icon icon-clear" ng-click="$wizardCtrl.cancel()"></span>
-        <div class="title-wrapper" ng-class="{'no-border' : $wizardDef.steps[$wizardCtrl.currentStep-1].hideTitleBorder}">
-            <div class="icon" ng-if="$wizardDef.steps[$wizardCtrl.currentStep-1].icon">
-                <img ng-src="{{$wizardDef.steps[$wizardCtrl.currentStep-1].icon}}" alt="">
+        <div class="title-wrapper icon-hidden" ng-class="{'no-border' : $wizardDef.steps[$wizardCtrl.currentStep-1].hideTitleBorder}" ng-init="$wizardCtrl.titleInit()">
+            <div class="icon"
+                 ng-if="$wizardDef.steps[$wizardCtrl.currentStep-1].icon"
+                 ng-class="{'build-animation' : $wizardDef.steps[$wizardCtrl.currentStep-1].buildIcon}">
+
+                <img ng-srcset="{{$wizardDef.steps[$wizardCtrl.currentStep-1].iconSrcset}}"
+                     ng-src="{{$wizardDef.steps[$wizardCtrl.currentStep-1].icon}}"
+                     alt="">
+
+                <img ng-srcset="{{$wizardDef.steps[$wizardCtrl.currentStep-1].buildIconSrcset}}"
+                     ng-src="{{$wizardDef.steps[$wizardCtrl.currentStep-1].buildIcon}}"
+                     ng-if="$wizardDef.steps[$wizardCtrl.currentStep-1].buildIcon"
+                     alt="" class="build">
             </div>
             <div class="title">
                 <h1 ng-if="$wizardDef.steps[$wizardCtrl.currentStep-1].name">{{$wizardDef.steps[$wizardCtrl.currentStep-1].name}}</h1>
@@ -21,13 +31,6 @@
                  ng-repeat="led in $wizardDef.steps"></div>
         </div>
 
-<!--
-        <button ng-if="$wizardDef.cancelable"
-                class="btn btn-default"
-                ng-click="$wizardCtrl.cancel()"
-                ng-disabled="$wizardCtrl.pending"
-                id="wizard-popup-cancel">Cancel</button>
--->
 
         <div class="modal-footer-buttons-container">
             <div ng-if="!$wizardDef.steps[$wizardCtrl.currentStep-1].customButtons">

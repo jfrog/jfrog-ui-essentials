@@ -45,15 +45,25 @@
     .title-wrapper {
       margin: 20px 0 0;
       display: table;
+      table-layout: fixed;
       border-bottom: 1px solid #e3e4e5;
       width: 100%;
+      &.icon-hidden > div.icon {visibility: hidden;}
       & > div {
         display: table-cell;
         &.icon {
-          padding-right: 30px;
-          width: 70px;
-          i.step-icon {
-
+          width: 90px;
+          position: relative;
+          &.build-animation {
+            .build {
+              background: #ffffff;
+              position: absolute;
+              top: 0;
+              left: 0;
+            }
+          }
+          &.hide-build-animation {
+            .build {display: none;}
           }
         }
         &.title {
