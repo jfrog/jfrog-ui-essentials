@@ -52,7 +52,7 @@ module.exports = {
         'components/angular-ui-grid/ui-grid.min.css',
 //        'components/angularjs-color-picker/angularjs-color-picker.min.css',
         'components/animate.css/animate.css',
-        'components/angularjs-toaster/toaster.css',
+//        'components/angularjs-toaster/toaster.css',
         'components/codemirror/lib/codemirror.css',
 //        'components/angular-hotkeys/build/hotkeys.css',
         'components/angular-ui-select/dist/select.css',
