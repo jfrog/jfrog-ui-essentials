@@ -42,7 +42,8 @@ module.exports = {
         'components/tooltipster/js/jquery.tooltipster.min.js',
         'components/angular-capitalize-filter/capitalize.js',
         'vendor/draggable-rows.js',
-        'components/clipboard/dist/clipboard.min.js'
+        'components/clipboard/dist/clipboard.min.js',
+        'node_modules/js-beautify/js/lib/beautify.js'
     ],
 
     CSS: [

@@ -16,7 +16,7 @@ export function jfCodeMirror() {
         controllerAs: 'jfCodeMirror',
         bindToController: true,
         template: '<textarea ui-codemirror="jfCodeMirror.editorOptions" ' +
-        'ng-model="jfCodeMirror.model"></textarea>'
+        'ng-model="jfCodeMirror.formattedModel"></textarea>'
 
     }
 }
@@ -25,6 +25,8 @@ class jfCodeController {
     constructor($scope, $element) {
         this.$element = $element;
         this.$scope = $scope;
+
+        this._formatModel();
 
         this.editorOptions = {
             lineNumbers: true,
@@ -70,5 +72,32 @@ class jfCodeController {
                 this.apiAccess.onLoad();
             }
         }
+    }
+
+    _isJSON(str) {
+        try {
+            JSON.parse(str);
+        }
+        catch(e) {
+            return false;
+        }
+        return true;
+    }
+
+    _formatModel() {
+
+        let format = (content) => {
+            if (this._isJSON(content)) {
+                this.formattedModel = require('js-beautify').js_beautify(content);
+            }
+            else {
+                this.formattedModel = content;
+            }
+        }
+
+        format(this.model);
+        this.$scope.$watch('jfCodeMirror.model',v=>{
+            format(v);
+        })
     }
 }
