@@ -185,19 +185,25 @@ class jfSidebarController {
     }
 
     _trackResize() {
+        if (this.trackResizeInterval) this.$interval.cancel(this.trackResizeInterval);
         let origWidth = parseInt($('#jf-content').css('width'));
         let lastWidth = origWidth;
         let noChangeLoops = 0;
         let resizeEvent = document.createEvent("Event");
         resizeEvent.initEvent("resize", false, true);
-        let intervalPromise = this.$interval(()=>{
+        this.trackResizeInterval = this.$interval(()=>{
             let currWidth = parseInt($('#jf-content').css('width'));
             if (currWidth === lastWidth) noChangeLoops++;
             else noChangeLoops=0;
-            if (noChangeLoops >= 20) this.$interval.cancel(intervalPromise);
+            if (noChangeLoops >= 20) {
+                this.$interval.cancel(this.trackResizeInterval);
+                delete this.trackResizeInterval;
+            }
 
             lastWidth = currWidth;
 
+            console.log('*****');
+            
             this.$timeout(() => {
                 try {
                     window.dispatchEvent(new Event('resize'));
