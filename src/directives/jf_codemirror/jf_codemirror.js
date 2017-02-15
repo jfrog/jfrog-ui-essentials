@@ -85,7 +85,6 @@ class jfCodeController {
     }
 
     _formatModel() {
-
         let format = (content) => {
             if (this._isJSON(content)) {
                 this.formattedModel = require('js-beautify').js_beautify(content);
@@ -95,9 +94,21 @@ class jfCodeController {
             }
         }
 
-        format(this.model);
-        this.$scope.$watch('jfCodeMirror.model',v=>{
-            format(v);
-        })
+        if (!this.allowEdit) {
+            format(this.model);
+            this.$scope.$watch('jfCodeMirror.model',v=>{
+                format(v);
+            })
+        }
+        else {
+            this.formattedModel = this.model;
+            this.$scope.$watch('jfCodeMirror.model',v=>{
+                this.formattedModel = this.model;
+            });
+            this.$scope.$watch('jfCodeMirror.formattedModel',v=>{
+                this.model = v;
+            });
+        }
+
     }
 }
