@@ -247,7 +247,7 @@ class WizardController {
 
     prevStep() {
         if (this.$userCtrl.onStepChange) {
-            let response = this.$userCtrl.onStepChange(this.wizardDefinitionObject.steps[this.currentStep-1], this.wizardDefinitionObject.steps[this.currentStep-1],'prev');
+            let response = this.$userCtrl.onStepChange(this.wizardDefinitionObject.steps[this.currentStep-2], this.wizardDefinitionObject.steps[this.currentStep-1],'prev');
             if (response && response.then) {
                 this.pending = true;
                 response.then((pRes)=>{
