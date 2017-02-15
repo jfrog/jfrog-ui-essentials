@@ -274,7 +274,7 @@ class jfSidebarController {
             } else {
                 if (!this.skip && this.menu.width !== this.subMenuWidth) {
                     this._updateMenuObject(this.subMenuWidth,'0.3s','0s');
-                    this._setSubMenuFocus();
+                    this.$timeout(()=>this._setSubMenuFocus());
                     if(angular.isDefined(this.subMenuDelay)) {
                         this._subMenuDelayStop();
                     }
