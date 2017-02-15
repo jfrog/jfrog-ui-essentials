@@ -202,8 +202,6 @@ class jfSidebarController {
 
             lastWidth = currWidth;
 
-            console.log('*****');
-            
             this.$timeout(() => {
                 try {
                     window.dispatchEvent(new Event('resize'));
