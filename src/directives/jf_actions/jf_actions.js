@@ -1,6 +1,7 @@
 class jfActionsController {
-    constructor($scope) {
+    constructor($scope,$timeout) {
         this.$scope = $scope;
+        this.$timeout = $timeout;
         this.isDropdownOpen = false;
 
         if (!this.label) this.label = 'Actions';
@@ -48,10 +49,9 @@ class jfActionsController {
     }
 
     _toggleDropdown(isOpen) {
-        this.isDropdownOpen = isOpen;
-        if (!this.$scope.$$phase) {
-            this.$scope.$digest();
-        }
+        this.$timeout(()=>{
+            this.isDropdownOpen = isOpen;
+        })
     }
 
 
@@ -92,7 +92,8 @@ export function jfActions($timeout) {
             parentController: '=',
             label: '@',
             initMethod: '@',
-            fixedActionsNames: '='
+            fixedActionsNames: '=',
+            disableMouseOverEvents: '@?'
         },
         restrict: 'EA',
         controller: jfActionsController,
@@ -107,34 +108,37 @@ export function jfActions($timeout) {
             let stayOpened = false;
             let clicked = false;
 
-            $dropdownElement.on('mouseup', () => {
-                if (!stayOpened) {
-                    clicked = true;
-                }
-            });
+            jfActions.disableMouseOverEvents = jfActions.disableMouseOverEvents !== undefined;
 
-            $dropdownElement.on('mouseenter', () => {
-                buttonOver = true;
-                jfActions._toggleDropdown(true);
-            });
-            $dropdownElement.on('mouseleave', () => {
-                buttonOver = false;
-                if (!stayOpened) {
-                    jfActions._toggleDropdown(dropdownOver);
-                }
-            });
-            $buttonElement.on('mouseenter', () => {
-                dropdownOver = true;
-                jfActions._toggleDropdown(true);
-            });
-            $buttonElement.on('mouseleave', () => {
-                dropdownOver = false;
-                if (!stayOpened) {
-                    $timeout(()=> {
-                        jfActions._toggleDropdown(buttonOver || dropdownOver);
-                    }, 200);
-                }
-            });
+            if (!jfActions.disableMouseOverEvents) {
+                $dropdownElement.on('mouseup', () => {
+                    if (!stayOpened) {
+                        clicked = true;
+                    }
+                });
+                $dropdownElement.on('mouseenter', () => {
+                    buttonOver = true;
+                    jfActions._toggleDropdown(true);
+                });
+                $dropdownElement.on('mouseleave', () => {
+                    buttonOver = false;
+                    if (!stayOpened) {
+                        jfActions._toggleDropdown(dropdownOver);
+                    }
+                });
+                $buttonElement.on('mouseenter', () => {
+                    dropdownOver = true;
+                    jfActions._toggleDropdown(true);
+                });
+                $buttonElement.on('mouseleave', () => {
+                    dropdownOver = false;
+                    if (!stayOpened) {
+                        $timeout(()=> {
+                            jfActions._toggleDropdown(buttonOver || dropdownOver);
+                        }, 200);
+                    }
+                });
+            }
 
 
             let unwatch = $scope.$watch('jfActions.isDropdownOpen',(newVal,oldVal)=>{
@@ -150,9 +154,31 @@ export function jfActions($timeout) {
             });
 
             $scope.$on('$destroy', () => {
-                $dropdownElement.off('click');
+                if (!jfActions.disableMouseOverEvents) {
+                    $dropdownElement.off('mouseup');
+                    $dropdownElement.off('mouseenter');
+                    $dropdownElement.off('mouseleave');
+                    $buttonElement.off('mouseenter');
+                    $buttonElement.off('mouseleave');
+                }
                 unwatch();
             });
+
+            jfActions.showDropdown = () =>{
+                stayOpened = true;
+                clicked = true;
+                buttonOver = true;
+                dropdownOver = true;
+                jfActions._toggleDropdown(true);
+            }
+
+            jfActions.hideDropdown = () =>{
+                stayOpened = false;
+                clicked = false;
+                buttonOver = false;
+                dropdownOver = false;
+                jfActions._toggleDropdown(false);
+            }
 
         }
     };
