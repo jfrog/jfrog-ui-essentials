@@ -1,5 +1,5 @@
 'use strict';
-fdescribe('unit test:jf_list_maker directive', function () {
+describe('unit test:jf_list_maker directive', function () {
 
   var $scope;
   var listRows;
