@@ -105,7 +105,14 @@ class jfSidebarController {
         }
     }
 
-    mouseLeaveMenu() {
+    mouseLeaveMenu(e) {
+        if (e && e.toElement) {
+            if ($(e.toElement).hasClass('tooltipster-content') || $(e.toElement.parentElement).hasClass('tooltipster-arrow')) {
+
+                return;
+            }
+        }
+
         this.mouseIsOver = false;
         if (this.menu.width != this.subMenuWidth) {     // if sub menu menu isn't open
             this._updateMenuObject(this.defaultWidth(),'.3s')
@@ -228,7 +235,7 @@ class jfSidebarController {
             }
             if (!item.isDisabled) this.$timeout(()=>this.goToState(item),20);
         } else if (item.children) {
-            if (!this._isSubMenuOpen()) {
+            if (!this.isSubMenuOpen()) {
                 this._setExtendedMenu(item);
                 this.openSubMenu();
             }
@@ -295,7 +302,7 @@ class jfSidebarController {
     }
 
     onMouseOverExtendedItem(item,delay = true) {
-        if (!this._isSubMenuOpen()) {
+        if (!this.isSubMenuOpen()) {
             this._setExtendedMenu(item);
             this.openSubMenu(delay);
         }
@@ -311,13 +318,13 @@ class jfSidebarController {
         }
     }
 
-    onMouseLeaveExtendedItem(item) {
+    onMouseLeaveExtendedItem(e) {
         this._subMenuDelayStop();
         this.subMenuItemDelay = true;
         this.closeSubMenu(1800,true,true);
     }
 
-    _isSubMenuOpen() {
+    isSubMenuOpen() {
         return $('#jf-main-nav').css('width') === this.subMenuWidth;
     }
 
@@ -355,7 +362,7 @@ class jfSidebarController {
             this.subMenuItemDelayTimer = this.$timeout(() => {
                 this.subMenuItemDelay = false;
                 delete this.subMenuItemDelayTimer;
-                if (!$('.sub-menu:hover').length) {
+                if (!$('.sub-menu:hover').length && !$('.tooltipster-content:hover').length && !$('.tooltipster-arrow:hover').length) {
                     this.closeSubMenu(delay,force,expand);
                 }
             }, 100);

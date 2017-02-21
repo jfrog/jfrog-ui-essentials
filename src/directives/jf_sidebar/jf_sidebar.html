@@ -1,6 +1,6 @@
 <div id="jf-main-nav"
      ng-style="jfSidebar.menu"
-     ng-mouseleave="jfSidebar.mouseLeaveMenu()"
+     ng-mouseleave="jfSidebar.mouseLeaveMenu($event)"
      ng-mouseover="jfSidebar.mouseOverMenu()">
 
     <span class="pin-menu" ng-click="jfSidebar.pinMenu()"><i class="icon-menu-arrow" ng-class="{'menu-arrow-close' : jfSidebar.pinMenuStatus}"></i></span>
@@ -23,6 +23,7 @@
                  id="{{item.id}}"
                  ng-mouseover="jfSidebar.onMouseOverExtendedItem(item)"
                  ng-mouseleave="jfSidebar.onMouseLeaveExtendedItem(item)"
+                 ng-class="{'hover-like': jfSidebar.openSub === item && jfSidebar.isSubMenuOpen()}"
                  ng-if="!item.isDisabled && item.children"><i class="{{item.icon}}"></i><span>{{item.label}}</span>
             </a>
 
