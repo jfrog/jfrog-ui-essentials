@@ -16,6 +16,7 @@ export function jfTooltip() {
             });
 
             $attrs.$observe('jfTooltip', function(val){
+                if (val === '') val = null;
                 $($element).tooltipster('content', val);
             });
         }

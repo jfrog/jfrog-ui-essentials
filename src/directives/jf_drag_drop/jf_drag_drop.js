@@ -92,6 +92,22 @@ class jfDragDropController {
                 includeSpecific: (item) => this.includeSelected(item)
             });
         }
+
+        this._initWatchers();
+    }
+
+    /**
+     * watch the original include and exclude lists
+     * and update the filtered lists when they change
+     */
+    _initWatchers() {
+        // we don't use this.updateFilter() for performance, we want to update only include list when original include list is update
+        this.$scope.$watch('jfDragDrop.includeList',()=>{
+            this.filterIncludeCache = _.filter(this.includeList,(item)=>!this._isExcludeFilteredOut(item));
+        },true);
+        this.$scope.$watch('jfDragDrop.excludeList',()=>{
+            this.filterExcludeCache = _.filter(this.excludeList,(item)=>!this._isIncludeFilteredOut(item));
+        },true);
     }
 
     /**

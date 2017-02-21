@@ -1,12 +1,18 @@
 class jfSidebarController {
 
     constructor($scope, $state, $timeout, $interval, $window, $rootScope, JFrogEventBus) {
-        this.openAdminSize = this.openAdminSize || '900px';
+        this.subMenuWidth = this.defaultSubMenuWidth || this.openAdminSize || '900px';
+        this.defaultSubWidth = this.subMenuWidth;
+
+        this.defaultSubMenuId = this.defaultSubMenuId || 'admin';
+
         $rootScope.jfSidebar = this;
         if (!this.driver) {
             console.error('jf-sidebar: No driver is provided');
             this.driver = {};
         }
+
+        this.legacyAdminMenuItems = this.driver.getAdminMenuItems ? this.driver.getAdminMenuItems() : [];
         if (this.driver.setMenu) this.driver.setMenu(this);
         if (this.driver.registerEvents) this.driver.registerEvents();
         this.refreshMenu();
@@ -16,7 +22,6 @@ class jfSidebarController {
         this.$timeout = $timeout;
         this.$interval = $interval;
         this.$window = $window;
-        this.adminMenuItems = this.driver.getAdminMenuItems ? this.driver.getAdminMenuItems() : [];
         this.JFrogEventBus = JFrogEventBus;
         this.EVENTS = JFrogEventBus.getEventsDefinition();
         this.pinMenuStatus = JSON.parse(localStorage.pinMenu || "false");
@@ -49,17 +54,19 @@ class jfSidebarController {
 
             if (this.driver.onKeyDown) this.driver.onKeyDown(e);
 
-            // Ctrl + right arrow to open the admin menu
-            if (e.keyCode === 39 && e.ctrlKey && e.altKey && $('.admin-menu').length) {
+            // Ctrl + right arrow to open the default sub menu
+            if (e.keyCode === 39 && e.ctrlKey && e.altKey && $('.sub-menu').length) {
                 this.$timeout(() => {
-                    this.openAdminMenu();
+                    let defaultItem = _.find(this.menuItems, {id: this.defaultSubMenuId});
+                    if (defaultItem) this._setExtendedMenu(defaultItem);
+                    this.openSubMenu();
                 });
                 e.preventDefault();
 
             }
 
-            // ESC click or Ctrl+left to close admin menu       TODO: Fix the function to work
-            if ((e.keyCode === 27 || (e.keyCode === 37 && e.ctrlKey && e.altKey)) && this.menu.width === this.openAdminSize && $('.admin-menu').length > 0) {
+            // ESC click or Ctrl+left to close default sub menu
+            if ((e.keyCode === 27 || (e.keyCode === 37 && e.ctrlKey && e.altKey)) && this.menu.width === this.subMenuWidth && $('.sub-menu').length > 0) {
                 this.$timeout(() => {
                     this.menuSearchQuery = '';
                     $('#menuSearchQuery').blur();
@@ -75,19 +82,19 @@ class jfSidebarController {
         if (this.mouseIsOver) return;
         this.mouseIsOver = true;
 
-        if (this.menu.width === this.openAdminSize && $('.menu-item:hover').length && $('a#admin:hover').length < 1) {
-            if (!angular.isDefined(this.closeAdminDelay) && !$('.admin-menu:hover').length) { // TODO:
-                this.closeAdminDelay = this.$timeout(() => {
-                    this.closeAdminMenu();
-                    delete this.closeAdminDelay;
+        if (this.menu.width === this.subMenuWidth && $('.menu-item:hover').length && $('a.menu-item.extended-item:hover').length < 1) {
+            if (!angular.isDefined(this.closeSubMenuDelay) && !$('.sub-menu:hover').length) {
+                this.closeSubMenuDelay = this.$timeout(() => {
+                    this.closeSubMenu();
+                    delete this.closeSubMenuDelay;
                 }, 300);
             }
 
-        } else if (this.menu.width != '200px' && !$('.pin-menu').is(':hover') && ($('.admin-menu:hover').length < 1)) {     // if menu isn't open
+        } else if (this.menu.width != '200px' && !$('.pin-menu').is(':hover') && ($('.sub-menu:hover').length < 1)) {     // if menu isn't open
             if (!angular.isDefined(this.openMenu)) {
                 this.openMenu = this.$timeout(() => {
-                    let widthToOpen = ($('.admin-menu').length > 0 && $('a#admin:hover').length) ? this.openAdminSize : '200px';
-                    if (($('.admin-menu:hover').length || $('#admin:hover').length) && angular.isDefined(this.openMenu)) {
+                    let widthToOpen = ($('.sub-menu').length > 0 && $('a.menu-item.extended-item:hover').length) ? this.subMenuWidth : '200px';
+                    if (($('.sub-menu:hover').length || $('.menu-item.extended-item:hover').length) && angular.isDefined(this.openMenu)) {
                             this.$timeout.cancel(this.openMenu);
                             delete this.openMenu;
                             return;
@@ -100,23 +107,23 @@ class jfSidebarController {
 
     mouseLeaveMenu() {
         this.mouseIsOver = false;
-        if (this.menu.width != this.openAdminSize) {     // if admin menu isn't open
+        if (this.menu.width != this.subMenuWidth) {     // if sub menu menu isn't open
             this._updateMenuObject(this.defaultWidth(),'.3s')
         }
-        this.closeAdminMenu();
+        this.closeSubMenu();
         this._openMenuStop();
-        this._adminMenuDelayStop();
+        this._subMenuDelayStop();
     }
 
-    menuAdminOver() {
-        if (angular.isDefined(this.adminMenuItemDelayTimer)) {
-            this.$timeout.cancel(this.adminMenuItemDelayTimer);
-            delete this.adminMenuItemDelayTimer;
+    subMenuOver() {
+        if (angular.isDefined(this.subMenuItemDelayTimer)) {
+            this.$timeout.cancel(this.subMenuItemDelayTimer);
+            delete this.subMenuItemDelayTimer;
         }
 
-        if (angular.isDefined(this.closeAdminDelay)) {
-            this.$timeout.cancel(this.closeAdminDelay);
-            delete this.closeAdminDelay;
+        if (angular.isDefined(this.closeSubMenuDelay)) {
+            this.$timeout.cancel(this.closeSubMenuDelay);
+            delete this.closeSubMenuDelay;
         }
 
     }
@@ -147,7 +154,7 @@ class jfSidebarController {
 
     refreshMenu() {
         this.menuItems = this._getMenuItems();
-        this.adminMenuItems = this.driver.getAdminMenuItems ? this.driver.getAdminMenuItems() : [];
+        this.legacyAdminMenuItems = this.driver.getAdminMenuItems ? this.driver.getAdminMenuItems() : [];
     }
 
     goToState(item) {
@@ -178,16 +185,20 @@ class jfSidebarController {
     }
 
     _trackResize() {
+        if (this.trackResizeInterval) this.$interval.cancel(this.trackResizeInterval);
         let origWidth = parseInt($('#jf-content').css('width'));
         let lastWidth = origWidth;
         let noChangeLoops = 0;
         let resizeEvent = document.createEvent("Event");
         resizeEvent.initEvent("resize", false, true);
-        let intervalPromise = this.$interval(()=>{
+        this.trackResizeInterval = this.$interval(()=>{
             let currWidth = parseInt($('#jf-content').css('width'));
             if (currWidth === lastWidth) noChangeLoops++;
             else noChangeLoops=0;
-            if (noChangeLoops >= 20) this.$interval.cancel(intervalPromise);
+            if (noChangeLoops >= 20) {
+                this.$interval.cancel(this.trackResizeInterval);
+                delete this.trackResizeInterval;
+            }
 
             lastWidth = currWidth;
 
@@ -203,55 +214,73 @@ class jfSidebarController {
         },1)
     }
     itemClick(item) {
-        if (this.adminMenuCloseDelay) {
-            this.$timeout.cancel(this.adminMenuCloseDelay);
-            delete this.adminMenuCloseDelay;
+        if (this.subMenuCloseDelay) {
+            this.$timeout.cancel(this.subMenuCloseDelay);
+            delete this.subMenuCloseDelay;
         }
 
         if (!item.children ) {
-            this.closeAdminMenu(0,true);
+//            delete this.openSub;
+            this.closeSubMenu(0,true);
             if (this.menu.width === '55px' || this.menu.width === '200px') {
                 this._openMenuStop();
-                this._adminMenuDelayStop();
+                this._subMenuDelayStop();
             }
             if (!item.isDisabled) this.$timeout(()=>this.goToState(item),20);
         } else if (item.children) {
-            if (!this._isAdminOpen()) {
-                this.openAdminMenu();
+            if (!this._isSubMenuOpen()) {
+                this._setExtendedMenu(item);
+                this.openSubMenu();
             }
             else {
-                this.closeAdminMenu(0,true,true);
-                this._adminMenuDelayStop();
+                this.closeSubMenu(0,true,true);
+                this._subMenuDelayStop();
+                if (this.openSub !== item) {
+                    this.$timeout(()=>{this.itemClick(item)},500)
+                }
             }
         }
     }
-    openAdminMenu(delay = false) {
-        if (this.adminMenuCloseDelay) {
-            this.$timeout.cancel(this.adminMenuCloseDelay);
-            delete this.adminMenuCloseDelay;
+    _setExtendedMenu(item) {
+        if (!item) return;
+        if (item.children === true && this.legacyAdminMenuItems) { //backward compatibility for single extended ('admin') menu
+            this.subMenuItems = this.legacyAdminMenuItems;
+            this.subMenuWidth = this.defaultSubWidth;
+            this.openSub = item;
+        }
+        else if (item.children) {
+            this.subMenuItems = item.children;
+            this.subMenuWidth = item.subMenuWidth || this.defaultSubWidth;
+            this.openSub = item;
+        }
+    }
+    openSubMenu(delay = false) {
+        if (this.subMenuCloseDelay) {
+            this.$timeout.cancel(this.subMenuCloseDelay);
+            delete this.subMenuCloseDelay;
         }
 
-        if ($('.admin-menu').length > 0) {
+        if ($('.sub-menu').length > 0) {
             this._openMenuStop();
-            this._adminMenuDelayStop();
+            this._subMenuDelayStop();
 
             if ($(':focus').length && $(':focus')[0].id != 'admin' && $(':focus')[0].id != 'menuSearchQuery') {
                 this.currentFocus = $(':focus');
             }
 
-            if (delay && !angular.isDefined(this.adminMenuDelay)) {
-                this.adminMenuDelay = this.$timeout(() => {
-                    this.openAdminMenu();
-                    this._setAdminMenuFocus();
-                    this._adminMenuDelayStop();
+            if (delay && !angular.isDefined(this.subMenuDelay)) {
+                this.subMenuDelay = this.$timeout(() => {
+                    this.openSubMenu();
+                    this._setSubMenuFocus();
+                    this._subMenuDelayStop();
                     return;
                 }, 2000)
             } else {
-                if (!this.skip && this.menu.width !== this.openAdminSize) {
-                    this._updateMenuObject(this.openAdminSize,'0.3s','0s');
-                    this._setAdminMenuFocus();
-                    if(angular.isDefined(this.adminMenuDelay)) {
-                        this._adminMenuDelayStop();
+                if (!this.skip && this.menu.width !== this.subMenuWidth) {
+                    this._updateMenuObject(this.subMenuWidth,'0.3s','0s');
+                    this.$timeout(()=>this._setSubMenuFocus());
+                    if(angular.isDefined(this.subMenuDelay)) {
+                        this._subMenuDelayStop();
                     }
                 }
 
@@ -261,46 +290,73 @@ class jfSidebarController {
 
     }
 
-    _isAdminOpen() {
-        return $('#jf-main-nav').css('width') === this.openAdminSize;
+    onMouseOverSimpleItem(item) {
+        this.closeSubMenu(1800,true,true);
+    }
+
+    onMouseOverExtendedItem(item,delay = true) {
+        if (!this._isSubMenuOpen()) {
+            this._setExtendedMenu(item);
+            this.openSubMenu(delay);
+        }
+        else {
+            if (this.openSub !== item) {
+                this.closeSubMenu(0,true,true);
+                this._subMenuDelayStop();
+                this.$timeout(()=>{this.onMouseOverExtendedItem(item,false)},500)
+            }
+            else {
+                this.openSubMenu(true);
+            }
+        }
+    }
+
+    onMouseLeaveExtendedItem(item) {
+        this._subMenuDelayStop();
+        this.subMenuItemDelay = true;
+        this.closeSubMenu(1800,true,true);
+    }
+
+    _isSubMenuOpen() {
+        return $('#jf-main-nav').css('width') === this.subMenuWidth;
     }
 
     clickOffMenu() {
-        if ($('.admin-menu').length > 0
+        if ($('.sub-menu').length > 0
             && !$('.menu-item:hover').length
             && (this.menu.width != '55px' || (!this.pinMenuStatus && this.menu.width != '200px'))) { // TODO: Fix this rule. shuldn't happen if menu is 55px or 200 with pinned on
-            if (this.menu.width != '55px' && !$('.admin-menu:hover').length) {
+            if (this.menu.width != '55px' && !$('.sub-menu:hover').length) {
                 this._updateMenuObject(this.defaultWidth(), '.3s');
                 this.menuSearchQuery = '';
                 this._updateTabIndex();
             }
         }
     }
-    closeAdminMenu(delay, force = false, expand = false) {
+    closeSubMenu(delay, force = false, expand = false) {
         if (delay) {
-            if (this.adminMenuCloseDelay) {
-                this.$timeout.cancel(this.adminMenuCloseDelay);
-                delete this.adminMenuCloseDelay;
+            if (this.subMenuCloseDelay) {
+                this.$timeout.cancel(this.subMenuCloseDelay);
+                delete this.subMenuCloseDelay;
             }
-            this.adminMenuCloseDelay = this.$timeout(()=>{
-                if (this.adminMenuCloseDelay) {
-                    this.$timeout.cancel(this.adminMenuCloseDelay);
-                    delete this.adminMenuCloseDelay;
+            this.subMenuCloseDelay = this.$timeout(()=>{
+                if (this.subMenuCloseDelay) {
+                    this.$timeout.cancel(this.subMenuCloseDelay);
+                    delete this.subMenuCloseDelay;
                 }
-                this.closeAdminMenu(0,force,expand);
+                this.closeSubMenu(0,force,expand);
             },delay)
             return;
         }
 
-        if (!force && ($('.admin-menu:hover').length || $('#admin:hover').length || ($('.admin-menu').find('a').is(':focus') || ($('#menuSearchQuery').is(':focus') && $('#menuSearchQuery').val().length > 0)))) {
+        if (!force && ($('.sub-menu:hover').length || $('.menu-item.extended-item:hover').length || ($('.sub-menu').find('a').is(':focus') || ($('#menuSearchQuery').is(':focus') && $('#menuSearchQuery').val().length > 0)))) {
 
             return;
-        } else if (this.adminMenuItemDelay) {
-            this.adminMenuItemDelayTimer = this.$timeout(() => {
-                this.adminMenuItemDelay = false;
-                delete this.adminMenuItemDelayTimer;
-                if (!$('.admin-menu:hover').length) {
-                    this.closeAdminMenu(delay,force,expand);
+        } else if (this.subMenuItemDelay) {
+            this.subMenuItemDelayTimer = this.$timeout(() => {
+                this.subMenuItemDelay = false;
+                delete this.subMenuItemDelayTimer;
+                if (!$('.sub-menu:hover').length) {
+                    this.closeSubMenu(delay,force,expand);
                 }
             }, 100);
             return;
@@ -324,12 +380,12 @@ class jfSidebarController {
         this.$timeout.cancel(this.openMenu);
         delete this.openMenu;
     }
-    _adminMenuDelayStop() {
-        this.$timeout.cancel(this.adminMenuDelay);
-        delete this.adminMenuDelay;
+    _subMenuDelayStop() {
+        this.$timeout.cancel(this.subMenuDelay);
+        delete this.subMenuDelay;
     }
-    _setAdminMenuFocus() {
-        if (!$('.admin-menu:hover').length) {
+    _setSubMenuFocus() {
+        if (!$('.sub-menu:hover').length) {
             $('#menuSearchQuery').focus();
             $('#jf-main-nav').scrollLeft(0);
         }
@@ -337,19 +393,19 @@ class jfSidebarController {
     }
 
     _updateTabIndex() {
-        if (this.menu.width != this.openAdminSize) {
-            $('.admin-menu').find('a,input').attr('tabindex', -1);
-            $('.admin-menu').find('a,input').blur();
+        if (this.menu.width != this.subMenuWidth) {
+            $('.sub-menu').find('a,input').attr('tabindex', -1);
+            $('.sub-menu').find('a,input').blur();
         } else {
-            let highlighted = $('.admin-menu').find('a.highlight');
+            let highlighted = $('.sub-menu').find('a.highlight');
             if (highlighted.length) {
-                $('.admin-menu').find('input').removeAttr('tabindex');
-                $('.admin-menu').find('a.highlight').removeAttr('tabindex');
-                $('.admin-menu').find('a:not(.highlight)').attr('tabindex', -1);
+                $('.sub-menu').find('input').removeAttr('tabindex');
+                $('.sub-menu').find('a.highlight').removeAttr('tabindex');
+                $('.sub-menu').find('a:not(.highlight)').attr('tabindex', -1);
 
             }
             else {
-                $('.admin-menu').find('a,input').removeAttr('tabindex');
+                $('.sub-menu').find('a,input').removeAttr('tabindex');
             }
         }
         $('#jf-main-nav').scrollLeft(0);
@@ -392,7 +448,7 @@ class jfSidebarController {
             return false;
         }
     }
-    adminItemClick(subItem) {
+    subMenuItemClick(subItem) {
         this.menuSearchQuery = '';
         this._updateMenuObject(this.defaultWidth(),'.3s');
         this._updateTabIndex();
@@ -408,13 +464,10 @@ class jfSidebarController {
 
     navigateInMenu(e) {
         let key = e.keyCode;
-        let $allHighlighted = $('.admin-menu').find('.highlight');
-        let $allFocusableItems = $('.admin-menu').find('a:focusable');
+        let $allHighlighted = $('.sub-menu').find('.highlight');
+        let $allFocusableItems = $('.sub-menu').find('a:focusable');
 
         switch (key) {
-            //case 13:    // ENTER
-            //    this.adminItemClick2();
-            //    break;
             case 38:    // UP
                 if ($(e.currentTarget).is(':input')) {
                     return;
@@ -437,7 +490,7 @@ class jfSidebarController {
                     if ($allHighlighted.length) {
                         $allHighlighted[0].focus();
                     } else {
-                        $('.admin-menu').find('a').first(':focusable').focus();
+                        $('.sub-menu').find('a').first(':focusable').focus();
                     }
                 } else {
                     if (!$('.highlight').length) {
@@ -488,8 +541,10 @@ export function jfSidebar() {
         scope: {
             driver: '=',
             footerTemplate: '@',
-            openAdminSize: '@?',
-            noSearchBox: '@?'
+            openAdminSize: '@?', //left here for backward compatibility, use defaultSubMenuWidth
+            defaultSubMenuWidth: '@?',
+            noSearchBox: '@?',
+            defaultSubMenuId: '@'
         },
         controller: jfSidebarController,
         bindToController: true,

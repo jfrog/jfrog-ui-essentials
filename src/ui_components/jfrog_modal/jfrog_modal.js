@@ -31,7 +31,7 @@ export class JFrogModal {
      * @param scope
      * @returns {{Modal instance}}
      */
-    launchModal(template, scope, size, cancelable = true) {
+    launchModal(template, scope, size, cancelable = true, options) {
         if (!size) size = 'lg';
 
         let customTemplate = true;
@@ -54,6 +54,8 @@ export class JFrogModal {
             modalObj.backdrop = 'static';
             modalObj.keyboard = false;
         }
+        if (options && _.isObject(options)) _.extend(modalObj,options);
+
         let modalInstance =  this.modal.open(modalObj);
         this.JFrogEventBus.registerOnScope(this.$rootScope, this.EVENTS.CLOSE_MODAL, () => {
             modalInstance.dismiss();
@@ -84,10 +86,27 @@ export class JFrogModal {
 
     _calculateMaxHeight() {
         this.$timeout(() => {
-            let modalFooterOffsetTop = $('.modal-footer').offset().top;
-            let modalHeaderBottomOffsetTop = $('.modal-header').offset().top + $('.modal-header').outerHeight();
 
-            let maxHeight = modalFooterOffsetTop - modalHeaderBottomOffsetTop - 20;
+            if ($('.wizard-modal').length > 0) {
+
+                // modal height - header - footer
+            let MH = $('.wizard-modal').height(),               // Modal height
+                HH  = $('.modal-header').outerHeight() || 0,         // Header height
+                FH  = $('.modal-footer').outerHeight() || 0;    // Footer height
+
+                let maxHeight = MH - HH - FH;
+                $('.modal-body').css('max-height', maxHeight);
+                return;
+            }
+
+
+            let VPH = window.innerHeight,                       // View port height
+                MOT = 110,                                      //Modal offset top
+                HH  = $('.modal-header').outerHeight() || 0,         // Header height
+                FH  = $('.modal-footer').outerHeight() || 0;    // Footer height
+
+            // Calculate: MPH - (MOT*2) - HH - FH = maxHeight
+            let maxHeight = VPH - (MOT * 2) - HH - FH;
 
             $('.modal-body').css('max-height', maxHeight);
         }, 100)
@@ -166,7 +185,8 @@ export class JFrogModal {
 
         wizardModalScope.$wizardCtrl.$userCtrl = controllerInstance;
 
-        let modalInstance = this.launchModal('@wizard_modal', wizardModalScope, 'lg', wizardDefinitionObject.cancelable);
+        let modalInstance = this.launchModal('@wizard_modal', wizardModalScope, 'lg', wizardDefinitionObject.cancelable && wizardDefinitionObject.backdropCancelable, wizardDefinitionObject.modalOptions);
+
 
         wizardModalScope.$wizardCtrl.$modalInstance = modalInstance;
 
@@ -195,6 +215,10 @@ class WizardController {
         this.$modalInstance.dismiss();
     }
 
+    titleInit() {
+        if (this.$userCtrl.onWizardShow) this.$userCtrl.onWizardShow(this.wizardDefinitionObject.steps[this.currentStep-1]);
+    }
+
     nextStep(skip) {
         if (this.$userCtrl.onStepChange) {
             let response = this.$userCtrl.onStepChange(this.wizardDefinitionObject.steps[this.currentStep], this.wizardDefinitionObject.steps[this.currentStep-1], skip ? 'skip' : 'next');
@@ -202,6 +226,7 @@ class WizardController {
                 this.pending = true;
                 response.then((pRes)=>{
                     if (pRes !== false) this.currentStep++
+                    if (this.$userCtrl.afterStepChange) this.$userCtrl.afterStepChange(this.wizardDefinitionObject.steps[this.currentStep-1], this.wizardDefinitionObject.steps[this.currentStep-2], skip ? 'skip' : 'next');
                     this.pending = false;
                 })
                     .catch(()=>{
@@ -209,7 +234,10 @@ class WizardController {
                     });
 
             }
-            else if (response !== false) this.currentStep++;
+            else if (response !== false) {
+                this.currentStep++;
+                if (this.$userCtrl.afterStepChange) this.$userCtrl.afterStepChange(this.wizardDefinitionObject.steps[this.currentStep-1], this.wizardDefinitionObject.steps[this.currentStep-2], skip ? 'skip' : 'next');
+            }
         }
         else {
             this.currentStep++;
@@ -224,13 +252,17 @@ class WizardController {
                 this.pending = true;
                 response.then((pRes)=>{
                     if (pRes !== false) this.currentStep--;
+                    if (this.$userCtrl.afterStepChange) this.$userCtrl.afterStepChange(this.wizardDefinitionObject.steps[this.currentStep-1], this.wizardDefinitionObject.steps[this.currentStep],  'prev');
                     this.pending = false;
                 })
                     .catch(()=>{
                         this.pending = false;
                     });
             }
-            else if (response !== false) this.currentStep--;
+            else if (response !== false) {
+                this.currentStep--;
+                if (this.$userCtrl.afterStepChange) this.$userCtrl.afterStepChange(this.wizardDefinitionObject.steps[this.currentStep-1], this.wizardDefinitionObject.steps[this.currentStep], 'prev');
+            }
         }
         else {
             this.currentStep--;

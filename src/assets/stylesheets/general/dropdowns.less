@@ -98,25 +98,21 @@
 }
 
 .actions-dropdown {
+  &:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 2px;
+    right: 8%;
+    box-sizing: border-box;
+    border: 5px solid black;
+    border-color: transparent transparent @white @white;
+    transform-origin: 0 0;
+    transform: rotate(135deg);
+    box-shadow: -3px 2px 2px 0 rgba(0, 0, 0, 0.06);
+  }
   li:first-child {
-    &::after {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 0;
-      top: 2px;
-      right: 8%;
-      box-sizing: border-box;
-
-      border: 5px solid black;
-      border-color: transparent transparent @white @white;
-
-      transform-origin: 0 0;
-      transform: rotate(135deg);
-
-      box-shadow: -3px 2px 2px 0 rgba(0, 0, 0, 0.06);
-    }
-
     &:hover::after {
       border-color: transparent transparent @greenBGDropdownHover @greenBGDropdownHover;
     }

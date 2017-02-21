@@ -7,7 +7,8 @@ export function jfWidgetsLayout(recursiveDirective) {
             widgets: '=',
             layout: '=',
             options: '=',
-            parentCell: '=?'
+            parentCell: '=?',
+            footerText: '='
         },
         templateUrl: 'directives/jf_widgets_layout/jf_widgets_layout.html',
         compile: (element) => {
@@ -62,6 +63,11 @@ class jfWidgetsLayoutController {
         if (this.options.parent && this.parentCell) {
             this.parentCell.$$childLayout = this;
         }
+
+        $scope.$on('$destroy',()=>{
+            if (this.scopes) this.scopes.forEach(s=>s.$destroy());
+        })
+
     }
 
 
@@ -239,6 +245,7 @@ class jfWidgetsLayoutController {
             'background-color': this.options.backColor,
             'overflow': this.options.isSub && this.editMode ? 'visible' : 'hidden'
         }
+
         if (this.options.parent) this.options.parent.updateCss();
     }
 
@@ -267,12 +274,15 @@ class jfWidgetsLayoutController {
 
     compileElements() {
         let elems = $('.compile-children');
+        this.scopes = [];
         for (let i = 0; i< elems.length; i++) {
             let elem = $(elems[i]);
             let widgetId = elem.prop('id');
             if (this._isWidgetInUse(widgetId)) {
                 let widget = this._getWidgetById(widgetId);
                 let scope = this.$rootScope.$new();
+
+                this.scopes.push(scope);
 
                 if (widget.model) {
                     _.extend(scope,widget.model);

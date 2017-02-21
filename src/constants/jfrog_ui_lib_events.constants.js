@@ -7,7 +7,9 @@ let events = {
 
     CLOSE_MODAL:                    'modal:close',
 
-    SIDEBAR_SIZE_CHANGE:      'sidebar:size:change'
+    CLOSE_NOTIFICATIONS:            'notifications:close',
+
+    SIDEBAR_SIZE_CHANGE:            'sidebar:size:change'
 };
 
 export default events;

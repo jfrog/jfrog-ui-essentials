@@ -14,7 +14,7 @@
   left: 12px;
 }
 .toast-top-center {
-  top: 12px;
+  top: 70px;
 }
 .toast-top-right {
   top: 12px;
@@ -176,6 +176,7 @@
     font-size: 14px;
     padding: 0 58px 0 0;
     vertical-align: middle;
+    word-break: break-word;
     // fade on top of bottom for multiple line text
     &:before,
     &:after {
@@ -264,7 +265,9 @@
   &.ng-leave ~ div:nth-child(6) {
     animation: showLastToaster .6s;
   }
-
+  &.toast-error + .ng-leave {
+    animation: hideBehindError .6s;
+  }
 }
 
 
@@ -322,5 +325,14 @@
   }
   to {
     margin-top: -72px;
+  }
+}
+
+@keyframes hideBehindError {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }

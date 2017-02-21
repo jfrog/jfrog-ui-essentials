@@ -4,7 +4,7 @@
      ng-mouseover="jfSidebar.mouseOverMenu()">
 
     <span class="pin-menu" ng-click="jfSidebar.pinMenu()"><i class="icon-menu-arrow" ng-class="{'menu-arrow-close' : jfSidebar.pinMenuStatus}"></i></span>
-    <ul class="sidebar-wrapper-inner" ng-click="jfSidebar.closeAdminMenu(0,true,true)">
+    <ul class="sidebar-wrapper-inner" ng-click="jfSidebar.closeSubMenu(0,true,true)">
         <li ng-repeat="item in jfSidebar.menuItems"
             ng-click="$event.stopPropagation(); jfSidebar.itemClick(item)"
             ng-class="{disabled: item.isDisabled, active: (item.stateParent | includedByState) || jfSidebar.isCurrentItem(item), 'icon-arrow-left':item.children }">
@@ -13,30 +13,29 @@
                class="menu-item disabled"
                id="{{item.id}}"><i class="{{item.icon}}"></i><span>{{item.label}}</span></a>
 
-            <a
-               class="menu-item"
+            <a class="menu-item"
                id="{{item.id}}"
-               ng-mouseover="jfSidebar.closeAdminMenu(1800,true,true)"
+               ng-mouseover="jfSidebar.onMouseOverSimpleItem(item)"
                ng-if="!item.isDisabled && !item.children"><i class="{{item.icon}}"></i><span>{{item.label}}</span></a>
 
             <a href
-                 class="menu-item"
-                 id="admin"
-                 ng-mouseover="jfSidebar.openAdminMenu(true)"
-                 ng-mouseleave="jfSidebar._adminMenuDelayStop(); jfSidebar.adminMenuItemDelay = true; jfSidebar.closeAdminMenu(1800,true,true)"
+                 class="menu-item extended-item"
+                 id="{{item.id}}"
+                 ng-mouseover="jfSidebar.onMouseOverExtendedItem(item)"
+                 ng-mouseleave="jfSidebar.onMouseLeaveExtendedItem(item)"
                  ng-if="!item.isDisabled && item.children"><i class="{{item.icon}}"></i><span>{{item.label}}</span>
             </a>
 
-            <div class="admin-menu" ng-if="item.children && !item.isDisabled" ng-mouseover="jfSidebar.menuAdminOver()" ng-click="$event.stopPropagation()">
+            <div class="sub-menu" ng-show="jfSidebar.openSub === item" ng-if="item.children && !item.isDisabled" ng-mouseover="jfSidebar.subMenuOver()" ng-click="$event.stopPropagation()">
 
-                <div class="searchbox-wrapper" ng-if="jfSidebar.noSearchBox === undefined">
+                <div class="searchbox-wrapper" ng-if="jfSidebar.noSearchBox === undefined && !jfSidebar.openSub.noSearchBox">
                     <input type="text"
                            class="input-text"
                            id="menuSearchQuery"
                            placeholder="Filter Menu..."
                            autocomplete="off"
                            ng-model="jfSidebar.menuSearchQuery"
-                           ng-focus="jfSidebar.openAdminMenu()"
+                           ng-focus="jfSidebar.openSubMenu()"
                            ng-change="jfSidebar.checkForSingleChoice()"
                            ng-keydown="jfSidebar.navigateInMenu($event)"
                            jf-enter-press="jfSidebar.chooseSingleChoice()" />
@@ -45,9 +44,9 @@
                               ng-class="{'disabled': !jfSidebar.menuSearchQuery}">&times;</span>
                 </div>
 
-                <div class="masonry" ng-class="{'no-search-box': jfSidebar.noSearchBox !== undefined}" tabindex="-1">
+                <div class="masonry" ng-class="{'no-search-box': jfSidebar.noSearchBox !== undefined || jfSidebar.openSub.noSearchBox}" tabindex="-1">
                     <div>
-                        <div ng-repeat="item in jfSidebar.adminMenuItems" class="section" ng-if="!item.isHidden">
+                        <div ng-repeat="item in jfSidebar.subMenuItems" class="section" ng-if="!item.isHidden">
                             <h3>{{item.label}}</h3>
                             <span ng-repeat="subItem in item.subItems"
                                   jf-disable-feature="{{ subItem.feature }}"
@@ -61,7 +60,7 @@
                                               'current' : jfSidebar.isCurrentItem(subItem)}"
                                    ng-if="!subItem.isDisabled"
                                    ui-sref="{{ subItem.state }} ({{ subItem.stateParams }})"
-                                   ng-click="jfSidebar.adminItemClick(subItem)"
+                                   ng-click="jfSidebar.subMenuItemClick(subItem)"
                                    ng-keydown="jfSidebar.navigateInMenu($event)"
                                    data-state="{{ subItem.state }}"
                                    data-params="{{ subItem.stateParams }}"
@@ -78,16 +77,4 @@
     </ul>
 
     <ng-include ng-if="jfSidebar.footerTemplate" src="jfSidebar.footerTemplate"></ng-include>
-<!--
-    <div class="sidebar-footer">
-        <div class="icon"><i class="icon-jfrog-logo"></i></div>
-        <div class="wrapper-footer-data">
-            {{jfSidebar.footerData.versionInfo}}<br />
-            {{jfSidebar.footerData.buildNumber}}<br ng-if="jfSidebar.footerData.buildNumber" />
-            {{jfSidebar.footerData.serverId}}<br ng-if="jfSidebar.footerData.serverId" />
-            {{jfSidebar.footerData.licenseInfo}}<br ng-if="jfSidebar.footerData.licenseInfo" />
-            <span>{{jfSidebar.footerData.copyRights}}</span>
-        </div>
-    </div>
--->
 </div>
