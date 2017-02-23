@@ -284,16 +284,21 @@ class jfWidgetsLayoutController {
 
                 this.scopes.push(scope);
 
+                let children = elem.children();
+
                 if (widget.model) {
                     _.extend(scope,widget.model);
                 }
                 if (widget.controller) {
-                    widget.controller.prototype.$scope = scope;
-                    widget.controller.prototype.$widgetObject = widget;
-                    widget.controller.prototype.$layoutObject = this._getLayoutByWidget(elem.prop('id'));
+
                     widget.controller.prototype.$widgetLayoutManager = this;
 
                     let controllerInstance = this.$injector.instantiate(widget.controller);
+
+                    controllerInstance.$element = children[0];
+                    controllerInstance.$layoutObject = this._getLayoutByWidget(elem.prop('id'));
+                    controllerInstance.$scope = scope;
+                    controllerInstance.$widgetObject = widget;
 
                     let controllerObject = {};
                     controllerObject[widget.controllerAs || 'ctrl'] = controllerInstance;
@@ -301,7 +306,6 @@ class jfWidgetsLayoutController {
                     _.extend(scope,controllerObject);
                 }
 
-                let children = elem.children();
 
                 //We compile only first child, templates should have only one root element!
                 let rootChild = $(children[0]);
@@ -309,9 +313,11 @@ class jfWidgetsLayoutController {
                     this.$compile(rootChild)(scope);
                     rootChild.prop('compiled',true);
                 }
+
                 this.$timeout(()=>{
                     widget.$compiled=true;
-                })
+                });
+
             }
         }
     }
