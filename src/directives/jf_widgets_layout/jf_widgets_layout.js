@@ -32,14 +32,16 @@ class jfWidgetsLayoutController {
         this.setDefaultOptions();
 
         let onChange = (newval,oldval) => {
-            if (!newval || this.templatesLoadStarted && !this.templatesLoaded) return;
+            if (!newval) return;
             this.transformLayout();
             this.updateFlatCells();
             this.updateCss();
             this.updateDragLines();
-            this.loadTemplates().then(()=>{
-                $timeout(()=>this.compileElements());
-            })
+            if (!this.templatesLoadStarted || this.templatesLoaded) {
+                this.loadTemplates().then(()=>{
+                    $timeout(()=>this.compileElements());
+                })
+            }
         };
         $scope.$watch('jfWidgetsLayout.options.editMode', (editMode) => {
             this.editMode = editMode === undefined ? false : editMode;
