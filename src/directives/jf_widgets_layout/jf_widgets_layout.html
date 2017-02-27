@@ -41,7 +41,6 @@
                 </div>
                 <div class="widget-container"
                      ng-mousemove="jfWidgetsLayout.onWidgetMouseMove($event)"
-                     ng-show="jfWidgetsLayout.widgets[layoutObj.widget].$compiled"
                      ng-if="!layoutObj.subLayout"
                      ng-style="{overflow: jfWidgetsLayout.widgets[layoutObj.widget].scroll ? 'auto' : 'hidden'}">
                     <div ng-if="jfWidgetsLayout.widgets[layoutObj.widget] && jfWidgetsLayout.widgets[layoutObj.widget].showSpinner"
@@ -52,6 +51,7 @@
                     </div>
                     <div ng-if="jfWidgetsLayout.widgets[layoutObj.widget] && jfWidgetsLayout.widgets[layoutObj.widget].template" ng-show="jfWidgetsLayout.widgets[layoutObj.widget].$compiled || (!jfWidgetsLayout.widgets[layoutObj.widget].model && !jfWidgetsLayout.widgets[layoutObj.widget].controller)">
                         <div class="compile-children"
+                             ng-show="jfWidgetsLayout.widgets[layoutObj.widget].$compiled"
                              id="{{layoutObj.widget}}"
                              ng-bind-html="jfWidgetsLayout.widgets[layoutObj.widget].template"></div>
                     </div>
