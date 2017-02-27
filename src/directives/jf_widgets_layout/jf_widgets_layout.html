@@ -41,6 +41,7 @@
                 </div>
                 <div class="widget-container"
                      ng-mousemove="jfWidgetsLayout.onWidgetMouseMove($event)"
+                     ng-show="jfWidgetsLayout.widgets[layoutObj.widget].$compiled"
                      ng-if="!layoutObj.subLayout"
                      ng-style="{overflow: jfWidgetsLayout.widgets[layoutObj.widget].scroll ? 'auto' : 'hidden'}">
                     <div ng-if="jfWidgetsLayout.widgets[layoutObj.widget] && jfWidgetsLayout.widgets[layoutObj.widget].showSpinner"

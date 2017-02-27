@@ -38,6 +38,7 @@ class jfWidgetsLayoutController {
             this.updateCss();
             this.updateDragLines();
             if (!this.templatesLoadStarted || this.templatesLoaded) {
+                Object.keys(this.widgets).forEach(id=>delete this.widgets[id].$compiled);
                 this.loadTemplates().then(()=>{
                     $timeout(()=>this.compileElements());
                 })
