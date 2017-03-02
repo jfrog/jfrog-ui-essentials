@@ -38,7 +38,9 @@ class jfWidgetsLayoutController {
             this.updateCss();
             this.updateDragLines();
             if (!this.templatesLoadStarted || this.templatesLoaded) {
-                Object.keys(this.widgets).forEach(id=>delete this.widgets[id].$compiled);
+                Object.keys(this.widgets).forEach(id=>{
+                    if (this._isWidgetInUse(id)) delete this.widgets[id].$compiled
+                });
                 this.loadTemplates().then(()=>{
                     $timeout(()=>this.compileElements());
                 })
@@ -198,6 +200,7 @@ class jfWidgetsLayoutController {
 
     updateCss() {
         this.cssRules = {};
+
         let currentX = 0, currentY = 0;
         let cssRunningId = 0;
 
@@ -345,9 +348,25 @@ class jfWidgetsLayoutController {
     }
 
 
+    _getPrecPoint(e) {
+        let container = $(this.$element).find('.jf-widgets-layout-container');
+
+        let containerWidth = container.innerWidth();
+        let containerHeight = container.innerHeight();
+
+        let mouseX = e.pageX - container.offset().left;
+        let mouseY = e.pageY - container.offset().top;
+
+        let xprec = Math.round((mouseX / containerWidth) * 100);
+        let yprec = Math.round((mouseY / containerHeight) * 100);
+
+        return {x:xprec,y:yprec};
+    }
+
     onMouseMove(e) {
 
         if (!this.options.allowResize && !this.editMode) return;
+
         if (this.draggingLines) {
             this.onDrag(e);
             e.preventDefault();
@@ -356,17 +375,8 @@ class jfWidgetsLayoutController {
 
             let container = $(this.$element).find('.jf-widgets-layout-container');
 
-            let containerWidth = container.innerWidth();
-            let containerHeight = container.innerHeight();
-
-            let mouseX = e.pageX - container.offset().left;
-            let mouseY = e.pageY - container.offset().top;
-
-            let xprec = Math.round((mouseX / containerWidth) * 100);
-            let yprec = Math.round((mouseY / containerHeight) * 100);
-
-            this.mousePrecPt = {x:xprec,y:yprec};
-            this.closestLines = this.getClosestLines(xprec,yprec);
+            let prec = this._getPrecPoint(e);
+            this.closestLines = this.getClosestLines(prec.x,prec.y);
             if (this.closestLines.length) {
                 let directions = _.map(this.closestLines,'cssRelevantRule');
 
@@ -405,18 +415,11 @@ class jfWidgetsLayoutController {
     }
 
     onDrag(e) {
-        let container = $(this.$element).find('.jf-widgets-layout-container');
-        let containerWidth = container.innerWidth();
-        let containerHeight = container.innerHeight();
 
-        let mouseX = e.pageX - container.offset().left;
-        let mouseY = e.pageY - container.offset().top;
+        let perc = this._getPrecPoint(e);
 
-        let xprec = Math.round((mouseX / containerWidth) * 100);
-        let yprec = Math.round((mouseY / containerHeight) * 100);
-
-        let xDiff = xprec - this.dragStartPt.x;
-        let yDiff = yprec - this.dragStartPt.y;
+        let xDiff = perc.x - this.dragStartPt.x;
+        let yDiff = perc.y - this.dragStartPt.y;
 
         let okToDrag = true;
 
@@ -466,6 +469,9 @@ class jfWidgetsLayoutController {
         if (okToDrag) {
             for (let i in this.closestLines) {
                 let line = this.closestLines[i];
+
+                if (!this.ensureCSSRulesSync(line,e)) break;
+
                 let origLine = this.dragStartLines[i];
                 if (line.cssRelevantRule === 'top') {
                     let top = parseFloat(origLine.cssRules.top);
@@ -485,13 +491,37 @@ class jfWidgetsLayoutController {
                 }
             }
         }
+
+    }
+    ensureCSSRulesSync(line,e) {
+
+        // Very hacky solution TODO: Find a better solution!
+
+        let found = false;
+        for (let key in this.cssRules) {
+            if (this.cssRules[key] === line.cssRules) {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            this.onMouseUp(e);
+            this.onMouseMove(e)
+            this.onMouseDown(e);
+            this.onMouseMove(e);
+            return false;
+        }
+        return true;
     }
 
     onMouseDown(e) {
+
         if (!this.options.allowResize && !this.editMode) return;
+
         if (this.closestLines && this.closestLines.length) {
             this.draggingLines = true;
-            this.dragStartPt = _.cloneDeep(this.mousePrecPt);
+            this.dragStartPt = _.cloneDeep(this._getPrecPoint(e));
             this.dragStartLines = _.cloneDeep(this.closestLines);
             e.preventDefault();
             e.stopPropagation();
@@ -510,7 +540,6 @@ class jfWidgetsLayoutController {
     onWidgetMouseMove(e) {
         if (!this.options.allowResize && !this.editMode) return;
         if (this.draggingLines || this.isParentDragging()) return;
-
         let container = $(this.$element).find('.jf-widgets-layout-container');
         if (!this.subIsOnEdge) {
             container.css('cursor','default');
@@ -529,6 +558,7 @@ class jfWidgetsLayoutController {
         let closest = [];
 
         this.dragLines.forEach((line)=>{
+
             let infinite = ((line.cssRelevantRule === 'bottom' || line.cssRelevantRule === 'top') && this.mainAxis === 'rows') ||
                            ((line.cssRelevantRule === 'right' || line.cssRelevantRule === 'left') && this.mainAxis === 'columns')
             let dist = this.getPointDistToLine({x:x,y:y},line,infinite);
@@ -739,6 +769,7 @@ class jfWidgetsLayoutController {
         });
 
     }
+
 
 }
 
