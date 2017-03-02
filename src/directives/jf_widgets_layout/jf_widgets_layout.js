@@ -770,6 +770,10 @@ class jfWidgetsLayoutController {
 
     }
 
+    getWidgetsCount() {
+        return $('.widget-container').length;
+    }
+
 
 }
 

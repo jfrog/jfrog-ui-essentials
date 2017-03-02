@@ -20,6 +20,7 @@
                        ng-click="jfWidgetsLayout.changeWidget(layoutObj)"></i>
                     <i class="glyphicon glyphicon-remove-circle"
                        jf-tooltip="Remove"
+                       ng-if="jfWidgetsLayout.getWidgetsCount() > 1"
                        ng-click="jfWidgetsLayout.removeWidget(layoutObj)"></i>
                     <i class="glyphicon glyphicon-resize-vertical"
                        jf-tooltip="Vertical Split"
