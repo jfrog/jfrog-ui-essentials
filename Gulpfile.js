@@ -2,6 +2,7 @@ var gulp = require("gulp");
 var gutil = require("gulp-util");
 var webpack = require("webpack");
 var path = require('path');
+var _ = require('lodash');
 var concat = require('gulp-concat');
 var html2js = require('gulp-html2js');
 var webpackConfig = require('./webpack.config');
@@ -167,13 +168,18 @@ gulp.task('bower', function () {
 // bundle application code
 gulp.task("webpack", function (callback) {
     return webpack(webpackConfig, function (err, stats) {
-        console.log(err);
-        if (err) {
-            throw new gutil.PluginError("webpack", err)
+        if (err || _.contains(stats.toString({}),'ERROR')) {
+            runSequence(['clean'],()=>{
+                gutil.log(gutil.colors.red.bgYellow.bold(stats.toString({})));
+                gutil.log(gutil.colors.red.bgYellow.bold('ERRORS IN WEBPACK BUILD!!!'));
+                throw new gutil.PluginError("webpack", err || ' ')
+            });
         }
-        gutil.log("[webpack]", stats.toString({
-            // output options
-        }));
+        else {
+            gutil.log("[webpack]", stats.toString({
+                // output options
+            }));
+        }
         callback();
     });
 });
