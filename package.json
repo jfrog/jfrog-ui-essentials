@@ -1,6 +1,6 @@
 {
   "name": "jfrog-ui-essentials",
-  "version": "0.5.13",
+  "version": "0.5.14",
   "license": "Apache-2.0",
   "description": "JFrog UI Essentials",
   "repository": {
@@ -55,5 +55,8 @@
     "run-sequence": "1.0.2",
     "stream-combiner2": "^1.0.2",
     "webpack": "~1.12.12"
+  },
+  "dependencies": {
+    "js-beautify": "1.6.11"
   }
 }
