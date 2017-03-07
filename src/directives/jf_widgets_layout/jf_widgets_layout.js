@@ -135,6 +135,11 @@ class jfWidgetsLayoutController {
                     percentWidth: parseInt(width),
                     percentHeight: parseInt(height)
                 };
+                if (rowOrColumn.new) {
+                    this.$timeout(()=>{
+                        this.splitCell(tCell,this.mainAxis === 'columns' ? 'v' : 'h');
+                    })
+                }
                 tRowOrColumn.push(tCell);
             })
             this.transformedLayout.push(tRowOrColumn);
@@ -410,7 +415,7 @@ class jfWidgetsLayoutController {
     }
     onMouseLeave(e) {
         if (!this.options.allowResize && !this.editMode) return;
-        this.onMouseUp(e);
+        this.onMouseUp();
         this.setSubIsOnEdge(false);
     }
 
@@ -506,7 +511,7 @@ class jfWidgetsLayoutController {
         }
 
         if (!found) {
-            this.onMouseUp(e);
+            this.onMouseUp();
             this.onMouseMove(e)
             this.onMouseDown(e);
             this.onMouseMove(e);
@@ -523,6 +528,7 @@ class jfWidgetsLayoutController {
             this.draggingLines = true;
             this.dragStartPt = _.cloneDeep(this._getPrecPoint(e));
             this.dragStartLines = _.cloneDeep(this.closestLines);
+            this._setTransitions(false);
             e.preventDefault();
             e.stopPropagation();
         }
@@ -536,6 +542,9 @@ class jfWidgetsLayoutController {
         this.draggingLines = false;
         this.dragStartPt = null;
         this.dragStartLines = null;
+
+        if (e) this._setTransitions(true);
+
     }
     onWidgetMouseMove(e) {
         if (!this.options.allowResize && !this.editMode) return;
@@ -624,6 +633,8 @@ class jfWidgetsLayoutController {
     }
 
     removeWidget(layoutObj) {
+        this._setTransitions(true);
+
         let rowOrColumnToRemove = null;
         this.transformedLayout.forEach((rowOrColumn) => {
             let index = _.indexOf(rowOrColumn,layoutObj);
@@ -683,6 +694,7 @@ class jfWidgetsLayoutController {
         }
     }
     splitCell(layoutObj,orientation) {
+        this._setTransitions(true);
         this.transformedLayout.forEach((rowOrColumn) => {
             let index = _.indexOf(rowOrColumn,layoutObj);
             if (index !== -1) {
@@ -692,6 +704,7 @@ class jfWidgetsLayoutController {
                     layoutObj[attr] /= 2;
                     clone[attr] /= 2;
                     rowOrColumn.splice(index + 1,0,clone);
+                    clone.selectWidgetMode = true;
                 }
                 else {
                     delete layoutObj.widget;
@@ -700,10 +713,10 @@ class jfWidgetsLayoutController {
                     layoutObj.subLayout[axis] = [
                         {
                             size: '100%',
-                            cells: ['50% @'+clone.widget,'50% @'+clone.widget]
+                            cells: ['100% @'+clone.widget],
+                            new: true
                         }
                     ]
-
                 }
             }
         });
@@ -774,6 +787,15 @@ class jfWidgetsLayoutController {
         return $('.widget-container').length;
     }
 
+
+    _setTransitions(active) {
+        if (active) {
+            $('.widgets-padder .widget-wrapper').css('transition','all 0.5s ease 0s')
+        }
+        else {
+            $('.widgets-padder .widget-wrapper').css('transition','none')
+        }
+    }
 
 }
 
