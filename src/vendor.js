@@ -21,6 +21,7 @@ module.exports = {
         'components/angular-ui-grid/ui-grid.js',
         'components/angular-resource/angular-resource.js',
         'components/angularjs-toaster/toaster.js',
+        'components/angular-file-upload/angular-file-upload.js',
         'components/jQuery-contextMenu/dist/jquery.contextMenu.min.js',
         'components/jquery-ui/jquery-ui.js',
         'components/lodash/lodash.js',

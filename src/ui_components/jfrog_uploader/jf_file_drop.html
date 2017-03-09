@@ -1,0 +1,34 @@
+<div class="wrapper-drop-zone">
+    <div class="drop-zone"
+         nv-file-drop uploader="jfFileUploader"
+         nv-file-over over-class="drop-zone-hover"
+         ng-disabled="jfFileDisabled"
+         ng-class="{'drop-zone-load': jfFileUploader.queue.length}">
+        <label class="file-input-label">
+            <input class="select-files-hidden"
+                    type="file"
+                    ng-if="!jfFileUploader.queue[0].progress"
+                    nv-file-select multiple
+                    uploader="jfFileUploader"
+                    ng-disabled="jfFileDisabled"
+                    title=" " />
+            <div ng-if="!jfFileUploader.queue.length"><span>Drop file</span> here or <span>Select file</span></div>
+            <div ng-if="jfFileUploader.queue.length && (!jfFileUploader.queue[0].progress || !showProgressBar)"
+                    class="drop-zone-file-name">{{jfFileUploader.queue[0].file.name}}</div>
+            <div ng-if="showProgressBar">
+                <div ng-repeat="item in jfFileUploader.queue">
+                    <div ng-show="jfFileUploader.isHTML5 && item.progress"
+                            class="file-upload-progress file-info">
+                        <div class="progress-file-drop">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar"
+                                        ng-style="{ 'width': item.progress + '%' }">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </label>
+    </div>
+</div>
