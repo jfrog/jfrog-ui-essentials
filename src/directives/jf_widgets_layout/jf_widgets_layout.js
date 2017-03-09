@@ -37,9 +37,16 @@ class jfWidgetsLayoutController {
             this.updateFlatCells();
             this.updateCss();
             this.updateDragLines();
-            if (!this.templatesLoadStarted || this.templatesLoaded) {
+            if (this.recompile) {
+                this.recompile = false;
+                Object.keys(this.widgets).forEach(id=>delete this.widgets[id].$compiled);
+                this.templatesLoadStarted = false;
+                this.templatesLoaded = false;
+                this.$timeout(()=>this.compileElements());
+            }
+            else if (!this.templatesLoadStarted || this.templatesLoaded) {
                 Object.keys(this.widgets).forEach(id=>{
-                    if (this._isWidgetInUse(id)) delete this.widgets[id].$compiled
+                    if (this._isWidgetInUse(id)) delete this.widgets[id].$compiled;
                 });
                 this.loadTemplates().then(()=>{
                     $timeout(()=>this.compileElements());
@@ -50,11 +57,18 @@ class jfWidgetsLayoutController {
             this.editMode = editMode === undefined ? false : editMode;
             this.subOptions.editMode = this.editMode;
 
-            if (!editMode && !this.options.isSub) {
-                this.updateLayoutJSON();
-                if (this.options.onEditEnd && this.layoutJSON) this.options.onEditEnd(this.layoutJSON);
-            }
+            if (!editMode) {
+                this.cleanLayout();
+                if (!this.options.isSub) {
+                    this.updateLayoutJSON();
 
+                    if (this.wasEditing) {
+                        if (this.options.onEditEnd && this.layoutJSON) this.options.onEditEnd(this.layoutJSON);
+                        this.recompile = true;
+                    }
+                }
+            }
+            this.wasEditing = this.editMode;
         });
 
         $scope.$watch('jfWidgetsLayout.layout', onChange);
@@ -795,6 +809,61 @@ class jfWidgetsLayoutController {
         else {
             $('.widgets-padder .widget-wrapper').css('transition','none')
         }
+    }
+
+    _getRootDirective() {
+        if (!this.options.parent) return this;
+        else return this.options.parent._getRootDirective();
+    }
+
+    cleanLayout() {
+        if (!this.transformedLayout) return;
+
+        // Remove empty layout directives from parent
+        if (!this.transformedLayout.length && this.options.parent) {
+            let parentLayoutObj = _.find(this.options.parent.flatCells,{subLayout: this.layout});
+            this.options.parent.removeWidget(parentLayoutObj);
+        }
+
+        // In case this directive is a sub and only has one widget in one cell, we move the widget to parent
+        else if (this.transformedLayout.length === 1 &&
+            this.transformedLayout[0].length === 1 &&
+            this.transformedLayout[0][0].percentHeight === 100 &&
+            this.transformedLayout[0][0].percentWidth === 100 &&
+            this.options.parent) {
+
+            let parentLayoutObj = _.find(this.options.parent.flatCells,{subLayout: this.layout});
+            let axis = Object.keys(parentLayoutObj.subLayout)[0];
+            if (!parentLayoutObj.subLayout[axis][0] || (parentLayoutObj.subLayout[axis][0] && !parentLayoutObj.subLayout[axis][0].new)) {
+                if (this.transformedLayout[0][0].widget) {
+                    parentLayoutObj.widget = this.transformedLayout[0][0].widget;
+                    delete parentLayoutObj.subLayout;
+                    delete parentLayoutObj.$$childLayout;
+                }
+                else if (this.transformedLayout[0][0].subLayout) {
+                    parentLayoutObj.subLayout = this.transformedLayout[0][0].subLayout;
+                    delete parentLayoutObj.widget;
+                }
+            }
+        }
+
+        // In case this directive is the root and only has one sub in one cell, we move the sub data to this
+        else if (this.transformedLayout.length === 1 &&
+            this.transformedLayout[0].length === 1 &&
+            this.transformedLayout[0][0].percentHeight === 100 &&
+            this.transformedLayout[0][0].percentWidth === 100 &&
+            this.transformedLayout[0][0].subLayout &&
+            !this.options.parent) {
+
+            console.log('pre',JSON.stringify(this.layout))
+            let theSub = this.transformedLayout[0][0].subLayout;
+            this.layout = theSub;
+            console.log('post',JSON.stringify(this.layout))
+            this.transformLayout();
+            this.cleanLayout();
+
+        }
+
     }
 
 }
