@@ -9,6 +9,7 @@ export function jfTableRow() {
         controller: jfTableRowController,
         controllerAs: 'jfTableRow',
         bindToController: true,
+        replace: true,
         scope: {
             data: '=',
             tableView: '='

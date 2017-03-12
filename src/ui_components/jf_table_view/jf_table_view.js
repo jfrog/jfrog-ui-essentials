@@ -1,9 +1,6 @@
 class jfTableViewController {
     constructor($scope,$element) {
         this.$element = $element;
-
-
-
         $scope.$watch('jfTableView.options',(options) => {
             if (this.options) {
                 this.options.setDirectiveController(this);
@@ -19,7 +16,6 @@ export function jfTableView() {
         controllerAs: 'jfTableView',
         bindToController: true,
         scope: {
-            data: '=',
             options: '=',
             objectName: '@'
         },

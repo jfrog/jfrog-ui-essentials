@@ -1,14 +1,24 @@
 .jf-table-view-container {
   width: 100%;
   .jf-table-row {
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
     padding: 0;
     margin: 0;
+    border: 1.5px solid @greenBorderLight;
+    &:not(:first-child) {
+      border-top: none;
+    }
     .jf-table-cell {
       display: inline-table;
-      background: lightblue;
-      border: 1px dotted plum;
       padding: 5px;
+      overflow: hidden;
+      &:not(:last-child) {
+        border-right: 1px darkgrey dotted;
+      }
       .jf-table-cell-content {
+        overflow: hidden;
         display: table-cell;
         vertical-align: middle;
         white-space: nowrap;

@@ -1,9 +1,15 @@
 export function JFrogTableViewOptions($timeout) {
     return class JFrogTableViewOptions {
         constructor() {
-            this.rowHeight = '80px';
+            this.rowHeight = '60px';
+
+            this.data = [];
         }
 
+        setData(data) {
+            this.data = data;
+            if (this.dirCtrl) this.dirCtrl.data = data;
+        }
         setColumns(columns) {
             this.columns = columns;
             this._normalizeWidths();
@@ -15,6 +21,7 @@ export function JFrogTableViewOptions($timeout) {
 
         setDirectiveController(ctrl) {
             this.dirCtrl = ctrl;
+            ctrl.data = this.data;
         }
 
         _normalizeWidths() {
@@ -30,7 +37,15 @@ export function JFrogTableViewOptions($timeout) {
                 }
             })
             $timeout(()=>{
-                let containerWidth = $(this.dirCtrl.$element.find('.jf-table-view-container')).width() - 4;
+                let containerWidth;
+                if (this.data.length) {
+                    containerWidth = $(this.dirCtrl.$element.find('.jf-table-row')).innerWidth();
+                    console.log(containerWidth)
+                }
+                else {
+                    containerWidth = $(this.dirCtrl.$element.find('.jf-table-view-container')).width();
+                }
+
                 let percSpace = containerWidth - totalAbs;
                 let absPerc = (totalAbs/containerWidth)*100;
                 let normalizer = (100/totalPerc);
@@ -39,14 +54,8 @@ export function JFrogTableViewOptions($timeout) {
                     if (width.trim().endsWith('%')) {
                         let origVal = parseFloat(width);
                         let newVal = normalizer*origVal*(percSpace-absPerc)/100;
-                        col.width = newVal + 'px';
-                    }
-                    else if (width.trim().endsWith('px')) {
-/*
-                        let origVal = parseFloat(width);
-                        let newVal = (origVal/percSpace)*100;
-                        col.width = newVal + 'px';
-*/
+                        let newPerc = Math.floor((newVal/containerWidth)*100);
+                        col.width = newPerc + '%';
                     }
                 })
             })
