@@ -12,7 +12,7 @@ module.exports = {
         VENDOR_ASSETS: vendorPaths.ASSETS,
         VENDOR_FONTS: vendorPaths.FONTS,
         LESS: 'src/assets/stylesheets/**/*.less',
-        DIRECTIVES_LESS: 'src/directives/**/*.less',
+        DIRECTIVES_LESS: ['src/directives/**/*.less','src/ui_components/jfrog_uploader/**/*.less'],
         LESS_MAIN_FILE: 'src/assets/stylesheets/main.less',
         FONTS : 'src/assets/fonts/**',
         VENDOR_JS : 'src/vendor.js',

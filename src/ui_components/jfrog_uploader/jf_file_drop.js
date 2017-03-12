@@ -7,7 +7,7 @@ export function jfFileDrop() {
             showProgressBar: '='
         },
         restrict: 'E',
-        templateUrl: 'directives/jf_file_drop/jf_file_drop.html',
+        templateUrl: 'ui_components/jfrog_uploader/jf_file_drop.html',
         link: ($scope) => {
             $scope.jfFileUploader.onAfterAddingFile = (fileItem) => {
                 $scope.jfFileUploader.queue = [fileItem];
