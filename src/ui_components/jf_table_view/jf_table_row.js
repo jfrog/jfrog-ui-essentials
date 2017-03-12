@@ -1,6 +1,22 @@
 class jfTableRowController {
-    constructor() {
-        console.log(this.data)
+    constructor($compile, $scope, $element, $rootScope, $timeout) {
+        this.$compile = $compile;
+        this.$scope = $scope;
+        this.$timeout = $timeout;
+        this.$rootScope = $rootScope;
+        this.$element = $element;
+    }
+    compileTemplates() {
+        this.$timeout(()=>{
+            let rowScope = this.$rootScope.$new();
+            rowScope.row = {
+                entity: this.data
+            };
+            this.$compile($(this.$element).find('.compile-this').children())(rowScope);
+        })
+    }
+    kebab(str) {
+        return _.kebabCase(str);
     }
 }
 

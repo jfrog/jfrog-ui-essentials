@@ -1,10 +1,19 @@
-<div class="jf-table-row">
+<div class="jf-table-row"
+     ng-style="{height: jfTableRow.tableView.options.rowHeight, opacity: jfTableRow.tableView.options.ready ? 1 : 0}"
+     ng-init="jfTableRow.compileTemplates()">
     <div class="jf-table-cell"
+         ng-class="jfTableRow.kebab(col.field)"
          ng-style="{height: jfTableRow.tableView.options.rowHeight, width: col.width}"
          ng-repeat="col in jfTableRow.tableView.options.columns">
         <div class="jf-table-cell-content"
+             ng-if="!col.cellTemplate"
              ng-style="{'max-width': col.width}">
             {{jfTableRow.data[col.field]}}
+        </div>
+        <div class="jf-table-cell-content compile-this"
+             ng-if="col.cellTemplate"
+             ng-bind-html="col.cellTemplate"
+             ng-style="{'max-width': col.width}">
         </div>
     </div>
 </div>

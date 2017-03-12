@@ -1,28 +1,43 @@
-.jf-table-view-container {
-  width: 100%;
-  .jf-table-row {
-    overflow: hidden;
-    width: 100%;
-    white-space: nowrap;
-    padding: 0;
-    margin: 0;
-    border: 1.5px solid @greenBorderLight;
-    &:not(:first-child) {
-      border-top: none;
+.jf-table-view {
+  .new-entity {
+    font-size: 18px;
+    font-weight: 500;
+    padding: 5px;
+    cursor: pointer;
+    span.icon:before {
+      font-weight: 600 !important;
     }
-    .jf-table-cell {
-      display: inline-table;
-      padding: 5px;
+  }
+  .jf-table-view-container {
+    width: 100%;
+    .jf-table-row {
+      display: flex;
       overflow: hidden;
-      &:not(:last-child) {
-        border-right: 1px darkgrey dotted;
+      width: 100%;
+      white-space: nowrap;
+      padding: 0;
+      margin: 0;
+      border: 1.5px solid @greenBorderLight;
+      &:not(:first-child) {
+        border-top: none;
       }
-      .jf-table-cell-content {
+      .jf-table-cell {
+        display: inline-table;
+        padding: 5px;
         overflow: hidden;
-        display: table-cell;
-        vertical-align: middle;
-        white-space: nowrap;
+        /*
+        &:not(:last-child) {
+          border-right: 1px darkgrey dotted;
+        }
+        */
+        .jf-table-cell-content {
+          overflow: hidden;
+          display: table-cell;
+          vertical-align: middle;
+          white-space: nowrap;
+        }
       }
     }
   }
+
 }

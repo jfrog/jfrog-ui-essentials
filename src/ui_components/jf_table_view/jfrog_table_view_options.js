@@ -58,6 +58,7 @@ export function JFrogTableViewOptions($timeout) {
                         col.width = newPerc + '%';
                     }
                 })
+                this.ready = true;
             })
         }
     }
