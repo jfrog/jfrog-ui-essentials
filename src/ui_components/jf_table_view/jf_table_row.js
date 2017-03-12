@@ -5,14 +5,17 @@ class jfTableRowController {
         this.$timeout = $timeout;
         this.$rootScope = $rootScope;
         this.$element = $element;
+        this.rowScope = this.$rootScope.$new();
+        this.rowScope.row = {
+            entity: this.data
+        };
+        $scope.$on('$destroy',()=>{
+            this.rowScope.$destroy();
+        })
     }
     compileTemplates() {
         this.$timeout(()=>{
-            let rowScope = this.$rootScope.$new();
-            rowScope.row = {
-                entity: this.data
-            };
-            this.$compile($(this.$element).find('.compile-this').children())(rowScope);
+            this.$compile($(this.$element).find('.compile-this').children())(this.rowScope);
         })
     }
     kebab(str) {

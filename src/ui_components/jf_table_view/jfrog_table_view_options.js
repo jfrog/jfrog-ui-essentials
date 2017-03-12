@@ -40,7 +40,6 @@ export function JFrogTableViewOptions($timeout) {
                 let containerWidth;
                 if (this.data.length) {
                     containerWidth = $(this.dirCtrl.$element.find('.jf-table-row')).innerWidth();
-                    console.log(containerWidth)
                 }
                 else {
                     containerWidth = $(this.dirCtrl.$element.find('.jf-table-view-container')).width();
