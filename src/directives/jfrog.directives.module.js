@@ -60,5 +60,5 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfWidgetsLayout': jfWidgetsLayout,
         'jfMarquee': jfMarquee,
         'jfPasswordStrength': jfPasswordStrength,
-        'jfClearErrors': jfClearErrors
+        'jfClearErrors': jfClearErrors,
     });

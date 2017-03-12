@@ -1,0 +1,10 @@
+<div class="jf-table-row">
+    <div class="jf-table-cell"
+         ng-style="{height: jfTableRow.tableView.options.rowHeight, width: col.width}"
+         ng-repeat="col in jfTableRow.tableView.options.columns">
+        <div class="jf-table-cell-content"
+             ng-style="{'max-width': col.width}">
+            {{jfTableRow.data[col.field]}}
+        </div>
+    </div>
+</div>

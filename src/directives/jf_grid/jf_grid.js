@@ -1,4 +1,4 @@
-    export function jfGrid($timeout,$compile) {
+export function jfGrid($timeout,$compile) {
 
 
     let isNoTooltip = (cell) => {
@@ -56,7 +56,7 @@
                 }
             }).on('mouseleave', '.ui-grid-draggable-row, .ui-grid-cell, .ui-grid-cell-contents, .btn-action', (e)=>{
                 let currentRowElement = $(e.currentTarget).parents('.ui-grid-row'),
-                        toRowElement = $(e.relatedTarget).parents('.ui-grid-row');
+                    toRowElement = $(e.relatedTarget).parents('.ui-grid-row');
 
                 if (!toRowElement || !currentRowElement.is(toRowElement)) {
                     currentRowElement.removeClass('hovered');
