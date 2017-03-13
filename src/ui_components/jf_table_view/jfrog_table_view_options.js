@@ -13,20 +13,18 @@ export function JFrogTableViewOptions($timeout) {
 
         setData(data) {
             this.data = data;
-            if (this.dirCtrl) {
-                this.dirCtrl.data = data;
-                this.dirCtrl.refresh();
-            }
+            this.update();
         }
 
         setRowsPerPage(rpp) {
             this.rowsPerPage = rpp;
         }
 
-        update() {
+        update(noSort=false) {
             if (this.dirCtrl) {
                 this.dirCtrl.data = this.data;
-                this.dirCtrl.refresh();
+                if (!noSort && this.sortByField) this.sortBy(this.sortByField,true);
+                else this.dirCtrl.refresh();
             }
         }
 
@@ -50,6 +48,24 @@ export function JFrogTableViewOptions($timeout) {
             this.columns.forEach(column=>{
                 if (column.header) this.headersRow[column.field] = column.header;
             })
+        }
+
+        sortBy(field,resort = false) {
+            if (!resort && this.sortByField === field) {
+                this.revSort = !this.revSort;
+            }
+            else if (!resort) {
+                this.revSort = false;
+            }
+            this.sortByField = field;
+            let temp = this.data;
+            temp = _.sortBy(temp,(row)=>this.revSort ? -row[field] : row[field]);
+            Array.prototype.splice.apply(this.data, [0,this.data.length].concat(temp));
+            this.update(true);
+        }
+
+        setSortable(sortable=true) {
+            this.sortable = sortable;
         }
 
         _setDirectiveController(ctrl) {

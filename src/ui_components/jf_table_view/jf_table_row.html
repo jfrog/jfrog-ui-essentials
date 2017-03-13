@@ -2,7 +2,8 @@
      ng-class="{headers: jfTableRow.rowId === 'headers'}"
      ng-style="{height: jfTableRow.tableView.options.rowHeight, opacity: jfTableRow.tableView.options.ready ? 1 : 0}">
     <div class="jf-table-cell"
-         ng-class="jfTableRow.kebab(col.field)"
+         ng-class="{header: jfTableRow.rowId === 'headers' && col.header, sortable: jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.sortable, [jfTableRow.kebab(col.field)]: true}"
+         ng-click="jfTableRow.rowId === 'headers' && col.header && jfTableRow.tableView.options.sortable && jfTableRow.tableView.options.sortBy(col.field)"
          ng-style="{height: jfTableRow.tableView.options.rowHeight, width: col.width}"
          ng-repeat="col in jfTableRow.tableView.options.columns">
         <div class="jf-table-cell-content"
