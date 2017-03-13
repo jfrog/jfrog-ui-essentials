@@ -22,7 +22,7 @@ class jfTableViewController {
         this.rowScopes = [];
         $scope.$watch('jfTableView.options',(options) => {
             if (this.options) {
-                this.options.setDirectiveController(this);
+                this.options._setDirectiveController(this);
             }
         })
         this.compileTemplates();
@@ -44,7 +44,7 @@ class jfTableViewController {
         if (!this.tableFilter) return this.data;
         return _.filter(this.data,(row=>{
             for (let key in row) {
-                if (_.contains(row[key],this.tableFilter)) return true;
+                if (row[key] && _.contains(row[key].toString().toLowerCase(),this.tableFilter.toLowerCase())) return true;
             }
         }))
     }

@@ -16,6 +16,12 @@
         </jf-drag-drop-pagination>
     </div>
     <div class="jf-table-view-container" ng-if="jfTableView.options">
+        <div class="jf-table-view-header"
+             ng-if="jfTableView.options.headersVisible">
+            <jf-table-row table-view="jfTableView"
+                          row-id="'headers'"
+                          data="jfTableView.options.headersRow"></jf-table-row>
+        </div>
         <jf-table-row ng-repeat="entity in jfTableView.getPageData() track by $index"
                       table-view="jfTableView"
                       row-id="$index"

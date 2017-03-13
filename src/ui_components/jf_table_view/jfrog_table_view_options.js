@@ -19,6 +19,10 @@ export function JFrogTableViewOptions($timeout) {
             }
         }
 
+        setRowsPerPage(rpp) {
+            this.rowsPerPage = rpp;
+        }
+
         update() {
             if (this.dirCtrl) {
                 this.dirCtrl.data = this.data;
@@ -40,7 +44,15 @@ export function JFrogTableViewOptions($timeout) {
             this.rowHeight = height;
         }
 
-        setDirectiveController(ctrl) {
+        showHeaders(show=true) {
+            this.headersVisible = show;
+            this.headersRow = {}
+            this.columns.forEach(column=>{
+                if (column.header) this.headersRow[column.field] = column.header;
+            })
+        }
+
+        _setDirectiveController(ctrl) {
             this.dirCtrl = ctrl;
             ctrl.data = this.data;
         }

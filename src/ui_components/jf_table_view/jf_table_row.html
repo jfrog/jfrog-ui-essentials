@@ -1,4 +1,5 @@
 <div class="jf-table-row"
+     ng-class="{headers: jfTableRow.rowId === 'headers'}"
      ng-style="{height: jfTableRow.tableView.options.rowHeight, opacity: jfTableRow.tableView.options.ready ? 1 : 0}">
     <div class="jf-table-cell"
          ng-class="jfTableRow.kebab(col.field)"
@@ -6,12 +7,12 @@
          ng-repeat="col in jfTableRow.tableView.options.columns">
         <div class="jf-table-cell-content"
              jf-tooltip-on-overflow
-             ng-if="!col.cellTemplate">
+             ng-if="!col.cellTemplate || jfTableRow.rowId === 'headers'">
             {{jfTableRow.data[col.field]}}
         </div>
         <div class="jf-table-cell-content compile-this"
              jf-tooltip-on-overflow
-             ng-if="col.cellTemplate"
+             ng-if="col.cellTemplate && jfTableRow.rowId !== 'headers'"
              data-column="{{col.field}}"
              data-row="{{jfTableRow.rowId}}">
         </div>
