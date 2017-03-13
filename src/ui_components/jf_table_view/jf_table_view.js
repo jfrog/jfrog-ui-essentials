@@ -1,3 +1,17 @@
+export function jfTableView() {
+    return {
+        controller: jfTableViewController,
+        controllerAs: 'jfTableView',
+        bindToController: true,
+        scope: {
+            options: '=',
+            objectName: '@'
+        },
+        templateUrl: 'ui_components/jf_table_view/jf_table_view.html'
+    }
+}
+
+
 class jfTableViewController {
     constructor($scope,$element, $timeout, $compile, $rootScope) {
         this.$element = $element;
@@ -20,16 +34,23 @@ class jfTableViewController {
         this.paginationApi = new PaginationApi(this);
 
         this.paginationApi.registerChangeListener(()=>{
-            this.rowScopes.forEach(s=>s.$destroy())
-            this.rowScopes = [];
-            this.compileTemplates();
+            this.refresh();
         })
 
         this.currentPage = 0;
     }
 
+    getFilteredData() {
+        if (!this.tableFilter) return this.data;
+        return _.filter(this.data,(row=>{
+            for (let key in row) {
+                if (_.contains(row[key],this.tableFilter)) return true;
+            }
+        }))
+    }
+
     getPageData() {
-        return this.data.slice(this.currentPage * this.options.rowsPerPage, this.currentPage * this.options.rowsPerPage + this.options.rowsPerPage)
+        return this.getFilteredData().slice(this.currentPage * this.options.rowsPerPage, this.currentPage * this.options.rowsPerPage + this.options.rowsPerPage)
     }
 
     compileTemplates() {
@@ -60,20 +81,19 @@ class jfTableViewController {
 
         })
     }
+
+    onUpdateFilter() {
+        this.refresh();
+        this.paginationApi.update();
+    }
+    refresh() {
+        this.rowScopes.forEach(s=>s.$destroy())
+        this.rowScopes = [];
+        this.compileTemplates();
+    }
+
 }
 
-export function jfTableView() {
-    return {
-        controller: jfTableViewController,
-        controllerAs: 'jfTableView',
-        bindToController: true,
-        scope: {
-            options: '=',
-            objectName: '@'
-        },
-        templateUrl: 'ui_components/jf_table_view/jf_table_view.html'
-    }
-}
 
 
 class PaginationApi {
@@ -81,7 +101,7 @@ class PaginationApi {
         this.tableCtrl = tableCtrl;
     }
     getTotalPages() {
-        return Math.ceil(this.tableCtrl.data.length / this.tableCtrl.options.rowsPerPage);
+        return Math.ceil(this.tableCtrl.getFilteredData().length / this.tableCtrl.options.rowsPerPage);
     }
     getCurrentPage() {
         return this.tableCtrl.currentPage + 1;

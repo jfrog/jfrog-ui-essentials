@@ -1,11 +1,31 @@
 .jf-table-view {
-  .new-entity {
-    font-size: 18px;
-    font-weight: 500;
-    padding: 5px;
-    cursor: pointer;
-    span.icon:before {
-      font-weight: 600 !important;
+  width: 100%;
+  .jf-table-top {
+    .jf-table-filter {
+      width: 33%;
+      display: inline-block;
+      input {
+        width: 200px;
+        padding: 5px;
+        margin-left: 5px;
+        margin-bottom: 5px;
+      }
+    }
+    .new-entity {
+      display: inline-block;
+      width: 33%;
+      font-size: 18px;
+      font-weight: 500;
+      padding: 5px;
+      cursor: pointer;
+      text-align: center;
+      span.icon:before {
+        font-weight: 600 !important;
+      }
+    }
+    jf-drag-drop-pagination {
+      display: inline-block;
+      width: 33%;
     }
   }
   .jf-table-view-container {

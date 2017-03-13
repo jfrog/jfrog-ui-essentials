@@ -1,9 +1,20 @@
 <div class="jf-table-view">
-    <div class="new-entity">
-        <span class="icon icon-new"></span>
-        Add {{jfTableView.objectName || 'Item'}}
+    <div class="jf-table-top">
+        <div class="jf-table-filter">
+            <input ng-model="jfTableView.tableFilter"
+                   ng-change="jfTableView.onUpdateFilter()"
+                   placeholder="Filter">
+        </div>
+        <div class="new-entity">
+            <div ng-click="jfTableView.options.newEntityCallback()"
+                 ng-if="jfTableView.options.newEntityCallback">
+                <span class="icon icon-new"></span>
+                Add {{jfTableView.objectName || 'Item'}}
+            </div>
+        </div>
+        <jf-drag-drop-pagination pagination-api="jfTableView.paginationApi">
+        </jf-drag-drop-pagination>
     </div>
-    <jf-drag-drop-pagination pagination-api="jfTableView.paginationApi"></jf-drag-drop-pagination>
     <div class="jf-table-view-container" ng-if="jfTableView.options">
         <jf-table-row ng-repeat="entity in jfTableView.getPageData() track by $index"
                       table-view="jfTableView"

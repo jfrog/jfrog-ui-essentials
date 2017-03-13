@@ -13,8 +13,23 @@ export function JFrogTableViewOptions($timeout) {
 
         setData(data) {
             this.data = data;
-            if (this.dirCtrl) this.dirCtrl.data = data;
+            if (this.dirCtrl) {
+                this.dirCtrl.data = data;
+                this.dirCtrl.refresh();
+            }
         }
+
+        update() {
+            if (this.dirCtrl) {
+                this.dirCtrl.data = this.data;
+                this.dirCtrl.refresh();
+            }
+        }
+
+        setNewEntityAction(newEntityCallback) {
+            this.newEntityCallback = newEntityCallback;
+        }
+
         setColumns(columns) {
             this.columns = columns;
             this.numTemplates = _.filter(this.columns,col=>col.cellTemplate  !== undefined).length;
