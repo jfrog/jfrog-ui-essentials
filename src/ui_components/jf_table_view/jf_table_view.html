@@ -3,9 +3,11 @@
         <span class="icon icon-new"></span>
         Add {{jfTableView.objectName || 'Item'}}
     </div>
+    <jf-drag-drop-pagination pagination-api="jfTableView.paginationApi"></jf-drag-drop-pagination>
     <div class="jf-table-view-container" ng-if="jfTableView.options">
-        <jf-table-row ng-repeat="entity in jfTableView.data"
+        <jf-table-row ng-repeat="entity in jfTableView.getPageData() track by $index"
                       table-view="jfTableView"
+                      row-id="$index"
                       data="entity"></jf-table-row>
     </div>
 </div>

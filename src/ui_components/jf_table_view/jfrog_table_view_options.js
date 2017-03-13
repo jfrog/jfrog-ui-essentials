@@ -1,9 +1,14 @@
 export function JFrogTableViewOptions($timeout) {
     return class JFrogTableViewOptions {
-        constructor() {
-            this.rowHeight = '60px';
-
+        constructor(appScope) {
+            this._setDefaults();
             this.data = [];
+            this.appScope = appScope;
+        }
+
+        _setDefaults() {
+            this.rowHeight = '60px';
+            this.rowsPerPage = 25;
         }
 
         setData(data) {
@@ -12,6 +17,7 @@ export function JFrogTableViewOptions($timeout) {
         }
         setColumns(columns) {
             this.columns = columns;
+            this.numTemplates = _.filter(this.columns,col=>col.cellTemplate  !== undefined).length;
             this._normalizeWidths();
         }
 
