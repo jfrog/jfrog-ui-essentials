@@ -9,7 +9,7 @@
         <div class="jf-table-cell-content"
              jf-tooltip-on-overflow
              ng-if="!col.cellTemplate || jfTableRow.rowId === 'headers'">
-            {{jfTableRow.data[col.field]}}
+            {{jfTableRow.getField(col.field)}}
         </div>
         <div class="jf-table-cell-content compile-this"
              jf-tooltip-on-overflow

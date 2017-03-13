@@ -59,8 +59,9 @@ export function JFrogTableViewOptions($timeout) {
             }
             this.sortByField = field;
             let temp = this.data;
-            temp = _.sortBy(temp,(row)=>this.revSort ? -row[field] : row[field]);
+            temp = _.sortBy(temp,(row)=>this.revSort ? -_.get(row,field) : _.get(row,field));
             Array.prototype.splice.apply(this.data, [0,this.data.length].concat(temp));
+            if (!resort) delete this.dirCtrl.filterCache;
             this.update(true);
         }
 

@@ -2,6 +2,7 @@
     <div class="jf-table-top">
         <div class="jf-table-filter">
             <input ng-model="jfTableView.tableFilter"
+                   ng-model-options="{debounce: { 'default': 500 } }"
                    ng-change="jfTableView.onUpdateFilter()"
                    placeholder="Filter">
         </div>

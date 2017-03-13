@@ -1,6 +1,9 @@
 class jfTableRowController {
     constructor() {
     }
+    getField(field) {
+        return _.get(this.data,field);
+    }
     kebab(str) {
         return _.kebabCase(str);
     }

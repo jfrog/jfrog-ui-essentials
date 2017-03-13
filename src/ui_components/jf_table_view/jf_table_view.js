@@ -42,11 +42,13 @@ class jfTableViewController {
 
     getFilteredData() {
         if (!this.tableFilter) return this.data;
-        return _.filter(this.data,(row=>{
-            for (let key in row) {
-                if (row[key] && _.contains(row[key].toString().toLowerCase(),this.tableFilter.toLowerCase())) return true;
+        if (!this.filterCache) this.filterCache = _.filter(this.data,(row=>{
+            for (let i in this.options.columns) {
+                let col = this.options.columns[i];
+                if (_.get(row,col.field) && _.contains(_.get(row,col.field).toString().toLowerCase(), this.tableFilter.toLowerCase())) return true;
             }
         }))
+        return this.filterCache;
     }
 
     getPageData() {
@@ -83,6 +85,7 @@ class jfTableViewController {
     }
 
     onUpdateFilter() {
+        delete this.filterCache;
         this.refresh();
         this.paginationApi.update();
     }
