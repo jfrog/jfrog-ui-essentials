@@ -7,7 +7,7 @@ export function jfCodeMirror() {
             mimeType: '@',
             mode: '@',
             model: '=',
-            allowEdit: '@',
+            allowEdit: '=',
             height: '@?',
             apiAccess: '=',
             autofocus: '@'
