@@ -42,6 +42,7 @@ module.exports = {
         'vendor/jquery.highlight.js',
         'components/tooltipster/js/jquery.tooltipster.min.js',
         'components/angular-capitalize-filter/capitalize.js',
+        'components/angular-file-upload/angular-file-upload.js',
         'vendor/draggable-rows.js',
         'components/clipboard/dist/clipboard.min.js',
         'node_modules/js-beautify/js/lib/beautify.js'
