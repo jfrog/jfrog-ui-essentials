@@ -2,6 +2,7 @@
     <div class="jf-table-top">
         <div class="jf-table-filter">
             <input ng-model="jfTableView.tableFilter"
+                   ng-show="jfTableView.data.length"
                    ng-model-options="{debounce: { 'default': 500 } }"
                    ng-change="jfTableView.onUpdateFilter()"
                    placeholder="Filter">
@@ -13,8 +14,10 @@
                 Add {{jfTableView.objectName || 'Item'}}
             </div>
         </div>
-        <jf-drag-drop-pagination pagination-api="jfTableView.paginationApi">
-        </jf-drag-drop-pagination>
+        <div class="pagination-controls">
+            <jf-drag-drop-pagination pagination-api="jfTableView.paginationApi">
+            </jf-drag-drop-pagination>
+        </div>
     </div>
     <div class="jf-table-view-container" ng-if="jfTableView.options">
         <div class="jf-table-view-header"
@@ -27,5 +30,9 @@
                       table-view="jfTableView"
                       row-id="$index"
                       data="entity"></jf-table-row>
+        <div class="empty-table-placeholder"
+             ng-if="!jfTableView.data.length">
+            Empty Table Placeholder!!
+        </div>
     </div>
 </div>

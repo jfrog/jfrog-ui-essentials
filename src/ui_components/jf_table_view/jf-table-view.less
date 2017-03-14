@@ -4,16 +4,16 @@
     .jf-table-filter {
       width: 33%;
       display: inline-block;
+      height: 50px;
       input {
         width: 200px;
         padding: 5px;
-        margin-left: 5px;
-        margin-bottom: 5px;
       }
     }
     .new-entity {
       display: inline-block;
       width: 33%;
+      height: 50px;
       font-size: 18px;
       font-weight: 500;
       padding: 5px;
@@ -23,13 +23,26 @@
         font-weight: 600 !important;
       }
     }
-    jf-drag-drop-pagination {
+    .pagination-controls {
       display: inline-block;
       width: 33%;
+      height: 50px;
+      jf-drag-drop-pagination {
+        position: absolute;
+        top: 18px;
+        right: 0;
+      }
     }
   }
   .jf-table-view-container {
     width: 100%;
+    .empty-table-placeholder {
+      font-size: 70px;
+      height: 120px;
+      width: 100%;
+      background-color: lightgoldenrodyellow;
+      text-align: center;
+    }
     .jf-table-row {
       display: flex;
       overflow: hidden;
@@ -50,10 +63,15 @@
         display: inline-table;
         padding: 5px;
         overflow: hidden;
+        &.actions {
+          padding: 0px !important;
+        }
         &.header {
           &.sortable {
             cursor: pointer;
           }
+        }
+        &.actions {
         }
         .jf-table-cell-content {
           overflow: hidden;
@@ -62,6 +80,18 @@
           white-space: nowrap;
           text-overflow: ellipsis;
           max-width: 0;
+          .action-button {
+            cursor: pointer;
+            overflow: hidden;
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            .action-icon {
+              &:before {
+                font-size: 22px;
+              }
+            }
+          }
         }
       }
     }

@@ -47,6 +47,7 @@ class jfTableViewController {
                 let col = this.options.columns[i];
                 if (_.get(row,col.field) && _.contains(_.get(row,col.field).toString().toLowerCase(), this.tableFilter.toLowerCase())) return true;
             }
+            return false;
         }))
         return this.filterCache;
     }

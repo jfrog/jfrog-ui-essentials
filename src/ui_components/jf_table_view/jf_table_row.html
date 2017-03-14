@@ -18,4 +18,20 @@
              data-row="{{jfTableRow.rowId}}">
         </div>
     </div>
+    <div class="jf-table-cell actions"
+         ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.actions.length * jfTableRow.tableView.options.actionButtonSize}"
+         ng-if="jfTableRow.rowId !== 'headers' && jfTableRow.tableView.options.actions.length">
+        <div class="jf-table-cell-content">
+            <div class="action-button"
+                 ng-if="!action.visibleWhen || action.visibleWhen(jfTableRow.data)"
+                 ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.actionButtonSize}"
+                 ng-repeat="action in jfTableRow.tableView.options.actions">
+                <div class="action-icon"
+                     ng-click="action.callback(jfTableRow.data)"
+                     jf-tooltip="{{action.tooltip}}"
+                     ng-class="action.icon"></div>
+            </div>
+        </div>
+    </div>
+
 </div>
