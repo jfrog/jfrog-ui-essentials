@@ -7,6 +7,20 @@ class jfTableRowController {
     kebab(str) {
         return _.kebabCase(str);
     }
+    toggleSelection(all) {
+        if (!all) {
+            if (this.tableView.options.selectionMode === this.tableView.options.MULTI_SELECTION) {
+                this.data.$selected = !this.data.$selected;
+            }
+            else if (this.tableView.options.selectionMode === this.tableView.options.SINGLE_SELECTION) {
+                this.tableView.clearSelection();
+                this.data.$selected = true;
+            }
+        }
+        else {
+            this.tableView.toggleSelectAll();
+        }
+    }
 }
 
 export function jfTableRow() {

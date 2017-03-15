@@ -1,6 +1,22 @@
 <div class="jf-table-row"
      ng-class="{headers: jfTableRow.rowId === 'headers'}"
      ng-style="{height: jfTableRow.tableView.options.rowHeight, opacity: jfTableRow.tableView.options.ready ? 1 : 0}">
+
+    <div class="jf-table-cell selection"
+         ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.selectionColumnWidth}"
+         ng-if="jfTableRow.tableView.options.hasSelection()">
+        <div class="jf-table-cell-content">
+            <div class="selection-button"
+                 ng-if="jfTableRow.rowId !== 'headers' || jfTableRow.tableView.options.selectionMode === jfTableRow.tableView.options.MULTI_SELECTION"
+                 ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.selectionColumnWidth}">
+                <div class="selection-icon icon icon-datagrid-v"
+                     ng-class="{selected: jfTableRow.data.$selected}"
+                     ng-click="jfTableRow.toggleSelection(jfTableRow.rowId === 'headers')">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="jf-table-cell"
          ng-class="{header: jfTableRow.rowId === 'headers' && col.header, sortable: jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.sortable, [jfTableRow.kebab(col.field)]: true}"
          ng-click="jfTableRow.rowId === 'headers' && col.header && jfTableRow.tableView.options.sortable && jfTableRow.tableView.options.sortBy(col.field)"
@@ -18,6 +34,7 @@
              data-row="{{jfTableRow.rowId}}">
         </div>
     </div>
+
     <div class="jf-table-cell actions"
          ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.actions.length * jfTableRow.tableView.options.actionButtonSize}"
          ng-if="jfTableRow.rowId !== 'headers' && jfTableRow.tableView.options.actions.length">

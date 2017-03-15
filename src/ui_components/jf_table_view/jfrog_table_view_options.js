@@ -6,13 +6,19 @@ export function JFrogTableViewOptions($timeout) {
             this.actions = [];
             this.columns = [];
             this.appScope = appScope;
+
+            this.NO_SELECTION = 0;
+            this.SINGLE_SELECTION = 1;
+            this.MULTI_SELECTION = 2;
         }
 
         _setDefaults() {
             this.rowHeight = '60px';
             this.rowsPerPage = 25;
             this.sortable = true;
+            this.selectionMode = this.NO_SELECTION;
             this.actionButtonSize = 60; //px
+            this.selectionColumnWidth = 60; //px
         }
 
         setData(data) {
@@ -53,6 +59,23 @@ export function JFrogTableViewOptions($timeout) {
             })
         }
 
+        setSelection(selectionMode) {
+            this.selectionMode = selectionMode;
+            this._normalizeWidths();
+        }
+
+        hasSelection() {
+            return _.includes([this.SINGLE_SELECTION,this.MULTI_SELECTION],this.selectionMode);
+        }
+
+        getSelected() {
+            return _.filter(this.data,{$selected: true});
+        }
+
+        getSelectedCount() {
+            return this.getSelected().length;
+        }
+
         sortBy(field,resort = false) {
             if (!resort && this.sortByField === field) {
                 this.revSort = !this.revSort;
@@ -85,12 +108,16 @@ export function JFrogTableViewOptions($timeout) {
         _normalizeWidths() {
 
             let actionsWidth = 0;
+            let selectionWidth = 0;
             if (this.actions) {
                 actionsWidth = this.actionButtonSize * this.actions.length;
             }
+            if (this.hasSelection()) {
+                selectionWidth = this.selectionColumnWidth;
+            }
+            console.log(selectionWidth);
 
-
-            let totalAbs = actionsWidth;
+            let totalAbs = actionsWidth + selectionWidth;
             let totalPerc = 0;
             this.columns.forEach(col=>{
                 if (col.origWidth === undefined) col.origWidth = col.width;
@@ -116,7 +143,7 @@ export function JFrogTableViewOptions($timeout) {
                 let percSpace = containerWidth - totalAbs;
 //                let absPerc = (totalAbs/containerWidth)*100;
                 let normalizer = (100/totalPerc);
-                let totalFinalPerc = (actionsWidth/containerWidth)*100;
+                let totalFinalPerc = ((actionsWidth + selectionWidth)/containerWidth)*100;
                 this.columns.forEach(col=>{
                     let width = col.origWidth;
                     if (width.trim().endsWith('%')) {
@@ -130,7 +157,7 @@ export function JFrogTableViewOptions($timeout) {
                         totalFinalPerc += 100*parseFloat(width)/containerWidth;
                     }
                 })
-//                console.log(totalFinalPerc)
+                console.log(totalFinalPerc);
                 this.ready = true;
             })
         }

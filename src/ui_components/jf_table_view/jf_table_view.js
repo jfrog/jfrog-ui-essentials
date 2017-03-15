@@ -96,6 +96,13 @@ class jfTableViewController {
         this.compileTemplates();
         if (updatePagination) this.paginationApi.update();
     }
+    clearSelection() {
+        this.data.forEach(row=>delete row.$selected)
+    }
+    toggleSelectAll() {
+        this.allSelected = !this.allSelected;
+        this.data.forEach(row=>row.$selected = this.allSelected);
+    }
 
 }
 
@@ -139,4 +146,5 @@ class PaginationApi {
         if (!this.listeners) this.listeners = []
         this.listeners.push(listener);
     }
+
 }

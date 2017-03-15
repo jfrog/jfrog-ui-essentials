@@ -63,6 +63,8 @@
         display: inline-table;
         padding: 5px;
         overflow: hidden;
+
+        &.selection,
         &.actions {
           padding: 0px !important;
         }
@@ -71,8 +73,6 @@
             cursor: pointer;
           }
         }
-        &.actions {
-        }
         .jf-table-cell-content {
           overflow: hidden;
           display: table-cell;
@@ -80,6 +80,7 @@
           white-space: nowrap;
           text-overflow: ellipsis;
           max-width: 0;
+          .selection-button,
           .action-button {
             cursor: pointer;
             overflow: hidden;
@@ -92,6 +93,20 @@
               }
             }
           }
+          .selection-button {
+            .selection-icon {
+              &:before {
+                font-size: 22px;
+                color: @grayBorderLighter;
+              }
+              &.selected {
+                &:before {
+                  color: @greenBGDark;
+                }
+              }
+            }
+          }
+
         }
       }
     }
