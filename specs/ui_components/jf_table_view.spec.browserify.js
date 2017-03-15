@@ -15,6 +15,9 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
   var filterInput;
   var pagination;
   var actionButtons;
+  var selectionButtons;
+  var selectedSelectionButtons;
+  var unselectedSelectionButtons;
 
   function setup(_$timeout_, _JFrogTableViewOptions_) {
     $timeout = _$timeout_;
@@ -31,6 +34,9 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
     filterInput = $('.jf-table-filter > input');
     pagination = $('.pagination-controls');
     actionButtons = $('.action-button > .action-icon');
+    selectionButtons = $('.selection-icon');
+    selectedSelectionButtons = $('.selection-icon.selected');
+    unselectedSelectionButtons = $('.selection-icon:not(.selected)');
   }
 
   function flushAndApply() {
@@ -102,7 +108,9 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
     expect(dataRows.length).toEqual(0);
     expect(dataCells.length).toEqual(0);
     expect($(filterInput[0]).css('display')).toEqual('none');
-    expect(pagination.children().children().length).toEqual(0)
+    expect(pagination.children().children().length).toEqual(0);
+    expect(selectionButtons.length).toEqual(0);
+
   });
   it('should show add entity button', () => {
     options.setNewEntityAction(()=>{});
@@ -132,6 +140,8 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
     options.setData(testData);
     flushAndApply();
+    expect(selectionButtons.length).toEqual(0);
+
     expect(emptyTablePlaceholder.length).toEqual(0);
     expect(dataRows.length).toEqual(2);
     expect(dataCells.length).toEqual(8);
@@ -299,21 +309,22 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
   });
 
+  function createTestData(numItems) {
+    let testData = [];
+    for (let i = 0; i < numItems; i++) {
+      testData.push({
+        userName: `Some User (#${i})`,
+        email: `someuser${i}@lam.biz`,
+        subscription: 'Free',
+        number: 100
+      })
+    }
+    return testData;
+  }
+
   it('should display pagination status and paginate correctly', () => {
 
-    var testData = [];
-    let createTestData = function(numItems) {
-      for (let i = 0; i < numItems; i++) {
-        testData.push({
-          userName: `Some User (#${i})`,
-          email: `someuser${i}@lam.biz`,
-          subscription: 'Free',
-          number: 100
-        })
-      }
-    }
-
-    createTestData(76)
+    var testData = createTestData(76);
 
     options.setRowsPerPage(10);
 
@@ -364,5 +375,96 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
   });
 
+  it('should allow single selection', () => {
+    var testData = createTestData(25);
+
+    options.setSelection(options.SINGLE_SELECTION);
+    options.setData(testData);
+
+
+    flushAndApply();
+
+    expect(selectionButtons.length).toEqual(25);
+    expect(unselectedSelectionButtons.length).toEqual(25);
+    expect(selectedSelectionButtons.length).toEqual(0);
+    expect(options.getSelectedCount()).toEqual(0);
+
+    $(selectionButtons[5]).click();
+
+    flushAndApply();
+
+    expect(selectionButtons.length).toEqual(25);
+    expect(unselectedSelectionButtons.length).toEqual(24);
+    expect(selectedSelectionButtons.length).toEqual(1);
+    expect(options.getSelectedCount()).toEqual(1);
+    expect(testData[5].$selected).toEqual(true);
+
+    $(selectionButtons[8]).click();
+
+    flushAndApply();
+
+    expect(selectionButtons.length).toEqual(25);
+    expect(unselectedSelectionButtons.length).toEqual(24);
+    expect(selectedSelectionButtons.length).toEqual(1);
+    expect(options.getSelectedCount()).toEqual(1);
+    expect(testData[5].$selected).toBeUndefined();
+    expect(testData[8].$selected).toEqual(true);
+
+  });
+
+  it('should allow multi selection', () => {
+    var testData = createTestData(25);
+
+    options.setSelection(options.MULTI_SELECTION);
+    options.showHeaders();
+    options.setData(testData);
+
+    flushAndApply();
+
+    expect(selectionButtons.length).toEqual(26);
+    expect(unselectedSelectionButtons.length).toEqual(26);
+    expect(selectedSelectionButtons.length).toEqual(0);
+    expect(options.getSelectedCount()).toEqual(0);
+
+    $(selectionButtons[6]).click();
+
+    flushAndApply();
+
+    expect(selectionButtons.length).toEqual(26);
+    expect(unselectedSelectionButtons.length).toEqual(25);
+    expect(selectedSelectionButtons.length).toEqual(1);
+    expect(options.getSelectedCount()).toEqual(1);
+    expect(testData[5].$selected).toEqual(true);
+
+    $(selectionButtons[9]).click();
+
+    flushAndApply();
+
+    expect(selectionButtons.length).toEqual(26);
+    expect(unselectedSelectionButtons.length).toEqual(24);
+    expect(selectedSelectionButtons.length).toEqual(2);
+    expect(options.getSelectedCount()).toEqual(2);
+    expect(testData[5].$selected).toEqual(true);
+    expect(testData[8].$selected).toEqual(true);
+
+    $(selectionButtons[0]).click(); // header selection - should select all
+
+    flushAndApply();
+
+    expect(selectionButtons.length).toEqual(26);
+    expect(unselectedSelectionButtons.length).toEqual(0);
+    expect(selectedSelectionButtons.length).toEqual(26);
+    expect(options.getSelectedCount()).toEqual(25);
+
+    $(selectionButtons[0]).click(); // second click on header selection - should deselect all
+
+    flushAndApply();
+
+    expect(selectionButtons.length).toEqual(26);
+    expect(unselectedSelectionButtons.length).toEqual(26);
+    expect(selectedSelectionButtons.length).toEqual(0);
+    expect(options.getSelectedCount()).toEqual(0);
+
+  });
 
 });

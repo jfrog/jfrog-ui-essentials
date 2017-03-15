@@ -11,6 +11,7 @@ class jfTableRowController {
         if (!all) {
             if (this.tableView.options.selectionMode === this.tableView.options.MULTI_SELECTION) {
                 this.data.$selected = !this.data.$selected;
+                if (!this.data.$selected) this.tableView.allSelected = false;
             }
             else if (this.tableView.options.selectionMode === this.tableView.options.SINGLE_SELECTION) {
                 this.tableView.clearSelection();

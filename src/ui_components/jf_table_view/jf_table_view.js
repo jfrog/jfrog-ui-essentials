@@ -98,6 +98,7 @@ class jfTableViewController {
     }
     clearSelection() {
         this.data.forEach(row=>delete row.$selected)
+        this.allSelected = false;
     }
     toggleSelectAll() {
         this.allSelected = !this.allSelected;

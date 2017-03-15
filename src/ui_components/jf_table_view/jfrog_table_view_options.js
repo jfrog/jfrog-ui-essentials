@@ -115,7 +115,6 @@ export function JFrogTableViewOptions($timeout) {
             if (this.hasSelection()) {
                 selectionWidth = this.selectionColumnWidth;
             }
-            console.log(selectionWidth);
 
             let totalAbs = actionsWidth + selectionWidth;
             let totalPerc = 0;
@@ -157,7 +156,7 @@ export function JFrogTableViewOptions($timeout) {
                         totalFinalPerc += 100*parseFloat(width)/containerWidth;
                     }
                 })
-                console.log(totalFinalPerc);
+//                console.log(totalFinalPerc);
                 this.ready = true;
             })
         }

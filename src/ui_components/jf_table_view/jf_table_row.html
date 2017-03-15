@@ -10,7 +10,7 @@
                  ng-if="jfTableRow.rowId !== 'headers' || jfTableRow.tableView.options.selectionMode === jfTableRow.tableView.options.MULTI_SELECTION"
                  ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.selectionColumnWidth}">
                 <div class="selection-icon icon icon-datagrid-v"
-                     ng-class="{selected: jfTableRow.data.$selected}"
+                     ng-class="{selected: jfTableRow.data.$selected || (jfTableRow.rowId === 'headers' && jfTableRow.tableView.allSelected)}"
                      ng-click="jfTableRow.toggleSelection(jfTableRow.rowId === 'headers')">
                 </div>
             </div>
