@@ -34,7 +34,7 @@ class jfTableViewController {
         this.paginationApi = new PaginationApi(this);
 
         this.paginationApi.registerChangeListener(()=>{
-            this.refresh();
+            this.refresh(false);
         })
 
         this.currentPage = 0;
@@ -90,10 +90,11 @@ class jfTableViewController {
         this.refresh();
         this.paginationApi.update();
     }
-    refresh() {
+    refresh(updatePagination = true) {
         this.rowScopes.forEach(s=>s.$destroy())
         this.rowScopes = [];
         this.compileTemplates();
+        if (updatePagination) this.paginationApi.update();
     }
 
 }

@@ -1,5 +1,5 @@
 'use strict';
-fdescribe('unit test: jf_table_view directive & JFTableViewOptions service', function () {
+describe('unit test: jf_table_view directive & JFTableViewOptions service', function () {
 
   var $scope;
   var $timeout;
