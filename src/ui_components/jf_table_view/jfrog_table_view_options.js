@@ -11,6 +11,7 @@ export function JFrogTableViewOptions($timeout) {
         _setDefaults() {
             this.rowHeight = '60px';
             this.rowsPerPage = 25;
+            this.sortable = true;
             this.actionButtonSize = 60; //px
         }
 
