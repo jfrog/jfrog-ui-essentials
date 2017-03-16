@@ -592,6 +592,36 @@ class JFrogGrid {
 
     }
 
+    /**
+     * htmlIsOverflowing(cellId)
+     * Get al the cell's children.
+     * Then sum all the children's box model width (includes padding and margin) in a loop
+     * If the child already has the overflowing class => remove it
+     * When the sum gets > then the container's width => add the overflowing class to him
+     * After exiting the loop return the overflowing flag
+     * **/
+    htmlIsOverflowing(cellId) {
+        let elem = $('#'+cellId);
+        let children = elem.children('.item');
+        let maxWidth = elem.outerWidth() - 65;
+        let totalChildrenWidth = 0;
+        children.each((i,child) => {
+            let childElem = $(child);
+            totalChildrenWidth += childElem.outerWidth()
+                + parseInt(childElem.css('margin-left'))
+                + parseInt(childElem.css('margin-right'));
+
+            if(totalChildrenWidth <= maxWidth){
+                childElem.removeClass('overflowing-child');
+            }
+            if(totalChildrenWidth > maxWidth && !childElem.is('.overflowing-child')){
+                childElem.addClass('overflowing-child');
+            }
+
+        });
+
+        return (totalChildrenWidth > maxWidth);
+    }
     showAll(model,rowName,col) {
 
         let objectName = _.startCase(this.gridObjectName.indexOf('/')>=0 ? this.gridObjectName.split('/')[0] : this.gridObjectName);
