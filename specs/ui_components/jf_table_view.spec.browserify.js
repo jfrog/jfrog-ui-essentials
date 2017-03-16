@@ -1,5 +1,5 @@
 'use strict';
-fdescribe('unit test: jf_table_view directive & JFTableViewOptions service', function () {
+describe('unit test: jf_table_view directive & JFTableViewOptions service', function () {
 
   var $scope;
   var $timeout;
@@ -18,6 +18,7 @@ fdescribe('unit test: jf_table_view directive & JFTableViewOptions service', fun
   var selectionButtons;
   var selectedSelectionButtons;
   var unselectedSelectionButtons;
+  var sortController;
 
   function setup(_$timeout_, _JFrogTableViewOptions_) {
     $timeout = _$timeout_;
@@ -37,6 +38,7 @@ fdescribe('unit test: jf_table_view directive & JFTableViewOptions service', fun
     selectionButtons = $('.selection-icon');
     selectedSelectionButtons = $('.selection-icon.selected');
     unselectedSelectionButtons = $('.selection-icon:not(.selected)');
+    sortController = $('.sort-controller');
   }
 
   function flushAndApply() {
@@ -110,12 +112,14 @@ fdescribe('unit test: jf_table_view directive & JFTableViewOptions service', fun
     expect($(filterInput[0]).css('display')).toEqual('none');
     expect(pagination.children().children().length).toEqual(0);
     expect(selectionButtons.length).toEqual(0);
+    expect(sortController.length).toEqual(0);
 
   });
   it('should show add entity button', () => {
     options.setNewEntityAction(()=>{});
     flushAndApply();
     expect(newEntityButton.length).toEqual(1);
+    expect(sortController.length).toEqual(0);
     expect(newEntityButton[0].textContent.trim()).toEqual('Add Test Entity');
   });
   it('should call callback when pressing add entity button', (done) => {
@@ -131,16 +135,18 @@ fdescribe('unit test: jf_table_view directive & JFTableViewOptions service', fun
     flushAndApply();
     expect(headers.length).toEqual(1);
     expect(headersCells.length).toEqual(4);
+    expect(sortController.length).toEqual(0);
   });
   it('should show data rows, pagination and filter', () => {
     var testData = [
       {userName: 'Shlomo', email: 'shlomo@lam.biz', subscription: 'Free', number: 4},
       {userName: 'Reuven', email: 'reu@ven.buzz', subscription: 'Premium', number: 1},
-    ]
+    ];
 
     options.setData(testData);
     flushAndApply();
     expect(selectionButtons.length).toEqual(0);
+    expect(sortController.length).toEqual(1);
 
     expect(emptyTablePlaceholder.length).toEqual(0);
     expect(dataRows.length).toEqual(2);
@@ -177,17 +183,21 @@ fdescribe('unit test: jf_table_view directive & JFTableViewOptions service', fun
     }
 
 
-    options.setData(testData);
     options.setSortable(false); //first we check the original order
+    options.setData(testData);
     options.showHeaders();
 
     flushAndApply();
+
+    expect(sortController.length).toEqual(0);
 
     expectSorted();
 
     options.setSortable(true); //sort by user name (defaults to first column)
 
     flushAndApply();
+
+    expect(sortController.length).toEqual(1);
 
     expectSorted(true); //reversed
 
@@ -228,8 +238,8 @@ fdescribe('unit test: jf_table_view directive & JFTableViewOptions service', fun
       {userName: 'Shlomo', email: 'shlomo@lam.biz', subscription: 'Free', number: 4},
       {userName: 'Reuven', email: 'reu@ven.buzz', subscription: 'Premium', number: 1},
     ]
+    options.setSortable(false); // we want to preserve original order
     options.setData(testData);
-    options.setSortable(false); // we want to preserve origina act order
     options.setActions([
       {
         icon: 'icon icon-clear',

@@ -6,6 +6,7 @@
                    ng-show="jfTableView.data.length"
                    ng-model-options="{debounce: { 'default': 500 } }"
                    ng-change="jfTableView.onUpdateFilter()"
+                   ng-class="{'no-results': jfTableView.noFilterResults}"
                    placeholder="Filter">
         </div>
         <div class="top-center">
@@ -16,7 +17,7 @@
                     Add {{jfTableView.objectName || 'Item'}}
                 </div>
             </div>
-            <div class="sort-controller" ng-if="jfTableView.options.sortable">
+            <div class="sort-controller" ng-if="jfTableView.options.sortable && jfTableView.data.length">
                 <div class="sort-label">Sort By:</div>
                 <div class="select-wrapper">
                     <jf-ui-select jf-select-model="jfTableView.options.sortByField"
@@ -47,7 +48,11 @@
                       data="entity"></jf-table-row>
         <div class="empty-table-placeholder"
              ng-if="!jfTableView.data.length">
-            Empty Table Placeholder!!
+            {{jfTableView.options.emptyTableText || 'This table is empty !'}}
+        </div>
+        <div class="empty-table-placeholder filter-no-results"
+             ng-if="jfTableView.noFilterResults">
+            Current filter has no results. <a href ng-click="jfTableView.clearFilter()">Clear filter</a>
         </div>
     </div>
 </div>

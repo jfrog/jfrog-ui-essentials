@@ -34,6 +34,7 @@ export function JFrogTableViewOptions($timeout) {
         update(noSort=false) {
             if (this.dirCtrl) {
                 this.dirCtrl.data = this.data;
+                this.origData = _.sortBy(data,'');
                 if (!noSort) this.sortBy(this.sortByField,true);
                 else this.dirCtrl.refresh();
             }
@@ -180,6 +181,10 @@ export function JFrogTableViewOptions($timeout) {
         getDisplayNameForField(field) {
             let col = _.find(this.columns,{field});
             if (col) return col.header;
+        }
+
+        setEmptyTableText(text) {
+            this.emptyTableText = text;
         }
 
     }

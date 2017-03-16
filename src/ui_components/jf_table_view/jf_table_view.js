@@ -41,7 +41,10 @@ class jfTableViewController {
     }
 
     getFilteredData() {
-        if (!this.tableFilter) return this.data;
+        if (!this.tableFilter) {
+            this.noFilterResults = false;
+            return this.data;
+        }
         if (!this.filterCache) this.filterCache = _.filter(this.data,(row=>{
             for (let i in this.options.columns) {
                 let col = this.options.columns[i];
@@ -49,7 +52,13 @@ class jfTableViewController {
             }
             return false;
         }))
+        this.noFilterResults = !!(!this.filterCache.length && this.data.length);
         return this.filterCache;
+    }
+
+    clearFilter() {
+        this.tableFilter = '';
+        this.onUpdateFilter();
     }
 
     getPageData() {
