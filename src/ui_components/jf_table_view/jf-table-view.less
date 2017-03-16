@@ -1,6 +1,12 @@
 .jf-table-view {
   width: 100%;
   .jf-table-top {
+    height: 100px;
+    margin-bottom: 10px;
+    &.no-sort {
+      height: 58px;
+    }
+    position: relative;
     .jf-table-filter {
       width: 33%;
       display: inline-block;
@@ -8,19 +14,63 @@
       input {
         width: 200px;
         padding: 5px;
+        position: absolute;
+        bottom: 0px;
       }
     }
-    .new-entity {
+    .top-center {
       display: inline-block;
       width: 33%;
-      height: 50px;
-      font-size: 18px;
-      font-weight: 500;
-      padding: 5px;
-      cursor: pointer;
-      text-align: center;
-      span.icon:before {
-        font-weight: 600 !important;
+      .new-entity {
+        height: 50px;
+        margin-bottom: 16px;
+        font-size: 18px;
+        font-weight: 500;
+        padding: 5px;
+        cursor: pointer;
+        text-align: center;
+        span.icon:before {
+          font-weight: 600 !important;
+        }
+      }
+      .sort-controller {
+        height: 50px;
+        text-align: center;
+        .ui-select-container {
+          .ui-select-search,
+          .ui-select-toggle {
+            height: 34px !important;
+            line-height: 34px !important;
+          }
+        }
+        .sort-label {
+          display: inline-block;
+          line-height: 34px;
+          vertical-align: top;
+          margin-right: 15px;
+        }
+        .select-wrapper {
+          width: 250px;
+          display: inline-block;
+          jf-ui-select {
+            text-align: left;
+          }
+        }
+        .sort-dir-icon {
+          display: inline-block;
+          margin-left: 10px;
+          padding-top: 17px;
+          opacity: 0;
+          cursor: pointer;
+          &.asc {
+            opacity: 1;
+            transform: scale(1,1) rotate(270deg)
+          }
+          &.desc {
+            opacity: 1;
+            transform: scale(1,-1) rotate(270deg)
+          }
+        }
       }
     }
     .pagination-controls {
@@ -29,7 +79,7 @@
       height: 50px;
       jf-drag-drop-pagination {
         position: absolute;
-        top: 18px;
+        bottom: -6px;
         right: 0;
       }
     }

@@ -44,6 +44,7 @@ export function JFrogTableViewOptions($timeout) {
 
         setColumns(columns) {
             this.columns = columns;
+            this._sortableFields = _.map(_.filter(this.columns,c=>(angular.isDefined(c.header))),'field');
             this._normalizeWidths();
         }
 
@@ -89,6 +90,10 @@ export function JFrogTableViewOptions($timeout) {
             Array.prototype.splice.apply(this.data, [0,this.data.length].concat(temp));
             if (!resort) delete this.dirCtrl.filterCache;
             this.update(true);
+        }
+
+        reverseSortingDir() {
+            this.sortBy(this.sortByField);
         }
 
         setSortable(sortable=true) {
@@ -160,6 +165,12 @@ export function JFrogTableViewOptions($timeout) {
                 this.ready = true;
             })
         }
+
+        getDisplayNameForField(field) {
+            let col = _.find(this.columns,{field});
+            if (col) return col.header;
+        }
+
     }
 
 }
