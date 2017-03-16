@@ -23,6 +23,7 @@ export function JFrogTableViewOptions($timeout) {
 
         setData(data) {
             this.data = data;
+            this.origData = _.sortBy(data,'');
             this.update();
         }
 
@@ -33,7 +34,7 @@ export function JFrogTableViewOptions($timeout) {
         update(noSort=false) {
             if (this.dirCtrl) {
                 this.dirCtrl.data = this.data;
-                if (!noSort && this.sortByField) this.sortBy(this.sortByField,true);
+                if (!noSort) this.sortBy(this.sortByField,true);
                 else this.dirCtrl.refresh();
             }
         }
@@ -86,10 +87,15 @@ export function JFrogTableViewOptions($timeout) {
                 this.revSort = false;
             }
             this.sortByField = field;
-            let temp = this.data;
-            temp = _.sortBy(temp,(row)=>this.revSort ? -_.get(row,field) : _.get(row,field));
-            Array.prototype.splice.apply(this.data, [0,this.data.length].concat(temp));
-            if (!resort) delete this.dirCtrl.filterCache;
+            if (field) {
+                let temp = this.data;
+                temp = _.sortBy(temp,(row)=>this.revSort ? -_.get(row,field) : _.get(row,field));
+                Array.prototype.splice.apply(this.data, [0,this.data.length].concat(temp));
+            }
+            else {
+                Array.prototype.splice.apply(this.data, [0,this.data.length].concat(this.origData));
+            }
+            if (!resort && this.dirCtrl) delete this.dirCtrl.filterCache;
             this.update(true);
         }
 
@@ -99,7 +105,10 @@ export function JFrogTableViewOptions($timeout) {
 
         setSortable(sortable=true) {
             this.sortable = sortable;
-            if (sortable && !this.sortByField) this.sortByField = this._sortableFields ? this._sortableFields[0] : undefined;
+            if (sortable && !this.sortByField) {
+                this.sortBy(this._sortableFields ? this._sortableFields[0] : undefined)
+            }
+            else if (!sortable) this.sortBy(undefined);
         }
 
         setActions(actions) {
@@ -109,7 +118,7 @@ export function JFrogTableViewOptions($timeout) {
 
         _setDirectiveController(ctrl) {
             this.dirCtrl = ctrl;
-            ctrl.data = this.data;
+            this.update();
         }
 
         _normalizeWidths() {

@@ -1,5 +1,5 @@
 'use strict';
-describe('unit test: jf_table_view directive & JFTableViewOptions service', function () {
+fdescribe('unit test: jf_table_view directive & JFTableViewOptions service', function () {
 
   var $scope;
   var $timeout;
@@ -178,13 +178,14 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
 
     options.setData(testData);
+    options.setSortable(false); //first we check the original order
     options.showHeaders();
 
     flushAndApply();
 
     expectSorted();
 
-    $(headersCells[0]).click(); //sort by user name
+    options.setSortable(true); //sort by user name (defaults to first column)
 
     flushAndApply();
 
@@ -228,6 +229,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
       {userName: 'Reuven', email: 'reu@ven.buzz', subscription: 'Premium', number: 1},
     ]
     options.setData(testData);
+    options.setSortable(false); // we want to preserve origina act order
     options.setActions([
       {
         icon: 'icon icon-clear',
