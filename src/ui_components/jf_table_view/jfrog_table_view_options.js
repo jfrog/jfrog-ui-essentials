@@ -45,6 +45,7 @@ export function JFrogTableViewOptions($timeout) {
         setColumns(columns) {
             this.columns = columns;
             this._sortableFields = _.map(_.filter(this.columns,c=>(angular.isDefined(c.header))),'field');
+            if (this.sortable && !this.sortByField) this.sortByField = this._sortableFields ? this._sortableFields[0] : undefined;
             this._normalizeWidths();
         }
 
@@ -98,6 +99,7 @@ export function JFrogTableViewOptions($timeout) {
 
         setSortable(sortable=true) {
             this.sortable = sortable;
+            if (sortable && !this.sortByField) this.sortByField = this._sortableFields ? this._sortableFields[0] : undefined;
         }
 
         setActions(actions) {
