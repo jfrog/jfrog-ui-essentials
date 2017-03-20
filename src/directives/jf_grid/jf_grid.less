@@ -7,7 +7,13 @@
 
   .ui-grid a {
     color: @blueMain;
-
+    &.gridcell-showall{
+      display: inline-block;
+      position: absolute;
+      top: 10px;
+      padding-left: 8px;
+      white-space: nowrap;
+    }
     &:hover {
       text-decoration: none;
     }
@@ -28,6 +34,9 @@
     line-height: 24px;
     border: 1px solid @blueMain;
     color: @grayFontGeneral;
+    &.overflowing-child{
+      display: none;
+    }
   }
 
   a.grid-column-button {

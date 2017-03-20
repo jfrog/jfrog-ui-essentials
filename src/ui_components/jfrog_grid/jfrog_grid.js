@@ -611,17 +611,21 @@ class JFrogGrid {
                 + parseInt(childElem.css('margin-left'))
                 + parseInt(childElem.css('margin-right'));
 
-            if(totalChildrenWidth <= maxWidth){
+            if(totalChildrenWidth < maxWidth){
                 childElem.removeClass('overflowing-child');
             }
-            if(totalChildrenWidth > maxWidth && !childElem.is('.overflowing-child')){
+            if(totalChildrenWidth >= maxWidth && !childElem.is('.overflowing-child')){
                 childElem.addClass('overflowing-child');
             }
 
         });
-
-        return (totalChildrenWidth > maxWidth);
+        return elem.children('.item.overflowing-child').length>0;
     }
+
+    lastHtmlElementOverflowing(cellId){
+        return ($('#'+cellId).children('.item:not(.overflowing-child)').length == 0);
+    }
+
     showAll(model,rowName,col) {
 
         let objectName = _.startCase(this.gridObjectName.indexOf('/')>=0 ? this.gridObjectName.split('/')[0] : this.gridObjectName);
