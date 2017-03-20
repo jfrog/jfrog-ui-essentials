@@ -22,6 +22,7 @@ export function JFrogTableViewOptions($timeout) {
         }
 
         setData(data) {
+            console.log(data);
             this.data = data;
             this.origData = _.sortBy(data,'');
             this.update();
@@ -34,7 +35,7 @@ export function JFrogTableViewOptions($timeout) {
         update(noSort=false) {
             if (this.dirCtrl) {
                 this.dirCtrl.data = this.data;
-                this.origData = _.sortBy(data,'');
+                this.origData = _.sortBy(this.data,'');
                 if (!noSort) this.sortBy(this.sortByField,true);
                 else this.dirCtrl.refresh();
             }
