@@ -22,7 +22,6 @@ export function JFrogTableViewOptions($timeout) {
         }
 
         setData(data) {
-            console.log(data);
             this.data = data;
             this.origData = _.sortBy(data,'');
             this.update();
