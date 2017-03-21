@@ -603,7 +603,9 @@ class JFrogGrid {
     htmlIsOverflowing(cellId) {
         let elem = $('#'+cellId);
         let children = elem.children('.item');
-        let maxWidth = elem.outerWidth() - 65;
+        let actionButtonsBar = elem.closest('.ui-grid-row').find('.grid-action-bar:eq(0)');
+        let actionButtonsWidth = actionButtonsBar.outerWidth();
+        let maxWidth = elem.outerWidth() - 60 - actionButtonsWidth;
         let totalChildrenWidth = 0;
         children.each((i,child) => {
             let childElem = $(child);
@@ -614,7 +616,7 @@ class JFrogGrid {
             if(totalChildrenWidth < maxWidth){
                 childElem.removeClass('overflowing-child');
             }
-            if(totalChildrenWidth >= maxWidth && !childElem.is('.overflowing-child')){
+            if(totalChildrenWidth > maxWidth && !childElem.is('.overflowing-child')){
                 childElem.addClass('overflowing-child');
             }
 

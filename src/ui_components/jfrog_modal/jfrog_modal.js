@@ -82,44 +82,58 @@ export class JFrogModal {
         return modalInstance;
     }
 
-
-
+    /**
+     * Calculate and set the max-height attribute of a modal's body
+     * */
     _calculateMaxHeight() {
-        let modalBody = $('.modal-content .modal-body');
-        if(modalBody.length > 0) {
-            modalBody.hide();
-            console.log('hidden the modal before timeout')
-        }
+        console.log('resize');
+        // Try to hide the modal body in this digest cycle before calculating height in the next digest cycle.
+        // This is very important for cases that the modal has more then one step - such as onboarding wizard (and
+        // applies to every step but the first)
+        $('.modal-body').hide();
 
+        // Calculate and set modal body height in the next digest cycle
+        // After the resizing is done - the modal body is shown again.
+        this.resizeModalBodyInNextCycle();
+    }
+
+    resizeModalBodyInNextCycle(){
         this.$timeout(() => {
+            // Hide modal body before perfroming calculations
             let modal = $('.modal-content');
-            modalBody = modal.find('.modal-body');
+            let modalBody = modal.find('.modal-body');
             modalBody.hide();
-            console.log('hidden the modal after timeout')
 
-            let wizardModal = modal.find('.wizard-modal');
-            if(wizardModal.length > 0){
-                let modalHeight = wizardModal.height();
-                this.setModalHeight(modal,modalBody,modalHeight);
+            // Calculate and show content
+            let wizardModalContainer = modal.find('.wizard-modal');
+            if(wizardModalContainer.length > 0) {
+                this.resizeWizardModalBody(modal,wizardModalContainer,modalBody);
                 modalBody.show();
-                console.log('showing the wizard modal')
             }
-            else{
+            else {
                 this.$timeout(() => {
-                    let modalOffsetTop = 110,                                 //Modal offset top
-                        viewPortHeight = window.innerHeight,                 // View port height
-                        modalHeight = viewPortHeight - (2 * modalOffsetTop);
-                    this.setModalHeight(modal,modalBody,modalHeight);
+                    this.resizeAnyModalBody(modal,modalBody);
                     modalBody.show();
-                    console.log('showing any modal')
-                }, 100)
+                }, 100);
             }
         });
     }
 
-    setModalHeight(modal,modalBody,modalHeight){
+    resizeAnyModalBody(modal,modalBody){
+        let modalOffsetTop = 110,                                 //Modal offset top
+            viewPortHeight = window.innerHeight,                 // View port height
+            modalHeight = viewPortHeight - (2 * modalOffsetTop);
+        this.setModalBodyMaxHeight(modal,modalBody,modalHeight);
+    }
+
+    resizeWizardModalBody(modal,wizardContainer,modalBody){
+        let modalHeight = wizardContainer.height();
+        this.setModalBodyMaxHeight(modal,modalBody,modalHeight);
+    }
+
+    setModalBodyMaxHeight(modal,modalBody,modalHeight){
         let headerHeight = modal.find('.modal-header').outerHeight() || 0,   // Header height
-            footerHeight  = modal.find('.modal-footer').outerHeight() || 0,  // Footer height
+            footerHeight = modal.find('.modal-footer').outerHeight() || 0,  // Footer height
             maxHeight = modalHeight - headerHeight - footerHeight;
         modalBody.css('max-height', maxHeight);
     }
