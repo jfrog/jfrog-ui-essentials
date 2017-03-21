@@ -85,32 +85,45 @@ export class JFrogModal {
 
 
     _calculateMaxHeight() {
+        let modalBody = $('.modal-content .modal-body');
+        if(modalBody.length > 0) {
+            modalBody.hide();
+            console.log('hidden the modal before timeout')
+        }
+
         this.$timeout(() => {
+            let modal = $('.modal-content');
+            modalBody = modal.find('.modal-body');
+            modalBody.hide();
+            console.log('hidden the modal after timeout')
 
-            if ($('.wizard-modal').length > 0) {
-
-                // modal height - header - footer
-            let MH = $('.wizard-modal').height(),               // Modal height
-                HH  = $('.modal-header').outerHeight() || 0,         // Header height
-                FH  = $('.modal-footer').outerHeight() || 0;    // Footer height
-
-                let maxHeight = MH - HH - FH;
-                $('.modal-body').css('max-height', maxHeight);
-                return;
+            let wizardModal = modal.find('.wizard-modal');
+            if(wizardModal.length > 0){
+                let modalHeight = wizardModal.height();
+                this.setModalHeight(modal,modalBody,modalHeight);
+                modalBody.show();
+                console.log('showing the wizard modal')
             }
-
-
-            let VPH = window.innerHeight,                       // View port height
-                MOT = 110,                                      //Modal offset top
-                HH  = $('.modal-header').outerHeight() || 0,         // Header height
-                FH  = $('.modal-footer').outerHeight() || 0;    // Footer height
-
-            // Calculate: MPH - (MOT*2) - HH - FH = maxHeight
-            let maxHeight = VPH - (MOT * 2) - HH - FH;
-
-            $('.modal-body').css('max-height', maxHeight);
-        }, 100)
+            else{
+                this.$timeout(() => {
+                    let modalOffsetTop = 110,                                 //Modal offset top
+                        viewPortHeight = window.innerHeight,                 // View port height
+                        modalHeight = viewPortHeight - (2 * modalOffsetTop);
+                    this.setModalHeight(modal,modalBody,modalHeight);
+                    modalBody.show();
+                    console.log('showing any modal')
+                }, 100)
+            }
+        });
     }
+
+    setModalHeight(modal,modalBody,modalHeight){
+        let headerHeight = modal.find('.modal-header').outerHeight() || 0,   // Header height
+            footerHeight  = modal.find('.modal-footer').outerHeight() || 0,  // Footer height
+            maxHeight = modalHeight - headerHeight - footerHeight;
+        modalBody.css('max-height', maxHeight);
+    }
+
 
     /**
      * launch a modal that shows content in a codemirror container
