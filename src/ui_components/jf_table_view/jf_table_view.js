@@ -43,7 +43,7 @@ class jfTableViewController {
     getFilteredData() {
         if (!this.tableFilter) {
             this.noFilterResults = false;
-            return this.data;
+            return this.data || [];
         }
         if (!this.filterCache) this.filterCache = _.filter(this.data,(row=>{
             for (let i in this.options.columns) {
