@@ -550,7 +550,7 @@ class JFrogGrid {
         this.enableSelectAll = true;
         this._allowMultiSelect = false;
         this.selectionRowHeaderWidth = 40;
-
+        this.allowSingleSelect = true;
         return this;
     }
 
