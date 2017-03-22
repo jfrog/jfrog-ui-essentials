@@ -70,7 +70,12 @@ export class JFrogModal {
         this._calculateMaxHeight();
 
         if (modalInstance.result) {
-            modalInstance.result.finally(()=>{
+            // Modal close event handler is registered as result.then(errorCallback)
+            // In some cases the modal close event is caught by result.finally()
+            modalInstance.result.then(()=>{}, ()=>{
+                this.modalIsClosing = true;
+            }).finally(()=>{
+                this.modalIsClosing = true;
                 $(window).off('resize', this._calculateMaxHeight());
             });
         }
@@ -86,7 +91,10 @@ export class JFrogModal {
      * Calculate and set the max-height attribute of a modal's body
      * */
     _calculateMaxHeight() {
-        console.log('resize');
+        if(this.modalIsClosing){
+            this.modalIsClosing = false;
+            return;
+        }
         // Try to hide the modal body in this digest cycle before calculating height in the next digest cycle.
         // This is very important for cases that the modal has more then one step - such as onboarding wizard (and
         // applies to every step but the first)
@@ -114,7 +122,7 @@ export class JFrogModal {
                 this.$timeout(() => {
                     this.resizeAnyModalBody(modal,modalBody);
                     modalBody.show();
-                }, 100);
+                });
             }
         });
     }
