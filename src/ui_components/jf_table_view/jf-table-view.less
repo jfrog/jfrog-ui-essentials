@@ -88,6 +88,18 @@
   }
   .jf-table-view-container {
     width: 100%;
+    .table-rows-container {
+      position: relative;
+      .scroll-faker-container {
+        position: absolute;
+        width: 16px;
+        height: 100%;
+        right: -16px;
+        overflow: auto;
+        .scroll-faker {
+        }
+      }
+    }
     .empty-table-placeholder {
       font-size: 20px;
       height: 60px;

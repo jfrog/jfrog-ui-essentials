@@ -45,7 +45,9 @@ module.exports = {
         'components/angular-file-upload/angular-file-upload.js',
         'vendor/draggable-rows.js',
         'components/clipboard/dist/clipboard.min.js',
-        'node_modules/js-beautify/js/lib/beautify.js'
+        'node_modules/js-beautify/js/lib/beautify.js',
+        'node_modules/hamsterjs/hamster.js',
+        'node_modules/angular-mousewheel/mousewheel.js'
     ],
 
     CSS: [

@@ -44,7 +44,7 @@
                  ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.actionButtonSize}"
                  ng-repeat="action in jfTableRow.tableView.options.actions">
                 <div class="action-icon"
-                     ng-click="action.callback(jfTableRow.data)"
+                     ng-click="action.callback(jfTableRow.data);jfTableRow.tableView.onUpdateFilter()"
                      jf-tooltip="{{action.tooltip}}"
                      ng-class="action.icon"></div>
             </div>

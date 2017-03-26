@@ -1,15 +1,20 @@
 export function JFrogTableViewOptions($timeout) {
     return class JFrogTableViewOptions {
         constructor(appScope) {
-            this._setDefaults();
             this.data = [];
             this.actions = [];
             this.columns = [];
             this.appScope = appScope;
 
+            // selection types
             this.NO_SELECTION = 0;
             this.SINGLE_SELECTION = 1;
             this.MULTI_SELECTION = 2;
+
+            // pagination mode
+            this.PAGINATION = 0;
+            this.VIRTUAL_SCROLL = 1;
+            this._setDefaults();
         }
 
         _setDefaults() {
@@ -17,6 +22,7 @@ export function JFrogTableViewOptions($timeout) {
             this.rowsPerPage = 25;
             this.sortable = true;
             this.selectionMode = this.NO_SELECTION;
+            this.paginationMode = this.PAGINATION;
             this.actionButtonSize = 60; //px
             this.selectionColumnWidth = 60; //px
         }
@@ -66,6 +72,10 @@ export function JFrogTableViewOptions($timeout) {
         setSelection(selectionMode) {
             this.selectionMode = selectionMode;
             this._normalizeWidths();
+        }
+
+        setPaginationMode(pagiMode) {
+            this.paginationMode = pagiMode;
         }
 
         hasSelection() {

@@ -19,6 +19,7 @@ class jfTableViewController {
         this.$compile = $compile;
         this.$scope = $scope;
         this.$rootScope = $rootScope;
+        this.data = null;
         this.rowScopes = [];
         $scope.$watch('jfTableView.options',(options) => {
             if (this.options && !this.options.dirCtrl) {
@@ -38,6 +39,7 @@ class jfTableViewController {
         })
 
         this.currentPage = 0;
+        this.virtualScrollIndex = 0;
     }
 
     getFilteredData() {
@@ -62,7 +64,12 @@ class jfTableViewController {
     }
 
     getPageData() {
-        return this.getFilteredData().slice(this.currentPage * this.options.rowsPerPage, this.currentPage * this.options.rowsPerPage + this.options.rowsPerPage)
+        if (this.options.paginationMode === this.options.PAGINATION) {
+            return this.getFilteredData().slice(this.currentPage * this.options.rowsPerPage, this.currentPage * this.options.rowsPerPage + this.options.rowsPerPage)
+        }
+        else if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
+            return this.getFilteredData().slice(this.virtualScrollIndex,this.virtualScrollIndex + this.options.rowsPerPage)
+        }
     }
 
     compileTemplates() {
@@ -113,7 +120,48 @@ class jfTableViewController {
         this.allSelected = !this.allSelected;
         this.data.forEach(row=>row.$selected = this.allSelected);
     }
+    onMouseWheel($event, $delta, $deltaX, $deltaY) {
+        if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
+            $event.preventDefault();
+            if ($deltaY<0) { // scrollUp
+                if (this.virtualScrollIndex + this.options.rowsPerPage < this.getFilteredData().length) this.virtualScrollIndex++;
+            }
+            else if ($deltaY>0) { // scrollDown
+                if (this.virtualScrollIndex > 0) this.virtualScrollIndex--;
+            }
+            this.currentPage = Math.floor((this.virtualScrollIndex + this.options.rowsPerPage - 1) / this.options.rowsPerPage);
+            this.options.update();
+            this.syncFakeScroller();
+        }
+    }
 
+    getTotalScrollHeight() {
+        return this.data ? ((this.filterCache || this.data).length * parseInt(this.options.rowHeight)) + 'px' : '0';
+    }
+
+    initScrollFaker() {
+        if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
+            let scrollParent = this.$element.find('.scroll-faker-container');
+            scrollParent.on('scroll',(e)=>{
+                this.$scope.$apply(()=>{
+                    let len = (this.filterCache || this.data).length;
+                    let relativePosition = scrollParent.scrollTop()/(len * parseInt(this.options.rowHeight))
+                    this.virtualScrollIndex = Math.floor(relativePosition*len);
+                    this.currentPage = Math.floor((this.virtualScrollIndex + this.options.rowsPerPage - 1) / this.options.rowsPerPage);
+                    this.options.update();
+                })
+            })
+        }
+    }
+    syncFakeScroller() {
+        if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
+            let len = (this.filterCache || this.data).length;
+            let scrollParent = this.$element.find('.scroll-faker-container');
+            let relativePosition = this.virtualScrollIndex / len;
+            let scrollTop = relativePosition * len * parseInt(this.options.rowHeight);
+            scrollParent.scrollTop(scrollTop);
+        }
+    }
 }
 
 
@@ -131,17 +179,21 @@ class PaginationApi {
     nextPage() {
         if (this.getCurrentPage() === this.getTotalPages()) return;
         this.tableCtrl.currentPage++;
+        this.syncVirtualScroll()
         this.update();
     }
     prevPage() {
         if (this.getCurrentPage() === 1) return;
         this.tableCtrl.currentPage--;
+        this.syncVirtualScroll()
         this.update();
     }
     setPage(pageNum) {
         if (pageNum < 1 || pageNum > this.getTotalPages()) return;
 
         this.tableCtrl.currentPage = pageNum - 1;
+
+        this.syncVirtualScroll()
         this.update();
     }
     update() {
@@ -155,6 +207,13 @@ class PaginationApi {
     registerChangeListener(listener) {
         if (!this.listeners) this.listeners = []
         this.listeners.push(listener);
+    }
+
+    syncVirtualScroll() {
+        if (this.tableCtrl.options.paginationMode === this.tableCtrl.options.VIRTUAL_SCROLL) {
+            this.tableCtrl.virtualScrollIndex = this.tableCtrl.currentPage*this.tableCtrl.options.rowsPerPage;
+            this.tableCtrl.syncFakeScroller();
+        }
     }
 
 }

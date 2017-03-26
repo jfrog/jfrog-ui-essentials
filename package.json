@@ -59,6 +59,7 @@
     "lodash": "3.10.1"
   },
   "dependencies": {
-    "js-beautify": "1.6.11"
+    "js-beautify": "1.6.11",
+    "angular-mousewheel": "^1.0.5"
   }
 }

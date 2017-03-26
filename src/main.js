@@ -8,7 +8,8 @@ if (!String.prototype.startsWith) {
         return this.substr(0, str.length)===str;
     }
 }
-
+window.Hamster = require('hamsterjs');
+require('angular-mousewheel');
 
 angular.module('jfrog.ui.essentials', [
         // Vendor modules
@@ -24,8 +25,10 @@ angular.module('jfrog.ui.essentials', [
         'ui.bootstrap',
         'ngClipboard',
         'ui.grid.draggable-rows',
+        'monospaced.mousewheel',
 
-        // Library modules
+
+    // Library modules
         'jfrog.ui.essentials.templates',
         'jfrog.ui.essentials.directives',
         'jfrog.ui.essentials.services',
