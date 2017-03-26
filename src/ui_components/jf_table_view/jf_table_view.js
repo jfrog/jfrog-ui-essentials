@@ -145,9 +145,15 @@ class jfTableViewController {
             scrollParent.on('scroll',(e)=>{
                 this.$scope.$apply(()=>{
                     let len = (this.filterCache || this.data).length;
-                    let relativePosition = scrollParent.scrollTop()/(len * parseInt(this.options.rowHeight))
-                    this.virtualScrollIndex = Math.floor(relativePosition*len);
-                    this.currentPage = Math.floor((this.virtualScrollIndex + this.options.rowsPerPage - 1) / this.options.rowsPerPage);
+                    if (len) {
+                        let relativePosition = scrollParent.scrollTop()/(len * parseInt(this.options.rowHeight))
+                        this.virtualScrollIndex = Math.floor(relativePosition*len);
+                        this.currentPage = Math.floor((this.virtualScrollIndex + this.options.rowsPerPage - 1) / this.options.rowsPerPage);
+                    }
+                    else {
+                        this.virtualScrollIndex = 0;
+                        this.currentPage = 0;
+                    }
                     this.options.update();
                 })
             })
