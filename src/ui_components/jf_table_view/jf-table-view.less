@@ -92,12 +92,15 @@
       position: relative;
       .scroll-faker-container {
         position: absolute;
-        width: 16px;
+        width: 100px;
         height: 100%;
-        right: -16px;
         overflow: auto;
+        overflow-x: hidden;
+        z-index: 0;
         .scroll-faker {
         }
+      }
+      .jf-table-row {
       }
     }
     .empty-table-placeholder {
@@ -128,6 +131,8 @@
         display: inline-table;
         padding: 5px;
         overflow: hidden;
+        z-index: 1;
+
 
         &.selection,
         &.actions {

@@ -28,9 +28,15 @@ class jfTableViewController {
         })
         this.compileTemplates();
 
+        let on_resize = () => this.$timeout(()=>this.options._normalizeWidths());
+        
+        $(window).on('resize',on_resize);
         $scope.$on('$destroy', ()=>{
             this.rowScopes.forEach(s=>s.$destroy())
+            $(window).off('resize',on_resize);
         })
+
+
 
         this.paginationApi = new PaginationApi(this);
 
@@ -167,6 +173,19 @@ class jfTableViewController {
             let scrollTop = relativePosition * len * parseInt(this.options.rowHeight);
             scrollParent.scrollTop(scrollTop);
         }
+    }
+
+    getScrollWidth() {
+        let el = this.$element.find('.scroll-faker-container')[0];
+        if (!this.scrollWidthCache) {
+            this.scrollWidthCache = (el.offsetWidth - el.clientWidth);
+        }
+        else {
+            this.$timeout(()=>{
+                this.scrollWidthCache = (el.offsetWidth - el.clientWidth);
+            })
+        }
+        return this.scrollWidthCache;
     }
 }
 

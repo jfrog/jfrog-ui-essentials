@@ -44,6 +44,7 @@
         </div>
         <div class="table-rows-container">
             <div class="scroll-faker-container"
+                 ng-style="{right: -jfTableView.getScrollWidth()+'px'}"
                  ng-if="jfTableView.options.paginationMode === jfTableView.options.VIRTUAL_SCROLL">
                 <div class="scroll-faker"
                      ng-init="jfTableView.initScrollFaker()"
