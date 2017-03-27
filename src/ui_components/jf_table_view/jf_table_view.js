@@ -25,6 +25,16 @@ class jfTableViewController {
             if (this.options && !this.options.dirCtrl) {
                 this.options._setDirectiveController(this);
             }
+            if (this.options && ! this.paginationApi) {
+                this.paginationApi = new PaginationApi(this);
+
+                this.paginationApi.registerChangeListener(()=>{
+                    this.refresh(false);
+                })
+
+                this.currentPage = 0;
+                this.virtualScrollIndex = 0;
+            }
         })
         this.compileTemplates();
 
@@ -36,16 +46,6 @@ class jfTableViewController {
             $(window).off('resize',on_resize);
         })
 
-
-
-        this.paginationApi = new PaginationApi(this);
-
-        this.paginationApi.registerChangeListener(()=>{
-            this.refresh(false);
-        })
-
-        this.currentPage = 0;
-        this.virtualScrollIndex = 0;
     }
 
     getFilteredData() {
@@ -116,7 +116,7 @@ class jfTableViewController {
         this.rowScopes.forEach(s=>s.$destroy())
         this.rowScopes = [];
         this.compileTemplates();
-        if (updatePagination) this.paginationApi.update();
+        if (this.paginationApi && updatePagination) this.paginationApi.update();
     }
     clearSelection() {
         this.data.forEach(row=>delete row.$selected)
