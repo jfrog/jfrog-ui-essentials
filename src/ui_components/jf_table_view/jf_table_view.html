@@ -11,7 +11,7 @@
         </div>
         <div class="top-center">
             <div class="new-entity">
-                <div ng-click="jfTableView.options.newEntityCallback()"
+                <div ng-click="jfTableView.options.newEntityCallback(); jfTableView.onUpdateFilter()"
                      ng-if="jfTableView.options.newEntityCallback">
                     <span class="icon icon-new"></span>
                     Add {{jfTableView.objectName || 'Item'}}
