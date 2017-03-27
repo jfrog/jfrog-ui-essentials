@@ -91,6 +91,10 @@ export function JFrogTableViewOptions($timeout) {
         }
 
         sortBy(field,resort = false) {
+            if (resort) {
+                this.update(true);
+                return;
+            }
             if (!resort && this.sortByField === field) {
                 this.revSort = !this.revSort;
             }
@@ -99,9 +103,26 @@ export function JFrogTableViewOptions($timeout) {
             }
             this.sortByField = field;
             if (field) {
-                let temp = this.data;
-                temp = _.sortBy(temp,(row)=>this.revSort ? -_.get(row,field) : _.get(row,field));
-                Array.prototype.splice.apply(this.data, [0,this.data.length].concat(temp));
+                let colObj = _.find(this.columns,{field});
+                if (colObj.sortingAlgorithm) {
+                    this.data.sort((a,b) => {
+                        return (this.revSort ? -1 : 1)*colObj.sortingAlgorithm(_.get(a,field),_.get(b,field),a,b,colObj);
+                    });
+                }
+                else {
+                    if (colObj.sortBy) {
+                        let temp = this.data;
+                        temp = _.sortBy(temp,(row)=>(this.revSort ? -1 : 1)*colObj.sortBy(_.get(row,field),row));
+                        Array.prototype.splice.apply(this.data, [0,this.data.length].concat(temp));
+                    }
+                    else {
+                        this.data.sort((a,b)=>{
+                            let valA = _.get(a,field);
+                            let valB = _.get(b,field);
+                            return (this.revSort ? -1 : 1)*(valA>valB?1:(valA<valB?-1:0));
+                        });
+                    }
+                }
             }
             else {
                 Array.prototype.splice.apply(this.data, [0,this.data.length].concat(this.origData));
