@@ -36,7 +36,8 @@ class jfTableViewController {
                 this.virtualScrollIndex = 0;
             }
         })
-        this.compileTemplates();
+
+        this.$timeout(()=>this.compileTemplates());
 
         let on_resize = () => this.$timeout(()=>this.options._normalizeWidths());
         
@@ -79,32 +80,30 @@ class jfTableViewController {
     }
 
     compileTemplates() {
-        this.$timeout(()=>{
-            let elems = $(this.$element).find('.compile-this');
-            for (let i = 0; i < elems.length; i++) {
-                let elem = $(elems[i]);
-                let column = $(elem).attr('data-column');
-                let row = $(elem).attr('data-row');
-                let columnObj = _.find(this.options.columns,{field:column});
-                let rowObj = this.getPageData()[row];
+        let elems = $(this.$element).find('.compile-this');
+        for (let i = 0; i < elems.length; i++) {
+            let elem = $(elems[i]);
+            let column = $(elem).attr('data-column');
+            let row = $(elem).attr('data-row');
+            let columnObj = _.find(this.options.columns,{field:column});
+            let rowObj = this.getPageData()[row];
 
-                let rowScope = this.$rootScope.$new();
+            let rowScope = this.$rootScope.$new();
 
-                this.rowScopes.push(rowScope);
+            this.rowScopes.push(rowScope);
 
-                _.extend(rowScope,{
-                    row: { entity: rowObj },
-                    appScope: this.options.appScope
-                });
+            _.extend(rowScope,{
+                row: { entity: rowObj },
+                appScope: this.options.appScope
+            });
 
-                let template = columnObj.cellTemplate;
-                let templateElem = $(template);
-                this.$compile(templateElem)(rowScope);
-                elem.empty();
-                elem.append(templateElem);
-            }
+            let template = columnObj.cellTemplate;
+            let templateElem = $(template);
+            this.$compile(templateElem)(rowScope);
+            elem.empty();
+            elem.append(templateElem);
+        }
 
-        })
     }
 
     onUpdateFilter() {
