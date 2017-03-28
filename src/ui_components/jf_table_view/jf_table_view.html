@@ -1,4 +1,4 @@
-<div class="jf-table-view">
+<div class="jf-table-view" ng-class="{'old-grid-theme': jfTableView.options.theme === jfTableView.options.OLD_GRID_THEME}">
     <div class="jf-table-top"
          ng-class="{'no-sort':!jfTableView.options.sortable}">
         <div class="jf-table-filter">
@@ -17,7 +17,7 @@
                     Add {{jfTableView.objectName || 'Item'}}
                 </div>
             </div>
-            <div class="sort-controller" ng-if="jfTableView.options.sortable && jfTableView.data.length">
+            <div class="sort-controller" ng-if="jfTableView.options.sortable && jfTableView.options.sortDropDownVisible && jfTableView.data.length">
                 <div class="sort-label">Sort By:</div>
                 <div class="select-wrapper">
                     <jf-ui-select jf-select-model="jfTableView.options.sortByField"

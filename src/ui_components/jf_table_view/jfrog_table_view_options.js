@@ -14,6 +14,11 @@ export function JFrogTableViewOptions($timeout) {
             // pagination mode
             this.PAGINATION = 0;
             this.VIRTUAL_SCROLL = 1;
+
+            // Themes
+            this.DEFAULT_THEME = 0;
+            this.OLD_GRID_THEME = 1;
+
             this._setDefaults();
         }
 
@@ -25,6 +30,8 @@ export function JFrogTableViewOptions($timeout) {
             this.paginationMode = this.PAGINATION;
             this.actionButtonSize = 60; //px
             this.selectionColumnWidth = 60; //px
+            this.theme = this.DEFAULT_THEME;
+            this.sortDropDownVisible = true;
         }
 
         setData(data) {
@@ -67,6 +74,10 @@ export function JFrogTableViewOptions($timeout) {
             this.columns.forEach(column=>{
                 if (column.header) this.headersRow[column.field] = column.header;
             })
+        }
+
+        showSortDropdown(show=true) {
+            this.sortDropDownVisible = show;
         }
 
         setSelection(selectionMode) {
@@ -217,6 +228,18 @@ export function JFrogTableViewOptions($timeout) {
         setEmptyTableText(text) {
             this.emptyTableText = text;
         }
+
+        setTheme(theme) {
+            this.theme = theme;
+            if (this.theme === this.OLD_GRID_THEME) {
+                this.rowHeight = '40px';
+                this.actionButtonSize = 40;
+                this.selectionColumnWidth = 40;
+            }
+            this._normalizeWidths();
+        }
+
+
 
     }
 
