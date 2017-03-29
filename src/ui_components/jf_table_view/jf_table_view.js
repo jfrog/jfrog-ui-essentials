@@ -29,7 +29,7 @@ class jfTableViewController {
                 this.paginationApi = new PaginationApi(this);
 
                 this.paginationApi.registerChangeListener(()=>{
-                    this.refresh(false);
+                    this.$timeout(()=>this.refresh(false));
                 })
 
                 this.currentPage = 0;
@@ -185,6 +185,11 @@ class jfTableViewController {
             })
         }
         return this.scrollWidthCache;
+    }
+
+    createNewEntity() {
+        this.options.newEntityCallback();
+        this.$timeout(()=>this.onUpdateFilter());
     }
 }
 

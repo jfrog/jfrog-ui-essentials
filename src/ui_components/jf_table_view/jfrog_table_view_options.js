@@ -159,6 +159,11 @@ export function JFrogTableViewOptions($timeout) {
             this._normalizeWidths();
         }
 
+        setBatchActions(batchActions) {
+            this.batchActions = batchActions;
+            this.setSelection(this.MULTI_SELECTION);
+        }
+
         _setDirectiveController(ctrl) {
             this.dirCtrl = ctrl;
             this.update();
@@ -239,7 +244,13 @@ export function JFrogTableViewOptions($timeout) {
             this._normalizeWidths();
         }
 
+        getSelectedRows() {
+            return _.filter(this.data,{$selected: true});
+        }
 
+        clearSelection() {
+            this.dirCtrl.clearSelection();
+        }
 
     }
 

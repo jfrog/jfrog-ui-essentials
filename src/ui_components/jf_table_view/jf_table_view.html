@@ -11,7 +11,7 @@
         </div>
         <div class="top-center">
             <div class="new-entity">
-                <div ng-click="jfTableView.options.newEntityCallback(); jfTableView.onUpdateFilter()"
+                <div ng-click="jfTableView.createNewEntity()"
                      ng-if="jfTableView.options.newEntityCallback">
                     <span class="icon icon-new"></span>
                     Add {{jfTableView.objectName || 'Item'}}
@@ -29,6 +29,9 @@
                      ng-click="jfTableView.options.reverseSortingDir()"
                      ng-class="{asc: !jfTableView.options.revSort, desc: jfTableView.options.revSort}"></div>
             </div>
+        </div>
+        <div class="batch-actions">
+            <jf-table-view-batch-actions table-options="jfTableView.options" actions="jfTableView.options.batchActions"></jf-table-view-batch-actions>
         </div>
         <div class="pagination-controls">
             <jf-drag-drop-pagination pagination-api="jfTableView.paginationApi" ng-if="jfTableView.paginationApi">

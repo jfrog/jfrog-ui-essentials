@@ -1,0 +1,45 @@
+.grid-batch-actions {
+  padding-top: 20px;
+
+  .btn {
+    height: 30px;
+    line-height: 30px;
+    padding: 0 12px;
+    border: 1px solid transparent;
+    &, i:before {
+      color: @grayFontGeneral;
+    }
+
+    &.disabled {
+      &, i:before {
+        color: @grayFontLighter;
+      }
+    }
+
+    img {
+      margin-right: 2px;
+    }
+
+    &:hover {
+      background-color: transparent;
+      &, i:before {
+        color: @greenFontHeader;
+      }
+    }
+
+    &.batch-action-clear:hover {
+      &, i:before {
+        color: @redError;
+      }
+      //i:before {
+      //  border: 0;
+      //}
+    }
+  }
+
+  i {
+    float: left;
+    margin: 0 5px 0 0;
+    font-size: 16px;
+  }
+}
