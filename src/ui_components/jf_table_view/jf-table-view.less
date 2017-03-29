@@ -154,7 +154,24 @@
           vertical-align: middle;
           white-space: nowrap;
           text-overflow: ellipsis;
-          max-width: 0;
+          &:not(.group-header) {
+            max-width: 0;
+          }
+          &.group-header {
+
+          }
+          .group-button-wrapper {
+            position: relative;
+            display: inline-block;
+            vertical-align: super;
+            .group-button {
+              position: absolute;
+              width: 24px;
+              height: 24px;
+              top: -12px;
+              left: 10px;
+            }
+          }
           .selection-button,
           .action-button {
             cursor: pointer;
@@ -186,7 +203,6 @@
               }
             }
           }
-
         }
       }
     }
@@ -231,8 +247,9 @@
         &:not(:first-child) {
         }
         .jf-table-cell {
-          border-right: 1px solid @grayGridHeader;
-
+          &:not(.group-header) {
+            border-right: 1px solid @grayGridHeader;
+          }
           &.actions {
             border-right: none;
           }

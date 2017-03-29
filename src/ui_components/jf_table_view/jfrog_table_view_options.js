@@ -252,6 +252,52 @@ export function JFrogTableViewOptions($timeout) {
             this.dirCtrl.clearSelection();
         }
 
+        groupBy(field) {
+            this.unGroup();
+            this.groupedBy = this.groupedBy === field ? null : field;
+            if (this.groupedBy) {
+                this.setFirstColumn(field);
+                let groupedData = _.groupBy(this.data,field);
+                let tempData = [];
+                let column = _.find(this.columns,{field});
+                for (let key in groupedData) {
+                    let data = groupedData[key];
+                    tempData.push({$groupHeader : {field, value: key, col: column, count: data.length}})
+                    Array.prototype.splice.apply(tempData, [tempData.length, 0].concat(data));
+                }
+                Array.prototype.splice.apply(this.data, [0, this.data.length].concat(tempData));
+            }
+            else {
+                this.restoreColumnOrder();
+            }
+
+            $timeout(()=>this.update());
+        }
+
+        setFirstColumn(field) {
+            this.restoreColumnOrder();
+            let column = _.find(this.columns,{field});
+            let index = this.columns.indexOf(column);
+            column.$originalIndex = index;
+            this.columns.splice(index,1);
+            this.columns.splice(0,0,column);
+        }
+
+        restoreColumnOrder() {
+            let originalIndex = this.columns[0] && this.columns[0].$originalIndex;
+            if (originalIndex) {
+                let temp = this.columns[0];
+                this.columns.splice(0,1);
+                this.columns.splice(originalIndex,0 , temp);
+            }
+        }
+
+        unGroup() {
+            let cleanData = _.filter(this.data,(row)=>!row.$groupHeader);
+            Array.prototype.splice.apply(this.data, [0, this.data.length].concat(cleanData));
+        }
+
+
     }
 
 }

@@ -88,6 +88,11 @@ class jfTableViewController {
             let columnObj = _.find(this.options.columns,{field:column});
             let rowObj = this.getPageData()[row];
 
+            if (rowObj.$groupHeader) {
+                let groupRowObj = {};
+                _.set(groupRowObj,rowObj.$groupHeader.field,rowObj.$groupHeader.value);
+                rowObj = groupRowObj;
+            }
             let rowScope = this.$rootScope.$new();
 
             this.rowScopes.push(rowScope);

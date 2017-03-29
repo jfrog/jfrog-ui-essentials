@@ -1,5 +1,5 @@
 <div class="jf-table-row"
-     ng-class="{headers: jfTableRow.rowId === 'headers'}"
+     ng-class="{headers: jfTableRow.rowId === 'headers', 'group-header': jfTableRow.data.$groupHeader}"
      ng-style="{height: jfTableRow.tableView.options.rowHeight, opacity: jfTableRow.tableView.options.ready ? 1 : 0}">
 
     <div class="jf-table-cell selection"
@@ -17,7 +17,22 @@
         </div>
     </div>
 
+    <div class="jf-table-cell group-header"
+         ng-if="jfTableRow.data.$groupHeader"
+         ng-click=""
+         ng-style="{height: jfTableRow.tableView.options.rowHeight}">
+        <div class="jf-table-cell-content group-header"
+             ng-if="!jfTableRow.data.$groupHeader.col.cellTemplate">
+            {{jfTableRow.data.$groupHeader.value}}
+        </div>
+        <div class="jf-table-cell-content group-header compile-this"
+             ng-if="jfTableRow.data.$groupHeader.col.cellTemplate"
+             data-column="{{jfTableRow.data.$groupHeader.field}}"
+             data-row="{{jfTableRow.rowId}}">
+        </div>
+    </div>
     <div class="jf-table-cell"
+         ng-if="!jfTableRow.data.$groupHeader"
          ng-class="{header: jfTableRow.rowId === 'headers' && col.header, sortable: jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.sortable, [jfTableRow.kebab(col.field)]: true}"
          ng-click="jfTableRow.rowId === 'headers' && col.header && jfTableRow.tableView.options.sortable && jfTableRow.tableView.options.sortBy(col.field)"
          ng-style="{height: jfTableRow.tableView.options.rowHeight, width: col.width}"
@@ -26,6 +41,12 @@
              jf-tooltip-on-overflow
              ng-if="!col.cellTemplate || jfTableRow.rowId === 'headers'">
             {{jfTableRow.getField(col.field)}}
+            <div class="group-button-wrapper">
+                <div class="group-button icon-grouping-off"
+                     ng-class="{'icon-grouping-on': jfTableRow.tableView.options.groupedBy === col.field}"
+                     ng-click="jfTableRow.tableView.options.groupBy(col.field); $event.stopPropagation();"
+                     ng-if="col.allowGrouping"></div>
+            </div>
         </div>
         <div class="jf-table-cell-content compile-this"
              jf-tooltip-on-overflow
@@ -37,7 +58,7 @@
 
     <div class="jf-table-cell actions"
          ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.actions.length * jfTableRow.tableView.options.actionButtonSize}"
-         ng-if="jfTableRow.rowId !== 'headers' && jfTableRow.tableView.options.actions.length">
+         ng-if="jfTableRow.rowId !== 'headers' && jfTableRow.tableView.options.actions.length && !jfTableRow.data.$groupHeader">
         <div class="jf-table-cell-content">
             <div class="action-button"
                  ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.actionButtonSize, visibility: !action.visibleWhen || action.visibleWhen(jfTableRow.data) ? 'visible' : 'hidden'}"
