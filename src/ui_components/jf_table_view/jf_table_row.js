@@ -22,6 +22,11 @@ class jfTableRowController {
             this.tableView.toggleSelectAll();
         }
     }
+
+    toggleGroupExpansion() {
+        this.data.$groupHeader.$expanded = !this.data.$groupHeader.$expanded;
+        this.tableView.options.updateGroupExpansionState(this.data);
+    }
 }
 
 export function jfTableRow() {

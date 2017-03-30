@@ -39,6 +39,10 @@ export function JFrogTableViewOptions($timeout) {
             this.origData = _.sortBy(data,'');
             this.update();
         }
+        
+        getData() {
+            return this.groupedData || this.data;
+        }
 
         setRowsPerPage(rpp) {
             this.rowsPerPage = rpp;
@@ -46,7 +50,6 @@ export function JFrogTableViewOptions($timeout) {
 
         update(noSort=false) {
             if (this.dirCtrl) {
-                this.dirCtrl.data = this.data;
                 this.origData = _.sortBy(this.data,'');
                 if (!noSort) this.sortBy(this.sortByField,true);
                 else this.dirCtrl.refresh();
@@ -127,11 +130,39 @@ export function JFrogTableViewOptions($timeout) {
                         Array.prototype.splice.apply(this.data, [0,this.data.length].concat(temp));
                     }
                     else {
-                        this.data.sort((a,b)=>{
-                            let valA = _.get(a,field);
-                            let valB = _.get(b,field);
-                            return (this.revSort ? -1 : 1)*(valA>valB?1:(valA<valB?-1:0));
-                        });
+                        if (this.groupedData) {
+                            if (this.groupedBy === field) {
+                                this.groupedData.sort((a,b)=>{
+                                    if (a.$groupHeader && !b.$groupHeader && a.$groupHeader.field === field && a.$groupHeader.value === _.get(b,field)) return -1;
+                                    else if (!a.$groupHeader && b.$groupHeader && b.$groupHeader.field === field && b.$groupHeader.value === _.get(a,field)) return 1;
+                                    else {
+                                        let valA = a.$groupHeader ? a.$groupHeader.value : _.get(a,field);
+                                        let valB= b.$groupHeader ? b.$groupHeader.value : _.get(b,field);
+                                        return (this.revSort ? -1 : 1)*(valA>valB?1:(valA<valB?-1:0));
+                                    }
+                                });
+                            }
+                            else {
+                                for (let key in this.fullGroupedData) {
+                                    let groupData = this.fullGroupedData[key];
+                                    groupData.sort((a,b)=>{
+                                        let valA = _.get(a,field);
+                                        let valB = _.get(b,field);
+                                        return (this.revSort ? -1 : 1)*(valA>valB?1:(valA<valB?-1:0));
+                                    });
+                                }
+                                this.groupedData.forEach(row=>{
+                                    if (row.$groupHeader) this.updateGroupExpansionState(row);
+                                });
+                            }
+                        }
+                        else {
+                            this.data.sort((a,b)=>{
+                                let valA = _.get(a,field);
+                                let valB = _.get(b,field);
+                                return (this.revSort ? -1 : 1)*(valA>valB?1:(valA<valB?-1:0));
+                            });
+                        }
                     }
                 }
             }
@@ -257,15 +288,15 @@ export function JFrogTableViewOptions($timeout) {
             this.groupedBy = this.groupedBy === field ? null : field;
             if (this.groupedBy) {
                 this.setFirstColumn(field);
-                let groupedData = _.groupBy(this.data,field);
+                this.fullGroupedData = _.groupBy(this.data,field);
                 let tempData = [];
                 let column = _.find(this.columns,{field});
-                for (let key in groupedData) {
-                    let data = groupedData[key];
-                    tempData.push({$groupHeader : {field, value: key, col: column, count: data.length}})
-                    Array.prototype.splice.apply(tempData, [tempData.length, 0].concat(data));
+                for (let key in this.fullGroupedData) {
+                    let data = this.fullGroupedData[key];
+                    tempData.push({$groupHeader : {field, value: _.get(data[0],field), col: column, count: data.length}})
+//                    Array.prototype.splice.apply(tempData, [tempData.length, 0].concat(data));
                 }
-                Array.prototype.splice.apply(this.data, [0, this.data.length].concat(tempData));
+                this.groupedData = tempData;
             }
             else {
                 this.restoreColumnOrder();
@@ -274,6 +305,20 @@ export function JFrogTableViewOptions($timeout) {
             $timeout(()=>this.update());
         }
 
+        updateGroupExpansionState(groupHeaderRow) {
+            let field = groupHeaderRow.$groupHeader.field;
+            let value = groupHeaderRow.$groupHeader.value;
+            let toRemove = _.filter(this.groupedData,row=>{
+                return !row.$groupHeader && _.get(row,field) == value
+            });
+            this.groupedData = _.difference(this.groupedData,toRemove);
+
+            if (groupHeaderRow.$groupHeader.$expanded) {
+                let index = _.indexOf(this.groupedData,groupHeaderRow);
+                Array.prototype.splice.apply(this.groupedData, [index+1, 0].concat(this.fullGroupedData[value]));
+            }
+            $timeout(()=>this.update());
+        }
         setFirstColumn(field) {
             this.restoreColumnOrder();
             let column = _.find(this.columns,{field});
@@ -293,8 +338,11 @@ export function JFrogTableViewOptions($timeout) {
         }
 
         unGroup() {
+            delete this.groupedData;
+/*
             let cleanData = _.filter(this.data,(row)=>!row.$groupHeader);
             Array.prototype.splice.apply(this.data, [0, this.data.length].concat(cleanData));
+*/
         }
 
 

@@ -123,6 +123,14 @@
       white-space: nowrap;
       padding: 0;
       margin: 0;
+      &.group-header {
+        background-color: white !important;
+        color: @greenBGDark;
+        cursor: pointer;
+        &.expanded {
+          background-color: @greenBGSmallHover !important;
+        }
+      }
       &:not(.headers) {
         border: 1.5px solid @greenBorderLight;
       }
@@ -146,6 +154,15 @@
         &.header {
           &.sortable {
             cursor: pointer;
+          }
+        }
+        &.group-header {
+          .icon-more {
+            transform: rotate(-90deg) translate(-15px,0) scale(1.5,1.5);
+            margin: 0 18px 0 7px;
+            &.expanded {
+              transform: rotate(0deg) translate(0,16px) scale(1.5,1.5);
+            }
           }
         }
         .jf-table-cell-content {
@@ -257,6 +274,16 @@
             &.sortable {
             }
           }
+          &.group-header {
+            .icon-more {
+              transform: rotate(-90deg) translate(-5px,0);
+              margin: 0 5px 0 5px;
+              &.expanded {
+                transform: rotate(0deg) translate(0,6px);
+              }
+            }
+          }
+
           .jf-table-cell-content {
             .selection-button,
             .action-button {

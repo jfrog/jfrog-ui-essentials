@@ -19,7 +19,6 @@ class jfTableViewController {
         this.$compile = $compile;
         this.$scope = $scope;
         this.$rootScope = $rootScope;
-        this.data = null;
         this.rowScopes = [];
         $scope.$watch('jfTableView.options',(options) => {
             if (this.options && !this.options.dirCtrl) {
@@ -52,16 +51,16 @@ class jfTableViewController {
     getFilteredData() {
         if (!this.tableFilter) {
             this.noFilterResults = false;
-            return this.data || [];
+            return this.options.getData() || [];
         }
-        if (!this.filterCache) this.filterCache = _.filter(this.data,(row=>{
+        if (!this.filterCache) this.filterCache = _.filter(this.options.getData(),(row=>{
             for (let i in this.options.columns) {
                 let col = this.options.columns[i];
                 if (_.get(row,col.field) && _.contains(_.get(row,col.field).toString().toLowerCase(), this.tableFilter.toLowerCase())) return true;
             }
             return false;
         }))
-        this.noFilterResults = !!(!this.filterCache.length && this.data.length);
+        this.noFilterResults = !!(!this.filterCache.length && this.options.getData().length);
         return this.filterCache;
     }
 
@@ -123,12 +122,12 @@ class jfTableViewController {
         if (this.paginationApi && updatePagination) this.paginationApi.update();
     }
     clearSelection() {
-        this.data.forEach(row=>delete row.$selected)
+        this.options.getData().forEach(row=>delete row.$selected)
         this.allSelected = false;
     }
     toggleSelectAll() {
         this.allSelected = !this.allSelected;
-        this.data.forEach(row=>row.$selected = this.allSelected);
+        this.options.getData().forEach(row=>row.$selected = this.allSelected);
     }
     onMouseWheel($event, $delta, $deltaX, $deltaY) {
         if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
@@ -146,7 +145,7 @@ class jfTableViewController {
     }
 
     getTotalScrollHeight() {
-        return this.data ? ((this.filterCache || this.data).length * parseInt(this.options.rowHeight)) + 'px' : '0';
+        return this.options.getData() ? ((this.filterCache || this.options.getData()).length * parseInt(this.options.rowHeight)) + 'px' : '0';
     }
 
     initScrollFaker() {
@@ -154,7 +153,7 @@ class jfTableViewController {
             let scrollParent = this.$element.find('.scroll-faker-container');
             scrollParent.on('scroll',(e)=>{
                 this.$scope.$apply(()=>{
-                    let len = (this.filterCache || this.data).length;
+                    let len = (this.filterCache || this.options.getData()).length;
                     if (len) {
                         let relativePosition = scrollParent.scrollTop()/(len * parseInt(this.options.rowHeight))
                         this.virtualScrollIndex = Math.floor(relativePosition*len);
@@ -171,7 +170,7 @@ class jfTableViewController {
     }
     syncFakeScroller() {
         if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
-            let len = (this.filterCache || this.data).length;
+            let len = (this.filterCache || this.options.getData()).length;
             let scrollParent = this.$element.find('.scroll-faker-container');
             let relativePosition = this.virtualScrollIndex / len;
             let scrollTop = relativePosition * len * parseInt(this.options.rowHeight);

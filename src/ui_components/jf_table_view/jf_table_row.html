@@ -1,5 +1,6 @@
 <div class="jf-table-row"
-     ng-class="{headers: jfTableRow.rowId === 'headers', 'group-header': jfTableRow.data.$groupHeader}"
+     ng-click="jfTableRow.data.$groupHeader && jfTableRow.toggleGroupExpansion()"
+     ng-class="{headers: jfTableRow.rowId === 'headers', 'group-header': jfTableRow.data.$groupHeader, 'expanded': jfTableRow.data.$groupHeader.$expanded}"
      ng-style="{height: jfTableRow.tableView.options.rowHeight, opacity: jfTableRow.tableView.options.ready ? 1 : 0}">
 
     <div class="jf-table-cell selection"
@@ -19,8 +20,9 @@
 
     <div class="jf-table-cell group-header"
          ng-if="jfTableRow.data.$groupHeader"
-         ng-click=""
          ng-style="{height: jfTableRow.tableView.options.rowHeight}">
+        <div class="action-icon icon icon-more"
+             ng-class="{'expanded': jfTableRow.data.$groupHeader.$expanded}"></div>
         <div class="jf-table-cell-content group-header"
              ng-if="!jfTableRow.data.$groupHeader.col.cellTemplate">
             {{jfTableRow.data.$groupHeader.value}}
