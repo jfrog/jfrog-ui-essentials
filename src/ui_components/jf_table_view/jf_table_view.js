@@ -56,7 +56,7 @@ class jfTableViewController {
         if (!this.filterCache) this.filterCache = _.filter(this.options.getData(),(row=>{
             for (let i in this.options.columns) {
                 let col = this.options.columns[i];
-                if (_.get(row,col.field) && _.contains(_.get(row,col.field).toString().toLowerCase(), this.tableFilter.toLowerCase())) return true;
+                if (row.$groupHeader || (_.get(row,col.field) && _.contains(_.get(row,col.field).toString().toLowerCase(), this.tableFilter.toLowerCase()))) return true;
             }
             return false;
         }))
@@ -130,15 +130,21 @@ class jfTableViewController {
     toggleSelectAll() {
         this.allSelected = !this.allSelected;
         this.options.getData().forEach(row=>row.$selected = this.allSelected);
+        if (this.options.groupedBy) this.options.data.forEach(row=>row.$selected = this.allSelected);
     }
     onMouseWheel($event, $delta, $deltaX, $deltaY) {
         if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
-            $event.preventDefault();
             if ($deltaY<0) { // scrollUp
-                if (this.virtualScrollIndex + this.options.rowsPerPage < this.getFilteredData().length) this.virtualScrollIndex++;
+                if (this.virtualScrollIndex + this.options.rowsPerPage < this.getFilteredData().length) {
+                    $event.preventDefault();
+                    this.virtualScrollIndex++;
+                }
             }
             else if ($deltaY>0) { // scrollDown
-                if (this.virtualScrollIndex > 0) this.virtualScrollIndex--;
+                if (this.virtualScrollIndex > 0) {
+                    $event.preventDefault();
+                    this.virtualScrollIndex--;
+                }
             }
             this.currentPage = Math.floor((this.virtualScrollIndex + this.options.rowsPerPage - 1) / this.options.rowsPerPage);
             this.options.update(true,true);
@@ -196,6 +202,13 @@ class jfTableViewController {
     createNewEntity() {
         this.options.newEntityCallback();
         this.$timeout(()=>this.onUpdateFilter());
+    }
+
+    groupSelection(groupHeader) {
+        let query = {};
+        _.set(query,groupHeader.$groupHeader.field,groupHeader.$groupHeader.value)
+        let group = _.filter(this.options.data,query);
+        group.forEach(row=>row.$selected = groupHeader.$selected);
     }
 }
 

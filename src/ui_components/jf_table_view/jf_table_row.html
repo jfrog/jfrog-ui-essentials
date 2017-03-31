@@ -8,11 +8,11 @@
          ng-if="jfTableRow.tableView.options.hasSelection()">
         <div class="jf-table-cell-content">
             <div class="selection-button"
-                 ng-if="jfTableRow.rowId !== 'headers' || (jfTableRow.tableView.options.selectionMode === jfTableRow.tableView.options.MULTI_SELECTION && jfTableRow.tableView.options.getData().length)"
+                 ng-if="(!jfTableRow.data.$groupHeader && jfTableRow.rowId !== 'headers') || (jfTableRow.tableView.options.selectionMode === jfTableRow.tableView.options.MULTI_SELECTION && jfTableRow.tableView.options.getData().length)"
                  ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.selectionColumnWidth}">
                 <div class="selection-icon icon icon-datagrid-v"
                      ng-class="{selected: jfTableRow.data.$selected || (jfTableRow.rowId === 'headers' && jfTableRow.tableView.allSelected)}"
-                     ng-click="jfTableRow.toggleSelection(jfTableRow.rowId === 'headers')">
+                     ng-click="jfTableRow.toggleSelection(jfTableRow.rowId === 'headers');$event.stopPropagation();">
                 </div>
             </div>
         </div>
@@ -32,6 +32,7 @@
              data-column="{{jfTableRow.data.$groupHeader.field}}"
              data-row="{{jfTableRow.rowId}}">
         </div>
+        <div class="group-header-count">({{jfTableRow.data.$groupHeader.count}})</div>
     </div>
     <div class="jf-table-cell"
          ng-if="!jfTableRow.data.$groupHeader"

@@ -11,7 +11,14 @@ class jfTableRowController {
         if (!all) {
             if (this.tableView.options.selectionMode === this.tableView.options.MULTI_SELECTION) {
                 this.data.$selected = !this.data.$selected;
-                if (!this.data.$selected) this.tableView.allSelected = false;
+                if (!this.data.$selected) {
+                    this.tableView.allSelected = false;
+                    if (this.tableView.options.groupedBy) {
+                        let groupHeader = _.find(this.tableView.options.getData(),{$groupHeader:{value: _.get(this.data,this.tableView.options.groupedBy)}})
+                        if (groupHeader) groupHeader.$selected = false;
+                    }
+                }
+                if (this.data.$groupHeader) this.tableView.groupSelection(this.data);
             }
             else if (this.tableView.options.selectionMode === this.tableView.options.SINGLE_SELECTION) {
                 this.tableView.clearSelection();
