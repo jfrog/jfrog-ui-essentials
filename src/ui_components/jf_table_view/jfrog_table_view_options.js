@@ -48,8 +48,10 @@ export function JFrogTableViewOptions($timeout) {
             this.rowsPerPage = rpp;
         }
 
-        update(noSort=false) {
+        update(noSort=false, noGrouping=false) {
+//            console.log('update',noSort,noGrouping)
             if (this.dirCtrl) {
+                if (!noGrouping) this.refreshGrouping();
                 this.origData = _.sortBy(this.data,'');
                 if (!noSort) this.sortBy(this.sortByField,true);
                 else this.dirCtrl.refresh();
@@ -106,7 +108,7 @@ export function JFrogTableViewOptions($timeout) {
 
         sortBy(field,resort = false) {
             if (resort) {
-                this.update(true);
+                this.update(true,true);
                 return;
             }
             if (!resort && this.sortByField === field) {
@@ -170,7 +172,7 @@ export function JFrogTableViewOptions($timeout) {
                 Array.prototype.splice.apply(this.data, [0,this.data.length].concat(this.origData));
             }
             if (!resort && this.dirCtrl) delete this.dirCtrl.filterCache;
-            this.update(true);
+            this.update(true,true);
         }
 
         reverseSortingDir() {
@@ -302,7 +304,23 @@ export function JFrogTableViewOptions($timeout) {
                 this.restoreColumnOrder();
             }
 
-            $timeout(()=>this.update());
+            $timeout(()=>this.update(false,true));
+        }
+
+        refreshGrouping() {
+            if (this.groupedBy) {
+                let temp = this.groupedBy;
+                this.groupedBy = null;
+                let openedGroupHeaders = _.filter(this.groupedData,{$groupHeader:{$expanded: true}});
+                this.groupBy(temp);
+                openedGroupHeaders.forEach(wasOpened => {
+                    let toBeOpened = _.find(this.groupedData,{$groupHeader:{value: wasOpened.$groupHeader.value}});
+                    if (toBeOpened) {
+                        toBeOpened.$groupHeader.$expanded = true;
+                        this.updateGroupExpansionState(toBeOpened);
+                    }
+                })
+            }
         }
 
         updateGroupExpansionState(groupHeaderRow) {
@@ -317,7 +335,7 @@ export function JFrogTableViewOptions($timeout) {
                 let index = _.indexOf(this.groupedData,groupHeaderRow);
                 Array.prototype.splice.apply(this.groupedData, [index+1, 0].concat(this.fullGroupedData[value]));
             }
-            $timeout(()=>this.update());
+            this.update(false,true);
         }
         setFirstColumn(field) {
             this.restoreColumnOrder();

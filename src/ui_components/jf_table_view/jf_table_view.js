@@ -87,6 +87,8 @@ class jfTableViewController {
             let columnObj = _.find(this.options.columns,{field:column});
             let rowObj = this.getPageData()[row];
 
+            if (!rowObj) continue;
+
             if (rowObj.$groupHeader) {
                 let groupRowObj = {};
                 _.set(groupRowObj,rowObj.$groupHeader.field,rowObj.$groupHeader.value);
@@ -139,7 +141,7 @@ class jfTableViewController {
                 if (this.virtualScrollIndex > 0) this.virtualScrollIndex--;
             }
             this.currentPage = Math.floor((this.virtualScrollIndex + this.options.rowsPerPage - 1) / this.options.rowsPerPage);
-            this.options.update();
+            this.options.update(true,true);
             this.syncFakeScroller();
         }
     }
@@ -163,7 +165,7 @@ class jfTableViewController {
                         this.virtualScrollIndex = 0;
                         this.currentPage = 0;
                     }
-                    this.options.update();
+                    this.options.update(true,true);
                 })
             })
         }

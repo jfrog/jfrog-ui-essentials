@@ -27,6 +27,11 @@ class jfTableRowController {
         this.data.$groupHeader.$expanded = !this.data.$groupHeader.$expanded;
         this.tableView.options.updateGroupExpansionState(this.data);
     }
+
+    fireAction(action) {
+        action.callback(this.data);
+        this.tableView.onUpdateFilter()
+    }
 }
 
 export function jfTableRow() {

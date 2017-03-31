@@ -8,7 +8,7 @@
          ng-if="jfTableRow.tableView.options.hasSelection()">
         <div class="jf-table-cell-content">
             <div class="selection-button"
-                 ng-if="jfTableRow.rowId !== 'headers' || (jfTableRow.tableView.options.selectionMode === jfTableRow.tableView.options.MULTI_SELECTION && jfTableRow.tableView.data.length)"
+                 ng-if="jfTableRow.rowId !== 'headers' || (jfTableRow.tableView.options.selectionMode === jfTableRow.tableView.options.MULTI_SELECTION && jfTableRow.tableView.options.getData().length)"
                  ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.selectionColumnWidth}">
                 <div class="selection-icon icon icon-datagrid-v"
                      ng-class="{selected: jfTableRow.data.$selected || (jfTableRow.rowId === 'headers' && jfTableRow.tableView.allSelected)}"
@@ -66,7 +66,7 @@
                  ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.actionButtonSize, visibility: !action.visibleWhen || action.visibleWhen(jfTableRow.data) ? 'visible' : 'hidden'}"
                  ng-repeat="action in jfTableRow.tableView.options.actions">
                 <div class="action-icon"
-                     ng-click="action.callback(jfTableRow.data);jfTableRow.tableView.onUpdateFilter()"
+                     ng-click="jfTableRow.fireAction(action);$event.stopPropagation();"
                      jf-tooltip="{{action.tooltip}}"
                      ng-class="action.icon"></div>
             </div>
