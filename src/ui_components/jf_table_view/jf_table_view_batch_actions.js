@@ -2,6 +2,7 @@ class jfTableViewBatchActionsController {
     perform(action) {
         if (this.anySelected() && (!action.disabledWhen || !action.disabledWhen())) {
             action.callback && action.callback(this.tableOptions.getSelectedRows());
+            this.tableOptions.refresh();
         }
     }
     anySelected() {

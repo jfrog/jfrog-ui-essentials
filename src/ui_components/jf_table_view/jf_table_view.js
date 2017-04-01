@@ -83,7 +83,7 @@ class jfTableViewController {
     }
 
     onUpdateFilter() {
-        delete this.options.filterCache;
+        this.options.refreshFilter();
         this.refresh();
         this.paginationApi.update();
     }
@@ -98,12 +98,12 @@ class jfTableViewController {
     }
     toggleSelectAll() {
         this.allSelected = !this.allSelected;
-        this.options.getRawData().forEach(row=>row.$selected = this.allSelected);
+        this.options.getPrePagedData().forEach(row=>row.$selected = this.allSelected);
     }
     onMouseWheel($event, $delta, $deltaX, $deltaY) {
         if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
             if ($deltaY<0) { // scrollUp
-                if (this.virtualScrollIndex + this.options.rowsPerPage < this.options.getFilteredData().length) {
+                if (this.virtualScrollIndex + this.options.rowsPerPage < this.options.getPrePagedData().length) {
                     $event.preventDefault();
                     this.virtualScrollIndex++;
                 }
@@ -175,7 +175,7 @@ class jfTableViewController {
     groupSelection(groupHeader) {
         let query = {};
         _.set(query,groupHeader.$groupHeader.field,groupHeader.$groupHeader.value)
-        let group = _.filter(this.options.data,query);
+        let group = _.filter(this.options.getFilteredData(),query);
         group.forEach(row=>row.$selected = groupHeader.$selected);
     }
 }
@@ -187,7 +187,7 @@ class PaginationApi {
         this.tableCtrl = tableCtrl;
     }
     getTotalPages() {
-        return Math.ceil(this.tableCtrl.options.getFilteredData().length / this.tableCtrl.options.rowsPerPage);
+        return Math.ceil(this.tableCtrl.options.getPrePagedData().length / this.tableCtrl.options.rowsPerPage);
     }
     getCurrentPage() {
         return this.tableCtrl.currentPage + 1;

@@ -17,7 +17,7 @@ class jfTableRowController {
                 if (!this.data.$selected) {
                     this.tableView.allSelected = false;
                     if (this.tableView.options.groupedBy) {
-                        let groupHeader = _.find(this.tableView.options.getData(),{$groupHeader:{value: _.get(this.data,this.tableView.options.groupedBy)}})
+                        let groupHeader = _.find(this.tableView.options.getPrePagedData(),{$groupHeader:{value: _.get(this.data,this.tableView.options.groupedBy)}})
                         if (groupHeader) groupHeader.$selected = false;
                     }
                 }

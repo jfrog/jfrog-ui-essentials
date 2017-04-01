@@ -40,9 +40,6 @@ export function JFrogTableViewOptions($timeout) {
             this.update();
         }
         
-        getRawData() {
-            return this.groupedData || this.data;
-        }
 
         setRowsPerPage(rpp) {
             this.rowsPerPage = rpp;
@@ -105,12 +102,7 @@ export function JFrogTableViewOptions($timeout) {
         getSelectedCount() {
             return this.getSelected().length;
         }
-
         sortBy(field,resort = false) {
-            if (resort) {
-                this.update(true,true);
-                return;
-            }
             if (!resort && this.sortByField === field) {
                 this.revSort = !this.revSort;
             }
@@ -118,61 +110,8 @@ export function JFrogTableViewOptions($timeout) {
                 this.revSort = false;
             }
             this.sortByField = field;
-            if (field) {
-                let colObj = _.find(this.columns,{field});
-                if (colObj.sortingAlgorithm) {
-                    this.data.sort((a,b) => {
-                        return (this.revSort ? -1 : 1)*colObj.sortingAlgorithm(_.get(a,field),_.get(b,field),a,b,colObj);
-                    });
-                }
-                else {
-                    if (colObj.sortBy) {
-                        let temp = this.data;
-                        temp = _.sortBy(temp,(row)=>(this.revSort ? -1 : 1)*colObj.sortBy(_.get(row,field),row));
-                        Array.prototype.splice.apply(this.data, [0,this.data.length].concat(temp));
-                    }
-                    else {
-                        if (this.groupedData) {
-                            if (this.groupedBy === field) {
-                                this.groupedData.sort((a,b)=>{
-                                    if (a.$groupHeader && !b.$groupHeader && a.$groupHeader.field === field && a.$groupHeader.value === _.get(b,field)) return -1;
-                                    else if (!a.$groupHeader && b.$groupHeader && b.$groupHeader.field === field && b.$groupHeader.value === _.get(a,field)) return 1;
-                                    else {
-                                        let valA = a.$groupHeader ? a.$groupHeader.value : _.get(a,field);
-                                        let valB= b.$groupHeader ? b.$groupHeader.value : _.get(b,field);
-                                        return (this.revSort ? -1 : 1)*(valA>valB?1:(valA<valB?-1:0));
-                                    }
-                                });
-                            }
-                            else {
-                                for (let key in this.fullGroupedData) {
-                                    let groupData = this.fullGroupedData[key];
-                                    groupData.sort((a,b)=>{
-                                        let valA = _.get(a,field);
-                                        let valB = _.get(b,field);
-                                        return (this.revSort ? -1 : 1)*(valA>valB?1:(valA<valB?-1:0));
-                                    });
-                                }
-                                this.groupedData.forEach(row=>{
-                                    if (row.$groupHeader) this.updateGroupExpansionState(row);
-                                });
-                            }
-                        }
-                        else {
-                            this.data.sort((a,b)=>{
-                                let valA = _.get(a,field);
-                                let valB = _.get(b,field);
-                                return (this.revSort ? -1 : 1)*(valA>valB?1:(valA<valB?-1:0));
-                            });
-                        }
-                    }
-                }
-            }
-            else {
-                Array.prototype.splice.apply(this.data, [0,this.data.length].concat(this.origData));
-            }
-            if (!resort && this.dirCtrl) delete this.filterCache;
-            this.update(true,true);
+
+            this.refreshSorting();
         }
 
         reverseSortingDir() {
@@ -286,41 +225,37 @@ export function JFrogTableViewOptions($timeout) {
         }
 
         groupBy(field) {
-            this.unGroup();
             this.groupedBy = this.groupedBy === field ? null : field;
             if (this.groupedBy) {
                 this.setFirstColumn(field);
-                this.fullGroupedData = _.groupBy(this.data,field);
-                let tempData = [];
-                let column = _.find(this.columns,{field});
-                for (let key in this.fullGroupedData) {
-                    let data = this.fullGroupedData[key];
-                    tempData.push({$groupHeader : {field, value: _.get(data[0],field), col: column, count: data.length}})
-//                    Array.prototype.splice.apply(tempData, [tempData.length, 0].concat(data));
-                }
-                this.groupedData = tempData;
             }
             else {
                 this.restoreColumnOrder();
             }
-
-            this.update(false,true);
+            this.openedGroupHeaders = [];
+            this.groupedData = null;
+            this.refreshGrouping();
         }
 
         refreshGrouping() {
-            if (this.groupedBy) {
-                let temp = this.groupedBy;
-                this.groupedBy = null;
-                let openedGroupHeaders = _.filter(this.groupedData,{$groupHeader:{$expanded: true}});
-                this.groupBy(temp);
-                openedGroupHeaders.forEach(wasOpened => {
-                    let toBeOpened = _.find(this.groupedData,{$groupHeader:{value: wasOpened.$groupHeader.value}});
-                    if (toBeOpened) {
-                        toBeOpened.$groupHeader.$expanded = true;
-                        this.updateGroupExpansionState(toBeOpened);
-                    }
-                })
+            if (this.groupedData) {
+                this.openedGroupHeaders = _.filter(this.groupedData,{$groupHeader:{$expanded: true}});
             }
+            delete this.groupedData;
+            this.refreshSorting();
+        }
+
+        refreshFilter() {
+            delete this.filterCache;
+            this.refreshGrouping();
+        }
+
+        refreshSorting() {
+            delete this.sortedData;
+        }
+
+        refresh() {
+            this.refreshFilter();
         }
 
         updateGroupExpansionState(groupHeaderRow) {
@@ -355,34 +290,128 @@ export function JFrogTableViewOptions($timeout) {
             }
         }
 
-        unGroup() {
-            delete this.groupedData;
+
+        getPageData() {
+            if (this.paginationMode === this.PAGINATION) {
+                return this.getPrePagedData().slice(this.dirCtrl.currentPage * this.rowsPerPage, this.dirCtrl.currentPage * this.rowsPerPage + this.rowsPerPage)
+            }
+            else if (this.paginationMode === this.VIRTUAL_SCROLL) {
+                return this.getPrePagedData().slice(this.dirCtrl.virtualScrollIndex,this.dirCtrl.virtualScrollIndex + this.rowsPerPage)
+            }
         }
 
-        getFilteredData() {
+        getPrePagedData() {
+            return this.getSortedData(this.getGroupedData(this.getFilteredData(this.getRawData())));
+        }
+
+        getSortedData(sourceData) {
+
+            if (!this.sortByField) {
+                return sourceData;
+            }
+            else {
+                if (!this.sortedData) {
+                    let colObj = _.find(this.columns,{field: this.sortByField});
+                    if (colObj.sortingAlgorithm) {
+                        this.sortedData = this.data.sort((a,b) => {
+                            return (this.revSort ? -1 : 1)*colObj.sortingAlgorithm(_.get(a,this.sortByField),_.get(b,this.sortByField),a,b,colObj);
+                        });
+                    }
+                    else {
+                        if (colObj.sortBy) {
+                            this.sortedData = _.sortBy(sourceData,(row)=>(this.revSort ? -1 : 1)*colObj.sortBy(_.get(row,this.sortByField),row));
+                        }
+                        else {
+                            if (this.groupedData) {
+                                if (this.groupedBy === this.sortByField) {
+                                    this.sortedData = sourceData.sort((a,b)=>{
+                                        if (a.$groupHeader && !b.$groupHeader && a.$groupHeader.field === this.sortByField && a.$groupHeader.value === _.get(b,this.sortByField)) return -1;
+                                        else if (!a.$groupHeader && b.$groupHeader && b.$groupHeader.field === this.sortByField && b.$groupHeader.value === _.get(a,this.sortByField)) return 1;
+                                        else {
+                                            let valA = a.$groupHeader ? a.$groupHeader.value : _.get(a,this.sortByField);
+                                            let valB= b.$groupHeader ? b.$groupHeader.value : _.get(b,this.sortByField);
+                                            return (this.revSort ? -1 : 1)*(valA>valB?1:(valA<valB?-1:0));
+                                        }
+                                    });
+                                }
+                                else {
+                                    for (let key in this.fullGroupedData) {
+                                        let groupData = this.fullGroupedData[key];
+                                        groupData.sort((a,b)=>{
+                                            let valA = _.get(a,this.sortByField);
+                                            let valB = _.get(b,this.sortByField);
+                                            return (this.revSort ? -1 : 1)*(valA>valB?1:(valA<valB?-1:0));
+                                        });
+                                    }
+                                    this.groupedData.forEach(row=>{
+                                        if (row.$groupHeader) this.updateGroupExpansionState(row);
+                                    });
+                                    this.sortedData = sourceData;
+                                }
+                            }
+                            else {
+                                this.sortedData = sourceData.sort((a,b)=>{
+                                    let valA = _.get(a,this.sortByField);
+                                    let valB = _.get(b,this.sortByField);
+                                    return (this.revSort ? -1 : 1)*(valA>valB?1:(valA<valB?-1:0));
+                                });
+                            }
+                        }
+                    }
+                }
+                return this.sortedData;
+            }
+        }
+
+        getGroupedData(sourceData) {
+            if (!this.groupedBy) {
+                return sourceData;
+            }
+            else {
+                if (!this.groupedData) {
+                    this.setFirstColumn(this.groupedBy);
+                    this.fullGroupedData = _.groupBy(sourceData,this.groupedBy);
+                    let tempData = [];
+                    let column = _.find(this.columns,{field: this.groupedBy});
+                    for (let key in this.fullGroupedData) {
+                        let data = this.fullGroupedData[key];
+                        tempData.push({$groupHeader : {field: this.groupedBy, value: _.get(data[0],this.groupedBy), col: column, count: data.length}})
+                    }
+                    this.groupedData = tempData;
+
+                    // reopen previously opened group headers
+                    this.openedGroupHeaders.forEach(wasOpened => {
+                        let toBeOpened = _.find(this.groupedData,{$groupHeader:{value: wasOpened.$groupHeader.value}});
+                        if (toBeOpened) {
+                            toBeOpened.$groupHeader.$expanded = true;
+                            this.updateGroupExpansionState(toBeOpened);
+                        }
+                    })
+                }
+                return this.groupedData;
+            }
+        }
+
+        getFilteredData(sourceData) {
             if (!this.dirCtrl.tableFilter) {
                 this.dirCtrl.noFilterResults = false;
-                return this.getRawData() || [];
+                return sourceData || [];
             }
-            if (!this.filterCache) this.filterCache = _.filter(this.getRawData(),(row=>{
+            if (!this.filterCache) this.filterCache = _.filter(sourceData,(row=>{
                 for (let i in this.columns) {
                     let col = this.columns[i];
                     if (row.$groupHeader || (_.get(row,col.field) && _.contains(_.get(row,col.field).toString().toLowerCase(), this.dirCtrl.tableFilter.toLowerCase()))) return true;
                 }
                 return false;
             }))
-            this.dirCtrl.noFilterResults = !!(!this.filterCache.length && this.getRawData().length);
+            this.dirCtrl.noFilterResults = !!(!this.filterCache.length && sourceData.length);
             return this.filterCache;
         }
 
-        getPageData() {
-            if (this.paginationMode === this.PAGINATION) {
-                return this.getFilteredData().slice(this.dirCtrl.currentPage * this.rowsPerPage, this.dirCtrl.currentPage * this.rowsPerPage + this.rowsPerPage)
-            }
-            else if (this.paginationMode === this.VIRTUAL_SCROLL) {
-                return this.getFilteredData().slice(this.dirCtrl.virtualScrollIndex,this.dirCtrl.virtualScrollIndex + this.rowsPerPage)
-            }
+        getRawData() {
+            return this.data;
         }
+
 
 
 
