@@ -393,6 +393,7 @@ export function JFrogTableViewOptions($timeout) {
         }
 
         getFilteredData(sourceData) {
+            sourceData = sourceData || this.getRawData();
             if (!this.dirCtrl.tableFilter) {
                 this.dirCtrl.noFilterResults = false;
                 return sourceData || [];

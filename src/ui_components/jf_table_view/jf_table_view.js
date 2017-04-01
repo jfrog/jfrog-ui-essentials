@@ -99,6 +99,10 @@ class jfTableViewController {
     toggleSelectAll() {
         this.allSelected = !this.allSelected;
         this.options.getPrePagedData().forEach(row=>row.$selected = this.allSelected);
+        if (this.options.groupedBy) {
+            this.options.getFilteredData().forEach(row=>row.$selected = this.allSelected);
+        }
+
     }
     onMouseWheel($event, $delta, $deltaX, $deltaY) {
         if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
@@ -121,7 +125,7 @@ class jfTableViewController {
     }
 
     getTotalScrollHeight() {
-        return this.options.getRawData() ? ((this.options.filterCache || this.options.getRawData()).length * parseInt(this.options.rowHeight)) + 'px' : '0';
+        return ((this.options.getPrePagedData().length * parseInt(this.options.rowHeight)) + 'px');
     }
 
     initScrollFaker() {
@@ -129,7 +133,7 @@ class jfTableViewController {
             let scrollParent = this.$element.find('.scroll-faker-container');
             scrollParent.on('scroll',(e)=>{
                 this.$scope.$apply(()=>{
-                    let len = (this.options.filterCache || this.options.getRawData()).length;
+                    let len = this.options.getPrePagedData().length;
                     if (len) {
                         let relativePosition = scrollParent.scrollTop()/(len * parseInt(this.options.rowHeight))
                         this.virtualScrollIndex = Math.floor(relativePosition*len);
@@ -146,7 +150,7 @@ class jfTableViewController {
     }
     syncFakeScroller() {
         if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
-            let len = (this.options.filterCache || this.options.getRawData()).length;
+            let len = this.options.getPrePagedData().length;
             let scrollParent = this.$element.find('.scroll-faker-container');
             let relativePosition = this.virtualScrollIndex / len;
             let scrollTop = relativePosition * len * parseInt(this.options.rowHeight);
