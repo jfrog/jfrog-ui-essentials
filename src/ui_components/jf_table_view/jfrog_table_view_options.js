@@ -40,7 +40,7 @@ export function JFrogTableViewOptions($timeout) {
             this.update();
         }
         
-        getData() {
+        getRawData() {
             return this.groupedData || this.data;
         }
 
@@ -304,7 +304,7 @@ export function JFrogTableViewOptions($timeout) {
                 this.restoreColumnOrder();
             }
 
-            $timeout(()=>this.update(false,true));
+            this.update(false,true);
         }
 
         refreshGrouping() {
@@ -357,25 +357,21 @@ export function JFrogTableViewOptions($timeout) {
 
         unGroup() {
             delete this.groupedData;
-/*
-            let cleanData = _.filter(this.data,(row)=>!row.$groupHeader);
-            Array.prototype.splice.apply(this.data, [0, this.data.length].concat(cleanData));
-*/
         }
 
         getFilteredData() {
             if (!this.dirCtrl.tableFilter) {
                 this.dirCtrl.noFilterResults = false;
-                return this.getData() || [];
+                return this.getRawData() || [];
             }
-            if (!this.filterCache) this.filterCache = _.filter(this.getData(),(row=>{
+            if (!this.filterCache) this.filterCache = _.filter(this.getRawData(),(row=>{
                 for (let i in this.columns) {
                     let col = this.columns[i];
                     if (row.$groupHeader || (_.get(row,col.field) && _.contains(_.get(row,col.field).toString().toLowerCase(), this.dirCtrl.tableFilter.toLowerCase()))) return true;
                 }
                 return false;
             }))
-            this.dirCtrl.noFilterResults = !!(!this.filterCache.length && this.getData().length);
+            this.dirCtrl.noFilterResults = !!(!this.filterCache.length && this.getRawData().length);
             return this.filterCache;
         }
 
@@ -387,6 +383,8 @@ export function JFrogTableViewOptions($timeout) {
                 return this.getFilteredData().slice(this.dirCtrl.virtualScrollIndex,this.dirCtrl.virtualScrollIndex + this.rowsPerPage)
             }
         }
+
+
 
     }
 

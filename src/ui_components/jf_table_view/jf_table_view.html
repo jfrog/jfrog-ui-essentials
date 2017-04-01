@@ -3,7 +3,7 @@
          ng-class="{'no-sort':!jfTableView.options.sortable}">
         <div class="jf-table-filter">
             <input ng-model="jfTableView.tableFilter"
-                   ng-show="jfTableView.options.getData().length"
+                   ng-show="jfTableView.options.getRawData().length"
                    ng-model-options="{debounce: { 'default': 500 } }"
                    ng-change="jfTableView.onUpdateFilter()"
                    ng-class="{'no-results': jfTableView.noFilterResults}"
@@ -17,7 +17,7 @@
                     Add {{jfTableView.objectName || 'Item'}}
                 </div>
             </div>
-            <div class="sort-controller" ng-if="jfTableView.options.sortable && jfTableView.options.sortDropDownVisible && jfTableView.options.getData().length">
+            <div class="sort-controller" ng-if="jfTableView.options.sortable && jfTableView.options.sortDropDownVisible && jfTableView.options.getRawData().length">
                 <div class="sort-label">Sort By:</div>
                 <div class="select-wrapper">
                     <jf-ui-select jf-select-model="jfTableView.options.sortByField"
@@ -61,7 +61,7 @@
                           data="entity"></jf-table-row>
         </div>
         <div class="empty-table-placeholder"
-             ng-if="!jfTableView.options.getData().length">
+             ng-if="!jfTableView.options.getRawData().length">
             {{jfTableView.options.emptyTableText || 'This table is empty !'}}
         </div>
         <div class="empty-table-placeholder filter-no-results"

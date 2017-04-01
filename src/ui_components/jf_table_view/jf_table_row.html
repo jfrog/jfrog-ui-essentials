@@ -8,7 +8,7 @@
          ng-if="jfTableRow.tableView.options.hasSelection()">
         <div class="jf-table-cell-content">
             <div class="selection-button"
-                 ng-if="(!jfTableRow.data.$groupHeader && jfTableRow.rowId !== 'headers') || (jfTableRow.tableView.options.selectionMode === jfTableRow.tableView.options.MULTI_SELECTION && jfTableRow.tableView.options.getData().length)"
+                 ng-if="(!jfTableRow.data.$groupHeader && jfTableRow.rowId !== 'headers') || (jfTableRow.tableView.options.selectionMode === jfTableRow.tableView.options.MULTI_SELECTION && jfTableRow.tableView.options.getRawData().length)"
                  ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.selectionColumnWidth}">
                 <div class="selection-icon icon icon-datagrid-v"
                      ng-class="{selected: jfTableRow.data.$selected || (jfTableRow.rowId === 'headers' && jfTableRow.tableView.allSelected)}"

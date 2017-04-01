@@ -93,13 +93,12 @@ class jfTableViewController {
         if (this.paginationApi && updatePagination) this.paginationApi.update();
     }
     clearSelection() {
-        this.options.getData().forEach(row=>delete row.$selected)
+        this.options.getRawData().forEach(row=>delete row.$selected)
         this.allSelected = false;
     }
     toggleSelectAll() {
         this.allSelected = !this.allSelected;
-        this.options.getData().forEach(row=>row.$selected = this.allSelected);
-        if (this.options.groupedBy) this.options.data.forEach(row=>row.$selected = this.allSelected);
+        this.options.getRawData().forEach(row=>row.$selected = this.allSelected);
     }
     onMouseWheel($event, $delta, $deltaX, $deltaY) {
         if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
@@ -122,7 +121,7 @@ class jfTableViewController {
     }
 
     getTotalScrollHeight() {
-        return this.options.getData() ? ((this.options.filterCache || this.options.getData()).length * parseInt(this.options.rowHeight)) + 'px' : '0';
+        return this.options.getRawData() ? ((this.options.filterCache || this.options.getRawData()).length * parseInt(this.options.rowHeight)) + 'px' : '0';
     }
 
     initScrollFaker() {
@@ -130,7 +129,7 @@ class jfTableViewController {
             let scrollParent = this.$element.find('.scroll-faker-container');
             scrollParent.on('scroll',(e)=>{
                 this.$scope.$apply(()=>{
-                    let len = (this.options.filterCache || this.options.getData()).length;
+                    let len = (this.options.filterCache || this.options.getRawData()).length;
                     if (len) {
                         let relativePosition = scrollParent.scrollTop()/(len * parseInt(this.options.rowHeight))
                         this.virtualScrollIndex = Math.floor(relativePosition*len);
@@ -147,7 +146,7 @@ class jfTableViewController {
     }
     syncFakeScroller() {
         if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
-            let len = (this.options.filterCache || this.options.getData()).length;
+            let len = (this.options.filterCache || this.options.getRawData()).length;
             let scrollParent = this.$element.find('.scroll-faker-container');
             let relativePosition = this.virtualScrollIndex / len;
             let scrollTop = relativePosition * len * parseInt(this.options.rowHeight);
