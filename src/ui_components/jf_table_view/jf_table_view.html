@@ -54,7 +54,7 @@
                      ng-style="{height: jfTableView.getTotalScrollHeight()}">
                 </div>
             </div>
-            <jf-table-row ng-repeat="entity in jfTableView.getPageData() track by $index"
+            <jf-table-row ng-repeat="entity in jfTableView.options.getPageData() track by $index"
                           table-view="jfTableView"
                           msd-wheel="jfTableView.onMouseWheel($event, $delta, $deltaX, $deltaY)"
                           row-id="$index"

@@ -171,7 +171,7 @@ export function JFrogTableViewOptions($timeout) {
             else {
                 Array.prototype.splice.apply(this.data, [0,this.data.length].concat(this.origData));
             }
-            if (!resort && this.dirCtrl) delete this.dirCtrl.filterCache;
+            if (!resort && this.dirCtrl) delete this.filterCache;
             this.update(true,true);
         }
 
@@ -363,6 +363,30 @@ export function JFrogTableViewOptions($timeout) {
 */
         }
 
+        getFilteredData() {
+            if (!this.dirCtrl.tableFilter) {
+                this.dirCtrl.noFilterResults = false;
+                return this.getData() || [];
+            }
+            if (!this.filterCache) this.filterCache = _.filter(this.getData(),(row=>{
+                for (let i in this.columns) {
+                    let col = this.columns[i];
+                    if (row.$groupHeader || (_.get(row,col.field) && _.contains(_.get(row,col.field).toString().toLowerCase(), this.dirCtrl.tableFilter.toLowerCase()))) return true;
+                }
+                return false;
+            }))
+            this.dirCtrl.noFilterResults = !!(!this.filterCache.length && this.getData().length);
+            return this.filterCache;
+        }
+
+        getPageData() {
+            if (this.paginationMode === this.PAGINATION) {
+                return this.getFilteredData().slice(this.dirCtrl.currentPage * this.rowsPerPage, this.dirCtrl.currentPage * this.rowsPerPage + this.rowsPerPage)
+            }
+            else if (this.paginationMode === this.VIRTUAL_SCROLL) {
+                return this.getFilteredData().slice(this.dirCtrl.virtualScrollIndex,this.dirCtrl.virtualScrollIndex + this.rowsPerPage)
+            }
+        }
 
     }
 

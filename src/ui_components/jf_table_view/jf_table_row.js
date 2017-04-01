@@ -1,5 +1,8 @@
 class jfTableRowController {
-    constructor() {
+    constructor($element,$timeout) {
+        this.$element = $element;
+        this.$timeout = $timeout;
+        this.templatesCount = _.filter(this.tableView.options.columns,col=>!!col.cellTemplate).length;
     }
     getField(field) {
         return _.get(this.data,field);
@@ -39,6 +42,7 @@ class jfTableRowController {
         action.callback(this.data);
         this.tableView.onUpdateFilter()
     }
+
 }
 
 export function jfTableRow() {

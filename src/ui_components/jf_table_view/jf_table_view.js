@@ -36,8 +36,6 @@ class jfTableViewController {
             }
         })
 
-        this.$timeout(()=>this.compileTemplates());
-
         let on_resize = () => this.$timeout(()=>this.options._normalizeWidths());
         
         $(window).on('resize',on_resize);
@@ -48,79 +46,50 @@ class jfTableViewController {
 
     }
 
-    getFilteredData() {
-        if (!this.tableFilter) {
-            this.noFilterResults = false;
-            return this.options.getData() || [];
-        }
-        if (!this.filterCache) this.filterCache = _.filter(this.options.getData(),(row=>{
-            for (let i in this.options.columns) {
-                let col = this.options.columns[i];
-                if (row.$groupHeader || (_.get(row,col.field) && _.contains(_.get(row,col.field).toString().toLowerCase(), this.tableFilter.toLowerCase()))) return true;
-            }
-            return false;
-        }))
-        this.noFilterResults = !!(!this.filterCache.length && this.options.getData().length);
-        return this.filterCache;
-    }
 
     clearFilter() {
         this.tableFilter = '';
         this.onUpdateFilter();
     }
 
-    getPageData() {
-        if (this.options.paginationMode === this.options.PAGINATION) {
-            return this.getFilteredData().slice(this.currentPage * this.options.rowsPerPage, this.currentPage * this.options.rowsPerPage + this.options.rowsPerPage)
+
+    compileTemplate(elem,field,rowId) {
+        let column = field;
+        let row = rowId;
+        let columnObj = _.find(this.options.columns,{field:column});
+        let rowObj = this.options.getPageData()[row];
+
+        if (!rowObj) return;
+
+        if (rowObj.$groupHeader) {
+            let groupRowObj = {};
+            _.set(groupRowObj,rowObj.$groupHeader.field,rowObj.$groupHeader.value);
+            rowObj = groupRowObj;
         }
-        else if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
-            return this.getFilteredData().slice(this.virtualScrollIndex,this.virtualScrollIndex + this.options.rowsPerPage)
-        }
-    }
+        let rowScope = this.$rootScope.$new();
 
-    compileTemplates() {
-        let elems = $(this.$element).find('.compile-this');
-        for (let i = 0; i < elems.length; i++) {
-            let elem = $(elems[i]);
-            let column = $(elem).attr('data-column');
-            let row = $(elem).attr('data-row');
-            let columnObj = _.find(this.options.columns,{field:column});
-            let rowObj = this.getPageData()[row];
+        this.rowScopes.push(rowScope);
 
-            if (!rowObj) continue;
+        _.extend(rowScope,{
+            row: { entity: rowObj },
+            appScope: this.options.appScope
+        });
 
-            if (rowObj.$groupHeader) {
-                let groupRowObj = {};
-                _.set(groupRowObj,rowObj.$groupHeader.field,rowObj.$groupHeader.value);
-                rowObj = groupRowObj;
-            }
-            let rowScope = this.$rootScope.$new();
-
-            this.rowScopes.push(rowScope);
-
-            _.extend(rowScope,{
-                row: { entity: rowObj },
-                appScope: this.options.appScope
-            });
-
-            let template = columnObj.cellTemplate;
-            let templateElem = $(template);
-            this.$compile(templateElem)(rowScope);
-            elem.empty();
-            elem.append(templateElem);
-        }
-
+        let template = columnObj.cellTemplate;
+        let templateElem = $(template);
+        this.$compile(templateElem)(rowScope);
+        elem.empty();
+        elem.append(templateElem);
     }
 
     onUpdateFilter() {
-        delete this.filterCache;
+        delete this.options.filterCache;
         this.refresh();
         this.paginationApi.update();
     }
     refresh(updatePagination = true) {
         this.rowScopes.forEach(s=>s.$destroy())
         this.rowScopes = [];
-        this.compileTemplates();
         if (this.paginationApi && updatePagination) this.paginationApi.update();
     }
     clearSelection() {
@@ -135,7 +104,7 @@ class jfTableViewController {
     onMouseWheel($event, $delta, $deltaX, $deltaY) {
         if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
             if ($deltaY<0) { // scrollUp
-                if (this.virtualScrollIndex + this.options.rowsPerPage < this.getFilteredData().length) {
+                if (this.virtualScrollIndex + this.options.rowsPerPage < this.options.getFilteredData().length) {
                     $event.preventDefault();
                     this.virtualScrollIndex++;
                 }
@@ -153,7 +122,7 @@ class jfTableViewController {
     }
 
     getTotalScrollHeight() {
-        return this.options.getData() ? ((this.filterCache || this.options.getData()).length * parseInt(this.options.rowHeight)) + 'px' : '0';
+        return this.options.getData() ? ((this.options.filterCache || this.options.getData()).length * parseInt(this.options.rowHeight)) + 'px' : '0';
     }
 
     initScrollFaker() {
@@ -161,7 +130,7 @@ class jfTableViewController {
             let scrollParent = this.$element.find('.scroll-faker-container');
             scrollParent.on('scroll',(e)=>{
                 this.$scope.$apply(()=>{
-                    let len = (this.filterCache || this.options.getData()).length;
+                    let len = (this.options.filterCache || this.options.getData()).length;
                     if (len) {
                         let relativePosition = scrollParent.scrollTop()/(len * parseInt(this.options.rowHeight))
                         this.virtualScrollIndex = Math.floor(relativePosition*len);
@@ -178,7 +147,7 @@ class jfTableViewController {
     }
     syncFakeScroller() {
         if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
-            let len = (this.filterCache || this.options.getData()).length;
+            let len = (this.options.filterCache || this.options.getData()).length;
             let scrollParent = this.$element.find('.scroll-faker-container');
             let relativePosition = this.virtualScrollIndex / len;
             let scrollTop = relativePosition * len * parseInt(this.options.rowHeight);
@@ -219,7 +188,7 @@ class PaginationApi {
         this.tableCtrl = tableCtrl;
     }
     getTotalPages() {
-        return Math.ceil(this.tableCtrl.getFilteredData().length / this.tableCtrl.options.rowsPerPage);
+        return Math.ceil(this.tableCtrl.options.getFilteredData().length / this.tableCtrl.options.rowsPerPage);
     }
     getCurrentPage() {
         return this.tableCtrl.currentPage + 1;

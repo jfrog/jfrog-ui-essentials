@@ -27,12 +27,15 @@
              ng-if="!jfTableRow.data.$groupHeader.col.cellTemplate">
             {{jfTableRow.data.$groupHeader.value}}
         </div>
-        <div class="jf-table-cell-content group-header compile-this"
-             ng-if="jfTableRow.data.$groupHeader.col.cellTemplate"
-             data-column="{{jfTableRow.data.$groupHeader.field}}"
-             data-row="{{jfTableRow.rowId}}">
+
+        <div class="jf-table-cell-content group-header"
+             ng-if="jfTableRow.data.$groupHeader.col.cellTemplate">
+            <jf-table-compiled-cell field="jfTableRow.data.$groupHeader.field"
+                                    row-id="jfTableRow.rowId"
+                                    table-row="jfTableRow">
+            </jf-table-compiled-cell>
         </div>
-        <div class="group-header-count">({{jfTableRow.data.$groupHeader.count}})</div>
+       <div class="group-header-count">({{jfTableRow.data.$groupHeader.count}})</div>
     </div>
     <div class="jf-table-cell"
          ng-if="!jfTableRow.data.$groupHeader"
@@ -51,11 +54,13 @@
                      ng-if="col.allowGrouping"></div>
             </div>
         </div>
-        <div class="jf-table-cell-content compile-this"
+        <div class="jf-table-cell-content"
              jf-tooltip-on-overflow
-             ng-if="col.cellTemplate && jfTableRow.rowId !== 'headers'"
-             data-column="{{col.field}}"
-             data-row="{{jfTableRow.rowId}}">
+             ng-if="col.cellTemplate && jfTableRow.rowId !== 'headers'">
+            <jf-table-compiled-cell field="col.field"
+                                    row-id="jfTableRow.rowId"
+                                    table-row="jfTableRow">
+            </jf-table-compiled-cell>
         </div>
     </div>
 
