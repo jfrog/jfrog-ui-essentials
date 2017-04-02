@@ -457,6 +457,15 @@ class JFrogGrid {
         }
     }
 
+    setHeaderHeight(height) {
+        this.headerRowHeight = height+1;
+        $timeout(()=>{
+            $(this.api.grid.element).find('.ui-grid-header-cell-wrapper, .ui-grid-header-canvas').css('height',height+'px');
+            $(this.api.grid.element).find('.ui-grid-header-cell .ui-grid-cell-contents').css('height',height+'px');
+        })
+        return this;
+    }
+
     setRowsPerPage(rowsPerPage) {
         this.paginationPageSize = rowsPerPage;
         return this;
