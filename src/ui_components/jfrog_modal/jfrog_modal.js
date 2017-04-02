@@ -70,7 +70,12 @@ export class JFrogModal {
         this._calculateMaxHeight();
 
         if (modalInstance.result) {
-            modalInstance.result.finally(()=>{
+            // Modal close event handler is registered as result.then(errorCallback)
+            // In some cases the modal close event is caught by result.finally()
+            modalInstance.result.then(()=>{}, ()=>{
+                this.modalIsClosing = true;
+            }).finally(()=>{
+                this.modalIsClosing = true;
                 $(window).off('resize', this._calculateMaxHeight());
             });
         }
@@ -82,35 +87,65 @@ export class JFrogModal {
         return modalInstance;
     }
 
-
-
+    /**
+     * Calculate and set the max-height attribute of a modal's body
+     * */
     _calculateMaxHeight() {
-        this.$timeout(() => {
+        if(this.modalIsClosing){
+            this.modalIsClosing = false;
+            return;
+        }
+        // Try to hide the modal body in this digest cycle before calculating height in the next digest cycle.
+        // This is very important for cases that the modal has more then one step - such as onboarding wizard (and
+        // applies to every step but the first)
+        $('.modal-body').hide();
 
-            if ($('.wizard-modal').length > 0) {
-
-                // modal height - header - footer
-            let MH = $('.wizard-modal').height(),               // Modal height
-                HH  = $('.modal-header').outerHeight() || 0,         // Header height
-                FH  = $('.modal-footer').outerHeight() || 0;    // Footer height
-
-                let maxHeight = MH - HH - FH;
-                $('.modal-body').css('max-height', maxHeight);
-                return;
-            }
-
-
-            let VPH = window.innerHeight,                       // View port height
-                MOT = 110,                                      //Modal offset top
-                HH  = $('.modal-header').outerHeight() || 0,         // Header height
-                FH  = $('.modal-footer').outerHeight() || 0;    // Footer height
-
-            // Calculate: MPH - (MOT*2) - HH - FH = maxHeight
-            let maxHeight = VPH - (MOT * 2) - HH - FH;
-
-            $('.modal-body').css('max-height', maxHeight);
-        }, 100)
+        // Calculate and set modal body height in the next digest cycle
+        // After the resizing is done - the modal body is shown again.
+        this.resizeModalBodyInNextCycle();
     }
+
+    resizeModalBodyInNextCycle(){
+        this.$timeout(() => {
+            // Hide modal body before perfroming calculations
+            let modal = $('.modal-content');
+            let modalBody = modal.find('.modal-body');
+            modalBody.hide();
+
+            // Calculate and show content
+            let wizardModalContainer = modal.find('.wizard-modal');
+            if(wizardModalContainer.length > 0) {
+                this.resizeWizardModalBody(modal,wizardModalContainer,modalBody);
+                modalBody.show();
+            }
+            else {
+                this.$timeout(() => {
+                    this.resizeAnyModalBody(modal,modalBody);
+                    modalBody.show();
+                });
+            }
+        });
+    }
+
+    resizeAnyModalBody(modal,modalBody){
+        let modalOffsetTop = 110,                                 //Modal offset top
+            viewPortHeight = window.innerHeight,                 // View port height
+            modalHeight = viewPortHeight - (2 * modalOffsetTop);
+        this.setModalBodyMaxHeight(modal,modalBody,modalHeight);
+    }
+
+    resizeWizardModalBody(modal,wizardContainer,modalBody){
+        let modalHeight = wizardContainer.height();
+        this.setModalBodyMaxHeight(modal,modalBody,modalHeight);
+    }
+
+    setModalBodyMaxHeight(modal,modalBody,modalHeight){
+        let headerHeight = modal.find('.modal-header').outerHeight() || 0,   // Header height
+            footerHeight = modal.find('.modal-footer').outerHeight() || 0,  // Footer height
+            maxHeight = modalHeight - headerHeight - footerHeight;
+        modalBody.css('max-height', maxHeight);
+    }
+
 
     /**
      * launch a modal that shows content in a codemirror container

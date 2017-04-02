@@ -1,4 +1,5 @@
-<div class="grid-container" ng-if="gridOptions.data">
+<div class="grid-container" ng-if="gridOptions.data"
+     ng-class="{'single-select':gridOptions.allowSingleSelect}">
     <div class="wrapper-grid-actions" ng-show="!noPagination || !noCount || gridOptions.batchActions.length || filterField">
 
         <div ng-if="!noCount" class="grid-counter">{{ getTotalRecords() }}<span ng-if="getSelectedRecords()"> ({{getSelectedRecords()}} Selected)</span></div>
