@@ -113,6 +113,11 @@ class jfTabsController {
     getTabWidthForStyle() {
         return this.tabWidth.endsWith('%') ? this.tabWidth : (this.tabWidth.endsWith('px') ? this.tabWidth : this.tabWidth + 'px');
     }
+
+    hasClass(obj) {
+        if (obj.class)
+            return true;
+    }
 }
 
 export function jfTabs() {
