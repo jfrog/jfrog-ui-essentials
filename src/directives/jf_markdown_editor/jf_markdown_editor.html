@@ -1,9 +1,17 @@
 <div class="jf-markdown-editor">
-    <div class="switch-wrapper">
-        <jf-switch ng-model="jfMarkdown.mode"
-                   ng-change="jfMarkdown.onModeChange()"
-                   options="['Edit', 'Preview']"
-                   class="no-margin-top"></jf-switch>
+    <div class="controls">
+        <div class="switch-wrapper">
+            <jf-switch ng-model="jfMarkdown.mode"
+                       ng-change="jfMarkdown.onModeChange()"
+                       options="jfMarkdown.modeOptions"
+                       controller="jfMarkdown.switchController"
+                       class="no-margin-top"></jf-switch>
+        </div>
+        <div class="lang-select-wrapper">
+            <jf-ui-select jf-select-model="jfMarkdown.language"
+                          jf-select-change="jfMarkdown.onLanguageChange()"
+                          jf-select-options="['Markdown','Asciidoc','Plain Text']"></jf-ui-select>
+        </div>
     </div>
     <div class="code-mirror-wrapper" ng-if="jfMarkdown.mode === 'Edit'">
         <jf-code-mirror

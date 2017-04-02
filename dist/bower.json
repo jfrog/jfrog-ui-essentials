@@ -14,7 +14,6 @@
     "!README.md",
     "!LICENSE"
   ],
-
   "dependencies": {
     "angular": "1.5.8",
     "angular-sanitize": "1.5.8",
@@ -42,7 +41,8 @@
     "angular-messages": "1.5.8",
     "tooltipster": "3.3.0",
     "jQuery-contextMenu": "~1.8.1",
-    "clipboard": "~1.5.5"
+    "clipboard": "~1.5.5",
+    "angular-asciidoc-directive": "^0.2.0"
   },
   "resolutions": {
     "angular": "1.5.8",

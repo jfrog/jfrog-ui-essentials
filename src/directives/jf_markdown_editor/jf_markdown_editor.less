@@ -1,7 +1,23 @@
 .jf-markdown-editor {
-  .switch-wrapper {
-    .jf-switch {
-      margin-bottom: 0;
+  .controls {
+    height: 50px;
+    position: relative;
+    .switch-wrapper {
+      position: absolute;
+      left: 0;
+      bottom: 10px;
+      .jf-switch {
+        margin-bottom: 0;
+        .jf-switch-options {
+          padding: 0;
+        }
+      }
+    }
+    .lang-select-wrapper {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 250px;
     }
   }
   .preview-wrapper,
@@ -9,5 +25,10 @@
     height: 500px;
     width: 100%;
     position: absolute;
+  }
+  .preview-wrapper {
+    overflow: auto;
+    border: 1px solid #eee;
+    padding: 15px;
   }
 }

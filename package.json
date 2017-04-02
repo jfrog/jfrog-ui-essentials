@@ -61,6 +61,6 @@
   "dependencies": {
     "angular-mousewheel": "^1.0.5",
     "js-beautify": "1.6.11",
-    "marked": "^0.3.6"
+    "marked": "0.3.6"
   }
 }
