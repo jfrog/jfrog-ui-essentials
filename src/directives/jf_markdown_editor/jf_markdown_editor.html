@@ -1,0 +1,23 @@
+<div class="jf-markdown-editor">
+    <div class="switch-wrapper">
+        <jf-switch ng-model="jfMarkdown.mode"
+                   ng-change="jfMarkdown.onModeChange()"
+                   options="['Edit', 'Preview']"
+                   class="no-margin-top"></jf-switch>
+    </div>
+    <div class="code-mirror-wrapper" ng-if="jfMarkdown.mode === 'Edit'">
+        <jf-code-mirror
+                mime-type="text/x-markdown"
+                allow-edit="true"
+                height="flexible"
+                autofocus="true"
+                model="jfMarkdown.markdown"
+                api-access="jfMarkdown.cmApi">
+        </jf-code-mirror>
+    </div>
+    <div class="preview-wrapper" ng-if="jfMarkdown.mode === 'Preview'">
+        <div class="preview"
+             ng-bind-html="jfMarkdown.preview"></div>
+    </div>
+</div>
+
