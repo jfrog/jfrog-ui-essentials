@@ -76,6 +76,33 @@
     height: 40px;
   }
 
+  .selected-row(){
+    .grid-actions, .grid-action-bar {
+      display: block;
+    }
+    .ui-grid-cell, .ui-grid-viewport, .grid-action-bar {
+      background: @grayGridRowHover;
+    }
+    .ui-grid-draggable-row {
+      &:before {
+        font-family: "artifactory" !important;
+        font-size: 26px;
+        content: "\\";
+        position: absolute;
+        z-index: 10;
+        top: 2px;
+        left: -7px;
+        color: #bbb;
+      }
+    }
+  }
+
+  &.single-select{
+    .ui-grid .ui-grid-row.ui-grid-row-selected {
+      .selected-row();
+    }
+  }
+
   .ui-grid {
     position: relative;
     clear: both;
@@ -146,27 +173,8 @@
       }
     }
 
-    .ui-grid-render-container-body .ui-grid-row.hovered {
-      .grid-actions, .grid-action-bar {
-        display: block;
-      }
-
-      .ui-grid-cell, .ui-grid-viewport, .grid-action-bar {
-        background: @grayGridRowHover;
-      }
-
-      .ui-grid-draggable-row {
-        &:before {
-          font-family: "artifactory" !important;
-          font-size: 26px;
-          content: "\\";
-          position: absolute;
-          z-index: 10;
-          top: 2px;
-          left: -7px;
-          color: #bbb;
-        }
-      }
+    .ui-grid-render-container-body .ui-grid-row.hovered{
+      .selected-row();
     }
 
     .ui-grid-header-cell {
