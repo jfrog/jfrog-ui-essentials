@@ -1,6 +1,8 @@
+import "./codemirror-asciidoc";
+
 class jfMarkdownEditorController {
 
-    constructor($timeout) {
+    constructor($timeout,$scope) {
         this.$timeout = $timeout;
         this.mode = this.mode || 'Edit';
         this.markdown = this.markdown || '';
@@ -10,11 +12,14 @@ class jfMarkdownEditorController {
         this.toHtml['Asciidoc'] = Opal.Asciidoctor.$convert.bind(Opal.Asciidoctor);;
         this.modeOptions = ['Edit', 'Preview'];
 
-        this.renderPreview();
+        $scope.$watch('jfMarkdown.markdown',()=>{
+            this.renderPreview();
+        })
+
     }
 
     renderPreview() {
-        if (this.mode === 'Preview' && this.toHtml[this.language]) {
+        if (this.toHtml[this.language]) {
             this.preview = this.toHtml[this.language](this.markdown);
         }
     }
@@ -29,6 +34,8 @@ class jfMarkdownEditorController {
         this.renderPreview();
         this.$timeout(()=>this.switchController.updateOptionObjects());
     }
+
+
 }
 
 export function jfMarkdownEditor() {

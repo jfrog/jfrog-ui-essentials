@@ -7,7 +7,7 @@
                        controller="jfMarkdown.switchController"
                        class="no-margin-top"></jf-switch>
         </div>
-        <div class="lang-select-wrapper">
+        <div class="lang-select-wrapper" ng-if="jfMarkdown.mode !== 'Preview'">
             <jf-ui-select jf-select-model="jfMarkdown.language"
                           jf-select-change="jfMarkdown.onLanguageChange()"
                           jf-select-options="['Markdown','Asciidoc','Plain Text']"></jf-ui-select>
@@ -15,12 +15,22 @@
     </div>
     <div class="code-mirror-wrapper" ng-if="jfMarkdown.mode === 'Edit'">
         <jf-code-mirror
+                ng-if="jfMarkdown.language === 'Markdown'"
                 mime-type="text/x-markdown"
+                mode="gfm"
                 allow-edit="true"
                 height="flexible"
                 autofocus="true"
-                model="jfMarkdown.markdown"
-                api-access="jfMarkdown.cmApi">
+                model="jfMarkdown.markdown">
+        </jf-code-mirror>
+        <jf-code-mirror
+                ng-if="jfMarkdown.language === 'Asciidoc'"
+                mime-type="text/x-markdown"
+                mode="asciidoc"
+                allow-edit="true"
+                height="flexible"
+                autofocus="true"
+                model="jfMarkdown.markdown">
         </jf-code-mirror>
     </div>
     <div class="preview-wrapper" ng-if="jfMarkdown.mode === 'Preview'">
