@@ -1,4 +1,5 @@
 .jf-markdown-editor {
+  position: relative;
   .controls {
     height: 50px;
     position: relative;
@@ -22,9 +23,12 @@
   }
   .preview-wrapper,
   .code-mirror-wrapper {
-    height: 500px;
     width: 100%;
-    position: absolute;
+  }
+  .code-mirror-wrapper {
+    .save-button {
+      margin-top: 20px;
+    }
   }
   .preview-wrapper {
     overflow: auto;

@@ -31,10 +31,8 @@ class jfMarkdownEditorController {
             this.modeOptions = ['Edit'];
             this.mode="Edit";
         }
-        this.renderPreview();
         this.$timeout(()=>this.switchController.updateOptionObjects());
     }
-
 
 }
 
@@ -45,7 +43,9 @@ export function jfMarkdownEditor() {
         scope: {
             markdown: '=?',
             language: '=?',
-            mode: '=?'
+            mode: '=?',
+            onSave: '&?',
+            onModeChange: '&?'
         },
         controller: jfMarkdownEditorController,
         controllerAs: 'jfMarkdown',

@@ -2,7 +2,7 @@
     <div class="controls">
         <div class="switch-wrapper">
             <jf-switch ng-model="jfMarkdown.mode"
-                       ng-change="jfMarkdown.onModeChange()"
+                       ng-change="jfMarkdown.onModeChange({mode:jfMarkdown.mode})"
                        options="jfMarkdown.modeOptions"
                        controller="jfMarkdown.switchController"
                        class="no-margin-top"></jf-switch>
@@ -19,7 +19,7 @@
                 mime-type="text/x-markdown"
                 mode="gfm"
                 allow-edit="true"
-                height="flexible"
+                height="100%"
                 autofocus="true"
                 model="jfMarkdown.markdown">
         </jf-code-mirror>
@@ -28,10 +28,12 @@
                 mime-type="text/x-markdown"
                 mode="asciidoc"
                 allow-edit="true"
-                height="flexible"
+                height="100%"
                 autofocus="true"
                 model="jfMarkdown.markdown">
         </jf-code-mirror>
+        <div ng-click="jfMarkdown.onSave()"
+             class="btn btn-primary save-button pull-right">Save</div>
     </div>
     <div class="preview-wrapper" ng-if="jfMarkdown.mode === 'Preview'">
         <div class="preview"
