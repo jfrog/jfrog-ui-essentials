@@ -31,6 +31,7 @@ class jfMarkdownEditorController {
             this.modeOptions = ['Edit'];
             this.mode="Edit";
         }
+        this.renderPreview();
         this.$timeout(()=>this.switchController.updateOptionObjects());
     }
 
