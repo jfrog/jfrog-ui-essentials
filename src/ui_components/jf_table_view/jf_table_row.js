@@ -44,36 +44,48 @@ class jfTableRowController {
     }
 
     onMouseMove(e) {
-        let container = this._getTableContainer();
         if (!this.resizingColumns) {
+            let container = this._getTableContainer();
             this.hoveringResize = this._getHoveringResizePoint(e);
             container.css('cursor',this.hoveringResize ? 'col-resize' : 'default');
         }
         else {
-            let containerWidth = container.innerWidth();
-            let mouseX = e.pageX - container.offset().left;
-            let mouseXPerc = Math.round((mouseX / containerWidth) * 100);
-            let offset = mouseXPerc - this.resizeDragStart;
-
-            if (this.hoveringResize.origLeftWidth.endsWith('%')) {
-                this.hoveringResize.left.width = (parseFloat(this.hoveringResize.origLeftWidth) + offset) + '%';
-            }
-            else if (this.hoveringResize.origLeftWidth.endsWith('px')) {
-                let perc = (parseFloat(this.hoveringResize.origLeftWidth)/containerWidth)*100;
-                this.hoveringResize.left.width = (perc + offset) + '%';
-            }
-            if (this.hoveringResize.right) {
-                if (this.hoveringResize.origRightWidth.endsWith('%')) {
-                    this.hoveringResize.right.width = (parseFloat(this.hoveringResize.origRightWidth) - offset) + '%';
-                }
-                else if (this.hoveringResize.origRightWidth.endsWith('px')) {
-                    let perc = (parseFloat(this.hoveringResize.origRightWidth)/containerWidth)*100;
-                    this.hoveringResize.right.width = (perc - offset) + '%';
-                }
-            }
-
+            this.dragColumnResize(e);
         }
     }
+
+    dragColumnResize(e) {
+        let MIN_WIDTH = 5; //percent
+        let container = this._getTableContainer();
+        let containerWidth = container.innerWidth();
+        let mouseX = e.pageX - container.offset().left;
+        let mouseXPerc = Math.round((mouseX / containerWidth) * 100);
+        let offset = mouseXPerc - this.resizeDragStart;
+
+        let newLeftWidth,newRightWidth;
+        if (this.hoveringResize.origLeftWidth.endsWith('%')) {
+            newLeftWidth = (parseFloat(this.hoveringResize.origLeftWidth) + offset) + '%';
+        }
+        else if (this.hoveringResize.origLeftWidth.endsWith('px')) {
+            let perc = (parseFloat(this.hoveringResize.origLeftWidth)/containerWidth)*100;
+            newLeftWidth = (perc + offset) + '%';
+        }
+        if (this.hoveringResize.right) {
+            if (this.hoveringResize.origRightWidth.endsWith('%')) {
+                newRightWidth = (parseFloat(this.hoveringResize.origRightWidth) - offset) + '%';
+            }
+            else if (this.hoveringResize.origRightWidth.endsWith('px')) {
+                let perc = (parseFloat(this.hoveringResize.origRightWidth)/containerWidth)*100;
+                newRightWidth = (perc - offset) + '%';
+            }
+        }
+
+        if (parseFloat(newLeftWidth) > MIN_WIDTH && parseFloat(newRightWidth) > MIN_WIDTH) {
+            this.hoveringResize.left.width = newLeftWidth;
+            if (this.hoveringResize.right) this.hoveringResize.right.width = newRightWidth;
+        }
+    }
+
     onMouseDown(e) {
         if (this.hoveringResize) {
             let container = this._getTableContainer();
