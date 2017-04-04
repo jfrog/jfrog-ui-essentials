@@ -43,6 +43,92 @@ class jfTableRowController {
         this.tableView.onUpdateFilter()
     }
 
+    onMouseMove(e) {
+        let container = this._getTableContainer();
+        if (!this.resizingColumns) {
+            this.hoveringResize = this._getHoveringResizePoint(e);
+            container.css('cursor',this.hoveringResize ? 'col-resize' : 'default');
+        }
+        else {
+            let containerWidth = container.innerWidth();
+            let mouseX = e.pageX - container.offset().left;
+            let mouseXPerc = Math.round((mouseX / containerWidth) * 100);
+            let offset = mouseXPerc - this.resizeDragStart;
+
+            if (this.hoveringResize.origLeftWidth.endsWith('%')) {
+                this.hoveringResize.left.width = (parseFloat(this.hoveringResize.origLeftWidth) + offset) + '%';
+            }
+            else if (this.hoveringResize.origLeftWidth.endsWith('px')) {
+                let perc = (parseFloat(this.hoveringResize.origLeftWidth)/containerWidth)*100;
+                this.hoveringResize.left.width = (perc + offset) + '%';
+            }
+            if (this.hoveringResize.right) {
+                if (this.hoveringResize.origRightWidth.endsWith('%')) {
+                    this.hoveringResize.right.width = (parseFloat(this.hoveringResize.origRightWidth) - offset) + '%';
+                }
+                else if (this.hoveringResize.origRightWidth.endsWith('px')) {
+                    let perc = (parseFloat(this.hoveringResize.origRightWidth)/containerWidth)*100;
+                    this.hoveringResize.right.width = (perc - offset) + '%';
+                }
+            }
+
+        }
+    }
+    onMouseDown(e) {
+        if (this.hoveringResize) {
+            let container = this._getTableContainer();
+            let containerWidth = container.innerWidth();
+            let mouseX = e.pageX - container.offset().left;
+            let mouseXPerc = Math.round((mouseX / containerWidth) * 100);
+
+            this.resizingColumns = true;
+            this.resizeDragStart = mouseXPerc;
+        }
+    }
+    onMouseUp(e) {
+        this.resizingColumns = false;
+        delete this.resizeDragStart;
+    }
+
+    _getHoveringResizePoint(e) {
+        let columns = this.tableView.options.columns;
+
+        let container = this._getTableContainer();
+        let containerWidth = container.innerWidth();
+        let mouseX = e.pageX - container.offset().left;
+        let mouseXPerc = Math.round((mouseX / containerWidth) * 100);
+
+        let percCount = this.tableView.options.hasSelection() ? (this.tableView.options.selectionColumnWidth/containerWidth)*100 : 0;
+
+        let hovering = false;
+
+        for (let colI = 0; colI < columns.length; colI++) {
+            let col = columns[colI];
+            if (col.width.endsWith('%')) {
+                percCount += parseFloat(col.width);
+            }
+            else if (col.width.endsWith('px')) {
+                let perc = (parseFloat(col.width)/containerWidth)*100;
+                percCount += perc;
+            }
+            if (Math.abs(percCount - mouseXPerc) <= .5) {
+                hovering = {
+                    left: col,
+                    right: columns[colI+1],
+                    origLeftWidth: col.width,
+                    origRightWidth: columns[colI+1] ? columns[colI+1].width : undefined
+                };
+                break;
+            }
+        }
+
+        return hovering;
+    }
+
+    _getTableContainer() {
+        return $(this.tableView.$element).find('.jf-table-view-container');
+    }
+
 }
 
 export function jfTableRow() {

@@ -1,4 +1,8 @@
 <div class="jf-table-row"
+     ng-mousemove="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.resizableColumns && jfTableRow.onMouseMove($event)"
+     ng-mousedown="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.resizableColumns && jfTableRow.onMouseDown($event)"
+     ng-mouseup="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.resizableColumns && jfTableRow.onMouseUp($event)"
+     ng-mouseleave="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.resizableColumns && jfTableRow.onMouseUp($event)"
      ng-click="jfTableRow.data.$groupHeader && jfTableRow.toggleGroupExpansion()"
      ng-class="{headers: jfTableRow.rowId === 'headers', 'group-header': jfTableRow.data.$groupHeader, 'expanded': jfTableRow.data.$groupHeader.$expanded}"
      ng-style="{height: jfTableRow.tableView.options.rowHeight, opacity: jfTableRow.tableView.options.ready ? 1 : 0}">
@@ -39,7 +43,7 @@
     </div>
     <div class="jf-table-cell"
          ng-if="!jfTableRow.data.$groupHeader"
-         ng-class="{header: jfTableRow.rowId === 'headers' && col.header, sortable: jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.sortable, [jfTableRow.kebab(col.field)]: true}"
+         ng-class="{header: jfTableRow.rowId === 'headers' && col.header, sortable: jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.sortable && !jfTableRow.hoveringResize, [jfTableRow.kebab(col.field)]: true}"
          ng-click="jfTableRow.rowId === 'headers' && col.header && jfTableRow.tableView.options.sortable && jfTableRow.tableView.options.sortBy(col.field)"
          ng-style="{height: jfTableRow.tableView.options.rowHeight, width: col.width}"
          ng-repeat="col in jfTableRow.tableView.options.columns">

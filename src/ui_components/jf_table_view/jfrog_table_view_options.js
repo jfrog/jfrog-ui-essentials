@@ -32,6 +32,7 @@ export function JFrogTableViewOptions($timeout) {
             this.selectionColumnWidth = 60; //px
             this.theme = this.DEFAULT_THEME;
             this.sortDropDownVisible = true;
+            this.resizableColumns = false;
         }
 
         setData(data) {
@@ -44,6 +45,11 @@ export function JFrogTableViewOptions($timeout) {
         setRowsPerPage(rpp) {
             this.rowsPerPage = rpp;
         }
+
+        enableColumnsResize(enabled) {
+            this.resizableColumns = enabled;
+        }
+
 
         update(noSort=false, noGrouping=false) {
 //            console.log('update',noSort,noGrouping)
