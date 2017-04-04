@@ -1,19 +1,23 @@
 <div class="jf-markdown-editor">
     <div class="controls">
         <div class="switch-wrapper">
-            <jf-switch ng-model="jfMarkdown.mode"
+            <jf-switch ng-if="jfMarkdown.showControls"
+                       ng-model="jfMarkdown.mode"
                        ng-change="jfMarkdown.onModeChange({mode:jfMarkdown.mode})"
                        options="jfMarkdown.modeOptions"
                        controller="jfMarkdown.switchController"
                        class="no-margin-top"></jf-switch>
         </div>
-        <div class="lang-select-wrapper" ng-if="jfMarkdown.mode !== 'Preview'">
+        <div class="lang-select-wrapper" ng-if="jfMarkdown.showControls && jfMarkdown.mode !== 'Preview'">
             <jf-ui-select jf-select-model="jfMarkdown.language"
                           jf-select-change="jfMarkdown.onLanguageChange()"
                           jf-select-options="['Markdown','Asciidoc','Plain Text']"></jf-ui-select>
         </div>
+        <div class="start-edit-button" ng-if="!jfMarkdown.showControls && jfMarkdown.editable">
+            <div class="icon icon-artifactory-edit" ng-click="jfMarkdown.showControls = true"></div>
+        </div>
     </div>
-    <div class="code-mirror-wrapper" ng-if="jfMarkdown.mode === 'Edit'">
+    <div class="code-mirror-wrapper" ng-if="jfMarkdown.mode === 'Edit' && jfMarkdown.showControls">
         <jf-code-mirror
                 ng-if="jfMarkdown.language === 'Markdown'"
                 mime-type="text/x-markdown"
@@ -32,10 +36,10 @@
                 autofocus="true"
                 model="jfMarkdown.markdown">
         </jf-code-mirror>
-        <div ng-click="jfMarkdown.onSave()"
+        <div ng-click="jfMarkdown.onSave(); jfMarkdown.showControls = false;"
              class="btn btn-primary save-button pull-right">Save</div>
     </div>
-    <div class="preview-wrapper" ng-if="jfMarkdown.mode === 'Preview'">
+    <div class="preview-wrapper" ng-if="jfMarkdown.mode === 'Preview' || !jfMarkdown.showControls">
         <div class="preview"
              ng-bind-html="jfMarkdown.preview"></div>
     </div>

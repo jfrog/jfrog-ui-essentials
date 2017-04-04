@@ -7,6 +7,7 @@ class jfMarkdownEditorController {
         this.mode = this.mode || 'Edit';
         this.markdown = this.markdown || '';
         this.language = this.language || 'Markdown';
+        if (this.editable === undefined) this.editable = true;
         this.toHtml = {};
         this.toHtml['Markdown'] = require('marked');
         this.toHtml['Asciidoc'] = Opal.Asciidoctor.$convert.bind(Opal.Asciidoctor);;
@@ -46,7 +47,8 @@ export function jfMarkdownEditor() {
             language: '=?',
             mode: '=?',
             onSave: '&?',
-            onModeChange: '&?'
+            onModeChange: '&?',
+            editable: '=?'
         },
         controller: jfMarkdownEditorController,
         controllerAs: 'jfMarkdown',
