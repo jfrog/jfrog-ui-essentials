@@ -66,7 +66,6 @@ export class JFrogModal {
                 $('.modal-dialog').css('max-width', size)
             });
         }
-
         this._calculateMaxHeight();
 
         if (modalInstance.result) {
@@ -90,15 +89,16 @@ export class JFrogModal {
     /**
      * Calculate and set the max-height attribute of a modal's body
      * */
-    _calculateMaxHeight() {
+    _calculateMaxHeight(isWizardStep) {
+        // return this.oldResize();
         if(this.modalIsClosing){
             this.modalIsClosing = false;
             return;
         }
-        // Try to hide the modal body in this digest cycle before calculating height in the next digest cycle.
+        // Try to hide the wizard modal body in this digest cycle before calculating height in the next digest cycle.
         // This is very important for cases that the modal has more then one step - such as onboarding wizard (and
         // applies to every step but the first)
-        $('.modal-body').hide();
+        if(isWizardStep) $('.modal-body').hide();
 
         // Calculate and set modal body height in the next digest cycle
         // After the resizing is done - the modal body is shown again.
@@ -110,19 +110,16 @@ export class JFrogModal {
             // Hide modal body before perfroming calculations
             let modal = $('.modal-content');
             let modalBody = modal.find('.modal-body');
-            modalBody.hide();
 
             // Calculate and show content
             let wizardModalContainer = modal.find('.wizard-modal');
             if(wizardModalContainer.length > 0) {
+                modalBody.hide();
                 this.resizeWizardModalBody(modal,wizardModalContainer,modalBody);
                 modalBody.show();
             }
             else {
-                this.$timeout(() => {
-                    this.resizeAnyModalBody(modal,modalBody);
-                    modalBody.show();
-                });
+                this.resizeAnyModalBody(modal,modalBody);
             }
         });
     }
@@ -146,6 +143,32 @@ export class JFrogModal {
         modalBody.css('max-height', maxHeight);
     }
 
+
+    oldResize(){
+        this.$timeout(() => {
+            if ($('.wizard-modal').length > 0) {
+
+                // modal height - header - footer
+                let MH = $('.wizard-modal').height(),               // Modal height
+                    HH  = $('.modal-header').outerHeight() || 0,         // Header height
+                    FH  = $('.modal-footer').outerHeight() || 0;    // Footer height
+
+                let maxHeight = MH - HH - FH;
+                $('.modal-body').css('max-height', maxHeight);
+                return;
+            }
+
+            let VPH = window.innerHeight,                       // View port height
+                MOT = 110,                                      //Modal offset top
+                HH  = $('.modal-header').outerHeight() || 0,         // Header height
+                FH  = $('.modal-footer').outerHeight() || 0;    // Footer height
+
+            // Calculate: MPH - (MOT*2) - HH - FH = maxHeight
+            let maxHeight = VPH - (MOT * 2) - HH - FH;
+
+            $('.modal-body').css('max-height', maxHeight);
+        }, 100)
+    }
 
     /**
      * launch a modal that shows content in a codemirror container
@@ -277,7 +300,7 @@ class WizardController {
         else {
             this.currentStep++;
         }
-        this.JFrogModal._calculateMaxHeight();
+        this.JFrogModal._calculateMaxHeight(true);
     }
 
     prevStep() {
@@ -302,7 +325,7 @@ class WizardController {
         else {
             this.currentStep--;
         }
-        this.JFrogModal._calculateMaxHeight();
+        this.JFrogModal._calculateMaxHeight(true);
     }
 
     finish() {
