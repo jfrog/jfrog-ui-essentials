@@ -1,94 +1,78 @@
 .jf-table-view {
   width: 100%;
   .jf-table-top {
-    height: 85px;
-    margin-bottom: 10px;
     &.no-sort {
-      height: 58px;
+      //height: 58px;
+    }
+
+    .new-entity {
+      .new-text {
+        margin-left: 0.5em;
+        vertical-align: -webkit-baseline-middle;
+      }
+      .add-box {
+        cursor: pointer;
+        width: 50px;
+        height: 45px;
+        border: 1px solid #cdd2d4;
+        border-radius: 5px;
+        display: inline-block;
+        text-align: center;
+        .icon {
+          vertical-align: -webkit-baseline-middle;
+          &:before {
+            font-weight: bolder !important;
+          }
+        }
+      }
     }
     position: relative;
+    .jf-table-right-actions {
+      & > div {
+        margin-left: 0.75em;
+        display: inline-block;
+      }
+    }
+
     .jf-table-filter {
-      width: 33%;
-      display: inline-block;
-      height: 50px;
       input {
-        width: 200px;
-        padding: 5px;
-        position: absolute;
-        bottom: 0px;
         &.no-results {
           color: red;
         }
       }
     }
-    .top-center {
-      display: inline-block;
-      width: 33%;
-      .new-entity {
-        height: 50px;
-        font-size: 18px;
-        font-weight: 500;
-        padding: 5px;
-        cursor: pointer;
-        text-align: center;
-        span.icon:before {
-          font-weight: 600 !important;
+    .sort-controller {
+      & > * {
+        display: inline-block;
+      }
+      .ui-select-container {
+        .ui-select-search,
+        .ui-select-toggle {
         }
       }
-      .sort-controller {
-        height: 50px;
-        text-align: center;
-        .ui-select-container {
-          .ui-select-search,
-          .ui-select-toggle {
-            height: 34px !important;
-            line-height: 34px !important;
-          }
+      .sort-label {
+      }
+      .select-wrapper {
+        jf-ui-select {
         }
-        .sort-label {
-          display: inline-block;
-          line-height: 34px;
-          vertical-align: top;
-          margin-right: 15px;
+      }
+      .sort-dir-icon {
+        &.asc {
+          opacity: 1;
+          transform: scale(1, 1) rotate(270deg)
         }
-        .select-wrapper {
-          width: 250px;
-          display: inline-block;
-          jf-ui-select {
-            text-align: left;
-          }
+        &.desc {
+          opacity: 1;
+          transform: scale(1, -1) rotate(270deg)
         }
-        .sort-dir-icon {
-          display: inline-block;
-          margin-left: 10px;
-          padding-top: 17px;
-          opacity: 0;
-          cursor: pointer;
-          &.asc {
-            opacity: 1;
-            transform: scale(1,1) rotate(270deg)
-          }
-          &.desc {
-            opacity: 1;
-            transform: scale(1,-1) rotate(270deg)
-          }
-        }
+
       }
     }
     .pagination-controls {
-      display: inline-block;
-      width: 33%;
-      height: 50px;
       jf-drag-drop-pagination {
-        position: absolute;
-        bottom: -6px;
-        right: 0;
       }
     }
     .batch-actions {
-      position: absolute;
-      top: 0;
-      right: 0;
     }
   }
   .jf-table-view-container {
@@ -132,8 +116,10 @@
         }
       }
       &:not(.headers) {
-        border: 1.5px solid @greenBorderLight;
+        border: none;
+        border-bottom: 1px solid #cdd2d4;
       }
+
       &.headers {
         border-bottom: 1.5px solid @greenBorderLight;
       }
@@ -142,7 +128,7 @@
       }
       .jf-table-cell {
         display: inline-table;
-        padding: 5px;
+        //padding: 5px;
         overflow: hidden;
         z-index: 1;
 
@@ -150,7 +136,7 @@
           border-right: 1px @greenBorderLight dotted !important;
         }
         &.drag-left {
-//          border-left: 1px @greenBorderLight dashed;
+          //          border-left: 1px @greenBorderLight dashed;
         }
 
         &.selection,
@@ -164,11 +150,11 @@
         }
         &.group-header {
           .icon-more {
-            transform: rotate(-90deg) translate(-15px,0) scale(1.5,1.5);
+            transform: rotate(-90deg) translate(-15px, 0) scale(1.5, 1.5);
             margin: 0 18px 0 7px;
             display: inline-block;
             &.expanded {
-              transform: rotate(0deg) translate(0,16px) scale(1.5,1.5);
+              transform: rotate(0deg) translate(0, 16px) scale(1.5, 1.5);
             }
           }
           .group-header-count {
@@ -240,7 +226,6 @@
     }
   }
 
-
   &.old-grid-theme {
     .jf-table-view-container {
       font-size: 16px;
@@ -291,10 +276,10 @@
           }
           &.group-header {
             .icon-more {
-              transform: rotate(-90deg) translate(-5px,0);
+              transform: rotate(-90deg) translate(-5px, 0);
               margin: 0 5px 0 5px;
               &.expanded {
-                transform: rotate(0deg) translate(0,6px);
+                transform: rotate(0deg) translate(0, 6px);
               }
             }
           }
