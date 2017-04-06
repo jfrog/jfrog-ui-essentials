@@ -48,8 +48,7 @@ module.exports = {
         'node_modules/js-beautify/js/lib/beautify.js',
         'node_modules/hamsterjs/hamster.js',
         'node_modules/angular-mousewheel/mousewheel.js',
-        'components/opal/opal/current/opal.min.js',
-        'components/angular-asciidoc-directive/dist/asciidoc.all.js'
+//        'components/angular-asciidoc-directive/dist/asciidoc.all.js'
     ],
 
     CSS: [
