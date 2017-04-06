@@ -8,14 +8,14 @@
             <input class="select-files-hidden"
                     type="file"
                     ng-if="!jfFileUploader.queue[0].progress"
-                    nv-file-select multiple
+                    nv-file-select
                     uploader="jfFileUploader"
                     ng-disabled="jfFileDisabled"
                     title=" " />
             <div ng-if="!jfFileUploader.queue.length"><span>Drop file</span> here or <span>Select file</span></div>
             <div ng-if="jfFileUploader.queue.length && (!jfFileUploader.queue[0].progress || !showProgressBar)"
                     class="drop-zone-file-name">{{jfFileUploader.queue[0].file.name}}</div>
-            <div ng-if="showProgressBar">
+            <div ng-if="true || showProgressBar">
                 <div ng-repeat="item in jfFileUploader.queue">
                     <div ng-show="jfFileUploader.isHTML5 && item.progress"
                             class="file-upload-progress file-info">
