@@ -6,7 +6,7 @@
         class="action-button"
         ng-if="!actionObj.visibleWhen || actionObj.visibleWhen()">
 
-        <a ng-href="{{ actionObj.href }}" ng-click="trackAction(actionObj.title)">
+        <a ng-href="{{ actionObj.href }}">
             <i class="action-icon icon" ng-class="actionObj.icon"></i> {{actionObj.title}}
         </a>
     </li>
@@ -20,7 +20,7 @@
                   class="action-item menu-item-{{actionObj.icon}}"
                   ng-class="{disabled: actionObj.disabled}"
                   ng-if="!actionObj.visibleWhen || actionObj.visibleWhen()">
-                  <a href="" class="action-container" ng-click="jfActions.doAction(actionObj,$event)" ng-click="jfActions.trackAction(actionObj.title)">
+                  <a href="" class="action-container" ng-click="jfActions.doAction(actionObj,$event)">
                       <span class="action-icon icon"
                             ng-class="actionObj.icon"></span>
                       <span class="action-name">{{actionObj.title}}</span>

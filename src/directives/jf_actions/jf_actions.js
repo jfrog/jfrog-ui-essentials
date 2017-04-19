@@ -36,7 +36,7 @@ class jfActionsController {
             return;
         }
         if (this.actionsHandler) {
-            if (!actionObj.href) this.actionsHandler.perform(actionObj, this.currentEntity);
+            this.actionsHandler.perform(actionObj, this.currentEntity);
         }
         else if (actionObj.action) {
             actionObj.action(this.currentEntity);
