@@ -139,7 +139,9 @@ class jfDragDropController {
         this._clearSelectedItems();
         this.updateFilter();
         this._updatePagination();
-        if (this.onChange) this.onChange();
+        this.$timeout(()=>{
+            if (this.onChange) this.onChange();
+        });
     }
 
     /**
