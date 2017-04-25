@@ -8,6 +8,10 @@ class jfGridBatchActionsController {
     anySelected() {
         return this.gridApi && this.gridApi.selection.getSelectedRows().length > 0;
     }
+
+    isDisabled(action){
+        return !this.anySelected() || (action.disabledWhen && action.disabledWhen());
+    }
 }
 export function jfGridBatchActions() {
     return {
