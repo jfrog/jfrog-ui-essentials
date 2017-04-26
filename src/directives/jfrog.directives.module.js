@@ -29,6 +29,7 @@ import {jfMarquee}       from './jf_marquee/jf_marquee';
 import {jfPasswordStrength} from './jf_password_strength/jf_password_strength';
 import {jfClearErrors} from "./jf_clear_errors/jf_clear_errors";
 import {jfMarkdownEditor} from "./jf_markdown_editor/jf_markdown_editor";
+import {jfTree} from "./jf_tree/jf_tree";
 
 angular.module('jfrog.ui.essentials.directives', [])
     .directive({
@@ -63,4 +64,5 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfPasswordStrength': jfPasswordStrength,
         'jfClearErrors': jfClearErrors,
         'jfMarkdownEditor': jfMarkdownEditor,
+        'jfTree': jfTree,
     });

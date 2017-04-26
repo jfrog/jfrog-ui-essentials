@@ -48,6 +48,7 @@ module.exports = {
         'node_modules/js-beautify/js/lib/beautify.js',
         'node_modules/hamsterjs/hamster.js',
         'node_modules/angular-mousewheel/mousewheel.js',
+        'components/jstree/dist/jstree.js',
 //        'components/angular-asciidoc-directive/dist/asciidoc.all.js'
     ],
 
@@ -67,13 +68,15 @@ module.exports = {
 //        'components/selectize/dist/css/selectize.bootstrap3.css',
 //        'components/font-awesome/css/font-awesome.css',
         'components/tooltipster/css/tooltipster.css',
-        'components/codemirror/addon/dialog/dialog.css'
+        'components/codemirror/addon/dialog/dialog.css',
+        'components/jstree/dist/themes/default/style.css',
     ],
 
     FONTS: [
 //        'components/lessfonts-open-sans/dist/fonts/**/*.{svg,woff,ttf,eot}',
         'components/angular-ui-grid/*.{svg,woff,ttf,eot}',
 //        'components/font-awesome/fonts/*.{svg,woff,ttf,eot}'
+        'components/jstree/dist/themes/default/*.{png,gif}',
     ],
 
     ASSETS: [

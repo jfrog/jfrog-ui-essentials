@@ -1,0 +1,16 @@
+
+<div ng-show="jfTree.hasData()"
+     id="jf-tree"
+     ng-style="{width: jfTree.treeWidth,height: jfTree.treeHeight}">
+    <div class="tree-browser-header"
+         ng-if="jfTree.treeHeader">
+        <div class="tree-browser-header-tabs"
+             ng-bind-html="jfTree.treeHeader">
+        </div>
+    </div>
+    <div class="tree-browser-container">
+        <div>
+            <div id="tree-element"></div>
+        </div>
+    </div>
+</div>
