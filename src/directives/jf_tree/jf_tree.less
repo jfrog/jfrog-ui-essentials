@@ -1,4 +1,5 @@
-#jf-tree{
+.jf-tree-container {
+  overflow: auto;
   .tree-head-expansion {
     display: none;
     padding: 0 20px;
@@ -7,7 +8,7 @@
     border-bottom: 1px solid #e9e9e9;
   }
 
-  #tree-element {
+  .tree-element {
     position: relative;
     overflow: auto;
     padding: 12px 0 10px;
@@ -22,7 +23,7 @@
     }
   }
   .expanded {
-    #tree-element {
+    .tree-element {
       top: 80px;
     }
 
@@ -104,6 +105,9 @@
     color: @grayFontLight;
     background-repeat: no-repeat !important;
     font-size: 14px;
+    &.jf-tree-no-icon {
+      display: none !important;
+    }
   }
 
   .jstree-wholerow-hovered {
@@ -231,6 +235,7 @@
         width: 41px;
       }
 
+      /*
       &.jstree-last {
         background: transparent;
         .jstree-icon:not(.jstree-checkbox) {
@@ -240,6 +245,7 @@
         }
 
       }
+      */
     }
 
     .jstree-anchor {
