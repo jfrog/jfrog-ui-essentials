@@ -41,10 +41,10 @@ class jfTreeController{
             this.currentNode = args.node;
         });
         $(this.treeElement).on("check_node.jstree", (e, args) => {
-            args.node.data.originalObject.$checked = true;
+            args.node.data.originalObject().$checked = true;
         });
         $(this.treeElement).on("uncheck_node.jstree", (e, args) => {
-            args.node.data.originalObject.$checked = false;
+            args.node.data.originalObject().$checked = false;
         });
     }
 
@@ -95,7 +95,7 @@ class jfTreeController{
         if(!origData || !origData.length) return;
         return _.map(origData,(origItem) => {
             let item = {};
-            item.data = {originalObject: _.find(this.treeData,origItem)};
+            item.data = {originalObject: ()=>origItem};
             item.children = this.transformData(this.getChildrenFunc({item:origItem}) || []);
             item.text = this.getTextFunc({item:origItem}) || '';
             item.icon = "jf-tree-no-icon";
