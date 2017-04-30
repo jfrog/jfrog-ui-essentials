@@ -41,10 +41,10 @@ class jfTreeController{
             this.currentNode = args.node;
         });
         $(this.treeElement).on("check_node.jstree", (e, args) => {
-            args.node.data.originalObject().$checked = true;
+            if (this.onStateChange) this.onStateChange();
         });
         $(this.treeElement).on("uncheck_node.jstree", (e, args) => {
-            args.node.data.originalObject().$checked = false;
+            if (this.onStateChange) this.onStateChange();
         });
     }
 
@@ -65,10 +65,22 @@ class jfTreeController{
                 "tie_selection" : false,
                 "whole_node": true
             },
-            'plugins' : this.plugins
+            'plugins' : this.checkboxes === true || this.checkboxes === undefined ? ['checkbox'] : []
         };
         this.$timeout(()=>{
-            TreeConfig.core.data = this.transformedData;
+//            TreeConfig.core.data = this.transformedData;
+            TreeConfig.core.data = (obj, cb) => {
+                if (obj.id==='#') cb(this.transformedData);
+                else {
+                    let children = this.getChildrenFunc({item:obj.data.originalObject()});
+                    if (children.then) {
+                        children.then(data=>cb(this.transformData(data)));
+                    }
+                    else {
+                        cb(children ? this.transformData(children) : []);
+                    }
+                }
+            };
             this.treeElement = $(this.$element).find('.tree-element');
             $(this.treeElement).jstree(TreeConfig);
             $(this.treeElement).on("ready.jstree", (e) => {
@@ -96,15 +108,41 @@ class jfTreeController{
         return _.map(origData,(origItem) => {
             let item = {};
             item.data = {originalObject: ()=>origItem};
-            item.children = this.transformData(this.getChildrenFunc({item:origItem}) || []);
+            let children = this.getChildrenFunc({item:origItem});
+            item.children = children && (children.length || children.then) ? true : [];
             item.text = this.getTextFunc({item:origItem}) || '';
             item.icon = "jf-tree-no-icon";
             item.state =  {
-                opened: false,
+                opened: origItem.$opened || false,
                 disabled: false,
                 selected: false,
-                checked: false
+                checked: origItem.$checked || false
             };
+
+            origItem.$isChecked = ()=>{
+                let treeJSON = this.jstree().get_json();
+                let found;
+                let recursiveFind = (arr) => {
+                    for (let i = 0; i < arr.length; i++) {
+                        if (arr[i].data.originalObject() === origItem) {
+                            found = arr[i];
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        for (let i = 0; i < arr.length; i++) {
+                            if (arr[i].children && arr[i].children.length) {
+                                found = recursiveFind(arr[i].children);
+                                if (found) break;
+                            }
+                        }
+                    }
+                    return found;
+                }
+                recursiveFind(treeJSON);
+                return found ? this.jstree().is_checked(found) : false;
+            }
+
             return item;
         });
     }
@@ -121,11 +159,10 @@ export function jfTree() {
         scope: {
             treeData: '=',
             treeHeader: '=',
-            treeWidth: '=',
-            treeHeight: '=',
-            plugins: '=',
+            checkboxes: '=',
             getTextFunc: '&',
             getChildrenFunc: '&',
+            onStateChange: '&?'
         },
         controller: jfTreeController,
         controllerAs: 'jfTree',
