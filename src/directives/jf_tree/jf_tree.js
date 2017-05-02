@@ -1,61 +1,16 @@
-/**
- * Created by tomere on 26/04/2017.
- * jfTree
- */
-
 class jfTreeController{
 
-    /**
-     * Constructor
-     * */
-    constructor($scope,$q,$timeout,$element){
-        this.$scope = $scope;
-        this.$timeout = $timeout;
+    constructor($scope,$q,$element){
         this.$element = $element;
         this.$q = $q;
-        this.currentNode = {};
-        this.generatedDictionay = {
-            tabs: {
-                result: 'result',
-            }
-        };
-//        this.registerTreeEvents();
-        this.initTree();
+
+        $scope.$watch('jfTree.treeData',(data)=>{
+            if (data && !this.built) this.initTree();
+        })
     }
 
-    initTree() {
-        this.buildTree().then(()=>{
-            this.registerTreeEvents();
-        });
-    }
-
-    /**
-     * register a listener on the tree and delegate to
-     * relevant methods
-     *
-     * @param element
-     * @private
-     */
-    registerTreeEvents() {
-        $(this.treeElement).on("select_node.jstree", (e, args) => {
-            this.currentNode = args.node;
-        });
-        $(this.treeElement).on("check_node.jstree", (e, args) => {
-            if (this.onStateChange) this.onStateChange();
-        });
-        $(this.treeElement).on("uncheck_node.jstree", (e, args) => {
-            if (this.onStateChange) this.onStateChange();
-        });
-    }
-
-    buildTree(){
-        let defer = this.$q.defer();
-        if(!this.treeData){
-            defer.reject();
-            return defer.promise;
-        }
-        this.transformedData = this.transformData(this.treeData);
-        let TreeConfig = {
+    treeConfig() {
+        return {
             'core': {
                 'data': {}
             },
@@ -66,35 +21,50 @@ class jfTreeController{
                 "whole_node": true
             },
             'plugins' : this.checkboxes === true || this.checkboxes === undefined ? ['checkbox'] : []
-        };
-        this.$timeout(()=>{
-//            TreeConfig.core.data = this.transformedData;
-            TreeConfig.core.data = (obj, cb) => {
-                if (obj.id==='#') cb(this.transformedData);
+        }
+    }
+
+    initTree() {
+        this.buildTree().then(()=>{
+            this.registerTreeEvents();
+            if (this.onReady) this.onReady({jstree:this.jstree()});
+            this.built = true;
+        });
+    }
+
+    registerTreeEvents() {
+        $(this.treeElement).on("select_node.jstree", (e, args) => {
+        });
+        $(this.treeElement).on("check_node.jstree", (e, args) => {
+            if (this.onStateChange) this.onStateChange();
+        });
+        $(this.treeElement).on("uncheck_node.jstree", (e, args) => {
+            if (this.onStateChange) this.onStateChange();
+        });
+    }
+
+    buildTree(){
+        this.transformedData = this.transformData(this.treeData);
+        let TreeConfig = this.treeConfig();
+
+        TreeConfig.core.data = (obj, cb) => {
+            if (obj.id==='#') cb(this.transformedData);
+            else {
+                let children = this.getChildrenFunc({node:obj.data.originalObject()});
+                if (children.then) {
+                    children.then(data=>cb(this.transformData(data)));
+                }
                 else {
-                    let children = this.getChildrenFunc({item:obj.data.originalObject()});
-                    if (children.then) {
-                        children.then(data=>cb(this.transformData(data)));
-                    }
-                    else {
-                        cb(children ? this.transformData(children) : []);
-                    }
+                    cb(children ? this.transformData(children) : []);
                 }
-            };
-            this.treeElement = $(this.$element).find('.tree-element');
-            $(this.treeElement).jstree(TreeConfig);
-            $(this.treeElement).on("ready.jstree", (e) => {
-                let firstNode = $(this.treeElement).find('.jstree-li:first');
-                if(firstNode){
-                    let nodeId = firstNode.attr('id');
-//                    $(this.treeElement).jstree('select_node', nodeId, true);
-                    let node = $(this.treeElement).jstree('get_node', nodeId);
-                    this.$timeout(()=>{
-                        this.currentNode = node;
-                    },100);
-                }
-                defer.resolve()
-            });
+            }
+        };
+        this.treeElement = $(this.$element).find('.tree-element');
+        $(this.treeElement).jstree(TreeConfig);
+
+        let defer = this.$q.defer();
+        $(this.treeElement).on("ready.jstree", (e) => {
+            defer.resolve();
         });
         return defer.promise;
     }
@@ -108,43 +78,65 @@ class jfTreeController{
         return _.map(origData,(origItem) => {
             let item = {};
             item.data = {originalObject: ()=>origItem};
-            let children = this.getChildrenFunc({item:origItem});
+            let children = this.getChildrenFunc({node:origItem});
             item.children = children && (children.length || children.then) ? true : [];
-            item.text = this.getTextFunc({item:origItem}) || '';
+            item.text = this.getTextFunc({node:origItem}) || '';
             item.icon = "jf-tree-no-icon";
-            item.state =  {
-                opened: origItem.$opened || false,
-                disabled: false,
-                selected: false,
-                checked: origItem.$checked || false
-            };
+            item.state =  { opened: false, disabled: false, selected: false, checked: false };
 
-            origItem.$isChecked = ()=>{
-                let treeJSON = this.jstree().get_json();
-                let found;
-                let recursiveFind = (arr) => {
-                    for (let i = 0; i < arr.length; i++) {
-                        if (arr[i].data.originalObject() === origItem) {
-                            found = arr[i];
-                            break;
-                        }
-                    }
-                    if (!found) {
-                        for (let i = 0; i < arr.length; i++) {
-                            if (arr[i].children && arr[i].children.length) {
-                                found = recursiveFind(arr[i].children);
-                                if (found) break;
-                            }
-                        }
-                    }
-                    return found;
-                }
-                recursiveFind(treeJSON);
-                return found ? this.jstree().is_checked(found) : false;
-            }
+            this.setItemMethods(origItem);
 
             return item;
         });
+    }
+
+    setItemMethods(item) {
+        item.$isChecked = () => {
+            let node = this.getTreeNodeByOrigItem(item);
+            return node ? this.jstree().is_checked(node) : false;
+        }
+        item.$isOpened = () => {
+            let node = this.getTreeNodeByOrigItem(item);
+            return node ? this.jstree().is_open(node) : false;
+        }
+        item.$setChecked = (checked = true) => {
+            let node = this.getTreeNodeByOrigItem(item);
+            if (node) {
+                if (checked) this.jstree().check_node(node);
+                else this.jstree().uncheck_node(node);
+            }
+        }
+        item.$setOpened = (opened = true) => {
+            let node = this.getTreeNodeByOrigItem(item);
+            if (node) {
+                if (opened) this.jstree().open_node(node,null,false);
+                else this.jstree().close_node(node,null,false);
+            }
+        }
+    }
+
+    getTreeNodeByOrigItem(origItem) {
+        let treeJSON = this.jstree().get_json();
+        let found;
+        let recursiveFind = (arr) => {
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].data.originalObject() === origItem) {
+                    found = arr[i];
+                    break;
+                }
+            }
+            if (!found) {
+                for (let i = 0; i < arr.length; i++) {
+                    if (arr[i].children && arr[i].children.length) {
+                        found = recursiveFind(arr[i].children);
+                        if (found) break;
+                    }
+                }
+            }
+            return found;
+        }
+        recursiveFind(treeJSON);
+        return found;
     }
 
     hasData() {
@@ -162,7 +154,8 @@ export function jfTree() {
             checkboxes: '=',
             getTextFunc: '&',
             getChildrenFunc: '&',
-            onStateChange: '&?'
+            onStateChange: '&?',
+            onReady: '&?'
         },
         controller: jfTreeController,
         controllerAs: 'jfTree',
