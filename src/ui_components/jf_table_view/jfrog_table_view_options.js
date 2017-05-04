@@ -58,6 +58,7 @@ export function JFrogTableViewOptions($timeout) {
                 this.origData = _.sortBy(this.data,'');
                 if (!noSort) this.sortBy(this.sortByField,true);
                 else this.dirCtrl.refresh();
+                this._normalizeWidths();
             }
         }
 
@@ -148,7 +149,9 @@ export function JFrogTableViewOptions($timeout) {
         }
 
         _normalizeWidths() {
-
+            
+            if (!this.dirCtrl) return;
+            
             let actionsWidth = 0;
             let selectionWidth = 0;
             if (this.actions) {
