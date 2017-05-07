@@ -1,7 +1,8 @@
 class jfTreeController{
 
-    constructor($scope,$q,$element){
+    constructor($scope,$q,$element,$timeout){
         this.$element = $element;
+        this.$timeout = $timeout;
         this.$q = $q;
 
         $scope.$watch('jfTree.treeData',(data)=>{
@@ -36,10 +37,10 @@ class jfTreeController{
         $(this.treeElement).on("select_node.jstree", (e, args) => {
         });
         $(this.treeElement).on("check_node.jstree", (e, args) => {
-            if (this.onStateChange) this.onStateChange();
+            if (this.onStateChange) this.$timeout(()=>this.onStateChange());
         });
         $(this.treeElement).on("uncheck_node.jstree", (e, args) => {
-            if (this.onStateChange) this.onStateChange();
+            if (this.onStateChange) this.$timeout(()=>this.onStateChange());
         });
     }
 
