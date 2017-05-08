@@ -83,7 +83,7 @@ class jfTreeController{
             item.children = children && (children.length || children.then) ? true : [];
             item.text = this.getTextFunc({node:origItem}) || '';
             item.icon = "jf-tree-no-icon";
-            item.state =  { opened: false, disabled: false, selected: false, checked: false };
+            item.state =  this.getInitialStateFunc ? this.getInitialStateFunc({node:origItem}) : { opened: false, disabled: false, selected: false, checked: false};
 
             this.setItemMethods(origItem);
 
@@ -155,6 +155,7 @@ export function jfTree() {
             checkboxes: '=',
             getTextFunc: '&',
             getChildrenFunc: '&',
+            getInitialStateFunc: '&?',
             onStateChange: '&?',
             onReady: '&?'
         },
