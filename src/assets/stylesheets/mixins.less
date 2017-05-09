@@ -17,6 +17,27 @@
   font-weight: 100;
 }
 
+// set color & font size for placeholder
+.placeholder-style(@color: @grayPlaceholderLight; @fontSize: 15px; @line-height: 1em;) {
+  &::-webkit-input-placeholder {
+    color: @color;
+    font-size: @fontSize;
+    line-height: @line-height;
+  }
+  &:-moz-placeholder {
+    color: @color;
+    font-size: @fontSize;
+  }
+  &::-moz-placeholder {
+    color: @color;
+    font-size: @fontSize;
+  }
+  &:-ms-input-placeholder {
+    color: @color;
+    font-size: @fontSize;
+  }
+}
+
 @-webkit-keyframes marquee {
   from {left: 0;}
   to {left: -9999px;}

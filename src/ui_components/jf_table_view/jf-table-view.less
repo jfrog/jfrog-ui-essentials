@@ -1,80 +1,112 @@
 .jf-table-view {
   width: 100%;
   .jf-table-top {
-    &.no-sort {
-      //height: 58px;
+    position: relative;
+
+
+    a.new-entity {
+      color: @gray-dark;
+      font-size: 16px;
+      &:hover {
+        text-decoration: none;
+        color: @color-JFrog-green;
+      }
+      i {
+        font-size: 18px;
+        margin: 1px 8px 0 0;
+        vertical-align: middle;
+      }
     }
 
-    .new-entity {
-      cursor: pointer;
-      .new-text {
-        margin-left: 0.5em;
-        vertical-align: -webkit-baseline-middle;
-      }
-      .add-box {
-        width: 50px;
-        height: 45px;
-        border: 1px solid #cdd2d4;
-        border-radius: 5px;
-        display: inline-block;
-        text-align: center;
-        .icon {
-          vertical-align: -webkit-baseline-middle;
-          &:before {
-            font-weight: bolder !important;
-          }
-        }
-      }
-    }
-    position: relative;
     .jf-table-right-actions {
       & > div {
-        margin-left: 0.75em;
         display: inline-block;
+        margin: 0 15px
+      }
+    }
+
+
+    .grid-batch-actions {padding: 0;}
+    .pagination-controls {
+      .grid-pagination {
+        margin: 0;
+        padding: 0;
+      }
+
+    }
+
+
+    .sort-and-filter-wrapper {
+      margin-bottom: 15px;
+      & > div {
+        //display: inline-block;
+        float: left;
+        &:not(:first-child) {margin-left: 10px;}
       }
     }
 
     .jf-table-filter {
-      input {
-        &.no-results {
-          color: red;
+      i {color: @light-gray;}
+      .input-search-wrapper {
+        background: #f1f1f1;
+        border: 1px solid @line-seperator;
+        border-radius: 4px;
+        padding: 0 8px;
+        width: 250px;
+        input {
+          border: 0;
+          background-color: transparent;
+          height: 36px;
+          outline: none;
+          .placeholder-style(@light-gray, 16px, 36px);
+          &.no-results {
+            color: red;
+          }
         }
       }
     }
+
     .sort-controller {
-      & > * {
-        display: inline-block;
+
+      .ui-select-no-choice {display: none;}
+
+      .ui-select-match > span,
+      input.ui-select-search {
+        background: #f1f1f1 !important;
+        border: 1px solid @line-seperator !important;
+        border-radius: 4px !important;
+        padding: 0 8px;
+        height: 38px !important;
+        line-height: 38px;
+        width: 156px !important;
+        color: @gray-dark;
       }
-      .ui-select-container {
-        .ui-select-search,
-        .ui-select-toggle {
-        }
+
+
+      .ui-select-container .text-muted {
+        font-size: 14px;
       }
-      .sort-label {
-      }
-      .select-wrapper {
-        jf-ui-select {
-        }
-      }
-      .sort-dir-icon {
-        &.asc {
-          opacity: 1;
-          transform: scale(1, 1) rotate(270deg)
-        }
-        &.desc {
-          opacity: 1;
-          transform: scale(1, -1) rotate(270deg)
+
+
+      /*.ui-select-container {
+
+
+
+        .sort-dir-icon {
+          &.asc {
+            opacity: 1;
+            transform: scale(1, 1) rotate(270deg)
+          }
+          &.desc {
+            opacity: 1;
+            transform: scale(1, -1) rotate(270deg)
+          }
         }
 
-      }
-    }
-    .pagination-controls {
-      jf-drag-drop-pagination {
-      }
-    }
-    .batch-actions {
+      }*/
     }
   }
+
   .jf-table-view-container {
     width: 100%;
     .table-rows-container {

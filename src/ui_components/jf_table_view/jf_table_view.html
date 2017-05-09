@@ -1,87 +1,99 @@
 <div class="jf-table-view"
      ng-class="{'old-grid-theme': jfTableView.options.theme === jfTableView.options.OLD_GRID_THEME}">
+
     <div class="jf-table-top"
          ng-class="{'no-sort':!jfTableView.options.sortable}">
-        <div class="row">
-            <div class="col-xs-3">
-                <div class="new-entity">
-                    <div ng-click="jfTableView.createNewEntity()"
-                         ng-if="jfTableView.options.newEntityCallback">
-                        <div class="add-box">
-                            <span class="icon icon-plus-sign"></span>
-                        </div>
-                        <span class="new-text">Add a {{jfTableView.objectName || 'Item'}}</span>
-                    </div>
+
+        <div class="text-right">
+
+            <a href class="new-entity"
+               ng-click="jfTableView.createNewEntity()"
+               ng-if="jfTableView.options.newEntityCallback">
+                <i class="icon icon-new"></i> Add a {{jfTableView.objectName || 'Item'}}
+            </a>
+
+        </div>
+
+        <div class="sort-and-filter-wrapper clearfix">
+
+            <div class="jf-table-filter">
+                <div class="input-search-wrapper field-style" ng-show="jfTableView.options.getRawData().length">
+                    <i class="icon-search"></i>
+                    <input ng-model="jfTableView.tableFilter"
+                           ng-model-options="{debounce: { 'default': 500 } }"
+                           ng-change="jfTableView.onUpdateFilter()"
+                           ng-class="{'no-results': jfTableView.noFilterResults}"
+                           placeholder="Filter">
                 </div>
             </div>
 
-            <div class="col-xs-9">
-                <div class="pull-right jf-table-right-actions">
-                    <div class="jf-table-filter">
-                        <input ng-model="jfTableView.tableFilter"
-                               ng-show="jfTableView.options.getRawData().length"
-                               ng-model-options="{debounce: { 'default': 500 } }"
-                               ng-change="jfTableView.onUpdateFilter()"
-                               ng-class="{'no-results': jfTableView.noFilterResults}"
-                               placeholder="Filter">
-                    </div>
-                    <div class="sort-controller"
-                         ng-if="jfTableView.options.sortable && jfTableView.options.sortDropDownVisible && jfTableView.options.getRawData().length">
-                        <div class="sort-label">Sort By:</div>
-                        <div class="select-wrapper">
-                            <jf-ui-select jf-select-model="jfTableView.options.sortByField"
-                                          jf-select-display-func="jfTableView.options.getDisplayNameForField($item)"
-                                          jf-select-change="jfTableView.options.sortBy(jfTableView.options.sortByField)"
-                                          jf-select-options="jfTableView.options._sortableFields"></jf-ui-select>
-                        </div>
-                        <div class="sort-dir-icon icon icon-arrow"
-                             ng-click="jfTableView.options.reverseSortingDir()"
-                             ng-class="{asc: !jfTableView.options.revSort, desc: jfTableView.options.revSort}"></div>
-                    </div>
-                    <div>
-                        <jf-table-view-batch-actions table-options="jfTableView.options"
-                                                     actions="jfTableView.options.batchActions"></jf-table-view-batch-actions>
-                    </div>
+            <div class="sort-controller"
+                 ng-if="jfTableView.options.sortable && jfTableView.options.sortDropDownVisible && jfTableView.options.getRawData().length">
+                <div class="select-wrapper">
+                    <jf-ui-select jf-select-model="jfTableView.options.sortByField"
+                                  jf-select-display-func="jfTableView.options.getDisplayNameForField($item)"
+                                  jf-select-change="jfTableView.options.sortBy(jfTableView.options.sortByField)"
+                                  jf-select-options="jfTableView.options._sortableFields"
+                                  jf-select-placeholder="Sort by"></jf-ui-select>
+                </div>
+                <!--<div class="sort-dir-icon icon icon-arrow"
+                     ng-click="jfTableView.options.reverseSortingDir()"
+                     ng-class="{asc: !jfTableView.options.revSort, desc: jfTableView.options.revSort}"></div>-->
+            </div>
 
-                    <div class="pagination-controls">
-                        <jf-drag-drop-pagination pagination-api="jfTableView.paginationApi"
-                                                 ng-if="jfTableView.paginationApi">
-                        </jf-drag-drop-pagination>
+
+
+
+            <div class="pull-right">
+                <jf-table-view-batch-actions table-options="jfTableView.options"
+                                             actions="jfTableView.options.batchActions"></jf-table-view-batch-actions>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="jf-table-view-container" ng-if="jfTableView.options">
+            <div class="jf-table-view-header"
+                 ng-if="jfTableView.options.headersVisible">
+                <jf-table-row table-view="jfTableView"
+                              row-id="'headers'"
+                              data="jfTableView.options.headersRow"></jf-table-row>
+            </div>
+            <div class="table-rows-container">
+                <div class="scroll-faker-container"
+                     ng-style="{right: -jfTableView.getScrollWidth()+'px'}"
+                     ng-if="jfTableView.options.paginationMode === jfTableView.options.VIRTUAL_SCROLL">
+                    <div class="scroll-faker"
+                         ng-init="jfTableView.initScrollFaker()"
+                         ng-style="{height: jfTableView.getTotalScrollHeight()}">
                     </div>
                 </div>
+                <jf-table-row ng-repeat="entity in jfTableView.options.getPageData() track by $index"
+                              table-view="jfTableView"
+                              msd-wheel="jfTableView.onMouseWheel($event, $delta, $deltaX, $deltaY)"
+                              row-id="$index"
+                              data="entity"></jf-table-row>
+            </div>
+            <div class="empty-table-placeholder"
+                 ng-if="!jfTableView.options.getRawData().length">
+                {{jfTableView.options.emptyTableText || 'This table is empty !'}}
+            </div>
+            <div class="empty-table-placeholder filter-no-results"
+                 ng-if="jfTableView.noFilterResults">
+                Current filter has no results. <a href ng-click="jfTableView.clearFilter()">Clear filter</a>
             </div>
         </div>
     </div>
 
-    <div class="jf-table-view-container" ng-if="jfTableView.options">
-        <div class="jf-table-view-header"
-             ng-if="jfTableView.options.headersVisible">
-            <jf-table-row table-view="jfTableView"
-                          row-id="'headers'"
-                          data="jfTableView.options.headersRow"></jf-table-row>
-        </div>
-        <div class="table-rows-container">
-            <div class="scroll-faker-container"
-                 ng-style="{right: -jfTableView.getScrollWidth()+'px'}"
-                 ng-if="jfTableView.options.paginationMode === jfTableView.options.VIRTUAL_SCROLL">
-                <div class="scroll-faker"
-                     ng-init="jfTableView.initScrollFaker()"
-                     ng-style="{height: jfTableView.getTotalScrollHeight()}">
-                </div>
-            </div>
-            <jf-table-row ng-repeat="entity in jfTableView.options.getPageData() track by $index"
-                          table-view="jfTableView"
-                          msd-wheel="jfTableView.onMouseWheel($event, $delta, $deltaX, $deltaY)"
-                          row-id="$index"
-                          data="entity"></jf-table-row>
-        </div>
-        <div class="empty-table-placeholder"
-             ng-if="!jfTableView.options.getRawData().length">
-            {{jfTableView.options.emptyTableText || 'This table is empty !'}}
-        </div>
-        <div class="empty-table-placeholder filter-no-results"
-             ng-if="jfTableView.noFilterResults">
-            Current filter has no results. <a href ng-click="jfTableView.clearFilter()">Clear filter</a>
-        </div>
-    </div>
+
 </div>
