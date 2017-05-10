@@ -34,8 +34,8 @@
                 autofocus="true"
                 model="jfMarkdown.markdown">
         </jf-code-mirror>
-        <div ng-click="jfMarkdown.onSave(); jfMarkdown.showControls = false;"
-             class="btn btn-primary save-button pull-right">Save</div>
+        <button ng-click="jfMarkdown.onSave(); jfMarkdown.showControls = false;"
+             class="btn btn-primary save-button pull-right">Save</button>
     </div>
     <div class="preview-wrapper" ng-if="jfMarkdown.mode === 'Preview' || !jfMarkdown.showControls">
         <div class="preview"
