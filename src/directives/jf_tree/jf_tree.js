@@ -19,9 +19,9 @@ class jfTreeController{
                 "keep_selected_style" : false,
                 "three_state" : true,
                 "tie_selection" : false,
-                "whole_node": true
+                "whole_node": false
             },
-            'plugins' : this.checkboxes === true || this.checkboxes === undefined ? ['checkbox'] : []
+            'plugins' : this.checkboxes === true || this.checkboxes === undefined ? ['wholerow','checkbox'] : []
         }
     }
 
