@@ -1,36 +1,28 @@
 .jf-markdown-editor {
   position: relative;
   .controls {
-    height: 50px;
     position: relative;
+    margin-bottom: 10px;
     .switch-wrapper {
-      position: absolute;
-      left: 0;
-      bottom: 0px;
+      float: right;
       .jf-switch {
-        margin-bottom: 0;
         .jf-switch-options {
-          padding: 0;
+
         }
       }
     }
+
     .lang-select-wrapper {
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 250px;
+      max-width: 150px;
     }
-    .start-edit-button {
-      position: absolute;
-      right: 0;
-      bottom: 6px;
-      font-size: 22px;
-      cursor: pointer;
+    & > button {
+      float: right;
     }
   }
   .preview-wrapper,
   .code-mirror-wrapper {
     width: 100%;
+    clear: both;
   }
   .code-mirror-wrapper {
     .save-button {

@@ -13,9 +13,7 @@
                           jf-select-change="jfMarkdown.onLanguageChange()"
                           jf-select-options="['Markdown','Asciidoc','Plain Text']"></jf-ui-select>
         </div>
-        <div class="start-edit-button" ng-if="!jfMarkdown.showControls && jfMarkdown.editable">
-            <div class="icon icon-artifactory-edit" ng-click="jfMarkdown.showControls = true"></div>
-        </div>
+        <button ng-if="!jfMarkdown.showControls && jfMarkdown.editable" ng-click="jfMarkdown.showControls = true" class="btn btn-default btn-sm"><i class="icon icon-artifactory-edit"></i> Edit</button>
     </div>
     <div class="code-mirror-wrapper" ng-if="jfMarkdown.mode === 'Edit' && jfMarkdown.showControls">
         <jf-code-mirror
