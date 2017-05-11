@@ -3,19 +3,29 @@
          nv-file-drop uploader="jfFileUploader"
          nv-file-over over-class="drop-zone-hover"
          ng-disabled="jfFileDisabled"
-         ng-class="{'drop-zone-load': jfFileUploader.queue.length}">
+         ng-class="{'drop-zone-load': jfFileUploader.queue.length , 'multiple': multiple}">
         <label class="file-input-label">
             <input class="select-files-hidden"
                     type="file"
-                    ng-if="!jfFileUploader.queue[0].progress"
+                    ng-if="!jfFileUploader.queue[0].progress && !multiple"
                     nv-file-select
                     uploader="jfFileUploader"
                     ng-disabled="jfFileDisabled"
                     title=" " />
-            <div ng-if="!jfFileUploader.queue.length"><span>Drop file</span> here or <span>Select file</span></div>
-            <div ng-if="jfFileUploader.queue.length && (!jfFileUploader.queue[0].progress || !showProgressBar)"
+            <input class="select-files-hidden"
+                   type="file"
+                   ng-if="!anyFileUploadInProgress() && multiple"
+                   nv-file-select
+                   uploader="jfFileUploader"
+                   ng-disabled="jfFileDisabled"
+                   title=" "
+                   multiple/>
+            <div ng-if="multiple || !jfFileUploader.queue.length">
+                <span>Drop file</span> here or <span>Select file</span>
+            </div>
+            <div ng-if="!multiple && jfFileUploader.queue.length && (!jfFileUploader.queue[0].progress || !showProgressBar)"
                     class="drop-zone-file-name">{{jfFileUploader.queue[0].file.name}}</div>
-            <div ng-if="true || showProgressBar">
+            <div ng-if="!multiple && showProgressBar">
                 <div ng-repeat="item in jfFileUploader.queue">
                     <div ng-show="jfFileUploader.isHTML5 && item.progress"
                             class="file-upload-progress file-info">
@@ -30,5 +40,17 @@
                 </div>
             </div>
         </label>
+        <div class="upload-files-frame"
+             ng-if="multiple">
+            <ul>
+                <li ng-repeat="item in jfFileUploader.queue" class="upload-item">
+                    <span class="file-name-deploy-multi" jf-tooltip="{{ item.file.name }}">{{ item.file.name }}</span>
+                    <a href=""
+                       ng-click="item.remove(); multiUploadItemRemoved()"
+                       jf-tooltip="Remove"
+                       class="icon icon-clear pull-right"></a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

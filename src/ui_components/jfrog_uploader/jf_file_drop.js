@@ -22,6 +22,16 @@ export function jfFileDrop($timeout) {
                 }
                 $scope.addCallback({fileItem: fileItem});
             }
+
+            $scope.jfFileUploader.multiUploadItemRemoved = () => {
+                if (!this.jfFileUploader.queue.length) {
+                    this.uploadCompleted = false;
+                }
+            }
+
+            $scope.jfFileUploader.anyFileUploadInProgress = () => {
+                return _.findWhere(this.jfFileUploader.queue,(item)=>{ return item.progress === true });
+            }
         }
     }
 }
