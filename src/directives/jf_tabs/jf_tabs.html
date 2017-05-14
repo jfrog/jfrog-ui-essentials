@@ -1,22 +1,26 @@
 <ul class="nav nav-tabs">
-    <li ng-repeat="tab in jfTabs.tabsVisible"
-        ng-class="{active:jfTabs.isActiveTab(tab), disabled:tab.isDisabled, [tab.class] : jfTabs.hasClass(tab)}"
-        class="jf-tabs-tab-header"
-        ng-style="{width: jfTabs.getTabWidthForStyle()}"
-        jf-disable-feature="{{ tab.feature }}">
-        <a ng-click="jfTabs.onClickTab(tab)" style="z-index: 999999"><div class="jf-tab-header-container" jf-tooltip-on-overflow><span>{{jfTabs.dictionary[tab.name]}}</span></div></a>
-    </li>
-    <li class="action-expand" ng-show="jfTabs.tabsCollapsed.length">
+	<li ng-repeat="tab in jfTabs.tabsVisible"
+	    ng-class="{active:jfTabs.isActiveTab(tab), disabled:tab.isDisabled, [tab.class] : jfTabs.hasClass(tab)}"
+	    class="jf-tabs-tab-header"
+	    ng-style="{width: jfTabs.getTabWidthForStyle()}"
+	    jf-disable-feature="{{ tab.feature }}">
+		<a ng-click="jfTabs.onClickTab(tab)" style="z-index: 999999">
+			<div class="jf-tab-header-container" jf-tooltip-on-overflow><span>{{jfTabs.dictionary[tab.name]}}</span>
+			</div>
+		</a>
+	</li>
+	<li class="action-expand" ng-show="jfTabs.tabsCollapsed.length">
         <span class="dropdown" dropdown is-open="jfTabs.isDropdownOpen">
             <a href class="dropdown-toggle nav-tabs-more" dropdown-toggle>&raquo;</a>
             <ul class="dropdown-menu dropdown-menu-right dropdown-container text-left">
                 <li class="dropdown-item" ng-repeat="tab in jfTabs.tabsCollapsed"
                     ng-class="{[tab.class] : jfTabs.hasClass(tab)}"
                     jf-disable-feature="{{ tab.feature }}">
-                    <a ng-click="jfTabs.onClickTab(tab)" jf-tooltip-on-overflow><span>{{jfTabs.dictionary[tab.name]}}</span></a>
+                    <a ng-click="jfTabs.onClickTab(tab)"
+                       jf-tooltip-on-overflow><span>{{jfTabs.dictionary[tab.name]}}</span></a>
                 </li>
             </ul>
         </span>
-    </li>
+	</li>
 </ul>
 <ng-transclude></ng-transclude>

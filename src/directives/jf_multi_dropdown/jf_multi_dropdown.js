@@ -68,10 +68,12 @@ class jfMultiDropdownController {
         this.items.splice.apply(this.items, [0,this.items.length].concat(combined));
     }
     selectAll() {
-        this.filter(this.items, this.filterText).forEach((item)=>{item.isSelected = true;})
+        this.filter(this.items, this.filterText).forEach((item)=>{item.isSelected = true;});
+        this.onSelection();
     }
     unSelectAll() {
         this.filter(this.items, this.filterText).forEach((item)=>{item.isSelected = false;})
+	    this.onSelection();
     }
 
 }
