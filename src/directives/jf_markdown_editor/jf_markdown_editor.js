@@ -48,7 +48,8 @@ export function jfMarkdownEditor() {
             mode: '=?',
             onSave: '&?',
             onModeChange: '&?',
-            editable: '=?'
+            editable: '=?',
+            showControls: '=?'
         },
         controller: jfMarkdownEditorController,
         controllerAs: 'jfMarkdown',
