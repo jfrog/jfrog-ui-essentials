@@ -1,6 +1,6 @@
 {
   "name": "jfrog-ui-essentials",
-  "version": "1.0.0-dev.24",
+  "version": "1.0.0-dev.25-testing-ang-bootstrap-version",
   "license": "Apache-2.0",
   "description": "JFrog UI Essentials",
   "repository": {
