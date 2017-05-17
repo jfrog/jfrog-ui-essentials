@@ -3,6 +3,7 @@
 </div>
 <jf-validation ng-if="formField.showErrors || alwaysShowErrors || (formField.initialValue && !formField.$error.required)"
                field="formField"
+               validations-params="validationsParams"
                dont-push-down="dontPushDownErrors"
                dictionary="{{validations}}">
 </jf-validation>

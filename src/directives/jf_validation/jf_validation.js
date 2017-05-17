@@ -5,6 +5,7 @@ export function jfValidation() {
         scope: {
             field: '=',
             dictionary: '@',
+            validationsParams: '=',
             dontPushDown: '='
         },
         controller: jfValidation,
@@ -17,5 +18,23 @@ export function jfValidation() {
 class jfValidation {
     constructor(JFrogUILibConfig) {
         this.messages = VALIDATION_MESSAGES(this.dictionary,JFrogUILibConfig);
+    }
+
+    applyParams(msg) {
+
+        let regex = /\@\{(.*?)\}/g;
+
+        let matches = msg.match(regex);
+
+        for (let i=0; matches && i<matches.length; i++) {
+            let match = matches[i];
+            let exec = regex.exec(match);
+            let param = exec[1];
+            let value = this.validationsParams[param];
+            if (value) msg = msg.replace(match,value);
+        }
+
+        return msg;
+
     }
 }

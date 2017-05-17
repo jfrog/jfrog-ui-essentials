@@ -7,6 +7,7 @@ export function jfField($timeout, JFrogEventBus, $rootScope) {
         scope: {
             animated: '@',
             validations: '@',
+            validationsParams: '=',
             autofocus: '=',
             invalidateOnSubmit: '@',
             alwaysShowErrors: '@',
