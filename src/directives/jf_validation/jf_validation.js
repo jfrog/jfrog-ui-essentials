@@ -22,6 +22,8 @@ class jfValidation {
 
     applyParams(msg) {
 
+        if (!this.validationsParams) return msg;
+
         let regex = /\@\{(.*?)\}/g;
 
         let matches = msg.match(regex);
