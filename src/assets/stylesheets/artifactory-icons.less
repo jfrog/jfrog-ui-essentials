@@ -38,6 +38,36 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-puppet:before {
+  content: "\e941";
+}
+.icon-notification-info:before {
+  content: "\e940";
+}
+.icon-success:before {
+  content: "\e93f";
+}
+.icon-quicksetup:before {
+  content: "\e93e";
+}
+.icon-logout:before {
+  content: "\e93b";
+}
+.icon-up-arrow:before {
+  content: "\e934";
+}
+.icon-down-arrow:before {
+  content: "\e935";
+}
+.icon-addons-arrow-left:before {
+  content: "\e92e";
+}
+.icon-addons-arrow-right:before {
+  content: "\e92d";
+}
+.icon-xray-ignore-alert:before {
+  content: "\e921";
+}
 .icon-home:before {
   content: "\e915";
 }
@@ -58,6 +88,7 @@
 }
 .icon-trash:before {
   content: "\e901";
+  color: #6c6c6c;
 }
 .icon-gz:before {
   content: "\e90d";
@@ -67,9 +98,11 @@
 }
 .icon-pin:before {
   content: "\e90a";
+  color: #6c6c6c;
 }
 .icon-unpin:before {
   content: "\e90b";
+  color: #b8b8b8;
 }
 .icon-revoke-api:before {
   content: "\e907";
@@ -80,11 +113,9 @@
 .icon-expire:before {
   content: "\e909";
 }
-.icon-cocoapods:before {
-  content: "\e906";
-}
 .icon-go:before {
   content: "\e905";
+  color: #464646;
 }
 .icon-trashcan-restore:before {
   content: "\e903";
@@ -95,7 +126,7 @@
 .icon-css:before {
   content: "\66";
 }
-.icon-deb:before {
+.icon-debian:before {
   content: "\67";
 }
 .icon-docker:before {
@@ -131,10 +162,7 @@
 .icon-artifacts-new:before {
   content: "\79";
 }
-.icon-rpm:before {
-  content: "\48";
-}
-.icon-ruby-gems:before {
+.icon-gems:before {
   content: "\49";
 }
 .icon-scala:before {
@@ -197,9 +225,6 @@
 .icon-virtual-repo:before {
   content: "\58";
 }
-.icon-v:before {
-  content: "\59";
-}
 .icon-unview:before {
   content: "\5a";
 }
@@ -207,6 +232,9 @@
   content: "\31";
 }
 .icon-show-in-ci-server:before {
+  content: "\32";
+}
+.icon-replace:before {
   content: "\32";
 }
 .icon-show-build-json:before {
@@ -236,6 +264,9 @@
 .icon-delete-recursive:before {
   content: "\4c";
 }
+.icon-untitled50:before {
+  content: "\46";
+}
 .icon-gradle:before {
   content: "\24";
 }
@@ -244,12 +275,6 @@
 }
 .icon-set-me-up:before {
   content: "\2a";
-}
-.icon-notif-success:before {
-  content: "\2c";
-}
-.icon-notif-error:before {
-  content: "\2d";
 }
 .icon-copy-to-clipboard:before {
   content: "\2f";
@@ -263,8 +288,20 @@
 .icon-jar:before {
   content: "\45";
 }
+.icon-cocoapods:before {
+  content: "\e906";
+}
+.icon-composer:before {
+  content: "\e922";
+}
+.icon-conan:before {
+  content: "\e91e";
+}
 .icon-vagrant:before {
   content: "\3c";
+}
+.icon-rpm:before {
+  content: "\48";
 }
 .icon-yum:before {
   content: "\3e";
@@ -287,40 +324,45 @@
 .icon-deploy:before {
   content: "\73";
 }
-.icon-datagrid-v {
-  &:before {
-    content: "\56";
-  }
+.icon-v:before {
+  content: "\59";
+}
+.icon-datagrid-v:before {
+  content: "\56";
 }
 .icon-more:before {
   content: "\23";
 }
+.icon-chef:before {
+  content: "\e93c";
+}
 .icon-opkg:before {
   content: "\e918";
+  color: #464646;
+}
+.icon-bower:before {
+  content: "\26";
 }
 .icon-import:before {
   content: "\27";
 }
 .icon-unlock:before {
   content: "\e902";
+  color: #cbcbcb;
 }
 .icon-locked-unlock:before {
   content: "\e902";
+  color: #cbcbcb;
 }
 .icon-lock:before {
   content: "\2b";
+  color: #cbcbcb;
 }
 .icon-p2:before {
   content: "\5e";
 }
 .icon-npm:before {
   content: "\5f";
-}
-.icon-notif-icon:before {
-  content: "\60";
-}
-.icon-notif-warning:before {
-  content: "\7b";
 }
 .icon-generic:before {
   content: "\7c";
@@ -334,17 +376,38 @@
 .icon-drag:before {
   content: "\5c";
 }
-.icon-new:before {
-  content: "\e000";
-}
 .icon-ivy:before {
   content: "\e001";
+}
+.icon-new:before {
+  content: "\e000";
 }
 .icon-info:before {
   content: "\e002";
 }
 .icon-clear:before {
   content: "\e003";
+}
+.icon-notif-icon:before {
+  content: "\60";
+}
+.icon-notif-warning:before {
+  content: "\7b";
+}
+.icon-notif-error:before {
+  content: "\2d";
+}
+.icon-notif-success:before {
+  content: "\2c";
+}
+.icon-notification-success:before {
+  content: "\e91b";
+}
+.icon-notification-warning:before {
+  content: "\e91c";
+}
+.icon-notification-error:before {
+  content: "\e91d";
 }
 .icon-pro:before {
   content: "\e004";
@@ -361,7 +424,7 @@
 .icon-vcs:before {
   content: "\e007";
 }
-.icon-pom:before {
+.icon-maven:before {
   content: "\e008";
 }
 .icon-unwatch:before {
@@ -420,6 +483,128 @@
 }
 .icon-menu-arrow:before {
   content: "\e919";
+  color: #7f7f7f;
+}
+.icon-twitter:before {
+  content: "\e92f";
+  color: #9e9e9e;
+}
+.icon-screw:before {
+  content: "\e930";
+  color: #9e9e9e;
+}
+.icon-external-link:before {
+  content: "\e933";
+}
+.icon-tree_filter-icon:before {
+  content: "\e93a";
+}
+.icon-navigation-repositories:before {
+  content: "\e94a";
+}
+.icon-navigation-bundle:before {
+  content: "\e94b";
+}
+.icon-navigation-products:before {
+  content: "\e94c";
+}
+.icon-navigation-settings:before {
+  content: "\e94d";
+}
+.icon-private-repository:before {
+  content: "\e949";
+}
+.icon-maturity-experimental:before {
+  content: "\e942";
+}
+.icon-maturity-development:before {
+  content: "\e943";
+}
+.icon-maturity-stable:before {
+  content: "\e944";
+}
+.icon-maturity-official:before {
+  content: "\e945";
+}
+.icon-edit-pen:before {
+  content: "\e946";
+}
+.icon-eula-doc:before {
+  content: "\e947";
+}
+.icon-checkmark:before {
+  content: "\e948";
+}
+.icon-custom-integration:before {
+  content: "\e93d";
+}
+.icon-icon-envelop:before {
+  content: "\e936";
+  color: #707070;
+}
+.icon-icon-xray-webhook-triangle:before {
+  content: "\e937";
+  color: #707070;
+}
+.icon-post_envelop:before {
+  content: "\e938";
+  color: #707070;
+}
+.icon-icon-xray-webhook:before {
+  content: "\e939";
+  color: #707070;
+}
+.icon-xray-moitoring-alert-new:before {
+  content: "\e931";
+  color: #d7593f;
+}
+.icon-xray-moitoring-alert .path1:before {
+  content: "\e924";
+  color: rgb(243, 184, 36);
+}
+.icon-xray-moitoring-alert .path2:before {
+  content: "\e925";
+  margin-left: -1em;
+  color: rgb(243, 184, 36);
+}
+.icon-xray-monitoring-error .path1:before {
+  content: "\e928";
+  color: rgb(255, 255, 255);
+}
+.icon-xray-monitoring-error .path2:before {
+  content: "\e929";
+  margin-left: -1em;
+  color: rgb(215, 89, 63);
+}
+.icon-xray-monitoring-ready .path1:before {
+  content: "\e92a";
+  color: rgb(255, 255, 255);
+}
+.icon-xray-monitoring-ready .path2:before {
+  content: "\e92c";
+  margin-left: -1em;
+  color: rgb(66, 159, 70);
+}
+.icon-xray-menu-admin:before {
+  content: "\e91f";
+}
+.icon-xray-menu-alerts:before {
+  content: "\e920";
+}
+.icon-xray-menu-components:before {
+  content: "\e923";
+}
+.icon-xray-menu-home:before {
+  content: "\e926";
+}
+.icon-xray-menu-reports:before {
+  content: "\e927";
+}
+.icon-xray-menu-watches:before {
+  content: "\e92b";
+}
+.icon-compress:before {
+  content: "\e932";
 }
 
 ////////////////////////////////////
