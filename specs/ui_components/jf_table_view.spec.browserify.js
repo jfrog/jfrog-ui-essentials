@@ -27,12 +27,12 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
   function getElements() {
     emptyTablePlaceholder = $('.empty-table-placeholder')
-    newEntityButton = $('.new-entity > div')
+    newEntityButton = $('.new-entity')
     headers = $('.jf-table-row.headers')
     headersCells = $('.jf-table-cell.header');
     dataCells = $('.jf-table-cell:not(.header)');
     dataRows = $('.jf-table-row:not(.headers)');
-    filterInput = $('.jf-table-filter > input');
+    filterInput = $('.jf-table-filter > .input-search-wrapper');
     pagination = $('.pagination-controls');
     actionButtons = $('.action-button > .action-icon');
     selectionButtons = $('.selection-icon');
@@ -120,7 +120,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
     flushAndApply();
     expect(newEntityButton.length).toEqual(1);
     expect(sortController.length).toEqual(0);
-    expect(newEntityButton[0].textContent.trim()).toEqual('Add Test Entity');
+    expect(newEntityButton[0].textContent.trim()).toEqual('Add a Test Entity');
   });
   it('should call callback when pressing add entity button', (done) => {
     options.setNewEntityAction(()=>{

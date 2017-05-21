@@ -15,16 +15,17 @@ export function jfCodeMirror() {
         controller: jfCodeController,
         controllerAs: 'jfCodeMirror',
         bindToController: true,
-        template: '<textarea ui-codemirror="jfCodeMirror.editorOptions" ' +
+        template: '<textarea ng-if="jfCodeMirror.cmVisible" ui-codemirror="jfCodeMirror.editorOptions" ' +
         'ng-model="jfCodeMirror.formattedModel"></textarea>'
 
     }
 }
 
 class jfCodeController {
-    constructor($scope, $element) {
+    constructor($scope, $element, $timeout) {
         this.$element = $element;
         this.$scope = $scope;
+        this.$timeout = $timeout;
 
         this._formatModel();
 
@@ -86,12 +87,16 @@ class jfCodeController {
 
     _formatModel() {
         let format = (content) => {
+            if (!this.formattedModel) this.cmVisible = false;
             if (this._isJSON(content)) {
                 this.formattedModel = require('js-beautify').js_beautify(content);
             }
             else {
                 this.formattedModel = content;
             }
+            this.$timeout(()=>{
+                this.cmVisible = true;
+            })
         }
 
         if (!this.allowEdit) {
@@ -108,6 +113,8 @@ class jfCodeController {
             this.$scope.$watch('jfCodeMirror.formattedModel',v=>{
                 this.model = v;
             });
+            this.cmVisible = true;
+
         }
 
     }
