@@ -41,13 +41,17 @@
                      ng-class="{asc: !jfTableView.options.revSort, desc: jfTableView.options.revSort}"></div>-->
             </div>
 
-
-
+            <div class="pagination-controls pull-right">
+                <jf-drag-drop-pagination pagination-api="jfTableView.paginationApi"
+                                         ng-if="jfTableView.paginationApi">
+                </jf-drag-drop-pagination>
+            </div>
 
             <div class="pull-right">
                 <jf-table-view-batch-actions table-options="jfTableView.options"
                                              actions="jfTableView.options.batchActions"></jf-table-view-batch-actions>
             </div>
+
         </div>
 
         <div class="jf-table-view-container" ng-if="jfTableView.options">

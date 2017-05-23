@@ -12,6 +12,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
   var headersCells;
   var dataRows;
   var dataCells;
+  var filter;
   var filterInput;
   var pagination;
   var actionButtons;
@@ -32,7 +33,8 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
     headersCells = $('.jf-table-cell.header');
     dataCells = $('.jf-table-cell:not(.header)');
     dataRows = $('.jf-table-row:not(.headers)');
-    filterInput = $('.jf-table-filter > .input-search-wrapper');
+    filter = $('.jf-table-filter > .input-search-wrapper');
+    filterInput = $('.jf-table-filter > .input-search-wrapper > input');
     pagination = $('.pagination-controls');
     actionButtons = $('.action-button > .action-icon');
     selectionButtons = $('.selection-icon');
@@ -109,7 +111,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
     expect(headersCells.length).toEqual(0);
     expect(dataRows.length).toEqual(0);
     expect(dataCells.length).toEqual(0);
-    expect($(filterInput[0]).css('display')).toEqual('none');
+    expect($(filter[0]).css('display')).toEqual('none');
     expect(pagination.children().children().length).toEqual(0);
     expect(selectionButtons.length).toEqual(0);
     expect(sortController.length).toEqual(0);
@@ -152,7 +154,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
     expect(dataRows.length).toEqual(2);
     expect(dataCells.length).toEqual(8);
 
-    expect($(filterInput[0]).css('display')).toEqual('inline-block');
+    expect($(filter[0]).css('display')).toEqual('block');
     expect(pagination.children().children().length).toEqual(1)
 
     expect(dataCells[0].textContent.trim()).toEqual(testData[0].userName);
