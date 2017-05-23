@@ -15,7 +15,7 @@ export function jfCodeMirror() {
         controller: jfCodeController,
         controllerAs: 'jfCodeMirror',
         bindToController: true,
-        template: '<textarea ng-if="jfCodeMirror.cmVisible" ui-codemirror="jfCodeMirror.editorOptions" ' +
+        template: '<textarea ui-codemirror="jfCodeMirror.editorOptions" ' +
         'ng-model="jfCodeMirror.formattedModel"></textarea>'
 
     }
@@ -47,6 +47,7 @@ class jfCodeController {
 
     // register click handlers on code mirror links
     _codeMirrorLoaded(_editor) {
+        this.cmApi = _editor;
         if (this.height) {
             let codeMirrorElement = $(this.$element).find('.CodeMirror');
             if (this.height === 'flexible') {
@@ -66,9 +67,12 @@ class jfCodeController {
                 window.open(url, '_blank');
             }
         });
-        this.$scope.$on('$destroy', () => $(_editor.display.wrapper).off('click'));
+        this.$scope.$on('$destroy', () => {
+            this.$destroyed = true;
+            $(_editor.display.wrapper).off('click')
+        });
         if (this.apiAccess) {
-            this.apiAccess.api = _editor;
+            this.apiAccess.api = this.cmApi;
             if (this.apiAccess.onLoad) {
                 this.apiAccess.onLoad();
             }
@@ -87,16 +91,14 @@ class jfCodeController {
 
     _formatModel() {
         let format = (content) => {
-            if (!this.formattedModel) this.cmVisible = false;
             if (this._isJSON(content)) {
                 this.formattedModel = require('js-beautify').js_beautify(content);
             }
             else {
                 this.formattedModel = content;
             }
-            this.$timeout(()=>{
-                this.cmVisible = true;
-            })
+            this.expectChange();
+            this.refreshUntilVisible();
         }
 
         if (!this.allowEdit) {
@@ -109,13 +111,37 @@ class jfCodeController {
             this.formattedModel = this.model;
             this.$scope.$watch('jfCodeMirror.model',v=>{
                 this.formattedModel = this.model;
+                this.expectChange();
+                this.refreshUntilVisible();
             });
             this.$scope.$watch('jfCodeMirror.formattedModel',v=>{
                 this.model = v;
             });
-            this.cmVisible = true;
-
+            this.expectChange();
+            this.refreshUntilVisible();
         }
 
+    }
+
+    refreshUntilVisible() {
+        if (this.cmApi) this.cmApi.refresh();
+        this.$timeout(()=>{
+            let cmText = this.$element.find('.CodeMirror-code').find('pre').text().replace(/\u200B/g,'');
+            if (this.expectingChange && cmText === this.lastVal) {
+                if (this.cmApi) {
+                    this.cmApi.refresh();
+                }
+                if (!this.$destroyed) this.refreshUntilVisible();
+            }
+            else if (this.expectingChange) {
+                this.expectingChange = false;
+            }
+        },100)
+    }
+
+    expectChange() {
+        let cmText = this.$element.find('.CodeMirror-code').find('pre').text().replace(/\u200B/g,'');
+        this.expectingChange = true;
+        this.lastVal = cmText;
     }
 }
