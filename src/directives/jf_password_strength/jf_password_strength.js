@@ -3,26 +3,29 @@ class jfPasswordStrengthController {
 
     constructor($scope) {
         $scope.$watch('jfPS.password',(pass)=>{
+            this.passLength = pass ? pass.length : 0;
             this.rank = passrank(pass);
         })
     }
 
-
-    getClass() {
-        if (this.rank < 20) {
-            return 'bad';
+    getStrength(){
+        if (this.rank === 0 && this.passLength === 0) {
+            return {label:'',class:'blank',sections:0};
+        }
+        else if (this.rank < 20) {
+            return {label:'Too short',class:'short',sections:1};
         }
         else if (this.rank < 40) {
-            return 'weak';
+            return {label:'Weak',class:'week',sections:2};
         }
         else if (this.rank < 60) {
-            return 'medium';
+            return {label:'Medium',class:'medium',sections:3};
         }
         else if (this.rank < 80) {
-            return 'good';
+            return {label:'Good',class:'good',sections:4};
         }
         else {
-            return 'perfect';
+            return {label:'Strong',class:'strong',sections:5};
         }
     }
 }
