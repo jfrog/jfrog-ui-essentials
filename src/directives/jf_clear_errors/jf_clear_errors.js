@@ -1,5 +1,5 @@
 class jfClearErrorsController {
-
+	/* @ngInject */
     constructor($scope, $element, $attrs, JFrogEventBus) {
 
         this.JFrogEventBus = JFrogEventBus;

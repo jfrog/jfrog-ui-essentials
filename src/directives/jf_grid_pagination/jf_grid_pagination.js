@@ -1,5 +1,5 @@
 class jfGridPaginationController {
-
+	/* @ngInject */
     constructor($scope,$timeout) {
 
         this.$scope = $scope;

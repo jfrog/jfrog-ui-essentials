@@ -1,6 +1,7 @@
 import KEYS from '../../constants/keys.constants';
 
 class jfEnterPressController {
+	/* @ngInject */
 	constructor($element, $scope) {
 		this.$scope = $scope;
 		$element.on('keypress', (e) => this._onKeyPress(e));

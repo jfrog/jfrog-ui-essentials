@@ -1,4 +1,5 @@
 class jfUiSelectController {
+	/* @ngInject */
     constructor($element, $timeout) {
         // 3 methods are allowed for passing the options:
         // Passing an array of objects, and the attribute to display

@@ -1,5 +1,5 @@
 class jfTreeController{
-
+	/* @ngInject */
     constructor($scope,$q,$element,$timeout){
         this.$element = $element;
         this.$timeout = $timeout;

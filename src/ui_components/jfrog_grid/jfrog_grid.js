@@ -17,7 +17,7 @@ const COMMON_ACTIONS = {
 };
 
 class JFrogGrid {
-
+	/* @ngInject */
     constructor(scope, uiGridConstants) {
         this.scope = scope;
 

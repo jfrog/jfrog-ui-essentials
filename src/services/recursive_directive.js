@@ -1,4 +1,5 @@
 export function recursiveDirective($compile) {
+	'ngInject';
 	return {
 		compile: (elem, link) => {
             link = _.isFunction(link) ? { post: link } : link;

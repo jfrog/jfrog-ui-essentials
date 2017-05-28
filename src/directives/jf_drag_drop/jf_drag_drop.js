@@ -58,7 +58,7 @@ export function jfDragDrop() {
  * API for the jfDragDrop directive
  */
 class jfDragDropController {
-
+	/* @ngInject */
     constructor($attrs,$interval,$element,$scope,$timeout,$compile) {
         this.$element = $element;
         this.$scope = $scope;

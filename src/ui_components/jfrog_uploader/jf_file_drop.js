@@ -35,3 +35,5 @@ export function jfFileDrop($timeout) {
         }
     }
 }
+
+jfFileDrop.$inject = ['$timeout'];

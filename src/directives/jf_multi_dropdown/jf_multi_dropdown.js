@@ -1,4 +1,5 @@
 class jfMultiDropdownController {
+	/* @ngInject */
     constructor($scope, $filter) {
 
         this.$scope = $scope;

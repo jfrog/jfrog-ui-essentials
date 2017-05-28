@@ -1,4 +1,5 @@
 class jfCheckboxController {
+	/* @ngInject */
     constructor($element, $transclude, $timeout) {
         $transclude(function(clone) {
             // (Adam) TODO: Find out why checkbox appears only when grid appears in jf_properties

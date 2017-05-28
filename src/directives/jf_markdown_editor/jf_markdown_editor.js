@@ -1,7 +1,7 @@
 import "./codemirror-asciidoc";
 
 class jfMarkdownEditorController {
-
+	/* @ngInject */
     constructor($timeout,$scope) {
         this.$timeout = $timeout;
         this.mode = this.mode || 'Edit';

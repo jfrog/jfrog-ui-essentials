@@ -1,4 +1,5 @@
 class jfRevealInputController {
+	/* @ngInject */
 	constructor($element) {
 		this.$elementIcon = $element.find('i');
 		this.tooltipText = 'Show ' + this.objectName;

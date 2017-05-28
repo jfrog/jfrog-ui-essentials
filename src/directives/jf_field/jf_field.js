@@ -1,6 +1,5 @@
-//import EVENTS     from '../../constants/common_events.constants';
-
 export function jfField($timeout, JFrogEventBus, $rootScope) {
+	'ngInject';
     return {
         restrict: 'E',
         require: '^form',

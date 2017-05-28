@@ -1,4 +1,5 @@
 export function jfWidgetsLayout(recursiveDirective) {
+	'ngInject';
     return {
         controller: jfWidgetsLayoutController,
         controllerAs: 'jfWidgetsLayout',
@@ -18,6 +19,7 @@ export function jfWidgetsLayout(recursiveDirective) {
 }
 
 class jfWidgetsLayoutController {
+	/* @ngInject */
     constructor($scope,$rootScope, $compile,$timeout,$q,$templateRequest,$sce, $injector,$element) {
         this.$q = $q;
         this.$sce = $sce;

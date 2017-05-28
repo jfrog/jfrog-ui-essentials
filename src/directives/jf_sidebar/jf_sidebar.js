@@ -1,5 +1,5 @@
 class jfSidebarController {
-
+	/* @ngInject */
     constructor($scope, $state, $timeout, $interval, $window, $rootScope, JFrogEventBus) {
         this.subMenuWidth = this.defaultSubMenuWidth || this.openAdminSize || '900px';
         this.defaultSubWidth = this.subMenuWidth;

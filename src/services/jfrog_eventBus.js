@@ -7,6 +7,7 @@ export class JFrogEventBus {
     /**
      * init an empty map
      */
+	/* @ngInject */
     constructor(JFrogUILibConfig, $timeout) {
         this._listeners = Object.create(null);
         this.JFrogUILibConfig = JFrogUILibConfig;

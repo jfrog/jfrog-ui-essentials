@@ -1,4 +1,5 @@
 class jfDisableNgAnimateController {
+	/* @ngInject */
 	constructor($element, $animate) {
 		$animate.enabled($element,false);
 	}

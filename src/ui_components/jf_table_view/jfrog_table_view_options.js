@@ -1,5 +1,7 @@
 export function JFrogTableViewOptions($timeout) {
+	'ngInject';
     return class JFrogTableViewOptions {
+	    /* @ngInject */
         constructor(appScope) {
             this.data = [];
             this.actions = [];
@@ -477,6 +479,5 @@ export function JFrogTableViewOptions($timeout) {
 
 
 
-    }
-
+    };
 }

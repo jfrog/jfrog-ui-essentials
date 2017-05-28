@@ -16,6 +16,7 @@ export function jfValidation() {
 }
 
 class jfValidation {
+	/* @ngInject */
     constructor(JFrogUILibConfig) {
         this.messages = VALIDATION_MESSAGES(this.dictionary,JFrogUILibConfig);
     }
