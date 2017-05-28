@@ -11,7 +11,7 @@
 
 
 class jfGridFilterController {
-
+	/* @ngInject */
     constructor($scope,$timeout) {
 
         this.$timeout = $timeout;

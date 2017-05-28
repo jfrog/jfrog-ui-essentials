@@ -1,4 +1,5 @@
 class jfMarqueeController {
+	/* @ngInject */
     constructor($element,$timeout,$interval) {
         this.$timeout = $timeout;
         this.container = $($element).find('.jf-marquee-container');

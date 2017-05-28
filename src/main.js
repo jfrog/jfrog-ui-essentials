@@ -36,7 +36,7 @@ angular.module('jfrog.ui.essentials', [
     ])
     .run(main);
 
-
+/* @ngInject */
 function main($httpBackend, $animate) {
 
 

@@ -3,6 +3,7 @@
  */
 let controller;
 class JFrogUploader {
+	/* @ngInject */
     constructor(FileUploader, _controller_) {
         controller = _controller_;
         this.fileUploader = new FileUploader();

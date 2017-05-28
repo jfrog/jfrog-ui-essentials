@@ -1,5 +1,5 @@
 class jfClipCopyController {
-
+	/* @ngInject */
     constructor($timeout,$scope,$element) {
 
         this.FEEDBACK_DELAY = 4000;
@@ -54,7 +54,7 @@ class jfClipCopyController {
 }
 
 export function jfClipCopy($compile) {
-
+	'ngInject';
     return {
         restrict: 'E',
         scope: {

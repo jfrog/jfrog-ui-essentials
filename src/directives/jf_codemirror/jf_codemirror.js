@@ -22,6 +22,7 @@ export function jfCodeMirror() {
 }
 
 class jfCodeController {
+	/* @ngInject */
     constructor($scope, $element, $timeout) {
         this.$element = $element;
         this.$scope = $scope;

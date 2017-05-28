@@ -1,7 +1,7 @@
 //import EVENTS from '../../constants/artifacts_events.constants';
 
 class jfTabsController {
-
+	/* @ngInject */
     constructor($scope, $state, $timeout, $element, $stateParams, JFrogEventBus) {
         this.$scope = $scope;
         this.$element = $element;

@@ -1,4 +1,5 @@
 class jfTableCompiledCellController {
+	/* @ngInject */
     constructor($element,$timeout,$scope) {
         this.$element = $element;
         this.$timeout = $timeout;

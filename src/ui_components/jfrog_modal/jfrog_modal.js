@@ -6,7 +6,7 @@
  * @url http://angular-ui.github.io/bootstrap/#/modal
  */
 export class JFrogModal {
-
+	/* @ngInject */
     constructor($modal, $rootScope, $injector, $q, $sce, $timeout, JFrogEventBus, JFrogUILibConfig, JFrogUIUtils) {
         this.modal = $modal;
         this.$rootScope = $rootScope;

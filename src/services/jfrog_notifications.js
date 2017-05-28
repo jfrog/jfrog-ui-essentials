@@ -3,7 +3,7 @@
  * @url http://tamerayd.in/ngToast/#
  */
 export class JFrogNotifications {
-
+	/* @ngInject */
     constructor(toaster, $timeout, $rootScope, JFrogEventBus) {
         this.toast = toaster;
         this.$timeout = $timeout;

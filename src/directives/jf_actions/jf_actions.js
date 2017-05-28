@@ -1,4 +1,5 @@
 class jfActionsController {
+	/* @ngInject */
     constructor($scope,$timeout) {
         this.$scope = $scope;
         this.$timeout = $timeout;
@@ -87,6 +88,7 @@ class jfActionsController {
 }
 
 export function jfActions($timeout) {
+	'ngInject';
     return {
         scope: {
             parentController: '=',

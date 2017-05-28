@@ -13,6 +13,7 @@ export function jfTableView() {
 
 
 class jfTableViewController {
+	/* @ngInject */
     constructor($scope,$element, $timeout, $compile, $rootScope) {
         this.$element = $element;
         this.$timeout = $timeout;
@@ -184,7 +185,7 @@ class jfTableViewController {
     }
 }
 
-
+jfTableViewController.$inject = ['$scope','$element', '$timeout', '$compile', '$rootScope'];
 
 class PaginationApi {
     constructor(tableCtrl) {

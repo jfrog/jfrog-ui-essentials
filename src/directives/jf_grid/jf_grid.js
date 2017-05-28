@@ -1,5 +1,5 @@
 export function jfGrid($timeout,$compile) {
-
+	'ngInject';
 
     let isNoTooltip = (cell) => {
         return (cell[0] && cell[0].classList && cell[0].classList.contains('no-tooltip'));

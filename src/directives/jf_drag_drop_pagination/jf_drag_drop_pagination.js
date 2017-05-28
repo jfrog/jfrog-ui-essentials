@@ -1,5 +1,5 @@
 class jfDragDropPaginationController {
-
+	/* @ngInject */
     constructor() {
 
         this.currentPage = 0;

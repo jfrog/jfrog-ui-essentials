@@ -1,6 +1,6 @@
 import {passrank} from './passrank';
 class jfPasswordStrengthController {
-
+	/* @ngInject */
     constructor($scope) {
         $scope.$watch('jfPS.password',(pass)=>{
             this.passLength = pass ? pass.length : 0;
