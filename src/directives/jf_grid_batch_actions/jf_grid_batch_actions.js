@@ -106,6 +106,7 @@ class jfGridBatchActionsController {
 
     initActions(actionsController) {
         this.moreActionsController = actionsController;
+        if (this.gridOptions) this.gridOptions.moreActionsController = actionsController;
         this.updateMoreActions();
     }
     updateMoreActions() {
@@ -145,7 +146,8 @@ export function jfGridBatchActions() {
     return {
         scope: {
             actions: '=',
-            gridApi: '='
+            gridApi: '=',
+            gridOptions: '='
         },
         templateUrl: 'directives/jf_grid_batch_actions/jf_grid_batch_actions.html',
         controller: jfGridBatchActionsController,

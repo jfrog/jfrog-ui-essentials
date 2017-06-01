@@ -1,5 +1,6 @@
 <div class="grid-container" ng-if="gridOptions.data"
-     ng-class="{'single-select':gridOptions.allowSingleSelect}">
+     ng-class="{'single-select':gridOptions.allowSingleSelect}"
+     ng-style="{overflow: gridOptions.moreActionsController.isDropdownOpen ? 'visible' : 'hidden'}">
     <div class="wrapper-grid-actions" ng-show="!noPagination || !noCount || gridOptions.batchActions.length || filterField">
 
         <div class="counter-and-filter">
@@ -21,7 +22,7 @@
                             class="pull-right">
         </jf-grid-pagination>
 
-        <jf-grid-batch-actions
+        <jf-grid-batch-actions grid-options="gridOptions"
                                grid-api="gridOptions.api"
                                actions="gridOptions.batchActions">
         </jf-grid-batch-actions>
