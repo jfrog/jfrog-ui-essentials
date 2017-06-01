@@ -1,9 +1,12 @@
-<div class="grid-batch-actions text-right">
+<div class="grid-batch-actions text-right" jf-disable-ng-animate>
     <div class="grid-batch-action-wrapper"
-         ng-repeat="action in jfBatchActions.actions"
+         ng-class="{'more-actions': action === jfBatchActions.MORE_ACTIONS}"
+         ng-repeat="action in jfBatchActions.actions track by $index"
+         data-action-id="{{action.name}}"
+         ng-style="{visibility: action === jfBatchActions.MORE_ACTIONS || jfBatchActions.visibleActions.indexOf(action) !== -1 ? 'inherit' : 'hidden', opacity: action === jfBatchActions.MORE_ACTIONS || jfBatchActions.visibleActions.indexOf(action) !== -1 ? 1 : 0}"
          jf-tooltip="{{jfBatchActions.isDisabled(action) ? action.getDisabledTooltip() : ''}}">
         <a ng-class="{disabled: jfBatchActions.isDisabled(action)}"
-           ng-if="!action.visibleWhen || action.visibleWhen()"
+           ng-if="action !== jfBatchActions.MORE_ACTIONS && (!action.visibleWhen || action.visibleWhen())"
            ng-click="jfBatchActions.perform(action)"
            class="btn batch-action-{{action.icon}}">
             <img ng-src="images/{{action.icon}}.png"
@@ -11,5 +14,12 @@
             <i class="icon icon-{{action.icon}}"
                ng-if="!action.img"></i> {{ action.name }}
         </a>
+        <div class="more-wrapper"
+             ng-if="action === jfBatchActions.MORE_ACTIONS">
+            <jf-actions parent-controller="jfBatchActions"
+                        label="More Actions"
+                        init-method="initActions"
+                        show-drop-down-for-one-item="true"></jf-actions>
+        </div>
     </div>
 </div>

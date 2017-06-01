@@ -1,17 +1,20 @@
 <div class="grid-container" ng-if="gridOptions.data"
-     ng-class="{'single-select':gridOptions.allowSingleSelect}">
+     ng-class="{'single-select':gridOptions.allowSingleSelect}"
+     ng-style="{overflow: gridOptions.moreActionsController.isDropdownOpen ? 'visible' : 'hidden'}">
     <div class="wrapper-grid-actions" ng-show="!noPagination || !noCount || gridOptions.batchActions.length || filterField">
 
-        <div ng-if="!noCount" class="grid-counter">{{ getTotalRecords() }}<span ng-if="getSelectedRecords()"> ({{getSelectedRecords()}} Selected)</span></div>
+        <div class="counter-and-filter">
+            <div ng-if="!noCount" class="grid-counter">{{ getTotalRecords() }}<span ng-if="getSelectedRecords()"> ({{getSelectedRecords()}} Selected)</span></div>
 
-        <div ng-if="filterField" class="filter-group">
-            <jf-grid-filter
-                    auto-focus="{{autoFocus}}"
-                    filter-grid="gridOptions"
-                    filter-field="{{ filterField }}"
-                    filter-field2="{{ filterField2 }}"
-                    filter-on-change="{{ filterOnChange }}">
-            </jf-grid-filter>
+            <div ng-if="filterField" class="filter-group">
+                <jf-grid-filter
+                        auto-focus="{{autoFocus}}"
+                        filter-grid="gridOptions"
+                        filter-field="{{ filterField }}"
+                        filter-field2="{{ filterField2 }}"
+                        filter-on-change="{{ filterOnChange }}">
+                </jf-grid-filter>
+            </div>
         </div>
 
         <jf-grid-pagination ng-show="!noPagination"
@@ -19,7 +22,7 @@
                             class="pull-right">
         </jf-grid-pagination>
 
-        <jf-grid-batch-actions ng-if="gridOptions.batchActions.length"
+        <jf-grid-batch-actions grid-options="gridOptions"
                                grid-api="gridOptions.api"
                                actions="gridOptions.batchActions">
         </jf-grid-batch-actions>

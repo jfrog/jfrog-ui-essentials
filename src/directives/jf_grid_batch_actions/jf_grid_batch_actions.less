@@ -1,7 +1,12 @@
 .grid-batch-actions {
   padding-top: 20px;
+  bottom: -10px;
+  position: relative;
   .grid-batch-action-wrapper{
     display: inline;
+    &.more-actions {
+      position: relative;
+    }
   }
   .btn {
     height: 30px;
@@ -43,5 +48,17 @@
     float: left;
     margin: 0 5px 0 0;
     font-size: 16px;
+  }
+
+  .more-wrapper {
+    display: inline-block;
+    position: absolute;
+    bottom: -3px;
+    left: 10px;
+    .actions-more {
+      line-height: 18px;
+      font-weight: 700;
+      font-size: 14px;
+    }
   }
 }
