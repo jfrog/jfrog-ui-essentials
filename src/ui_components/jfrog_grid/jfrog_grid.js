@@ -254,6 +254,8 @@ class JFrogGrid {
         }
 
         gridApi.grid.refreshCanvas(true);
+        gridApi.core.handleWindowResize()
+
     }
 
     // Set the columns width to a fixed pixel size, only on load, so the ui-grid itself won't resize them on window resize
@@ -328,6 +330,8 @@ class JFrogGrid {
             this.calculateFn = () => this._calculateColumnsWidthByPercent(gridApi);
 
             $($window).resize(this.calculateFn);
+            if (this.scope) this.scope.$on("ui-layout.resize", this.calculateFn);
+
             gridApi.core.on.rowsRendered(this.scope, () => this._fixColumnsWidthFromPercentToPixel(gridApi));
             if (gridApi.colResizable)
                 gridApi.colResizable.on.columnSizeChanged(this.scope, (colDef, deltaChange) => this._calculateColumnsWidthOnResize(gridApi, colDef, deltaChange));

@@ -2,16 +2,18 @@
      ng-class="{'single-select':gridOptions.allowSingleSelect}">
     <div class="wrapper-grid-actions" ng-show="!noPagination || !noCount || gridOptions.batchActions.length || filterField">
 
-        <div ng-if="!noCount" class="grid-counter">{{ getTotalRecords() }}<span ng-if="getSelectedRecords()"> ({{getSelectedRecords()}} Selected)</span></div>
+        <div class="counter-and-filter">
+            <div ng-if="!noCount" class="grid-counter">{{ getTotalRecords() }}<span ng-if="getSelectedRecords()"> ({{getSelectedRecords()}} Selected)</span></div>
 
-        <div ng-if="filterField" class="filter-group">
-            <jf-grid-filter
-                    auto-focus="{{autoFocus}}"
-                    filter-grid="gridOptions"
-                    filter-field="{{ filterField }}"
-                    filter-field2="{{ filterField2 }}"
-                    filter-on-change="{{ filterOnChange }}">
-            </jf-grid-filter>
+            <div ng-if="filterField" class="filter-group">
+                <jf-grid-filter
+                        auto-focus="{{autoFocus}}"
+                        filter-grid="gridOptions"
+                        filter-field="{{ filterField }}"
+                        filter-field2="{{ filterField2 }}"
+                        filter-on-change="{{ filterOnChange }}">
+                </jf-grid-filter>
+            </div>
         </div>
 
         <jf-grid-pagination ng-show="!noPagination"
@@ -19,7 +21,7 @@
                             class="pull-right">
         </jf-grid-pagination>
 
-        <jf-grid-batch-actions ng-if="gridOptions.batchActions.length"
+        <jf-grid-batch-actions
                                grid-api="gridOptions.api"
                                actions="gridOptions.batchActions">
         </jf-grid-batch-actions>

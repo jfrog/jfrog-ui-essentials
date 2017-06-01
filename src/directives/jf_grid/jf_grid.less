@@ -507,7 +507,39 @@ div.ui-grid-cell input.ng-valid {
 }
 
 .wrapper-grid-actions {
-  height: 50px;
+  height: 68px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  .counter-and-filter {
+    flex-grow: 1;
+    max-width: 380px;
+    min-width: 150px;
+    .filter-group {
+      width: 100%;
+      .jf-field {
+        width: 100%;
+      }
+      input.input-text {
+        width: 100% !important;
+      }
+    }
+  }
+  jf-grid-pagination {
+    order: 1;
+    min-width: 130px;
+    align-self: flex-end;
+    margin-left: -6px;
+    .grid-pagination {
+      margin-bottom: -10px;
+    }
+  }
+  jf-grid-batch-actions {
+    flex-grow: 1;
+    align-self: flex-end;
+    white-space: nowrap;
+    min-width: 80px;
+  }
 }
 
 .icon.clear-group {

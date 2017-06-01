@@ -80,7 +80,7 @@ class jfActionsController {
                 this.dynamicActions.push(actionObj);
             }
         });
-        if (this.fixedActions.length === 0 && this.dynamicActions.length === 1) {
+        if (this.fixedActions.length === 0 && this.dynamicActions.length === 1 && !this.showDropDownForOneItem) {
             this.fixedActions.push(this.dynamicActions.pop());
         }
     }
@@ -93,7 +93,8 @@ export function jfActions($timeout) {
             label: '@',
             initMethod: '@',
             fixedActionsNames: '=',
-            disableMouseOverEvents: '@?'
+            disableMouseOverEvents: '@?',
+            showDropDownForOneItem: '='
         },
         restrict: 'EA',
         controller: jfActionsController,
