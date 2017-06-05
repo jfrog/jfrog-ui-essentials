@@ -115,7 +115,7 @@ class jfTabsController {
     }
 
     hasClass(obj) {
-        if (obj.class)
+        if (obj && obj.class)
             return true;
     }
 }
