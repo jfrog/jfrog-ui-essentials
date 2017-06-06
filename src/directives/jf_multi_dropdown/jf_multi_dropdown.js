@@ -46,10 +46,14 @@ class jfMultiDropdownController {
     }
 
     onClick() {
-        if (!this.items) return;
-        this.opened = !this.opened;
-        if (!this.opened) this.sortItems();
-        this.filterText = '';
+        if (this.disabled !== true) {
+            if (!this.items) return;
+            this.opened = !this.opened;
+            if (!this.opened) this.sortItems();
+            this.filterText = '';
+
+        }
+
     }
     onSelection() {
         if (this.onChange) this.onChange();
@@ -86,6 +90,7 @@ export function jfMultiDropdown() {
             filterPlaceholder: '@',
             noItemsMessage: '@',
             items: '=',
+            disabled: '=?',
             onChange: '&?',
             dropdownOpened: '='
         },
