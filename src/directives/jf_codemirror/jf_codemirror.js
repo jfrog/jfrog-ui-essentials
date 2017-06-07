@@ -7,7 +7,7 @@ export function jfCodeMirror() {
             mimeType: '@',
             mode: '@',
             model: '=',
-            allowEdit: '@',
+            allowEdit: '=',
             height: '@?',
             apiAccess: '=',
             autofocus: '@'
@@ -22,9 +22,10 @@ export function jfCodeMirror() {
 }
 
 class jfCodeController {
-    constructor($scope, $element) {
+    constructor($scope, $element, $timeout) {
         this.$element = $element;
         this.$scope = $scope;
+        this.$timeout = $timeout;
 
         this._formatModel();
 
@@ -46,6 +47,7 @@ class jfCodeController {
 
     // register click handlers on code mirror links
     _codeMirrorLoaded(_editor) {
+        this.cmApi = _editor;
         if (this.height) {
             let codeMirrorElement = $(this.$element).find('.CodeMirror');
             if (this.height === 'flexible') {
@@ -65,9 +67,12 @@ class jfCodeController {
                 window.open(url, '_blank');
             }
         });
-        this.$scope.$on('$destroy', () => $(_editor.display.wrapper).off('click'));
+        this.$scope.$on('$destroy', () => {
+            this.$destroyed = true;
+            $(_editor.display.wrapper).off('click')
+        });
         if (this.apiAccess) {
-            this.apiAccess.api = _editor;
+            this.apiAccess.api = this.cmApi;
             if (this.apiAccess.onLoad) {
                 this.apiAccess.onLoad();
             }
@@ -92,6 +97,8 @@ class jfCodeController {
             else {
                 this.formattedModel = content;
             }
+            this.expectChange();
+            this.refreshUntilVisible();
         }
 
         if (!this.allowEdit) {
@@ -104,11 +111,37 @@ class jfCodeController {
             this.formattedModel = this.model;
             this.$scope.$watch('jfCodeMirror.model',v=>{
                 this.formattedModel = this.model;
+                this.expectChange();
+                this.refreshUntilVisible();
             });
             this.$scope.$watch('jfCodeMirror.formattedModel',v=>{
                 this.model = v;
             });
+            this.expectChange();
+            this.refreshUntilVisible();
         }
 
+    }
+
+    refreshUntilVisible() {
+        if (this.cmApi) this.cmApi.refresh();
+        this.$timeout(()=>{
+            let cmText = this.$element.find('.CodeMirror-code').find('pre').text().replace(/\u200B/g,'');
+            if (this.expectingChange && cmText === this.lastVal) {
+                if (this.cmApi) {
+                    this.cmApi.refresh();
+                }
+                if (!this.$destroyed) this.refreshUntilVisible();
+            }
+            else if (this.expectingChange) {
+                this.expectingChange = false;
+            }
+        },100)
+    }
+
+    expectChange() {
+        let cmText = this.$element.find('.CodeMirror-code').find('pre').text().replace(/\u200B/g,'');
+        this.expectingChange = true;
+        this.lastVal = cmText;
     }
 }
