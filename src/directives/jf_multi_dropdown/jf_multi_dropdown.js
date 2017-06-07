@@ -73,9 +73,11 @@ class jfMultiDropdownController {
     }
     selectAll() {
         this.filter(this.items, this.filterText).forEach((item)=>{item.isSelected = true;})
+        this.onSelection();
     }
     unSelectAll() {
         this.filter(this.items, this.filterText).forEach((item)=>{item.isSelected = false;})
+        this.onSelection();
     }
 
 }
