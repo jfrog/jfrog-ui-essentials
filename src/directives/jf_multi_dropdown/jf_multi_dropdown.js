@@ -1,7 +1,8 @@
 class jfMultiDropdownController {
-    constructor($scope, $filter) {
+    constructor($scope, $filter, $element) {
 
         this.$scope = $scope;
+        this.$element = $element;
 
         this.filter = $filter('filter');
         this.opened = false;
@@ -36,7 +37,7 @@ class jfMultiDropdownController {
 
     handleOutsideClick() {
         let handler = (e) => {
-            let outside = !$(e.target).parents('.jf-multi-dropdown').length
+            let outside = !$(e.target).parents('.jf-multi-dropdown').length || $(e.target).parents('.jf-multi-dropdown')[0] !== $(this.$element).find('.jf-multi-dropdown')[0];
             if (outside) {
                 this.opened = false;
                 this.sendOpenStateChange();
