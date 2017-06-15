@@ -30,11 +30,16 @@ class jfMultiDropdownController {
 
     }
 
+    sendOpenStateChange() {
+        if (this.onOpenStateChange) this.onOpenStateChange({opened:this.opened});
+    }
+
     handleOutsideClick() {
         let handler = (e) => {
             let outside = !$(e.target).parents('.jf-multi-dropdown').length
             if (outside) {
                 this.opened = false;
+                this.sendOpenStateChange();
                 this.sortItems();
             }
             this.$scope.$apply();
@@ -49,6 +54,7 @@ class jfMultiDropdownController {
         if (this.disabled !== true) {
             if (!this.items) return;
             this.opened = !this.opened;
+            this.sendOpenStateChange();
             if (!this.opened) this.sortItems();
             this.filterText = '';
 
@@ -94,6 +100,7 @@ export function jfMultiDropdown() {
             items: '=',
             disabled: '=?',
             onChange: '&?',
+            onOpenStateChange: '&?',
             dropdownOpened: '='
         },
         templateUrl: 'directives/jf_multi_dropdown/jf_multi_dropdown.html'
