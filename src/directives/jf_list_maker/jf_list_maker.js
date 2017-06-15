@@ -13,7 +13,8 @@ export function jfListMaker() {
             inputType: '@?',
             predefinedValues: '=?',
             placeholder: '@?',
-            listId: '@'
+            listId: '@',
+            onAddValue: '&?'
         },
         templateUrl: 'directives/jf_list_maker/jf_list_maker.html',
         controller: jfListMakerController,
@@ -48,6 +49,9 @@ class jfListMakerController {
             this.errorMessage = "Value already exists";
         }
         else {
+            if(this.onAddValue){
+                this.newValue = this.onAddValue({newPattern: this.newValue})
+            }
             this.values.push(this.newValue);
             this.newValue = null;
         }
