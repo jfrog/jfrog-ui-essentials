@@ -50,7 +50,7 @@ class jfListMakerController {
         }
         else {
             if(this.onAddValue){
-                this.newValue = this.onAddValue({newPattern: this.newValue})
+                this.newValue = this.onAddValue({newValue: this.newValue})
             }
             this.values.push(this.newValue);
             this.newValue = null;
