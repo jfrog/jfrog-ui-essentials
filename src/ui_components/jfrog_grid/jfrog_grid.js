@@ -676,6 +676,14 @@ class JFrogGrid {
         });
     }
 
+    asyncShowAll(rowName,col){
+        if(col.colDef && col.colDef.asyncDataCallback){
+            col.colDef.asyncDataCallback(rowName).then((dataList)=>{
+                this.showAll(dataList,rowName,col);
+            });
+        }
+    }
+
     _transformDataForSubRowsSupport(data, autoExpand) {
         let transformed = [];
 
