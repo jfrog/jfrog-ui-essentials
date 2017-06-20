@@ -94,6 +94,9 @@ class jfTabsController {
         // Replace between collapsedTabs & visibleTabs:
         var collapsedTabIndex = this.tabsCollapsed.indexOf(collapsedTab)
         var tabToReplace = this.tabsVisible[this.tabsVisible.length - 1]
+
+        if (!tabToReplace) return;
+
         this.tabsCollapsed[collapsedTabIndex] = tabToReplace;
         this.tabsVisible[this.tabsVisible.length - 1] = collapsedTab;
     }
@@ -115,7 +118,7 @@ class jfTabsController {
     }
 
     hasClass(obj) {
-        if (obj.class)
+        if (obj && obj.class)
             return true;
     }
 }

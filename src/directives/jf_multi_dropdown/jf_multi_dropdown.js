@@ -1,8 +1,9 @@
 class jfMultiDropdownController {
 	/* @ngInject */
-    constructor($scope, $filter) {
+    constructor($scope, $filter, $element) {
 
         this.$scope = $scope;
+        this.$element = $element;
 
         this.filter = $filter('filter');
         this.opened = false;
@@ -31,11 +32,16 @@ class jfMultiDropdownController {
 
     }
 
+    sendOpenStateChange() {
+        if (this.onOpenStateChange) this.onOpenStateChange({opened:this.opened});
+    }
+
     handleOutsideClick() {
         let handler = (e) => {
-            let outside = !$(e.target).parents('.jf-multi-dropdown').length
+            let outside = !$(e.target).parents('.jf-multi-dropdown').length || $(e.target).parents('.jf-multi-dropdown')[0] !== $(this.$element).find('.jf-multi-dropdown')[0];
             if (outside) {
                 this.opened = false;
+                this.sendOpenStateChange();
                 this.sortItems();
             }
             this.$scope.$apply();
@@ -47,10 +53,15 @@ class jfMultiDropdownController {
     }
 
     onClick() {
-        if (!this.items) return;
-        this.opened = !this.opened;
-        if (!this.opened) this.sortItems();
-        this.filterText = '';
+        if (this.disabled !== true) {
+            if (!this.items) return;
+            this.opened = !this.opened;
+            this.sendOpenStateChange();
+            if (!this.opened) this.sortItems();
+            this.filterText = '';
+
+        }
+
     }
     onSelection() {
         if (this.onChange) this.onChange();
@@ -89,7 +100,9 @@ export function jfMultiDropdown() {
             filterPlaceholder: '@',
             noItemsMessage: '@',
             items: '=',
+            disabled: '=?',
             onChange: '&?',
+            onOpenStateChange: '&?',
             dropdownOpened: '='
         },
         templateUrl: 'directives/jf_multi_dropdown/jf_multi_dropdown.html'

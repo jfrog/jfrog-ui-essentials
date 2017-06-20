@@ -40,7 +40,7 @@
         position: relative;
         .batch-selection {
           position: absolute;
-          right:0px;
+          right: 0px;
           top: -3px;
           a {
             font-size: 10px;
@@ -76,6 +76,13 @@
           border-bottom: 1px solid @blackBGDark;
         }
       }
+    }
+  }
+
+  &.disabled {
+    * {
+      opacity: 0.6;
+      cursor: default;
     }
   }
 }
