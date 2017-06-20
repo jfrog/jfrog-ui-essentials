@@ -1,6 +1,17 @@
 .jf-multi-dropdown {
   position: relative;
   display: inline-block;
+
+  label {
+    font-weight: 100;
+  }
+
+  .icon-clear {
+    position: absolute !important;
+    font-size: 18px !important;
+    right: 25px;
+    margin-top: -3px;
+  }
   .main-box {
     width: 280px;
     height: 40px;
@@ -24,12 +35,21 @@
       margin-top: -2px;
     }
   }
+
+  .selected-view > span {
+    display: block;
+    padding-right: 40px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
   .drop-down-container {
     position: absolute;
     background-color: white;
-    top: 40px;
+    top: 30px;
     left: 0;
-    width: 280px;
+    width: 100%;
     border: 1px solid @grayBorderLighter;
     border-top: none;
     z-index: 99;
