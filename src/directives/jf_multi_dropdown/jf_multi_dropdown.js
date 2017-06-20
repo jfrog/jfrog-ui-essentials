@@ -70,6 +70,12 @@ class jfMultiDropdownController {
         return selected.length;
     }
 
+    selectedItems() {
+        let selected = _.filter(this.items, (item) => item.isSelected);
+        selected = _.map(selected, 'text');
+        return selected;
+    }
+
     sortItems() {
         if (!this.items) return;
         let selected = _.sortBy(_.filter(this.items, (item) => item.isSelected), 'text');
@@ -96,13 +102,16 @@ export function jfMultiDropdown() {
         bindToController: true,
         scope: {
             title: '@',
+	        label: '@',
             filterPlaceholder: '@',
             noItemsMessage: '@',
             items: '=',
             disabled: '=?',
             onChange: '&?',
             onOpenStateChange: '&?',
-            dropdownOpened: '='
+            dropdownOpened: '=',
+            showSelected: '@',
+	        showLabelCounter: '@'
         },
         templateUrl: 'directives/jf_multi_dropdown/jf_multi_dropdown.html'
     }

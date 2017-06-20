@@ -1,7 +1,11 @@
 <div ng-class="{'disabled':jfMultiDropdown.disabled}" class="jf-multi-dropdown">
+    <label ng-if="jfMultiDropdown.label">{{jfMultiDropdown.label}} <span ng-if="jfMultiDropdown.showLabelCounter && jfMultiDropdown.selectedItems().length">({{jfMultiDropdown.selectedItems().length}})</span></label>
     <div class="main-box"
+         ng-class="{'selected-view' : jfMultiDropdown.selectedItems().length}"
          ng-click="jfMultiDropdown.onClick()">
-        {{jfMultiDropdown.title}} <span class="selected-counter">({{jfMultiDropdown.getSelectedCount()}})</span>
+        <span ng-if="!jfMultiDropdown.showSelected">{{jfMultiDropdown.title}} <span class="selected-counter">({{jfMultiDropdown.getSelectedCount()}})</span></span>
+        <span ng-if="jfMultiDropdown.showSelected && jfMultiDropdown.selectedItems().length">{{jfMultiDropdown.selectedItems().join(', ')}} <i class="icon icon-clear" ng-click="jfMultiDropdown.unSelectAll()"></i></span>
+        <span ng-if="jfMultiDropdown.showSelected && !jfMultiDropdown.selectedItems().length">{{jfMultiDropdown.title}}</span>
         <i class="caret pull-right"></i>
     </div>
     <div ng-if="jfMultiDropdown.opened"
