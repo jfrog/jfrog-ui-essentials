@@ -152,7 +152,16 @@ class JFrogGrid {
         }
     }
 
+    refreshColumns() {
+        if (this.origColumnDefs) {
+            this.setColumns(_.cloneDeep(this.origColumnDefs))
+            this.firstRenderedIteration=false;
+        }
+    }
+
     setColumns(columnDefs) {
+        if (!this.origColumnDefs) this.origColumnDefs = _.cloneDeep(columnDefs);
+        columnDefs = _.filter(columnDefs,col=>!col.isVisible || col.isVisible());
         this._normalizeColumnWidths(columnDefs);
         this.columnDefs = columnDefs;
 
