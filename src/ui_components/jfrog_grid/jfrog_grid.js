@@ -135,7 +135,25 @@ class JFrogGrid {
         }
     }
 
+    _normalizeColumnWidths(columnDefs) {
+        let totalSize = columnDefs.reduce((acc,curr) => {
+            let w = parseInt(curr.width);
+            if (!_.isNaN(w)) return acc + w;
+            else return acc;
+        },0);
+        if (totalSize !== 100) {
+            let ratio = 100/totalSize;
+            columnDefs.forEach(column => {
+                let w = parseInt(column.width);
+                if (!_.isNaN(w)) {
+                    column.width = ratio*w + '%';
+                }
+            })
+        }
+    }
+
     setColumns(columnDefs) {
+        this._normalizeColumnWidths(columnDefs);
         this.columnDefs = columnDefs;
 
         this.columnDefs.forEach((item, index) => {
