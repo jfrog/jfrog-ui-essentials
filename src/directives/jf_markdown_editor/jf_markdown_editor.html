@@ -3,7 +3,7 @@
         <div class="switch-wrapper">
             <jf-switch ng-if="jfMarkdown.showControls"
                        ng-model="jfMarkdown.mode"
-                       ng-change="jfMarkdown.onModeChange({mode:jfMarkdown.mode})"
+                       ng-change="jfMarkdown.onChangeModeInternal()"
                        options="jfMarkdown.modeOptions"
                        controller="jfMarkdown.switchController"
                        class="no-margin-top"></jf-switch>

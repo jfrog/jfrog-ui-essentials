@@ -1,6 +1,6 @@
 {
   "name": "jfrog-ui-essentials",
-  "version": "1.0.0-dev.32",
+  "version": "1.0.0-dev.33",
   "homepage": "http://www.jfrog.com",
   "description": "JFrog UI Essentials",
   "license": "Apache-2.0",
@@ -41,7 +41,6 @@
     "tooltipster": "3.3.0",
     "jQuery-contextMenu": "~1.8.1",
     "clipboard": "~1.5.5",
-    "angular-asciidoc-directive": "^0.2.0",
     "jstree": "500tech/jstree#3.0.0-beta10-patch7"
   },
   "resolutions": {
