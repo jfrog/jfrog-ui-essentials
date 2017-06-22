@@ -15,9 +15,12 @@ class jfMarkdownEditorController {
         this.updatePreviewButton();
 
 
-
+        let firstPreview = true;
         $scope.$watch('jfMarkdown.markdown',()=>{
-            if (this.markdown && !this.preview) this.renderPreview();
+            if (this.markdown && firstPreview) {
+                this.renderPreview();
+                firstPreview = false;
+            }
         })
 
     }
