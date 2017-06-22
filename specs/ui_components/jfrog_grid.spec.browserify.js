@@ -64,7 +64,7 @@ describe('unit test: jfrog_grid ui component', () => {
       expect(result).toBe(gridOptions);
     });    
     it('should allow to set columns', () => {
-      expect(gridOptions.columnDefs).toBe(columns);
+      expect(gridOptions.columnDefs).toEqual(columns);
     });
     it('should set default headerCellTemplate', () => {
       expect(gridOptions.columnDefs[0].headerCellTemplate).toBeDefined();
