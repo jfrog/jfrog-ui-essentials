@@ -84,7 +84,7 @@
 
                 //Reduce rows that should not be counted
                 count -= _.filter($scope.gridOptions.api.grid.rows,{entity:{'__doNotCount__':true}}).length;
-                count -= _.filter(visRows,(row) => row.entity.$parentRow).length;
+                count -= _.filter($scope.gridOptions.api.grid.rows,(row) => row.entity.$parentRow).length;
 
                 let recordsName;
 

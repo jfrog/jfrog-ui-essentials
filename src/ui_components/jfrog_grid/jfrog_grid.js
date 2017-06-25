@@ -778,6 +778,7 @@ class JFrogGrid {
 
     refreshGridAfterFiltering(gridFilter) {
 
+        this.gridFilter = gridFilter;
         gridFilter.column.name += ' ';
         if (gridFilter.column2) gridFilter.column2.name += ' ';
         var data = [];
@@ -898,6 +899,7 @@ class JFrogGrid {
         this.visibleFields = _.map(_.filter(this.availableColumns, col=>col.isSelected),'id');
         this.saveCustomizedColumnsState();
         if (refresh) this.refreshColumns();
+        if (this.gridFilter) this.gridFilter.doFilter();
     }
 
     setGridSettingsId(id) {
