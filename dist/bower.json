@@ -1,6 +1,6 @@
 {
   "name": "jfrog-ui-essentials",
-  "version": "1.0.0-dev.36",
+  "version": "1.0.0-dev.37-table-external-pagination",
   "homepage": "http://www.jfrog.com",
   "description": "JFrog UI Essentials",
   "license": "Apache-2.0",
