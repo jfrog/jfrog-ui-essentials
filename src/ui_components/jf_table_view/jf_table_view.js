@@ -223,6 +223,7 @@ class PaginationApi {
 
         this.syncVirtualScroll()
         this.update();
+        this.sendExternalPageRequest();
     }
     update() {
         if (this.getCurrentPage() > this.getTotalPages()) {

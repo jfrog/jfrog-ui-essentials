@@ -111,6 +111,10 @@ export function JFrogTableViewOptions($timeout) {
                     this.paginationMode = this.PAGINATION;
                 }
                 this.externalPaginationCallback = externalPaginationCallback;
+                this.pendingExternalPaging = true;
+                if (this.dirCtrl && !this.initialExternalPaginationSent) {
+                    $timeout(()=>this.sendExternalPageRequest());
+                }
             }
         }
 
@@ -178,6 +182,7 @@ export function JFrogTableViewOptions($timeout) {
             this.update();
             if (this.paginationMode === this.EXTERNAL_PAGINATION) {
                 $timeout(()=>this.sendExternalPageRequest());
+                this.initialExternalPaginationSent = true;
             }
 
         }

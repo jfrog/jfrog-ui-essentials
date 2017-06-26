@@ -77,7 +77,7 @@
                               data="entity"></jf-table-row>
             </div>
             <div class="empty-table-placeholder"
-                 ng-if="!jfTableView.options.getRawData().length && (!jfTableView.options.externalTotalCount || jfTableView.options.externalTotalCount.total === 0)">
+                 ng-if="!jfTableView.options.getRawData().length && !jfTableView.options.pendingExternalPaging && (!jfTableView.options.externalTotalCount || jfTableView.options.externalTotalCount.total === 0)">
                 {{jfTableView.options.emptyTableText || 'This table is empty !'}}
             </div>
             <div class="empty-table-placeholder filter-no-results"
