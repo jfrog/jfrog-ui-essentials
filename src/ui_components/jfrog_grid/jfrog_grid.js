@@ -2,7 +2,7 @@ const TEMPLATES_FOLDER = "ui_components/jfrog_grid/templates/",
         MIN_COLUMN_WIDTH = 50;
 let headerCellTemplate = require("raw!./templates/headerCellDefaultTemplate.html");
 let groupHeaderCellTemplate = require("raw!./templates/headerCellTemplate.html");
-let $timeout, $window, $state, $modal, $rootScope, download;
+let globals = {};
 
 const COMMON_ACTIONS = {
     delete: {
@@ -366,7 +366,7 @@ class JFrogGrid {
         this.afterRegister((gridApi) => {
             this.calculateFn = () => this._calculateColumnsWidthByPercent(gridApi);
 
-            $($window).resize(this.calculateFn);
+            $(globals.$window).resize(this.calculateFn);
             if (this.scope) this.scope.$on("ui-layout.resize", this.calculateFn);
 
             gridApi.core.on.rowsRendered(this.scope, () => this._fixColumnsWidthFromPercentToPixel(gridApi));
@@ -500,7 +500,7 @@ class JFrogGrid {
 
     setHeaderHeight(height) {
         this.headerRowHeight = height+1;
-        $timeout(()=>{
+        globals.$timeout(()=>{
             $(this.api.grid.element).find('.ui-grid-header-cell-wrapper, .ui-grid-header-canvas').css('height',height+'px');
             $(this.api.grid.element).find('.ui-grid-header-cell .ui-grid-cell-contents').css('height',height+'px');
         })
@@ -610,11 +610,11 @@ class JFrogGrid {
     }
 
     selectItem(item) {
-        $timeout(() => this.api.selection.selectRow(item));
+        globals.$timeout(() => this.api.selection.selectRow(item));
     }
 
     onDestroy() {
-        $($window).off('resize', this.calculateFn);
+        $(globals.$window).off('resize', this.calculateFn);
     }
 
 
@@ -682,7 +682,7 @@ class JFrogGrid {
 
         let objectName = _.startCase(this.gridObjectName.indexOf('/')>=0 ? this.gridObjectName.split('/')[0] : this.gridObjectName);
 
-        let modalScope = $rootScope.$new();
+        let modalScope = globals.$rootScope.$new();
 
         modalScope.items = model;
         modalScope.colName = col.displayName || col.name;
@@ -705,7 +705,7 @@ class JFrogGrid {
             return filteredResults.length === 0;
         };
 
-        $modal.open({
+        globals.$modal.open({
             scope: modalScope,
             templateUrl: 'ui_components/jfrog_grid/show_all_modal.html',
             backdrop: true,
@@ -788,7 +788,7 @@ class JFrogGrid {
         }
 
         this.setGridData(data,false);
-        $timeout(()=>{
+        globals.$timeout(()=>{
             if (this.api.grid.getVisibleRows().length === 0) {
                 this.setGridData(data.concat([{_emptyRow:true}]),false);
                 gridFilter.noMatches=true;
@@ -799,7 +799,7 @@ class JFrogGrid {
                 }),false);
                 gridFilter.noMatches=false;
             }
-            $timeout(()=> {
+            globals.$timeout(()=> {
                 this.api.core.refresh();
             });
         });
@@ -935,13 +935,13 @@ class JFrogGrid {
 
 export class JFrogGridFactory {
     /* @ngInject */
-    constructor(uiGridConstants, _$timeout_, _$window_, _$state_, _$modal_,_$rootScope_, _JFrogDownload_) {
-        $timeout = _$timeout_;
-        $window = _$window_;
-        $state = _$state_;
-        $modal = _$modal_;
-        download = _JFrogDownload_;
-        $rootScope = _$rootScope_;
+    constructor(uiGridConstants, $timeout, $window, $state, $modal,$rootScope, JFrogDownload) {
+        globals.$timeout = $timeout;
+        globals.$window = $window;
+        globals.$state = $state;
+        globals.$modal = $modal;
+        globals.download = JFrogDownload;
+        globals.$rootScope = $rootScope;
 
         this.uiGridConstants = uiGridConstants;
         this._createContextMenu();
@@ -1031,11 +1031,11 @@ export class JFrogGridFactory {
                         }
                     }
 
-                    $timeout(()=>{
+                    globals.$timeout(()=>{
                         $('.context-menu-item').on('click',(e)=>{
                             if (this.actionToDo) {
                                 $(e.target).trigger('contextmenu:hide');
-                                $timeout(()=>{
+                                globals.$timeout(()=>{
                                     this.actionToDo();
                                     delete this.actionToDo;
                                 },100);
@@ -1059,7 +1059,7 @@ export class JFrogGridFactory {
                                     grid.options.callActionCallback(act,row);
                                     if (act.href) {
                                         let url = grid.options.getActionHref(act,row);
-                                        if (url) download(url);
+                                        if (url) globals.download(url);
                                     }
                                 }
                             };
@@ -1103,7 +1103,7 @@ export class JFrogGridFactory {
 
             return {
                 do: ()=>{
-                    $state.go(state,paramsObj);
+                    globals.$state.go(state,paramsObj);
                 }
             }
         }
