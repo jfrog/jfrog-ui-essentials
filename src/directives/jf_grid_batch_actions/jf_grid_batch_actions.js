@@ -1,5 +1,6 @@
 // TODO: (Adam) improve performence by listening to the batch selection change on gridApi, other than using ng-class
 class jfGridBatchActionsController {
+    /* @ngInject */
 
     constructor($element, $scope, $timeout) {
         this.$element = $element;
