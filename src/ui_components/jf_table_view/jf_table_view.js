@@ -192,7 +192,7 @@ class PaginationApi {
         this.tableCtrl = tableCtrl;
     }
     getTotalPages() {
-        return Math.ceil(this.tableCtrl.options.getPrePagedData().length / this.tableCtrl.options.rowsPerPage);
+        return Math.ceil(this.tableCtrl.options.getTotalLengthOfData() / this.tableCtrl.options.rowsPerPage);
     }
     getCurrentPage() {
         return this.tableCtrl.currentPage + 1;
@@ -200,14 +200,21 @@ class PaginationApi {
     nextPage() {
         if (this.getCurrentPage() === this.getTotalPages()) return;
         this.tableCtrl.currentPage++;
-        this.syncVirtualScroll()
+        this.syncVirtualScroll();
         this.update();
+        this.sendExternalPageRequest();
     }
     prevPage() {
         if (this.getCurrentPage() === 1) return;
         this.tableCtrl.currentPage--;
-        this.syncVirtualScroll()
+        this.syncVirtualScroll();
         this.update();
+        this.sendExternalPageRequest();
+    }
+    sendExternalPageRequest() {
+        if (this.tableCtrl.options.paginationMode === this.tableCtrl.options.EXTERNAL_PAGINATION) {
+            this.tableCtrl.options.sendExternalPageRequest();
+        }
     }
     setPage(pageNum) {
         if (pageNum < 1 || pageNum > this.getTotalPages()) return;

@@ -16,6 +16,7 @@ export function JFrogTableViewOptions($timeout) {
             // pagination mode
             this.PAGINATION = 0;
             this.VIRTUAL_SCROLL = 1;
+            this.EXTERNAL_PAGINATION = 2;
 
             // Themes
             this.DEFAULT_THEME = 0;
@@ -37,10 +38,16 @@ export function JFrogTableViewOptions($timeout) {
             this.resizableColumns = false;
         }
 
-        setData(data) {
-            this.data = data;
-            this.origData = _.sortBy(data,'');
-            this.update();
+        setData(data,internalCall) {
+
+            if (this.paginationMode === this.EXTERNAL_PAGINATION && internalCall !== '$$internal$$') {
+                console.error('When using external pagination, you should not call setData directly !')
+            }
+            else {
+                this.data = data;
+                this.origData = _.sortBy(data,'');
+                this.update();
+            }
         }
         
 
@@ -96,8 +103,15 @@ export function JFrogTableViewOptions($timeout) {
             this._normalizeWidths();
         }
 
-        setPaginationMode(pagiMode) {
+        setPaginationMode(pagiMode, externalPaginationCallback) {
             this.paginationMode = pagiMode;
+            if (this.paginationMode === this.EXTERNAL_PAGINATION) {
+                if (!externalPaginationCallback || typeof externalPaginationCallback !== 'function') {
+                    console.error('Setting pagination mode to EXTERNAL_PAGINATION require pagination callback function as the second parameter of setPaginationMode')
+                    this.paginationMode = this.PAGINATION;
+                }
+                this.externalPaginationCallback = externalPaginationCallback;
+            }
         }
 
         hasSelection() {
@@ -111,14 +125,28 @@ export function JFrogTableViewOptions($timeout) {
         getSelectedCount() {
             return this.getSelected().length;
         }
+
         sortBy(field,resort = false) {
+
+            let sendExternal = false;
+
             if (!resort && this.sortByField === field) {
                 this.revSort = !this.revSort;
+                sendExternal = true;
             }
             else if (!resort) {
                 this.revSort = false;
             }
+
+            if (this.sortByField !== field) {
+                sendExternal = true;
+            }
+
             this.sortByField = field;
+
+            if (this.paginationMode === this.EXTERNAL_PAGINATION && sendExternal) {
+                this.sendExternalPageRequest();
+            }
 
             this.refreshSorting();
         }
@@ -148,6 +176,10 @@ export function JFrogTableViewOptions($timeout) {
         _setDirectiveController(ctrl) {
             this.dirCtrl = ctrl;
             this.update();
+            if (this.paginationMode === this.EXTERNAL_PAGINATION) {
+                $timeout(()=>this.sendExternalPageRequest());
+            }
+
         }
 
         _normalizeWidths() {
@@ -258,6 +290,9 @@ export function JFrogTableViewOptions($timeout) {
 
         refreshFilter() {
             delete this.filterCache;
+            if (this.paginationMode === this.EXTERNAL_PAGINATION) {
+                this.sendExternalPageRequest();
+            }
             this.refreshGrouping();
         }
 
@@ -309,6 +344,40 @@ export function JFrogTableViewOptions($timeout) {
             else if (this.paginationMode === this.VIRTUAL_SCROLL) {
                 return this.getPrePagedData().slice(this.dirCtrl.virtualScrollIndex,this.dirCtrl.virtualScrollIndex + this.rowsPerPage)
             }
+            else if (this.paginationMode === this.EXTERNAL_PAGINATION) {
+                return this.getRawData();
+            }
+        }
+
+        sendExternalPageRequest() {
+            if (!this.dirCtrl || _.isUndefined(this.dirCtrl.currentPage)) return;
+            let promise = this.externalPaginationCallback({
+                pageNum: this.dirCtrl.currentPage,
+                numOfRows: this.rowsPerPage,
+                direction: !this.sortByField ? null : this.revSort ? 'desc' : 'asc',
+                orderBy: this.sortByField,
+                filter: this.dirCtrl.tableFilter || null
+            })
+            if (!promise || !promise.then) {
+                console.error('External pagination callback should return promise')
+            }
+            else {
+                this.pendingExternalPaging = true;
+                promise.then(pagedData => {
+                    this.setData(pagedData.data, '$$internal$$');
+                    this.externalTotalCount = {total: pagedData.totalCount, filtered: pagedData.filteredCount};
+                    this.pendingExternalPaging = false;
+                    this.dirCtrl.noFilterResults = this.externalTotalCount.filtered === 0 && this.externalTotalCount.total > 0
+                })
+            }
+        }
+
+        getTotalLengthOfData() {
+            if (this.paginationMode === this.EXTERNAL_PAGINATION) {
+                return this.externalTotalCount ? this.externalTotalCount.filtered || 0 : 0;
+            }
+            else return this.getPrePagedData().length
+
         }
 
         getPrePagedData() {
@@ -317,7 +386,7 @@ export function JFrogTableViewOptions($timeout) {
 
         getSortedData(sourceData) {
 
-            if (!this.sortByField) {
+            if (this.paginationMode === this.EXTERNAL_PAGINATION || !this.sortByField) {
                 return sourceData;
             }
             else {
@@ -427,7 +496,7 @@ export function JFrogTableViewOptions($timeout) {
         }
 
         getGroupedData(sourceData) {
-            if (!this.groupedBy) {
+            if (this.paginationMode === this.EXTERNAL_PAGINATION || !this.groupedBy) {
                 return sourceData;
             }
             else {
@@ -456,7 +525,13 @@ export function JFrogTableViewOptions($timeout) {
         }
 
         getFilteredData(sourceData) {
+
             sourceData = sourceData || this.getRawData();
+
+            if (this.paginationMode === this.EXTERNAL_PAGINATION) {
+                return sourceData || [];
+            }
+
             if (!this.dirCtrl.tableFilter) {
                 this.dirCtrl.noFilterResults = false;
                 return sourceData || [];
@@ -475,9 +550,5 @@ export function JFrogTableViewOptions($timeout) {
         getRawData() {
             return this.data;
         }
-
-
-
-
     };
 }

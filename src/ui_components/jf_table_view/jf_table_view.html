@@ -17,7 +17,7 @@
         <div class="sort-and-filter-wrapper clearfix">
 
             <div class="jf-table-filter">
-                <div class="input-search-wrapper field-style" ng-show="jfTableView.options.getRawData().length">
+                <div class="input-search-wrapper field-style" ng-show="jfTableView.options.getRawData().length || jfTableView.options.externalTotalCount.total > 0">
                     <i class="icon-search"></i>
                     <input ng-model="jfTableView.tableFilter"
                            ng-model-options="{debounce: { 'default': 500 } }"
@@ -77,7 +77,7 @@
                               data="entity"></jf-table-row>
             </div>
             <div class="empty-table-placeholder"
-                 ng-if="!jfTableView.options.getRawData().length">
+                 ng-if="!jfTableView.options.getRawData().length && (!jfTableView.options.externalTotalCount || jfTableView.options.externalTotalCount.total === 0)">
                 {{jfTableView.options.emptyTableText || 'This table is empty !'}}
             </div>
             <div class="empty-table-placeholder filter-no-results"
