@@ -934,6 +934,7 @@ class JFrogGrid {
 
 
 export class JFrogGridFactory {
+    /* @ngInject */
     constructor(uiGridConstants, _$timeout_, _$window_, _$state_, _$modal_,_$rootScope_, _JFrogDownload_) {
         $timeout = _$timeout_;
         $window = _$window_;
