@@ -158,10 +158,20 @@ class JFrogGrid {
             this.firstRenderedIteration=false;
         }
     }
-
+    filterColumns(columns) {
+        return _.filter(columns,col=>{
+            return (!col.isVisible || col.isVisible()) && (!this.visibleFields || this.visibleFields.indexOf(col.field) !== -1)
+        });
+    }
     setColumns(columnDefs) {
         if (!this.origColumnDefs) this.origColumnDefs = _.cloneDeep(columnDefs);
-        columnDefs = _.filter(columnDefs,col=>!col.isVisible || col.isVisible());
+        if (this.columnsCustomization && !this.availableColumns) {
+            this.loadCustomizedColumnsState();
+            this.createAvailableColumnsArray();
+            this.updateCustomizedColumns(false);
+        }
+        this.filterColumns();
+        columnDefs = this.filterColumns(columnDefs);
         this._normalizeColumnWidths(columnDefs);
         this.columnDefs = columnDefs;
 
@@ -768,6 +778,7 @@ class JFrogGrid {
 
     refreshGridAfterFiltering(gridFilter) {
 
+        this.gridFilter = gridFilter;
         gridFilter.column.name += ' ';
         if (gridFilter.column2) gridFilter.column2.name += ' ';
         var data = [];
@@ -861,6 +872,64 @@ class JFrogGrid {
         }
         else return false;
     }
+
+    allowColumnsCustomization() {
+        this.columnsCustomization = true;
+        this.loadCustomizedColumnsState();
+        this.createAvailableColumnsArray();
+        this.updateCustomizedColumns();
+        return this;
+    }
+
+    createAvailableColumnsArray() {
+        if (!this.origColumnDefs) return;
+        this.availableColumns = [];
+        this.origColumnDefs.forEach(colDef=>{
+            let item = {
+                id: colDef.field,
+                text: colDef.displayName || colDef.name,
+                isSelected: ((!this.visibleFields && !colDef.optional) || (this.visibleFields && this.visibleFields.indexOf(colDef.field) !== -1))
+            };
+            this.availableColumns.push(item);
+        })
+    }
+
+    updateCustomizedColumns(refresh = true) {
+        if (!this.availableColumns) return;
+        this.visibleFields = _.map(_.filter(this.availableColumns, col=>col.isSelected),'id');
+        this.saveCustomizedColumnsState();
+        if (refresh) this.refreshColumns();
+        if (this.gridFilter) this.gridFilter.doFilter();
+    }
+
+    setGridSettingsId(id) {
+        this.gridSettingsId = id;
+        return this;
+    }
+
+    saveCustomizedColumnsState() {
+        if (!this.gridSettingsId) return;
+        if (!localStorage.jfGridSettings) {
+            localStorage.jfGridSettings = JSON.stringify({
+                [this.gridSettingsId]: this.visibleFields
+            })
+        }
+        else {
+            let settings = JSON.parse(localStorage.jfGridSettings);
+            settings[this.gridSettingsId] = this.visibleFields;
+            localStorage.jfGridSettings = JSON.stringify(settings);
+        }
+    }
+    loadCustomizedColumnsState() {
+        if (!this.gridSettingsId) return;
+        let settings = localStorage.jfGridSettings;
+        if (settings) {
+            settings = JSON.parse(settings);
+            let mySetting = settings[this.gridSettingsId];
+            this.visibleFields = mySetting;
+        }
+    }
+
 }
 
 

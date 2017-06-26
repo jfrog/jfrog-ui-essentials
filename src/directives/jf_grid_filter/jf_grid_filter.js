@@ -35,11 +35,15 @@ class jfGridFilterController {
             this.filterSubField2 = splitted[1];
         }
 
-        var cols = this.grid.columnDefs;
-        this.column = _.find(cols, _.matchesProperty('field', this.filterField)) || cols[0];
-        if (this.filterField2) this.column2 = _.find(cols, _.matchesProperty('field', this.filterField2));
+        this.attachColumns();
 
         $scope.$on('$destroy', () => this.onDestroy());
+    }
+
+    attachColumns() {
+        this.cols = this.grid.columnDefs;
+        this.column = _.find(this.cols, _.matchesProperty('field', this.filterField)) || this.cols[0];
+        if (this.filterField2) this.column2 = _.find(this.cols, _.matchesProperty('field', this.filterField2));
     }
 
     shouldFilterOnChange() {
@@ -47,6 +51,8 @@ class jfGridFilterController {
     }
 
     doFilter() {
+        if (this.cols !== this.grid.columnDefs) this.attachColumns();
+
         if (!this.column) return;
         if (!this.column2) {
 //            this.column.filter = {term: '*' + this.gridFilter + '*'};
