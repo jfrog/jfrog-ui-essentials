@@ -5,7 +5,8 @@ export function jfFileDrop($timeout) {
             jfFileDisabled: '=ngDisabled',
             addCallback: '&jfAddingFileCallback',
             showProgressBar: '=',
-            multiple: '=?'
+            multiple: '=?',
+	        onFileRemove: '&'
         },
         restrict: 'E',
         templateUrl: 'ui_components/jfrog_uploader/jf_file_drop.html',
@@ -31,6 +32,10 @@ export function jfFileDrop($timeout) {
 
             $scope.jfFileUploader.anyFileUploadInProgress = () => {
                 return _.findWhere(this.jfFileUploader.queue,(item)=>{ return item.progress === true });
+            }
+
+	        $scope.removeItemCallback = (fileItem) => {
+		        $scope.onFileRemove({fileItem: fileItem})
             }
         }
     }

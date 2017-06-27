@@ -46,7 +46,7 @@
                 <li ng-repeat="item in jfFileUploader.queue" class="upload-item">
                     <span class="file-name-deploy-multi" jf-tooltip="{{ item.file.name }}">{{ item.file.name }}</span>
                     <a href=""
-                       ng-click="item.remove(); multiUploadItemRemoved()"
+                       ng-click="item.remove(); multiUploadItemRemoved(); removeItemCallback(item)"
                        jf-tooltip="Remove"
                        class="icon icon-clear pull-right"></a>
                 </li>
