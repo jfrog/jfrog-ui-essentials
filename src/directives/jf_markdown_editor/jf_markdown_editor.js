@@ -2,42 +2,35 @@ import "./codemirror-asciidoc";
 
 class jfMarkdownEditorController {
 	/* @ngInject */
-    constructor($timeout,$scope) {
-        this.checkPreviewers();
+    constructor($timeout,$scope, JFrogUIWebWorker) {
 
-        this.$timeout = $timeout;
-        this.mode = this.mode || 'Edit';
-        this.markdown = this.markdown || '';
-        this.language = this.language || 'Markdown';
-        if (this.editable === undefined) this.editable = true;
-        this.modeOptions = ['Edit', 'Preview'];
+        this.JFrogUIWebWorker = JFrogUIWebWorker;
 
-        this.updatePreviewButton();
+        this.JFrogUIWebWorker.check().then(()=>{
 
+            this.JFrogUIWebWorker.open();
 
-        let firstPreview = true;
-        $scope.$watch('jfMarkdown.markdown',()=>{
-            if (this.markdown && firstPreview) {
+            this.webworkerOk = true;
+            this.$timeout = $timeout;
+            this.mode = this.mode || 'Edit';
+            this.markdown = this.markdown || '';
+            this.language = this.language || 'Markdown';
+            if (this.editable === undefined) this.editable = true;
+            this.modeOptions = ['Edit', 'Preview'];
+
+            this.updatePreviewButton();
+
+            $scope.$watch('jfMarkdown.markdown',()=>{
                 this.renderPreview();
-                firstPreview = false;
-            }
+            })
+        }).catch(() => {
+            console.error(`jf-markdown-editor: Cannot find ${this.JFrogUIWebWorker.getPathToWebWorker()}\nCheck that the webworker script is served by your server and that its path is defined in your app config (set 'webworkerPath' in the object passed to JFrogUILibConfigProvider.setConfig())`)
         })
 
-    }
+        $scope.$on('$destroy',() => {
+            this.JFrogUIWebWorker.close();
+        })
 
-    checkPreviewers() {
-        if (!this.previewRenderers) {
-            console.error('jf-markdown-editor: No preview-renderers was set. Previews will not work!')
-            this.previewRenderers = {};
-        }
-        else {
-            if (!this.previewRenderers.markdown) {
-                console.error('jf-markdown-editor: No markdown preview renderer was set. Markdown previews will not work!')
-            }
-            if (!this.previewRenderers.asciidoc) {
-                console.error('jf-markdown-editor: No asciidoc preview renderer was set. Asciidoc previews will not work!')
-            }
-        }
     }
 
     setPreview(preview) {
@@ -45,13 +38,12 @@ class jfMarkdownEditorController {
     }
 
     renderPreview() {
-        if (this.previewRenderers[this.language.toLowerCase()]) {
-            this.previewRenderers[this.language.toLowerCase()](this.markdown, (preview)=>this.setPreview(preview));
-        }
+        this.JFrogUIWebWorker.markdownPreview(this.language.toLowerCase(), this.markdown)
+            .then(html => this.setPreview(html))
     }
 
     updatePreviewButton() {
-        if (this.previewRenderers[this.language.toLowerCase()]) {
+        if (_.includes(['asciidoc', 'markdown'],this.language.toLowerCase())) {
             this.modeOptions = ['Edit', 'Preview'];
         }
         else {
@@ -77,7 +69,6 @@ export function jfMarkdownEditor() {
         restrict: 'E',
         scope: {
             markdown: '=?',
-            previewRenderers: '=?',
             language: '=?',
             mode: '=?',
             onSave: '&?',

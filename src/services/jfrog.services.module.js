@@ -4,6 +4,7 @@ import {JFrogUILibConfig}                       from './jfrog_ui_lib_config';
 import {JFrogDownload}                          from './jfrog_download';
 import {JFrogIFrameDownload}                    from './jfrog_iframe_download';
 import {JFrogUIUtils}                           from './jfrog_ui_utils';
+import {JFrogUIWebWorker}                           from './jfrog_ui_webworker';
 import {recursiveDirective} from "./recursive_directive";
 
 angular.module('jfrog.ui.essentials.services', ['ui.router', 'jfrog.ui_components', 'toaster'])
@@ -14,3 +15,4 @@ angular.module('jfrog.ui.essentials.services', ['ui.router', 'jfrog.ui_component
     .factory('recursiveDirective', recursiveDirective)
     .service('JFrogNotifications', JFrogNotifications)
     .service('JFrogUIUtils', JFrogUIUtils)
+    .service('JFrogUIWebWorker', JFrogUIWebWorker)
