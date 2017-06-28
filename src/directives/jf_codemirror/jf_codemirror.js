@@ -110,9 +110,11 @@ class jfCodeController {
         else {
             this.formattedModel = this.model;
             this.$scope.$watch('jfCodeMirror.model',v=>{
-                this.formattedModel = this.model;
-                this.expectChange();
-                this.refreshUntilVisible();
+                if (this.formattedModel !== this.model) {
+                    this.formattedModel = this.model;
+                    this.expectChange();
+                    this.refreshUntilVisible();
+                }
             });
             this.$scope.$watch('jfCodeMirror.formattedModel',v=>{
                 this.model = v;
@@ -125,9 +127,8 @@ class jfCodeController {
 
     refreshUntilVisible() {
         if (this.cmApi) this.cmApi.refresh();
-        if (this.allowEdit) return;
         this.$timeout(()=>{
-            let cmText = this.$element.find('.CodeMirror-code').find('pre').text().replace(/\u200B/g,'');
+            let cmText = $(this.$element).find('.CodeMirror-code').find('pre').text().replace(/\u200B/g,'');
             if (this.expectingChange && cmText === this.lastVal) {
                 if (this.cmApi) {
                     this.cmApi.refresh();
@@ -136,12 +137,13 @@ class jfCodeController {
             }
             else if (this.expectingChange) {
                 this.expectingChange = false;
+                delete this.lastVal;
             }
         },100)
     }
 
     expectChange() {
-        let cmText = this.$element.find('.CodeMirror-code').find('pre').text().replace(/\u200B/g,'');
+        let cmText = $(this.$element).find('.CodeMirror-code').find('pre').text().replace(/\u200B/g,'');
         this.expectingChange = true;
         this.lastVal = cmText;
     }
