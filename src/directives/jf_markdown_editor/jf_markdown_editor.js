@@ -4,33 +4,44 @@ class jfMarkdownEditorController {
 	/* @ngInject */
     constructor($timeout,$scope, JFrogUIWebWorker) {
 
+        this.$timeout = $timeout;
+        this.$scope = $scope;
+
         this.JFrogUIWebWorker = JFrogUIWebWorker;
+        this.checkPreviewers();
+        if (this.previewersCount === 2) {
+            this.init();
+        }
+        else {
+            this.JFrogUIWebWorker.check().then(()=>{
 
-        this.JFrogUIWebWorker.check().then(()=>{
+                this.JFrogUIWebWorker.open();
 
-            this.JFrogUIWebWorker.open();
-
-            this.webworkerOk = true;
-            this.$timeout = $timeout;
-            this.mode = this.mode || 'Edit';
-            this.markdown = this.markdown || '';
-            this.language = this.language || 'Markdown';
-            if (this.editable === undefined) this.editable = true;
-            this.modeOptions = ['Edit', 'Preview'];
-
-            this.updatePreviewButton();
-
-            $scope.$watch('jfMarkdown.markdown',()=>{
-                this.renderPreview();
+                this.webworkerOk = true;
+                this.init();
+            }).catch(() => {
+                console.error(`jf-code-mirror: Error: No preview render callback defined and WebWorker is not available.`)
             })
-        }).catch(() => {
-            console.error(`jf-markdown-editor: Cannot find ${this.JFrogUIWebWorker.getPathToWebWorker()}\nCheck that the webworker script is served by your server and that its path is defined in your app config (set 'webworkerPath' in the object passed to JFrogUILibConfigProvider.setConfig())`)
-        })
+        }
 
         $scope.$on('$destroy',() => {
-            this.JFrogUIWebWorker.close();
+            if (this.webworkerOk) this.JFrogUIWebWorker.close();
         })
 
+    }
+
+    init() {
+        this.mode = this.mode || 'Edit';
+        this.markdown = this.markdown || '';
+        this.language = this.language || 'Markdown';
+        if (this.editable === undefined) this.editable = true;
+        this.modeOptions = ['Edit', 'Preview'];
+
+        this.updatePreviewButton();
+
+        this.$scope.$watch('jfMarkdown.markdown',()=>{
+            if (this.webworkerOk && (!this.previewRenderers || !this.previewRenderers[this.language.toLowerCase()])) this.renderPreview();
+        })
     }
 
     setPreview(preview) {
@@ -38,8 +49,14 @@ class jfMarkdownEditorController {
     }
 
     renderPreview() {
-        this.JFrogUIWebWorker.markdownPreview(this.language.toLowerCase(), this.markdown)
-            .then(html => this.setPreview(html))
+
+        if (this.previewRenderers && this.previewRenderers[this.language.toLowerCase()]) {
+            this.previewRenderers[this.language.toLowerCase()](this.markdown, (preview)=>this.setPreview(preview));
+        }
+        else if (this.webworkerOk) {
+            this.JFrogUIWebWorker.markdownPreview(this.language.toLowerCase(), this.markdown)
+                .then(html => this.setPreview(html))
+        }
     }
 
     updatePreviewButton() {
@@ -53,12 +70,28 @@ class jfMarkdownEditorController {
     }
     onLanguageChange() {
         this.updatePreviewButton();
-        this.renderPreview();
+        this.preview = '';
+        if (this.webworkerOk && (!this.previewRenderers || !this.previewRenderers[this.language.toLowerCase()])) this.renderPreview();
         this.$timeout(()=>this.switchController.updateOptionObjects());
     }
     onChangeModeInternal() {
         if (this.mode === 'Preview') this.renderPreview();
         this.onModeChange({mode:this.mode})
+    }
+
+    checkPreviewers() {
+        if (!this.previewRenderers) {
+            this.previewRenderers = {};
+            this.previewersCount = 0;
+        }
+        else {
+            if (this.previewRenderers.markdown && this.previewRenderers.asciidoc) {
+                this.previewersCount = 2;
+            }
+            else if (this.previewRenderers.markdown || this.previewRenderers.asciidoc) {
+                this.previewersCount = 1;
+            }
+        }
     }
 
 }
@@ -69,6 +102,7 @@ export function jfMarkdownEditor() {
         restrict: 'E',
         scope: {
             markdown: '=?',
+            previewRenderers: '=?',
             language: '=?',
             mode: '=?',
             onSave: '&?',
