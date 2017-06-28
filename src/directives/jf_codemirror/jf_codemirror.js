@@ -125,6 +125,7 @@ class jfCodeController {
 
     refreshUntilVisible() {
         if (this.cmApi) this.cmApi.refresh();
+        if (this.allowEdit) return;
         this.$timeout(()=>{
             let cmText = this.$element.find('.CodeMirror-code').find('pre').text().replace(/\u200B/g,'');
             if (this.expectingChange && cmText === this.lastVal) {
