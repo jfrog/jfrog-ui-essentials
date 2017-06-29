@@ -1,9 +1,9 @@
 export class JFrogUIWebWorker {
 
-    constructor($q, JFrogUILibConfig) {
+    constructor($q, JFrogUILibConfig, WebWorkersPool) {
         this.$q = $q;
         this.JFrogUILibConfig = JFrogUILibConfig;
-        this.worker = null;
+        this.wwPool  = new WebWorkersPool(this.getPathToWebWorker(), 1);
     }
 
     getPathToWebWorker() {
@@ -12,51 +12,69 @@ export class JFrogUIWebWorker {
 
     check() {
         let defer = this.$q.defer();
-        let w = new Worker(this.getPathToWebWorker());
-        w.onmessage = (e) => {
-            if (e.data === 'OK') defer.resolve();
-            else defer.reject();
-            w.terminate();
-        };
-        w.onerror = (e) => {
-            defer.reject();
-        }
 
-        w.postMessage({cmd: 'testWorker'})
+        this.wwPool.open();
+
+        this.wwPool.send({cmd: 'testWorker'})
+            .then(response => {
+                if (response === 'OK') defer.resolve();
+                else defer.reject();
+                this.wwPool.close();
+            })
+            .catch(e => {
+                defer.reject();
+                this.wwPool.close();
+            }
+        );
 
         return defer.promise;
     }
 
-    open() {
-        this.worker = new Worker(this.getPathToWebWorker());
+    open(poolSize) {
+        this.wwPool.open(poolSize);
     }
 
     close() {
-        if (this.worker) {
-            this.worker.terminate();
-            this.worker = null;
-        }
+        this.wwPool.close();
     }
 
     markdownPreview(type, markdown) {
 
-        if (!this.worker) this.open();
+        if (!this.wwPool.isOpened()) this.open();
 
         let defer = this.$q.defer();
 
-        this.worker.onmessage = (e) => {
-            if (e.data.html) {
-                defer.resolve(e.data.html);
+        this.wwPool.kill({cmd: 'convertMarkdown'});
+        this.wwPool.send({cmd: 'convertMarkdown', type, markdown})
+            .then(response => {
+                if (response.html) {
+                    defer.resolve(response.html);
+                }
+                else defer.reject();
+            })
+            .catch(e => {
+                defer.reject();
             }
-            else defer.reject();
-        };
-
-        this.worker.onerror = (e) => {
-            defer.reject();
-        }
-
-        this.worker.postMessage({cmd: 'convertMarkdown', type, markdown});
+        );
 
         return defer.promise;
+    }
+
+    runFunction(func, ...params) {
+        if (!this.wwPool.isOpened()) this.open();
+
+        let defer = this.$q.defer();
+
+        this.wwPool.send({cmd: 'runFunction', function: func.toString(), params})
+            .then(response => {
+                defer.resolve(response.response);
+            })
+            .catch(e => {
+                defer.reject();
+            }
+        );
+
+        return defer.promise;
+
     }
 }
