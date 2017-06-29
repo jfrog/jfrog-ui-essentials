@@ -56,7 +56,7 @@ gulp.task('build:common',
             'preprocessJS',
             'preprocessBowerJSON',
             'writeBuildVersion',
-            'buildWebWorker',
+            'copyWebworkers',
             'cleanTemp',
             callback
         );
@@ -331,9 +331,8 @@ gulp.task('karma', function (done) {
     }, done);
 });
 
-gulp.task('buildWebWorker', function() {
-    return gulp.src(['src/webworker/asciidoctor.js','src/webworker/marked.min.js','src/webworker/jfrog-ui-essentials.webworker.js'])
-        .pipe(concat('jfrog-ui-essentials.webworker.js'))
+gulp.task('copyWebworkers', function() {
+    return gulp.src(['src/webworkers/**/*'])
         .pipe(uglify({mangle:true}))
-        .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET));
+        .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET + '/workers'));
 })

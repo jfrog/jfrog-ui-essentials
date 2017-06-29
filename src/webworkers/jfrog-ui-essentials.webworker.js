@@ -1,5 +1,5 @@
-Asciidoctor({runtime: {platform: 'browser'}})
-var asciidoctor = Asciidoctor();
+
+
 
 onmessage = function(e) {
     switch(e.data.cmd) {
@@ -25,9 +25,25 @@ onmessage = function(e) {
 
 
 function asciidoc2Html(asciidoc) {
+    loadAsciidoctor();
     return asciidoctor.convert(asciidoc);
 }
 function markdown2Html(markdown) {
-    return marked(markdown);
+    loadKramed();
+    return kramed(markdown,{gfm: true, breaks: true, sanitize: true});
 }
 
+var asciidoctor, kramed;
+function loadAsciidoctor() {
+    if (!asciidoctor) {
+        importScripts('./dependencies/asciidoctor.js');
+        Asciidoctor({runtime: {platform: 'browser'}})
+        asciidoctor = Asciidoctor();
+    }
+}
+
+function loadKramed() {
+    if (!kramed) {
+        importScripts('./dependencies/kramed.min.js');
+    }
+}

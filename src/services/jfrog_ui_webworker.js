@@ -7,7 +7,7 @@ export class JFrogUIWebWorker {
     }
 
     getPathToWebWorker() {
-        return this.JFrogUILibConfig.config.webworkerPath || 'jfrog-ui-essentials.webworker.js';
+        return (this.JFrogUILibConfig.config.webworkersPath || '') + '/jfrog-ui-essentials.webworker.js';
     }
 
     check() {
