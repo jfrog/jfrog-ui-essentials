@@ -1,5 +1,5 @@
 export class JFrogUIWebWorker {
-
+    /* @ngInject */
     constructor($q, JFrogUILibConfig, WebWorkersPool) {
         this.$q = $q;
         this.JFrogUILibConfig = JFrogUILibConfig;
