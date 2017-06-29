@@ -26,12 +26,22 @@
     }
 
     .upload-item{
-      span{
+      .file-selection{
+        display: inline;
+        line-height: initial;
+        top: 23%;
+        position: relative;
+        padding-right: 5px;
+        label.jf-checkbox{
+          margin-bottom:0;
+        }
+      }
+      & > span{
         float: left;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
-        width: 94%;
+        width: 88%;
       }
       .icon.icon-clear{
         color:grey;

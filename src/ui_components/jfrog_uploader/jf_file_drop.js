@@ -6,7 +6,8 @@ export function jfFileDrop($timeout) {
             addCallback: '&jfAddingFileCallback',
             showProgressBar: '=',
             multiple: '=?',
-	        onFileRemove: '&'
+	        onFileRemove: '&',
+	        checkboxesName: '=?'
         },
         restrict: 'E',
         templateUrl: 'ui_components/jfrog_uploader/jf_file_drop.html',
