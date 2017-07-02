@@ -44,6 +44,13 @@
              ng-if="multiple">
             <ul>
                 <li ng-repeat="item in jfFileUploader.queue" class="upload-item">
+                    <jf-checkbox class="file-selection pull-left"
+                                 ng-show="item.hasCheckbox"
+                                 jf-tooltip="{{ checkboxesName }}">
+                        <input type="checkbox"
+                               ng-change="item.onCheckboxChange(item)"
+                               ng-model="item.isCheckboxChecked">
+                    </jf-checkbox>
                     <span class="file-name-deploy-multi" jf-tooltip="{{ item.file.name }}">{{ item.file.name }}</span>
                     <a href=""
                        ng-click="item.remove(); multiUploadItemRemoved(); removeItemCallback(item)"
