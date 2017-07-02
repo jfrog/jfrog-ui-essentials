@@ -9,7 +9,8 @@ module.exports = function (config) {
             'specs/spec_helper.js',
             'components/jasmine-jquery/lib/jasmine-jquery.js',
             'mocks/**/**.js',
-            'specs/**/**.js'
+            'specs/**/**.js',
+            {pattern: 'src/webworkers/**/*', included: false},
         ],
         exclude: [
 /*

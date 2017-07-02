@@ -21,3 +21,11 @@ window.useAngularEquality = function() {
       jasmine.addCustomEqualityTester(angularEquality);
     });
 }
+
+window.waitForPromise = function() {
+    setInterval(()=>{
+        inject(function($rootScope) {
+            $rootScope.$apply();
+        });
+    },0)
+}

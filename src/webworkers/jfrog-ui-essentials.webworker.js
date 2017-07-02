@@ -21,7 +21,7 @@ onmessage = function(e) {
             break;
         }
         case 'runFunction': {
-            var f = eval(e.data.function);
+            var f = eval('('+e.data.function+')');
             postMessage({response: f.apply(f, e.data.params || [])});
             break;
         }
