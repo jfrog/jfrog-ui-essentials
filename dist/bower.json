@@ -1,6 +1,6 @@
 {
   "name": "jfrog-ui-essentials",
-  "version": "1.0.0-dev.40",
+  "version": "1.0.0-dev.41",
   "homepage": "http://www.jfrog.com",
   "description": "JFrog UI Essentials",
   "license": "Apache-2.0",
@@ -9,6 +9,7 @@
     "!dist/*",
     "!dist/fonts/*",
     "!dist/images/*",
+    "!dist/workers/**/*",
     "!bower.json",
     "!package.json",
     "!README.md",
