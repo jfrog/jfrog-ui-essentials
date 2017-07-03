@@ -36,6 +36,7 @@ export function JFrogTableViewOptions($timeout) {
             this.theme = this.DEFAULT_THEME;
             this.sortDropDownVisible = true;
             this.resizableColumns = false;
+            this.defaultFilterByAll = true;
         }
 
         setData(data,internalCall) {
@@ -167,6 +168,10 @@ export function JFrogTableViewOptions($timeout) {
             else if (!sortable) this.sortBy(undefined);
         }
 
+        setDefaultFilterByAll(filterByAll) {
+            this.defaultFilterByAll = filterByAll;
+        }
+
         setActions(actions) {
             this.actions = actions;
             this._normalizeWidths();
@@ -252,6 +257,10 @@ export function JFrogTableViewOptions($timeout) {
 
         setEmptyTableText(text) {
             this.emptyTableText = text;
+        }
+
+        disableFilterTooltip() {
+            this.tooltipFilterDisabled = true;
         }
 
         setTheme(theme) {
@@ -382,7 +391,26 @@ export function JFrogTableViewOptions($timeout) {
                 return this.externalTotalCount ? this.externalTotalCount.filtered || 0 : 0;
             }
             else return this.getPrePagedData().length
+        }
 
+        getFilterTooltip() {
+            if (!this.columns || !this.columns.length) return '';
+            else {
+                let filterables;
+                if (this.defaultFilterByAll) {
+                    filterables = _.filter(this.columns, col=>col.filterable !== false);
+                }
+                else {
+                    filterables = _.filter(this.columns, col=>col.filterable === true);
+                }
+                if (filterables.length === this.columns.length) {
+                    return 'Filter by any column'
+                }
+                else {
+                    return 'Filter by ' + _.map(filterables,c=>c.header || _.startCase(c.field)).join(', ');
+                }
+
+            }
         }
 
         getPrePagedData() {
@@ -544,7 +572,9 @@ export function JFrogTableViewOptions($timeout) {
             if (!this.filterCache) this.filterCache = _.filter(sourceData,(row=>{
                 for (let i in this.columns) {
                     let col = this.columns[i];
-                    if (row.$groupHeader || (_.get(row,col.field) && _.contains(_.get(row,col.field).toString().toLowerCase(), this.dirCtrl.tableFilter.toLowerCase()))) return true;
+                    if ((this.defaultFilterByAll && col.filterable !== false) || (!this.defaultFilterByAll && col.filterable === true)) {
+                        if (row.$groupHeader || (_.get(row,col.field) && _.contains(_.get(row,col.field).toString().toLowerCase(), this.dirCtrl.tableFilter.toLowerCase()))) return true;
+                    }
                 }
                 return false;
             }))

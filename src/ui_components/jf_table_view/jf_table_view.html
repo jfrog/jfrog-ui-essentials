@@ -23,7 +23,8 @@
                            ng-model-options="{debounce: { 'default': 500 } }"
                            ng-change="jfTableView.onUpdateFilter()"
                            ng-class="{'no-results': jfTableView.noFilterResults}"
-                           placeholder="Filter">
+                           placeholder="Filter"
+                           jf-tooltip="{{!jfTableView.options.tooltipFilterDisabled ? jfTableView.options.getFilterTooltip() : ''}}">
                 </div>
             </div>
 
