@@ -14,7 +14,8 @@ export function jfListMaker() {
             predefinedValues: '=?',
             placeholder: '@?',
             listId: '@',
-            onAddValue: '&?'
+            onAddValue: '&?',
+	        hideAddNewFields: '@'
         },
         templateUrl: 'directives/jf_list_maker/jf_list_maker.html',
         controller: jfListMakerController,

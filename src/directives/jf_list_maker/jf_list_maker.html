@@ -1,5 +1,7 @@
 <div class="jf-list-maker" jf-disable-ng-animate>
-    <div class="list-new-value" ng-class="{dropdown: jfListMaker.predefinedValues}">
+    <div class="list-new-value"
+         ng-class="{dropdown: jfListMaker.predefinedValues}"
+         ng-if="!jfListMaker.hideAddNewFields">
         <form>
             <jf-field validations="common" dont-push-down-errors="true" delayed-init="true">
                 <label>{{jfListMaker.label}}</label>
