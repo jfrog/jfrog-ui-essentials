@@ -30,6 +30,7 @@ import {jfPasswordStrength} from './jf_password_strength/jf_password_strength';
 import {jfClearErrors} from "./jf_clear_errors/jf_clear_errors";
 import {jfMarkdownEditor} from "./jf_markdown_editor/jf_markdown_editor";
 import {jfTree} from "./jf_tree/jf_tree";
+import {jfAutoComplete} from "./jf_auto_complete/jf_auto_complete";
 
 angular.module('jfrog.ui.essentials.directives', [])
     .directive({
@@ -65,4 +66,5 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfClearErrors': jfClearErrors,
         'jfMarkdownEditor': jfMarkdownEditor,
         'jfTree': jfTree,
+        'jfAutoComplete': jfAutoComplete
     });

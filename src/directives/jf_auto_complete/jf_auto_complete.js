@@ -2,11 +2,10 @@
  * Created by tomere on 29/06/2017.
  */
 class jfAutoCompleteController {
-
+	/* @ngInject */
 	constructor($scope, $element, $attrs, $timeout) {
 
 		this.$element = $element;
-
 
 		$($element).autocomplete({
 			source: $scope.uiItems,
@@ -30,7 +29,9 @@ class jfAutoCompleteController {
 	}
 
 	updateSource(list) {
-		$(this.$element).autocomplete('option','source',list);
+		$(this.$element).autocomplete({
+			source: list
+		});
 	}
 
 }
