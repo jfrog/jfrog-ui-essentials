@@ -67,14 +67,21 @@ class jfTableViewController {
             _.set(groupRowObj,rowObj.$groupHeader.field,rowObj.$groupHeader.value);
             rowObj = groupRowObj;
         }
-        let rowScope = this.$rootScope.$new();
 
-        this.rowScopes.push(rowScope);
+        let existingScope = _.find(this.rowScopes, s => s.row.entity === rowObj);
 
-        _.extend(rowScope,{
-            row: { entity: rowObj },
-            appScope: this.options.appScope
-        });
+        let rowScope;
+        if (!existingScope) {
+            rowScope = this.$rootScope.$new();
+
+            this.rowScopes.push(rowScope);
+
+            _.extend(rowScope,{
+                row: { entity: rowObj },
+                appScope: this.options.appScope
+            });
+        }
+        else rowScope = existingScope;
 
         let template = columnObj.cellTemplate;
         let templateElem = $(template);
@@ -89,8 +96,11 @@ class jfTableViewController {
         this.paginationApi.update();
     }
     refresh(updatePagination = true) {
-        this.rowScopes.forEach(s=>s.$destroy())
-        this.rowScopes = [];
+        let unusedScopes = _.filter(this.rowScopes, scope => this.options.getPageData().indexOf(scope.row.entity) === -1);
+        unusedScopes.forEach(s=>{
+            this.rowScopes.splice(this.rowScopes.indexOf(s),1);
+            s.$destroy()
+        });
         if (this.paginationApi && updatePagination) this.paginationApi.update();
     }
     clearSelection() {
