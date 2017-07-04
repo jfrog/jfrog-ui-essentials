@@ -37,6 +37,7 @@ export function JFrogTableViewOptions($timeout) {
             this.sortDropDownVisible = true;
             this.resizableColumns = false;
             this.defaultFilterByAll = true;
+            this.columnsCustomization = false;
         }
 
         setData(data,internalCall) {
@@ -75,8 +76,21 @@ export function JFrogTableViewOptions($timeout) {
         setNewEntityAction(newEntityCallback) {
             this.newEntityCallback = newEntityCallback;
         }
+        filterColumns(columns) {
+            return _.filter(columns,col => {
+                return (!col.isVisible || col.isVisible()) && (!this.visibleFields || this.visibleFields.indexOf(col.field) !== -1)
+            });
+        }
 
         setColumns(columns) {
+            if (!this.origColumnDefs) this.origColumnDefs = _.cloneDeep(columns);
+            if (this.columnsCustomization && !this.availableColumns) {
+                this.loadCustomizedColumnsState();
+                this.createAvailableColumnsArray();
+                this.updateCustomizedColumns(false);
+            }
+            columns = this.filterColumns(columns);
+
             this.columns = columns;
             this._sortableFields = _.map(_.filter(this.columns,c=>(angular.isDefined(c.header))),'field');
             if (this.sortable && !this.sortByField) this.sortByField = this._sortableFields ? this._sortableFields[0] : undefined;
@@ -585,5 +599,67 @@ export function JFrogTableViewOptions($timeout) {
         getRawData() {
             return this.data;
         }
+        
+        allowColumnsCustomization() {
+            this.columnsCustomization = true;
+            this.loadCustomizedColumnsState();
+            this.createAvailableColumnsArray();
+            this.updateCustomizedColumns();
+        }
+
+        createAvailableColumnsArray() {
+            if (!this.origColumnDefs) return;
+            this.availableColumns = [];
+            this.origColumnDefs.forEach(colDef=>{
+                let item = {
+                    id: colDef.field,
+                    text: colDef.header || _.startCase(colDef.field),
+                    isSelected: ((!this.visibleFields && !colDef.optional) || (this.visibleFields && this.visibleFields.indexOf(colDef.field) !== -1))
+                };
+                this.availableColumns.push(item);
+            })
+        }
+
+        refreshColumns() {
+            if (this.origColumnDefs) {
+                this.setColumns(_.cloneDeep(this.origColumnDefs))
+            }
+        }
+
+        updateCustomizedColumns(refresh = true) {
+            if (!this.availableColumns) return;
+            this.visibleFields = _.map(_.filter(this.availableColumns, col=>col.isSelected),'id');
+            this.saveCustomizedColumnsState();
+            if (refresh) this.refreshColumns();
+        }
+
+        setId(id) {
+            this.tableId = id;
+            return this;
+        }
+
+        saveCustomizedColumnsState() {
+            if (!this.tableId) return;
+            if (!localStorage.jfTableViewSettings) {
+                localStorage.jfTableViewSettings = JSON.stringify({
+                    [this.tableId]: this.visibleFields
+                })
+            }
+            else {
+                let settings = JSON.parse(localStorage.jfTableViewSettings);
+                settings[this.tableId] = this.visibleFields;
+                localStorage.jfTableViewSettings = JSON.stringify(settings);
+            }
+        }
+        loadCustomizedColumnsState() {
+            if (!this.tableId) return;
+            let settings = localStorage.jfTableViewSettings;
+            if (settings) {
+                settings = JSON.parse(settings);
+                let mySetting = settings[this.tableId];
+                this.visibleFields = mySetting;
+            }
+        }
+
     };
 }

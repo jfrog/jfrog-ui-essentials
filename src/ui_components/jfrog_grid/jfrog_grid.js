@@ -170,7 +170,6 @@ class JFrogGrid {
             this.createAvailableColumnsArray();
             this.updateCustomizedColumns(false);
         }
-        this.filterColumns();
         columnDefs = this.filterColumns(columnDefs);
         this._normalizeColumnWidths(columnDefs);
         this.columnDefs = columnDefs;

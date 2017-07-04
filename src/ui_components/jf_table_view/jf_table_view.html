@@ -1,6 +1,15 @@
 <div class="jf-table-view"
      ng-class="{'old-grid-theme': jfTableView.options.theme === jfTableView.options.OLD_GRID_THEME}">
 
+    <div class="columns-customization-wrap"
+         ng-if="jfTableView.options.columnsCustomization">
+        <div class="columns-customization pull-right">
+            <jf-multi-dropdown title="Columns"
+                               filter-placeholder="Filter Columns"
+                               items="jfTableView.options.availableColumns"
+                               on-change="jfTableView.options.updateCustomizedColumns()"></jf-multi-dropdown>
+        </div>
+    </div>
     <div class="jf-table-top"
          ng-class="{'no-sort':!jfTableView.options.sortable}">
 

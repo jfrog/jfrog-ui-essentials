@@ -24,6 +24,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
     var unselectedSelectionButtons;
     var sortController;
     var compiledCellTemplate;
+    var customColumns;
 
     var columns = [
         {
@@ -72,6 +73,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         unselectedSelectionButtons = $('.selection-icon:not(.selected)');
         sortController = $('.sort-controller');
         compiledCellTemplate = $('.compiled-cell-template');
+        customColumns = $('.columns-customization-wrap');
     }
 
     function flushAndApply() {
@@ -163,6 +165,32 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         expect(headers.length).toEqual(1);
         expect(headersCells.length).toEqual(4);
         expect(sortController.length).toEqual(0);
+        expect(customColumns.length).toEqual(0);
+    });
+    it('should toggle columns visibility', () => {
+        options.setId('test-table');
+        options.allowColumnsCustomization();
+        options.showHeaders();
+
+        flushAndApply();
+        expect(customColumns.length).toEqual(1);
+        expect(headersCells.length).toEqual(4);
+
+        expect(options.visibleFields).toEqual(["userName","email","subscription","number"])
+
+        let emailSelect = _.find(options.availableColumns, {id: 'email'});
+        let subscriptionSelect = _.find(options.availableColumns, {id: 'subscription'});
+        emailSelect.isSelected = false;
+        subscriptionSelect.isSelected = false;
+
+        options.updateCustomizedColumns();
+
+        flushAndApply();
+        expect(headersCells.length).toEqual(2);
+
+        expect(options.visibleFields).toEqual(["number","userName"])
+        expect(localStorage.jfTableViewSettings).toEqual('{"test-table":["number","userName"]}')
+
     });
     it('should show data rows, pagination and filter', () => {
         var testData = [
