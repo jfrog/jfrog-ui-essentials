@@ -31,11 +31,13 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
             header: "User Name",
             field: "userName",
             width: "25%",
+            filterable: true
         },
         {
             header: "Email",
             field: "email",
-            width: "25%"
+            width: "25%",
+            filterable: true
         },
         {
             header: "Subscription",
@@ -480,6 +482,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         var testData = createTestData(76);
 
+        options.setDefaultFilterByAll(false);
         options.setRowsPerPage(10);
 
         var currTest = 0;
@@ -520,10 +523,10 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         }
 
         let expectedPagingData = [
-            {pageNum: 0, numOfRows: 10, direction: 'asc', orderBy: 'userName', filter: null},
-            {pageNum: 1, numOfRows: 10, direction: 'asc', orderBy: 'userName', filter: null},
-            {pageNum: 7, numOfRows: 10, direction: 'asc', orderBy: 'userName', filter: null},
-            {pageNum: 6, numOfRows: 10, direction: 'asc', orderBy: 'userName', filter: null}
+            {pageNum: 0, numOfRows: 10, direction: 'asc', orderBy: 'userName', filter: null, filterBy: [ 'userName', 'email']},
+            {pageNum: 1, numOfRows: 10, direction: 'asc', orderBy: 'userName', filter: null, filterBy: [ 'userName', 'email']},
+            {pageNum: 7, numOfRows: 10, direction: 'asc', orderBy: 'userName', filter: null, filterBy: [ 'userName', 'email']},
+            {pageNum: 6, numOfRows: 10, direction: 'asc', orderBy: 'userName', filter: null, filterBy: [ 'userName', 'email']}
         ]
         let expectedIndex = 0;
         var checkPagingData = function(pagingData) {

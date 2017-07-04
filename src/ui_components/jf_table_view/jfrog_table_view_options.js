@@ -384,7 +384,8 @@ export function JFrogTableViewOptions($timeout) {
                 numOfRows: this.rowsPerPage,
                 direction: !this.sortByField ? null : this.revSort ? 'desc' : 'asc',
                 orderBy: this.sortByField,
-                filter: this.dirCtrl.tableFilter || null
+                filter: this.dirCtrl.tableFilter || null,
+                filterBy: _.map(this.getFilterables(),'field')
             })
             if (!promise || !promise.then) {
                 console.error('External pagination callback should return promise')
@@ -407,16 +408,21 @@ export function JFrogTableViewOptions($timeout) {
             else return this.getPrePagedData().length
         }
 
+        getFilterables() {
+            let filterables;
+            if (this.defaultFilterByAll) {
+                filterables = _.filter(this.columns, col=>col.filterable !== false);
+            }
+            else {
+                filterables = _.filter(this.columns, col=>col.filterable === true);
+            }
+            return filterables;
+        }
+
         getFilterTooltip() {
             if (!this.columns || !this.columns.length) return '';
             else {
-                let filterables;
-                if (this.defaultFilterByAll) {
-                    filterables = _.filter(this.columns, col=>col.filterable !== false);
-                }
-                else {
-                    filterables = _.filter(this.columns, col=>col.filterable === true);
-                }
+                let filterables = this.getFilterables();
                 if (filterables.length === this.columns.length) {
                     return 'Filter by any column'
                 }
