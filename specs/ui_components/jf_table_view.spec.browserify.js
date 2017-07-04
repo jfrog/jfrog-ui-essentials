@@ -2,6 +2,8 @@
 describe('unit test: jf_table_view directive & JFTableViewOptions service', function () {
 
     var $scope;
+    var $rootScope;
+    var testAppScope;
     var $q;
     var $timeout;
     var JFrogTableViewOptions;
@@ -21,6 +23,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
     var selectedSelectionButtons;
     var unselectedSelectionButtons;
     var sortController;
+    var compiledCellTemplate;
 
     var columns = [
         {
@@ -41,12 +44,14 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         {
             header: "Some Number",
             field: "number",
+            cellTemplate: '<div class="compiled-cell-template" ng-click="appScope.testAppScopeMethod(row.entity)">{{row.entity.number * 3}}</div>',
             width: "25%"
         }
     ]
 
-    function setup(_$timeout_, _JFrogTableViewOptions_, _$q_) {
+    function setup(_$timeout_, _JFrogTableViewOptions_, _$q_, _$rootScope_) {
         $timeout = _$timeout_;
+        $rootScope = _$rootScope_;
         $q = _$q_;
         JFrogTableViewOptions = _JFrogTableViewOptions_;
     }
@@ -66,6 +71,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         selectedSelectionButtons = $('.selection-icon.selected');
         unselectedSelectionButtons = $('.selection-icon:not(.selected)');
         sortController = $('.sort-controller');
+        compiledCellTemplate = $('.compiled-cell-template');
     }
 
     function flushAndApply() {
@@ -113,7 +119,8 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
     beforeEach(inject(setup));
 
     beforeEach(()=>{
-        options = new JFrogTableViewOptions();
+        testAppScope = $rootScope.$new();
+        options = new JFrogTableViewOptions(testAppScope);
         options.setColumns(columns);
 
         compileDirective({
@@ -178,11 +185,11 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         expect(dataCells[0].textContent.trim()).toEqual(testData[0].userName);
         expect(dataCells[1].textContent.trim()).toEqual(testData[0].email);
         expect(dataCells[2].textContent.trim()).toEqual(testData[0].subscription);
-        expect(dataCells[3].textContent.trim()).toEqual(testData[0].number.toString());
+        expect(dataCells[3].textContent.trim()).toEqual((testData[0].number*3).toString());
         expect(dataCells[4].textContent.trim()).toEqual(testData[1].userName);
         expect(dataCells[5].textContent.trim()).toEqual(testData[1].email);
         expect(dataCells[6].textContent.trim()).toEqual(testData[1].subscription);
-        expect(dataCells[7].textContent.trim()).toEqual(testData[1].number.toString());
+        expect(dataCells[7].textContent.trim()).toEqual((testData[1].number*3).toString());
     });
     it('should sort when clicking header', () => {
         var testData = [
@@ -195,11 +202,11 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
             expect(dataCells[0].textContent.trim()).toEqual(origData[rev?1:0].userName);
             expect(dataCells[1].textContent.trim()).toEqual(origData[rev?1:0].email);
             expect(dataCells[2].textContent.trim()).toEqual(origData[rev?1:0].subscription);
-            expect(dataCells[3].textContent.trim()).toEqual(origData[rev?1:0].number.toString());
+            expect(dataCells[3].textContent.trim()).toEqual((origData[rev?1:0].number*3).toString());
             expect(dataCells[4].textContent.trim()).toEqual(origData[rev?0:1].userName);
             expect(dataCells[5].textContent.trim()).toEqual(origData[rev?0:1].email);
             expect(dataCells[6].textContent.trim()).toEqual(origData[rev?0:1].subscription);
-            expect(dataCells[7].textContent.trim()).toEqual(origData[rev?0:1].number.toString());
+            expect(dataCells[7].textContent.trim()).toEqual((origData[rev?0:1].number*3).toString());
         }
 
 
@@ -286,6 +293,40 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         expect(actionButtons.length).toEqual(4);
 
         $(actionButtons[0]).click();
+
+    });
+
+    it('should call appScope methods', (done) => {
+        var testData = createTestData(76);
+        options.setRowsPerPage(10);
+        options.setSortable(false); // we want to preserve original order
+        options.setData(testData);
+
+        flushAndApply();
+
+        testAppScope.testAppScopeMethod = (row) => {
+            expect(row.userName).toEqual('Some User (#0)');
+            expect(row.email).toEqual('someuser0@lam.biz');
+            expect(row.subscription).toEqual('Free');
+            expect(row.number).toEqual(100);
+
+            setTimeout(()=>{
+                $(pagination.find('a')[1]).click(); //move to next page
+                flushAndApply();
+                testAppScope.testAppScopeMethod = (row) => {
+                    expect(row.userName).toEqual('Some User (#10)');
+                    expect(row.email).toEqual('someuser10@lam.biz');
+                    expect(row.subscription).toEqual('Free');
+                    expect(row.number).toEqual(100);
+                    done();
+                }
+                $(compiledCellTemplate[0]).click();
+            },0)
+
+        }
+
+        $(compiledCellTemplate[0]).click();
+
 
     });
 
