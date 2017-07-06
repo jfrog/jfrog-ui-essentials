@@ -14,6 +14,7 @@ import {jfCodeMirror}   from './jf_codemirror/jf_codemirror';
 import {jfGridFilter}   from './jf_grid_filter/jf_grid_filter';
 import {jfTabs}   from './jf_tabs/jf_tabs';
 import {jfTab}   from './jf_tabs/jf_tab';
+import {jfDrawer}   from './jf_drawers/jf_drawer';
 import {jfPanel}   from './jf_panel/jf_panel';
 import {jfUiSelect}   from './jf_ui_select/jf_ui_select';
 import {jfRevealInput}   from './jf_reveal_input/jf_reveal_input';
@@ -48,6 +49,7 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfGridFilter': jfGridFilter,
         'jfTabs': jfTabs,
         'jfTab': jfTab,
+        'jfDrawer': jfDrawer,
         'jfPanel': jfPanel,
         'jfUiSelect': jfUiSelect,
         'jfRevealInput': jfRevealInput,
