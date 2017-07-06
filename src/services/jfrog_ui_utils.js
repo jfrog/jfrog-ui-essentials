@@ -1,5 +1,9 @@
 export class JFrogUIUtils {
 
+    constructor($timeout) {
+        this.$timeout = $timeout;
+    }
+
     getCapitalizedKeys(object, dictionary) {
 
         let getCapitalized = (str) => {
@@ -31,5 +35,17 @@ export class JFrogUIUtils {
         return safe;
     }
 
+    fireResizeEvent() {
+        let resizeEvent = document.createEvent("Event");
+        resizeEvent.initEvent("resize", false, true);
+        this.$timeout(() => {
+            try {
+                window.dispatchEvent(new Event('resize'));
+            }
+            catch (e) {
+                window.dispatchEvent(resizeEvent);
+            }
+        });
+    }
 
 }
