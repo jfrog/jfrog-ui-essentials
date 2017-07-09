@@ -38,14 +38,14 @@ export class JFrogUIWebWorker {
         this.wwPool.close();
     }
 
-    markdownPreview(type, markdown) {
+    markupPreview(type, markup) {
 
         if (!this.wwPool.isOpened()) this.open();
 
         let defer = this.$q.defer();
 
-        this.wwPool.kill({cmd: 'convertMarkdown'});
-        this.wwPool.send({cmd: 'convertMarkdown', type, markdown})
+        this.wwPool.kill({cmd: 'convertMarkup'});
+        this.wwPool.send({cmd: 'convertMarkup', type, markup})
             .then(response => {
                 if (response.html) {
                     defer.resolve(response.html);

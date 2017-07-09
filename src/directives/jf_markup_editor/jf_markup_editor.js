@@ -1,6 +1,6 @@
 import "./codemirror-asciidoc";
 
-class jfMarkdownEditorController {
+class jfMarkupEditorController {
 	/* @ngInject */
     constructor($timeout,$scope, JFrogUIWebWorker) {
 
@@ -32,14 +32,14 @@ class jfMarkdownEditorController {
 
     init() {
         this.mode = this.mode || 'Edit';
-        this.markdown = this.markdown || '';
+        this.markup = this.markup || '';
         this.language = this.language || 'Markdown';
         if (this.editable === undefined) this.editable = true;
         this.modeOptions = ['Edit', 'Preview'];
 
         this.updatePreviewButton();
 
-        this.$scope.$watch('jfMarkdown.markdown',()=>{
+        this.$scope.$watch('jfMarkup.markup',()=>{
             if (this.webworkerOk && (!this.previewRenderers || !this.previewRenderers[this.language.toLowerCase()])) this.renderPreview();
         })
     }
@@ -50,23 +50,20 @@ class jfMarkdownEditorController {
 
     renderPreview() {
 
-        if (this.previewRenderers && this.previewRenderers[this.language.toLowerCase()]) {
-            this.previewRenderers[this.language.toLowerCase()](this.markdown, (preview)=>this.setPreview(preview));
+        if (this.language.toLowerCase() === 'plain text') {
+            this.setPreview(this.markup.replace(/\n/g,'<br>'));
+        }
+        else if (this.previewRenderers && this.previewRenderers[this.language.toLowerCase()]) {
+            this.previewRenderers[this.language.toLowerCase()](this.markup, (preview)=>this.setPreview(preview));
         }
         else if (this.webworkerOk) {
-            this.JFrogUIWebWorker.markdownPreview(this.language.toLowerCase(), this.markdown)
+            this.JFrogUIWebWorker.markupPreview(this.language.toLowerCase(), this.markup)
                 .then(html => this.setPreview(html))
         }
     }
 
     updatePreviewButton() {
-        if (_.includes(['asciidoc', 'markdown'],this.language.toLowerCase())) {
-            this.modeOptions = ['Edit', 'Preview'];
-        }
-        else {
-            this.modeOptions = ['Edit'];
-            this.mode="Edit";
-        }
+        this.modeOptions = ['Edit', 'Preview'];
     }
     onLanguageChange() {
         this.updatePreviewButton();
@@ -96,12 +93,12 @@ class jfMarkdownEditorController {
 
 }
 
-export function jfMarkdownEditor() {
+export function jfMarkupEditor() {
 
     return {
         restrict: 'E',
         scope: {
-            markdown: '=?',
+            markup: '=?',
             previewRenderers: '=?',
             language: '=?',
             mode: '=?',
@@ -110,9 +107,9 @@ export function jfMarkdownEditor() {
             editable: '=?',
             showControls: '=?'
         },
-        controller: jfMarkdownEditorController,
-        controllerAs: 'jfMarkdown',
+        controller: jfMarkupEditorController,
+        controllerAs: 'jfMarkup',
         bindToController: true,
-        templateUrl: 'directives/jf_markdown_editor/jf_markdown_editor.html'
+        templateUrl: 'directives/jf_markup_editor/jf_markup_editor.html'
     };
 }

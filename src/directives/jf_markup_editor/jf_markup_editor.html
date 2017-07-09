@@ -1,0 +1,53 @@
+<div class="jf-markup-editor" ng-if="jfMarkup.webworkerOk || jfMarkup.previewersCount === 2">
+    <div class="controls">
+        <div class="switch-wrapper">
+            <jf-switch ng-if="jfMarkup.showControls"
+                       ng-model="jfMarkup.mode"
+                       ng-change="jfMarkup.onChangeModeInternal()"
+                       options="jfMarkup.modeOptions"
+                       controller="jfMarkup.switchController"
+                       class="no-margin-top"></jf-switch>
+        </div>
+        <div class="lang-select-wrapper" ng-if="jfMarkup.showControls && jfMarkup.mode !== 'Preview'">
+            <jf-ui-select jf-select-model="jfMarkup.language"
+                          jf-select-change="jfMarkup.onLanguageChange()"
+                          jf-select-options="['Markdown','Asciidoc','Plain Text']"></jf-ui-select>
+        </div>
+        <a class="flat-icon" ng-if="!jfMarkup.showControls && jfMarkup.editable" ng-click="jfMarkup.showControls = true"><i class="icon icon-edit-pen"></i> Edit</a>
+    </div>
+    <div class="code-mirror-wrapper" ng-if="jfMarkup.mode === 'Edit' && jfMarkup.showControls">
+        <jf-code-mirror
+                ng-if="jfMarkup.language === 'Markdown'"
+                mime-type="text/x-markdown"
+                mode="gfm"
+                allow-edit="true"
+                height="100%"
+                autofocus="true"
+                model="jfMarkup.markup">
+        </jf-code-mirror>
+        <jf-code-mirror
+                ng-if="jfMarkup.language === 'Asciidoc'"
+                mime-type="text/x-markdown"
+                mode="asciidoc"
+                allow-edit="true"
+                height="100%"
+                autofocus="true"
+                model="jfMarkup.markup">
+        </jf-code-mirror>
+        <jf-code-mirror
+                ng-if="jfMarkup.language === 'Plain Text'"
+                allow-edit="true"
+                height="100%"
+                autofocus="true"
+                model="jfMarkup.markup">
+        </jf-code-mirror>
+        <button ng-if="jfMarkup.onSave"
+                ng-click="jfMarkup.onSave(); jfMarkup.showControls = false;"
+                class="btn btn-primary save-button pull-right">Save</button>
+    </div>
+    <div class="preview-wrapper" ng-if="jfMarkup.mode === 'Preview' || !jfMarkup.showControls">
+        <div class="preview"
+             ng-bind-html="jfMarkup.preview"></div>
+    </div>
+</div>
+

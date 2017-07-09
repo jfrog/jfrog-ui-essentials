@@ -7,14 +7,14 @@ onmessage = function(e) {
             postMessage('OK');
             break;
         }
-        case 'convertMarkdown': {
+        case 'convertMarkup': {
             switch (e.data.type) {
                 case 'asciidoc': {
-                    postMessage({html: asciidoc2Html(e.data.markdown)});
+                    postMessage({html: asciidoc2Html(e.data.markup)});
                     break;
                 }
                 case 'markdown': {
-                    postMessage({html: markdown2Html(e.data.markdown)});
+                    postMessage({html: markdown2Html(e.data.markup)});
                     break;
                 }
             }
