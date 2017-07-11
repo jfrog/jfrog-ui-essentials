@@ -68,6 +68,8 @@ export class JFrogModal {
         }
         this._calculateMaxHeight();
 
+        let keyDownBinded = this._onKeyDown.bind(this);
+
         if (modalInstance.result) {
             // Modal close event handler is registered as result.then(errorCallback)
             // In some cases the modal close event is caught by result.finally()
@@ -76,6 +78,7 @@ export class JFrogModal {
             }).finally(()=>{
                 this.modalIsClosing = true;
                 $(window).off('resize', this._calculateMaxHeight());
+                $(document).off('keydown', keyDownBinded);
             });
         }
 
@@ -83,7 +86,34 @@ export class JFrogModal {
             this._calculateMaxHeight();
         });
 
+        $(document).on('keydown', keyDownBinded);
+
         return modalInstance;
+    }
+
+    _onKeyDown(event) {
+        let target = $(event.target);
+        if (event.keyCode === 13) {
+            if (target.attr('jf-enter-press') === undefined) {
+                if ($('.wizard-modal').length) {
+                    this._clickFirstFoundButton(['.wizard-modal button#wizard-popup-next', '.wizard-modal button#wizard-popup-next-custom', '.wizard-modal button#wizard-popup-finish'])
+                }
+                else {
+                    this._clickFirstFoundButton(['.modal-dialog button.btn-primary'])
+                }
+                event.preventDefault();
+            }
+        }
+    }
+
+    _clickFirstFoundButton(selectorsArray) {
+        for (let i in selectorsArray) {
+            let selector = selectorsArray[i];
+            if ($(selector).length) {
+                $(selector).click();
+                break;
+            }
+        }
     }
 
     /**
