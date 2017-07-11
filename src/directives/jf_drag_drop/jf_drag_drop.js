@@ -293,7 +293,10 @@ class jfDragDropController {
             }
         }
 
+        let scrollParent = $(this.$element[0].querySelector('.dnd-panel')).scrollParent();
+        let tempScrollTop = scrollParent.scrollTop();
         this.$element[0].querySelector('.dnd-panel').focus();
+        scrollParent.scrollTop(tempScrollTop);
     }
 
     /**
