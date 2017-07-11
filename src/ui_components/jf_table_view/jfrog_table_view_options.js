@@ -55,10 +55,12 @@ export function JFrogTableViewOptions($timeout) {
 
         setRowsPerPage(rpp) {
             this.rowsPerPage = rpp;
+            return this;
         }
 
         enableColumnsResize(enabled) {
             this.resizableColumns = enabled;
+            return this;
         }
 
 
@@ -73,8 +75,15 @@ export function JFrogTableViewOptions($timeout) {
             }
         }
 
+        setObjectName(objectName, useAn = false) {
+            this.objectName = objectName;
+            this.useAnWithObjectName = useAn;
+            return this;
+        }
+
         setNewEntityAction(newEntityCallback) {
             this.newEntityCallback = newEntityCallback;
+            return this;
         }
         filterColumns(columns) {
             return _.filter(columns,col => {
@@ -95,10 +104,13 @@ export function JFrogTableViewOptions($timeout) {
             this._sortableFields = _.map(_.filter(this.columns,c=>(angular.isDefined(c.header))),'field');
             if (this.sortable && !this.sortByField) this.sortByField = this._sortableFields ? this._sortableFields[0] : undefined;
             this._normalizeWidths();
+
+            return this;
         }
 
         setRowHeight(height) {
             this.rowHeight = height;
+            return this;
         }
 
         showHeaders(show=true) {
@@ -107,15 +119,18 @@ export function JFrogTableViewOptions($timeout) {
             this.columns.forEach(column=>{
                 if (column.header) this.headersRow[column.field] = column.header;
             })
+            return this;
         }
 
         showSortDropdown(show=true) {
             this.sortDropDownVisible = show;
+            return this;
         }
 
         setSelection(selectionMode) {
             this.selectionMode = selectionMode;
             this._normalizeWidths();
+            return this;
         }
 
         setPaginationMode(pagiMode, externalPaginationCallback) {
@@ -131,6 +146,7 @@ export function JFrogTableViewOptions($timeout) {
                     $timeout(()=>this.sendExternalPageRequest());
                 }
             }
+            return this;
         }
 
         hasSelection() {
@@ -168,6 +184,8 @@ export function JFrogTableViewOptions($timeout) {
             }
 
             this.refreshSorting();
+
+            return this;
         }
 
         reverseSortingDir() {
@@ -180,20 +198,24 @@ export function JFrogTableViewOptions($timeout) {
                 this.sortBy(this._sortableFields ? this._sortableFields[0] : undefined)
             }
             else if (!sortable) this.sortBy(undefined);
+            return this;
         }
 
         setDefaultFilterByAll(filterByAll) {
             this.defaultFilterByAll = filterByAll;
+            return this;
         }
 
         setActions(actions) {
             this.actions = actions;
             this._normalizeWidths();
+            return this;
         }
 
         setBatchActions(batchActions) {
             this.batchActions = batchActions;
             this.setSelection(this.MULTI_SELECTION);
+            return this;
         }
 
         _setDirectiveController(ctrl) {
@@ -271,10 +293,12 @@ export function JFrogTableViewOptions($timeout) {
 
         setEmptyTableText(text) {
             this.emptyTableText = text;
+            return this;
         }
 
         disableFilterTooltip() {
             this.tooltipFilterDisabled = true;
+            return this;
         }
 
         setTheme(theme) {
@@ -285,6 +309,7 @@ export function JFrogTableViewOptions($timeout) {
                 this.selectionColumnWidth = 40;
             }
             this._normalizeWidths();
+            return this;
         }
 
         getSelectedRows() {
@@ -306,6 +331,7 @@ export function JFrogTableViewOptions($timeout) {
             this.openedGroupHeaders = [];
             this.groupedData = null;
             this.refreshGrouping();
+            return this;
         }
 
         refreshGrouping() {
@@ -346,6 +372,7 @@ export function JFrogTableViewOptions($timeout) {
             }
             this.update(false,true);
         }
+
         setFirstColumn(field) {
             this.restoreColumnOrder();
             let column = _.find(this.columns,{field});
@@ -354,6 +381,8 @@ export function JFrogTableViewOptions($timeout) {
             this.columns.splice(index,1);
             this.columns.splice(0,0,column);
         }
+
+
 
         restoreColumnOrder() {
             let originalIndex = this.columns[0] && this.columns[0].$originalIndex;
@@ -453,7 +482,7 @@ export function JFrogTableViewOptions($timeout) {
                                     else if (!a.$groupHeader && b.$groupHeader && b.$groupHeader.field === this.sortByField && b.$groupHeader.value === _.get(a,this.sortByField)) return 1;
                                     else {
                                         let valA = a.$groupHeader ? a.$groupHeader.value : _.get(a,this.sortByField);
-                                        let valB= b.$groupHeader ? b.$groupHeader.value : _.get(b,this.sortByField);
+                                        let valB = b.$groupHeader ? b.$groupHeader.value : _.get(b,this.sortByField);
                                         return (this.revSort ? -1 : 1)*colObj.sortingAlgorithm(valA,valB,a,b,colObj);
                                     }
                                 });
@@ -611,6 +640,7 @@ export function JFrogTableViewOptions($timeout) {
             this.loadCustomizedColumnsState();
             this.createAvailableColumnsArray();
             this.updateCustomizedColumns();
+            return this;
         }
 
         createAvailableColumnsArray() {
@@ -657,6 +687,7 @@ export function JFrogTableViewOptions($timeout) {
                 localStorage.jfTableViewSettings = JSON.stringify(settings);
             }
         }
+
         loadCustomizedColumnsState() {
             if (!this.tableId) return;
             let settings = localStorage.jfTableViewSettings;

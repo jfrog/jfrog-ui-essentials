@@ -18,7 +18,7 @@
             <a href class="new-entity"
                ng-click="jfTableView.createNewEntity()"
                ng-if="jfTableView.options.newEntityCallback">
-                <i class="icon icon-new"></i> Add a {{jfTableView.objectName || 'Item'}}
+                <i class="icon icon-new"></i> Add {{jfTableView.options.useAnWithObjectName ? 'an' : 'a'}} {{jfTableView.objectName || jfTableView.options.objectName || 'Item'}}
             </a>
 
         </div>

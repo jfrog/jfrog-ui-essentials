@@ -41,7 +41,7 @@ describe('Unit: Web Workers', function () {
     })
 
     it('Should convert markdown to html',(done) => {
-        jfww.markdownPreview('markdown', '# This should be header')
+        jfww.markupPreview('markdown', '# This should be header')
             .then((response) => {
                 expect(response).toEqual('<h1 id="this-should-be-header">This should be header</h1>\n');
                 done();
@@ -55,7 +55,7 @@ describe('Unit: Web Workers', function () {
     })
 
     it('Should convert asciidoc to html',(done) => {
-        jfww.markdownPreview('asciidoc', '[float]\n= This should be header')
+        jfww.markupPreview('asciidoc', '[float]\n= This should be header')
             .then((response) => {
                 expect(response).toEqual('<h1 id="_this_should_be_header" class="float">This should be header</h1>');
                 done();
