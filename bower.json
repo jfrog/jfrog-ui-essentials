@@ -6,9 +6,7 @@
   "license": "Apache-2.0",
   "ignore": [
     "*",
-    "!dist/*",
-    "!dist/fonts/*",
-    "!dist/images/*",
+    "!dist/**/*",
     "!bower.json",
     "!package.json",
     "!README.md",
