@@ -141,6 +141,14 @@ class JFrogGrid {
             if (!_.isNaN(w)) return acc + w;
             else return acc;
         },0);
+        let average = totalSize/columnDefs.length;
+        if (average === 0) average = 100;
+        columnDefs.forEach(column => {
+            if (!column.width) {
+                column.width = average + '%';
+                totalSize += average;
+            }
+        });
         if (totalSize !== 100) {
             let ratio = 100/totalSize;
             columnDefs.forEach(column => {
@@ -170,7 +178,6 @@ class JFrogGrid {
             this.createAvailableColumnsArray();
             this.updateCustomizedColumns(false);
         }
-        this.filterColumns();
         columnDefs = this.filterColumns(columnDefs);
         this._normalizeColumnWidths(columnDefs);
         this.columnDefs = columnDefs;
@@ -329,11 +336,12 @@ class JFrogGrid {
                 indexChanged = index;
 
             if (item.visible)
-                totalColumnWidth = totalColumnWidth + item.width;
+                totalColumnWidth = totalColumnWidth + parseInt(item.width);
         });
 
         indexIterate = indexChanged + 1;
         pixelsToDivide = $(gridApi.grid.element[0]).width() - totalColumnWidth;
+
         gridApi.grid.columns[indexChanged].colDef.width = gridApi.grid.columns[indexChanged].width;
 
         // Resize the columns that follow the resized column
@@ -348,7 +356,7 @@ class JFrogGrid {
                 gridApi.grid.columns[indexIterate].width = gridApi.grid.columns[indexIterate].colDef.width = MIN_COLUMN_WIDTH;
             }
             else {
-                gridApi.grid.columns[indexIterate].width = gridApi.grid.columns[indexIterate].colDef.width = gridApi.grid.columns[indexIterate].width + pixelsToDivide;
+                gridApi.grid.columns[indexIterate].width = gridApi.grid.columns[indexIterate].colDef.width = parseInt(gridApi.grid.columns[indexIterate].width) + pixelsToDivide;
                 pixelsToDivide = 0;
             }
 
@@ -356,8 +364,9 @@ class JFrogGrid {
         }
 
         // If the column was resized too much, shorten it so the grid won't overflow
-        if (pixelsToDivide != 0)
-            gridApi.grid.columns[indexChanged].width = gridApi.grid.columns[indexChanged].colDef.width = gridApi.grid.columns[indexChanged].width + pixelsToDivide;
+        if (pixelsToDivide != 0) {
+            gridApi.grid.columns[indexChanged].width = gridApi.grid.columns[indexChanged].colDef.width = parseInt(gridApi.grid.columns[indexChanged].width) + pixelsToDivide;
+        }
 
         gridApi.grid.refreshCanvas(true);
     }
