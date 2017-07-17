@@ -149,6 +149,16 @@ class jfTableRowController {
         return $(this.tableView.$element).find('.jf-table-view-container');
     }
 
+    onClickCell(col, event) {
+//        event.stopPropagation();
+        if (this.rowId === 'headers' && col.header && this.tableView.options.sortable && !this.hoveringResize) {
+            this.tableView.options.sortBy(col.field);
+        }
+    }
+
+    toggleExpansion() {
+        this.tableView.options.toggleExpansion(this.data);
+    }
 }
 
 export function jfTableRow() {

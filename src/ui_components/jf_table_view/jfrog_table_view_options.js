@@ -40,29 +40,90 @@ export function JFrogTableViewOptions($timeout) {
             this.columnsCustomization = false;
         }
 
-        setData(data,internalCall) {
+        setData(data, internalCall) {
 
             if (this.paginationMode === this.EXTERNAL_PAGINATION && internalCall !== '$$internal$$') {
                 console.error('When using external pagination, you should not call setData directly !')
             }
             else {
-                this.data = data;
                 this.origData = _.sortBy(data,'');
+                if (this.subRowsEnabled) {
+                    this.data = this._transformDataForSubRowsSupport(data, false);
+                }
+                else {
+                    this.data = data;
+                }
                 this.update();
             }
         }
-        
+
+        _transformDataForSubRowsSupport(data, autoExpand) {
+            let transformed = [];
+
+            data.forEach((row)=>{
+                let transformedRow = _.cloneDeep(row);
+                transformed.push(transformedRow);
+                if (transformedRow.$subRows && transformedRow.$subRows.length) {
+                    transformedRow.$expandable = true;
+                    transformedRow.$subRows.forEach((sub)=>{
+                        sub.$parentRow = transformedRow;
+                        if (autoExpand && row.$expanded) {
+                            transformed.push(sub);
+                        }
+                    });
+                }
+            });
+
+            return transformed;
+        }
+
+        toggleExpansion(row) {
+            if (row.$expandable) {
+                row.$expanded = !row.$expanded;
+                if (row.$expanded) this._addSubRows(row);
+                else this._removeSubRows(row);
+            }
+            else if (row.$parentRow) {
+                this.toggleExpansion(row.$parentRow);
+            }
+        }
+
+        _addSubRows(row, addTo = null) {
+            addTo = addTo || this.data;
+            let index = _.indexOf(addTo ,row) + 1;
+            let newSubRows = _.filter(row.$subRows,(subRow)=>{
+                return addTo.indexOf(subRow) === -1;
+            });
+            Array.prototype.splice.apply(addTo, [index, 0].concat(newSubRows));
+            this.refreshFilter();
+            this.update();
+        }
+
+        _removeSubRows(row) {
+            if (row.$subRows) {
+                row.$subRows.forEach(subRow => {
+                    let index = this.data.indexOf(subRow);
+                    if (index >= 0) this.data.splice(index,1);
+                })
+            }
+            this.refreshFilter();
+            this.update();
+        }
 
         setRowsPerPage(rpp) {
             this.rowsPerPage = rpp;
             return this;
         }
 
-        enableColumnsResize(enabled) {
+        enableColumnsResize(enabled = true) {
             this.resizableColumns = enabled;
             return this;
         }
 
+        enableSubRows() {
+            this.subRowsEnabled = true;
+            return this;
+        }
 
         update(noSort=false, noGrouping=false) {
 //            console.log('update',noSort,noGrouping)
@@ -104,6 +165,12 @@ export function JFrogTableViewOptions($timeout) {
             this._sortableFields = _.map(_.filter(this.columns,c=>(angular.isDefined(c.header))),'field');
             if (this.sortable && !this.sortByField) this.sortByField = this._sortableFields ? this._sortableFields[0] : undefined;
             this._normalizeWidths();
+
+            let groupables = _.filter(this.columns, c => !!c.allowGrouping)
+            if (this.subRowsEnabled && groupables.length) {
+                console.error('jf-table-view: Grouping is not supported with sub rows !')
+                groupables.forEach(c => c.allowGrouping = false);
+            }
 
             return this;
         }
@@ -462,6 +529,23 @@ export function JFrogTableViewOptions($timeout) {
             }
         }
 
+        _saveAndRemoveSubRows(data) {
+            if (!this.subRowsEnabled) return data;
+            this.savedSubRowsParents = _.filter(data, d => d.$subRows && d.$expanded)
+            return _.filter(data, d => !d.$parentRow)
+        }
+
+        _reInsertSubRows(data) {
+            if (!this.subRowsEnabled) return data;
+            let newData = [].concat(data);
+            if (this.savedSubRowsParents) {
+                this.savedSubRowsParents.forEach(parent => {
+                    this._addSubRows(parent, newData)
+                })
+            }
+            return newData;
+        }
+
         getPrePagedData() {
             return this.getSortedData(this.getGroupedData(this.getFilteredData(this.getRawData())));
         }
@@ -473,6 +557,7 @@ export function JFrogTableViewOptions($timeout) {
             }
             else {
                 if (!this.sortedData) {
+                    sourceData = this._saveAndRemoveSubRows(sourceData);
                     let colObj = _.find(this.columns,{field: this.sortByField});
                     if (colObj.sortingAlgorithm) {
                         if (this.groupedData) {
@@ -572,6 +657,7 @@ export function JFrogTableViewOptions($timeout) {
                             }
                         }
                     }
+                    this.sortedData = this._reInsertSubRows(this.sortedData);
                 }
                 return this.sortedData;
             }
@@ -622,13 +708,32 @@ export function JFrogTableViewOptions($timeout) {
                 for (let i in this.columns) {
                     let col = this.columns[i];
                     if ((this.defaultFilterByAll && col.filterable !== false) || (!this.defaultFilterByAll && col.filterable === true)) {
-                        if (row.$groupHeader || (_.get(row,col.field) && _.contains(_.get(row,col.field).toString().toLowerCase(), this.dirCtrl.tableFilter.toLowerCase()))) return true;
+                        if (this._isSubVisible(row, col) || row.$groupHeader || (_.get(row,col.field) && _.contains(_.get(row,col.field).toString().toLowerCase(), this.dirCtrl.tableFilter.toLowerCase()))) {
+                            return true;
+                        }
                     }
                 }
                 return false;
             }))
             this.dirCtrl.noFilterResults = !!(!this.filterCache.length && sourceData.length);
             return this.filterCache;
+        }
+
+        _isSubVisible(row, col) {
+            if (!this.subRowsEnabled) return false;
+            let subsVisible = false;
+            if (row.$expandable) {
+                for (let i = 0; i < row.$subRows.length; i++) {
+                    let subRow = row.$subRows[i];
+                    if ((this.defaultFilterByAll && col.filterable !== false) || (!this.defaultFilterByAll && col.filterable === true)) {
+                        if ((_.get(subRow,col.field) && _.contains(_.get(subRow,col.field).toString().toLowerCase(), this.dirCtrl.tableFilter.toLowerCase()))) {
+                            subsVisible = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            return subsVisible;
         }
 
         getRawData() {

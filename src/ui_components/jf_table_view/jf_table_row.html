@@ -41,13 +41,24 @@
         </div>
        <div class="group-header-count">({{jfTableRow.data.$groupHeader.count}})</div>
     </div>
+
     <div class="jf-table-cell"
          ng-if="!jfTableRow.data.$groupHeader"
-         ng-class="{header: jfTableRow.rowId === 'headers' && col.header, sortable: jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.sortable && !jfTableRow.hoveringResize, ['drag-right']: col.$dragRightBorder, ['drag-left']: col.$dragLeftBorder, [jfTableRow.kebab(col.field)]: true}"
-         ng-click="jfTableRow.rowId === 'headers' && col.header && jfTableRow.tableView.options.sortable && !jfTableRow.hoveringResize && jfTableRow.tableView.options.sortBy(col.field)"
+         ng-class="{header: jfTableRow.rowId === 'headers' && col.header, sortable: jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.sortable && !jfTableRow.hoveringResize, ['drag-right']: col.$dragRightBorder, ['drag-left']: col.$dragLeftBorder, [jfTableRow.kebab(col.field)]: true, ['row-expander-cell']: $index === 0 && jfTableRow.tableView.options.subRowsEnabled}"
+         ng-click="jfTableRow.onClickCell(col,$event)"
          ng-style="{height: jfTableRow.rowId === 'headers' ? '' : jfTableRow.tableView.options.rowHeight, width: col.width}"
          ng-repeat="col in jfTableRow.tableView.options.columns">
+        <div class="row-expander"
+             ng-class="{placeholder: (!(jfTableRow.data.$subRows && jfTableRow.data.$subRows.length) && !jfTableRow.data.$parentRow)}"
+             ng-if="$index === 0 && jfTableRow.tableView.options.subRowsEnabled"
+             ng-style="{height: jfTableRow.tableView.options.rowHeight}"
+             ng-click="jfTableRow.toggleExpansion()">
+            <i ng-if="jfTableRow.data.$subRows && jfTableRow.data.$subRows.length"
+               class="action-icon icon icon-more"
+               ng-class="{'expanded': jfTableRow.data.$expanded}"></i>
+        </div>
         <div class="jf-table-cell-content"
+             ng-class="{'row-expander-content': $index === 0 && jfTableRow.tableView.options.subRowsEnabled}"
              jf-tooltip-on-overflow
              ng-if="!col.cellTemplate || jfTableRow.rowId === 'headers'">
             {{jfTableRow.getField(col.field)}}
@@ -82,5 +93,4 @@
             </div>
         </div>
     </div>
-
 </div>
