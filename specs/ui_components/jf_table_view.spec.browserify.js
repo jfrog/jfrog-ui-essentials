@@ -144,7 +144,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         });
     })
 
-    it('should show only empty table placeholder and', () => {
+    it('should show only empty table placeholder', () => {
         expect(emptyTablePlaceholder.length).toEqual(1);
         expect(newEntityButton.length).toEqual(0);
         expect(headers.length).toEqual(0);
@@ -206,6 +206,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         expect(localStorage.jfTableViewSettings).toEqual('{"test-table":["number","userName"]}')
 
     });
+
     it('should show data rows, pagination and filter', () => {
         var testData = [
             {userName: 'Shlomo', email: 'shlomo@lam.biz', subscription: 'Free', number: 4},
@@ -233,6 +234,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         expect(dataCells[6].textContent.trim()).toEqual(testData[1].subscription);
         expect(dataCells[7].textContent.trim()).toEqual((testData[1].number * 3).toString());
     });
+
     it('should sort when clicking header', () => {
         var testData = [
             {userName: 'Shlomo', email: 'shlomo@lam.biz', subscription: 'Free', number: 4},
@@ -368,7 +370,6 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         }
 
         $(compiledCellTemplate[0]).click();
-
 
     });
 
@@ -725,7 +726,6 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         expect(options.getSelectedCount()).toEqual(0);
 
     });
-
 
     it('should support sub rows', () => {
         var testData = createTestData(15);
