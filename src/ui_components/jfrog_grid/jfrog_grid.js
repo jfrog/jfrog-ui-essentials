@@ -49,7 +49,13 @@ class JFrogGrid {
     }
 
     resetPagination() {
-        this.paginationCurrentPage = 1;
+        JFrogEventBus.dispatch(JFrogEventBus.getEventsDefinition().RESET_GRID_PAGINATION);
+        if (this.paginationCurrentPage === 1) {
+            this.getPage();
+        }
+        else {
+            this.paginationCurrentPage = 1;
+        }
     }
 
     getPagination() {
@@ -944,13 +950,14 @@ class JFrogGrid {
 
 export class JFrogGridFactory {
     /* @ngInject */
-    constructor(uiGridConstants, $timeout, $window, $state, $modal,$rootScope, JFrogDownload) {
+    constructor(uiGridConstants, $timeout, $window, $state, $modal,$rootScope, JFrogDownload, JFrogEventBus) {
         globals.$timeout = $timeout;
         globals.$window = $window;
         globals.$state = $state;
         globals.$modal = $modal;
         globals.download = JFrogDownload;
         globals.$rootScope = $rootScope;
+        globals.JFrogEventBus = JFrogEventBus;
 
         this.uiGridConstants = uiGridConstants;
         this._createContextMenu();

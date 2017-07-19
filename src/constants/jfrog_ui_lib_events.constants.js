@@ -9,7 +9,9 @@ let events = {
 
     CLOSE_NOTIFICATIONS:            'notifications:close',
 
-    SIDEBAR_SIZE_CHANGE:            'sidebar:size:change'
+    SIDEBAR_SIZE_CHANGE:            'sidebar:size:change',
+
+    RESET_GRID_PAGINATION:          'reset:grid:pagination'
 };
 
 export default events;
