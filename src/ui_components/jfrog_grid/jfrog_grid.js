@@ -2,7 +2,7 @@ const TEMPLATES_FOLDER = "ui_components/jfrog_grid/templates/",
         MIN_COLUMN_WIDTH = 50;
 let headerCellTemplate = require("raw!./templates/headerCellDefaultTemplate.html");
 let groupHeaderCellTemplate = require("raw!./templates/headerCellTemplate.html");
-let $timeout, $window, $state, $modal, $rootScope, download;
+let $timeout, $window, $state, $modal, $rootScope, download, JFrogEventBus;
 
 const COMMON_ACTIONS = {
     delete: {
@@ -49,7 +49,13 @@ class JFrogGrid {
     }
 
     resetPagination() {
-        this.paginationCurrentPage = 1;
+        JFrogEventBus.dispatch(JFrogEventBus.getEventsDefinition().RESET_GRID_PAGINATION);
+        if (this.paginationCurrentPage === 1) {
+            this.getPage();
+        }
+        else {
+            this.paginationCurrentPage = 1;
+        }
     }
 
     getPagination() {
@@ -830,13 +836,14 @@ class JFrogGrid {
 
 
 export class JFrogGridFactory {
-    constructor(uiGridConstants, _$timeout_, _$window_, _$state_, _$modal_,_$rootScope_, _JFrogDownload_) {
+    constructor(uiGridConstants, _$timeout_, _$window_, _$state_, _$modal_, _$rootScope_, _JFrogDownload_, _JFrogEventBus_) {
         $timeout = _$timeout_;
         $window = _$window_;
         $state = _$state_;
         $modal = _$modal_;
         download = _JFrogDownload_;
         $rootScope = _$rootScope_;
+        JFrogEventBus = _JFrogEventBus_;
 
         this.uiGridConstants = uiGridConstants;
         this._createContextMenu();
