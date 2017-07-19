@@ -49,7 +49,7 @@ class JFrogGrid {
     }
 
     resetPagination() {
-        JFrogEventBus.dispatch(JFrogEventBus.getEventsDefinition().RESET_GRID_PAGINATION);
+        globals.JFrogEventBus.dispatch(globals.JFrogEventBus.getEventsDefinition().RESET_GRID_PAGINATION);
         if (this.paginationCurrentPage === 1) {
             this.getPage();
         }
