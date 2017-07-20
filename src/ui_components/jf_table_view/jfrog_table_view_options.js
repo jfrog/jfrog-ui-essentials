@@ -27,6 +27,7 @@ export function JFrogTableViewOptions($timeout) {
 
         _setDefaults() {
             this.rowHeight = '60px';
+            this.headerRowHeight = '60px';
             this.rowsPerPage = 25;
             this.sortable = true;
             this.selectionMode = this.NO_SELECTION;
@@ -175,8 +176,9 @@ export function JFrogTableViewOptions($timeout) {
             return this;
         }
 
-        setRowHeight(height) {
+        setRowHeight(height, headerHeight) {
             this.rowHeight = height;
+            this.headerRowHeight = headerHeight || height;
             return this;
         }
 

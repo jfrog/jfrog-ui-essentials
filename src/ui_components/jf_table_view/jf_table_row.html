@@ -46,7 +46,7 @@
          ng-if="!jfTableRow.data.$groupHeader"
          ng-class="{header: jfTableRow.rowId === 'headers' && col.header, sortable: jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.sortable && !jfTableRow.hoveringResize, ['drag-right']: col.$dragRightBorder, ['drag-left']: col.$dragLeftBorder, [jfTableRow.kebab(col.field)]: true, ['row-expander-cell']: $index === 0 && jfTableRow.tableView.options.subRowsEnabled}"
          ng-click="jfTableRow.onClickCell(col,$event)"
-         ng-style="{height: jfTableRow.rowId === 'headers' ? '' : jfTableRow.tableView.options.rowHeight, width: col.width}"
+         ng-style="{height: jfTableRow.rowId === 'headers' ? jfTableRow.tableView.options.headerRowHeight : jfTableRow.tableView.options.rowHeight, width: col.width}"
          ng-repeat="col in jfTableRow.tableView.options.columns">
         <div class="row-expander"
              ng-class="{placeholder: (!(jfTableRow.data.$subRows && jfTableRow.data.$subRows.length) && !jfTableRow.data.$parentRow), 'sub-row-expander': jfTableRow.data.$parentRow}"
@@ -62,6 +62,9 @@
              jf-tooltip-on-overflow
              ng-if="!col.cellTemplate || jfTableRow.rowId === 'headers'">
             {{jfTableRow.getField(col.field)}}
+            <i ng-if="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.sortable && jfTableRow.tableView.options.sortByField === col.field"
+               class="icon"
+               ng-class="{'icon-down-arrow': jfTableRow.tableView.options.revSort, 'icon-up-arrow': !jfTableRow.tableView.options.revSort}"></i>
             <div class="group-button-wrapper">
                 <div class="group-button icon-grouping-off"
                      ng-class="{'icon-grouping-on': jfTableRow.tableView.options.groupedBy === col.field}"
