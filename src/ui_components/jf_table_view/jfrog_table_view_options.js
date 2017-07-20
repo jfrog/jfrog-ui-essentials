@@ -810,5 +810,55 @@ export function JFrogTableViewOptions($timeout) {
             }
         }
 
+        setKey(key) {
+            if (typeof key === 'function') {
+                this.keyFn = (row) => {
+                    return key(row);
+                }
+            }
+            else {
+                this.keyFn = (row) => {
+                    return row[key];
+                }
+            }
+            return this;
+        }
+
+        updateData(data) {
+            if (!this.data || !this.data.length) {
+                this.setData(data);
+            }
+            else if (!this.keyFn) throw new Error('Cannot update data, no key was defined. (use setKey(key|keyFn))');
+            else {
+                data.forEach((row) => {
+                    let exists = _.find(this.data, (r)=>{
+                        return this.keyFn(r) === this.keyFn(row);
+                    });
+                    if (exists) {
+                        for (let key in exists) {
+                            if (!key.startsWith('$')) {
+                                exists[key] = row[key];
+                            }
+                        }
+                        if (row.$subRows) {
+                            row.$subRows.forEach((subRow)=>{
+                                let existsSub = _.find(exists.$subRows, (r)=>{
+                                    return this.keyFn(r) === this.keyFn(subRow);
+                                });
+                                if (existsSub) {
+                                    for (let subKey in existsSub) {
+                                        if (!subKey.startsWith('$')) {
+                                            existsSub[subKey] = subRow[subKey];
+                                        }
+                                    }
+                                }
+
+                            });
+                        }
+                    }
+                });
+                this.update();
+            }
+        }
     };
 }
