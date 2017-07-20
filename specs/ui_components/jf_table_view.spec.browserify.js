@@ -182,6 +182,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         expect(customColumns.length).toEqual(0);
     });
     it('should toggle columns visibility', () => {
+        delete localStorage.jfTableViewSettings;
         options.setId('test-table');
         options.allowColumnsCustomization();
         options.showHeaders();

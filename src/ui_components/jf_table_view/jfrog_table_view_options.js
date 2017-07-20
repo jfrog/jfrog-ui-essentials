@@ -59,23 +59,19 @@ export function JFrogTableViewOptions($timeout) {
         }
 
         _transformDataForSubRowsSupport(data, autoExpand) {
-            let transformed = [];
-
             data.forEach((row)=>{
-                let transformedRow = _.cloneDeep(row);
-                transformed.push(transformedRow);
-                if (transformedRow.$subRows && transformedRow.$subRows.length) {
-                    transformedRow.$expandable = true;
-                    transformedRow.$subRows.forEach((sub)=>{
-                        sub.$parentRow = transformedRow;
+                if (row.$subRows && row.$subRows.length) {
+                    row.$expandable = true;
+                    row.$subRows.forEach((sub)=>{
+                        sub.$parentRow = row;
                         if (autoExpand && row.$expanded) {
-                            transformed.push(sub);
+                            data.push(sub);
                         }
                     });
                 }
             });
 
-            return transformed;
+            return data;
         }
 
         toggleExpansion(row) {
@@ -531,6 +527,14 @@ export function JFrogTableViewOptions($timeout) {
             }
         }
 
+        _reorderStickies(data) {
+            let stickies = _.filter(data, i => i.$sticky);
+            stickies.forEach(sticky => {
+                data.splice(data.indexOf(sticky), 1);
+            })
+            Array.prototype.splice.apply(data, [0, 0].concat(stickies));
+        }
+
         _saveAndRemoveSubRows(data) {
             if (!this.subRowsEnabled) return data;
             this.savedSubRowsParents = _.filter(data, d => d.$subRows && d.$expanded)
@@ -660,6 +664,7 @@ export function JFrogTableViewOptions($timeout) {
                         }
                     }
                     this.sortedData = this._reInsertSubRows(this.sortedData);
+                    this._reorderStickies(this.sortedData);
                 }
                 return this.sortedData;
             }
@@ -710,7 +715,7 @@ export function JFrogTableViewOptions($timeout) {
                 for (let i in this.columns) {
                     let col = this.columns[i];
                     if ((this.defaultFilterByAll && col.filterable !== false) || (!this.defaultFilterByAll && col.filterable === true)) {
-                        if (this._isSubVisible(row, col) || row.$groupHeader || (_.get(row,col.field) && _.contains(_.get(row,col.field).toString().toLowerCase(), this.dirCtrl.tableFilter.toLowerCase()))) {
+                        if (row.$sticky || this._isSubVisible(row, col) || row.$groupHeader || (_.get(row,col.field) && _.contains(_.get(row,col.field).toString().toLowerCase(), this.dirCtrl.tableFilter.toLowerCase()))) {
                             return true;
                         }
                     }

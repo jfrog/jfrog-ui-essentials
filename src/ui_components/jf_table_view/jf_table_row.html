@@ -4,7 +4,7 @@
      ng-mouseup="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.resizableColumns && jfTableRow.onMouseUp($event)"
      ng-mouseleave="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.resizableColumns && jfTableRow.onMouseUp($event)"
      ng-click="jfTableRow.data.$groupHeader && jfTableRow.toggleGroupExpansion()"
-     ng-class="{headers: jfTableRow.rowId === 'headers', 'group-header': jfTableRow.data.$groupHeader, 'expanded': jfTableRow.data.$groupHeader.$expanded, 'sub-row': jfTableRow.data.$parentRow}"
+     ng-class="{headers: jfTableRow.rowId === 'headers', 'group-header': jfTableRow.data.$groupHeader, 'expanded': jfTableRow.data.$groupHeader.$expanded, 'sub-row': jfTableRow.data.$parentRow, sticky: jfTableRow.data.$sticky}"
      ng-style="{height: jfTableRow.rowId === 'headers' ? '' : jfTableRow.tableView.options.rowHeight, opacity: jfTableRow.tableView.options.ready ? 1 : 0}">
 
     <div class="jf-table-cell selection"
