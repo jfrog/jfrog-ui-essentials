@@ -171,15 +171,7 @@ class jfTableViewController {
 
     getScrollWidth() {
         let el = this.$element.find('.scroll-faker-container')[0];
-        if (!this.scrollWidthCache) {
-            this.scrollWidthCache = (el.offsetWidth - el.clientWidth);
-        }
-        else {
-            this.$timeout(()=>{
-                this.scrollWidthCache = (el.offsetWidth - el.clientWidth);
-            })
-        }
-        return this.scrollWidthCache;
+        return el.offsetWidth - el.clientWidth;
     }
 
     createNewEntity() {

@@ -655,11 +655,10 @@ export function JFrogTableViewOptions($timeout) {
                                 }
                             }
                             else {
-                                this.sortedData = sourceData.sort((a,b)=>{
-                                    let valA = _.get(a,this.sortByField);
-                                    let valB = _.get(b,this.sortByField);
-                                    return (this.revSort ? -1 : 1)*(valA>valB?1:(valA<valB?-1:0));
-                                });
+                                this.sortedData = _.sortByOrder(sourceData, item => {
+                                    let val = _.get(item, this.sortByField);
+                                    return val;
+                                }, !this.revSort);
                             }
                         }
                     }
@@ -857,7 +856,7 @@ export function JFrogTableViewOptions($timeout) {
                         }
                     }
                 });
-                this.update();
+//                this.update();
             }
         }
     };
