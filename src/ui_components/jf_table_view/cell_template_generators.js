@@ -30,7 +30,7 @@ let cellTemplateGenerators = {
 
         let template =  `<div><div ng-if="${listModel}.length" 
                                    ng-class="{'always-show': ${showAsyncData} || ${alwaysShow} }" 
-                                   class="ui-grid-cell-contents no-tooltip" id="${id}">
+                                   class="ui-grid-cell-contents" id="${id}">
                                 <span class="gridcell-content-text">${displayModel}</span>
                                  <a class="gridcell-showall" ng-if="!(${showAsyncData}) && (table.options.isOverflowing('${testIdPrefix}'+row.uid+'_'+${nextId}) || ${alwaysShow})" href ng-click="table.options.showAll(${listModel},${rowNameModel},col)"> (See All)</a>
                                  <a class="gridcell-showall" ng-if="${showAsyncData}" href ng-click="table.options.asyncShowAll(${rowNameModel},col)"> (See All)</a>

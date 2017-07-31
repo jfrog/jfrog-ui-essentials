@@ -145,6 +145,9 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
     })
 
     it('should show only empty table placeholder', () => {
+        options.setData([]);
+        options.showHeaders(false);
+        flushAndApply();
         expect(emptyTablePlaceholder.length).toEqual(1);
         expect(newEntityButton.length).toEqual(0);
         expect(headers.length).toEqual(0);
@@ -214,10 +217,11 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
             {userName: 'Reuven', email: 'reu@ven.buzz', subscription: 'Premium', number: 1},
         ];
 
+        options.setSortable(false);
         options.setData(testData);
         flushAndApply();
         expect(selectionButtons.length).toEqual(0);
-        expect(sortController.length).toEqual(1);
+        expect(sortController.length).toEqual(0);
 
         expect(emptyTablePlaceholder.length).toEqual(0);
         expect(dataRows.length).toEqual(2);
@@ -273,17 +277,11 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         expectSorted(true); //reversed
 
-        expect(testData[0]).toEqual(origData[1]);
-        expect(testData[1]).toEqual(origData[0]);
-
         $(headersCells[2]).click(); //sort by subscription
 
         flushAndApply();
 
         expectSorted();
-
-        expect(testData[0]).toEqual(origData[0]);
-        expect(testData[1]).toEqual(origData[1]);
 
         $(headersCells[3]).click(); //sort by number
 
@@ -291,17 +289,11 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         expectSorted(true)
 
-        expect(testData[0]).toEqual(origData[1]);
-        expect(testData[1]).toEqual(origData[0]);
-
         $(headersCells[3]).click(); //sort by number - desc
 
         flushAndApply();
 
         expectSorted();
-
-        expect(testData[0]).toEqual(origData[0]);
-        expect(testData[1]).toEqual(origData[1]);
 
     });
 
@@ -639,6 +631,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
     it('should allow single selection', () => {
         var testData = createTestData(25);
 
+        options.setSortable(false);
         options.setSelection(options.SINGLE_SELECTION);
         options.setData(testData);
 
@@ -676,6 +669,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
     it('should allow multi selection', () => {
         var testData = createTestData(25);
 
+        options.setSortable(false);
         options.setSelection(options.MULTI_SELECTION);
         options.showHeaders();
         options.setData(testData);

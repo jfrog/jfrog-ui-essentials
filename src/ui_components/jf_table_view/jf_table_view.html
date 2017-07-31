@@ -1,4 +1,4 @@
-<div class="jf-table-view"
+<div class="jf-table-view" style="clear: both"
      ng-class="{'old-grid-theme': jfTableView.options.theme === jfTableView.options.OLD_GRID_THEME}">
 
     <div class="columns-customization-wrap"
@@ -87,7 +87,7 @@
                               data="entity"></jf-table-row>
             </div>
             <div class="empty-table-placeholder"
-                 ng-if="!jfTableView.options.getRawData().length && !jfTableView.options.pendingExternalPaging && (!jfTableView.options.externalTotalCount || jfTableView.options.externalTotalCount.total === 0)">
+                 ng-if="jfTableView.options.dataWasSet && !jfTableView.options.getRawData().length && !jfTableView.options.pendingExternalPaging && (!jfTableView.options.externalTotalCount || jfTableView.options.externalTotalCount.total === 0)">
                 {{jfTableView.options.emptyTableText || 'This table is empty !'}}
             </div>
             <div class="empty-table-placeholder filter-no-results"

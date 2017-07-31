@@ -8,7 +8,7 @@
      ng-style="{height: jfTableRow.rowId === 'headers' ? '' : jfTableRow.tableView.options.rowHeight, opacity: jfTableRow.tableView.options.ready ? 1 : 0}">
 
     <div class="jf-table-cell selection"
-         ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.selectionColumnWidth}"
+         ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.selectionColumnWidth + 'px'}"
          ng-if="jfTableRow.tableView.options.hasSelection()">
         <div class="jf-table-cell-content">
             <div class="selection-button"
@@ -83,11 +83,11 @@
     </div>
 
     <div class="jf-table-cell actions"
-         ng-style="{height: jfTableRow.rowId === 'headers' ? '' : jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.actions.length * jfTableRow.tableView.options.actionButtonSize}"
+         ng-style="{height: jfTableRow.rowId === 'headers' ? '' : jfTableRow.tableView.options.rowHeight, width: (jfTableRow.tableView.options.actions.length * jfTableRow.tableView.options.actionButtonSize) + 'px'}"
          ng-if="jfTableRow.rowId !== 'headers' && jfTableRow.tableView.options.actions.length && !jfTableRow.data.$groupHeader">
         <div class="jf-table-cell-content">
             <div class="action-button"
-                 ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.actionButtonSize, visibility: !action.visibleWhen || action.visibleWhen(jfTableRow.data) ? 'visible' : 'hidden'}"
+                 ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.actionButtonSize + 'px', visibility: !action.visibleWhen || action.visibleWhen(jfTableRow.data) ? 'visible' : 'hidden'}"
                  ng-repeat="action in jfTableRow.tableView.options.actions">
                 <div class="action-icon"
                      ng-click="jfTableRow.fireAction(action);$event.stopPropagation();"

@@ -77,7 +77,7 @@ class jfTableViewController {
             this.rowScopes.push(rowScope);
 
             _.extend(rowScope,{
-                row: { entity: rowObj },
+                row: { entity: rowObj, uid: rowId},
                 col: columnObj,
                 appScope: this.options.appScope,
                 table: {

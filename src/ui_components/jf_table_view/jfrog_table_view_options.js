@@ -41,9 +41,10 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
             this.selectionColumnWidth = 60; //px
             this.theme = this.DEFAULT_THEME;
             this.sortDropDownVisible = true;
-            this.resizableColumns = false;
+            this.resizableColumns = true;
             this.defaultFilterByAll = true;
             this.columnsCustomization = false;
+            this.headersVisible = true;
         }
 
         setData(data, internalCall) {
@@ -61,6 +62,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
                 }
                 this.update();
             }
+            this.dataWasSet = true;
         }
 
         _transformDataForSubRowsSupport(data, autoExpand) {
@@ -174,6 +176,8 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
                 groupables.forEach(c => c.allowGrouping = false);
             }
 
+            this.showHeaders(this.headersVisible);
+
             return this;
         }
 
@@ -260,6 +264,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
 
         reverseSortingDir() {
             this.sortBy(this.sortByField);
+            return this;
         }
 
         setSortable(sortable=true) {
@@ -332,10 +337,10 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
             $timeout(()=>{
                 let containerWidth;
                 if (this.data.length) {
-                    containerWidth = $(this.dirCtrl.$element.find('.jf-table-row')).innerWidth();
+                    containerWidth = $(this.dirCtrl.$element).find('.jf-table-row').innerWidth();
                 }
                 else {
-                    containerWidth = $(this.dirCtrl.$element.find('.jf-table-view-container')).width();
+                    containerWidth = $(this.dirCtrl.$element).find('.jf-table-view-container').width();
                 }
 
                 let percSpace = containerWidth - totalAbs;
@@ -871,7 +876,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
 
         isOverflowing(cellId) {
 
-            let elem = this.dirCtrl.$element.find('#'+cellId);
+            let elem = $(this.dirCtrl.$element).find('#'+cellId);
             let text = elem.children('.gridcell-content-text');
             let showAll = elem.children('.gridcell-showall');
             let cellItemContent = elem.text().trim();
@@ -894,7 +899,6 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
         }
 
         showAll(model,rowName,col) {
-            console.log(model, rowName, col);
             let objectName = _.startCase(this.objectName.indexOf('/')>=0 ? this.objectName.split('/')[0] : this.objectName);
 
             let modalScope = $rootScope.$new();
