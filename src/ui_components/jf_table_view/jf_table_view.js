@@ -78,7 +78,11 @@ class jfTableViewController {
 
             _.extend(rowScope,{
                 row: { entity: rowObj },
-                appScope: this.options.appScope
+                col: columnObj,
+                appScope: this.options.appScope,
+                table: {
+                    options: this.options
+                }
             });
         }
         else rowScope = existingScope;
@@ -185,6 +189,7 @@ class jfTableViewController {
         let group = _.filter(this.options.getFilteredData(),query);
         group.forEach(row=>row.$selected = groupHeader.$selected);
     }
+
 }
 
 jfTableViewController.$inject = ['$scope','$element', '$timeout', '$compile', '$rootScope'];

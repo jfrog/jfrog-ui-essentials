@@ -1,4 +1,6 @@
-export function JFrogTableViewOptions($timeout) {
+import cellTemplateGenerators from './cell_template_generators';
+
+export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
 	'ngInject';
     return class JFrogTableViewOptions {
 	    /* @ngInject */
@@ -22,10 +24,13 @@ export function JFrogTableViewOptions($timeout) {
             this.DEFAULT_THEME = 0;
             this.OLD_GRID_THEME = 1;
 
+            this.cellTemplateGenerators = cellTemplateGenerators;
+
             this._setDefaults();
         }
 
         _setDefaults() {
+            this.objectName = 'Item';
             this.rowHeight = '60px';
             this.headerRowHeight = '60px';
             this.rowsPerPage = 25;
@@ -311,11 +316,15 @@ export function JFrogTableViewOptions($timeout) {
             this.columns.forEach(col=>{
                 if (col.origWidth === undefined) col.origWidth = col.width;
                 let width = col.origWidth;
-                if (width.trim().endsWith('%')) {
+                if (width && width.trim().endsWith('%')) {
                     totalPerc += parseFloat(width);
                 }
-                else if (width.trim().endsWith('px')) {
+                else if (width && width.trim().endsWith('px')) {
                     totalAbs += parseFloat(width);
+                }
+                else if (width === undefined) {
+                    col.origWidth = col.width = 100/this.columns.length + '%';
+                    totalPerc += parseFloat(col.width);
                 }
             })
 
@@ -335,14 +344,14 @@ export function JFrogTableViewOptions($timeout) {
                 let totalFinalPerc = ((actionsWidth + selectionWidth)/containerWidth)*100;
                 this.columns.forEach(col=>{
                     let width = col.origWidth;
-                    if (width.trim().endsWith('%')) {
+                    if (width && width.trim().endsWith('%')) {
                         let origVal = parseFloat(width);
                         let newVal = normalizer*origVal*percSpace/100;
                         let newPerc = (newVal/containerWidth)*100;
                         col.width = newPerc +  '%';
                         totalFinalPerc += newPerc
                     }
-                    else {
+                    else if (width) {
                         totalFinalPerc += 100*parseFloat(width)/containerWidth;
                     }
                 })
@@ -859,5 +868,65 @@ export function JFrogTableViewOptions($timeout) {
 //                this.update();
             }
         }
+
+        isOverflowing(cellId) {
+
+            let elem = this.dirCtrl.$element.find('#'+cellId);
+            let text = elem.children('.gridcell-content-text');
+            let showAll = elem.children('.gridcell-showall');
+            let cellItemContent = elem.text().trim();
+            let width = 0;
+            if (showAll.length) {
+                width = showAll.outerWidth();
+            }
+//        showAll.css('background-color',elem.parent().css('background-color'));
+            if (cellItemContent.length > 0 && elem[0].scrollWidth > elem.innerWidth()) {
+//            elem.css('padding-right',width+'px');
+                elem.addClass('overflow')
+                return true;
+            }
+            else {
+                elem.removeClass('overflow')
+//            elem.css('padding-right','5px');
+                return false;
+            }
+
+        }
+
+        showAll(model,rowName,col) {
+            console.log(model, rowName, col);
+            let objectName = _.startCase(this.objectName.indexOf('/')>=0 ? this.objectName.split('/')[0] : this.objectName);
+
+            let modalScope = $rootScope.$new();
+
+            modalScope.items = model;
+            modalScope.colName = col.displayName || col.name;
+            modalScope.rowName = rowName;
+            modalScope.objectName = objectName;
+
+            modalScope.filter = {};
+            modalScope.filterItem = (item) => {
+                if (modalScope.filter.text) {
+                    let regex = new RegExp('.*' + modalScope.filter.text.split('*').join('.*') + '.*', "i");
+                    return regex.test(item);
+                }
+                else return true;
+            };
+
+            modalScope.noResults = () => {
+                let filteredResults = _.filter(modalScope.items, (item)=>{
+                    return modalScope.filterItem(item);
+                });
+                return filteredResults.length === 0;
+            };
+
+            $modal.open({
+                scope: modalScope,
+                templateUrl: 'ui_components/jfrog_grid/show_all_modal.html',
+                backdrop: true,
+                size: 'sm'
+            });
+        }
+
     };
 }
