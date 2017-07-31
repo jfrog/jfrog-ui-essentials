@@ -44,6 +44,10 @@
         <button ng-if="jfMarkup.onSave"
                 ng-click="jfMarkup.onSave(); jfMarkup.showControls = false;"
                 class="btn btn-primary save-button pull-right">Save</button>
+        <button ng-if="jfMarkup.shouldHaveClearButton"
+                ng-click="jfMarkup.onClear();"
+                ng-disabled="!jfMarkup.markup.length || jfMarkup.markup.length === 0"
+                class="btn btn-secondary clear-button pull-right">Clear</button>
     </div>
     <div class="preview-wrapper" ng-if="jfMarkup.mode === 'Preview' || !jfMarkup.showControls">
         <div class="preview"

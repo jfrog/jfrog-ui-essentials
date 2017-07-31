@@ -90,6 +90,11 @@ class jfMarkupEditorController {
             }
         }
     }
+	onClear(){
+		this.$timeout(()=>{
+			this.markup = '';
+        });
+    }
 
 }
 
@@ -105,7 +110,8 @@ export function jfMarkupEditor() {
             onSave: '&?',
             onModeChange: '&?',
             editable: '=?',
-            showControls: '=?'
+            showControls: '=?',
+	        shouldHaveClearButton: '=?'
         },
         controller: jfMarkupEditorController,
         controllerAs: 'jfMarkup',
