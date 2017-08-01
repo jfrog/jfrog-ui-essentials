@@ -43,6 +43,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
             this.defaultFilterByAll = true;
             this.columnsCustomization = false;
             this.headersVisible = true;
+            this.autoFocusFilter = false;
         }
 
         setData(data, internalCall) {
@@ -285,6 +286,11 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
             return this;
         }
 
+        setAutoFocusFilter(autoFocus = true) {
+            this.autoFocusFilter = autoFocus;
+            return this;
+        }
+
         setBatchActions(batchActions) {
             this.batchActions = batchActions;
             this.setSelection(this.MULTI_SELECTION);
@@ -299,6 +305,12 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
                 this.initialExternalPaginationSent = true;
             }
 
+            if (this.autoFocusFilter) {
+                $timeout(()=>{
+                    let filterInput = $(this.dirCtrl.$element).find('.jf-table-filter input');
+                    filterInput.focus();
+                },100)
+            }
         }
 
         _normalizeWidths() {
