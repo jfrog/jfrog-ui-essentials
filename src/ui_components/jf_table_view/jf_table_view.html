@@ -26,13 +26,14 @@
         <div class="sort-and-filter-wrapper clearfix">
 
             <div class="jf-table-filter">
-                <div class="input-search-wrapper field-style" ng-show="jfTableView.options.getRawData().length || jfTableView.options.externalTotalCount.total > 0">
+                <div class="input-search-wrapper field-style" ng-if="jfTableView.options.getRawData().length || jfTableView.options.externalTotalCount.total > 0">
                     <i class="icon-search"></i>
                     <input ng-model="jfTableView.tableFilter"
                            ng-model-options="{debounce: { 'default': 500 } }"
                            ng-change="jfTableView.onUpdateFilter()"
                            ng-class="{'no-results': jfTableView.noFilterResults}"
                            placeholder="Filter"
+                           ng-init="jfTableView.initFilter()"
                            jf-tooltip="{{!jfTableView.options.tooltipFilterDisabled ? jfTableView.options.getFilterTooltip() : ''}}">
                 </div>
             </div>

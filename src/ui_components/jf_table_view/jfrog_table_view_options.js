@@ -61,6 +61,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
                 }
                 this.update();
             }
+
             this.dataWasSet = true;
         }
 
@@ -305,12 +306,6 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
                 this.initialExternalPaginationSent = true;
             }
 
-            if (this.autoFocusFilter) {
-                $timeout(()=>{
-                    let filterInput = $(this.dirCtrl.$element).find('.jf-table-filter input');
-                    filterInput.focus();
-                },100)
-            }
         }
 
         _normalizeWidths() {

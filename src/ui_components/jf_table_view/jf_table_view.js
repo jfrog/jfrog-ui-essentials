@@ -192,6 +192,16 @@ class jfTableViewController {
         group.forEach(row=>row.$selected = groupHeader.$selected);
     }
 
+    initFilter() {
+        this.$timeout(() => {
+            if (this.options.autoFocusFilter) {
+                let filterInput = $(this.$element).find('.jf-table-filter input');
+                filterInput.focus();
+            }
+        })
+    }
+
+
 }
 
 jfTableViewController.$inject = ['$scope','$element', '$timeout', '$compile', '$rootScope'];
