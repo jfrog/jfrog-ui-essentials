@@ -20,7 +20,7 @@ class jfTableViewController {
         this.$compile = $compile;
         this.$scope = $scope;
         this.$rootScope = $rootScope;
-        this.rowScopes = [];
+        this.cellScopes = [];
         $scope.$watch('jfTableView.options',(options) => {
             if (this.options && !this.options.dirCtrl) {
                 this.options._setDirectiveController(this);
@@ -41,7 +41,7 @@ class jfTableViewController {
         
         $(window).on('resize',on_resize);
         $scope.$on('$destroy', ()=>{
-            this.rowScopes.forEach(s=>s.$destroy())
+            this.cellScopes.forEach(s=>s.$destroy())
             $(window).off('resize',on_resize);
         })
 
@@ -68,17 +68,19 @@ class jfTableViewController {
             rowObj = groupRowObj;
         }
 
-        let existingScope = _.find(this.rowScopes, s => s.row.entity === rowObj);
+        let existingScope = _.find(this.cellScopes, s => s.row.entity === rowObj && s.col === columnObj);
 
         let rowScope;
         if (!existingScope) {
             rowScope = this.$rootScope.$new();
 
-            this.rowScopes.push(rowScope);
+            this.cellScopes.push(rowScope);
 
             _.extend(rowScope,{
                 row: { entity: rowObj, uid: rowId},
                 col: columnObj,
+                MODEL_COL_FIELD: _.get(rowObj, field),
+                COL_FIELD: _.get(rowObj, field),
                 appScope: this.options.appScope,
                 table: {
                     options: this.options
@@ -100,9 +102,9 @@ class jfTableViewController {
         this.paginationApi.update();
     }
     refresh(updatePagination = true) {
-        let unusedScopes = _.filter(this.rowScopes, scope => this.options.getPageData().indexOf(scope.row.entity) === -1);
+        let unusedScopes = _.filter(this.cellScopes, scope => this.options.getPageData().indexOf(scope.row.entity) === -1);
         unusedScopes.forEach(s=>{
-            this.rowScopes.splice(this.rowScopes.indexOf(s),1);
+            this.cellScopes.splice(this.cellScopes.indexOf(s),1);
             s.$destroy()
         });
         if (this.paginationApi && updatePagination) this.paginationApi.update();

@@ -2,7 +2,7 @@ import cellTemplateGenerators from './cell_template_generators';
 
 export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
 	'ngInject';
-    return class JFrogTableViewOptions {
+    class JFrogTableViewOptionsClass {
 	    /* @ngInject */
         constructor(appScope) {
             this.data = [];
@@ -23,8 +23,6 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
             // Themes
             this.DEFAULT_THEME = 0;
             this.OLD_GRID_THEME = 1;
-
-            this.cellTemplateGenerators = cellTemplateGenerators;
 
             this._setDefaults();
         }
@@ -932,5 +930,19 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
             });
         }
 
+        asyncShowAll(rowName,col){
+            if(col && col.asyncDataCallback){
+                col.asyncDataCallback(rowName).then((dataList)=>{
+                    this.showAll(dataList,rowName,col);
+                });
+            }
+        }
+
+
     };
+
+
+    JFrogTableViewOptionsClass.cellTemplateGenerators = cellTemplateGenerators;
+
+    return JFrogTableViewOptionsClass;
 }
