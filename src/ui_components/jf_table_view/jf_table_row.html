@@ -8,6 +8,7 @@
      ng-style="{height: jfTableRow.rowId === 'headers' ? '' : jfTableRow.tableView.options.rowHeight, opacity: jfTableRow.tableView.options.ready ? 1 : 0}">
 
     <div class="jf-table-cell selection"
+         ng-class="{'single-selection' : jfTableRow.tableView.options.selectionMode === jfTableRow.tableView.options.SINGLE_SELECTION}"
          ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.selectionColumnWidth + 'px'}"
          ng-if="jfTableRow.tableView.options.hasSelection()">
         <div class="jf-table-cell-content">

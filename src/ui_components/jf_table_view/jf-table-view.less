@@ -201,7 +201,23 @@
         &.drag-left {
           //          border-left: 1px @greenBorderLight dashed;
         }
-
+        &.selection{
+          &.single-selection{
+            .selection-button{
+              .selection-icon{
+                display: none;
+                &.selected{
+                  display: block;
+                }
+              }
+              &:hover{
+                .selection-icon{
+                  display: block;
+                }
+              }
+            }
+          }
+        }
         &.selection,
         &.actions {
           padding: 0px !important;
@@ -277,8 +293,9 @@
           .selection-button {
             .selection-icon {
               &:before {
-                font-size: 22px !important;
+                font-size: 16px !important;
                 color: @grayBorderLighter;
+                line-height: 1.8em;
               }
               &.selected {
                 &:before {
