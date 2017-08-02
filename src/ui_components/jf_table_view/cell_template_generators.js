@@ -6,7 +6,7 @@ let cellTemplateGenerators = {
     },
 
     downloadableColumn: function(specialClass) {
-        return '<div><div ng-if="row.entity.downloadLink"" class="ui-grid-cell-contents '+specialClass+'">{{row.entity.name}}</div>' +
+        return '<div><div ng-if="row.entity.downloadLink" class="ui-grid-cell-contents '+specialClass+'">{{row.entity.name}}</div>' +
             '<div ng-if="!row.entity.downloadLink" class="ui-grid-cell-contents '+specialClass+'">{{row.entity.name}}</div></div>';
     },
 
