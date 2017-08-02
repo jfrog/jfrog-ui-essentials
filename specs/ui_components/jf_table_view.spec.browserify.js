@@ -154,7 +154,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         expect(headersCells.length).toEqual(0);
         expect(dataRows.length).toEqual(0);
         expect(dataCells.length).toEqual(0);
-        expect($(filter[0]).css('display')).toEqual('none');
+        expect(filter.length).toEqual(0);
         expect(pagination.children().children().length).toEqual(0);
         expect(selectionButtons.length).toEqual(0);
         expect(sortController.length).toEqual(0);
