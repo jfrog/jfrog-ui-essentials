@@ -29,14 +29,14 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
 
         _setDefaults() {
             this.objectName = 'Item';
-            this.rowHeight = '60px';
-            this.headerRowHeight = '60px';
+            this.rowHeight = '50px';
+            this.headerRowHeight = '50px';
             this.rowsPerPage = 25;
             this.sortable = true;
             this.selectionMode = this.NO_SELECTION;
             this.paginationMode = this.PAGINATION;
-            this.actionButtonSize = 60; //px
-            this.selectionColumnWidth = 60; //px
+            this.actionButtonSize = 50; //px
+            this.selectionColumnWidth = 50; //px
             this.theme = this.DEFAULT_THEME;
             this.sortDropDownVisible = true;
             this.resizableColumns = true;

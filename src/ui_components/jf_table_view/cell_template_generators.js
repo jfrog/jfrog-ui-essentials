@@ -6,8 +6,8 @@ let cellTemplateGenerators = {
     },
 
     downloadableColumn: function(specialClass) {
-        return '<div ng-if="row.entity.downloadLink"" class="ui-grid-cell-contents '+specialClass+'">{{row.entity.name}}</div>' +
-            '<div ng-if="!row.entity.downloadLink" class="ui-grid-cell-contents '+specialClass+'">{{row.entity.name}}</div>';
+        return '<div><div ng-if="row.entity.downloadLink"" class="ui-grid-cell-contents '+specialClass+'">{{row.entity.name}}</div>' +
+            '<div ng-if="!row.entity.downloadLink" class="ui-grid-cell-contents '+specialClass+'">{{row.entity.name}}</div></div>';
     },
 
     booleanColumn: function(model) {
@@ -15,10 +15,10 @@ let cellTemplateGenerators = {
             model + '" type="checkbox" disabled/><span class="icon icon-v"></span></div>';
     },
     checkboxColumn: function(model, click, disabled) {
-        return '<div ng-if="!row.entity._emptyRow" class="grid-cell-checkbox"><jf-checkbox><input ng-model="' + model + '"' +
+        return '<div><div class="grid-cell-checkbox"><jf-checkbox><input ng-model="' + model + '"' +
             (click && click.length ? ' ng-click="' + click + '"' : '') +
             (disabled && disabled.length ? ' ng-disabled="' + disabled + '"' : '') +
-            ' type="checkbox"/></jf-checkbox></div>';
+            ' type="checkbox"/></jf-checkbox></div></div>';
     },
     listableColumn: function(listModel,rowNameModel,displayModel,alwaysShow,testIdPrefix=null,showAsyncData, externalCountModel) {
 
@@ -41,7 +41,7 @@ let cellTemplateGenerators = {
         return template;
     },
     iconColumn: function(cellText, cellIcon, iconClass) {
-        return '<div class="ui-grid-cell-contents" id="type"><i class="icon icon-{{' + cellIcon + '}}' + (iconClass ? ' ' + iconClass : '') + '"></i>{{' + cellText + '}}</div>';
+        return '<div id="type"><i class="icon icon-{{' + cellIcon + '}}' + (iconClass ? ' ' + iconClass : '') + '"></i>{{' + cellText + '}}</div>';
     },
     ajaxColumn: function () {
         return '<div class="ui-grid-cell-contents status-grid"><div class="icon-hourglass" ng-if="!row.entity.status"></div>{{row.entity.status}}</div>';

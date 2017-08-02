@@ -133,8 +133,8 @@
     }
     .empty-table-placeholder {
       font-size: 20px;
-      height: 60px;
-      line-height: 60px;
+      height: 50px;
+      line-height: 50px;
       width: 100%;
       //background-color: lightgoldenrodyellow;
       text-align: center;
@@ -147,8 +147,11 @@
       padding: 0;
       margin: 0;
       &.sticky {
-        background-color: lightgrey;
-        color: blue;
+          font-weight: 600;
+          &:nth-child(2) {
+            border-top: 1px solid @grayGridHeader;
+            border-bottom: 1px solid @greenFontHeader;
+          }
       }
       &.group-header {
         background-color: white !important;
@@ -246,6 +249,7 @@
           }
         }
         .jf-table-cell-content {
+
           overflow: hidden;
           display: table-cell;
           vertical-align: middle;
@@ -260,6 +264,19 @@
           &.row-expander-content {
             padding-left: 32px;
           }
+          .grid-cell-checkbox {
+            line-height: 40px;
+            text-align: center;
+          }
+          .repo-type-icon {
+            float: left;
+            margin: 1px 10px 0 0;
+
+            &.icon- {
+              display: none;
+            }
+          }
+
           .group-button-wrapper {
             position: relative;
             display: inline-block;
