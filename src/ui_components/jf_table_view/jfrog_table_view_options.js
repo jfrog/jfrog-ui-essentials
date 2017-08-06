@@ -1,5 +1,18 @@
 import cellTemplateGenerators from './cell_template_generators';
 
+const COMMON_ACTIONS = {
+    delete: {
+        icon: 'icon icon-clear',
+        tooltip: 'Delete'
+    },
+    download: {
+        icon: 'icon icon-download',
+        href: row => {return row.downloadLink},
+        tooltip: 'Download'
+    }
+};
+
+
 export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
 	'ngInject';
     class JFrogTableViewOptionsClass {
@@ -165,6 +178,25 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
             columns = this.filterColumns(columns);
 
             this.columns = columns;
+            let actions = [];
+            this.columns.forEach(col => {
+                if (col.actions) {
+                    col.customActions = col.customActions || [];
+                    _.forEach(col.actions, (callback, key) => {
+                        let action;
+                        if (callback.visibleWhen) {
+                            action = this._getCommonAction(key, callback.callback, callback.visibleWhen);
+                        } else {
+                            action = this._getCommonAction(key, callback.callback || callback);
+                        }
+                        col.customActions.push(action);
+                    });
+                }
+                if (col.customActions && col.customActions.length) {
+                    actions = actions.concat(col.customActions);
+                }
+            })
+            if (actions.length) this.setActions(this.actions ? this.actions.concat(actions) : actions);
             this._sortableFields = _.map(_.filter(this.columns,c=>(angular.isDefined(c.header))),'field');
             if (this.sortable && !this.sortByField) this.sortByField = this._sortableFields ? this._sortableFields[0] : undefined;
             this._normalizeWidths();
@@ -937,6 +969,15 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
                     this.showAll(dataList,rowName,col);
                 });
             }
+        }
+
+        _getCommonAction(key, callback, visibleWhen) {
+            let action = COMMON_ACTIONS[key];
+            action = angular.extend({callback: callback}, action);
+            if (visibleWhen) {
+                action = angular.extend({visibleWhen: visibleWhen}, action);
+            }
+            return action;
         }
 
 

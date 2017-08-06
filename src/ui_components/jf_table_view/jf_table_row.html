@@ -94,8 +94,15 @@
                  ng-repeat="action in jfTableRow.tableView.options.actions">
                 <div class="action-icon"
                      ng-click="jfTableRow.fireAction(action);$event.stopPropagation();"
+                     ng-if="!action.href"
                      jf-tooltip="{{action.tooltip}}"
                      ng-class="action.icon"></div>
+                <a ng-click="jfTableRow.fireAction(action);$event.stopPropagation();"
+                   ng-if="action.href"
+                   jf-tooltip="{{action.tooltip}}"
+                   ng-href="{{action.href(jfTableRow.data)}}">
+                    <div class="action-icon" ng-class="action.icon"></div>
+                </a>
             </div>
         </div>
     </div>
