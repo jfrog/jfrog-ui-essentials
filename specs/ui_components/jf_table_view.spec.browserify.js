@@ -22,7 +22,6 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
     var selectionButtons;
     var selectedSelectionButtons;
     var unselectedSelectionButtons;
-    var sortController;
     var compiledCellTemplate;
     var customColumns;
     var rowExpanders;
@@ -78,7 +77,6 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         selectionButtons = $('.selection-icon');
         selectedSelectionButtons = $('.selection-icon.selected');
         unselectedSelectionButtons = $('.selection-icon:not(.selected)');
-        sortController = $('.sort-controller');
         compiledCellTemplate = $('.compiled-cell-template');
         customColumns = $('.columns-customization-wrap');
         rowExpanders = $('.row-expander:not(.placeholder):not(.sub-row-expander)');
@@ -157,7 +155,6 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         expect(filter.length).toEqual(0);
         expect(pagination.children().children().length).toEqual(0);
         expect(selectionButtons.length).toEqual(0);
-        expect(sortController.length).toEqual(0);
 
     });
     it('should show add entity button', () => {
@@ -165,7 +162,6 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         });
         flushAndApply();
         expect(newEntityButton.length).toEqual(1);
-        expect(sortController.length).toEqual(0);
         expect(newEntityButton[0].textContent.trim()).toEqual('Add a Test Entity');
     });
     it('should call callback when pressing add entity button', (done) => {
@@ -181,7 +177,6 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         flushAndApply();
         expect(headers.length).toEqual(1);
         expect(headersCells.length).toEqual(4);
-        expect(sortController.length).toEqual(0);
         expect(customColumns.length).toEqual(0);
     });
     it('should toggle columns visibility', () => {
@@ -221,7 +216,6 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         options.setData(testData);
         flushAndApply();
         expect(selectionButtons.length).toEqual(0);
-        expect(sortController.length).toEqual(0);
 
         expect(emptyTablePlaceholder.length).toEqual(0);
         expect(dataRows.length).toEqual(2);
@@ -265,15 +259,11 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         flushAndApply();
 
-        expect(sortController.length).toEqual(0);
-
         expectSorted();
 
         options.setSortable(true); //sort by user name (defaults to first column)
 
         flushAndApply();
-
-        expect(sortController.length).toEqual(1);
 
         expectSorted(true); //reversed
 

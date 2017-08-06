@@ -201,6 +201,32 @@ class jfTableViewController {
         })
     }
 
+    getTotalRecords() {
+
+        let count = this.options.getRawData().length;
+        let recordsName;
+
+        if (this.options.objectName) {
+            if (this.options.objectName.indexOf('/')>=0) {
+                let splited = this.options.objectName.split('/');
+                recordsName = count !== 1 ? splited[1] : splited[0];
+            }
+            else
+                recordsName = count !== 1 ? this.options.objectName + 's' : this.options.objectName;
+        }
+        else
+            recordsName = count !== 1 ? 'records' : 'record';
+
+        return count + ' ' + _.startCase(recordsName);
+    }
+
+    getSelectedRecords() {
+
+        let count = this.options.getSelectedRows().length;
+
+        return count;
+    }
+
 
 }
 
