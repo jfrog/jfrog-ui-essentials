@@ -38,20 +38,6 @@
                 </div>
             </div>
 
-            <div class="sort-controller"
-                 ng-if="jfTableView.options.sortable && jfTableView.options.sortDropDownVisible && jfTableView.options.getRawData().length">
-                <div class="select-wrapper">
-                    <jf-ui-select jf-select-model="jfTableView.options.sortByField"
-                                  jf-select-display-func="jfTableView.options.getDisplayNameForField($item)"
-                                  jf-select-change="jfTableView.options.sortBy(jfTableView.options.sortByField)"
-                                  jf-select-options="jfTableView.options._sortableFields"
-                                  jf-select-placeholder="Sort by"></jf-ui-select>
-                </div>
-                <!--<div class="sort-dir-icon icon icon-arrow"
-                     ng-click="jfTableView.options.reverseSortingDir()"
-                     ng-class="{asc: !jfTableView.options.revSort, desc: jfTableView.options.revSort}"></div>-->
-            </div>
-
             <div class="pagination-controls pull-right">
                 <jf-drag-drop-pagination pagination-api="jfTableView.paginationApi"
                                          ng-if="jfTableView.paginationApi">

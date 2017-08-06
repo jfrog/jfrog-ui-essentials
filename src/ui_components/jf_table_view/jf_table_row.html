@@ -67,11 +67,11 @@
             <i ng-if="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.sortable && jfTableRow.tableView.options.sortByField === col.field"
                class="icon"
                ng-class="{'icon-down-arrow': jfTableRow.tableView.options.revSort, 'icon-up-arrow': !jfTableRow.tableView.options.revSort}"></i>
-            <div class="group-button-wrapper">
+            <div class="group-button-wrapper" ng-if="jfTableRow.rowId === 'headers' && col.allowGrouping">
                 <div class="group-button icon-grouping-off"
                      ng-class="{'icon-grouping-on': jfTableRow.tableView.options.groupedBy === col.field}"
                      ng-click="jfTableRow.tableView.options.groupBy(col.field); $event.stopPropagation();"
-                     ng-if="col.allowGrouping"></div>
+                     ></div>
             </div>
         </div>
         <div class="jf-table-cell-content"

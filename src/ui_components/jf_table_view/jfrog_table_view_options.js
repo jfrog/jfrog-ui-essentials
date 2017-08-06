@@ -38,7 +38,6 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
             this.actionButtonSize = 50; //px
             this.selectionColumnWidth = 50; //px
             this.theme = this.DEFAULT_THEME;
-            this.sortDropDownVisible = true;
             this.resizableColumns = true;
             this.defaultFilterByAll = true;
             this.columnsCustomization = false;
@@ -193,11 +192,6 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal) {
             this.columns.forEach(column=>{
                 if (column.header) this.headersRow[column.field] = column.header;
             })
-            return this;
-        }
-
-        showSortDropdown(show=true) {
-            this.sortDropDownVisible = show;
             return this;
         }
 
