@@ -73,7 +73,7 @@ class jfMarkupEditorController {
     }
     onChangeModeInternal() {
         if (this.mode === 'Preview') this.renderPreview();
-        this.onModeChange({mode:this.mode})
+        if (this.onModeChange) this.onModeChange({mode:this.mode})
     }
 
     checkPreviewers() {
