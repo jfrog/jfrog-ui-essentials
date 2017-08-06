@@ -203,6 +203,8 @@ class jfTableViewController {
 
     getTotalRecords() {
 
+        if (!this.options) return;
+
         let count = this.options.getRawData().length;
         let recordsName;
 
@@ -221,6 +223,8 @@ class jfTableViewController {
     }
 
     getSelectedRecords() {
+
+        if (!this.options) return 0;
 
         let count = this.options.getSelectedRows().length;
 
