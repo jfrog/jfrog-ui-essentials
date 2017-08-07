@@ -147,6 +147,14 @@
       white-space: nowrap;
       padding: 0;
       margin: 0;
+
+      &:hover {
+        .jf-table-cell {
+          &.actions {
+            display: inline-table !important;
+          }
+        }
+      }
       &.sticky {
           font-weight: 600;
           &:nth-child(2) {
@@ -218,6 +226,9 @@
               }
             }
           }
+        }
+        &.actions {
+          display: none;
         }
         &.selection,
         &.actions {
