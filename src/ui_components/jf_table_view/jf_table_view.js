@@ -82,6 +82,7 @@ class jfTableViewController {
                 MODEL_COL_FIELD: _.get(rowObj, field),
                 COL_FIELD: _.get(rowObj, field),
                 appScope: this.options.appScope,
+                grid: {appScope: this.options.appScope}, //Backward compatibility with old grid
                 table: {
                     options: this.options
                 }

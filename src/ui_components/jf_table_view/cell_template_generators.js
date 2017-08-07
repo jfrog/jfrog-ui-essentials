@@ -1,8 +1,8 @@
 let nextId = 0;
 let cellTemplateGenerators = {
     artifactoryRepoPathColumn: function(specialClass) {
-        return '<div ng-if="row.entity.repoKey" class="ui-grid-cell-contents '+specialClass+'">{{row.entity.repoKey}}/{{row.entity.path}}</div>' +
-            '<div ng-if="!row.entity.repoKey" class="ui-grid-cell-contents '+specialClass+'">{{row.entity.path}}</div>';
+        return '<div><div ng-if="row.entity.repoKey" class="ui-grid-cell-contents '+specialClass+'">{{row.entity.repoKey}}/{{row.entity.path}}</div>' +
+            '<div ng-if="!row.entity.repoKey" class="ui-grid-cell-contents '+specialClass+'">{{row.entity.path}}</div></div>';
     },
 
     downloadableColumn: function(specialClass) {
