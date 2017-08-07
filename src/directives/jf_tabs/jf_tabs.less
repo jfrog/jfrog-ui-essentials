@@ -3,6 +3,7 @@
   left: 0;
   position: relative;
   z-index: 200;
+  border-bottom: 1px solid @grayBorder;
 
   > li {
     position: relative;
@@ -16,41 +17,18 @@
     }
 
     &:not(.license-required):not(.disabled) {
-      > a:hover, &.active > a, &.active > a:hover, .active > a:focus {
-        border-bottom: 1px solid @greenBGDark;
-        color: @greenBGDark;
+      a {
         cursor: pointer;
         z-index: 3;
       }
 
       &.active > a, &.active > a:hover, .active > a:focus {
-        position: relative;
+        border-bottom: 2px solid @greenBGDark;
+        color: @greenBGDark;
+      }
 
-        &::before {
-          content: '';
-          width: 0;
-          height: 0;
-          border-style: solid;
-          border-width: 6px 6px 0 6px;
-          border-color: @greenBGDark transparent transparent transparent;
-          position: absolute;
-          bottom: -6px;
-          left: 50%;
-          margin-left: -6px;
-        }
-
-        &::after {
-          content: '';
-          width: 0;
-          height: 0;
-          border-style: solid;
-          border-width: 4px 4px 0 4px;
-          border-color: @white transparent transparent transparent;
-          position: absolute;
-          bottom: -4px;
-          left: 50%;
-          margin-left: -4px;
-        }
+      > a:hover {
+        border-bottom: 2px solid @blackBGLight;
       }
     }
 
