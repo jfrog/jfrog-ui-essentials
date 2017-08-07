@@ -13,27 +13,31 @@
 
 .jf-placeholder() {
   color: @grayPlaceholderLight;
-  font-size: 15px;
-  font-weight: 100;
+  font-family: 'Open Sans Light';
+  font-size: 14px;
 }
 
 // set color & font size for placeholder
-.placeholder-style(@color: @grayPlaceholderLight; @fontSize: 15px; @line-height: 1em;) {
+.placeholder-style(@color: @grayPlaceholderLight; @fontSize: 14px; @line-height: 1em;) {
   &::-webkit-input-placeholder {
     color: @color;
+    font-family: 'Open Sans Light';
     font-size: @fontSize;
     line-height: @line-height;
   }
   &:-moz-placeholder {
     color: @color;
+    font-family: 'Open Sans Light';
     font-size: @fontSize;
   }
   &::-moz-placeholder {
     color: @color;
+    font-family: 'Open Sans Light';
     font-size: @fontSize;
   }
   &:-ms-input-placeholder {
     color: @color;
+    font-family: 'Open Sans Light';
     font-size: @fontSize;
   }
 }

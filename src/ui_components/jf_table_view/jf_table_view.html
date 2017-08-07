@@ -26,16 +26,14 @@
             <div ng-if="!jfTableView.options.noCount" class="grid-counter">{{ jfTableView.getTotalRecords() }}<span ng-if="jfTableView.getSelectedRecords()"> ({{jfTableView.getSelectedRecords()}} Selected)</span></div>
 
             <div class="jf-table-filter">
-                <div class="input-search-wrapper field-style" ng-if="jfTableView.options.getRawData().length || jfTableView.options.externalTotalCount.total > 0">
-                    <i class="icon-search"></i>
-                    <input ng-model="jfTableView.tableFilter"
-                           ng-model-options="{debounce: { 'default': 500 } }"
-                           ng-change="jfTableView.onUpdateFilter()"
-                           ng-class="{'no-results': jfTableView.noFilterResults}"
-                           placeholder="Filter"
-                           ng-init="jfTableView.initFilter()"
-                           jf-tooltip="{{!jfTableView.options.tooltipFilterDisabled ? jfTableView.options.getFilterTooltip() : ''}}">
-                </div>
+                <input class="input-text"
+                       ng-model="jfTableView.tableFilter"
+                       ng-model-options="{debounce: { 'default': 500 } }"
+                       ng-change="jfTableView.onUpdateFilter()"
+                       ng-class="{'no-results': jfTableView.noFilterResults}"
+                       placeholder="Filter"
+                       ng-init="jfTableView.initFilter()"
+                       jf-tooltip="{{!jfTableView.options.tooltipFilterDisabled ? jfTableView.options.getFilterTooltip() : ''}}">
             </div>
         </div>
 

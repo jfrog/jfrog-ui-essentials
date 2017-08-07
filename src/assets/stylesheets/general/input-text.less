@@ -41,28 +41,6 @@
   &:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px white inset;
   }
-  
-  &::-webkit-input-placeholder {
-    .jf-placeholder();
-  }
 
-  &:-moz-placeholder {
-    /* Firefox 18- */
-    .jf-placeholder();
-  }
-
-  &::-moz-placeholder {
-    /* Firefox 19+ */
-    .jf-placeholder();
-  }
-
-  &:-ms-input-placeholder {
-    .jf-placeholder();
-  }
-}
-
-.jf-placeholder() {
-  color: @grayPlaceholderLight;
-  font-size: 15px;
-  font-weight: 100;
+  .placeholder-style();
 }
