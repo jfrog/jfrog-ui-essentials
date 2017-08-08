@@ -974,11 +974,13 @@ export class JFrogGridFactory {
 
     _createContextMenu() {
         $.contextMenu({
-            selector: '.ui-grid-cell-contents, .grid-cell-checkbox',
+            selector: '.grid-container .ui-grid-cell-contents, .grid-container .grid-cell-checkbox',
             build: ($trigger,e) => {
 
                 let row = angular.element($trigger[0]).scope().row;
-                let grid = angular.element($trigger[0]).controller('uiGrid').grid;
+                let uiGrid = angular.element($trigger[0]).controller('uiGrid');
+                if (!uiGrid) return;
+                let grid = uiGrid.grid;
                 let rowActions = grid.appScope.grids[grid.id].buttons;
                 let customActionsRaw = _.pluck(grid.columns,'colDef.customActions');
                 let allActions = [];

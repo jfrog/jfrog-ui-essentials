@@ -70,8 +70,8 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         headersCells = $('.jf-table-cell.header');
         dataCells = $('.jf-table-cell:not(.header)');
         dataRows = $('.jf-table-row:not(.headers)');
-        filter = $('.jf-table-filter > .input-search-wrapper');
-        filterInput = $('.jf-table-filter > .input-search-wrapper > input');
+        filter = $('.jf-table-filter');
+        filterInput = $('.jf-table-filter > input');
         pagination = $('.pagination-controls');
         actionButtons = $('.action-button > .action-icon');
         selectionButtons = $('.selection-icon');
