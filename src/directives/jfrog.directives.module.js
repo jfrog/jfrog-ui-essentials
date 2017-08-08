@@ -25,6 +25,7 @@ import {jfClipCopy} from './jf_clip_copy/jf_clip_copy';
 import {jfValidation}   from './jf_validation/jf_validation';
 import {jfSidebar}       from './jf_sidebar/jf_sidebar';
 import {jfMultiDropdown}       from './jf_multi_dropdown/jf_multi_dropdown';
+import {jfRadioButton} from './jf_radio_button/jf_radio_button';
 import {jfWidgetsLayout}       from './jf_widgets_layout/jf_widgets_layout';
 import {jfMarquee}       from './jf_marquee/jf_marquee';
 import {jfPasswordStrength} from './jf_password_strength/jf_password_strength';
@@ -68,5 +69,6 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfClearErrors': jfClearErrors,
         'jfMarkupEditor': jfMarkupEditor,
         'jfTree': jfTree,
-        'jfAutoComplete': jfAutoComplete
+        'jfAutoComplete': jfAutoComplete,
+	    'jfRadioButton': jfRadioButton,
     });
