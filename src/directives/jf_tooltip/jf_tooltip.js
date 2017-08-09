@@ -3,8 +3,7 @@ export function jfTooltip() {
         restrict: 'A',
         link: function($scope, $element, $attrs) {
             let content = $attrs.jfTooltip;
-
-            $($element).tooltipster({
+	        $($element).tooltipster({
                 animation: 'fade',
                 contentAsHTML : 'true',
                 trigger: 'hover',
