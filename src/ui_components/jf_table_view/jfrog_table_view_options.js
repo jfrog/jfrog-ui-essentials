@@ -59,6 +59,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			this.columnsCustomization = false;
 			this.headersVisible = true;
 			this.autoFocusFilter = false;
+			this.noCount = false;
 		}
 
 		setData(data, internalCall) {
@@ -133,6 +134,11 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			}
 			this.refreshFilter();
 			this.update();
+		}
+
+		showCounter(show = true) {
+			this.noCount = !show;
+			return this;
 		}
 
 		setRowsPerPage(rpp) {
