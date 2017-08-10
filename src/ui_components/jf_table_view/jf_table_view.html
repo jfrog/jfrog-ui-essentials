@@ -1,87 +1,38 @@
 <div class="jf-table-view" style="clear: both"
      ng-class="{'old-grid-theme': jfTableView.options.theme === jfTableView.options.OLD_GRID_THEME}">
 
-    <div class="jf-table-top"
-         ng-class="{'no-sort':!jfTableView.options.sortable}">
+    <jf-table-top table-view="jfTableView"></jf-table-top>
 
-        <div class="text-right">
-            <a href class="new-entity"
-               ng-click="jfTableView.createNewEntity()"
-               ng-if="jfTableView.options.newEntityCallback">
-                <i class="icon icon-new"></i> Add {{jfTableView.options.useAnWithObjectName ? 'an' : 'a'}} {{jfTableView.objectName ? jfTableView.objectName.split('/')[0] : jfTableView.options.objectName ? jfTableView.options.objectName.split('/')[0] : 'Item'}}
-            </a>
+    <div class="jf-table-view-container" ng-if="jfTableView.options">
+        <div class="jf-table-view-header"
+             ng-if="jfTableView.options.headersVisible">
+            <jf-table-row table-view="jfTableView"
+                          row-id="'headers'"
+                          data="jfTableView.options.headersRow"></jf-table-row>
         </div>
-        <div class="columns-customization-wrap"
-             ng-if="jfTableView.options.columnsCustomization">
-            <div class="columns-customization pull-right">
-                <jf-multi-dropdown title="Columns"
-                                   filter-placeholder="Filter Columns"
-                                   items="jfTableView.options.availableColumns"
-                                   on-change="jfTableView.options.updateCustomizedColumns()"></jf-multi-dropdown>
-            </div>
-        </div>
-
-        <div class="counter-and-filter-wrapper clearfix">
-
-            <div ng-if="!jfTableView.options.noCount" class="grid-counter">{{ jfTableView.getTotalRecords() }}<span ng-if="jfTableView.getSelectedRecords()"> ({{jfTableView.getSelectedRecords()}} Selected)</span></div>
-
-            <div class="jf-table-filter"
-                 ng-if="jfTableView.options.getRawData().length || jfTableView.options.externalTotalCount.total > 0">
-                <input class="input-text"
-                       ng-model="jfTableView.tableFilter"
-                       ng-model-options="{debounce: { 'default': 500 } }"
-                       ng-change="jfTableView.onUpdateFilter()"
-                       ng-class="{'no-results': jfTableView.noFilterResults}"
-                       placeholder="Filter"
-                       ng-init="jfTableView.initFilter()"
-                       jf-tooltip="{{!jfTableView.options.tooltipFilterDisabled ? jfTableView.options.getFilterTooltip() : ''}}">
-            </div>
-        </div>
-
-        <div class="pagination-controls pull-right">
-            <jf-drag-drop-pagination pagination-api="jfTableView.paginationApi"
-                                     ng-if="jfTableView.paginationApi">
-            </jf-drag-drop-pagination>
-        </div>
-
-        <div class="pull-right">
-            <jf-table-view-batch-actions table-options="jfTableView.options"
-                                         actions="jfTableView.options.batchActions"></jf-table-view-batch-actions>
-        </div>
-
-
-        <div class="jf-table-view-container" ng-if="jfTableView.options">
-            <div class="jf-table-view-header"
-                 ng-if="jfTableView.options.headersVisible">
-                <jf-table-row table-view="jfTableView"
-                              row-id="'headers'"
-                              data="jfTableView.options.headersRow"></jf-table-row>
-            </div>
-            <div class="table-rows-container">
-                <div class="scroll-faker-container"
-                     ng-style="{right: -jfTableView.getScrollWidth()+'px'}"
-                     ng-if="jfTableView.options.paginationMode === jfTableView.options.VIRTUAL_SCROLL">
-                    <div class="scroll-faker"
-                         ng-init="jfTableView.initScrollFaker()"
-                         ng-style="{height: jfTableView.getTotalScrollHeight()}">
-                    </div>
+        <div class="table-rows-container">
+            <div class="scroll-faker-container"
+                 ng-style="{right: -jfTableView.getScrollWidth()+'px'}"
+                 ng-if="jfTableView.options.paginationMode === jfTableView.options.VIRTUAL_SCROLL">
+                <div class="scroll-faker"
+                     ng-init="jfTableView.initScrollFaker()"
+                     ng-style="{height: jfTableView.getTotalScrollHeight()}">
                 </div>
-                <jf-table-row ng-repeat="entity in jfTableView.options.getPageData() track by $index"
-                              table-view="jfTableView"
-                              msd-wheel="jfTableView.onMouseWheel($event, $delta, $deltaX, $deltaY)"
-                              row-id="$index"
-                              data="entity"></jf-table-row>
             </div>
-            <div class="empty-table-placeholder"
-                 ng-if="jfTableView.options.dataWasSet && !jfTableView.options.getRawData().length && !jfTableView.options.pendingExternalPaging && (!jfTableView.options.externalTotalCount || jfTableView.options.externalTotalCount.total === 0)">
-                {{jfTableView.options.emptyTableText || 'This table is empty !'}}
-            </div>
-            <div class="empty-table-placeholder filter-no-results"
-                 ng-if="jfTableView.noFilterResults">
-                Current filter has no results. <a href ng-click="jfTableView.clearFilter()">Clear filter</a>
-            </div>
+            <jf-table-row ng-repeat="entity in jfTableView.options.getPageData() track by $index"
+                          table-view="jfTableView"
+                          msd-wheel="jfTableView.onMouseWheel($event, $delta, $deltaX, $deltaY)"
+                          row-id="$index"
+                          data="entity"></jf-table-row>
+        </div>
+        <div class="empty-table-placeholder"
+             ng-if="jfTableView.options.dataWasSet && !jfTableView.options.getRawData().length && !jfTableView.options.pendingExternalPaging && (!jfTableView.options.externalTotalCount || jfTableView.options.externalTotalCount.total === 0)">
+            {{jfTableView.options.emptyTableText || 'This table is empty !'}}
+        </div>
+        <div class="empty-table-placeholder filter-no-results"
+             ng-if="jfTableView.noFilterResults">
+            Current filter has no results. <a href ng-click="jfTableView.clearFilter()">Clear filter</a>
         </div>
     </div>
-
 
 </div>

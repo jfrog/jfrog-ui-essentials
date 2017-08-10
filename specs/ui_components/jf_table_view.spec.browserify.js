@@ -433,7 +433,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         var expectPaginationState = (current, total) => {
             let textContent = pagination.text().replace(/[\ \n]/g, '');
-            expect(textContent).toEqual(`‹Pageof${total}›`);
+            expect(textContent.trim()).toEqual(`‹Pageof${total}›`);
             expect(pagination.find('.grid-page-box').val()).toEqual(current.toString())
         }
 
@@ -601,7 +601,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         var expectPaginationState = (current, total) => {
             let textContent = pagination.text().replace(/[\ \n]/g, '');
-            expect(textContent).toEqual(`‹Pageof${total}›`);
+            expect(textContent.trim()).toEqual(`‹Pageof${total}›`);
             expect(pagination.find('.grid-page-box').val()).toEqual(current.toString())
         }
 
