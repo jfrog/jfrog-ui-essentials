@@ -1196,7 +1196,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 		let objScope = {row: {entity: row}, grid: tableOptions, appScope: tableOptions.appScope};
 		let editState = $trigger.find('[ui-sref]:not(.no-cm-action):not([cm-additional-action])').length ? $trigger.parent().parent().find('[ui-sref]:not(.no-cm-action):not([cm-additional-action])')[0].attributes['ui-sref'].textContent : null;
 		if (editState) {
-			let stateAndParams = _getStateAndParamsFromUISrefString(editState);
+			let stateAndParams = _getStateAndParamsFromUISrefString(editState, objScope);
 
 			return {
 				do: ()=>{
@@ -1265,7 +1265,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				});
 			}
 			else if (commandName && srefLink) {
-				let stateAndParams = _getStateAndParamsFromUISrefString(srefLink);
+				let stateAndParams = _getStateAndParamsFromUISrefString(srefLink, objScope);
 				let func = () => {
 					$state.go(stateAndParams.state,stateAndParams.stateParams);
 				}
@@ -1282,7 +1282,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 		return additionalCommands;
 	}
 
-	function _getStateAndParamsFromUISrefString(uiSrefContent) {
+	function _getStateAndParamsFromUISrefString(uiSrefContent, objScope) {
 		let parenthesesOpenIndex = uiSrefContent.indexOf('(');
 		let state = uiSrefContent.substr(0,parenthesesOpenIndex !== -1 ? parenthesesOpenIndex : undefined);
 		let paramsString = uiSrefContent.substr(parenthesesOpenIndex);
