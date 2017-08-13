@@ -1194,39 +1194,18 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
 	function getEditAction($trigger, row, tableOptions) {
 		let objScope = {row: {entity: row}, grid: tableOptions, appScope: tableOptions.appScope};
-		let editState = $trigger.parent().parent().find('[ui-sref]:not(.no-cm-action)').length ? $trigger.parent().parent().find('[ui-sref]:not(.no-cm-action)')[0].attributes['ui-sref'].textContent : null;
+		let editState = $trigger.find('[ui-sref]:not(.no-cm-action):not([cm-additional-action])').length ? $trigger.parent().parent().find('[ui-sref]:not(.no-cm-action):not([cm-additional-action])')[0].attributes['ui-sref'].textContent : null;
 		if (editState) {
-			let parenthesesOpenIndex = editState.indexOf('(');
-			let state = editState.substr(0,parenthesesOpenIndex);
-			let paramsString = editState.substr(parenthesesOpenIndex);
-			let openBraceIndex = paramsString.indexOf('{');
-			let closeBraceIndex = paramsString.lastIndexOf('}');
-			paramsString = paramsString.substr(openBraceIndex+1,closeBraceIndex-openBraceIndex-1);
-
-			let paramsObj = {};
-
-			let paramsSplit = paramsString.split(',');
-
-			paramsSplit.forEach((param)=>{
-				let keyVal = param.split(':');
-				let key = keyVal[0].trim();
-				let val = keyVal[1].trim();
-				if (val.startsWith('row.') || val.startsWith('grid.')) val = _.get(objScope,val);
-				else if (val.startsWith('!row.') || val.startsWith('grid.')) val = !_.get(objScope,val);
-
-				else if (val.startsWith("'")) val = val.split("'").join('');
-				else if (val.startsWith('"')) val = val.split('"').join('');
-				paramsObj[key]=val;
-			});
+			let stateAndParams = _getStateAndParamsFromUISrefString(editState);
 
 			return {
 				do: ()=>{
-					$state.go(state,paramsObj);
+					$state.go(stateAndParams.state,stateAndParams.stateParams);
 				}
 			}
 		}
 		else {
-			let ngClicks = $trigger.find('[ng-click]:not(.no-cm-action)');
+			let ngClicks = $trigger.find('[ng-click]:not(.no-cm-action):not([cm-additional-action])');
 			let clickCommand;
 			for (let i in ngClicks) {
 				let ngClick = ngClicks[i];
@@ -1259,14 +1238,16 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 	function getAdditionalActions($trigger,row,tableOptions) {
 		let objScope = {row: {entity: row}, grid: tableOptions, appScope: tableOptions.appScope};
 		let additionalCommands = [];
-		let additionalElems = $trigger.parent().parent().find('[cm-aditional-action]');
+		let additionalElems = $trigger.find('[cm-additional-action]');
+
 		for (let i = 0; i<additionalElems.length; i++) {
 			let elem = additionalElems[i];
-			let clickCommand = elem.attributes['ng-click'].textContent;
-			let icon = elem.attributes['class'].textContent;
-			let commandName = elem.attributes['cm-aditional-action'].textContent;
+			let clickCommand = elem.attributes['ng-click'] ? elem.attributes['ng-click'].textContent : undefined;
+			let srefLink = elem.attributes['ui-sref'] ? elem.attributes['ui-sref'].textContent : undefined;
+			let icon = elem.attributes['class'] ? elem.attributes['class'].textContent : undefined;
+			let commandName = elem.attributes['cm-additional-action'].textContent;
 
-			if (clickCommand) {
+			if (commandName && clickCommand) {
 				let parenthesesOpenIndex = clickCommand.indexOf('(');
 				let funcName = clickCommand.substr(0,parenthesesOpenIndex);
 				let paramsString = clickCommand.substr(parenthesesOpenIndex).split('(').join('').split(')').join('').trim();
@@ -1283,9 +1264,56 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 					}
 				});
 			}
+			else if (commandName && srefLink) {
+				let stateAndParams = _getStateAndParamsFromUISrefString(srefLink);
+				let func = () => {
+					$state.go(stateAndParams.state,stateAndParams.stateParams);
+				}
+				additionalCommands.push({
+					name: commandName,
+					icon: icon,
+					do: () => {
+						func();
+					}
+				});
+			}
 		}
 
 		return additionalCommands;
+	}
+
+	function _getStateAndParamsFromUISrefString(uiSrefContent) {
+		let parenthesesOpenIndex = uiSrefContent.indexOf('(');
+		let state = uiSrefContent.substr(0,parenthesesOpenIndex !== -1 ? parenthesesOpenIndex : undefined);
+		let paramsString = uiSrefContent.substr(parenthesesOpenIndex);
+		let openBraceIndex = paramsString.indexOf('{');
+		let closeBraceIndex = paramsString.lastIndexOf('}');
+
+		let paramsObj = {};
+
+		if (openBraceIndex !== -1 && closeBraceIndex !== -1) {
+
+			paramsString = paramsString.substr(openBraceIndex+1,closeBraceIndex-openBraceIndex-1);
+
+			let paramsSplit = paramsString.split(',');
+
+			paramsSplit.forEach((param)=>{
+				let keyVal = param.split(':');
+				let key = keyVal[0].trim();
+				let val = keyVal[1].trim();
+				if (val.startsWith('row.') || val.startsWith('grid.')) val = _.get(objScope,val);
+				else if (val.startsWith('!row.') || val.startsWith('grid.')) val = !_.get(objScope,val);
+
+				else if (val.startsWith("'")) val = val.split("'").join('');
+				else if (val.startsWith('"')) val = val.split('"').join('');
+				paramsObj[key]=val;
+			});
+		}
+		return {
+			state,
+			stateParams: paramsObj
+		}
+
 	}
 
 }
