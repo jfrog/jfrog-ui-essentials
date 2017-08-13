@@ -95,6 +95,7 @@ class jfMarkupEditorController {
 	onClear(){
 		this.$timeout(()=>{
 			this.markup = '';
+			this.preview = '';
         });
     }
 
