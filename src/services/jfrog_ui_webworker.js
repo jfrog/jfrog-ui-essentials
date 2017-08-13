@@ -13,19 +13,44 @@ export class JFrogUIWebWorker {
     check() {
         let defer = this.$q.defer();
 
-        this.wwPool.open();
+        if (this.checking) {
+            if (!this.pendingCheckDefers) this.pendingCheckDefers = [];
+	        this.pendingCheckDefers.push(defer);
+        }
+        else {
+	        this.wwPool.open();
 
-        this.wwPool.send({cmd: 'testWorker'})
-            .then(response => {
-                if (response === 'OK') defer.resolve();
-                else defer.reject();
-                this.wwPool.close();
-            })
-            .catch(e => {
-                defer.reject();
-                this.wwPool.close();
-            }
-        );
+	        this.checking = true;
+	        this.wwPool.send({cmd: 'testWorker'})
+	            .then(response => {
+		            this.checking = false;
+		            if (response === 'OK') {
+		                defer.resolve();
+		                if (this.pendingCheckDefers) {
+			                this.pendingCheckDefers.forEach(d => d.resolve());
+			                delete this.pendingCheckDefers;
+                        }
+		            }
+		            else {
+		                defer.reject();
+			            if (this.pendingCheckDefers) {
+				            this.pendingCheckDefers.forEach(d => d.reject());
+				            delete this.pendingCheckDefers;
+			            }
+		            }
+		            this.wwPool.close();
+	            })
+	            .catch(e => {
+                    this.checking = false;
+                    defer.reject();
+		            if (this.pendingCheckDefers) {
+			            this.pendingCheckDefers.forEach(d => d.reject());
+			            delete this.pendingCheckDefers;
+		            }
+                    this.wwPool.close();
+                }
+            );
+        }
 
         return defer.promise;
     }
@@ -38,14 +63,14 @@ export class JFrogUIWebWorker {
         this.wwPool.close();
     }
 
-    markupPreview(type, markup) {
+    markupPreview(type, markup, instanceId = 0) {
 
         if (!this.wwPool.isOpened()) this.open();
 
         let defer = this.$q.defer();
 
-        this.wwPool.kill({cmd: 'convertMarkup'});
-        this.wwPool.send({cmd: 'convertMarkup', type, markup})
+        this.wwPool.kill({cmd: 'convertMarkup', instanceId});
+        this.wwPool.send({cmd: 'convertMarkup', instanceId, type, markup})
             .then(response => {
                 if (response.html) {
                     defer.resolve(response.html);

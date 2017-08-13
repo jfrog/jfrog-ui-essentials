@@ -31,6 +31,7 @@ export function WebWorkersPool($q) {
         }
 
         close() {
+            if (!this.pool) return;
             this.pool.forEach(spot => {
                 spot.worker.terminate();
             })
@@ -44,7 +45,6 @@ export function WebWorkersPool($q) {
                 if (this.debugEnabled) console.log('Terminating worker: #' + this.pool.indexOf(spot));
                 spot.worker.terminate();
                 spot.worker = new Worker(this.webworkerPath);
-                ;
                 spot.busy = false;
                 spot.msg = null;
             })

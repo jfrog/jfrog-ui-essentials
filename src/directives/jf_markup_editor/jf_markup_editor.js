@@ -7,6 +7,8 @@ class jfMarkupEditorController {
         this.$timeout = $timeout;
         this.$scope = $scope;
 
+        this.instanceId = Math.floor(Math.random()*10000000000);
+
         this.JFrogUIWebWorker = JFrogUIWebWorker;
         this.checkPreviewers();
         if (this.previewersCount === 2) {
@@ -57,7 +59,7 @@ class jfMarkupEditorController {
             this.previewRenderers[this.language.toLowerCase()](this.markup, (preview)=>this.setPreview(preview));
         }
         else if (this.webworkerOk) {
-            this.JFrogUIWebWorker.markupPreview(this.language.toLowerCase(), this.markup)
+            this.JFrogUIWebWorker.markupPreview(this.language.toLowerCase(), this.markup, this.instanceId)
                 .then(html => this.setPreview(html))
         }
     }
