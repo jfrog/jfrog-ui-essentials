@@ -116,9 +116,23 @@ class jfTableViewController {
     }
     toggleSelectAll() {
         this.allSelected = !this.allSelected;
-        this.options.getPrePagedData().forEach(row=>row.$selected = this.allSelected);
+        this.options.getPrePagedData().forEach(row=>{
+	        if (this.options.isRowSelectable && !this.options.isRowSelectable({entity: row})) {
+		        row.$selected = false;
+	        }
+	        else {
+		        row.$selected = this.allSelected
+	        }
+        });
         if (this.options.groupedBy) {
-            this.options.getFilteredData().forEach(row=>row.$selected = this.allSelected);
+            this.options.getFilteredData().forEach(row=>{
+                if (this.options.isRowSelectable && !this.options.isRowSelectable({entity: row})) {
+	                row.$selected = false;
+                }
+                else {
+	                row.$selected = this.allSelected
+                }
+            });
         }
 
     }
