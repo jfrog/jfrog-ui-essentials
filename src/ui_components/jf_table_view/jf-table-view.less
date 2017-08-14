@@ -1,5 +1,6 @@
 .jf-table-view {
   width: 100%;
+  position: relative;
   .columns-customization-wrap {
     width: 100%;
     position: absolute;
@@ -7,21 +8,24 @@
     .jf-multi-dropdown {
       .drop-down-container {
         visibility: visible;
-        top: 160px;
+        top: 135px;
       }
     }
   }
-  a.new-entity {
-    color: @gray-dark;
-    font-size: 16px;
-    &:hover {
-      text-decoration: none;
-      color: @color-JFrog-green;
-    }
-    i {
-      font-size: 18px;
-      margin: 1px 8px 0 0;
-      vertical-align: middle;
+  .new-entity-wrapper {
+    text-align: right;
+    a.new-entity {
+      color: @gray-dark;
+      font-size: 16px;
+      &:hover {
+        text-decoration: none;
+        color: @color-JFrog-green;
+      }
+      i {
+        font-size: 18px;
+        margin: 1px 8px 0 0;
+        vertical-align: middle;
+      }
     }
   }
 

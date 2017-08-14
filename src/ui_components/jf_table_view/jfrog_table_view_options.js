@@ -51,7 +51,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			this.selectionColumnWidth = 50; //px
 			this.resizableColumns = true;
 			this.defaultFilterByAll = true;
-			this.columnsCustomization = false;
+			this.columnsCustomization = true;
 			this.headersVisible = true;
 			this.autoFocusFilter = false;
 			this.noCount = false;

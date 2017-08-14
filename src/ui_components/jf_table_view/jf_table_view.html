@@ -1,5 +1,13 @@
 <div class="jf-table-view" style="clear: both">
 
+    <div class="new-entity-wrapper">
+        <a href class="new-entity"
+           ng-click="jfTableView.createNewEntity()"
+           ng-if="jfTableView.options.newEntityCallback">
+            <i class="icon icon-new"></i> Add {{jfTableView.options.useAnWithObjectName ? 'an' : 'a'}} {{jfTableView.objectName ? jfTableView.objectName.split('/')[0] : jfTableView.options.objectName ? jfTableView.options.objectName.split('/')[0] : 'Item'}}
+        </a>
+    </div>
+
     <div class="columns-customization-wrap"
          ng-if="jfTableView.options.columnsCustomization">
         <div class="columns-customization pull-right">
@@ -9,14 +17,6 @@
                                items="jfTableView.options.availableColumns"
                                on-change="jfTableView.options.updateCustomizedColumns()"></jf-multi-dropdown>
         </div>
-    </div>
-
-    <div class="text-right">
-        <a href class="new-entity"
-           ng-click="jfTableView.createNewEntity()"
-           ng-if="jfTableView.options.newEntityCallback">
-            <i class="icon icon-new"></i> Add {{jfTableView.options.useAnWithObjectName ? 'an' : 'a'}} {{jfTableView.objectName ? jfTableView.objectName.split('/')[0] : jfTableView.options.objectName ? jfTableView.options.objectName.split('/')[0] : 'Item'}}
-        </a>
     </div>
 
     <jf-table-top table-view="jfTableView"></jf-table-top>
