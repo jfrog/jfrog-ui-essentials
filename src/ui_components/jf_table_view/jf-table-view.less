@@ -101,6 +101,16 @@
           &.actions {
             display: inline-table !important;
           }
+          &.selection{
+            &.single-selection{
+              .selection-button{
+                .selection-icon{
+                  display: block;
+                }
+              }
+            }
+          }
+
         }
       }
       &.sticky {
@@ -164,11 +174,6 @@
               .selection-icon{
                 display: none;
                 &.selected{
-                  display: block;
-                }
-              }
-              &:hover{
-                .selection-icon{
                   display: block;
                 }
               }
