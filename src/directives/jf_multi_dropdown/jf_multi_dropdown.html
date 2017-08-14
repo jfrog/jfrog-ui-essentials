@@ -10,7 +10,7 @@
     </div>
     <div ng-if="jfMultiDropdown.opened"
          class="drop-down-container">
-        <div class="filter-container">
+        <div class="filter-container" ng-if="!jfMultiDropdown.noFilter">
             <form>
                 <jf-field autofocus="true">
                     <input type="text"

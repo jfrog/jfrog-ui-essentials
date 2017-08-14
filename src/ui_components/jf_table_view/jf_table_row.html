@@ -106,4 +106,9 @@
             </div>
         </div>
     </div>
+    <div class="columns-customization-icon"
+         ng-click="jfTableRow.tableView.options.toggleColumnsCustomizationDropdown()"
+         ng-if="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.columnsCustomization">
+        <i class="icon-menu-arrow"></i>
+    </div>
 </div>

@@ -1063,6 +1063,13 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			return action;
 		}
 
+		toggleColumnsCustomizationDropdown() {
+			let opened = $(this.dirCtrl.$element).find('.drop-down-container').length;
+			if (!opened) $timeout(()=>{
+				$(this.dirCtrl.$element).find('.main-box.selected-view').click();
+			});
+		}
+
 	}
 
 

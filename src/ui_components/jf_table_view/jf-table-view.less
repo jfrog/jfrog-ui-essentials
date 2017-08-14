@@ -2,8 +2,14 @@
   width: 100%;
   .columns-customization-wrap {
     width: 100%;
-    height: 50px;
-    display: block
+    position: absolute;
+    visibility: hidden;
+    .jf-multi-dropdown {
+      .drop-down-container {
+        visibility: visible;
+        top: 160px;
+      }
+    }
   }
   a.new-entity {
     color: @gray-dark;
@@ -66,7 +72,7 @@
     clear: both;
     .table-rows-container {
       position: relative;
-      border-top: 1px solid #cdd2d4;
+      border-top: 2px solid @blackBGLight;
       .scroll-faker-container {
         position: absolute;
         width: 30px;
@@ -79,6 +85,12 @@
       }
       .jf-table-row {
       }
+    }
+    .columns-customization-icon {
+      position: absolute;
+      right: -4px;
+      bottom: 32px;
+      cursor: pointer;
     }
     .empty-table-placeholder {
       font-size: 20px;
@@ -95,6 +107,7 @@
       white-space: nowrap;
       padding: 0;
       margin: 0;
+      position: relative;
 
       &:hover {
         .jf-table-cell {

@@ -4,6 +4,7 @@
          ng-if="jfTableView.options.columnsCustomization">
         <div class="columns-customization pull-right">
             <jf-multi-dropdown title="Columns"
+                               no-filter="true"
                                filter-placeholder="Filter Columns"
                                items="jfTableView.options.availableColumns"
                                on-change="jfTableView.options.updateCustomizedColumns()"></jf-multi-dropdown>

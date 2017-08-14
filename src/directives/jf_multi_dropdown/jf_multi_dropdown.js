@@ -112,7 +112,8 @@ export function jfMultiDropdown() {
             onOpenStateChange: '&?',
             dropdownOpened: '=',
             showSelected: '@',
-	        showLabelCounter: '@'
+	        showLabelCounter: '@',
+            noFilter: '=?'
         },
         templateUrl: 'directives/jf_multi_dropdown/jf_multi_dropdown.html'
     }
