@@ -5,59 +5,60 @@
     height: 50px;
     display: block
   }
+  a.new-entity {
+    color: @gray-dark;
+    font-size: 16px;
+    &:hover {
+      text-decoration: none;
+      color: @color-JFrog-green;
+    }
+    i {
+      font-size: 18px;
+      margin: 1px 8px 0 0;
+      vertical-align: middle;
+    }
+  }
+
   .jf-table-top {
-    position: relative;
-    width: 100%;
+//    background-color: blue;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
 
-    a.new-entity {
-      color: @gray-dark;
-      font-size: 16px;
-      &:hover {
-        text-decoration: none;
-        color: @color-JFrog-green;
+    .counter-and-filter-wrapper {
+      .table-counter {
+        font-size: 16px;
+        font-weight: 700;
+        height: 16px;
+        margin-bottom: 10px;
+        color: @blackBGLight;
       }
-      i {
-        font-size: 18px;
-        margin: 1px 8px 0 0;
-        vertical-align: middle;
+      .jf-table-filter {
+        i {
+          color: @light-gray;
+        }
+        input {
+          width: 250px;
+        }
       }
     }
 
-    .jf-table-right-actions {
-      & > div {
-        display: inline-block;
-        margin: 0 15px
-      }
+    .batch-actions-wrapper {
+      flex-grow: 1;
+      align-self: flex-end;
+      margin-bottom: 14px;
     }
 
-
-    .grid-batch-actions {padding: 0;}
     .pagination-controls {
+      align-self: flex-end;
+      margin-bottom: 13px;
       .grid-pagination {
+        font-size: 14px;
+        color: @blackBGLight;
         margin: 0;
         padding: 0;
       }
-
     }
-
-
-    .counter-and-filter-wrapper {
-      margin-bottom: 15px;
-      float: left;
-      & > div {
-        //display: inline-block;
-        margin-left: 5px;
-        margin-bottom: 5px;
-      }
-    }
-
-    .jf-table-filter {
-      i {color: @light-gray;}
-      input {
-        width: 250px;
-      }
-    }
-
   }
 
   .jf-table-view-container {
@@ -185,6 +186,10 @@
           &.sortable {
             cursor: pointer;
           }
+          .jf-table-cell-content {
+            font-size: 14px;
+            font-weight: 700;
+          }
         }
         &.group-header {
           .icon-more {
@@ -274,98 +279,6 @@
               &.selected {
                 &:before {
                   color: @greenBGDark;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  &.old-grid-theme {
-    .jf-table-view-container {
-      font-size: 16px;
-      .table-rows-container {
-      }
-      .empty-table-placeholder {
-      }
-      .jf-table-row {
-        border: 1px solid @grayGridHeader;
-        &:nth-child(odd) {
-          background-color: @white;
-        }
-        &:nth-child(even) {
-          background-color: @grayGridRow;
-        }
-        &:not(:last-child) {
-          border-bottom: none;
-        }
-        &:not(.headers) {
-        }
-        &.headers {
-          border-bottom: none;
-          color: @grayFontGeneral;
-          background-color: @grayGridHeader;
-          .jf-table-cell-content {
-            .selection-button {
-              .selection-icon:not(.selected) {
-                &:before {
-                  color: @grayBorderDarker !important;
-                }
-              }
-            }
-          }
-
-        }
-        &:not(:first-child) {
-        }
-        .jf-table-cell {
-          &:not(.group-header) {
-            border-right: 1px solid @grayGridHeader;
-          }
-          &.actions {
-            border-right: none;
-          }
-          &.header {
-            &.sortable {
-            }
-          }
-          &.group-header {
-            .icon-more {
-              transform: rotate(-90deg) translate(-5px, 0);
-              margin: 0 5px 0 5px;
-              &.expanded {
-                transform: rotate(0deg) translate(0, 6px);
-              }
-            }
-          }
-
-          .jf-table-cell-content {
-            .selection-button,
-            .action-button {
-              .action-icon {
-                &:before {
-                }
-              }
-              .action-icon:hover {
-                &:before {
-                }
-              }
-            }
-            .selection-button {
-              .selection-icon {
-                &:before {
-                  color: @grayBGDarker;
-                  font-size: 16px;
-                }
-                &:hover:before {
-                  color: @grayFontGeneral;
-                }
-                &.selected {
-                  &:before {
-                    color: @greenFontHeader;
-                  }
                 }
               }
             }

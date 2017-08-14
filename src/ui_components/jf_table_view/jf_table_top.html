@@ -1,27 +1,7 @@
-<div class="jf-table-top"
-     ng-class="{'no-sort':!jfTableTop.tableView.options.sortable}">
+<div class="jf-table-top clearfix">
 
-	<div class="text-right">
-		<a href class="new-entity"
-		   ng-click="jfTableTop.tableView.createNewEntity()"
-		   ng-if="jfTableTop.tableView.options.newEntityCallback">
-			<i class="icon icon-new"></i> Add {{jfTableTop.tableView.options.useAnWithObjectName ? 'an' : 'a'}} {{jfTableTop.tableView.objectName ? jfTableTop.tableView.objectName.split('/')[0] : jfTableTop.tableView.options.objectName ? jfTableTop.tableView.options.objectName.split('/')[0] : 'Item'}}
-		</a>
-	</div>
-	<div class="columns-customization-wrap"
-	     ng-if="jfTableTop.tableView.options.columnsCustomization">
-		<div class="columns-customization pull-right">
-			<jf-multi-dropdown title="Columns"
-			                   filter-placeholder="Filter Columns"
-			                   items="jfTableTop.tableView.options.availableColumns"
-			                   on-change="jfTableTop.tableView.options.updateCustomizedColumns()"></jf-multi-dropdown>
-		</div>
-	</div>
-
-	<div class="counter-and-filter-wrapper clearfix">
-
-		<div ng-if="!jfTableTop.tableView.options.noCount" class="grid-counter">{{ jfTableTop.tableView.getTotalRecords() }}<span ng-if="jfTableTop.tableView.getSelectedRecords()"> ({{jfTableTop.tableView.getSelectedRecords()}} Selected)</span></div>
-
+	<div class="counter-and-filter-wrapper">
+		<div ng-if="!jfTableTop.tableView.options.noCount" class="table-counter">{{ jfTableTop.tableView.getTotalRecords() }}<span ng-if="jfTableTop.tableView.getSelectedRecords()"> ({{jfTableTop.tableView.getSelectedRecords()}} Selected)</span></div>
 		<div class="jf-table-filter"
 		     ng-if="jfTableTop.tableView.options.getRawData().length || jfTableTop.tableView.options.externalTotalCount.total > 0">
 			<input class="input-text"
@@ -35,15 +15,15 @@
 		</div>
 	</div>
 
-	<div class="pagination-controls pull-right">
+	<div class="batch-actions-wrapper">
+		<jf-table-view-batch-actions table-options="jfTableTop.tableView.options"
+		                             actions="jfTableTop.tableView.options.batchActions"></jf-table-view-batch-actions>
+	</div>
+
+	<div class="pagination-controls">
 		<jf-drag-drop-pagination pagination-api="jfTableTop.tableView.paginationApi"
 		                         ng-if="jfTableTop.tableView.paginationApi">
 		</jf-drag-drop-pagination>
-	</div>
-
-	<div class="pull-right">
-		<jf-table-view-batch-actions table-options="jfTableTop.tableView.options"
-		                             actions="jfTableTop.tableView.options.batchActions"></jf-table-view-batch-actions>
 	</div>
 
 </div>

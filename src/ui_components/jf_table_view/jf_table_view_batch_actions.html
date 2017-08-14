@@ -1,4 +1,4 @@
-<div class="grid-batch-actions text-right">
+<div class="table-batch-actions">
     <a ng-repeat="action in jfTableViewBatchActions.actions"
        ng-class="{disabled: !jfTableViewBatchActions.anySelected() || (action.disabledWhen && action.disabledWhen())}"
        ng-if="!action.visibleWhen || action.visibleWhen()"

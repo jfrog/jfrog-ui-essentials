@@ -36,10 +36,6 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			this.VIRTUAL_SCROLL = 1;
 			this.EXTERNAL_PAGINATION = 2;
 
-			// Themes
-			this.DEFAULT_THEME = 0;
-			this.OLD_GRID_THEME = 1;
-
 			this._setDefaults();
 		}
 
@@ -53,7 +49,6 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			this.paginationMode = this.PAGINATION;
 			this.actionButtonSize = 50; //px
 			this.selectionColumnWidth = 50; //px
-			this.theme = this.DEFAULT_THEME;
 			this.resizableColumns = true;
 			this.defaultFilterByAll = true;
 			this.columnsCustomization = false;
@@ -447,17 +442,6 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
 		disableFilterTooltip() {
 			this.tooltipFilterDisabled = true;
-			return this;
-		}
-
-		setTheme(theme) {
-			this.theme = theme;
-			if (this.theme === this.OLD_GRID_THEME) {
-				this.rowHeight = '40px';
-				this.actionButtonSize = 40;
-				this.selectionColumnWidth = 40;
-			}
-			this._normalizeWidths();
 			return this;
 		}
 
