@@ -8,6 +8,7 @@
         </a>
     </div>
 
+    <jf-table-top table-view="jfTableView"></jf-table-top>
     <div class="columns-customization-wrap"
          ng-if="jfTableView.options.columnsCustomization">
         <div class="columns-customization pull-right">
@@ -18,8 +19,6 @@
                                on-change="jfTableView.options.updateCustomizedColumns()"></jf-multi-dropdown>
         </div>
     </div>
-
-    <jf-table-top table-view="jfTableView"></jf-table-top>
 
     <div class="jf-table-view-container" ng-if="jfTableView.options">
         <div class="jf-table-view-header"

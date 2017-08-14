@@ -51,7 +51,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			this.selectionColumnWidth = 50; //px
 			this.resizableColumns = true;
 			this.defaultFilterByAll = true;
-			this.columnsCustomization = true;
+			this.columnsCustomization = false;
 			this.headersVisible = true;
 			this.autoFocusFilter = false;
 			this.noCount = false;
@@ -215,7 +215,8 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 					actions = actions.concat(col.customActions);
 				}
 			});
-			if (actions.length) {
+			if (actions.length && !this.actionsAggregated) {
+				this.actionsAggregated = true;
 				this.setActions(this.actions.length ? this.actions.concat(actions) : actions);
 			}
 			this._sortableFields = _.map(_.filter(this.columns, c => (angular.isDefined(c.header))), 'field');
