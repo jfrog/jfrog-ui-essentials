@@ -17,4 +17,4 @@ angular.module('jfrog.ui.essentials.services', ['ui.router', 'jfrog.ui_component
     .factory('recursiveDirective', recursiveDirective)
     .service('JFrogNotifications', JFrogNotifications)
     .service('JFrogUIUtils', JFrogUIUtils)
-    .service('JFrogUIWebWorker', JFrogUIWebWorker)
+    .factory('JFrogUIWebWorker', JFrogUIWebWorker)

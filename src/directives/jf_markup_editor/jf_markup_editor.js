@@ -9,7 +9,7 @@ class jfMarkupEditorController {
 
         this.instanceId = Math.floor(Math.random()*10000000000);
 
-        this.JFrogUIWebWorker = JFrogUIWebWorker;
+        this.JFrogUIWebWorker = new JFrogUIWebWorker();
         this.checkPreviewers();
         if (this.previewersCount === 2) {
             this.init();

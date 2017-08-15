@@ -9,7 +9,8 @@ describe('Unit: Web Workers', function () {
     beforeEach(inject(function ($injector, $rootScope) {
         libConfig = $injector.get('JFrogUILibConfig');
         libConfig.setConfig({webworkersPath: 'base/src/webworkers'})
-        jfww = $injector.get('JFrogUIWebWorker');
+        let JFWW = new $injector.get('JFrogUIWebWorker');
+        jfww = new JFWW();
         $scope = $rootScope;
     }));
 
