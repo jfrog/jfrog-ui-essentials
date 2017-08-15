@@ -17,8 +17,9 @@ export function jfTooltipOnOverflow() {
         },
         link: ($scope, $element) => {
             $($element).on('mouseenter',(e)=>{
-                let target = $(e.target);
+                let target = $($element);
                 let targetContent = target.text().trim();
+
 
                 if (target[0].scrollWidth > target.innerWidth()) {
                     if (!target.hasClass('tooltipstered')) {
