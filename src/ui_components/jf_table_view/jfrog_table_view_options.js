@@ -364,7 +364,6 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 		}
 
 		_normalizeWidths() {
-
 			if (!this.dirCtrl) {
 				return;
 			}

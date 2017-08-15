@@ -86,8 +86,8 @@ class jfTableRowController {
         }
 
         if (parseFloat(newLeftWidth) > MIN_WIDTH && (!newRightWidth || parseFloat(newRightWidth) > MIN_WIDTH)) {
-            this.hoveringResize.left.width = newLeftWidth;
-            if (this.hoveringResize.right) this.hoveringResize.right.width = newRightWidth;
+            this.hoveringResize.left.width = this.hoveringResize.left.origWidth = newLeftWidth;
+            if (this.hoveringResize.right) this.hoveringResize.right.width = this.hoveringResize.right.origWidth = newRightWidth;
         }
     }
 

@@ -159,7 +159,7 @@ class jfTableViewController {
     }
 
     getTotalScrollHeight() {
-        return ((this.options.getPrePagedData().length * parseInt(this.options.rowHeight)) + 'px');
+        return ((this.options.getPrePagedData().length * parseFloat(this.options.rowHeight)) + 'px');
     }
 
     initScrollFaker() {
@@ -169,7 +169,7 @@ class jfTableViewController {
                 this.$scope.$apply(()=>{
                     let len = this.options.getPrePagedData().length;
                     if (len) {
-                        let relativePosition = scrollParent.scrollTop()/(len * parseInt(this.options.rowHeight))
+                        let relativePosition = scrollParent.scrollTop()/(len * parseFloat(this.options.rowHeight))
                         this.virtualScrollIndex = Math.floor(relativePosition*len);
                         this.currentPage = Math.floor((this.virtualScrollIndex + this.options.rowsPerPage - 1) / this.options.rowsPerPage);
                     }
@@ -187,7 +187,7 @@ class jfTableViewController {
             let len = this.options.getPrePagedData().length;
             let scrollParent = this.$element.find('.scroll-faker-container');
             let relativePosition = this.virtualScrollIndex / len;
-            let scrollTop = relativePosition * len * parseInt(this.options.rowHeight);
+            let scrollTop = relativePosition * len * parseFloat(this.options.rowHeight);
             scrollParent.scrollTop(scrollTop);
         }
     }
