@@ -301,6 +301,7 @@ class jfWidgetsLayoutController {
 
     compileElements() {
         let elems = $('.compile-children');
+        if (this.scopes) this.scopes.forEach(s=>s.$destroy());
         this.scopes = [];
         for (let i = 0; i< elems.length; i++) {
             let elem = $(elems[i]);
