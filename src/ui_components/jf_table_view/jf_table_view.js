@@ -92,8 +92,10 @@ class jfTableViewController {
 
         let template = columnObj.cellTemplate;
         let templateElem = $(template);
+/*
 	    templateElem.attr('jf-tooltip-on-overflow',true);
         templateElem.addClass('overflow-ellipsis');
+*/
         this.$compile(templateElem)(rowScope);
         elem.empty();
         elem.append(templateElem);
