@@ -76,7 +76,7 @@
     clear: both;
     .table-rows-container {
       position: relative;
-      border-top: 2px solid @blackBGLight;
+      border-top: 2px solid @grayBorderDarker;
       .scroll-faker-container {
         position: absolute;
         width: 30px;
@@ -147,7 +147,11 @@
       }
       &:not(.headers) {
         border: none;
-        border-bottom: 1px solid #cdd2d4;
+        border-bottom: 1px solid @grayBGHover;
+
+        &:hover {
+          background-color: @grayBGHover;
+        }
       }
 
       &:not(:first-child) {
