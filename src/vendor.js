@@ -6,7 +6,8 @@ module.exports = {
 
     JS: [
         'vendor/jquery.highlight.js',
-        'vendor/draggable-rows.js'
+        'vendor/draggable-rows.js',
+        'node_modules/svgxuse/svgxuse.js'
     ],
     JS_FOR_KARMA: [
         'components/jquery/dist/jquery.js',

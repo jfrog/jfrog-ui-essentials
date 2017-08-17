@@ -62,16 +62,14 @@ ul.sidebar-wrapper-inner {
       border-bottom: 1px solid #454545;
       box-shadow:inset 0 -1px 0 0 #2c2c2c;
       transition: color .15s ease-in;
-      i {
+      svg {
         display: inline-block;
         text-align: center;
-        font-size: 24px;
-        width: 55px;
         float: left;
-        color: @menu-text-default;
-        &:before {
-          color: inherit;
-        }
+        fill: @menu-text-default;
+        width: 55px;
+        height: 50px;
+        padding: 14px;
       }
       &.disabled,
       &.disabled:hover {

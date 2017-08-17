@@ -11,12 +11,12 @@
 
             <a ng-if="item.isDisabled"
                class="menu-item disabled"
-               id="{{item.id}}"><i class="{{item.icon}}"></i><span>{{item.label}}</span></a>
+               id="{{item.id}}"><jf-svg-icon id="{{item.icon}}"></jf-svg-icon><span>{{item.label}}</span></a>
 
             <a class="menu-item"
                id="{{item.id}}"
                ng-mouseover="jfSidebar.onMouseOverSimpleItem(item)"
-               ng-if="!item.isDisabled && !item.children"><i class="{{item.icon}}"></i><span>{{item.label}}</span></a>
+               ng-if="!item.isDisabled && !item.children"><jf-svg-icon id="{{item.icon}}"></jf-svg-icon><span>{{item.label}}</span></a>
 
             <a href
                  class="menu-item extended-item"
@@ -24,7 +24,7 @@
                  ng-mouseover="jfSidebar.onMouseOverExtendedItem(item)"
                  ng-mouseleave="jfSidebar.onMouseLeaveExtendedItem(item)"
                  ng-class="{'hover-like': jfSidebar.openSub === item && jfSidebar.isSubMenuOpen()}"
-                 ng-if="!item.isDisabled && item.children"><i class="{{item.icon}}"></i><span>{{item.label}}</span>
+                 ng-if="!item.isDisabled && item.children"><jf-svg-icon id="{{item.icon}}"></jf-svg-icon><span>{{item.label}}</span>
             </a>
 
             <div class="sub-menu" ng-show="jfSidebar.openSub === item" ng-if="item.children && !item.isDisabled" ng-mouseover="jfSidebar.subMenuOver()" ng-click="$event.stopPropagation()">
