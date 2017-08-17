@@ -22,7 +22,7 @@ class jfTableViewController {
         this.$rootScope = $rootScope;
         this.cellScopes = [];
         $scope.$watch('jfTableView.options',(options) => {
-            if (this.options && !this.options.dirCtrl) {
+            if (this.options) {
                 this.options._setDirectiveController(this);
             }
             if (this.options && ! this.paginationApi) {
