@@ -25,7 +25,7 @@ class jfTableViewController {
             if (this.options) {
                 this.options._setDirectiveController(this);
             }
-            if (this.options && ! this.paginationApi) {
+            if (this.options && !this.paginationApi) {
                 this.paginationApi = new PaginationApi(this);
 
                 this.paginationApi.registerChangeListener(()=>{
@@ -41,7 +41,7 @@ class jfTableViewController {
         
         $(window).on('resize',on_resize);
         $scope.$on('$destroy', ()=>{
-            this.cellScopes.forEach(s=>s.$destroy())
+            this.cellScopes.forEach(s=>s.$destroy());
             $(window).off('resize',on_resize);
         })
 
