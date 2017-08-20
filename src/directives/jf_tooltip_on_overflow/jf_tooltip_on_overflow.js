@@ -13,36 +13,41 @@ export function jfTooltipOnOverflow() {
 
     return {
         restrict: 'A',
-        scope: {
-        },
         link: ($scope, $element) => {
             $($element).on('mouseenter',(e)=>{
-                let target = $($element);
-                let targetContent = target.text().trim();
+                let targets = [$($element), $(e.target)];
+                let tooltipShown = false;
+	            let isNoTooltip = (cell) => {
+		            return (cell[0] && cell[0].classList && cell[0].classList.contains('no-tooltip'));
+	            };
 
+	            for (let i = 0; !tooltipShown && i < targets.length; i++) {
+                    let target = targets[i];
 
-                if (target[0].scrollWidth > target.innerWidth()) {
-                    if (!target.hasClass('tooltipstered')) {
-                        target.tooltipster({
-                            animation: 'fade',
-                            trigger: 'hover',
-                            onlyOne: 'true',
-                            interactive: 'true',
-                            position: 'bottom',
-                            theme: 'tooltipster-default bottom',
-                            content: targetContent
-                        });
-                        target.tooltipster('show');
-                    }
-                    else {
-                        target.tooltipster('enable');
+	                let targetContent = target.children(':not(:visible)').length ? target.children(':visible').text().trim() : target.text().trim();
+	                if (!isNoTooltip(target) && target[0].scrollWidth > target.innerWidth()) {
+		                if (!target.hasClass('tooltipstered')) {
+			                target.tooltipster({
+				                animation: 'fade',
+				                trigger: 'hover',
+				                onlyOne: 'true',
+				                interactive: 'true',
+				                position: 'bottom',
+				                theme: 'tooltipster-default bottom',
+				                content: targetContent
+			                });
+			                target.tooltipster('show');
+		                }
+		                else {
+			                target.tooltipster('enable');
 
-                        if (target.tooltipster('content') != targetContent)
-                            target.tooltipster('content', targetContent);
-                    }
+			                if (target.tooltipster('content') != targetContent)
+				                target.tooltipster('content', targetContent);
+		                }
+	                }
+	                else if (target.hasClass('tooltipstered'))
+		                target.tooltipster('disable');
                 }
-                else if (target.hasClass('tooltipstered'))
-                    target.tooltipster('disable');
             });
             $scope.$on('$destroy', () => {
                 $($element).off('mouseenter');

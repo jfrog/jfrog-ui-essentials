@@ -92,13 +92,37 @@ class jfTableViewController {
 
         let template = columnObj.cellTemplate;
         let templateElem = $(template);
-/*
-	    templateElem.attr('jf-tooltip-on-overflow',true);
-        templateElem.addClass('overflow-ellipsis');
-*/
-        this.$compile(templateElem)(rowScope);
+	    this._autoAddEllipsisClass(templateElem);
+	    this.$compile(templateElem)(rowScope);
         elem.empty();
         elem.append(templateElem);
+    }
+
+	_autoAddEllipsisClass(templateRoot) {
+        let allText = templateRoot.text();
+        let elementToAddTo = null;
+        let recursiveAdd = (root) => {
+            let children = root.children();
+            let childToRecurseInto = null;
+            for (let i = 0; i < children.length; i++) {
+                let child = $(children[i]);
+                if (child.text() === allText) {
+                    childToRecurseInto = child;
+                    break;
+                }
+            }
+            if (childToRecurseInto) {
+                recursiveAdd(childToRecurseInto);
+            }
+            else {
+                elementToAddTo = root;
+            }
+        }
+        recursiveAdd(templateRoot);
+        if (elementToAddTo) {
+	        elementToAddTo.attr('jf-tooltip-on-overflow',true);
+	        elementToAddTo.addClass('overflow-ellipsis');
+        }
     }
 
     onUpdateFilter() {

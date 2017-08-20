@@ -1240,7 +1240,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			let elem = additionalElems[i];
 			let clickCommand = elem.attributes['ng-click'] ? elem.attributes['ng-click'].textContent : undefined;
 			let srefLink = elem.attributes['ui-sref'] ? elem.attributes['ui-sref'].textContent : undefined;
-			let icon = elem.attributes['class'] ? elem.attributes['class'].textContent : undefined;
+			let icon = elem.attributes['cm-additional-action-icon'].textContent;
 			let commandName = elem.attributes['cm-additional-action'].textContent;
 
 			if (commandName && clickCommand) {
