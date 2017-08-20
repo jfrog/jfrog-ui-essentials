@@ -34,6 +34,8 @@ class jfTableRowController {
         else {
             this.tableView.toggleSelectAll();
         }
+	    this.tableView.options.fire('selection.change', this.tableView.options.getSelectedRows());
+
     }
 
     toggleGroupExpansion() {

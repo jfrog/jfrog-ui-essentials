@@ -204,6 +204,8 @@ class jfTableViewController {
                         this.currentPage = 0;
                     }
                     this.options.update(true,true);
+	                this.options.fire('pagination.change', this.paginationApi.getCurrentPage());
+
                 })
             })
         }
@@ -295,6 +297,7 @@ class PaginationApi {
         this.syncVirtualScroll();
         this.update();
         this.sendExternalPageRequest();
+	    this.tableCtrl.options.fire('pagination.change', this.getCurrentPage());
     }
     prevPage() {
         if (this.getCurrentPage() === 1) return;
@@ -302,6 +305,7 @@ class PaginationApi {
         this.syncVirtualScroll();
         this.update();
         this.sendExternalPageRequest();
+	    this.tableCtrl.options.fire('pagination.change', this.getCurrentPage());
     }
     sendExternalPageRequest() {
         if (this.tableCtrl.options.paginationMode === this.tableCtrl.options.EXTERNAL_PAGINATION) {
@@ -309,14 +313,16 @@ class PaginationApi {
         }
     }
     setPage(pageNum) {
-        if (pageNum < 1 || pageNum > this.getTotalPages()) return;
+	    if (pageNum < 1 || pageNum > this.getTotalPages()) return;
 
-        this.tableCtrl.currentPage = pageNum - 1;
+	    this.tableCtrl.currentPage = pageNum - 1;
 
-        this.syncVirtualScroll()
-        this.update();
-        this.sendExternalPageRequest();
+	    this.syncVirtualScroll()
+	    this.update();
+	    this.sendExternalPageRequest();
+	    this.tableCtrl.options.fire('pagination.change', this.getCurrentPage());
     }
+
     update() {
         if (this.getCurrentPage() > this.getTotalPages()) {
             this.setPage(this.getTotalPages());

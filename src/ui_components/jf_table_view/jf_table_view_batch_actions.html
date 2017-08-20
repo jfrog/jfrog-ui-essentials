@@ -1,12 +1,25 @@
-<div class="table-batch-actions">
-    <a ng-repeat="action in jfTableViewBatchActions.actions"
-       ng-class="{disabled: !jfTableViewBatchActions.anySelected() || (action.disabledWhen && action.disabledWhen())}"
-       ng-if="!action.visibleWhen || action.visibleWhen()"
-       ng-click="jfTableViewBatchActions.perform(action)"
-       class="btn batch-action-{{action.icon}}">
-        <img ng-src="images/{{action.icon}}.png"
-                ng-if="action.img"/>
-        <i class="icon icon-{{action.icon}}"
-           ng-if="!action.img"></i> {{ action.name }}
-    </a>
+<div class="grid-batch-actions text-right" jf-disable-ng-animate>
+    <div class="grid-batch-action-wrapper"
+         ng-class="{'more-actions': action === jfTableViewBatchActions.MORE_ACTIONS}"
+         ng-repeat="action in jfTableViewBatchActions.actions track by $index"
+         data-action-id="{{action.name}}"
+         ng-style="{visibility: action === jfTableViewBatchActions.MORE_ACTIONS || jfTableViewBatchActions.visibleActions.indexOf(action) !== -1 ? 'inherit' : 'hidden', opacity: action === jfTableViewBatchActions.MORE_ACTIONS || jfTableViewBatchActions.visibleActions.indexOf(action) !== -1 ? 1 : 0}"
+         jf-tooltip="{{jfTableViewBatchActions.isDisabled(action) ? action.getDisabledTooltip() : ''}}">
+        <a ng-class="{disabled: jfTableViewBatchActions.isDisabled(action)}"
+           ng-if="action !== jfTableViewBatchActions.MORE_ACTIONS && (!action.visibleWhen || action.visibleWhen())"
+           ng-click="jfTableViewBatchActions.perform(action)"
+           class="btn batch-action-{{action.icon}}">
+            <img ng-src="images/{{action.icon}}.png"
+                 ng-if="action.img"/>
+            <i class="icon icon-{{action.icon}}"
+               ng-if="!action.img"></i> {{ action.name }}
+        </a>
+        <div class="more-wrapper"
+             ng-if="action === jfTableViewBatchActions.MORE_ACTIONS">
+            <jf-actions parent-controller="jfTableViewBatchActions"
+                        label="More Actions"
+                        init-method="initActions"
+                        show-drop-down-for-one-item="true"></jf-actions>
+        </div>
+    </div>
 </div>

@@ -24,6 +24,8 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			this.data = [];
 			this.actions = [];
 			this.columns = [];
+			this.listeners = {};
+			this.supportedEvents = ['pagination.change', 'selection.change'];
 			this.appScope = appScope;
 
 			// selection types
@@ -55,6 +57,36 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			this.headersVisible = true;
 			this.autoFocusFilter = false;
 			this.noCount = false;
+		}
+
+		on(event, listener) {
+			if (!_.includes(this.supportedEvents, event)) {
+				console.error('jf-table-view: Unsupported Event: ' + event);
+				return;
+			}
+			if (!this.listeners[event]) this.listeners[event] = [];
+			this.listeners[event].push(listener);
+		}
+
+		off(event, listener) {
+			if (!_.includes(this.supportedEvents, event)) {
+				console.error('jf-table-view: Unsupported Event: ' + event);
+				return;
+			}
+			if (this.listeners[event]) {
+				if (listener) {
+					_.remove(this.listeners[event],l=>l===listener);
+				}
+				else {
+					this.listeners[event] = [];
+				}
+			}
+		}
+
+		fire(event, ...params) {
+			if (this.listeners[event]) {
+				this.listeners[event].forEach(listener=>listener(...params))
+			}
 		}
 
 		setData(data, internalCall) {
