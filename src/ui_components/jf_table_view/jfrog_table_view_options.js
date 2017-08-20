@@ -1145,6 +1145,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 					}
 
 					let getIconName = (classdef) => {
+						if (classdef === undefined) return '';
 						let iconName;
 						let classes = classdef.split(' ');
 						classes.forEach((cls) => {
@@ -1272,7 +1273,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			let elem = additionalElems[i];
 			let clickCommand = elem.attributes['ng-click'] ? elem.attributes['ng-click'].textContent : undefined;
 			let srefLink = elem.attributes['ui-sref'] ? elem.attributes['ui-sref'].textContent : undefined;
-			let icon = elem.attributes['cm-additional-action-icon'].textContent;
+			let icon = elem.attributes['cm-additional-action-icon'] ? elem.attributes['cm-additional-action-icon'].textContent : undefined;
 			let commandName = elem.attributes['cm-additional-action'].textContent;
 
 			if (commandName && clickCommand) {
