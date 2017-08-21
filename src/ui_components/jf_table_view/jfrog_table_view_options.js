@@ -14,6 +14,7 @@ const COMMON_ACTIONS = {
 	}
 };
 
+let defaultAppOptions;
 
 export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFrogDownload) {
 	'ngInject';
@@ -42,21 +43,44 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 		}
 
 		_setDefaults() {
-			this.objectName = 'Item';
-			this.rowHeight = '50px';
-			this.headerRowHeight = '50px';
-			this.rowsPerPage = 25;
-			this.sortable = true;
-			this.selectionMode = this.NO_SELECTION;
-			this.paginationMode = this.PAGINATION;
-			this.actionButtonSize = 50; //px
-			this.selectionColumnWidth = 50; //px
-			this.resizableColumns = true;
-			this.defaultFilterByAll = true;
-			this.columnsCustomization = false;
-			this.headersVisible = true;
-			this.autoFocusFilter = false;
-			this.noCount = false;
+
+			if (defaultAppOptions) {
+				this.objectName = defaultAppOptions.objectName;
+				this.emptyTableText = defaultAppOptions.emptyTableText;
+				this.rowHeight = defaultAppOptions.rowHeight;
+				this.headerRowHeight = defaultAppOptions.headerRowHeight;
+				this.rowsPerPage = defaultAppOptions.rowsPerPage;
+				this.sortable = defaultAppOptions.sortable;
+				this.selectionMode = defaultAppOptions.selectionMode;
+				this.paginationMode = defaultAppOptions.paginationMode;
+				this.actionButtonSize = defaultAppOptions.actionButtonSize;
+				this.selectionColumnWidth = defaultAppOptions.selectionColumnWidth;
+				this.resizableColumns = defaultAppOptions.resizableColumns;
+				this.defaultFilterByAll = defaultAppOptions.defaultFilterByAll;
+				this.columnsCustomization = defaultAppOptions.columnsCustomization;
+				this.headersVisible = defaultAppOptions.headersVisible;
+				this.autoFocusFilter = defaultAppOptions.autoFocusFilter;
+				this.noCount = defaultAppOptions.noCount;
+				this.tooltipFilterDisabled = defaultAppOptions.tooltipFilterDisabled;
+				this.subRowsEnabled = defaultAppOptions.subRowsEnabled;
+			}
+			else {
+				this.objectName = 'Item';
+				this.rowHeight = '50px';
+				this.headerRowHeight = '50px';
+				this.rowsPerPage = 25;
+				this.sortable = true;
+				this.selectionMode = this.NO_SELECTION;
+				this.paginationMode = this.PAGINATION;
+				this.actionButtonSize = 50; //px
+				this.selectionColumnWidth = 50; //px
+				this.resizableColumns = true;
+				this.defaultFilterByAll = true;
+				this.columnsCustomization = false;
+				this.headersVisible = true;
+				this.autoFocusFilter = false;
+				this.noCount = false;
+			}
 		}
 
 		on(event, listener) {
@@ -1111,6 +1135,11 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
 
 	JFrogTableViewOptionsClass.cellTemplateGenerators = cellTemplateGenerators;
+
+	JFrogTableViewOptionsClass.setAppDefaults = (defaultsSetter => {
+		defaultAppOptions = new JFrogTableViewOptionsClass();
+		defaultsSetter(defaultAppOptions);
+	})
 
 	return JFrogTableViewOptionsClass;
 
