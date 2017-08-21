@@ -4,7 +4,7 @@
      ng-mouseup="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.resizableColumns && jfTableRow.onMouseUp($event)"
      ng-mouseleave="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.resizableColumns && jfTableRow.onMouseUp($event)"
      ng-click="jfTableRow.data.$groupHeader && jfTableRow.toggleGroupExpansion()"
-     ng-class="{headers: jfTableRow.rowId === 'headers', 'group-header': jfTableRow.data.$groupHeader, 'expanded': jfTableRow.data.$groupHeader.$expanded, 'sub-row': jfTableRow.data.$parentRow, sticky: jfTableRow.data.$sticky}"
+     ng-class="{headers: jfTableRow.rowId === 'headers', 'group-header': jfTableRow.data.$groupHeader, 'expanded': jfTableRow.data.$groupHeader.$expanded, 'sub-row': jfTableRow.data.$parentRow, sticky: jfTableRow.data.$sticky, selected: jfTableRow.data.$selected}"
      ng-style="{height: jfTableRow.rowId === 'headers' ? '' : jfTableRow.tableView.options.rowHeight, opacity: jfTableRow.tableView.options.ready ? 1 : 0}">
 
     <div class="jf-table-cell selection"
@@ -14,7 +14,7 @@
         <div class="jf-table-cell-content">
             <div class="selection-button"
                  ng-if="(!jfTableRow.data.$groupHeader && jfTableRow.rowId !== 'headers') || (jfTableRow.tableView.options.selectionMode === jfTableRow.tableView.options.MULTI_SELECTION && jfTableRow.tableView.options.getRawData().length)"
-                 ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.selectionColumnWidth}">
+                 ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.selectionColumnWidth +'px'}">
                 <div class="selection-icon icon icon-datagrid-v"
                      ng-class="{selected: jfTableRow.data.$selected || (jfTableRow.rowId === 'headers' && jfTableRow.tableView.allSelected)}"
                      ng-click="jfTableRow.toggleSelection(jfTableRow.rowId === 'headers');$event.stopPropagation();">
