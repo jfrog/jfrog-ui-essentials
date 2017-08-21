@@ -85,11 +85,12 @@
     </div>
 
     <div class="jf-table-cell actions"
-         ng-style="{height: jfTableRow.rowId === 'headers' ? '' : jfTableRow.tableView.options.rowHeight, width: (jfTableRow.tableView.options.actions.length * jfTableRow.tableView.options.actionButtonSize) + 'px'}"
+         ng-style="{height: jfTableRow.rowId === 'headers' ? '' : jfTableRow.tableView.options.rowHeight, width: ((jfTableRow.tableView.options.actions.length <= 3 ? jfTableRow.tableView.options.actions.length : 1) * jfTableRow.tableView.options.actionButtonSize) + 'px'}"
          ng-if="jfTableRow.rowId !== 'headers' && jfTableRow.tableView.options.actions.length && !jfTableRow.data.$groupHeader">
         <div class="jf-table-cell-content">
             <div class="action-button"
                  ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.actionButtonSize + 'px', visibility: !action.visibleWhen || action.visibleWhen(jfTableRow.data) ? 'visible' : 'hidden'}"
+                 ng-if="jfTableRow.tableView.options.actions.length <= 3"
                  ng-repeat="action in jfTableRow.tableView.options.actions">
                 <div class="action-icon"
                      ng-click="jfTableRow.fireAction(action);$event.stopPropagation();"
@@ -103,6 +104,13 @@
                     <div class="action-icon" ng-class="action.icon"></div>
                 </a>
             </div>
+            <div class="action-button"
+                 ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.actionButtonSize + 'px', visibility: !action.visibleWhen || action.visibleWhen(jfTableRow.data) ? 'visible' : 'hidden'}"
+                 ng-if="jfTableRow.tableView.options.actions.length > 3">
+                <div class="action-icon icon-more"
+                     ng-click="jfTableRow.toggleActionsDropdown()"
+                     jf-tooltip="Actions"></div>
+            </div>
         </div>
     </div>
     <div class="columns-customization-icon"
@@ -110,4 +118,17 @@
          ng-if="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.columnsCustomization">
         <i class="icon-menu-arrow"></i>
     </div>
+
+    <div class="row-actions-dropdown" ng-if="jfTableRow.actionsDropdownOpen">
+        <div ng-repeat="action in jfTableRow.tableView.options.actions"
+             ng-if="!action.visibleWhen || action.visibleWhen(jfTableRow.data)"
+             ng-click="jfTableRow.fireAction(action);$event.stopPropagation();jfTableRow.actionsDropdownOpen=false;"
+             class="action-item">
+            <i class="action-icon"
+                 ng-if="!action.href"
+                 ng-class="action.icon"></i>
+            <span>{{action.tooltip}}</span>
+        </div>
+    </div>
+
 </div>

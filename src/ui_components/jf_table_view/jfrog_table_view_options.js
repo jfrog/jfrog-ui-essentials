@@ -403,7 +403,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			let actionsWidth = 0;
 			let selectionWidth = 0;
 			if (this.actions) {
-				actionsWidth = this.actionButtonSize * this.actions.length;
+				actionsWidth = this.actionButtonSize * (this.actions.length <= 3 ? this.actions.length : 1);
 			}
 			if (this.hasSelection()) {
 				selectionWidth = this.selectionColumnWidth;

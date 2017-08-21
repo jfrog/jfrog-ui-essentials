@@ -9,6 +9,7 @@
       .drop-down-container {
         visibility: visible;
         top: 50px;
+        box-shadow: 0 2px 12px rgba(0,0,0,.25);
       }
     }
   }
@@ -121,12 +122,37 @@
     }
     .jf-table-row {
       display: flex;
-      overflow: hidden;
+//      overflow: hidden;
       width: 100%;
       white-space: nowrap;
       padding: 0;
       margin: 0;
       position: relative;
+
+      .row-actions-dropdown {
+        background: white;
+        position: absolute;
+        top: ~"calc(100% - 21px)";
+        right: 26px;
+        z-index: 9999999;
+        box-shadow: 0 2px 12px rgba(0,0,0,.25);
+        .action-item {
+          cursor: pointer;
+          height: 40px;
+          line-height: 40px;
+          padding: 0 10px;
+          .action-icon {
+            margin-right: 8px;
+            &:before {
+              font-size: 18px;
+            }
+          }
+          &:hover {
+            color: @greenFontHeader;
+            background-color: @greenBGDropdownHover;
+          }
+        }
+      }
 
       &.selected,
       &:hover {

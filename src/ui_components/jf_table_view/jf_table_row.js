@@ -1,9 +1,13 @@
 class jfTableRowController {
 	/* @ngInject */
-    constructor($element,$timeout) {
+    constructor($scope, $element, $timeout, JFrogEventBus) {
         this.$element = $element;
         this.$timeout = $timeout;
+        this.JFrogEventBus = JFrogEventBus;
+        this.EVENTS = JFrogEventBus.getEventsDefinition()
         this.templatesCount = _.filter(this.tableView.options.columns,col=>!!col.cellTemplate).length;
+
+        JFrogEventBus.registerOnScope($scope, this.EVENTS.TABLEVIEW_HIDE_ACTIONS_DROPDOWN, () => this.actionsDropdownOpen = false);
     }
     getField(field) {
         return _.get(this.data,field);
@@ -162,6 +166,12 @@ class jfTableRowController {
 
     toggleExpansion() {
         this.tableView.options.toggleExpansion(this.data);
+    }
+
+	toggleActionsDropdown() {
+        let origState = this.actionsDropdownOpen;
+        this.JFrogEventBus.dispatch(this.EVENTS.TABLEVIEW_HIDE_ACTIONS_DROPDOWN);
+	    this.actionsDropdownOpen = !origState;
     }
 }
 

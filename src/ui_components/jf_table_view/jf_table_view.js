@@ -14,12 +14,14 @@ export function jfTableView() {
 
 class jfTableViewController {
 	/* @ngInject */
-    constructor($scope,$element, $timeout, $compile, $rootScope) {
+    constructor($scope, $element, $timeout, $compile, $rootScope, JFrogEventBus) {
         this.$element = $element;
         this.$timeout = $timeout;
         this.$compile = $compile;
         this.$scope = $scope;
-        this.$rootScope = $rootScope;
+	    this.JFrogEventBus = JFrogEventBus;
+	    this.EVENTS = JFrogEventBus.getEventsDefinition();
+	    this.$rootScope = $rootScope;
         this.cellScopes = [];
         $scope.$watch('jfTableView.options',(options) => {
             if (this.options) {
@@ -45,6 +47,7 @@ class jfTableViewController {
             $(window).off('resize',on_resize);
         })
 
+        this._handleDocumentClick();
     }
 
 
@@ -276,10 +279,22 @@ class jfTableViewController {
         return count;
     }
 
+	_handleDocumentClick() {
+		let handler = (e) => {
+			let shouldCloseDropdown = !$(e.target).parents('.jf-table-cell.actions').length || $(e.target).parents('.jf-table-view')[0] !== $(this.$element).find('.jf-table-view')[0];
+
+			if (shouldCloseDropdown) this.JFrogEventBus.dispatch(this.EVENTS.TABLEVIEW_HIDE_ACTIONS_DROPDOWN);
+		};
+		$(document).on('click',handler);
+		this.$scope.$on('$destroy',() => {
+			$(document).off('click', handler)
+		})
+	}
+
 
 }
 
-jfTableViewController.$inject = ['$scope','$element', '$timeout', '$compile', '$rootScope'];
+jfTableViewController.$inject = ['$scope','$element', '$timeout', '$compile', '$rootScope', 'JFrogEventBus'];
 
 class PaginationApi {
     constructor(tableCtrl) {
