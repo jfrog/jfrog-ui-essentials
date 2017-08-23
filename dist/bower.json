@@ -1,6 +1,6 @@
 {
   "name": "jfrog-ui-essentials",
-  "version": "1.0.0-dev.64",
+  "version": "1.0.0-dev.65",
   "homepage": "http://www.jfrog.com",
   "description": "JFrog UI Essentials",
   "license": "Apache-2.0",
@@ -27,7 +27,7 @@
     "angularjs-toaster": "*",
     "angular-file-upload": "1.1.5",
     "jquery": "3.2.1",
-    "jquery-ui": "1.11.4",
+    "jquery-ui": "1.12.1",
     "lodash": "3.9.3",
     "angular-ui-codemirror": "0.2.3",
     "codemirror": "5.0.0",
