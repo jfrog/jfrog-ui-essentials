@@ -27,7 +27,7 @@
     "angularjs-toaster": "*",
     "angular-file-upload": "1.1.5",
     "jquery": "3.2.1",
-    "jquery-ui": "1.11.4",
+    "jquery-ui": "1.12.1",
     "lodash": "3.9.3",
     "angular-ui-codemirror": "0.2.3",
     "codemirror": "5.0.0",
