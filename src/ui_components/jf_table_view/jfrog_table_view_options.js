@@ -243,6 +243,9 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 		}
 
 		setColumns(columns) {
+
+			this.defaultFilterByAll = !_.filter(columns, c => c.filterable === true).length;
+
 			if (!this.origColumnDefs) {
 				this.origColumnDefs = _.cloneDeep(columns);
 			}
@@ -385,11 +388,6 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			else if (!sortable) {
 				this.sortBy(undefined);
 			}
-			return this;
-		}
-
-		setDefaultFilterByAll(filterByAll) {
-			this.defaultFilterByAll = filterByAll;
 			return this;
 		}
 

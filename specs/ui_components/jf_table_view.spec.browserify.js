@@ -478,7 +478,6 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         var testData = createTestData(76);
 
-        options.setDefaultFilterByAll(false);
         options.setRowsPerPage(10);
 
         var currTest = 0;
