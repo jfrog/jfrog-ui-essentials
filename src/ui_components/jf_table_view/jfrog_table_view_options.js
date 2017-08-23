@@ -126,6 +126,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				else {
 					this.data = data;
 				}
+				if (!this.data) this.data = [];
 				this.update();
 			}
 
@@ -917,7 +918,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 		}
 
 		getRawData() {
-			return this.data;
+			return this.data || [];
 		}
 
 		allowColumnsCustomization() {
