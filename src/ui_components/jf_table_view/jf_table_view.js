@@ -193,7 +193,7 @@ class jfTableViewController {
 
     initScrollFaker() {
         if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
-            let scrollParent = this.$element.find('.scroll-faker-container');
+            let scrollParent = $(this.$element).find('.scroll-faker-container');
             scrollParent.on('scroll',(e)=>{
                 this.$scope.$apply(()=>{
                     let len = this.options.getPrePagedData().length;
@@ -216,7 +216,7 @@ class jfTableViewController {
     syncFakeScroller() {
         if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
             let len = this.options.getPrePagedData().length;
-            let scrollParent = this.$element.find('.scroll-faker-container');
+            let scrollParent = $(this.$element).find('.scroll-faker-container');
             let relativePosition = this.virtualScrollIndex / len;
             let scrollTop = relativePosition * len * parseFloat(this.options.rowHeight);
             scrollParent.scrollTop(scrollTop);
@@ -224,7 +224,7 @@ class jfTableViewController {
     }
 
     getScrollWidth() {
-        let el = this.$element.find('.scroll-faker-container')[0];
+        let el = $(this.$element).find('.scroll-faker-container')[0];
         return el.offsetWidth - el.clientWidth;
     }
 
