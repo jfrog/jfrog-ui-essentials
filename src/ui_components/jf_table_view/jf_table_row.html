@@ -62,7 +62,7 @@
              ng-class="{'row-expander-content': $index === 0 && jfTableRow.tableView.options.subRowsEnabled}"
              ng-style="{'text-align': col.textAlign || 'auto'}"
              jf-tooltip-on-overflow
-             ng-if="!col.cellTemplate || jfTableRow.rowId === 'headers'">
+             ng-if="(!col.cellTemplate && jfTableRow.rowId !== 'headers') || (!col.headerCellTemplate && jfTableRow.rowId === 'headers')">
             {{jfTableRow.getField(col.field)}}
             <i ng-if="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.sortable && jfTableRow.tableView.options.sortByField === col.field"
                class="icon"
@@ -76,11 +76,20 @@
         </div>
         <div class="jf-table-cell-content"
              ng-style="{'text-align': col.textAlign || 'auto'}"
-             ng-if="col.cellTemplate && jfTableRow.rowId !== 'headers'">
+             ng-if="(col.cellTemplate && jfTableRow.rowId !== 'headers') || (col.headerCellTemplate && jfTableRow.rowId === 'headers')">
             <jf-table-compiled-cell field="col.field"
                                     row-id="jfTableRow.rowId"
                                     table-row="jfTableRow">
             </jf-table-compiled-cell>
+            <i ng-if="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.sortable && jfTableRow.tableView.options.sortByField === col.field"
+               class="icon"
+               ng-class="{'icon-down-arrow': jfTableRow.tableView.options.revSort, 'icon-up-arrow': !jfTableRow.tableView.options.revSort}"></i>
+            <div class="group-button-wrapper" ng-if="jfTableRow.rowId === 'headers' && col.allowGrouping">
+                <div class="group-button icon-grouping-off"
+                     ng-class="{'icon-grouping-on': jfTableRow.tableView.options.groupedBy === col.field}"
+                     ng-click="jfTableRow.tableView.options.groupBy(col.field); $event.stopPropagation();"
+                ></div>
+            </div>
         </div>
     </div>
 

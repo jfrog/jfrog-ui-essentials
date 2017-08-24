@@ -4,7 +4,7 @@ class jfTableCompiledCellController {
         this.$element = $element;
         this.$timeout = $timeout;
 
-        $scope.$watch('compiledCell.tableRow.data',()=>{
+        $scope.$watch('compiledCell.tableRow.data',() => {
             this.compile()
         });
     }

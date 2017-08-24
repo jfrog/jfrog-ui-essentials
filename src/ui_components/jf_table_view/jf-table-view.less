@@ -256,6 +256,9 @@
           .jf-table-cell-content {
             font-size: 14px;
             font-weight: 700;
+            jf-table-compiled-cell {
+              display: inline-table;
+            }
           }
         }
         &.group-header {
@@ -283,6 +286,7 @@
           vertical-align: middle;
           white-space: nowrap;
           text-overflow: ellipsis;
+
           &:not(.group-header):not(.row-expander-content) {
             max-width: 0;
           }

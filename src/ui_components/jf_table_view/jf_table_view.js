@@ -61,7 +61,7 @@ class jfTableViewController {
         let column = field;
         let row = rowId;
         let columnObj = _.find(this.options.columns,{field:column});
-        let rowObj = this.options.getPageData()[row];
+        let rowObj = row !== 'headers' ? this.options.getPageData()[row] : this.options.headersRow;
 
         if (!rowObj) return;
 
@@ -93,7 +93,7 @@ class jfTableViewController {
         }
         else rowScope = existingScope;
 
-        let template = columnObj.cellTemplate;
+        let template = row !== 'headers' ? columnObj.cellTemplate : columnObj.headerCellTemplate;
         let templateElem = $(template);
 	    this._autoAddEllipsisClass(templateElem);
 	    this.$compile(templateElem)(rowScope);

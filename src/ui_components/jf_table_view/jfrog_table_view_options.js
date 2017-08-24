@@ -221,6 +221,10 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 					this.dirCtrl.refresh();
 				}
 				this._normalizeWidths();
+
+				//This is for updating header cell templates
+				let temp = _.cloneDeep(this.headersRow);
+				this.headersRow = temp;
 			}
 		}
 
@@ -307,7 +311,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			this.headersRow = {};
 			this.columns.forEach(column => {
 				if (column.header) {
-					this.headersRow[column.field] = column.header;
+					_.set(this.headersRow,column.field, column.header);
 				}
 			});
 			return this;
