@@ -6,6 +6,7 @@
   "dependencies": {
     "escodegen": "^1.8.1",
     "esprima": "^4.0.0",
+    "esquery": "^1.0.0",
     "fs-jetpack": "^1.1.0",
     "lodash": "^4.17.4",
     "replace-in-file": "^2.5.3"
