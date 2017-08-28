@@ -16,6 +16,7 @@ class jfTableViewBatchActionsController {
 
 		$scope.$watch('jfTableViewBatchActions.actions',()=>$timeout(()=>this.calcActionsVisibility()));
 		$scope.$watch('jfTableViewBatchActions.tableOptions',()=> {
+			if (!this.tableOptions) return;
 			this.tableOptions.on('selection.change', () => {
 				$timeout(()=>this.updateMoreActions());
 			});
