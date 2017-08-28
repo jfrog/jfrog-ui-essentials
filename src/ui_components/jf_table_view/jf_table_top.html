@@ -3,7 +3,7 @@
 	<div class="counter-and-filter-wrapper">
 		<div ng-if="!jfTableTop.tableView.options.noCount" class="table-counter">{{ jfTableTop.tableView.getTotalRecords() }}<span ng-if="jfTableTop.tableView.getSelectedRecords()"> ({{jfTableTop.tableView.getSelectedRecords()}} Selected)</span></div>
 		<div class="jf-table-filter"
-		     ng-if="jfTableTop.tableView.options.getRawData().length || jfTableTop.tableView.options.externalTotalCount.total > 0">
+		     ng-if="jfTableTop.tableView.options.filterVisible && (jfTableTop.tableView.options.getRawData().length || jfTableTop.tableView.options.externalTotalCount.total > 0)">
 			<input class="input-text"
 			       ng-model="jfTableTop.tableView.tableFilter"
 			       ng-model-options="{debounce: { 'default': 500 } }"
@@ -22,7 +22,7 @@
 
 	<div class="pagination-controls">
 		<jf-drag-drop-pagination pagination-api="jfTableTop.tableView.paginationApi"
-		                         ng-if="jfTableTop.tableView.paginationApi">
+		                         ng-if="jfTableTop.tableView.paginationApi && jfTableTop.tableView.options.paginationVisible">
 		</jf-drag-drop-pagination>
 	</div>
 

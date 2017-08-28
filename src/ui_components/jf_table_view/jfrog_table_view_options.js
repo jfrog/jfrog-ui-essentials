@@ -59,6 +59,8 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				this.defaultFilterByAll = defaultAppOptions.defaultFilterByAll;
 				this.columnsCustomization = defaultAppOptions.columnsCustomization;
 				this.headersVisible = defaultAppOptions.headersVisible;
+				this.filterVisible = defaultAppOptions.filterVisible;
+				this.paginationVisible = defaultAppOptions.paginationVisible;
 				this.autoFocusFilter = defaultAppOptions.autoFocusFilter;
 				this.noCount = defaultAppOptions.noCount;
 				this.tooltipFilterDisabled = defaultAppOptions.tooltipFilterDisabled;
@@ -78,6 +80,8 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				this.defaultFilterByAll = true;
 				this.columnsCustomization = false;
 				this.headersVisible = true;
+				this.filterVisible = true;
+				this.paginationVisible = true;
 				this.autoFocusFilter = false;
 				this.noCount = false;
 			}
@@ -190,6 +194,16 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
 		showCounter(show = true) {
 			this.noCount = !show;
+			return this;
+		}
+
+		showFilter(show = true) {
+			this.filterVisible = show;
+			return this;
+		}
+
+		showPagination(show = true) {
+			this.paginationVisible = show;
 			return this;
 		}
 
