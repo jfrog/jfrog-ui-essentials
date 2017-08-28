@@ -101,7 +101,7 @@ function getDirectives(template) {
 
 function getAttributesFromElement(element) {
 
-  element = element.replace(/\n/g, '');
+  element = element.replace(/\n/g, ' ');
   element = element.replace(/ +/g, ' ');
   let attrsString = directiveRegex.exec(element)[1];
   if (directiveRegex.exec(element)) {
@@ -110,9 +110,10 @@ function getAttributesFromElement(element) {
 
   let attrs = {}
 
-  attrsString.split(' ').forEach(keyValString => {
+  let spacesNotInQuotes = /\s+(?=([^"]*"[^"]*")*[^"]*$)/g
+  attrsString.replace(spacesNotInQuotes, '∆').split('∆').forEach(keyValString => {
     let [key, val] = keyValString.split('=');
-    attrs[key] = val;
+    attrs[key] = val || null;
   })
 
   return attrs;
@@ -160,6 +161,9 @@ function replaceInjections(module) {
 
   _.remove(body, statement => {
     if (statement.expression.operator === '=') {
+      if (statement.expression.right.name === 'commonGridColumns') {
+        global.jfTableViewConverter.commonGridColumns = statement.expression.left.property.name;
+      }
       if (_.includes(['uiGridConstants', 'commonGridColumns'], statement.expression.right.name)) {
         return true;
       }
@@ -197,6 +201,8 @@ function rewriteDirective(module, directives) {
     gridOptions = gridOptions.replace(controllerAs + '.', '');
     let creationLocation = locateGridCreation(module, gridOptions);
     rewriteCreation(module, creationLocation, dir);
+    rewriteColumns(module, dir);
+    rewriteAllTheRest(module, dir);
   })
 }
 
@@ -264,23 +270,147 @@ function rewriteCreation(module, creationLocation, directive) {
   let setSingleSelect = es$(chainStart, 'Identifier[name="setSingleSelect"]')[0];
 
   if (setMultiSelect || setSingleSelect) {
-    let smsParent = _getNodeParent(module, _getNodeParent(module, setMultiSelect || setSingleSelect));
+    let selectionParent = _getNodeParent(module, _getNodeParent(module, setMultiSelect || setSingleSelect));
 
-    smsParent.callee.property.name = 'setSelection';
+    selectionParent.callee.property.name = 'setSelection';
     let params = es$(esprima.parse(src(clone.expression.left) + (setMultiSelect ? '.MULTI_SELECTION' : '.SINGLE_SELECTION')), 'ExpressionStatement > MemberExpression')[0];
-    smsParent.arguments = [params];
+    selectionParent.arguments = [params];
   }
 
-  if (directive.attrs['object-name']) {
-    
+  directive.chainHeader = expression.expression;
+  if (directive.attrs['object-name'] !== undefined) {
+    _addToChain(expression.expression, 'setObjectName', [
+      {
+        type: 'Literal',
+        value: _.trim(directive.attrs['object-name'], '"'),
+        raw: `'${_.trim(directive.attrs['object-name'], '"')}'`
+      }
+    ])
+  }
+  if (directive.attrs['auto-focus'] !== undefined) {
+    _addToChain(expression.expression, 'setAutoFocusFilter', []);
+  }
+  if (directive.attrs['no-count'] !== undefined) {
+    _addToChain(expression.expression, 'showCounter', [
+      {
+        type: 'Literal',
+        value: false
+      }
+    ]);
   }
 
+  let setColumns = _getNodeParent(module, _getNodeParent(module, es$(expression.expression, 'Identifier[name="setColumns"]')[0]));
+
+  let getColumnsMethodName = setColumns.arguments[0].callee.property.name;
+
+  directive.getColumnsMethodName = getColumnsMethodName;
 
   let root = _getChainRoot(chainStart);
   root.object = clone.expression;
 
+}
+
+function rewriteColumns(module, directive) {
+  let filterBy = [];
+  if (directive.attrs['filter-field'] !== undefined) {
+    filterBy.push(_.trim(directive.attrs['filter-field'], '"'));
+    if (directive.attrs['filter-field2'] !== undefined) {
+      filterBy.push(_.trim(directive.attrs['filter-field2'], '"'));
+    }
+  }
+
+  let getColumnsMethod = es$(module, `ClassDeclaration MethodDefinition[kind="method"][key.name="${directive.getColumnsMethodName}"]`)[0];
+
+  let arrayExpressions = es$(getColumnsMethod, 'FunctionExpression ArrayExpression');
+
+  let columnsArray = _.filter(arrayExpressions, ae => {
+    let parentAE = _getNodeParent(module, ae, 'ArrayExpression');
+    let parentAEMethod = _getNodeParent(module, parentAE, 'MethodDefinition');
+    return !parentAE || (parentAEMethod !== getColumnsMethod);
+  })[0]
+
+  columnsArray.elements.forEach(columnDef => {
+    let field = _.find(columnDef.properties, {key: {name: 'field'}});
+    let name = _.find(columnDef.properties, {key: {name: 'name'}});
+    let displayName = _.find(columnDef.properties, {key: {name: 'displayName'}});
+    if (name && displayName) {
+      if (name.value.value !== displayName.value.value) {
+        console.error('Warning! Unmatched \'name\' & \'displayName\' column attribute:\nname=' + name.value.value + ' | displayName=' + displayName.value.value + '\nTaking \'displayName\' for header');
+      }
+      _.remove(columnDef.properties, p => p === name);
+      displayName.key.name = 'header';
+    }
+    else {
+      (displayName || name).key.name = 'header';
+    }
+
+    if (_.includes(filterBy, field.value.value)) {
+      let clone = _.cloneDeep(field);
+      clone.key.name = 'filterable';
+      clone.value.value = true;
+      delete clone.value.raw;
+      columnDef.properties.push(clone);
+    }
+
+    let sort = _.find(columnDef.properties, {key: {name: 'sort'}});
+
+    if (sort) {
+      let desc = src(sort).indexOf('.DESC') !== -1;
+      if (columnsArray.elements.indexOf(columnDef) !== 0 || desc) {
+        _addToChain(directive.chainHeader, 'sortBy', [
+          {
+            type: 'Literal',
+            value: field.value.value,
+            raw: `'${field.value.value}'`
+          }
+        ])
+      }
+      if (desc) {
+        _addToChain(directive.chainHeader, 'reverseSortingDir', []);
+      }
+      _.remove(columnDef.properties, p => p === sort);
+    }
+
+    let cellTemplate = _.find(columnDef.properties, {key: {name: 'cellTemplate'}});
+    if (cellTemplate && global.jfTableViewConverter.commonGridColumns) {
+      let value = src(cellTemplate.value);
+      if (_.startsWith(value, 'this.' + global.jfTableViewConverter.commonGridColumns)) {
+        value = value.replace('this.' + global.jfTableViewConverter.commonGridColumns, 'this.JFrogTableViewOptions.cellTemplateGenerators');
+        value = value.replace('.repoPathColumn', '.artifactoryRepoPathColumn');
+        cellTemplate.value = es$(esprima.parse(value), 'CallExpression')[0];
+      }
+    }
+
+  })
 
 
+}
+
+function rewriteAllTheRest(module, dir) {
+  let controllerAs = getControllerAs(module);
+  let gridOptions = dir.attrs['grid-options'];
+  gridOptions = _.trim(gridOptions, '"');
+  gridOptions = gridOptions.replace(controllerAs + '.', '');
+
+
+  let setGridDataCalls = es$(module, 'Identifier[name="setGridData"]');
+
+  setGridDataCalls.forEach(call => {
+    let parent = _getNodeParent(module, call);
+
+    if (parent.object.property.name === gridOptions) {
+      call.name = 'setData';
+    }
+  })
+
+  let getSelectedRowsCalls = es$(module, 'Identifier[name="getSelectedRows"]');
+
+  getSelectedRowsCalls.forEach(call => {
+    let parent = _getNodeParent(module, call);
+    if (parent.object && parent.object.object && parent.object.object.object && parent.object.property.name === 'selection' && parent.object.object.property.name === 'api') {
+      parent.object = parent.object.object.object;
+    }
+  })
 
 }
 
@@ -313,6 +443,12 @@ function _removeFromChain(module, chainStart, toRemove) {
   }
 }
 
+function _addToChain(chainStart, methodName, argumentsNode) {
+  let temp = _.cloneDeep(chainStart);
+  chainStart.callee.object = temp;
+  chainStart.callee.property.name = methodName;
+  chainStart.arguments = argumentsNode;
+}
 
 
 
