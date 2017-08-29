@@ -115,6 +115,12 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			if (this.listeners[event]) {
 				this.listeners[event].forEach(listener=>listener(...params))
 			}
+
+			// This is for backward compatibility with old grid
+			if (event === 'selection.change') {
+				if (this.onSelectionChange) this.onSelectionChange();
+				if (this.onSelectionChangeBatch) this.onSelectionChangeBatch();
+			}
 		}
 
 		setData(data, internalCall) {

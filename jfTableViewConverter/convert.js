@@ -236,8 +236,12 @@ function replaceInjections() {
     if (statement.expression && statement.expression.operator === '=') {
       if (statement.expression.right.name === (underlineInjections ? '_JFrogGridFactory_' : 'JFrogGridFactory')) {
         statement.expression.right.name = underlineInjections ? '_JFrogTableViewOptions_' : 'JFrogTableViewOptions';
-        if (statement.expression.left.property) statement.expression.left.property.name = 'JFrogTableViewOptions';
+        if (statement.expression.left.property) {
+          global.jfTableViewConverter.optionsNotOnThis = false;
+          statement.expression.left.property.name = 'JFrogTableViewOptions';
+        }
         else {
+          global.jfTableViewConverter.optionsNotOnThis = true;
           renameVar = statement.expression.left.name;
           statement.expression.left.name = 'JFrogTableViewOptions';
         }
@@ -337,6 +341,7 @@ function rewriteCreation(creationLocation, directive) {
     },
     'arguments': creation.object.arguments
   }
+  if (global.jfTableViewConverter.optionsNotOnThis) newExpression.callee = newExpression.callee.property;
   let expression = _getNodeParent(creationLocation.assigment, 'ExpressionStatement');
   let clone = _.cloneDeep(expression);
 
@@ -395,7 +400,8 @@ function rewriteCreation(creationLocation, directive) {
 
   let root = _getChainRoot(chainStart);
   root.object = clone.expression;
-  _rewriteNode(creationLocation.assigment)
+
+  _rewriteNode(expression)
 }
 
 function rewriteColumns(directive) {
@@ -461,7 +467,33 @@ function rewriteColumns(directive) {
       _.remove(columnDef.properties, p => p === sort);
     }
 
+    let centerText = () => {
+      let clone = _.cloneDeep(field);
+      clone.key.name = 'textAlign';
+      clone.value.value = 'center';
+      clone.value.raw = "'center'";
+      columnDef.properties.push(clone);
+    }
+
+    let wrapCellTemplate = (cellTemplate) => {
+      try {
+        // eslint-disable-next-line no-eval
+        let evaluated = eval(src(cellTemplate));
+        if (evaluated && _.isString(evaluated) && evaluated.startsWith('<') && evaluated.endsWith('>') && evaluated.indexOf(' ng-if') !== -1) {
+          let newValue = es$(esprima.parse(`'<div>${evaluated}</div>'`), 'ExpressionStatement')[0];
+          cellTemplate.value = newValue.expression;
+          if (evaluated.indexOf('text-center')) {
+            centerText();
+          }
+        }
+      }
+      catch (e) {
+      }
+    };
+
     let cellTemplate = _.find(columnDef.properties, {key: {name: 'cellTemplate'}});
+
+    if (cellTemplate) wrapCellTemplate(cellTemplate);
     if (cellTemplate && global.jfTableViewConverter.commonGridColumns) {
       let value = src(cellTemplate.value);
       if (_.startsWith(value, 'this.' + global.jfTableViewConverter.commonGridColumns)) {
@@ -470,11 +502,7 @@ function rewriteColumns(directive) {
         cellTemplate.value = es$(esprima.parse(value), 'CallExpression')[0];
 
         if (value.indexOf('.booleanColumn(') !== -1 || value.indexOf('.checkboxColumn(') !== -1) {
-          let clone = _.cloneDeep(field);
-          clone.key.name = 'textAlign';
-          clone.value.value = 'center';
-          clone.value.raw = "'center'";
-          columnDef.properties.push(clone);
+          centerText();
         }
       }
     }
