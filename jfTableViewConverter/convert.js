@@ -13,45 +13,124 @@ let src = (node, indent = 0) => {
 }
 let json = (node) => console.log(JSON.stringify(node, null, 4));
 
-let directiveRegex = /<jf-grid ((?:.|\n)*?)><\/jf-grid>/g;
-let convertedAttributes = ['grid-options', 'object-name', 'auto-focus', 'filter-field', 'filter-field2', 'no-count'];
+let directiveRegex = /<jf-grid ((?:.|\n)*?)>(?:.|\n)*?<\/jf-grid>/g;
+let convertedAttributes = ['grid-options', 'object-name', 'auto-focus', 'filter-field', 'filter-field2', 'no-count', 'filter-on-change'];
 
 
 global.jfTableViewConverter = {};
 
 const jsonFile = process.argv[2];
+
 if (!jsonFile) console.error('Missing conversion description json file !');
-else if (!jetpack.exists(jsonFile)) console.error('Conversion description file not found !');
-else {
+else processConversionJson(jsonFile);
 
-  let conversionJson = global.jfTableViewConverter.conversionJson = jetpack.read(jsonFile, 'json');
-
-  let workingDir = _.dropRight(jsonFile.split('/')).join('/');
-
-  let localJetpack = global.jfTableViewConverter.localJetpack = jetpack.cwd(workingDir);
-
-  let templateFile = conversionJson.sources.template;
-  let controllerFile = conversionJson.sources['controller'];
-
-  if (!global.jfTableViewConverter.localJetpack.exists(templateFile)) console.error('Template file not found !', templateFile);
-  else if (!global.jfTableViewConverter.localJetpack.exists(controllerFile)) console.error('Controller file not' + ' found !', controllerFile);
+function processConversionJson(jsonFile) {
+  if (!jetpack.exists(jsonFile)) {
+    console.error('Conversion description file not found !');
+  }
   else {
-    let template = localJetpack.read(templateFile);
-    let controller = localJetpack.read(controllerFile);
-    global.jfTableViewConverter.controllerSource = controller;
+    let conversionJson = global.jfTableViewConverter.conversionJson = jetpack.read(jsonFile, 'json');
 
-    let directives = getDirectives(template);
-    let newTemplate = rewriteTemplate(template, directives);
-    localJetpack.write(conversionJson.overwrite ? templateFile : templateFile.replace('.html', '.converted.html'), newTemplate);
+    let workingDir = global.jfTableViewConverter.workingDir = _.dropRight(jsonFile.split('/')).join('/');
 
-    rewriteController(controller, directives);
-    localJetpack.write(conversionJson.overwrite ? controllerFile : controllerFile.replace('.js', '.converted.js'), global.jfTableViewConverter.controllerSource);
+    let localJetpack = global.jfTableViewConverter.localJetpack = jetpack.cwd(workingDir);
+
+    let moduleFile = conversionJson.sources.module;
+    let templateFile = conversionJson.sources.template;
+    let controllerFile = conversionJson.sources.controller;
+
+    if (moduleFile && controllerFile && templateFile) {
+      console.error('Found module+template+controller (Should only found wither module, or template+controller)')
+    }
+    if (!moduleFile && (!controllerFile || !templateFile)) {
+      console.error('Missing sources !')
+    }
+    else {
+      if (moduleFile) {
+        convertByModule(moduleFile)
+      }
+      else {
+        convertByControllerAndTemplate(templateFile, controllerFile)
+      }
+    }
 
   }
 }
 
-function getDirectives(template) {
+function convertByControllerAndTemplate(templateFile, controllerFile, controllerAs) {
 
+  console.log(`Converting:\nTemplate=${templateFile}\nController=${controllerFile}`)
+
+  global.jfTableViewConverter.controllerAs = controllerAs;
+
+  if (!global.jfTableViewConverter.localJetpack.exists(templateFile)) console.error('Template file not found !', templateFile);
+  else if (!global.jfTableViewConverter.localJetpack.exists(controllerFile)) console.error('Controller file not' + ' found !', controllerFile);
+  else {
+    let template = global.jfTableViewConverter.localJetpack.read(templateFile);
+    let controller = global.jfTableViewConverter.localJetpack.read(controllerFile);
+    global.jfTableViewConverter.controllerSource = controller;
+
+    let directives = getDirectives(template);
+    console.log('Rewriting template...')
+    let newTemplate = rewriteTemplate(template, directives);
+    global.jfTableViewConverter.localJetpack.write(global.jfTableViewConverter.conversionJson.overwrite ? templateFile : templateFile.replace('.html', '.converted.html'), newTemplate);
+
+    console.log('Rewriting controller...')
+    rewriteController(controller, directives);
+    global.jfTableViewConverter.localJetpack.write(global.jfTableViewConverter.conversionJson.overwrite ? controllerFile : controllerFile.replace('.js', '.converted.js'), global.jfTableViewConverter.controllerSource);
+  }
+}
+
+function convertByModule(moduleFile) {
+  if (!global.jfTableViewConverter.localJetpack.exists(moduleFile)) console.error('Module file not found !', moduleFile);
+  else {
+    let baseDir = _.dropRight(moduleFile.split('/')).join('/');
+    let module = global.jfTableViewConverter.localJetpack.read(moduleFile);
+
+    let moduleAST = esprima.parseModule(module, {});
+
+
+    let angularControllerCalls = es$(moduleAST, 'CallExpression[callee.property.name="controller"][arguments.0.type="Literal"][arguments.1.type="Identifier"]');
+
+    angularControllerCalls.forEach(c => {
+      let [name, identifier] = c.arguments;
+      name = name.value;
+      identifier = identifier.name;
+
+      let importDeclaration = _.find(es$(moduleAST, `ImportDeclaration`), imp => {
+        let specifier = _.find(imp.specifiers, {local: {name: identifier}})
+        if (specifier) return true;
+      })
+
+      let controllerFileName = importDeclaration.source.value;
+      if (!_.endsWith(controllerFileName, '.js')) controllerFileName += '.js';
+      controllerFileName = baseDir + '/' + _.trim(controllerFileName, './');
+
+      let controllerAs;
+      let controllerProperty = _.find(es$(moduleAST, 'Property[key.name="controller"]'), p => {
+        if (p.value.value === name || p.value.value.indexOf(name + ' as ') !== -1) {
+          controllerAs = p.value.value === name ? name : p.value.value.split(' as ')[1];
+          return true;
+        }
+      })
+
+      if (controllerProperty) {
+        let objectExpression = _getNodeParent(controllerProperty, 'ObjectExpression', moduleAST);
+
+        let templateUrlProperty = _.find(objectExpression.properties, {key: {name: 'templateUrl'}});
+
+        let templateFileName = global.jfTableViewConverter.conversionJson.base + templateUrlProperty.value.value;
+
+        if (templateFileName && controllerFileName) {
+          convertByControllerAndTemplate(templateFileName, controllerFileName, controllerAs);
+        }
+      }
+
+    });
+  }
+}
+
+function getDirectives(template) {
   let matches = template.match(directiveRegex);
 
   let directives = [];
@@ -107,10 +186,11 @@ function rewriteTemplate(template, directives) {
 }
 
 function rewriteController(controller, directives) {
-  global.jfTableViewConverter.theModule = esprima.parseModule(controller, {range: true, tokens: true, comment: true});
+  global.jfTableViewConverter.ASTRoot = esprima.parseModule(controller, {range: true, tokens: true, comment: true});
 
   attachComments()
 
+  console.log('Replacing injections')
   replaceInjections();
 
   rewriteDirective(directives);
@@ -119,7 +199,7 @@ function rewriteController(controller, directives) {
 }
 
 function replaceInjections() {
-  let constructor = es$(global.jfTableViewConverter.theModule, 'ClassDeclaration MethodDefinition[kind="constructor"] FunctionExpression');
+  let constructor = es$(global.jfTableViewConverter.ASTRoot, 'ClassDeclaration MethodDefinition[kind="constructor"] FunctionExpression');
   let params = constructor[0].params;
 
   let foundJFrogGridFactory = false;
@@ -138,7 +218,7 @@ function replaceInjections() {
   let body = constructor[0].body.body;
 
   _.remove(body, statement => {
-    if (statement.expression.operator === '=') {
+    if (statement.expression && statement.expression.operator === '=') {
       if (statement.expression.right.name === 'commonGridColumns') {
         global.jfTableViewConverter.commonGridColumns = statement.expression.left.property.name;
       }
@@ -150,7 +230,7 @@ function replaceInjections() {
   })
 
   _.forEach(body, statement => {
-    if (statement.expression.operator === '=') {
+    if (statement.expression && statement.expression.operator === '=') {
       if (statement.expression.right.name === 'JFrogGridFactory') {
         statement.expression.right.name = 'JFrogTableViewOptions';
         statement.expression.left.property.name = 'JFrogTableViewOptions';
@@ -163,13 +243,13 @@ function replaceInjections() {
 }
 
 function attachComments() {
-  let module = global.jfTableViewConverter.theModule;
-  global.jfTableViewConverter.theModule.body.forEach(part => {
+  let ASTRoot = global.jfTableViewConverter.ASTRoot;
+  global.jfTableViewConverter.ASTRoot.body.forEach(part => {
     if (part.type === 'ExportNamedDeclaration') {
-      escodegen.attachComments(part.declaration, module.comments, module.tokens);
+      escodegen.attachComments(part.declaration, ASTRoot.comments, ASTRoot.tokens);
     }
     else {
-      escodegen.attachComments(part, module.comments, module.tokens);
+      escodegen.attachComments(part, ASTRoot.comments, ASTRoot.tokens);
     }
   })
 }
@@ -181,18 +261,21 @@ function rewriteDirective(directives) {
     gridOptions = _.trim(gridOptions, '"');
     gridOptions = gridOptions.replace(controllerAs + '.', '');
     let creationLocation = locateGridCreation(gridOptions);
+    console.log('Rewriting creation code')
     rewriteCreation(creationLocation, dir);
+    console.log('Rewriting columns definition')
     rewriteColumns(dir);
+    console.log('Rewriting more stuff')
     rewriteAllTheRest(dir);
   })
 }
 
 function getControllerAs() {
-  if (global.jfTableViewConverter.conversionJson.controllerAs) {
-    return global.jfTableViewConverter.conversionJson.controllerAs
+  if (global.jfTableViewConverter.controllerAs) {
+    return global.jfTableViewConverter.controllerAs
   }
   else {
-    let exportDeclaration = _.find(global.jfTableViewConverter.theModule.body, {type: 'ExportNamedDeclaration'})
+    let exportDeclaration = _.find(global.jfTableViewConverter.ASTRoot.body, {type: 'ExportNamedDeclaration'})
     let dirDescObject = exportDeclaration.declaration.body.body[0].argument.properties;
     let controllerAsProperty = _.find(dirDescObject, {key: {name: 'controllerAs'}})
     return controllerAsProperty.value.value;
@@ -201,7 +284,7 @@ function getControllerAs() {
 
 function locateGridCreation(gridOptions) {
 
-  let methods = es$(global.jfTableViewConverter.theModule, 'ClassDeclaration MethodDefinition');
+  let methods = es$(global.jfTableViewConverter.ASTRoot, 'ClassDeclaration MethodDefinition');
 
   let assigment;
   let creationMethod = _.find(methods, method => {
@@ -264,6 +347,11 @@ function rewriteCreation(creationLocation, directive) {
     selectionParent.arguments = [params];
   }
 
+  let setGridData = es$(chainStart, 'Identifier[name="setGridData"]')[0];
+
+  if (setGridData) setGridData.name = 'setData';
+
+
   directive.chainHeader = expression.expression;
   if (directive.attrs['object-name'] !== undefined) {
     _addToChain(expression.expression, 'setObjectName', [
@@ -306,7 +394,7 @@ function rewriteColumns(directive) {
     }
   }
 
-  let getColumnsMethod = es$(global.jfTableViewConverter.theModule, `ClassDeclaration MethodDefinition[kind="method"][key.name="${directive.getColumnsMethodName}"]`)[0];
+  let getColumnsMethod = es$(global.jfTableViewConverter.ASTRoot, `ClassDeclaration MethodDefinition[kind="method"][key.name="${directive.getColumnsMethodName}"]`)[0];
 
   let arrayExpressions = es$(getColumnsMethod, 'FunctionExpression ArrayExpression');
 
@@ -367,6 +455,14 @@ function rewriteColumns(directive) {
         value = value.replace('this.' + global.jfTableViewConverter.commonGridColumns, 'this.JFrogTableViewOptions.cellTemplateGenerators');
         value = value.replace('.repoPathColumn', '.artifactoryRepoPathColumn');
         cellTemplate.value = es$(esprima.parse(value), 'CallExpression')[0];
+
+        if (value.indexOf('.booleanColumn(') !== -1 || value.indexOf('.checkboxColumn(') !== -1) {
+          let clone = _.cloneDeep(field);
+          clone.key.name = 'textAlign';
+          clone.value.value = 'center';
+          clone.value.raw = "'center'";
+          columnDef.properties.push(clone);
+        }
       }
     }
 
@@ -384,7 +480,17 @@ function rewriteAllTheRest(dir) {
   gridOptions = gridOptions.replace(controllerAs + '.', '');
 
 
-  let setGridDataCalls = es$(global.jfTableViewConverter.theModule, 'Identifier[name="setGridData"]');
+  let findSetGridDataCalls = () => {
+    return _.filter(es$(global.jfTableViewConverter.ASTRoot, 'Identifier[name="setGridData"]'), call => {
+      let parent = _getNodeParent(call);
+
+      if (parent.object.property.name === gridOptions) {
+        return true;
+      }
+    });
+  }
+
+  let setGridDataCalls = findSetGridDataCalls();
 
   while (setGridDataCalls.length) {
     let call = setGridDataCalls[0];
@@ -396,11 +502,11 @@ function rewriteAllTheRest(dir) {
 
     _rewriteNode(parent);
 
-    setGridDataCalls = es$(global.jfTableViewConverter.theModule, 'Identifier[name="setGridData"]');
+    setGridDataCalls = findSetGridDataCalls();
   }
 
   let findGetSelectedRowsCalls = () => {
-    let getSelectedRowsCalls = es$(global.jfTableViewConverter.theModule, 'Identifier[name="getSelectedRows"]');
+    let getSelectedRowsCalls = es$(global.jfTableViewConverter.ASTRoot, 'Identifier[name="getSelectedRows"]');
 
     getSelectedRowsCalls = _.filter(getSelectedRowsCalls, call => {
       let parent = _getNodeParent(call);
@@ -480,9 +586,9 @@ function _traverse(obj, callback, parents = []) {
   });
 }
 
-function _getNodeParent(node, type) {
+function _getNodeParent(node, type, astRoot) {
   let parent = null;
-  _traverse(global.jfTableViewConverter.theModule, (key, val, p, pArray) => {
+  _traverse(astRoot || global.jfTableViewConverter.ASTRoot, (key, val, p, pArray) => {
     if (val === node) {
       if (type) {
         parent = _.findLast(pArray, {type});
@@ -510,7 +616,7 @@ function _rewriteNode(node) {
   let newCode = src(node, Math.round(_getIndent(start) / 4));
   newCode = newCode.replace(/\)\./g, ')\n' + ' '.repeat(4 + _getIndent(start)) + '.');
   global.jfTableViewConverter.controllerSource = beforeChange + newCode + afterChange;
-  global.jfTableViewConverter.theModule = esprima.parseModule(global.jfTableViewConverter.controllerSource, {range: true, tokens: true, comment: true});
+  global.jfTableViewConverter.ASTRoot = esprima.parseModule(global.jfTableViewConverter.controllerSource, {range: true, tokens: true, comment: true});
   attachComments()
 }
 

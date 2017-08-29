@@ -409,6 +409,10 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			return this;
 		}
 
+		setDraggable(callbackFunc) {
+			console.log('setDraggable: NOT YET SUPPORTED')
+		}
+
 		setActions(actions) {
 			this.actions = actions;
 			this._normalizeWidths();
