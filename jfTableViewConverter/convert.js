@@ -19,30 +19,30 @@ if (!jsonFile) console.error('Missing conversion description json file !');
 else if (!jetpack.exists(jsonFile)) console.error('Conversion description file not found !');
 else {
 
-  jetpack.readAsync(jsonFile, 'json').then(conversionJson => {
+  let conversionJson = global.jfTableViewConverter.conversionJson = jetpack.read(jsonFile, 'json');
 
-    let workingDir = _.dropRight(jsonFile.split('/')).join('/');
+  let workingDir = _.dropRight(jsonFile.split('/')).join('/');
 
-    let localJetpack = global.jfTableViewConverter.localJetpack = jetpack.cwd(workingDir);
+  let localJetpack = global.jfTableViewConverter.localJetpack = jetpack.cwd(workingDir);
 
-    let templateFile = conversionJson.sources.template;
-    let controllerFile = conversionJson.sources['controller'];
+  let templateFile = conversionJson.sources.template;
+  let controllerFile = conversionJson.sources['controller'];
 
-    if (!global.jfTableViewConverter.localJetpack.exists(templateFile)) console.error('Template file not found !', templateFile);
-    else if (!global.jfTableViewConverter.localJetpack.exists(controllerFile)) console.error('Controller file not' + ' found !', controllerFile);
-    else {
-      let template = localJetpack.read(templateFile);
-      let controller = localJetpack.read(controllerFile);
+  if (!global.jfTableViewConverter.localJetpack.exists(templateFile)) console.error('Template file not found !', templateFile);
+  else if (!global.jfTableViewConverter.localJetpack.exists(controllerFile)) console.error('Controller file not' + ' found !', controllerFile);
+  else {
+    let template = localJetpack.read(templateFile);
+    let controller = localJetpack.read(controllerFile);
+    global.jfTableViewConverter.controllerSource = controller;
 
-      let directives = getDirectives(template);
-      let newTemplate = rewriteTemplate(template, directives);
-      localJetpack.write(templateFile.replace('.html', '.converted.html'), newTemplate);
+    let directives = getDirectives(template);
+    let newTemplate = rewriteTemplate(template, directives);
+    localJetpack.write(conversionJson.overwrite ? templateFile : templateFile.replace('.html', '.converted.html'), newTemplate);
 
-      let newController = rewriteController(controller, directives);
-      localJetpack.write(controllerFile.replace('.js', '.converted.js'), newController);
+    let newController = rewriteController(controller, directives);
+    localJetpack.write(conversionJson.overwrite ? controllerFile : controllerFile.replace('.js', '.converted.js'), newController);
 
-    }
-  });
+  }
 }
 
 function _traverse(obj, callback, parents = []) {
@@ -207,10 +207,15 @@ function rewriteDirective(module, directives) {
 }
 
 function getControllerAs(module) {
-  let exportDeclaration = _.find(module.body, {type: 'ExportNamedDeclaration'})
-  let dirDescObject = exportDeclaration.declaration.body.body[0].argument.properties;
-  let controllerAsProperty = _.find(dirDescObject, {key: {name: 'controllerAs'}})
-  return controllerAsProperty.value.value;
+  if (global.jfTableViewConverter.conversionJson.controllerAs) {
+    return global.jfTableViewConverter.conversionJson.controllerAs
+  }
+  else {
+    let exportDeclaration = _.find(module.body, {type: 'ExportNamedDeclaration'})
+    let dirDescObject = exportDeclaration.declaration.body.body[0].argument.properties;
+    let controllerAsProperty = _.find(dirDescObject, {key: {name: 'controllerAs'}})
+    return controllerAsProperty.value.value;
+  }
 }
 
 function locateGridCreation(module, gridOptions) {
@@ -450,6 +455,14 @@ function _addToChain(chainStart, methodName, argumentsNode) {
   chainStart.arguments = argumentsNode;
 }
 
+
+/*
+function _rewriteElement(element) {
+  let [start, end] = statement.range;
+  console.log(global.jfTableViewConverter.controllerSource.substr(start, end - start))
+
+}
+*/
 
 
 
