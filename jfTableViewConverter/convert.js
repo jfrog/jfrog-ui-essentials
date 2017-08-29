@@ -203,16 +203,18 @@ function replaceInjections() {
   let params = constructor[0].params;
 
   let foundJFrogGridFactory = false;
+  let underlineInjections = false;
   _.remove(params, p => {
-    if (p.name === 'JFrogGridFactory') foundJFrogGridFactory = true;
-    return _.includes(['JFrogGridFactory', 'uiGridConstants', 'commonGridColumns'], p.name);
+    if (p.name === 'JFrogGridFactory' || p.name === '_JFrogGridFactory_') foundJFrogGridFactory = true;
+    if (p.name === '_JFrogGridFactory_') underlineInjections = true;
+    return _.includes(['JFrogGridFactory', 'uiGridConstants', 'commonGridColumns', '_JFrogGridFactory_', '_uiGridConstants_', '_commonGridColumns_'], p.name);
   })
 
   if (!foundJFrogGridFactory) return;
 
   params.push({
     type: 'Identifier',
-    name: 'JFrogTableViewOptions'
+    name: underlineInjections ? '_JFrogTableViewOptions_' : 'JFrogTableViewOptions'
   })
 
   let body = constructor[0].body.body;
@@ -229,16 +231,27 @@ function replaceInjections() {
     return false;
   })
 
+  let renameVar;
   _.forEach(body, statement => {
     if (statement.expression && statement.expression.operator === '=') {
-      if (statement.expression.right.name === 'JFrogGridFactory') {
-        statement.expression.right.name = 'JFrogTableViewOptions';
-        statement.expression.left.property.name = 'JFrogTableViewOptions';
+      if (statement.expression.right.name === (underlineInjections ? '_JFrogGridFactory_' : 'JFrogGridFactory')) {
+        statement.expression.right.name = underlineInjections ? '_JFrogTableViewOptions_' : 'JFrogTableViewOptions';
+        if (statement.expression.left.property) statement.expression.left.property.name = 'JFrogTableViewOptions';
+        else {
+          renameVar = statement.expression.left.name;
+          statement.expression.left.name = 'JFrogTableViewOptions';
+        }
       }
     }
   })
 
   _rewriteNode(_getNodeParent(constructor[0], 'MethodDefinition'));
+
+  if (renameVar) {
+    let varDeclarator = es$(global.jfTableViewConverter.ASTRoot, `VariableDeclarator[id.name="${renameVar}"]`)[0];
+    varDeclarator.id.name = 'JFrogTableViewOptions';
+    _rewriteNode(varDeclarator);
+  }
 
 }
 
