@@ -13,7 +13,7 @@ let src = (node, indent = 0) => {
 }
 let json = (node) => console.log(JSON.stringify(node, null, 4));
 
-let directiveRegex = /<jf-grid ((?:.|\n)*?)>(?:.|\n)*?<\/jf-grid>/g;
+let directiveRegex = /<jf-grid(?:.|\n)*?((?:.|\n)*?)>(?:.|\n)*?<\/jf-grid>/g;
 let convertedAttributes = ['grid-options', 'object-name', 'auto-focus', 'filter-field', 'filter-field2', 'no-count', 'filter-on-change'];
 
 
@@ -35,24 +35,35 @@ function processConversionJson(jsonFile) {
 
     let localJetpack = global.jfTableViewConverter.localJetpack = jetpack.cwd(workingDir);
 
-    let moduleFile = conversionJson.sources.module;
-    let templateFile = conversionJson.sources.template;
-    let controllerFile = conversionJson.sources.controller;
-
-    if (moduleFile && controllerFile && templateFile) {
-      console.error('Found module+template+controller (Should only found wither module, or template+controller)')
-    }
-    if (!moduleFile && (!controllerFile || !templateFile)) {
-      console.error('Missing sources !')
-    }
-    else {
-      if (moduleFile) {
-        convertByModule(moduleFile)
+    let perSource = (moduleFile, templateFile, controllerFile) => {
+      if (moduleFile && controllerFile && templateFile) {
+        console.error('Found module+template+controller (Should only found wither module, or template+controller)')
+      }
+      if (!moduleFile && (!controllerFile || !templateFile)) {
+        console.error('Missing sources !')
       }
       else {
-        convertByControllerAndTemplate(templateFile, controllerFile)
+        if (moduleFile) {
+          convertByModule(moduleFile)
+        }
+        else {
+          convertByControllerAndTemplate(templateFile, controllerFile)
+        }
       }
     }
+
+    if (!_.isArray(conversionJson.sources)) {
+      let moduleFile = conversionJson.sources.module;
+      let templateFile = conversionJson.sources.template;
+      let controllerFile = conversionJson.sources.controller;
+      perSource(moduleFile, templateFile, controllerFile)
+    }
+    else {
+      conversionJson.sources.forEach(source => {
+        perSource(source.module, source.template, source.controller)
+      })
+    }
+
 
   }
 }
@@ -81,7 +92,26 @@ function convertByControllerAndTemplate(templateFile, controllerFile, controller
   }
 }
 
+function convertByController(controllerFile) {
+  if (!global.jfTableViewConverter.localJetpack.exists(controllerFile)) console.error('Controller file not' + ' found !', controllerFile);
+  else {
+    let controller = global.jfTableViewConverter.localJetpack.read(controllerFile);
+    let ast = esprima.parseModule(controller);
+    let exportDeclaration = _.find(ast.body, {type: 'ExportNamedDeclaration'})
+    if (exportDeclaration) {
+      if (exportDeclaration.declaration.body.body[0] && exportDeclaration.declaration.body.body[0].argument) {
+        let dirDescObject = exportDeclaration.declaration.body.body[0].argument.properties;
+        let templateUrlProperty = _.find(dirDescObject, {key: {name: 'templateUrl'}})
+        if (templateUrlProperty) {
+          convertByControllerAndTemplate(global.jfTableViewConverter.conversionJson.base + templateUrlProperty.value.value, controllerFile);
+        }
+      }
+    }
+  }
+}
+
 function convertByModule(moduleFile) {
+  console.log('Converting module: ' + moduleFile);
   if (!global.jfTableViewConverter.localJetpack.exists(moduleFile)) console.error('Module file not found !', moduleFile);
   else {
     let baseDir = _.dropRight(moduleFile.split('/')).join('/');
@@ -91,15 +121,20 @@ function convertByModule(moduleFile) {
 
 
     let angularControllerCalls = es$(moduleAST, 'CallExpression[callee.property.name="controller"][arguments.0.type="Literal"][arguments.1.type="Identifier"]');
+    let imports = es$(moduleAST, `ImportDeclaration`);
 
+    let treatedImports = [];
     angularControllerCalls.forEach(c => {
       let [name, identifier] = c.arguments;
       name = name.value;
       identifier = identifier.name;
 
-      let importDeclaration = _.find(es$(moduleAST, `ImportDeclaration`), imp => {
+      let importDeclaration = _.find(imports, imp => {
         let specifier = _.find(imp.specifiers, {local: {name: identifier}})
-        if (specifier) return true;
+        if (specifier) {
+          treatedImports.push(imp);
+          return true;
+        }
       })
 
       let controllerFileName = importDeclaration.source.value;
@@ -115,18 +150,33 @@ function convertByModule(moduleFile) {
       })
 
       if (controllerProperty) {
-        let objectExpression = _getNodeParent(controllerProperty, 'ObjectExpression', moduleAST);
+        let objectExpression = _getNodeParent(_getNodeParent(controllerProperty, null, moduleAST), null, moduleAST);
 
         let templateUrlProperty = _.find(objectExpression.properties, {key: {name: 'templateUrl'}});
+        if (templateUrlProperty) {
+          let templateFileName = global.jfTableViewConverter.conversionJson.base + templateUrlProperty.value.value;
 
-        let templateFileName = global.jfTableViewConverter.conversionJson.base + templateUrlProperty.value.value;
-
-        if (templateFileName && controllerFileName) {
-          convertByControllerAndTemplate(templateFileName, controllerFileName, controllerAs);
+          if (templateFileName && controllerFileName) {
+            convertByControllerAndTemplate(templateFileName, controllerFileName, controllerAs);
+          }
         }
       }
 
     });
+
+    imports.forEach(imp => {
+      if (!_.includes(treatedImports, imp)) {
+        let source = imp.source.value;
+        if (!_.endsWith(source, '.js')) source += '.js';
+        source = baseDir + '/' + _.trim(source, './');
+        if (source.endsWith('.module.js')) {
+          convertByModule(source);
+        }
+        else {
+          convertByController(source);
+        }
+      }
+    })
   }
 }
 
@@ -162,7 +212,7 @@ function getAttributesFromElement(element) {
   let spacesNotInQuotes = /\s+(?=([^"]*"[^"]*")*[^"]*$)/g
   attrsString.replace(spacesNotInQuotes, '∆').split('∆').forEach(keyValString => {
     let [key, val] = keyValString.split('=');
-    attrs[key] = val || null;
+    if (key) attrs[key] = val || null;
   })
 
   return attrs;
@@ -200,6 +250,7 @@ function rewriteController(controller, directives) {
 
 function replaceInjections() {
   let constructor = es$(global.jfTableViewConverter.ASTRoot, 'ClassDeclaration MethodDefinition[kind="constructor"] FunctionExpression');
+  if (!constructor.length) return;
   let params = constructor[0].params;
 
   let foundJFrogGridFactory = false;
@@ -212,10 +263,12 @@ function replaceInjections() {
 
   if (!foundJFrogGridFactory) return;
 
-  params.push({
-    type: 'Identifier',
-    name: underlineInjections ? '_JFrogTableViewOptions_' : 'JFrogTableViewOptions'
-  })
+  if (!_.find(params, p => p.name === '_JFrogTableViewOptions_' || p.name === 'JFrogTableViewOptions')) {
+    params.push({
+      type: 'Identifier',
+      name: underlineInjections ? '_JFrogTableViewOptions_' : 'JFrogTableViewOptions'
+    })
+  }
 
   let body = constructor[0].body.body;
 
@@ -260,15 +313,20 @@ function replaceInjections() {
 }
 
 function attachComments() {
-  let ASTRoot = global.jfTableViewConverter.ASTRoot;
-  global.jfTableViewConverter.ASTRoot.body.forEach(part => {
-    if (part.type === 'ExportNamedDeclaration') {
-      escodegen.attachComments(part.declaration, ASTRoot.comments, ASTRoot.tokens);
-    }
-    else {
-      escodegen.attachComments(part, ASTRoot.comments, ASTRoot.tokens);
-    }
-  })
+  try {
+    let ASTRoot = global.jfTableViewConverter.ASTRoot;
+    global.jfTableViewConverter.ASTRoot.body.forEach(part => {
+      if (part.type === 'ExportNamedDeclaration') {
+        escodegen.attachComments(part.declaration, ASTRoot.comments, ASTRoot.tokens);
+      }
+      else {
+        escodegen.attachComments(part, ASTRoot.comments, ASTRoot.tokens);
+      }
+    })
+  }
+  catch (e) {
+    console.error('Error attaching comments')
+  }
 }
 
 function rewriteDirective(directives) {
@@ -295,7 +353,7 @@ function getControllerAs() {
     let exportDeclaration = _.find(global.jfTableViewConverter.ASTRoot.body, {type: 'ExportNamedDeclaration'})
     let dirDescObject = exportDeclaration.declaration.body.body[0].argument.properties;
     let controllerAsProperty = _.find(dirDescObject, {key: {name: 'controllerAs'}})
-    return controllerAsProperty.value.value;
+    if (controllerAsProperty) return controllerAsProperty.value.value;
   }
 }
 
@@ -367,7 +425,9 @@ function rewriteCreation(creationLocation, directive) {
 
   let setGridData = es$(chainStart, 'Identifier[name="setGridData"]')[0];
 
-  if (setGridData) setGridData.name = 'setData';
+  if (setGridData) {
+    setGridData.name = 'setData';
+  }
 
 
   directive.chainHeader = expression.expression;
@@ -436,8 +496,15 @@ function rewriteColumns(directive) {
       _.remove(columnDef.properties, p => p === name);
       displayName.key.name = 'header';
     }
-    else {
+    else if (displayName || name) {
       (displayName || name).key.name = 'header';
+    }
+    else {
+      let clone = _.cloneDeep(field);
+      clone.key.name = 'header';
+      clone.value.value = _.capitalize(clone.value.value);
+      clone.value.raw = `'${clone.value.value}'`
+      columnDef.properties.push(clone);
     }
 
     if (_.includes(filterBy, field.value.value)) {
@@ -482,9 +549,9 @@ function rewriteColumns(directive) {
         if (evaluated && _.isString(evaluated) && evaluated.startsWith('<') && evaluated.endsWith('>') && evaluated.indexOf(' ng-if') !== -1) {
           let newValue = es$(esprima.parse(`'<div>${evaluated}</div>'`), 'ExpressionStatement')[0];
           cellTemplate.value = newValue.expression;
-          if (evaluated.indexOf('text-center')) {
-            centerText();
-          }
+        }
+        if (evaluated && _.isString(evaluated) && evaluated.indexOf('text-center') !== -1) {
+          centerText();
         }
       }
       catch (e) {
@@ -525,7 +592,7 @@ function rewriteAllTheRest(dir) {
     return _.filter(es$(global.jfTableViewConverter.ASTRoot, 'Identifier[name="setGridData"]'), call => {
       let parent = _getNodeParent(call);
 
-      if (parent.object.property.name === gridOptions) {
+      if (parent.object.property && parent.object.property.name === gridOptions) {
         return true;
       }
     });
@@ -615,7 +682,7 @@ function _traverse(obj, callback, parents = []) {
   if (obj && obj.type) parents.push(obj);
   _.forIn(obj, (val, key) => {
     if (stopped) return;
-    if (val && val.type) {
+    if (val) {
       let ret = callback(key, val, obj, parents);
       if (ret === false) stopped = true;
     }
@@ -655,9 +722,12 @@ function _rewriteNode(node) {
   let afterChange = global.jfTableViewConverter.controllerSource.substr(end);
 
   let newCode = src(node, Math.round(_getIndent(start) / 4));
-  newCode = newCode.replace(/\)\./g, ')\n' + ' '.repeat(4 + _getIndent(start)) + '.');
+//  newCode = newCode.replace(/\)\./g, ')\n' + ' '.repeat(4 + _getIndent(start)) + '.');
+
   global.jfTableViewConverter.controllerSource = beforeChange + newCode + afterChange;
+
   global.jfTableViewConverter.ASTRoot = esprima.parseModule(global.jfTableViewConverter.controllerSource, {range: true, tokens: true, comment: true});
+
   attachComments()
 }
 
