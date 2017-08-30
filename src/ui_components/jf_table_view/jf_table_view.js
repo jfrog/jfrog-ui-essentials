@@ -123,7 +123,9 @@ class jfTableViewController {
         }
         recursiveAdd(templateRoot);
         if (elementToAddTo) {
-	        elementToAddTo.attr('jf-tooltip-on-overflow',true);
+	        if (!elementToAddTo.attr('jf-tooltip') && !elementToAddTo.attr('jf-tooltip')) {
+		        elementToAddTo.attr('jf-tooltip-on-overflow',true);
+            }
 	        elementToAddTo.addClass('overflow-ellipsis');
         }
     }
