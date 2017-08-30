@@ -341,7 +341,7 @@ function rewriteDirective(directives) {
     console.log('Rewriting columns definition')
     rewriteColumns(dir);
     console.log('Rewriting more stuff')
-    rewriteAllTheRest(dir);
+    rewriteAllTheRest(dir, creationLocation);
   })
 }
 
@@ -351,9 +351,12 @@ function getControllerAs() {
   }
   else {
     let exportDeclaration = _.find(global.jfTableViewConverter.ASTRoot.body, {type: 'ExportNamedDeclaration'})
-    let dirDescObject = exportDeclaration.declaration.body.body[0].argument.properties;
-    let controllerAsProperty = _.find(dirDescObject, {key: {name: 'controllerAs'}})
-    if (controllerAsProperty) return controllerAsProperty.value.value;
+    if (exportDeclaration.declaration.body.body[0].argument) {
+      let dirDescObject = exportDeclaration.declaration.body.body[0].argument.properties;
+      let controllerAsProperty = _.find(dirDescObject, {key: {name: 'controllerAs'}})
+      if (controllerAsProperty) return controllerAsProperty.value.value;
+    }
+    else return 'ctrl';
   }
 }
 
@@ -520,16 +523,7 @@ function rewriteColumns(directive) {
     if (sort) {
       let desc = src(sort).indexOf('.DESC') !== -1;
       if (columnsArray.elements.indexOf(columnDef) !== 0 || desc) {
-        _addToChain(directive.chainHeader, 'sortBy', [
-          {
-            type: 'Literal',
-            value: field.value.value,
-            raw: `'${field.value.value}'`
-          }
-        ])
-      }
-      if (desc) {
-        _addToChain(directive.chainHeader, 'reverseSortingDir', []);
+        directive.addSortBy = {field: field.value.value, desc}
       }
       _.remove(columnDef.properties, p => p === sort);
     }
@@ -543,19 +537,28 @@ function rewriteColumns(directive) {
     }
 
     let wrapCellTemplate = (cellTemplate) => {
-      try {
-        // eslint-disable-next-line no-eval
-        let evaluated = eval(src(cellTemplate));
-        if (evaluated && _.isString(evaluated) && evaluated.startsWith('<') && evaluated.endsWith('>') && evaluated.indexOf(' ng-if') !== -1) {
-          let newValue = es$(esprima.parse(`'<div>${evaluated}</div>'`), 'ExpressionStatement')[0];
-          cellTemplate.value = newValue.expression;
+      let tryVal = (val, object, key) => {
+        try {
+          // eslint-disable-next-line no-eval
+          let evaluated = eval(src(object[key]));
+          if (evaluated && _.isString(evaluated) && evaluated.startsWith('<') && evaluated.endsWith('>') && evaluated.indexOf(' ng-if') !== -1) {
+            let newValue = es$(esprima.parse(`'<div>${evaluated}</div>'`), 'ExpressionStatement')[0];
+            object[key] = newValue.expression;
+          }
+          if (evaluated && _.isString(evaluated) && evaluated.indexOf('text-center') !== -1) {
+            centerText();
+          }
         }
-        if (evaluated && _.isString(evaluated) && evaluated.indexOf('text-center') !== -1) {
-          centerText();
+        catch (e) {
+          if (object[key].type === 'Identifier') {
+            let varDeclarator = es$(getColumnsMethod, `VariableDeclarator[id.name="${cellTemplate.value.name}"]`)[0];
+            tryVal(varDeclarator.init, varDeclarator, 'init');
+          }
         }
       }
-      catch (e) {
-      }
+      tryVal(cellTemplate.value, cellTemplate, 'value');
+
+
     };
 
     let cellTemplate = _.find(columnDef.properties, {key: {name: 'cellTemplate'}});
@@ -576,12 +579,12 @@ function rewriteColumns(directive) {
 
   })
 
-  _rewriteNode(columnsArray);
+  _rewriteNode(getColumnsMethod);
 
 
 }
 
-function rewriteAllTheRest(dir) {
+function rewriteAllTheRest(dir, creationLocation) {
   let controllerAs = getControllerAs();
   let gridOptions = dir.attrs['grid-options'];
   gridOptions = _.trim(gridOptions, '"');
@@ -639,11 +642,40 @@ function rewriteAllTheRest(dir) {
     getSelectedRowsCalls = findGetSelectedRowsCalls();
   }
 
+
+  if (dir.addSortBy) {
+    let creationMethodName = creationLocation.method.key.name;
+    let creationMethod = es$(global.jfTableViewConverter.ASTRoot, `MethodDefinition[key.name="${creationMethodName}"]`)[0];
+    let memberExpressions = es$(creationMethod, 'MemberExpression[object.callee.object.callee]');
+
+    let chainRoot;
+    let i = 0;
+    while (!chainRoot && i < memberExpressions.length) {
+      chainRoot = _getChainRoot(memberExpressions[i]);
+      i++;
+    }
+
+    chainRoot = _getNodeParent(chainRoot);
+
+    _addToChain(chainRoot, 'sortBy', [
+      {
+        type: 'Literal',
+        value: dir.addSortBy.field,
+        raw: `'${dir.addSortBy.field}'`
+      }
+    ])
+    if (dir.addSortBy.desc) {
+      _addToChain(chainRoot, 'reverseSortingDir', []);
+    }
+    _rewriteNode(chainRoot);
+  }
+
 }
 
 function _getChainRoot(chainStart) {
+  if (!chainStart.object || !chainStart.object.callee) return null;
   let curr = chainStart;
-  while (curr.object.callee.object.callee) {
+  while (curr.object.callee.object && curr.object.callee.object.callee) {
     curr = curr.object.callee
   }
   return curr;
