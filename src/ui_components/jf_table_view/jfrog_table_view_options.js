@@ -142,6 +142,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
 			this.dataWasSet = true;
 
+			return this;
 		}
 
 		_transformDataForSubRowsSupport(data, autoExpand) {
