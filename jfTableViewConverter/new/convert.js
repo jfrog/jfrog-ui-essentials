@@ -1,5 +1,5 @@
 let dryrun;
-//dryrun = true;
+dryrun = true;
 let printOutput;
 //printOutput = true;
 let printProgress = true;
@@ -17,7 +17,7 @@ let directiveRegex = /<jf-grid(?:.|\n)*?((?:.|\n)*?)>(?:.|\n)*?<\/jf-grid>/g;
 let convertedAttributes = ['grid-options', 'object-name', 'auto-focus', 'filter-field', 'filter-field2', 'no-count', 'filter-on-change'];
 
 
-global.jfTableViewConverter = {};
+let globals = global.jfTableViewConverter = {};
 
 const jsonFile = process.argv[2];
 
@@ -29,11 +29,11 @@ function processConversionJson(jsonFile) {
     console.error('Conversion description file not found !');
   }
   else {
-    let conversionJson = global.jfTableViewConverter.conversionJson = jetpack.read(jsonFile, 'json');
+    let conversionJson = globals.conversionJson = jetpack.read(jsonFile, 'json');
 
-    let workingDir = global.jfTableViewConverter.workingDir = _.dropRight(jsonFile.split('/')).join('/');
+    let workingDir = globals.workingDir = _.dropRight(jsonFile.split('/')).join('/');
 
-    let localJetpack = global.jfTableViewConverter.localJetpack = jetpack.cwd(workingDir);
+    let localJetpack = globals.localJetpack = jetpack.cwd(workingDir);
 
     let perSource = (moduleFile, templateFile, controllerFile) => {
       if (moduleFile && controllerFile && templateFile) {
@@ -72,17 +72,17 @@ function convertByControllerAndTemplate(templateFile, controllerFile, controller
 
   progress(`Converting:\nTemplate=${templateFile}\nController=${controllerFile}`)
 
-  global.jfTableViewConverter.controllerAs = controllerAs;
+  globals.controllerAs = controllerAs;
 
-  if (!global.jfTableViewConverter.localJetpack.exists(templateFile)) console.error('Template file not found !', templateFile);
-  else if (!global.jfTableViewConverter.localJetpack.exists(controllerFile)) console.error('Controller file not' + ' found !', controllerFile);
+  if (!globals.localJetpack.exists(templateFile)) console.error('Template file not found !', templateFile);
+  else if (!globals.localJetpack.exists(controllerFile)) console.error('Controller file not' + ' found !', controllerFile);
   else {
-    let template = global.jfTableViewConverter.localJetpack.read(templateFile);
+    let template = globals.localJetpack.read(templateFile);
 
     let directives = getDirectives(template);
     progress('Rewriting template...')
     let newTemplate = rewriteTemplate(template, directives);
-    if (!dryrun) global.jfTableViewConverter.localJetpack.write(global.jfTableViewConverter.conversionJson.overwrite ? templateFile : templateFile.replace('.html', '.converted.html'), newTemplate);
+    if (!dryrun) globals.localJetpack.write(globals.conversionJson.overwrite ? templateFile : templateFile.replace('.html', '.converted.html'), newTemplate);
 
     progress('Rewriting controller...')
     rewriteController(controllerFile, directives);
@@ -90,7 +90,7 @@ function convertByControllerAndTemplate(templateFile, controllerFile, controller
 }
 
 function convertByController(controllerFile) {
-  if (!global.jfTableViewConverter.localJetpack.exists(controllerFile)) console.error('Controller file not' + ' found !', controllerFile);
+  if (!globals.localJetpack.exists(controllerFile)) console.error('Controller file not' + ' found !', controllerFile);
   else {
     let controllerEditor = esEditor(controllerFile);
     let exportDeclaration = controllerEditor.root.select('ExportNamedDeclaration')[0];
@@ -99,7 +99,7 @@ function convertByController(controllerFile) {
         let dirDescObject = exportDeclaration.get('declaration.body.body[0].argument.properties');
         let templateUrlProperty = _.find(dirDescObject, {node: {key: {name: 'templateUrl'}}})
         if (templateUrlProperty) {
-          convertByControllerAndTemplate(global.jfTableViewConverter.conversionJson.base + templateUrlProperty.get('value.value'), controllerFile);
+          convertByControllerAndTemplate(globals.conversionJson.base + templateUrlProperty.get('value.value'), controllerFile);
         }
       }
     }
@@ -108,7 +108,7 @@ function convertByController(controllerFile) {
 
 function convertByModule(moduleFile) {
   progress('Converting module: ' + moduleFile);
-  if (!global.jfTableViewConverter.localJetpack.exists(moduleFile)) console.error('Module file not found !', moduleFile);
+  if (!globals.localJetpack.exists(moduleFile)) console.error('Module file not found !', moduleFile);
   else {
     let baseDir = _.dropRight(moduleFile.split('/')).join('/');
 
@@ -148,7 +148,7 @@ function convertByModule(moduleFile) {
 
         let templateUrlProperty = _.find(objectExpression.get('properties'), {node: {key: {name: 'templateUrl'}}});
         if (templateUrlProperty) {
-          let templateFileName = global.jfTableViewConverter.conversionJson.base + templateUrlProperty.get('value.value');
+          let templateFileName = globals.conversionJson.base + templateUrlProperty.get('value.value');
 
           if (templateFileName && controllerFileName) {
             convertByControllerAndTemplate(templateFileName, controllerFileName, controllerAs);
@@ -215,7 +215,7 @@ function getAttributesFromElement(element) {
 function rewriteTemplate(template, directives) {
   directives.forEach(dir => {
     let index = template.indexOf(dir.exactElement);
-    let indent = global.jfTableViewConverter.editor.editor.getIndentation(template, index);
+    let indent = globals.editor.editor.getIndentation(template, index);
     let retainedAttrs = _.filter(Object.keys(dir.attrs), a => !_.includes(convertedAttributes, a));
     retainedAttrs = _.map(retainedAttrs, a => {
       let str = `${a}=${dir.attrs[a]}`
@@ -230,21 +230,21 @@ function rewriteTemplate(template, directives) {
 }
 
 function rewriteController(controllerFile, directives) {
-  global.jfTableViewConverter.editor = esEditor(controllerFile);
-  global.jfTableViewConverter.root = global.jfTableViewConverter.editor.root;
+  globals.editor = esEditor(controllerFile);
+  globals.root = globals.editor.root;
 
   progress('Replacing injections')
   replaceInjections();
 
   rewriteDirective(directives);
 
-  if (!dryrun) global.jfTableViewConverter.editor.editor.write();
-  else if (printOutput) console.log(global.jfTableViewConverter.editor.editor.getEditedSource());
-  else global.jfTableViewConverter.editor.editor.getEditedSource();
+  if (!dryrun) globals.editor.editor.write();
+  else if (printOutput) console.log(globals.editor.editor.getEditedSource());
+  else globals.editor.editor.getEditedSource();
 }
 
 function replaceInjections() {
-  let constructors = global.jfTableViewConverter.root.select('ClassDeclaration MethodDefinition[kind="constructor"] FunctionExpression');
+  let constructors = globals.root.select('ClassDeclaration MethodDefinition[kind="constructor"] FunctionExpression');
   if (!constructors.length) return;
   let params = constructors[0].get('params');
 
@@ -270,7 +270,7 @@ function replaceInjections() {
   body.removeIf(statement => {
     if (statement.has('expression') && statement.get('expression.operator') === '=') {
       if (statement.get('expression.right.name') === 'commonGridColumns') {
-        global.jfTableViewConverter.commonGridColumns = statement.get('expression.left.property.name');
+        globals.commonGridColumns = statement.get('expression.left.property.name');
       }
       if (_.includes(['uiGridConstants', 'commonGridColumns'], statement.get('expression.right.name'))) {
         return true;
@@ -285,11 +285,11 @@ function replaceInjections() {
       if (statement.get('expression.right.name') === (underlineInjections ? '_JFrogGridFactory_' : 'JFrogGridFactory')) {
         statement.set('expression.right.name', underlineInjections ? '_JFrogTableViewOptions_' : 'JFrogTableViewOptions');
         if (statement.get('expression.left.property')) {
-          global.jfTableViewConverter.optionsNotOnThis = false;
+          globals.optionsNotOnThis = false;
           statement.set('expression.left.property.name', 'JFrogTableViewOptions');
         }
         else {
-          global.jfTableViewConverter.optionsNotOnThis = true;
+          globals.optionsNotOnThis = true;
           renameVar = statement.get('expression.left.name');
           statement.set('expression.left.name', 'JFrogTableViewOptions');
         }
@@ -299,7 +299,7 @@ function replaceInjections() {
 
 
   if (renameVar) {
-    let varDeclarator = global.jfTableViewConverter.root.select(`VariableDeclarator[id.name="${renameVar}"]`)[0];
+    let varDeclarator = globals.root.select(`VariableDeclarator[id.name="${renameVar}"]`)[0];
     varDeclarator.set('id.name', 'JFrogTableViewOptions');
   }
 
@@ -324,11 +324,11 @@ function rewriteDirective(directives) {
 }
 
 function getControllerAs() {
-  if (global.jfTableViewConverter.controllerAs) {
-    return global.jfTableViewConverter.controllerAs
+  if (globals.controllerAs) {
+    return globals.controllerAs
   }
   else {
-    let exportDeclaration = global.jfTableViewConverter.editor.root.select('ExportNamedDeclaration')[0];
+    let exportDeclaration = globals.editor.root.select('ExportNamedDeclaration')[0];
     if (exportDeclaration.get('declaration.body.body[0].argument')) {
       let dirDescObject = exportDeclaration.get('declaration.body.body[0].argument.properties');
       let controllerAsProperty = _.find(dirDescObject, {node: {key: {name: 'controllerAs'}}})
@@ -340,7 +340,7 @@ function getControllerAs() {
 
 function locateGridCreation(gridOptions) {
 
-  let methods = global.jfTableViewConverter.editor.root.select('ClassDeclaration MethodDefinition');
+  let methods = globals.editor.root.select('ClassDeclaration MethodDefinition');
 
   let assigment;
   let creationMethod = _.find(methods, method => {
@@ -364,7 +364,7 @@ function locateGridCreation(gridOptions) {
 
 function rewriteCreation(creationLocation, directive) {
   if (!creationLocation.assigment) return;
-  let editor = global.jfTableViewConverter.editor.editor;
+  let editor = globals.editor.editor;
 
   let creationMemberExpression = creationLocation.assigment.get('right')
     .select('MemberExpression[object.callee.property.name="getGridInstance"]')[0];
@@ -388,7 +388,7 @@ function rewriteCreation(creationLocation, directive) {
   })
   newExpression.set('arguments', creationMemberExpression.get('object.arguments'));
 
-  if (global.jfTableViewConverter.optionsNotOnThis) newExpression.set('callee', newExpression.get('callee.property'));
+  if (globals.optionsNotOnThis) newExpression.set('callee', newExpression.get('callee.property'));
 
   let clone = creationStatement.clone().get('expression');
   clone.set('right', newExpression);
@@ -461,7 +461,7 @@ function rewriteColumns(directive) {
     }
   }
 
-  let getColumnsMethod = global.jfTableViewConverter.editor
+  let getColumnsMethod = globals.editor
     .root.select(`ClassDeclaration MethodDefinition[kind="method"][key.name="${directive.getColumnsMethodName}"]`)[0];
 
   if (!getColumnsMethod) return;
@@ -538,7 +538,7 @@ function rewriteColumns(directive) {
           // eslint-disable-next-line no-eval
           let evaluated = eval(object.get(key).src);
           if (evaluated && _.isString(evaluated) && evaluated.startsWith('<') && evaluated.endsWith('>') && evaluated.indexOf(' ng-if') !== -1) {
-            let newValue = global.jfTableViewConverter.editor.editor
+            let newValue = globals.editor.editor
               .createNewElementFromCode(`'<div>${evaluated}</div>'`);
             object.set(key, newValue.get('expression'));
           }
@@ -562,12 +562,12 @@ function rewriteColumns(directive) {
 
     if (cellTemplate) wrapCellTemplate(cellTemplate);
 
-    if (cellTemplate && global.jfTableViewConverter.commonGridColumns) {
+    if (cellTemplate && globals.commonGridColumns) {
       let value = cellTemplate.get('value').src;
-      if (_.startsWith(value, 'this.' + global.jfTableViewConverter.commonGridColumns)) {
-        value = value.replace('this.' + global.jfTableViewConverter.commonGridColumns, 'this.JFrogTableViewOptions.cellTemplateGenerators');
+      if (_.startsWith(value, 'this.' + globals.commonGridColumns)) {
+        value = value.replace('this.' + globals.commonGridColumns, 'this.JFrogTableViewOptions.cellTemplateGenerators');
         value = value.replace('.repoPathColumn', '.artifactoryRepoPathColumn');
-        cellTemplate.set('value', global.jfTableViewConverter.editor.editor
+        cellTemplate.set('value', globals.editor.editor
           .createNewElementFromCode(value).select('CallExpression')[0]);
 
         if (value.indexOf('.booleanColumn(') !== -1 || value.indexOf('.checkboxColumn(') !== -1) {
@@ -589,7 +589,7 @@ function rewriteAllTheRest(dir, creationLocation) {
 
 
   let findSetGridDataCalls = () => {
-    let candidates = global.jfTableViewConverter.editor.root.select('Identifier[name="setGridData"]');
+    let candidates = globals.editor.root.select('Identifier[name="setGridData"]');
     return _.filter(candidates , call => {
       let parent = call.parent();
 
@@ -606,7 +606,7 @@ function rewriteAllTheRest(dir, creationLocation) {
   });
 
   let findGetSelectedRowsCalls = () => {
-    let getSelectedRowsCalls = global.jfTableViewConverter.editor.root.select('Identifier[name="getSelectedRows"]');
+    let getSelectedRowsCalls = globals.editor.root.select('Identifier[name="getSelectedRows"]');
 
     getSelectedRowsCalls = _.filter(getSelectedRowsCalls, call => {
       let parent = call.parent();

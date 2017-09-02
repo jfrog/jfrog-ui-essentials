@@ -222,7 +222,7 @@ class Editor {
     let oldCode = this.source.substr(start, end - start);
 
     let newCode;
-    newCode = src(node, Math.round(this._getIndent(start) / 4));
+    newCode = src(node, Math.round(this.getIndentation(start) / 4));
 
     let linesSplit = newCode.split('\n');
     for (let i = 0; i < linesSplit.length; i++) {
@@ -231,19 +231,19 @@ class Editor {
         let comment = commentSplit.slice(1).join('//');
         let oldIndex = oldCode.indexOf(comment);
         if (oldIndex !== -1) {
-          let indent = this._getIndent(start + oldIndex);
+          let indent = this.getIndentation(start + oldIndex);
           commentSplit[1] = '\n' + ' '.repeat(indent) + '//' + comment;
         }
 
       }
 
       let chainSplit = commentSplit[0].split(/\)\./g);
-      commentSplit[0] = chainSplit.join(')\n' + ' '.repeat(8 + this._getIndent(start)) + '.');
+      commentSplit[0] = chainSplit.join(')\n' + ' '.repeat(8 + this.getIndentation(start)) + '.');
       linesSplit[i] = commentSplit.join('//');
       linesSplit[i] = linesSplit[i].split('\n')
         .map(splt => splt.endsWith('//') ? splt.substr(0, splt.length - 2) : splt)
         .join('\n');
-      if (linesSplit[i].startsWith('.')) linesSplit[i] = ' '.repeat(8 + this._getIndent(start)) + linesSplit[i];
+      if (linesSplit[i].startsWith('.')) linesSplit[i] = ' '.repeat(8 + this.getIndentation(start)) + linesSplit[i];
 
     }
 
