@@ -2,12 +2,13 @@ let dryrun;
 //dryrun = true;
 let printOutput;
 //printOutput = true;
-let printProgress = false;
+let printProgress = true;
 let progress = (progStr) => printProgress && console.log(progStr);
 let jetpack = require('fs-jetpack');
 let _ = require('lodash');
 
 let json = (node) => console.log(JSON.stringify(node, null, 4));
+let inspect = (obj, depth) => console.dir(obj, {depth: depth || null});
 
 let esEditor = require('./es-editor');
 
@@ -214,7 +215,7 @@ function getAttributesFromElement(element) {
 function rewriteTemplate(template, directives) {
   directives.forEach(dir => {
     let index = template.indexOf(dir.exactElement);
-    let indent = _getIndent(template, index);
+    let indent = global.jfTableViewConverter.editor.editor.getIndentation(template, index);
     let retainedAttrs = _.filter(Object.keys(dir.attrs), a => !_.includes(convertedAttributes, a));
     retainedAttrs = _.map(retainedAttrs, a => {
       let str = `${a}=${dir.attrs[a]}`
@@ -315,10 +316,10 @@ function rewriteDirective(directives) {
     let creationLocation = locateGridCreation(gridOptions);
     progress('Rewriting creation code')
     rewriteCreation(creationLocation, dir);
-//    progress('Rewriting columns definition')
-//    rewriteColumns(dir);
-//    progress('Rewriting more stuff')
-//    rewriteAllTheRest(dir, creationLocation);
+    progress('Rewriting columns definition')
+    rewriteColumns(dir);
+    progress('Rewriting more stuff')
+    rewriteAllTheRest(dir, creationLocation);
   })
 }
 
@@ -460,100 +461,114 @@ function rewriteColumns(directive) {
     }
   }
 
-  let getColumnsMethod = es$(global.jfTableViewConverter.ASTRoot, `ClassDeclaration MethodDefinition[kind="method"][key.name="${directive.getColumnsMethodName}"]`)[0];
+  let getColumnsMethod = global.jfTableViewConverter.editor
+    .root.select(`ClassDeclaration MethodDefinition[kind="method"][key.name="${directive.getColumnsMethodName}"]`)[0];
 
-  let arrayExpressions = es$(getColumnsMethod, 'FunctionExpression ArrayExpression');
+  if (!getColumnsMethod) return;
+
+  let arrayExpressions = getColumnsMethod.select('FunctionExpression ArrayExpression');
 
   let columnsArray = _.filter(arrayExpressions, ae => {
-    let parentAE = _getNodeParent(ae, 'ArrayExpression');
-    let parentAEMethod = _getNodeParent(parentAE, 'MethodDefinition');
+    let parentAE = ae.parent('ArrayExpression');
+    let parentAEMethod = parentAE ? parentAE.select('MethodDefinition') : null;
     return !parentAE || (parentAEMethod !== getColumnsMethod);
   })[0]
 
   if (!columnsArray) return;
-
-  columnsArray.elements.forEach(columnDef => {
-    let field = _.find(columnDef.properties, {key: {name: 'field'}});
-    let name = _.find(columnDef.properties, {key: {name: 'name'}});
-    let displayName = _.find(columnDef.properties, {key: {name: 'displayName'}});
+  columnsArray.get('elements').forEach(columnDef => {
+    let field = _.find(columnDef.get('properties'), {node: {key: {name: 'field'}}});
+    let name = _.find(columnDef.get('properties'), {node: {key: {name: 'name'}}});
+    let displayName = _.find(columnDef.get('properties'), {node: {key: {name: 'displayName'}}});
     if (name && displayName) {
-      if (name.value.value !== displayName.value.value) {
-        console.error('Warning! Unmatched \'name\' & \'displayName\' column attribute:\nname=' + name.value.value + ' | displayName=' + displayName.value.value + '\nTaking \'displayName\' for header');
+      if (name.get('value.value') !== displayName.get('value.value')) {
+        console.error('Warning! Unmatched \'name\' & \'displayName\' column attribute:\nname=' + name.get('value.value') + ' | displayName=' + displayName.get('value.value') + '\nTaking \'displayName\' for header');
       }
-      _.remove(columnDef.properties, p => p === name);
-      displayName.key.name = 'header';
+      columnDef.get('properties').removeIf(p => p.equals(name));
+      displayName.set('key.name', 'header');
     }
     else if (displayName || name) {
-      (displayName || name).key.name = 'header';
+      (displayName || name).set('key.name', 'header');
     }
     else {
-      let clone = _.cloneDeep(field);
-      clone.key.name = 'header';
-      clone.value.value = _.capitalize(clone.value.value);
-      clone.value.raw = `'${clone.value.value}'`
-      columnDef.properties.push(clone);
+      let clone = field.clone();
+      clone.set('key.name', 'header');
+      clone.set('value.value', _.capitalize(clone.get('value.value')));
+      clone.set('value.raw', `'${clone.get('value.value')}'`);
+      columnDef.get('properties').push(clone);
     }
 
-    if (_.includes(filterBy, field.value.value)) {
-      let clone = _.cloneDeep(field);
-      clone.key.name = 'filterable';
-      clone.value.value = true;
-      delete clone.value.raw;
-      columnDef.properties.push(clone);
+    if (_.includes(filterBy, field.get('value.value'))) {
+      let clone = field.clone();
+      clone.set('key.name', 'filterable');
+      clone.set('value.value', true);
+      delete clone.node.value.raw;
+      columnDef.get('properties').push(clone);
     }
 
-    let sort = _.find(columnDef.properties, {key: {name: 'sort'}});
+    let sort = _.find(columnDef.get('properties'), {node: {key: {name: 'sort'}}});
 
     if (sort) {
-      let desc = src(sort).indexOf('.DESC') !== -1;
-      if (columnsArray.elements.indexOf(columnDef) !== 0 || desc) {
-        directive.addSortBy = {field: field.value.value, desc}
+      let desc = sort.src.indexOf('.DESC') !== -1;
+      if (columnsArray.get('elements').indexOf(columnDef) !== 0 || desc) {
+        _addToChain(directive.chainHeader, 'sortBy', [
+          {
+            type: 'Literal',
+            value: field.get('value.value'),
+            raw: `'${field.get('value.value')}'`
+          }
+        ])
+        if (desc) {
+          _addToChain(directive.chainHeader, 'reverseSortingDir', []);
+        }
       }
-      _.remove(columnDef.properties, p => p === sort);
+      columnDef.get('properties').removeIf(p => p.equals(sort));
     }
 
     let centerText = () => {
-      let clone = _.cloneDeep(field);
-      clone.key.name = 'textAlign';
-      clone.value.value = 'center';
-      clone.value.raw = "'center'";
-      columnDef.properties.push(clone);
+      let clone = field.clone();
+      clone.set('key.name', 'textAlign');
+      clone.set('value.value', 'center');
+      clone.set('value.raw', "'center'");
+      columnDef.get('properties').push(clone);
     }
 
     let wrapCellTemplate = (cellTemplate) => {
       let tryVal = (val, object, key) => {
         try {
           // eslint-disable-next-line no-eval
-          let evaluated = eval(src(object[key]));
+          let evaluated = eval(object.get(key).src);
           if (evaluated && _.isString(evaluated) && evaluated.startsWith('<') && evaluated.endsWith('>') && evaluated.indexOf(' ng-if') !== -1) {
-            let newValue = es$(esprima.parse(`'<div>${evaluated}</div>'`), 'ExpressionStatement')[0];
-            object[key] = newValue.expression;
+            let newValue = global.jfTableViewConverter.editor.editor
+              .createNewElementFromCode(`'<div>${evaluated}</div>'`);
+            object.set(key, newValue.get('expression'));
           }
           if (evaluated && _.isString(evaluated) && evaluated.indexOf('text-center') !== -1) {
             centerText();
           }
         }
         catch (e) {
-          if (object[key].type === 'Identifier') {
-            let varDeclarator = es$(getColumnsMethod, `VariableDeclarator[id.name="${cellTemplate.value.name}"]`)[0];
-            tryVal(varDeclarator.init, varDeclarator, 'init');
+          if (object.get(key).get('type') === 'Identifier') {
+            let varDeclarator = getColumnsMethod.select(`VariableDeclarator[id.name="${cellTemplate.get('value.name')}"]`)[0];
+            tryVal(varDeclarator.get('init'), varDeclarator, 'init');
           }
         }
       }
-      tryVal(cellTemplate.value, cellTemplate, 'value');
+      tryVal(cellTemplate.get('value'), cellTemplate, 'value');
 
 
     };
 
-    let cellTemplate = _.find(columnDef.properties, {key: {name: 'cellTemplate'}});
+    let cellTemplate = _.find(columnDef.get('properties'), {node: {key: {name: 'cellTemplate'}}});
 
     if (cellTemplate) wrapCellTemplate(cellTemplate);
+
     if (cellTemplate && global.jfTableViewConverter.commonGridColumns) {
-      let value = src(cellTemplate.value);
+      let value = cellTemplate.get('value').src;
       if (_.startsWith(value, 'this.' + global.jfTableViewConverter.commonGridColumns)) {
         value = value.replace('this.' + global.jfTableViewConverter.commonGridColumns, 'this.JFrogTableViewOptions.cellTemplateGenerators');
         value = value.replace('.repoPathColumn', '.artifactoryRepoPathColumn');
-        cellTemplate.value = es$(esprima.parse(value), 'CallExpression')[0];
+        cellTemplate.set('value', global.jfTableViewConverter.editor.editor
+          .createNewElementFromCode(value).select('CallExpression')[0]);
 
         if (value.indexOf('.booleanColumn(') !== -1 || value.indexOf('.checkboxColumn(') !== -1) {
           centerText();
@@ -561,10 +576,8 @@ function rewriteColumns(directive) {
       }
     }
 
+
   })
-
-  _rewriteNode(getColumnsMethod);
-
 
 }
 
@@ -576,10 +589,11 @@ function rewriteAllTheRest(dir, creationLocation) {
 
 
   let findSetGridDataCalls = () => {
-    return _.filter(es$(global.jfTableViewConverter.ASTRoot, 'Identifier[name="setGridData"]'), call => {
-      let parent = _getNodeParent(call);
+    let candidates = global.jfTableViewConverter.editor.root.select('Identifier[name="setGridData"]');
+    return _.filter(candidates , call => {
+      let parent = call.parent();
 
-      if (parent.object.property && parent.object.property.name === gridOptions) {
+      if (parent.get('object.property.name') === gridOptions) {
         return true;
       }
     });
@@ -587,82 +601,30 @@ function rewriteAllTheRest(dir, creationLocation) {
 
   let setGridDataCalls = findSetGridDataCalls();
 
-  while (setGridDataCalls.length) {
-    let call = setGridDataCalls[0];
-    let parent = _getNodeParent(call);
-
-    if (parent.object.property.name === gridOptions) {
-      call.name = 'setData';
-    }
-
-    _rewriteNode(parent);
-
-    setGridDataCalls = findSetGridDataCalls();
-  }
+  setGridDataCalls.forEach(call => {
+    call.set('name', 'setData');
+  });
 
   let findGetSelectedRowsCalls = () => {
-    let getSelectedRowsCalls = es$(global.jfTableViewConverter.ASTRoot, 'Identifier[name="getSelectedRows"]');
+    let getSelectedRowsCalls = global.jfTableViewConverter.editor.root.select('Identifier[name="getSelectedRows"]');
 
     getSelectedRowsCalls = _.filter(getSelectedRowsCalls, call => {
-      let parent = _getNodeParent(call);
-      if (parent.object && parent.object.object && parent.object.object.object && parent.object.property.name === 'selection' && parent.object.object.property.name === 'api') {
+      let parent = call.parent();
+      if (parent.get('object.object.object') && parent.get('object.property.name') === 'selection' && parent.get('object.object.property.name') === 'api') {
         return true;
       }
     })
-
     return getSelectedRowsCalls;
   }
 
   let getSelectedRowsCalls = findGetSelectedRowsCalls();
 
-  while (getSelectedRowsCalls.length) {
-    let call = getSelectedRowsCalls[0];
-    let parent = _getNodeParent(call);
+  getSelectedRowsCalls.forEach(call => {
+    let parent = call.parent();
 
-    parent.object = parent.object.object.object;
+    parent.set('object', parent.get('object.object.object'));
+  })
 
-    _rewriteNode(parent);
-
-    getSelectedRowsCalls = findGetSelectedRowsCalls();
-  }
-
-
-  if (dir.addSortBy) {
-    let creationMethodName = creationLocation.method.key.name;
-    let creationMethod = es$(global.jfTableViewConverter.ASTRoot, `MethodDefinition[key.name="${creationMethodName}"]`)[0];
-    let memberExpressions = es$(creationMethod, 'MemberExpression[object.callee.object.callee]');
-
-    let chainRoot;
-    let i = 0;
-    while (!chainRoot && i < memberExpressions.length) {
-      chainRoot = _getChainRoot(memberExpressions[i]);
-      i++;
-    }
-
-    chainRoot = _getNodeParent(chainRoot);
-
-    _addToChain(chainRoot, 'sortBy', [
-      {
-        type: 'Literal',
-        value: dir.addSortBy.field,
-        raw: `'${dir.addSortBy.field}'`
-      }
-    ])
-    if (dir.addSortBy.desc) {
-      _addToChain(chainRoot, 'reverseSortingDir', []);
-    }
-    _rewriteNode(chainRoot);
-  }
-
-}
-
-function _getChainRoot(chainStart) {
-  if (!chainStart.get('object') || !chainStart.get('object.callee')) return null;
-  let curr = chainStart;
-  while (curr.get('object.callee.object') && curr.get('object.callee.object.callee')) {
-    curr = curr.get('object.callee')
-  }
-  return curr;
 }
 
 function _removeFromChain(chainStart, toRemove) {
@@ -691,16 +653,5 @@ function _addToChain(chainStart, methodName, argumentsNode) {
   chainStart.set('callee.object', temp);
   chainStart.set('callee.property.name', methodName);
   chainStart.set('arguments', argumentsNode);
-}
-
-
-function _getIndent(source, offset) {
-  let before = source.substr(0, offset);
-  let lastNewLineIndex = before.lastIndexOf('\n') + 1;
-  let count = 0;
-  while (before.charAt(lastNewLineIndex + count) === ' ' || before.charAt(lastNewLineIndex + count) === '\t') {
-    count++;
-  }
-  return count;
 }
 

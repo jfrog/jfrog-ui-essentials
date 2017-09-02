@@ -7,12 +7,12 @@ let esquery = require('esquery');
 let inspect = (obj, depth) => console.dir(obj, {depth: depth || null});
 let json = (node) => console.log(JSON.stringify(node, null, 4));
 let src = (node, indent = 0) => {
+  if (node instanceof Element) console.log('!!!');
   let options = {}
   options.comment = true;
   if (indent) options.format = {indent: {base: indent}};
   return escodegen.generate(node, options);
 }
-
 
 class Element {
   constructor(editor, astNode) {
@@ -88,7 +88,8 @@ class Element {
 
   parent(type) {
     let parent = this.$editor._getParent(this.node, type);
-    if (parent.type) {
+    if (!parent) return null;
+    else if (parent.type) {
       return new Element(this.$editor, parent);
     }
     else if (_.isArray(parent)) {
@@ -115,8 +116,14 @@ class Element {
     }
 
     eArr.push = (node) => {
-      nodesArray.push(node);
-      origPush(new Element(this.$editor, node));
+      if (node instanceof Element) {
+        nodesArray.push(node.node);
+        origPush(node);
+      }
+      else {
+        nodesArray.push(node);
+        origPush(new Element(this.$editor, node));
+      }
       updateParent(eArr);
     }
 
@@ -214,7 +221,8 @@ class Editor {
     let afterChange = this.source.substr(end);
     let oldCode = this.source.substr(start, end - start);
 
-    let newCode = src(node, Math.round(this._getIndent(start) / 4));
+    let newCode;
+    newCode = src(node, Math.round(this._getIndent(start) / 4));
 
     let linesSplit = newCode.split('\n');
     for (let i = 0; i < linesSplit.length; i++) {
@@ -239,12 +247,19 @@ class Editor {
 
     }
 
-    newCode = linesSplit.join('\n');
+//    newCode = linesSplit.join('\n');
 
     this.source = beforeChange + newCode + afterChange;
-    this.astRoot = esprima.parseModule(this.source, {range: true, tokens: true, comment: true});
+    try {
+      this.astRoot = esprima.parseModule(this.source, {range: true, tokens: true, comment: true});
+    }
+    catch (e) {
+      console.log('ERROR IN RE-PARSING  !\nSOURCE:');
+      console.log(this.source);
+      process.exit(1)
+    }
 
-    this._attachComments()
+    this._attachComments();
 
   }
 
@@ -264,7 +279,8 @@ class Editor {
 
     return parent;
   }
-  _getIndent(offset) {
+
+  getIndentation(offset) {
     let before = (this.source).substr(0, offset);
     let lastNewLineIndex = before.lastIndexOf('\n') + 1;
     let count = 0;
