@@ -26,7 +26,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			this.actions = [];
 			this.columns = [];
 			this.listeners = {};
-			this.supportedEvents = ['pagination.change', 'selection.change'];
+			this.supportedEvents = ['pagination.change', 'selection.change', 'row.clicked'];
 			this.appScope = appScope;
 
 			// selection types

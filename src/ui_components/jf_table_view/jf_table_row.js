@@ -7,7 +7,9 @@ class jfTableRowController {
         this.EVENTS = JFrogEventBus.getEventsDefinition()
         this.templatesCount = _.filter(this.tableView.options.columns,col=>!!col.cellTemplate).length;
 
-        JFrogEventBus.registerOnScope($scope, this.EVENTS.TABLEVIEW_HIDE_ACTIONS_DROPDOWN, () => this.actionsDropdownOpen = false);
+        JFrogEventBus.registerOnScope($scope, this.EVENTS.TABLEVIEW_HIDE_ACTIONS_DROPDOWN, (tableView) => {
+	        if (tableView === this.tableView) this.actionsDropdownOpen = false
+        });
     }
     getField(field) {
         return _.get(this.data,field);
@@ -164,13 +166,22 @@ class jfTableRowController {
         }
     }
 
+    onRowClick() {
+	    if (this.data.$groupHeader) {
+	        jfTableRow.toggleGroupExpansion()
+	    }
+	    else {
+		    this.tableView.options.fire('row.clicked', {entity: this.data})
+        }
+    }
+
     toggleExpansion() {
         this.tableView.options.toggleExpansion(this.data);
     }
 
 	toggleActionsDropdown() {
         let origState = this.actionsDropdownOpen;
-        this.JFrogEventBus.dispatch(this.EVENTS.TABLEVIEW_HIDE_ACTIONS_DROPDOWN);
+        this.JFrogEventBus.dispatch(this.EVENTS.TABLEVIEW_HIDE_ACTIONS_DROPDOWN, this.tableView);
 	    this.actionsDropdownOpen = !origState;
     }
 }
