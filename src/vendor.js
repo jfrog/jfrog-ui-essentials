@@ -49,6 +49,8 @@ module.exports = {
         'node_modules/hamsterjs/hamster.js',
         'node_modules/angular-mousewheel/mousewheel.js',
         'components/jstree/dist/jstree.js',
+        'components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+        'components/angular-eonasdan-datetimepicker/dist/angular-eonasdan-datetimepicker.js'
     ],
 
     CSS: [
@@ -69,6 +71,7 @@ module.exports = {
         'components/tooltipster/css/tooltipster.css',
         'components/codemirror/addon/dialog/dialog.css',
         'components/jstree/dist/themes/default/style.css',
+        'components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
     ],
 
     FONTS: [
