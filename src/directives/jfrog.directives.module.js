@@ -33,7 +33,7 @@ import {jfClearErrors} from "./jf_clear_errors/jf_clear_errors";
 import {jfMarkupEditor} from "./jf_markup_editor/jf_markup_editor";
 import {jfTree} from "./jf_tree/jf_tree";
 import {jfAutoComplete} from "./jf_auto_complete/jf_auto_complete";
-import jfDatetimepicker from "./jf_datetimepicker/jf_datetimepicker";
+import {jfDatetimepicker} from "./jf_datetimepicker/jf_datetimepicker";
 
 angular.module('jfrog.ui.essentials.directives', [])
     .directive({
@@ -71,6 +71,6 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfMarkupEditor': jfMarkupEditor,
         'jfTree': jfTree,
         'jfAutoComplete': jfAutoComplete,
-	    'jfRadioButton': jfRadioButton
-    })
-    .component('jfDatetimepicker', jfDatetimepicker);
+	    'jfRadioButton': jfRadioButton,
+        'jfDatetimepicker': jfDatetimepicker
+    });

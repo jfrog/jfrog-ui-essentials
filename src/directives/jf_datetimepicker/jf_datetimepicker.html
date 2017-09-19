@@ -1,9 +1,12 @@
 <jf-field animated="true">
 	<div class="input-group"
+	     id="datetimepicker"
 	     datetimepicker
-	     options="$ctrl.options"
-	     ng-model="$ctrl.model">
+	     options="jfDatetimepicker.dpOpitons"
+	     ng-model="jfDatetimepicker.model">
 		<input class="input-text"
+		       ng-focus="jfDatetimepicker.onFocus()"
+		       ng-blur="jfDatetimepicker.onBlur()"
 		       required/>
 		<span class="input-group-addon calendar">
 	        <span class="glyphicon glyphicon-calendar"></span>
