@@ -1,5 +1,6 @@
 <div class="jf-marquee-container">
-	<span ng-init="jfMarquee.initContent()">
-		<ng-transclude></ng-transclude>
+	<span ng-init="jfMarquee.checkOverflow()">
+		<ng-transclude ng-if="!jfMarquee.$transclude.isSlotFilled('innerHtml')"></ng-transclude>
+		<ng-transclude ng-transclude-slot="innerHtml" ng-if="jfMarquee.$transclude.isSlotFilled('innerHtml')"></ng-transclude>
 	</span>
 </div>

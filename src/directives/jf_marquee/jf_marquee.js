@@ -1,7 +1,8 @@
 class jfMarqueeController {
 	/* @ngInject */
-    constructor($element,$timeout,$interval) {
+    constructor($element,$timeout,$interval,$scope,$transclude) {
         this.$timeout = $timeout;
+        this.$transclude = $transclude;
         this.container = $($element).find('.jf-marquee-container');
         this.content = $($element).find('.jf-marquee-container span');
 
@@ -9,6 +10,7 @@ class jfMarqueeController {
         this.container.on('mouseleave',()=>this.onMouseLeave());
     }
     onMouseEnter() {
+        this.checkOverflow();
         if (this.overflowing) {
             this.animPeriod = (this.content.innerWidth() * 0.01);
             this.startAnimation(1000);
@@ -39,20 +41,24 @@ class jfMarqueeController {
             },this.animPeriod*1000);
         }, delay);
     }
-    initContent() {
-        this.$timeout(()=>{
-            if (this.container.innerWidth() < this.content.innerWidth()) {
-                this.container.addClass('overflowing');
-                this.overflowing = true;
-            }
-        })
+    checkOverflow() {
+        if (this.container.innerWidth() < this.content.innerWidth()) {
+            this.container.addClass('overflowing');
+            this.overflowing = true;
+        }
+        else {
+            this.container.removeClass('overflowing');
+            this.overflowing = false;
+        }
     }
 }
 
 export function jfMarquee() {
     return {
         restrict: 'E',
-        transclude: true,
+        transclude: {
+            innerHtml: '?innerHtml'
+        },
         scope: {
         },
         controller: jfMarqueeController,
