@@ -129,6 +129,10 @@
       margin: 0;
       position: relative;
 
+      &.drop-target-mark {
+        border-top: 2px solid green !important;
+      }
+
       .row-actions-dropdown {
         background: white;
         position: absolute;
@@ -157,6 +161,20 @@
       &.selected,
       &:hover {
         .jf-table-cell {
+          .jf-table-cell-content {
+            &.drag-mark {
+              &:before {
+                font-family: artifactory!important;
+                font-size: 26px;
+                content: "\\";
+                position: absolute;
+                z-index: 10;
+                top: ~"calc(50% - 13px)";
+                left: -13px;
+                color: #bbb;
+              }
+            }
+          }
           &.actions {
             display: inline-table !important;
           }
@@ -230,18 +248,19 @@
         &.drag-left {
           //          border-left: 1px @greenBorderLight dashed;
         }
-        &.selection{
-          &.single-selection{
-            .selection-button{
-              .selection-icon{
+        &.selection {
+          &.single-selection {
+            .selection-button {
+              .selection-icon {
                 display: none;
-                &.selected{
+                &.selected {
                   display: block;
                 }
               }
             }
           }
         }
+
         &.actions {
           display: none;
         }
@@ -363,6 +382,13 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     display: block;
+  }
+  .row-drag-helper {
+    opacity: 0.7 !important;
+    z-index: 9999999999;
+    pointer-events: none;
+    background-color: lightgray !important;
+    border: 1px lightgreen dotted !important;
   }
 }
 

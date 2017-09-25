@@ -10,6 +10,10 @@ class jfTableRowController {
         JFrogEventBus.registerOnScope($scope, this.EVENTS.TABLEVIEW_HIDE_ACTIONS_DROPDOWN, (tableView) => {
 	        if (tableView === this.tableView) this.actionsDropdownOpen = false
         });
+
+        $(this.$element).prop('ctrl', this);
+
+        if (this.tableView.options.draggableRows) $timeout(()=>this.initDragAndDrop());
     }
     getField(field) {
         return _.get(this.data,field);
@@ -183,6 +187,46 @@ class jfTableRowController {
         let origState = this.actionsDropdownOpen;
         this.JFrogEventBus.dispatch(this.EVENTS.TABLEVIEW_HIDE_ACTIONS_DROPDOWN, this.tableView);
 	    this.actionsDropdownOpen = !origState;
+    }
+
+    initDragAndDrop() {
+        $(this.$element).draggable({
+            helper: 'clone',
+            scroll: true,
+            distance: 10,
+            start: (event, ui) => this.dragStart(event,ui),
+            stop: (event, ui) => this.dragStop(event,ui),
+            drag: (event, ui) => this.dragMove(event,ui)
+        });
+        $(this.$element).addClass('drag-enabled');
+    }
+
+    dragStart(event, ui) {
+        this.tableView.options.dragRow(this.data);
+        this.initDragHelper(ui.helper);
+
+    }
+
+    initDragHelper(helper) {
+        helper.addClass('row-drag-helper');
+    }
+
+    dragStop(event, ui) {
+        let target = $(event.toElement).parents('.jf-table-row')[0];
+        if (target) {
+            this.tableView.options.dropDraggedRow($(target).prop('ctrl').data);
+        }
+        else {
+            this.tableView.options.dropDraggedRow();
+        }
+    }
+
+    dragMove(event, ui) {
+        let target = $(event.toElement).parents('.jf-table-row')[0];
+        if (target) {
+            this.tableView.options.markDropTarget($(target));
+            console.log();
+        }
     }
 }
 

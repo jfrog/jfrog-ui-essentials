@@ -65,7 +65,8 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				this.noCount = defaultAppOptions.noCount;
 				this.tooltipFilterDisabled = defaultAppOptions.tooltipFilterDisabled;
 				this.subRowsEnabled = defaultAppOptions.subRowsEnabled;
-			}
+                this.draggableRows = defaultAppOptions.draggableRows;
+            }
 			else {
 				this.objectName = 'Item';
 				this.rowHeight = '50px';
@@ -84,7 +85,8 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				this.paginationVisible = true;
 				this.autoFocusFilter = false;
 				this.noCount = false;
-			}
+                this.draggableRows = false;
+            }
 		}
 
 		on(event, listener) {
@@ -406,6 +408,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 		}
 
 		setSortable(sortable = true) {
+		    if (sortable && this.draggableRows) return;
 			this.sortable = sortable;
 			if (sortable && !this.sortByField) {
 				this.sortBy(this._sortableFields ? this._sortableFields[0] : undefined);
@@ -416,8 +419,9 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			return this;
 		}
 
-		setDraggable(callbackFunc) {
-			console.log('setDraggable: NOT YET SUPPORTED');
+		setDraggable() {
+			this.draggableRows = true;
+			this.setSortable(false);
 			return this;
 		}
 
@@ -1163,6 +1167,41 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
         hasVisibleActionsFor(rowData) {
 			let visible = _.filter(this.actions, act => !act.visibleWhen || act.visibleWhen(rowData));
 			return !!visible.length;
+        }
+
+        dragRow(row) {
+		    this.draggedRow = row;
+		    this.draggedIndex = _.findIndex(this.data, r => r === row);
+            _.remove(this.data, r => r === row);
+            this.update();
+            this.refreshFilter();
+        }
+
+        dropDraggedRow(targetRow) {
+            if (this.markedDropTarget) {
+                this.markedDropTarget.removeClass('drop-target-mark');
+            }
+
+            let targetIndex;
+		    if (!targetRow) {
+                targetIndex = this.draggedIndex;
+            }
+            else {
+                targetIndex = _.findIndex(this.data, r => r === targetRow);
+            }
+
+            this.data.splice(targetIndex, 0, this.draggedRow);
+            this.draggedRow = null;
+            this.update();
+            this.refreshFilter();
+        }
+
+        markDropTarget(rowElem) {
+		    if (this.markedDropTarget) {
+                this.markedDropTarget.removeClass('drop-target-mark');
+            }
+            rowElem.addClass('drop-target-mark');
+            this.markedDropTarget = rowElem;
         }
 
 	}
