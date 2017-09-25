@@ -283,9 +283,10 @@ class jfTableViewController {
 
 	_handleDocumentClick() {
 		let handler = (e) => {
-			let shouldCloseDropdown = !$(e.target).parents('.jf-table-cell.actions').length || $(e.target).parents('.jf-table-view')[0] !== $(this.$element).find('.jf-table-view')[0];
-
-			if (shouldCloseDropdown) this.JFrogEventBus.dispatch(this.EVENTS.TABLEVIEW_HIDE_ACTIONS_DROPDOWN, this);
+		    this.$timeout(() => {
+                let shouldCloseDropdown = !$(e.target).parents('.jf-table-cell.actions').length || $(e.target).parents('.jf-table-view')[0] !== $(this.$element).find('.jf-table-view')[0];
+                if (shouldCloseDropdown) this.JFrogEventBus.dispatch(this.EVENTS.TABLEVIEW_HIDE_ACTIONS_DROPDOWN, this);
+            })
 		};
 		$(document).on('click',handler);
 		this.$scope.$on('$destroy',() => {
