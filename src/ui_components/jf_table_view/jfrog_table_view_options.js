@@ -1160,6 +1160,11 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			});
 		}
 
+        hasVisibleActionsFor(rowData) {
+			let visible = _.filter(this.actions, act => !act.visibleWhen || act.visibleWhen(rowData));
+			return !!visible.length;
+        }
+
 	}
 
 

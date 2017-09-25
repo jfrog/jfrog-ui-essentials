@@ -114,8 +114,8 @@
                 </a>
             </div>
             <div class="action-button"
-                 ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.actionButtonSize + 'px', visibility: !action.visibleWhen || action.visibleWhen(jfTableRow.data) ? 'visible' : 'hidden'}"
-                 ng-if="jfTableRow.tableView.options.actions.length > 3">
+                 ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.actionButtonSize + 'px', visibility: jfTableRow.tableView.options.hasVisibleActionsFor(jfTableRow.data) ? 'visible' : 'hidden'}"
+                 ng-if="jfTableRow.tableView.options.actions.length > 3 && jfTableRow.tableView.options">
                 <div class="action-icon icon-more"
                      ng-click="jfTableRow.toggleActionsDropdown()"
                      jf-tooltip="Actions"></div>
