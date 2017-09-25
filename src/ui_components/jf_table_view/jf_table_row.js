@@ -168,7 +168,7 @@ class jfTableRowController {
 
     onRowClick() {
 	    if (this.data.$groupHeader) {
-	        jfTableRow.toggleGroupExpansion()
+	        this.toggleGroupExpansion()
 	    }
 	    else {
 		    this.tableView.options.fire('row.clicked', {entity: this.data})
