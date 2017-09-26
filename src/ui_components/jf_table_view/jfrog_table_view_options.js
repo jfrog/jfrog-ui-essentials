@@ -26,7 +26,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			this.actions = [];
 			this.columns = [];
 			this.listeners = {};
-			this.supportedEvents = ['pagination.change', 'selection.change', 'row.clicked'];
+			this.supportedEvents = ['pagination.change', 'selection.change', 'row.clicked', 'row.dragged'];
 			this.appScope = appScope;
 
 			// selection types
@@ -1194,6 +1194,8 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
             this.draggedRow = null;
             this.update();
             this.refreshFilter();
+
+            this.fire('row.dragged', this.data);
         }
 
         markDropTarget(rowElem) {
