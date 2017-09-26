@@ -1,16 +1,13 @@
-<jf-field animated="true">
-	<div class="input-group"
-	     id="datetimepicker"
-	     datetimepicker
-	     options="jfDatetimepicker.dpOpitons"
-	     ng-model="jfDatetimepicker.model">
-		<input class="input-text"
-		       ng-focus="jfDatetimepicker.onFocus()"
-		       ng-blur="jfDatetimepicker.onBlur()"
-		       required/>
-		<span class="input-group-addon calendar">
-	        <span class="glyphicon glyphicon-calendar"></span>
-	    </span>
-	</div>
-</jf-field>
-
+<div class="input-group"
+     id="datetimepicker"
+     datetimepicker
+     options="jfDatetimepicker.dpOpitons"
+     ng-model="jfDatetimepicker.model">
+	<input class="input-text"
+	       ng-focus="jfDatetimepicker.onFocus()"
+	       ng-blur="jfDatetimepicker.onBlur()"
+	       ng-required="jfDatetimepicker.isRequired"/>
+	<span class="input-group-addon calendar">
+        <span class="glyphicon glyphicon-calendar"></span>
+    </span>
+</div>

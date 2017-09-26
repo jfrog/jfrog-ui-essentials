@@ -6,7 +6,10 @@ class jfDatetimepickerController {
 	/* @ngInject */
 	constructor() {}
 	$onInit(){
-		this.dpOpitons = {allowInputToggle : true};
+		this.dpOpitons = {
+			allowInputToggle : true,
+			toolbarPlacement : 'top',
+		};
 		if(this.options){
 			this.dpOpitons = _.assign({}, this.options , this.dpOpitons);
 		}
@@ -18,14 +21,15 @@ class jfDatetimepickerController {
 		this.isDatepickerOpen = true;
 	}
 }
-
+// More information regarding options could be found at: http://eonasdan.github.io/bootstrap-datetimepicker/Options/
 export function jfDatetimepicker() {
 	return {
 		restrict   : 'E',
 		scope      : {
 			isDatepickerOpen: '=?',
+			isRequired      : '<',
 			model           : '=',
-			options         : '<?' // Options are detailed in: http://eonasdan.github.io/bootstrap-datetimepicker/Options/
+			options         : '<?'
 		},
 		controller : jfDatetimepickerController,
 		controllerAs: 'jfDatetimepicker',
