@@ -419,9 +419,10 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			return this;
 		}
 
-		setDraggable() {
+		setDraggable(callback) {
 			this.draggableRows = true;
 			this.setSortable(false);
+			if (callback) this.on('row.dragged', callback);
 			return this;
 		}
 
