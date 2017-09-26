@@ -19,6 +19,7 @@ import {jfPanel}   from './jf_panel/jf_panel';
 import {jfUiSelect}   from './jf_ui_select/jf_ui_select';
 import {jfRevealInput}   from './jf_reveal_input/jf_reveal_input';
 import {jfDisableNgAnimate} from './jf_disable_ng_animate/jf_disable_ng_animate';
+import {jfIncludeReplace} from './jf_include_replace/jf_include_replace';
 import {jfEnterPress}   from './jf_enter_press/jf_enter_press';
 import {jfTooltipOnOverflow} from './jf_tooltip_on_overflow/jf_tooltip_on_overflow';
 import {jfClipCopy} from './jf_clip_copy/jf_clip_copy';
@@ -59,6 +60,7 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfUiSelect': jfUiSelect,
         'jfRevealInput': jfRevealInput,
         'jfDisableNgAnimate': jfDisableNgAnimate,
+        'jfIncludeReplace': jfIncludeReplace,
         'jfEnterPress': jfEnterPress,
         'jfTooltipOnOverflow': jfTooltipOnOverflow,
         'jfClipCopy': jfClipCopy,
