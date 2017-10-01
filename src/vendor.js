@@ -49,6 +49,7 @@ module.exports = {
         'node_modules/hamsterjs/hamster.js',
         'node_modules/angular-mousewheel/mousewheel.js',
         'components/jstree/dist/jstree.js',
+        'components/moment/min/moment.min.js',
         'components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
         'components/angular-eonasdan-datetimepicker/dist/angular-eonasdan-datetimepicker.js'
     ],
