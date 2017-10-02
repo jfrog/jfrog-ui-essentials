@@ -32,7 +32,7 @@ import {jfMarquee}       from './jf_marquee/jf_marquee';
 import {jfPasswordStrength} from './jf_password_strength/jf_password_strength';
 import {jfClearErrors} from "./jf_clear_errors/jf_clear_errors";
 import {jfMarkupEditor} from "./jf_markup_editor/jf_markup_editor";
-import {jfTree} from "./jf_tree/jf_tree";
+import {jfJsTreeWrap} from "./jf_js_tree_wrap/jf_js_tree_wrap";
 import {jfAutoComplete} from "./jf_auto_complete/jf_auto_complete";
 import {jfDatetimepicker} from "./jf_datetimepicker/jf_datetimepicker";
 
@@ -71,7 +71,7 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfPasswordStrength': jfPasswordStrength,
         'jfClearErrors': jfClearErrors,
         'jfMarkupEditor': jfMarkupEditor,
-        'jfTree': jfTree,
+        'jfJsTreeWrap': jfJsTreeWrap,
         'jfAutoComplete': jfAutoComplete,
 	    'jfRadioButton': jfRadioButton,
         'jfDatetimepicker': jfDatetimepicker

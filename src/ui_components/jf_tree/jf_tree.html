@@ -1,0 +1,27 @@
+<div class="jf-tree" style="clear: both">
+    <div class="jf-tree-container" ng-if="jfTree.api">
+        <div class="tree-items-container">
+            <div class="scroll-faker-container"
+                 ng-style="{right: -jfTree.getScrollWidth()+'px'}">
+                <div class="scroll-faker"
+                     ng-init="jfTree.initScrollFaker()"
+                     ng-style="{height: jfTree.getTotalScrollHeight()}">
+                </div>
+            </div>
+            <jf-tree-item ng-repeat="item in jfTree.api._getPageData() track by $index"
+                          tree="jfTree"
+                          msd-wheel="jfTree.onMouseWheel($event, $delta, $deltaX, $deltaY)"
+                          item-id="$index"
+                          data="entity"></jf-tree-item>
+        </div>
+        <div class="empty-tree-placeholder"
+             ng-if="jfTree.api.dataWasSet && !jfTree.api._getRawData().length">
+            {{jfTree.api.emptyTableText || 'This tree is empty !'}}
+        </div>
+        <div class="empty-tree-placeholder filter-no-results"
+             ng-if="jfTree.noFilterResults">
+            Current filter has no results. <a href ng-click="jfTree.clearFilter()">Clear filter</a>
+        </div>
+    </div>
+
+</div>

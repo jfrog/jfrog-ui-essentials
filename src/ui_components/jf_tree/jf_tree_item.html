@@ -1,0 +1,24 @@
+<div class="jf-tree-item"
+     ng-click="jfTreeItem.onItemClick()"
+     ng-style="{height: jfTreeItem.tree.api.itemHeight}">
+
+    <div class="jf-tree-item-container"
+         ng-style="{height: jfTreeItem.tree.api.itemHeight}">
+<!--
+        <div class="row-expander"
+             ng-class="{placeholder: (!(jfTreeItem.data.$subRows && jfTreeItem.data.$subRows.length) && !jfTreeItem.data.$parentRow), 'sub-row-expander': jfTreeItem.data.$parentRow}"
+             ng-if="$index === 0 && jfTreeItem.tableView.options.subRowsEnabled"
+             ng-style="{height: jfTreeItem.tableView.options.rowHeight}"
+             ng-click="jfTreeItem.toggleExpansion()">
+            <i ng-if="jfTreeItem.data.$subRows && jfTreeItem.data.$subRows.length"
+               class="action-icon icon icon-more"
+               ng-class="{'expanded': jfTreeItem.data.$expanded}"></i>
+        </div>
+-->
+        <div class="jf-tree-item-content">
+            <jf-tree-compiled-cell item-id="jfTreeItem.itemId"
+                                   tree-item="jfTreeItem">
+            </jf-tree-compiled-cell>
+        </div>
+    </div>
+</div>

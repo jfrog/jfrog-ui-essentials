@@ -1,11 +1,11 @@
-class jfTreeController{
+class jfJsTreeWrapController{
 	/* @ngInject */
     constructor($scope,$q,$element,$timeout){
         this.$element = $element;
         this.$timeout = $timeout;
         this.$q = $q;
 
-        $scope.$watch('jfTree.treeData',(data)=>{
+        $scope.$watch('jfJsTreeWrap.treeData',(data)=>{
             if (data && !this.built) this.initTree();
         })
     }
@@ -146,7 +146,7 @@ class jfTreeController{
 
 }
 
-export function jfTree() {
+export function jfJsTreeWrap() {
     return {
         restrict: 'E',
         scope: {
@@ -159,9 +159,9 @@ export function jfTree() {
             onStateChange: '&?',
             onReady: '&?'
         },
-        controller: jfTreeController,
-        controllerAs: 'jfTree',
-        templateUrl: 'directives/jf_tree/jf_tree.html',
+        controller: jfJsTreeWrapController,
+        controllerAs: 'jfJsTreeWrap',
+        templateUrl: 'directives/jf_js_tree_wrap/jf_js_tree_wrap.html',
         bindToController: true
     };
 }
