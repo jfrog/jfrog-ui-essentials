@@ -38,6 +38,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-sort-and-filter:before {
+  content: "\e950";
+}
+.icon-star-full:before {
+  content: "\e94f";
+}
+.icon-star:before {
+  content: "\e94e";
+}
 .icon-puppet:before {
   content: "\e941";
 }
@@ -88,7 +97,6 @@
 }
 .icon-trash:before {
   content: "\e901";
-  color: #6c6c6c;
 }
 .icon-gz:before {
   content: "\e90d";
@@ -327,10 +335,8 @@
 .icon-v:before {
   content: "\59";
 }
-.icon-datagrid-v {
-  &:before {
-    content: "\56";
-  }
+.icon-datagrid-v:before {
+  content: "\56";
 }
 .icon-more:before {
   content: "\23";
@@ -501,6 +507,9 @@
 .icon-tree_filter-icon:before {
   content: "\e93a";
 }
+.icon-get-badge:before {
+  content: "\e951";
+}
 .icon-navigation-repositories:before {
   content: "\e94a";
 }
@@ -609,9 +618,9 @@
   content: "\e932";
 }
 
-////////////////////////////////////
-//      Custom modifications      //
-////////////////////////////////////
+////////////////////////////////////////////////////
+//      Custom modifications - DO NOT CHANGE     //
+//////////////////////////////////////////////////
 .context-menu-item {
   &.icon-locked-unlock:before {
     content: "\e902";
@@ -628,4 +637,10 @@
   content: "\21E9";
   font-size: 22px;
   line-height: 36px !important;
+}
+
+.icon-datagrid-v {
+  &:before {
+    content: "\56";
+  }
 }
