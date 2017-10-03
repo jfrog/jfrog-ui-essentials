@@ -9,7 +9,6 @@ export function JFTreeApi() {
             this.listeners = {};
             this.supportedEvents = ['pagination.change', 'item.clicked'];
             this.appScope = appScope;
-
             this._setDefaults();
         }
 
@@ -28,16 +27,23 @@ export function JFTreeApi() {
             return this;
         }
 
+        update() {
+            if (this.dirCtrl) {
+                this.dirCtrl.refresh();
+            }
+        }
+
         _buildFlatItems() {
             this.flatItems = [];
-            let addChildren = (children) => {
+            let addChildren = (children, level = 0) => {
                 children.forEach(node => {
                     let _children = this.childrenGetter(node);
                     this.flatItems.push({
-                        data: node
+                        data: node,
+                        level
                     });
 
-                    if (_children && _children.length) addChildren(_children)
+                    if (_children && _children.length) addChildren(_children, level + 1);
                 })
             }
             addChildren(this.$root);

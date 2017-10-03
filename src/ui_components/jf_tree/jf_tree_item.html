@@ -15,6 +15,12 @@
                ng-class="{'expanded': jfTreeItem.data.$expanded}"></i>
         </div>
 -->
+        <div class="node-expander"
+             ng-if="jfTreeItem.hasChildren()">
+            <div class="action-icon icon icon-more"
+                 ng-class="{'expanded': jfTreeItem.isExpanded()}"></div>
+        </div>
+        <span>{{ '&nbsp;&nbsp;&nbsp;'.repeat(jfTreeItem.data.level) }}</span>
         <div class="jf-tree-item-content">
             <jf-tree-compiled-cell item-id="jfTreeItem.itemId"
                                    tree-item="jfTreeItem">

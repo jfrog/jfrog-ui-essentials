@@ -94,7 +94,7 @@ class jfTreeController {
             }
         }
         this.currentPage = Math.floor((this.virtualScrollIndex + this.api.itemsPerPage - 1) / this.api.itemsPerPage);
-        this.api.update(true,true);
+//        this.api.update(true,true);
         this.syncFakeScroller();
     }
 
@@ -116,7 +116,7 @@ class jfTreeController {
                     this.virtualScrollIndex = 0;
                     this.currentPage = 0;
                 }
-                this.api.update(true,true);
+//                this.api.update(true,true);
                 this.api.fire('pagination.change', this.paginationApi.getCurrentPage());
             })
         })
@@ -134,6 +134,18 @@ class jfTreeController {
         let el = $(this.$element).find('.scroll-faker-container')[0];
         return el.offsetWidth - el.clientWidth;
     }
+
+    refresh(updatePagination = true) {
+/*
+        let unusedScopes = _.filter(this.cellScopes, scope => this.api._getPageData().indexOf(scope.node) === -1);
+        unusedScopes.forEach(s => {
+            this.cellScopes.splice(this.cellScopes.indexOf(s),1);
+            s.$destroy()
+        });
+        if (this.paginationApi && updatePagination) this.paginationApi.update();
+*/
+    }
+
 
 }
 

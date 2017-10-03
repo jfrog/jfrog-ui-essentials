@@ -12,7 +12,7 @@
                           tree="jfTree"
                           msd-wheel="jfTree.onMouseWheel($event, $delta, $deltaX, $deltaY)"
                           item-id="$index"
-                          data="entity"></jf-tree-item>
+                          data="item"></jf-tree-item>
         </div>
         <div class="empty-tree-placeholder"
              ng-if="jfTree.api.dataWasSet && !jfTree.api._getRawData().length">
@@ -23,5 +23,4 @@
             Current filter has no results. <a href ng-click="jfTree.clearFilter()">Clear filter</a>
         </div>
     </div>
-
 </div>

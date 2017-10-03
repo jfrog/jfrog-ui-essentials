@@ -1,0 +1,43 @@
+.jf-tree {
+  width: 100%;
+  position: relative;
+  .jf-tree-container {
+    width: 100%;
+    .tree-items-container {
+      position: relative;
+      .scroll-faker-container {
+        position: absolute;
+        width: 30px;
+        height: 100%;
+        overflow: auto;
+        overflow-x: hidden;
+        z-index: 0;
+        .scroll-faker {
+        }
+      }
+
+      .jf-tree-item {
+        border: 1px red solid;
+        .jf-tree-item-container {
+          .node-expander {
+            width: 26px;
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            .icon-more {
+              transform: rotate(-90deg) translate(-15px, 0) scale(1.5, 1.5);
+              margin: 4px 18px 0 7px;
+              display: inline-block;
+              &.expanded {
+                transform: rotate(0deg) translate(0, 16px) scale(1.5, 1.5);
+              }
+            }
+          }
+          .jf-tree-item-content {
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+}

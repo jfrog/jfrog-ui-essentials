@@ -15,6 +15,11 @@ class jfTreeItemController {
 
     }
 
+    hasChildren() {
+        let children = this.tree.api.childrenGetter(this.data.data);
+        return !!(children && children.length);
+    }
+
 }
 
 export function jfTreeItem() {
