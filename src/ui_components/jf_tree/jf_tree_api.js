@@ -1,4 +1,4 @@
-export function JFTreeApi($q) {
+export function JFTreeApi($q, $timeout) {
 	'ngInject';
 	class JFTreeApiClass {
 		/* @ngInject */
@@ -162,6 +162,7 @@ export function JFTreeApi($q) {
             }
             if (!this.listeners[event]) this.listeners[event] = [];
             this.listeners[event].push(listener);
+            return this;
         }
 
         off(event, listener) {
@@ -212,6 +213,12 @@ export function JFTreeApi($q) {
 
         _setDirectiveController(ctrl) {
             this.dirCtrl = ctrl;
+            if (this.itemsPerPage === 'auto') {
+               $timeout(() => {
+                   let containerHeight = $(this.dirCtrl.$element).parent().height();
+                   this.setItemsPerPage(Math.floor(containerHeight / parseFloat(this.itemHeight)));
+               })
+            }
         }
 
         setEmptyTreeText(text) {

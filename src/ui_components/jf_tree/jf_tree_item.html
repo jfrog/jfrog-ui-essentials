@@ -19,7 +19,7 @@
              ng-style="{width: (jfTreeItem.data.level * 26) + 'px'}"></div>
         <div class="node-expander">
             <div class="action-icon icon icon-more" ng-if="jfTreeItem.data.hasChildren"
-                 ng-click="jfTreeItem.toggleExpansion()"
+                 ng-click="jfTreeItem.toggleExpansion(); $event.stopPropagation();"
                  ng-class="{'expanded': jfTreeItem.isExpanded()}"></div>
         </div>
         <div class="jf-tree-item-content">

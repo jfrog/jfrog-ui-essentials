@@ -2,7 +2,7 @@
     <div class="jf-tree-container" ng-if="jfTree.api">
         <div class="tree-items-container">
             <div class="scroll-faker-container"
-                 ng-style="{right: -jfTree.getScrollWidth()+'px'}">
+                 ng-style="{right: 0}">
                 <div class="scroll-faker"
                      ng-init="jfTree.initScrollFaker()"
                      ng-style="{height: (jfTree.getTotalScrollHeight() > jfTree.maxFakeScrollHeight ? jfTree.maxFakeScrollHeight : jfTree.getTotalScrollHeight()) + 'px'}">

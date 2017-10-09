@@ -12,7 +12,7 @@ class jfTreeItemController {
     }
 
     onItemClick() {
-
+        this.tree.api.fire('item.clicked', this.data.data);
     }
 
     isExpanded() {

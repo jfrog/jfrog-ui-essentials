@@ -72,7 +72,7 @@ class jfTreeController {
         }
         else itemScope = existingScope;
 
-        let template = this.api.nodeTemplate;
+        let template = _.isFunction(this.api.nodeTemplate) ? this.api.nodeTemplate(node) : this.api.nodeTemplate;
 
         let templateElem = $(template);
 	    this.$compile(templateElem)(itemScope);
