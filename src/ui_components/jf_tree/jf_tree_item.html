@@ -1,4 +1,5 @@
 <div class="jf-tree-item"
+     ng-class="{selected: jfTreeItem.tree.api._isSelected(jfTreeItem.data)}"
      ng-click="jfTreeItem.onItemClick()"
      ng-style="{height: jfTreeItem.tree.api.itemHeight, 'line-height': jfTreeItem.tree.api.itemHeight}">
 

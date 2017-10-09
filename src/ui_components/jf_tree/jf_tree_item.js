@@ -12,6 +12,7 @@ class jfTreeItemController {
     }
 
     onItemClick() {
+        this.tree.api._setSelected(this.data);
         this.tree.api.fire('item.clicked', this.data.data);
     }
 

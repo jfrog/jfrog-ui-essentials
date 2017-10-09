@@ -156,6 +156,14 @@ export function JFTreeApi($q, $timeout) {
             this.itemsPerPage = 25;
         }
 
+        _setSelected(item) {
+            this.$selectedNode = item.data;
+        }
+
+        _isSelected(item) {
+            return this.$selectedNode === item.data;
+        }
+
         on(event, listener) {
             if (!_.includes(this.supportedEvents, event)) {
                 console.error('jf-tree: Unsupported Event: ' + event);
