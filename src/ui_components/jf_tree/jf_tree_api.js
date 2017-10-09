@@ -55,6 +55,7 @@ export function JFTreeApi($q, $timeout) {
                 this.$openedNodes.push(node);
                 let flat = this._flatFromNode(node);
                 this.getChildren(node).then(children => {
+                    if (!children.length) node.$noChildren = true;
                     this._addChildren(children, flat.level + 1, flat);
                 })
             }
