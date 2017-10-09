@@ -25,8 +25,8 @@ export function jfTooltipOnOverflow() {
                     let target = targets[i];
 
 	                let targetContent = target.children(':not(:visible)').length ? target.children(':visible').text().trim() : target.text().trim();
-	                if (!isNoTooltip(target) && target[0].scrollWidth > target.innerWidth()) {
-		                if (!target.hasClass('tooltipstered')) {
+	                if (!isNoTooltip(target) && target[0].scrollWidth > Math.round(target.innerWidth())) {
+                        if (!!targetContent && !target.hasClass('tooltipstered')) {
 			                target.tooltipster({
 				                animation: 'fade',
 				                trigger: 'hover',
@@ -38,7 +38,7 @@ export function jfTooltipOnOverflow() {
 			                });
 			                target.tooltipster('show');
 		                }
-		                else {
+		                else if (!!targetContent) {
 			                target.tooltipster('enable');
 
 			                if (target.tooltipster('content') != targetContent)
