@@ -5,7 +5,7 @@
                  ng-style="{right: -jfTree.getScrollWidth()+'px'}">
                 <div class="scroll-faker"
                      ng-init="jfTree.initScrollFaker()"
-                     ng-style="{height: jfTree.getTotalScrollHeight()}">
+                     ng-style="{height: (jfTree.getTotalScrollHeight() > jfTree.maxFakeScrollHeight ? jfTree.maxFakeScrollHeight : jfTree.getTotalScrollHeight()) + 'px'}">
                 </div>
             </div>
             <jf-tree-item ng-repeat="item in jfTree.api._getPageData() track by $index"

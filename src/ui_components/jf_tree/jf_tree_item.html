@@ -1,9 +1,9 @@
 <div class="jf-tree-item"
      ng-click="jfTreeItem.onItemClick()"
-     ng-style="{height: jfTreeItem.tree.api.itemHeight}">
+     ng-style="{height: jfTreeItem.tree.api.itemHeight, 'line-height': jfTreeItem.tree.api.itemHeight}">
 
     <div class="jf-tree-item-container"
-         ng-style="{height: jfTreeItem.tree.api.itemHeight}">
+         ng-style="{height: jfTreeItem.tree.api.itemHeight, 'line-height': jfTreeItem.tree.api.itemHeight}">
 <!--
         <div class="row-expander"
              ng-class="{placeholder: (!(jfTreeItem.data.$subRows && jfTreeItem.data.$subRows.length) && !jfTreeItem.data.$parentRow), 'sub-row-expander': jfTreeItem.data.$parentRow}"
@@ -15,12 +15,13 @@
                ng-class="{'expanded': jfTreeItem.data.$expanded}"></i>
         </div>
 -->
-        <div class="node-expander"
-             ng-if="jfTreeItem.hasChildren()">
-            <div class="action-icon icon icon-more"
+        <div class="indentation-unit"
+             ng-style="{width: (jfTreeItem.data.level * 26) + 'px'}"></div>
+        <div class="node-expander">
+            <div class="action-icon icon icon-more" ng-if="jfTreeItem.data.hasChildren"
+                 ng-click="jfTreeItem.toggleExpansion()"
                  ng-class="{'expanded': jfTreeItem.isExpanded()}"></div>
         </div>
-        <span>{{ '&nbsp;&nbsp;&nbsp;'.repeat(jfTreeItem.data.level) }}</span>
         <div class="jf-tree-item-content">
             <jf-tree-compiled-cell item-id="jfTreeItem.itemId"
                                    tree-item="jfTreeItem">

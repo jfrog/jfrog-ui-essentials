@@ -20,6 +20,7 @@ class jfTreeController {
         this.$scope = $scope;
 	    this.$rootScope = $rootScope;
         this.cellScopes = [];
+        this.maxFakeScrollHeight = 1000000;
         $scope.$watch('jfTree.api',(api) => {
             if (this.api) {
                 this.api._setDirectiveController(this);
@@ -50,7 +51,6 @@ class jfTreeController {
 
     compileTemplate(elem, itemId) {
         let node = this.api._getPageData()[itemId];
-        console.log(itemId);
 
         if (!node) return;
 
@@ -95,21 +95,22 @@ class jfTreeController {
         }
         this.currentPage = Math.floor((this.virtualScrollIndex + this.api.itemsPerPage - 1) / this.api.itemsPerPage);
 //        this.api.update(true,true);
-        this.syncFakeScroller();
+        this.syncFakeScroller(false);
     }
 
     getTotalScrollHeight() {
-        return ((this.api._getPrePagedData().length * parseFloat(this.api.itemHeight)) + 'px');
+        return this.api._getPrePagedData().length * parseFloat(this.api.itemHeight);
     }
 
     initScrollFaker() {
         let scrollParent = $(this.$element).find('.scroll-faker-container');
-        scrollParent.on('scroll',(e)=>{
+        scrollParent.on('scroll',(e) => {
             this.$scope.$apply(()=>{
                 let len = this.api._getPrePagedData().length;
                 if (len) {
-                    let relativePosition = scrollParent.scrollTop()/(len * parseFloat(this.api.itemHeight))
-                    this.virtualScrollIndex = Math.floor(relativePosition*len);
+                    let maxScrollTop = scrollParent[0].scrollHeight - scrollParent.outerHeight();
+                    let relativePosition = scrollParent.scrollTop() / maxScrollTop;
+                    this.virtualScrollIndex = Math.floor(relativePosition * (len - this.api.itemsPerPage));
                     this.currentPage = Math.floor((this.virtualScrollIndex + this.api.itemsPerPage - 1) / this.api.itemsPerPage);
                 }
                 else {
@@ -120,14 +121,21 @@ class jfTreeController {
                 this.api.fire('pagination.change', this.paginationApi.getCurrentPage());
             })
         })
+
     }
 
-    syncFakeScroller() {
+    syncFakeScroller(delay = true) {
         let len = this.api._getPrePagedData().length;
         let scrollParent = $(this.$element).find('.scroll-faker-container');
-        let relativePosition = this.virtualScrollIndex / len;
-        let scrollTop = relativePosition * len * parseFloat(this.api.itemHeight);
-        scrollParent.scrollTop(scrollTop);
+        let relativePosition = this.virtualScrollIndex / (len - this.api.itemsPerPage);
+
+        let sync = () => {
+            let maxScrollTop = scrollParent[0].scrollHeight - scrollParent.outerHeight();
+            let scrollTop = Math.floor(maxScrollTop * relativePosition);
+            scrollParent.scrollTop(scrollTop);
+        }
+        if (delay) this.$timeout(sync);
+        else sync();
     }
 
     getScrollWidth() {
@@ -135,15 +143,15 @@ class jfTreeController {
         return el.offsetWidth - el.clientWidth;
     }
 
-    refresh(updatePagination = true) {
-/*
-        let unusedScopes = _.filter(this.cellScopes, scope => this.api._getPageData().indexOf(scope.node) === -1);
-        unusedScopes.forEach(s => {
-            this.cellScopes.splice(this.cellScopes.indexOf(s),1);
-            s.$destroy()
-        });
-        if (this.paginationApi && updatePagination) this.paginationApi.update();
-*/
+    refresh() {
+        /*
+                let unusedScopes = _.filter(this.cellScopes, scope => this.api._getPageData().indexOf(scope.node) === -1);
+                unusedScopes.forEach(s => {
+                    this.cellScopes.splice(this.cellScopes.indexOf(s),1);
+                    s.$destroy()
+                });
+                if (this.paginationApi && updatePagination) this.paginationApi.update();
+        */
     }
 
 

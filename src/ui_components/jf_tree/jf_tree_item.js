@@ -15,11 +15,18 @@ class jfTreeItemController {
 
     }
 
-    hasChildren() {
-        let children = this.tree.api.childrenGetter(this.data.data);
-        return !!(children && children.length);
+    isExpanded() {
+        return this.tree.api.isNodeOpen(this.data.data);
     }
 
+    toggleExpansion() {
+        if (this.isExpanded()) {
+            this.tree.api.closeNode(this.data.data);
+        }
+        else {
+            this.tree.api.openNode(this.data.data);
+        }
+    }
 }
 
 export function jfTreeItem() {

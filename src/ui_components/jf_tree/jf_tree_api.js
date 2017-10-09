@@ -1,10 +1,11 @@
-export function JFTreeApi() {
+export function JFTreeApi($q) {
 	'ngInject';
 	class JFTreeApiClass {
 		/* @ngInject */
         constructor(appScope) {
             this.$root = [];
-            this.flatItems = [];
+            this.$openedNodes = [];
+            this.$flatItems = [];
             this.actions = [];
             this.listeners = {};
             this.supportedEvents = ['pagination.change', 'item.clicked'];
@@ -24,6 +25,14 @@ export function JFTreeApi() {
 
         setChildrenGetter(childrenGetter) {
             this.childrenGetter = childrenGetter;
+            this.getChildren(null).then(rootData => {
+                if (rootData && rootData.length) this.setTreeData(rootData)
+            })
+            return this;
+        }
+
+        setChildrenChecker(childrenChecker) {
+            this.childrenChecker = childrenChecker;
             return this;
         }
 
@@ -33,20 +42,111 @@ export function JFTreeApi() {
             }
         }
 
-        _buildFlatItems() {
-            this.flatItems = [];
-            let addChildren = (children, level = 0) => {
-                children.forEach(node => {
-                    let _children = this.childrenGetter(node);
-                    this.flatItems.push({
-                        data: node,
-                        level
-                    });
+        isNodeOpen(node) {
+            return _.includes(this.$openedNodes, node);
+        }
 
-                    if (_children && _children.length) addChildren(_children, level + 1);
+        _flatFromNode(node) {
+            return _.find(this.$flatItems, flat => flat.data === node);
+        }
+
+        openNode(node) {
+            if (!_.includes(this.$openedNodes, node)) {
+                this.$openedNodes.push(node);
+                let flat = this._flatFromNode(node);
+                this.getChildren(node).then(children => {
+                    this._addChildren(children, flat.level + 1, flat);
                 })
             }
-            addChildren(this.$root);
+        }
+
+        closeNode(node) {
+            if (_.includes(this.$openedNodes, node)) {
+                _.remove(this.$openedNodes, n => n === node);
+                let flat = this._flatFromNode(node);
+                this._removeChildren(flat)
+            }
+        }
+
+        getChildren(node) {
+            let childrenOrPromise = this.childrenGetter(node);
+            if (childrenOrPromise && childrenOrPromise.then) {
+                return childrenOrPromise;
+            }
+            else {
+                let defer = $q.defer();
+                defer.resolve(childrenOrPromise || []);
+                return defer.promise;
+            }
+        }
+
+        _createFlatItem(node, level = 0, parent = null) {
+            let flat = {
+                data: node,
+                level,
+                parent,
+                hasChildren: undefined
+            }
+
+            if (this.childrenChecker) {
+                let check = this.childrenChecker(node);
+                if (check && check.then) {
+                    check.then((_check) => {
+                        flat.hasChildren = _check;
+                    })
+                }
+                else flat.hasChildren = check;
+            }
+            else {
+                this.getChildren(node).then(children => {
+                    flat.hasChildren = !!(children && children.length);
+                });
+            }
+
+            return flat;
+        }
+
+        _addChildren(children, level = 0, parent = null) {
+            let parentIndex = this.$flatItems.indexOf(parent);
+            let added = [];
+            children.forEach((node, i) => {
+                let flatItem = this._createFlatItem(node, level, parent);
+//                this.$flatItems.splice(parentIndex + 1 + i, 0, flatItem);
+                added.push(flatItem);
+                if (this.isNodeOpen(node)) {
+                    this.getChildren(node).then(_children => {
+                        if (_children && _children.length) {
+                            this._addChildren(_children, level + 1, flatItem);
+                        }
+                    })
+                }
+            })
+            let before = this.$flatItems.slice(0, parentIndex + 1);
+            let after = this.$flatItems.slice(parentIndex + 1);
+            this.$flatItems = before.concat(added).concat(after);
+            this.update();
+        }
+
+        _removeChildren(parent) {
+            this.$flatItems = _.filter(this.$flatItems, flat => {
+                let remove = false;
+                let _parent = flat.parent;
+                while (_parent) {
+                    if (_parent  === parent) {
+                        remove = true;
+                        break;
+                    }
+                    _parent = _parent.parent;
+                }
+                return !remove;
+            })
+            this.update();
+
+        }
+
+        _buildFlatItems() {
+            this.$flatItems = [];
+            this._addChildren(this.$root);
         }
 
         _setDefaults() {
@@ -137,7 +237,7 @@ export function JFTreeApi() {
         }
 
         _getRawData() {
-            return this.flatItems || [];
+            return this.$flatItems || [];
         }
 
 	}
