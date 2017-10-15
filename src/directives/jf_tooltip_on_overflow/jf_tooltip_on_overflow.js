@@ -9,12 +9,12 @@
 
  */
 
-export function jfTooltipOnOverflow() {
+export function jfTooltipOnOverflow($sanitize) {
 
     return {
         restrict: 'A',
-        link: ($scope, $element) => {
-            $($element).on('mouseenter',(e)=>{
+        link: ($scope, $element ) => {
+	        $($element).on('mouseenter',(e)=>{
                 let targets = [$($element), $(e.target)];
                 let tooltipShown = false;
 	            let isNoTooltip = (cell) => {
@@ -25,6 +25,7 @@ export function jfTooltipOnOverflow() {
                     let target = targets[i];
 
 	                let targetContent = target.children(':not(:visible)').length ? target.children(':visible').text().trim() : target.text().trim();
+	                targetContent = $sanitize(targetContent);
 	                if (!isNoTooltip(target) && target[0].scrollWidth > Math.round(target.innerWidth())) {
                         if (!!targetContent && !target.hasClass('tooltipstered')) {
 			                target.tooltipster({

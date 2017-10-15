@@ -1,8 +1,8 @@
-export function jfTooltip() {
+export function jfTooltip($sanitize) {
     return {
         restrict: 'A',
         link: function($scope, $element, $attrs) {
-            let content = $attrs.jfTooltip;
+	        let content = $sanitize($attrs.jfTooltip);
 	        $($element).tooltipster({
                 animation: 'fade',
                 contentAsHTML : 'true',
