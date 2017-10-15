@@ -78,15 +78,36 @@ export function JFTreeApi($q, $timeout) {
         }
 
         getChildren(node) {
-            let childrenOrPromise = this.childrenGetter(node);
-            if (childrenOrPromise && childrenOrPromise.then) {
-                return childrenOrPromise;
+            let defer = $q.defer();
+            if (node && node.$childrenCache) {
+                defer.resolve(node.$childrenCache);
+            }
+            else if (!node && this.$rootCache) {
+                defer.resolve(node.$rootCache);
             }
             else {
-                let defer = $q.defer();
-                defer.resolve(childrenOrPromise || []);
-                return defer.promise;
+                let childrenOrPromise = this.childrenGetter(node);
+                if (childrenOrPromise && childrenOrPromise.then) {
+                    childrenOrPromise.then(children => {
+                        if (this.sortingFunction) {
+                            children = children.sort(this.sortingFunction);
+                        }
+                        if (node) node.$childrenCache = children;
+                        else this.$rootCache = children;
+                        defer.resolve(children);
+                    })
+                }
+                else {
+                    if (this.sortingFunction) {
+                        childrenOrPromise = childrenOrPromise.sort(this.sortingFunction);
+                    }
+                    if (node) node.$childrenCache = childrenOrPromise;
+                    else this.$rootCache = childrenOrPromise;
+
+                    defer.resolve(childrenOrPromise || []);
+                }
             }
+            return defer.promise;
         }
 
         _createFlatItem(node, level = 0, parent = null) {
@@ -116,9 +137,6 @@ export function JFTreeApi($q, $timeout) {
         }
 
         _addChildren(children, level = 0, parent = null) {
-            if (this.sortingFunction) {
-                children = children.sort(this.sortingFunction);
-            }
             let parentIndex = this.$flatItems.indexOf(parent);
             let added = [];
             children.forEach((node, i) => {
