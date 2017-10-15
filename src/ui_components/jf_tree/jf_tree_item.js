@@ -25,7 +25,11 @@ class jfTreeItemController {
             this.tree.api.closeNode(this.data.data);
         }
         else {
-            this.tree.api.openNode(this.data.data);
+            let node = this.data;
+            node.$pending = true;
+            this.tree.api.openNode(node.data).then(() => {
+                node.$pending = false;
+            });
         }
     }
 }

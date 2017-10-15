@@ -23,6 +23,11 @@ export function JFTreeApi($q, $timeout) {
             this._buildFlatItems();
         }
 
+        setSortingFunction(sortingFunction) {
+            this.sortingFunction = sortingFunction;
+            return this;
+        }
+
         setChildrenGetter(childrenGetter) {
             this.childrenGetter = childrenGetter;
             this.getChildren(null).then(rootData => {
@@ -51,14 +56,17 @@ export function JFTreeApi($q, $timeout) {
         }
 
         openNode(node) {
+            let defer = $q.defer();
             if (!_.includes(this.$openedNodes, node)) {
                 this.$openedNodes.push(node);
                 let flat = this._flatFromNode(node);
                 this.getChildren(node).then(children => {
                     if (!children.length) node.$noChildren = true;
                     this._addChildren(children, flat.level + 1, flat);
+                    defer.resolve();
                 })
             }
+            return defer.promise;
         }
 
         closeNode(node) {
@@ -108,6 +116,9 @@ export function JFTreeApi($q, $timeout) {
         }
 
         _addChildren(children, level = 0, parent = null) {
+            if (this.sortingFunction) {
+                children = children.sort(this.sortingFunction);
+            }
             let parentIndex = this.$flatItems.indexOf(parent);
             let added = [];
             children.forEach((node, i) => {
@@ -245,7 +256,7 @@ export function JFTreeApi($q, $timeout) {
         }
 
         _getSortedData(sourceData) {
-			return sourceData;
+            return sourceData;
         }
 
         _getFilteredData(sourceData) {
