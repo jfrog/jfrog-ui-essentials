@@ -1,4 +1,4 @@
-export function JFTreeApi($q, $timeout) {
+export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
 	'ngInject';
 	class JFTreeApiClass {
 		/* @ngInject */
@@ -36,6 +36,11 @@ export function JFTreeApi($q, $timeout) {
             return this;
         }
 
+        setTextGetter(textGetter) {
+            this.textGetter = textGetter;
+            return this;
+        }
+
         setChildrenChecker(childrenChecker) {
             this.childrenChecker = childrenChecker;
             return this;
@@ -60,6 +65,31 @@ export function JFTreeApi($q, $timeout) {
 
         isNodeOpen(node) {
             return _.includes(this.$openedNodes, node);
+        }
+
+        getQuickFindMatches() {
+            if (!this.quickFindTerm) return [];
+            else {
+                return _.filter(this.$flatItems, fi => {
+                    let text = this.textGetter(fi);
+                    return AdvancedStringMatch.match(text, this.quickFindTerm).matched;
+                })
+            }
+        }
+
+        centerOnItem(item) {
+            let index = this.$flatItems.indexOf(item);
+            let pageMiddle = Math.floor(this.itemsPerPage / 2);
+            if (index - pageMiddle < 0) {
+                this.dirCtrl.virtualScrollIndex = 0;
+            }
+            else if (index + (this.itemsPerPage - pageMiddle) > this.$flatItems.length) {
+                this.dirCtrl.virtualScrollIndex = this.$flatItems.length - this.itemsPerPage;
+            }
+            else this.dirCtrl.virtualScrollIndex = index - pageMiddle;
+
+            this._setSelected(item);
+            this.dirCtrl.syncFakeScroller();
         }
 
         _flatFromNode(node) {
