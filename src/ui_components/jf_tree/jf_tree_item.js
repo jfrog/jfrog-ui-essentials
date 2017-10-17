@@ -1,8 +1,9 @@
 class jfTreeItemController {
 	/* @ngInject */
-    constructor($scope, $element, $timeout) {
+    constructor($scope, $element, $timeout, AdvancedStringMatch) {
         this.$element = $element;
         this.$timeout = $timeout;
+        this.asm = AdvancedStringMatch;
 
         $(this.$element).prop('ctrl', this);
     }
@@ -30,6 +31,22 @@ class jfTreeItemController {
             this.tree.api.openNode(node.data).then(() => {
                 node.$pending = false;
             });
+        }
+    }
+
+    isQuickFindMatch() {
+        let elem = $(this.$element).find('.jf-tree-item-content .node-text');
+        if (elem.length) {
+            let text = elem.text();
+            elem.unhighlight();
+            if (text && this.tree.api.quickFindTerm) {
+                let asmResponse = this.asm.match(text, this.tree.api.quickFindTerm);
+                if (asmResponse.matched) {
+                    this.asm.highlight(elem, asmResponse.segments);
+                }
+                return asmResponse.matched;
+            }
+            else return false;
         }
     }
 }

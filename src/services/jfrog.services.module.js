@@ -7,6 +7,7 @@ import {JFrogUIUtils}                           from './jfrog_ui_utils';
 import {WebWorkersPool}                           from './WebWorkersPool';
 import {JFrogUIWebWorker}                           from './jfrog_ui_webworker';
 import {recursiveDirective} from "./recursive_directive";
+import {AdvancedStringMatch} from "./advanced_string_match";
 
 angular.module('jfrog.ui.essentials.services', ['ui.router', 'jfrog.ui_components', 'toaster'])
     .provider('JFrogUILibConfig', JFrogUILibConfig)
@@ -18,3 +19,5 @@ angular.module('jfrog.ui.essentials.services', ['ui.router', 'jfrog.ui_component
     .service('JFrogNotifications', JFrogNotifications)
     .service('JFrogUIUtils', JFrogUIUtils)
     .factory('JFrogUIWebWorker', JFrogUIWebWorker)
+    .service('AdvancedStringMatch', AdvancedStringMatch)
+

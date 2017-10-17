@@ -17,6 +17,9 @@
       }
 
       .jf-tree-item {
+        &.quick-find-match {
+          font-weight: 900;
+        }
         &.selected {
           background-color: lightblue;
         }
@@ -58,6 +61,10 @@
           .jf-tree-item-content {
             margin-left: 10px;
             display: inline-block;
+            .highlight {
+              color: #222;
+              background-color: yellow;
+            }
           }
         }
       }

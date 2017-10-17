@@ -1,9 +1,10 @@
 <div class="jf-tree-item"
-     ng-class="{selected: jfTreeItem.tree.api._isSelected(jfTreeItem.data)}"
+     ng-class="{selected: jfTreeItem.tree.api._isSelected(jfTreeItem.data), 'quick-find-match': jfTreeItem.isQuickFindMatch()}"
      ng-click="jfTreeItem.onItemClick()"
      ng-style="{height: jfTreeItem.tree.api.itemHeight, 'line-height': jfTreeItem.tree.api.itemHeight}">
 
     <div class="jf-tree-item-container"
+         style="white-space: nowrap"
          ng-style="{height: jfTreeItem.tree.api.itemHeight, 'line-height': jfTreeItem.tree.api.itemHeight}">
         <div class="indentation-unit"
              ng-style="{width: (jfTreeItem.data.level * 26) + 'px'}"></div>

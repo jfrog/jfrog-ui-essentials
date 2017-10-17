@@ -41,7 +41,18 @@ export function JFTreeApi($q, $timeout) {
             return this;
         }
 
+        setFilterCallback(filterCallback) {
+            this.filterCallbcak = filterCallback;
+            return this;
+        }
+
+        quickFind(quickFindTerm) {
+            this.quickFindTerm = quickFindTerm;
+            return this;
+        }
+
         update() {
+            this.refreshFilter();
             if (this.dirCtrl) {
                 this.dirCtrl.refresh();
             }
@@ -283,7 +294,30 @@ export function JFTreeApi($q, $timeout) {
         }
 
         _getFilteredData(sourceData) {
-			return sourceData;
+            if (this.filterCallbcak && sourceData.length) {
+                if (!this.filterCache) {
+                    this.filterCache = _.filter(sourceData, item => {
+                        let parentIsFilteredOut = false;
+                        let curr = item.parent;
+                        while (curr && !parentIsFilteredOut) {
+                            if (!this.filterCallbcak(curr.data)) {
+                                parentIsFilteredOut = true;
+                            }
+                            curr = curr.parent;
+                        }
+
+                        return !parentIsFilteredOut && this.filterCallbcak(item.data);
+                    })
+                }
+                return this.filterCache;
+            }
+            else {
+                return sourceData;
+            }
+        }
+
+        refreshFilter() {
+            delete this.filterCache;
         }
 
         _getRawData() {
