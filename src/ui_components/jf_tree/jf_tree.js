@@ -40,6 +40,11 @@ class jfTreeController {
         $scope.$on('$destroy', ()=>{
             this.cellScopes.forEach(s=>s.$destroy());
         })
+
+        $(window).on('resize', () => {
+            if (this.api.autoHeight) this.api._setAutoItemsPerPage();
+        });
+
     }
 
 

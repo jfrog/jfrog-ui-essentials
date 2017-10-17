@@ -252,11 +252,16 @@ export function JFTreeApi($q, $timeout) {
         _setDirectiveController(ctrl) {
             this.dirCtrl = ctrl;
             if (this.itemsPerPage === 'auto') {
-               $timeout(() => {
-                   let containerHeight = $(this.dirCtrl.$element).parent().height();
-                   this.setItemsPerPage(Math.floor(containerHeight / parseFloat(this.itemHeight)));
-               })
+                this.autoHeight = true;
+                this._setAutoItemsPerPage();
             }
+        }
+
+        _setAutoItemsPerPage() {
+            $timeout(() => {
+                let containerHeight = $(this.dirCtrl.$element).parent().height();
+                this.setItemsPerPage(Math.floor(containerHeight / parseFloat(this.itemHeight)));
+            })
         }
 
         setEmptyTreeText(text) {
