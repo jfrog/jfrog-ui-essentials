@@ -8,7 +8,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
             this.$flatItems = [];
             this.actions = [];
             this.listeners = {};
-            this.supportedEvents = ['pagination.change', 'item.clicked'];
+            this.supportedEvents = ['pagination.change', 'item.clicked', 'keydown'];
             this.appScope = appScope;
             this._setDefaults();
         }
@@ -116,21 +116,11 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
             }
             else {
                 let currIndex = _.findIndex(this.$flatItems, fi => fi.data === this.$selectedNode);
-                if (down) {
-                    if (this.$flatItems[currIndex + 1]) {
-                        selectedItem = this.$flatItems[currIndex + 1];
-                    }
-                    else {
-                        selectedItem = this.$flatItems[0];
-                    }
+                if (down && this.$flatItems[currIndex + 1] || !down && currIndex - 1 >= 0) {
+                    selectedItem = this.$flatItems[currIndex + (down ? 1 : -1)];
                 }
                 else {
-                    if (currIndex - 1 >= 0) {
-                        selectedItem = this.$flatItems[currIndex - 1];
-                    }
-                    else {
-                        selectedItem = this.$flatItems[this.$flatItems.length - 1];
-                    }
+                    selectedItem = this.$flatItems[down ? 0 : this.$flatItems.length - 1];
                 }
             }
             this._setSelected(selectedItem);
@@ -139,6 +129,13 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
 
         _onUpArrow() {
 
+        }
+
+        handleKeyEvent(e) {
+            if (_.includes(['ArrowDown', 'ArrowUp'], e.key)) {
+                $(this.dirCtrl.$element).find('.jf-tree').trigger(e);
+                e.preventDefault();
+            }
         }
 
         _flatFromNode(node) {
