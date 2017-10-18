@@ -91,17 +91,54 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
 
         centerOnItem(item) {
             let index = this.$flatItems.indexOf(item);
-            let pageMiddle = Math.floor(this.itemsPerPage / 2);
-            if (index - pageMiddle < 0) {
+            let halfPage = Math.floor(this.itemsPerPage / 2);
+            if (index - halfPage < 0) {
                 this.dirCtrl.virtualScrollIndex = 0;
             }
-            else if (index + (this.itemsPerPage - pageMiddle) > this.$flatItems.length) {
+            else if (index + (this.itemsPerPage - halfPage) > this.$flatItems.length) {
                 this.dirCtrl.virtualScrollIndex = this.$flatItems.length - this.itemsPerPage;
             }
-            else this.dirCtrl.virtualScrollIndex = index - pageMiddle;
+            else {
+                this.dirCtrl.virtualScrollIndex = index - halfPage;
+            }
 
+            this.dirCtrl.syncFakeScroller(false);
             this._setSelected(item);
-            this.dirCtrl.syncFakeScroller();
+        }
+
+        _onArrowKey(down) {
+            if (!this.$flatItems.length) return;
+
+            let selectedItem;
+
+            if (this.$selectedNode === undefined) {
+                selectedItem = this.$flatItems[down ? 0 : this.$flatItems.length - 1];
+            }
+            else {
+                let currIndex = _.findIndex(this.$flatItems, fi => fi.data === this.$selectedNode);
+                if (down) {
+                    if (this.$flatItems[currIndex + 1]) {
+                        selectedItem = this.$flatItems[currIndex + 1];
+                    }
+                    else {
+                        selectedItem = this.$flatItems[0];
+                    }
+                }
+                else {
+                    if (currIndex - 1 >= 0) {
+                        selectedItem = this.$flatItems[currIndex - 1];
+                    }
+                    else {
+                        selectedItem = this.$flatItems[this.$flatItems.length - 1];
+                    }
+                }
+            }
+            this._setSelected(selectedItem);
+            this.centerOnItem(selectedItem);
+        }
+
+        _onUpArrow() {
+
         }
 
         _flatFromNode(node) {
@@ -113,10 +150,12 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
             if (!_.includes(this.$openedNodes, node)) {
                 this.$openedNodes.push(node);
                 let flat = this._flatFromNode(node);
+                flat.$pending = true;
                 this.getChildren(node).then(children => {
                     if (!children.length) node.$noChildren = true;
                     this._addChildren(children, flat.level + 1, flat);
                     defer.resolve();
+                    flat.$pending = false;
                 })
             }
             return defer.promise;

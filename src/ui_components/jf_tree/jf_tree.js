@@ -45,6 +45,25 @@ class jfTreeController {
             if (this.api.autoHeight) this.api._setAutoItemsPerPage();
         });
 
+        $(this.$element).find('.jf-tree').keydown(e => {
+            this.$scope.$apply(() => {
+                switch (e.key) {
+                    case 'ArrowDown':
+                        this.api._onArrowKey(true);
+                        break;
+                    case 'ArrowUp':
+                        this.api._onArrowKey(false);
+                        break;
+                    case 'ArrowRight':
+                        this.api.openNode(this.api.getSelectedNode());
+                        break;
+                    case 'ArrowLeft':
+                        this.api.closeNode(this.api.getSelectedNode());
+                        break;
+                }
+            })
+        })
+
     }
 
 
@@ -115,7 +134,7 @@ class jfTreeController {
                 if (len) {
                     let maxScrollTop = scrollParent[0].scrollHeight - scrollParent.outerHeight();
                     let relativePosition = scrollParent.scrollTop() / maxScrollTop;
-                    this.virtualScrollIndex = Math.floor(relativePosition * (len - this.api.itemsPerPage));
+                    this.virtualScrollIndex = Math.round(relativePosition * (len - this.api.itemsPerPage));
                     this.currentPage = Math.floor((this.virtualScrollIndex + this.api.itemsPerPage - 1) / this.api.itemsPerPage);
                 }
                 else {

@@ -27,10 +27,10 @@ class jfTreeItemController {
         }
         else {
             let node = this.data;
-            node.$pending = true;
-            this.tree.api.openNode(node.data).then(() => {
+//            node.$pending = true;
+            this.tree.api.openNode(node.data)/*.then(() => {
                 node.$pending = false;
-            });
+            });*/
         }
     }
 
