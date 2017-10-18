@@ -46,6 +46,7 @@ class jfTreeController {
         });
 
         $(this.$element).find('.jf-tree').keydown(e => {
+            e.preventDefault();
             this.$timeout(() => {
                 switch (e.key) {
                     case 'ArrowDown':
@@ -54,8 +55,9 @@ class jfTreeController {
                     case 'ArrowUp':
                         this.api._onArrowKey(false);
                         break;
+                    case 'Enter':
                     case 'ArrowRight':
-                        this.api.openNode(this.api.getSelectedNode());
+                        this.api.openSelected();
                         break;
                     case 'ArrowLeft':
                         this.api.closeNode(this.api.getSelectedNode());

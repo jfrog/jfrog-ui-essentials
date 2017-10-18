@@ -53,6 +53,8 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
 
         quickFind(quickFindTerm) {
             this.quickFindTerm = quickFindTerm;
+            this.quickFindMatches = this.getQuickFindMatches();
+            delete this.quickFindIndex;
             return this;
         }
 
@@ -106,40 +108,90 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
             this._setSelected(item);
         }
 
+        focus() {
+            $(this.dirCtrl.$element).find('.jf-tree').focus();
+        }
+
         _onArrowKey(down) {
-            if (!this.$flatItems.length) return;
+            let items = this._getFilteredData();
+            if (!items.length) return;
 
-            let selectedItem;
-
-            if (this.$selectedNode === undefined) {
-                selectedItem = this.$flatItems[down ? 0 : this.$flatItems.length - 1];
+            if (this.quickFindTerm) {
+                if (down) this._selectNextSearchResult();
+                else this._selectPreviousSearchResult();
             }
             else {
-                let currIndex = _.findIndex(this.$flatItems, fi => fi.data === this.$selectedNode);
-                if (down && this.$flatItems[currIndex + 1] || !down && currIndex - 1 >= 0) {
-                    selectedItem = this.$flatItems[currIndex + (down ? 1 : -1)];
+                let selectedItem;
+
+                if (this.$selectedNode === undefined) {
+                    selectedItem = items[down ? 0 : items.length - 1];
                 }
                 else {
-                    selectedItem = this.$flatItems[down ? 0 : this.$flatItems.length - 1];
+                    let currIndex = _.findIndex(items, fi => fi.data === this.$selectedNode);
+                    if (down && items[currIndex + 1] || !down && currIndex - 1 >= 0) {
+                        selectedItem = items[currIndex + (down ? 1 : -1)];
+                    }
+                    else {
+                        selectedItem = items[down ? 0 : items.length - 1];
+                    }
                 }
+                this._setSelected(selectedItem);
+                this.centerOnItem(selectedItem);
             }
-            this._setSelected(selectedItem);
-            this.centerOnItem(selectedItem);
-        }
-
-        _onUpArrow() {
 
         }
+
+        _selectNextSearchResult() {
+            if (this.quickFindIndex === undefined && this.quickFindMatches.length) {
+                this.quickFindIndex = 0;
+            }
+            else if (this.quickFindIndex + 1 < this.quickFindMatches.length) {
+                this.quickFindIndex++;
+            }
+            else if (this.quickFindIndex + 1 === this.quickFindMatches.length) {
+                this.quickFindIndex = 0;
+            }
+            this._gotoCurrentSearchResult();
+        }
+
+        _selectPreviousSearchResult() {
+            if (this.quickFindIndex === undefined && this.quickFindMatches.length) {
+                this.quickFindIndex = this.quickFindMatches.length - 1;
+            }
+            else if (this.quickFindIndex - 1 >= 0) {
+                this.quickFindIndex--;
+            }
+            else if (this.quickFindIndex - 1 === -1) {
+                this.quickFindIndex = this.quickFindMatches.length - 1;
+            }
+            this._gotoCurrentSearchResult();
+        }
+
+        _gotoCurrentSearchResult() {
+            if (this.quickFindIndex !== undefined && this.quickFindMatches[this.quickFindIndex]) {
+                this.centerOnItem(this.quickFindMatches[this.quickFindIndex]);
+            }
+        }
+        
 
         handleKeyEvent(e) {
             if (_.includes(['ArrowDown', 'ArrowUp'], e.key)) {
-                $(this.dirCtrl.$element).find('.jf-tree').trigger(e);
+                let keydown = $.Event('keydown', {
+                    keyCode: e.keyCode,
+                    which: e.which,
+                    key: e.key
+                });
+                $(this.dirCtrl.$element).find('.jf-tree').trigger(keydown);
                 e.preventDefault();
             }
         }
 
         _flatFromNode(node) {
             return _.find(this.$flatItems, flat => flat.data === node);
+        }
+
+        openSelected() {
+            this.openNode(this.$selectedNode);
         }
 
         openNode(node) {
@@ -376,6 +428,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
         }
 
         _getFilteredData(sourceData) {
+            sourceData = sourceData || this._getRawData();
             if (this.filterCallbcak && sourceData.length) {
                 if (!this.filterCache) {
                     this.filterCache = _.filter(sourceData, item => {
