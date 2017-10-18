@@ -70,10 +70,22 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
         getQuickFindMatches() {
             if (!this.quickFindTerm) return [];
             else {
-                return _.filter(this.$flatItems, fi => {
+                let matches = _.filter(this.$flatItems, fi => {
                     let text = this.textGetter(fi);
                     return AdvancedStringMatch.match(text, this.quickFindTerm).matched;
                 })
+
+                if (this.$selectedNode) {
+                    let selectedIndex = _.findIndex(this.$flatItems, fi => fi.data === this.$selectedNode);
+                    let matchesAfterSelection = _.filter(matches, match => {
+                       return this.$flatItems.indexOf(match) >= selectedIndex;
+                    });
+                    let matchesBeforeSelection = _.difference(matches, matchesAfterSelection);
+
+                    matches = matchesAfterSelection.concat(matchesBeforeSelection);
+                }
+
+                return matches;
             }
         }
 
@@ -232,6 +244,10 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
 
         _isSelected(item) {
             return this.$selectedNode === item.data;
+        }
+
+        getSelectedNode() {
+            return this.$selectedNode;
         }
 
         on(event, listener) {
