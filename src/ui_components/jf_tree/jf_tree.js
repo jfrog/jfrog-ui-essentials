@@ -46,24 +46,32 @@ class jfTreeController {
         });
 
         $(this.$element).find('.jf-tree').keydown(e => {
-            e.preventDefault();
             this.$timeout(() => {
                 switch (e.key) {
                     case 'ArrowDown':
+                        e.preventDefault();
                         this.api._onArrowKey(true);
                         break;
                     case 'ArrowUp':
+                        e.preventDefault();
                         this.api._onArrowKey(false);
                         break;
                     case 'Enter':
+                        e.preventDefault();
+                        this.api.toggleSelected();
+                        break;
                     case 'ArrowRight':
+                        e.preventDefault();
                         this.api.openSelected();
                         break;
                     case 'ArrowLeft':
+                        e.preventDefault();
                         this.api.closeNode(this.api.getSelectedNode());
                         break;
                     default:
-                        this.api.fire('keydown', e);
+                        if (!e.ctrlKey && !e.shiftKey && ! e.metaKey && e.key.toLowerCase() === String.fromCharCode(e.which).toLowerCase()) {
+                            this.api.fire('keydown', e);
+                        }
                 }
             })
         })

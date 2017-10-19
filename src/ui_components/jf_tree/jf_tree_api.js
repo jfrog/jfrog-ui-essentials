@@ -72,15 +72,19 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
         getQuickFindMatches() {
             if (!this.quickFindTerm) return [];
             else {
-                let matches = _.filter(this.$flatItems, fi => {
+                let start = (new Date()).getTime();
+
+                let matches = _.filter(this.$flatItems, (fi, ind) => {
                     let text = this.textGetter(fi);
-                    return AdvancedStringMatch.match(text, this.quickFindTerm).matched;
+                    let matched = AdvancedStringMatch.match(text, this.quickFindTerm).matched;
+                    if (matched) fi.$$index = ind;
+                    return matched;
                 })
 
                 if (this.$selectedNode) {
                     let selectedIndex = _.findIndex(this.$flatItems, fi => fi.data === this.$selectedNode);
                     let matchesAfterSelection = _.filter(matches, match => {
-                       return this.$flatItems.indexOf(match) >= selectedIndex;
+                       return match.$$index >= selectedIndex;
                     });
                     let matchesBeforeSelection = _.difference(matches, matchesAfterSelection);
 
@@ -194,19 +198,39 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
             this.openNode(this.$selectedNode);
         }
 
-        openNode(node) {
-            let defer = $q.defer();
-            if (!_.includes(this.$openedNodes, node)) {
-                this.$openedNodes.push(node);
-                let flat = this._flatFromNode(node);
-                flat.$pending = true;
-                this.getChildren(node).then(children => {
-                    if (!children.length) node.$noChildren = true;
-                    this._addChildren(children, flat.level + 1, flat);
-                    defer.resolve();
-                    flat.$pending = false;
-                })
+        closeSelected() {
+            this.closeNode(this.$selectedNode);
+        }
+
+        toggleSelected() {
+            if (this.isNodeOpen(this.$selectedNode)) {
+                this.closeSelected();
             }
+            else {
+                this.openSelected();
+            }
+        }
+
+        openNode(node) {
+
+            let defer = $q.defer();
+
+            let flat = this._flatFromNode(node);
+
+            if (flat.hasChildren && !flat.data.$noChildren && !flat.$pending) {
+                if (!_.includes(this.$openedNodes, node)) {
+                    this.$openedNodes.push(node);
+                    flat.$pending = true;
+                    this.getChildren(node).then(children => {
+                        if (!children.length) node.$noChildren = true;
+                        this._addChildren(children, flat.level + 1, flat);
+                        defer.resolve();
+                        flat.$pending = false;
+                    })
+                }
+            }
+            else defer.resolve();
+
             return defer.promise;
         }
 

@@ -22,6 +22,7 @@ class jfTreeItemController {
     }
 
     toggleExpansion() {
+
         if (this.isExpanded()) {
             this.tree.api.closeNode(this.data.data);
         }
