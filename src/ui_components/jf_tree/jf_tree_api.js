@@ -8,7 +8,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
             this.$flatItems = [];
             this.actions = [];
             this.listeners = {};
-            this.supportedEvents = ['pagination.change', 'item.clicked', 'keydown'];
+            this.supportedEvents = ['ready', 'pagination.change', 'item.clicked', 'item.selected', 'keydown'];
             this.appScope = appScope;
             this._setDefaults();
         }
@@ -21,6 +21,11 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
         setTreeData(rootData) {
             this.$root = rootData;
             this._buildFlatItems();
+            this.fire('ready');
+        }
+
+        selectFirst() {
+            if (this.$flatItems.length) this._setSelected(this.$flatItems[0])
         }
 
         setSortingFunction(sortingFunction) {
@@ -38,6 +43,11 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
 
         setTextGetter(textGetter) {
             this.textGetter = textGetter;
+            return this;
+        }
+
+        setUniqueIdGetter(uniqueIdGetter) {
+            this.uniqueIdGetter = uniqueIdGetter;
             return this;
         }
 
@@ -93,6 +103,21 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
 
                 return matches;
             }
+        }
+
+        findNode(findFunction) {
+            let item = _.find(this.$flatItems, fi => {
+                return findFunction(fi.data);
+            })
+            if (item) return item.data;
+        }
+
+        selectNode(node) {
+            this._setSelected(this._flatFromNode(node));
+        }
+
+        centerOnNode(node) {
+            this.centerOnItem(this._flatFromNode(node));
         }
 
         centerOnItem(item) {
@@ -228,6 +253,9 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
                         flat.$pending = false;
                     })
                 }
+                else {
+                    defer.resolve();
+                }
             }
             else defer.resolve();
 
@@ -352,6 +380,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
 
         _setSelected(item) {
             this.$selectedNode = item.data;
+            this.fire('item.selected', item.data);
         }
 
         _isSelected(item) {
