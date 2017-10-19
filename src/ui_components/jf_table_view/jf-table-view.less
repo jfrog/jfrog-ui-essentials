@@ -145,15 +145,27 @@
           height: 40px;
           line-height: 40px;
           padding: 0 10px;
+          font-size: 13px;
+          span {
+            margin-left: 8px;
+          }
           .action-icon {
-            margin-right: 8px;
             &:before {
+              width: auto!important;
               font-size: 18px;
+              line-height: 40px;
+              float: left;
             }
           }
           &:hover {
             color: @greenFontHeader;
-            background-color: @greenBGDropdownHover;
+            background-color: @greenBGDropdownHover!important;
+            box-shadow: inset 3px 0 0 0 @greenFontHeader;
+            &[icon-name="icon icon-clear"] {
+              color: @redError;
+              background: #F4E7E7!important;
+              box-shadow: inset 3px 0 0 0 @redError;
+            }
           }
         }
       }

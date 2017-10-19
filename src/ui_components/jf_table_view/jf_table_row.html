@@ -133,7 +133,7 @@
         <div ng-repeat="action in jfTableRow.tableView.options.actions"
              ng-if="!action.visibleWhen || action.visibleWhen(jfTableRow.data)"
              ng-click="jfTableRow.fireAction(action);$event.stopPropagation();jfTableRow.actionsDropdownOpen=false;"
-             class="action-item">
+             class="action-item" icon-name="{{action.icon || ''}}">
             <i class="action-icon"
                  ng-if="!action.href"
                  ng-class="action.icon"></i>
