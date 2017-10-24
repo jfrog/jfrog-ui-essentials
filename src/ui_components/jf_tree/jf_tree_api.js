@@ -21,7 +21,10 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
         setTreeData(rootData) {
             this.$root = rootData;
             this._buildFlatItems();
-            this.fire('ready');
+            if (!this.$isReady) {
+                this.$isReady = true;
+                this.fire('ready');
+            }
         }
 
         selectFirst() {
@@ -35,10 +38,29 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
 
         setChildrenGetter(childrenGetter) {
             this.childrenGetter = childrenGetter;
-            this.getChildren(null).then(rootData => {
-                if (rootData && rootData.length) this.setTreeData(rootData)
-            })
+            this._getRoot();
             return this;
+        }
+
+        setParentGetter(parentGetter) {
+            this.parentGetter = parentGetter;
+            return this;
+        }
+
+        setNodeByIdGetter(nodeByIdGetter) {
+            this.nodeByIdGetter = nodeByIdGetter;
+            return this;
+        }
+
+        _getRoot() {
+            let defer = $q.defer();
+            this.getChildren(null).then(rootData => {
+                if (rootData && rootData.length) {
+                    this.setTreeData(rootData)
+                    defer.resolve();
+                }
+            })
+            return defer.promise;
         }
 
         setTextGetter(textGetter) {
@@ -75,15 +97,80 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
             }
         }
 
+        refreshTree() {
+            let mainDefer = $q.defer();
+
+            let recursiveOpenRestore = (node) => {
+                let defer = $q.defer();
+
+                let id = this.uniqueIdGetter(node);
+                let opened = _.find(this.$openedNodes, n => this.uniqueIdGetter(n) === id);
+                if (opened) {
+                    _.remove(this.$openedNodes, n => n === opened);
+                    this.openNode(node).then(() => {
+                        let children = node.$childrenCache;
+                        if (!children.length) defer.resolve();
+                        else {
+                            let pendingPromises = children.length;
+                            children.forEach(child => {
+                                recursiveOpenRestore(child, defer).then(() => {
+                                    pendingPromises--;
+                                    if (pendingPromises === 0) {
+                                        defer.resolve();
+                                    }
+                                })
+                            })
+                        }
+                    })
+                }
+                else {
+                    defer.resolve();
+                }
+
+                return defer.promise;
+            };
+
+            this._freeze();
+            delete this.$rootCache;
+            this._getRoot().then(() => {
+                if (this.uniqueIdGetter) {
+                    let resolveCount = 0;
+                    let itemsCount = this.$flatItems.length;
+                    this.$flatItems.forEach((fi, ind) => {
+                        recursiveOpenRestore(fi.data).then(() => {
+                            resolveCount++;
+                            if (resolveCount === itemsCount) {
+                                let selectedId = this.uniqueIdGetter(this.$selectedNode);
+                                let newSelected = _.find(this.$flatItems, fi => this.uniqueIdGetter(fi.data) === selectedId);
+                                if (newSelected) {
+                                    this._setSelected(newSelected);
+                                    this._unFreeze();
+                                    mainDefer.resolve();
+                                }
+                                else {
+                                    this.nodeByIdGetter(selectedId).then(node => {
+                                        this._unFreeze();
+                                        this.openDeepNode(node).then(() => {
+                                            mainDefer.resolve();
+                                        })
+                                    })
+                                }
+                            }
+                        })
+                    })
+                }
+            })
+
+            return mainDefer.promise;
+        }
+
         isNodeOpen(node) {
-            return _.includes(this.$openedNodes, node);
+            return (this.$freezedOpened && _.includes(this.$freezedOpened, node)) || (!this.$freezedOpened && _.includes(this.$openedNodes, node));
         }
 
         getQuickFindMatches() {
             if (!this.quickFindTerm) return [];
             else {
-                let start = (new Date()).getTime();
-
                 let matches = _.filter(this.$flatItems, (fi, ind) => {
                     let text = this.textGetter(fi);
                     let matched = AdvancedStringMatch.match(text, this.quickFindTerm).matched;
@@ -201,7 +288,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
                 this.centerOnItem(this.quickFindMatches[this.quickFindIndex]);
             }
         }
-        
+
 
         handleKeyEvent(e) {
             if (_.includes(['ArrowDown', 'ArrowUp'], e.key)) {
@@ -268,6 +355,52 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
                 let flat = this._flatFromNode(node);
                 this._removeChildren(flat)
             }
+        }
+
+        openDeepNode(node) {
+
+            let defer = $q.defer();
+
+            let nodesToOpen = [];
+
+            let curr = node;
+            while (curr) {
+                nodesToOpen.push(curr);
+                curr = this.parentGetter(curr);
+            }
+
+            nodesToOpen.reverse();
+
+            let index = 0;
+            let handleNext = () => {
+                if (index + 1 < nodesToOpen.length) {
+                    let idToOpen = this.uniqueIdGetter(nodesToOpen[index]);
+                    let nodeToOpen = this.findNode(n => this.uniqueIdGetter(n) === idToOpen);
+                    this.openNode(nodeToOpen).then(() => {
+                        index++;
+                        handleNext();
+                    })
+                }
+                else {
+                    let idToSelect = this.uniqueIdGetter(nodesToOpen[index]);
+                    let nodeToSelect = this.findNode(n => this.uniqueIdGetter(n) === idToSelect);
+                    $timeout(() => {
+                        if (nodeToSelect) {
+                            this.centerOnNode(nodeToSelect);
+                            //                        this.treeApi.openNode(nodeToSelect)
+                        }
+                        else {
+                            this.selectFirst();
+                        }
+                        defer.resolve();
+                    });
+                }
+            }
+
+            handleNext();
+
+            return defer.promise;
+
         }
 
         getChildren(node) {
@@ -509,7 +642,18 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
         }
 
         _getRawData() {
-            return this.$flatItems || [];
+
+            return this.$freezedItems || this.$flatItems || [];
+        }
+
+        _freeze() {
+            this.$freezedItems = [].concat(this.$flatItems);
+            this.$freezedOpened = [].concat(this.$openedNodes);
+        }
+
+        _unFreeze() {
+            delete this.$freezedItems;
+            delete this.$freezedOpened;
         }
 
 	}
