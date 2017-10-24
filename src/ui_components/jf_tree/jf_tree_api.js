@@ -153,6 +153,10 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
                                         this.openDeepNode(node).then(() => {
                                             mainDefer.resolve();
                                         })
+                                    }).catch(() => {
+                                        this.selectFirst();
+                                        this._unFreeze();
+                                        mainDefer.resolve();
                                     })
                                 }
                             }
