@@ -4,7 +4,8 @@ export function jfTree() {
         controllerAs: 'jfTree',
         bindToController: true,
         scope: {
-            api: '='
+            api: '=',
+            viewPaneName: '@?'
         },
         templateUrl: 'ui_components/jf_tree/jf_tree.html'
     }
@@ -14,6 +15,7 @@ export function jfTree() {
 class jfTreeController {
 	/* @ngInject */
     constructor($scope, $element, $timeout, $compile, $rootScope) {
+        this.viewPaneName = this.viewPaneName || 'default';
         this.$element = $element;
         this.$timeout = $timeout;
         this.$compile = $compile;
@@ -42,7 +44,7 @@ class jfTreeController {
         })
 
         $(window).on('resize', () => {
-            if (this.api.autoHeight) this.api._setAutoItemsPerPage();
+            if (this.viewPane.autoHeight) this.viewPane._setAutoItemsPerPage();
         });
 
         $(this.$element).find('.jf-tree').keydown(e => {
@@ -50,11 +52,11 @@ class jfTreeController {
                 switch (e.key) {
                     case 'ArrowDown':
                         e.preventDefault();
-                        this.api._onArrowKey(true);
+                        this.api._onArrowKey(true, this.viewPane);
                         break;
                     case 'ArrowUp':
                         e.preventDefault();
-                        this.api._onArrowKey(false);
+                        this.api._onArrowKey(false, this.viewPane);
                         break;
                     case 'Enter':
                         e.preventDefault();
@@ -86,7 +88,7 @@ class jfTreeController {
 
 
     compileTemplate(elem, itemId) {
-        let node = this.api._getPageData()[itemId];
+        let node = this.viewPane._getPageData()[itemId];
 
         if (!node) return;
 
@@ -118,7 +120,7 @@ class jfTreeController {
 
     onMouseWheel($event, $delta, $deltaX, $deltaY) {
         if ($deltaY<0) { // scrollUp
-            if (this.virtualScrollIndex + this.api.itemsPerPage < this.api._getPrePagedData().length) {
+            if (this.virtualScrollIndex + this.viewPane.itemsPerPage < this.viewPane._getPrePagedData().length) {
                 $event.preventDefault();
                 this.virtualScrollIndex++;
             }
@@ -129,25 +131,25 @@ class jfTreeController {
                 this.virtualScrollIndex--;
             }
         }
-        this.currentPage = Math.floor((this.virtualScrollIndex + this.api.itemsPerPage - 1) / this.api.itemsPerPage);
+        this.currentPage = Math.floor((this.virtualScrollIndex + this.viewPane.itemsPerPage - 1) / this.viewPane.itemsPerPage);
 //        this.api.update(true,true);
         this.syncFakeScroller(false);
     }
 
     getTotalScrollHeight() {
-        return this.api._getPrePagedData().length * parseFloat(this.api.itemHeight);
+        return this.viewPane._getPrePagedData().length * parseFloat(this.viewPane.itemHeight);
     }
 
     initScrollFaker() {
         let scrollParent = $(this.$element).find('.scroll-faker-container');
         scrollParent.on('scroll',(e) => {
             this.$scope.$apply(()=>{
-                let len = this.api._getPrePagedData().length;
+                let len = this.viewPane._getPrePagedData().length;
                 if (len) {
                     let maxScrollTop = scrollParent[0].scrollHeight - scrollParent.outerHeight();
                     let relativePosition = scrollParent.scrollTop() / maxScrollTop;
-                    this.virtualScrollIndex = Math.round(relativePosition * (len - this.api.itemsPerPage));
-                    this.currentPage = Math.floor((this.virtualScrollIndex + this.api.itemsPerPage - 1) / this.api.itemsPerPage);
+                    this.virtualScrollIndex = Math.round(relativePosition * (len - this.viewPane.itemsPerPage));
+                    this.currentPage = Math.floor((this.virtualScrollIndex + this.viewPane.itemsPerPage - 1) / this.viewPane.itemsPerPage);
                 }
                 else {
                     this.virtualScrollIndex = 0;
@@ -161,9 +163,9 @@ class jfTreeController {
     }
 
     syncFakeScroller(delay = true) {
-        let len = this.api._getPrePagedData().length;
+        let len = this.viewPane._getPrePagedData().length;
         let scrollParent = $(this.$element).find('.scroll-faker-container');
-        let relativePosition = this.virtualScrollIndex / (len - this.api.itemsPerPage);
+        let relativePosition = this.virtualScrollIndex / (len - this.viewPane.itemsPerPage);
 
         let sync = () => {
             let maxScrollTop = scrollParent[0].scrollHeight - scrollParent.outerHeight();
@@ -200,7 +202,7 @@ class PaginationApi {
         this.treeCtrl = treeCtrl;
     }
     getTotalPages() {
-        return Math.ceil(this.treeCtrl.api.getTotalLengthOfData() / this.treeCtrl.api.itemsPerPage);
+        return Math.ceil(this.treeCtrl.viewPane.getTotalLengthOfData() / this.treeCtrl.viewPane.itemsPerPage);
     }
     getCurrentPage() {
         return this.treeCtrl.currentPage + 1;
@@ -245,7 +247,7 @@ class PaginationApi {
     }
 
     syncVirtualScroll() {
-        this.treeCtrl.virtualScrollIndex = this.treeCtrl.currentPage*this.treeCtrl.api.itemsPerPage;
+        this.treeCtrl.virtualScrollIndex = this.treeCtrl.currentPage*this.treeCtrl.viewPane.itemsPerPage;
         this.treeCtrl.syncFakeScroller();
     }
 

@@ -1,16 +1,23 @@
-export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
+import {TreeViewPane} from './tree_view_pane';
+export function JFTreeApi($q, $timeout, AdvancedStringMatch, JFrogUIUtils) {
 	'ngInject';
 	class JFTreeApiClass {
 		/* @ngInject */
         constructor(appScope) {
+            this.$timeout = $timeout;
+            this.$q = $q;
+            this.AdvancedStringMatch = AdvancedStringMatch;
+            this.JFrogUIUtils = JFrogUIUtils;
             this.$root = [];
+            this.$viewPanes = [];
             this.$openedNodes = [];
-            this.$flatItems = [];
             this.actions = [];
             this.listeners = {};
             this.supportedEvents = ['ready', 'pagination.change', 'item.clicked', 'item.selected', 'keydown'];
             this.appScope = appScope;
-            this._setDefaults();
+            this.objectName = 'Item';
+
+            this.paneSelector = () => 'default';
         }
 
         setNodeTemplate(nodeTemplate) {
@@ -20,15 +27,11 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
 
         setTreeData(rootData) {
             this.$root = rootData;
-            this._buildFlatItems();
+            this.$viewPanes.forEach(vp => vp._buildFlatItems())
             if (!this.$isReady) {
                 this.$isReady = true;
                 this.fire('ready');
             }
-        }
-
-        selectFirst() {
-            if (this.$flatItems.length) this._setSelected(this.$flatItems[0])
         }
 
         setSortingFunction(sortingFunction) {
@@ -39,6 +42,11 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
         setChildrenGetter(childrenGetter) {
             this.childrenGetter = childrenGetter;
             this._getRoot();
+            return this;
+        }
+
+        setPaneSelector(paneSelector) {
+            this.paneSelector = paneSelector;
             return this;
         }
 
@@ -85,155 +93,49 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
 
         quickFind(quickFindTerm) {
             this.quickFindTerm = quickFindTerm;
-            this.quickFindMatches = this.getQuickFindMatches();
+            let matches = [];
+            this.$viewPanes.forEach(vp => matches = matches.concat(vp.getQuickFindMatches()))
+            this.quickFindMatches = matches;
             delete this.quickFindIndex;
             return this;
         }
 
-        update() {
-            this.refreshFilter();
-            if (this.dirCtrl) {
-                this.dirCtrl.refresh();
-            }
-        }
-
         refreshTree() {
-            let mainDefer = $q.defer();
-
-            let recursiveOpenRestore = (node) => {
-                let defer = $q.defer();
-
-                let id = this.uniqueIdGetter(node);
-                let opened = _.find(this.$openedNodes, n => this.uniqueIdGetter(n) === id);
-                if (opened) {
-                    _.remove(this.$openedNodes, n => n === opened);
-                    this.openNode(node).then(() => {
-                        let children = node.$childrenCache;
-                        if (!children.length) defer.resolve();
-                        else {
-                            let pendingPromises = children.length;
-                            children.forEach(child => {
-                                recursiveOpenRestore(child, defer).then(() => {
-                                    pendingPromises--;
-                                    if (pendingPromises === 0) {
-                                        defer.resolve();
-                                    }
-                                })
-                            })
-                        }
-                    })
-                }
-                else {
-                    defer.resolve();
-                }
-
-                return defer.promise;
-            };
-
-            this._freeze();
+            let defer = $q.defer();
             delete this.$rootCache;
-            this._getRoot().then(() => {
-                if (this.uniqueIdGetter) {
-                    let resolveCount = 0;
-                    let itemsCount = this.$flatItems.length;
-                    this.$flatItems.forEach((fi, ind) => {
-                        recursiveOpenRestore(fi.data).then(() => {
-                            resolveCount++;
-                            if (resolveCount === itemsCount) {
-                                let selectedId = this.uniqueIdGetter(this.$selectedNode);
-                                let newSelected = _.find(this.$flatItems, fi => this.uniqueIdGetter(fi.data) === selectedId);
-                                if (newSelected) {
-                                    this._setSelected(newSelected);
-                                    this._unFreeze();
-                                    mainDefer.resolve();
-                                }
-                                else {
-                                    this.nodeByIdGetter(selectedId).then(node => {
-                                        this._unFreeze();
-                                        this.openDeepNode(node).then(() => {
-                                            mainDefer.resolve();
-                                        })
-                                    }).catch(() => {
-                                        this.selectFirst();
-                                        this._unFreeze();
-                                        mainDefer.resolve();
-                                    })
-                                }
-                            }
-                        })
-                    })
-                }
-            })
-
-            return mainDefer.promise;
+            let pendingPromises = this.$viewPanes.length;
+            this.$viewPanes.forEach(vp => {
+                vp.refreshView().then(() => {
+                    pendingPromises--;
+                    if (!pendingPromises) {
+                        defer.resolve();
+                    }
+                })
+            });
+            return defer.promise;
         }
 
         isNodeOpen(node) {
-            return (this.$freezedOpened && _.includes(this.$freezedOpened, node)) || (!this.$freezedOpened && _.includes(this.$openedNodes, node));
-        }
-
-        getQuickFindMatches() {
-            if (!this.quickFindTerm) return [];
-            else {
-                let matches = _.filter(this.$flatItems, (fi, ind) => {
-                    let text = this.textGetter(fi);
-                    let matched = AdvancedStringMatch.match(text, this.quickFindTerm).matched;
-                    if (matched) fi.$$index = ind;
-                    return matched;
-                })
-
-                if (this.$selectedNode) {
-                    let selectedIndex = _.findIndex(this.$flatItems, fi => fi.data === this.$selectedNode);
-                    let matchesAfterSelection = _.filter(matches, match => {
-                       return match.$$index >= selectedIndex;
-                    });
-                    let matchesBeforeSelection = _.difference(matches, matchesAfterSelection);
-
-                    matches = matchesAfterSelection.concat(matchesBeforeSelection);
-                }
-
-                return matches;
-            }
+            return !!_.find(this.$viewPanes, vp => vp.isNodeOpen(node))
         }
 
         findNode(findFunction) {
-            let item = _.find(this.$flatItems, fi => {
-                return findFunction(fi.data);
+            let viewPane = _.find(this.$viewPanes, vp => {
+                return !!vp.findNode(findFunction);
             })
-            if (item) return item.data;
+
+            if (viewPane) {
+                return viewPane.findNode(findFunction);
+            }
+
         }
 
         selectNode(node) {
             this._setSelected(this._flatFromNode(node));
         }
 
-        centerOnNode(node) {
-            this.centerOnItem(this._flatFromNode(node));
-        }
-
-        centerOnItem(item) {
-            let index = this.$flatItems.indexOf(item);
-            let halfPage = Math.floor(this.itemsPerPage / 2);
-            if (index - halfPage < 0) {
-                this.dirCtrl.virtualScrollIndex = 0;
-            }
-            else if (index + (this.itemsPerPage - halfPage) > this.$flatItems.length) {
-                this.dirCtrl.virtualScrollIndex = this.$flatItems.length - this.itemsPerPage;
-            }
-            else {
-                this.dirCtrl.virtualScrollIndex = index - halfPage;
-            }
-
-            this.dirCtrl.syncFakeScroller(false);
-            this._setSelected(item);
-        }
-
-        focus() {
-            $(this.dirCtrl.$element).find('.jf-tree').focus();
-        }
-
-        _onArrowKey(down) {
-            let items = this._getFilteredData();
+        _onArrowKey(down, viewPane) {
+            let items = viewPane._getFilteredData();
             if (!items.length) return;
 
             if (this.quickFindTerm) {
@@ -256,7 +158,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
                     }
                 }
                 this._setSelected(selectedItem);
-                this.centerOnItem(selectedItem);
+                viewPane.centerOnItem(selectedItem);
             }
 
         }
@@ -289,7 +191,8 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
 
         _gotoCurrentSearchResult() {
             if (this.quickFindIndex !== undefined && this.quickFindMatches[this.quickFindIndex]) {
-                this.centerOnItem(this.quickFindMatches[this.quickFindIndex]);
+                let item = this.quickFindMatches[this.quickFindIndex];
+                item.pane.centerOnItem(item);
             }
         }
 
@@ -301,13 +204,15 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
                     which: e.which,
                     key: e.key
                 });
-                $(this.dirCtrl.$element).find('.jf-tree').trigger(keydown);
+                let dirCtrl = this.$viewPanes[0].dirCtrl;
+                $(dirCtrl.$element).find('.jf-tree').trigger(keydown);
                 e.preventDefault();
             }
         }
 
         _flatFromNode(node) {
-            return _.find(this.$flatItems, flat => flat.data === node);
+            let pane = _.find(this.$viewPanes, vp => !!vp._flatFromNode(node));
+            if (pane) return pane._flatFromNode(node);
         }
 
         openSelected() {
@@ -339,7 +244,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
                     flat.$pending = true;
                     this.getChildren(node).then(children => {
                         if (!children.length) node.$noChildren = true;
-                        this._addChildren(children, flat.level + 1, flat);
+                        flat.pane._addChildren(children, flat.level + 1, flat);
                         defer.resolve();
                         flat.$pending = false;
                     })
@@ -357,7 +262,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
             if (_.includes(this.$openedNodes, node)) {
                 _.remove(this.$openedNodes, n => n === node);
                 let flat = this._flatFromNode(node);
-                this._removeChildren(flat)
+                flat.pane._removeChildren(flat)
             }
         }
 
@@ -390,7 +295,9 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
                     let nodeToSelect = this.findNode(n => this.uniqueIdGetter(n) === idToSelect);
                     $timeout(() => {
                         if (nodeToSelect) {
-                            this.centerOnNode(nodeToSelect);
+                            let flat = this._flatFromNode(nodeToSelect);
+                            if (flat) flat.pane.centerOnNode(nodeToSelect);
+                            else this.selectFirst();
                             //                        this.treeApi.openNode(nodeToSelect)
                         }
                         else {
@@ -440,80 +347,6 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
             return defer.promise;
         }
 
-        _createFlatItem(node, level = 0, parent = null) {
-            let flat = {
-                data: node,
-                level,
-                parent,
-                hasChildren: undefined
-            }
-
-            if (this.childrenChecker) {
-                let check = this.childrenChecker(node);
-                if (check && check.then) {
-                    check.then((_check) => {
-                        flat.hasChildren = _check;
-                    })
-                }
-                else flat.hasChildren = check;
-            }
-            else {
-                this.getChildren(node).then(children => {
-                    flat.hasChildren = !!(children && children.length);
-                });
-            }
-
-            return flat;
-        }
-
-        _addChildren(children, level = 0, parent = null) {
-            let parentIndex = this.$flatItems.indexOf(parent);
-            let added = [];
-            children.forEach((node, i) => {
-                let flatItem = this._createFlatItem(node, level, parent);
-//                this.$flatItems.splice(parentIndex + 1 + i, 0, flatItem);
-                added.push(flatItem);
-                if (this.isNodeOpen(node)) {
-                    this.getChildren(node).then(_children => {
-                        if (_children && _children.length) {
-                            this._addChildren(_children, level + 1, flatItem);
-                        }
-                    })
-                }
-            })
-            let before = this.$flatItems.slice(0, parentIndex + 1);
-            let after = this.$flatItems.slice(parentIndex + 1);
-            this.$flatItems = before.concat(added).concat(after);
-            this.update();
-        }
-
-        _removeChildren(parent) {
-            this.$flatItems = _.filter(this.$flatItems, flat => {
-                let remove = false;
-                let _parent = flat.parent;
-                while (_parent) {
-                    if (_parent  === parent) {
-                        remove = true;
-                        break;
-                    }
-                    _parent = _parent.parent;
-                }
-                return !remove;
-            })
-            this.update();
-
-        }
-
-        _buildFlatItems() {
-            this.$flatItems = [];
-            this._addChildren(this.$root);
-        }
-
-        _setDefaults() {
-            this.objectName = 'Item';
-            this.itemHeight = '50px';
-            this.itemsPerPage = 25;
-        }
 
         _setSelected(item) {
             this.$selectedNode = item.data;
@@ -522,6 +355,10 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
 
         _isSelected(item) {
             return this.$selectedNode === item.data;
+        }
+
+        selectFirst() {
+            this.$viewPanes[0].selectFirst();
         }
 
         getSelectedNode() {
@@ -559,19 +396,9 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
             }
         }
 
-        setItemsPerPage(rpp) {
-            this.itemsPerPage = rpp;
-            return this;
-        }
-
         setObjectName(objectName, useAn = false) {
             this.objectName = objectName;
             this.useAnWithObjectName = useAn;
-            return this;
-        }
-
-        setItemHeight(height) {
-            this.itemHeight = height;
             return this;
         }
 
@@ -584,19 +411,26 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
             return this;
         }
 
-        _setDirectiveController(ctrl) {
-            this.dirCtrl = ctrl;
-            if (this.itemsPerPage === 'auto') {
-                this.autoHeight = true;
-                this._setAutoItemsPerPage();
+        createViewPane(viewPaneName) {
+            viewPaneName = viewPaneName || 'default';
+            let exists = this.getViewPane(viewPaneName);
+            if (exists) return exists;
+            else {
+                let viewPane = new TreeViewPane(viewPaneName, this);
+                this.$viewPanes.push(viewPane);
+                return viewPane;
             }
         }
 
-        _setAutoItemsPerPage() {
-            $timeout(() => {
-                let containerHeight = $(this.dirCtrl.$element).parent().height();
-                this.setItemsPerPage(Math.floor(containerHeight / parseFloat(this.itemHeight)));
-            })
+        getViewPane(viewPaneName) {
+            viewPaneName = viewPaneName || 'default';
+            return _.find(this.$viewPanes, vp => vp.viewPaneName === viewPaneName);
+        }
+
+        _setDirectiveController(ctrl) {
+            let pane = this.getViewPane(ctrl.viewPaneName);
+            if (!pane) console.error(`Missing view pane '${ctrl.viewPaneName}'. Forgot to create it?`);
+            else pane._setDirectiveController(ctrl);
         }
 
         setEmptyTreeText(text) {
@@ -604,60 +438,12 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
             return this;
         }
 
-        _getPageData() {
-            return this._getPrePagedData().slice(this.dirCtrl.virtualScrollIndex,
-                this.dirCtrl.virtualScrollIndex + this.itemsPerPage);
-        }
-
-        _getPrePagedData() {
-            return this._getSortedData(this._getFilteredData(this._getRawData()));
-        }
-
-        _getSortedData(sourceData) {
-            return sourceData;
-        }
-
-        _getFilteredData(sourceData) {
-            sourceData = sourceData || this._getRawData();
-            if (this.filterCallbcak && sourceData.length) {
-                if (!this.filterCache) {
-                    this.filterCache = _.filter(sourceData, item => {
-                        let parentIsFilteredOut = false;
-                        let curr = item.parent;
-                        while (curr && !parentIsFilteredOut) {
-                            if (!this.filterCallbcak(curr.data)) {
-                                parentIsFilteredOut = true;
-                            }
-                            curr = curr.parent;
-                        }
-
-                        return !parentIsFilteredOut && this.filterCallbcak(item.data);
-                    })
-                }
-                return this.filterCache;
-            }
-            else {
-                return sourceData;
-            }
-        }
-
         refreshFilter() {
-            delete this.filterCache;
+            this.$viewPanes.forEach(vp => vp.refreshFilter());
         }
 
-        _getRawData() {
-
-            return this.$freezedItems || this.$flatItems || [];
-        }
-
-        _freeze() {
-            this.$freezedItems = [].concat(this.$flatItems);
-            this.$freezedOpened = [].concat(this.$openedNodes);
-        }
-
-        _unFreeze() {
-            delete this.$freezedItems;
-            delete this.$freezedOpened;
+        focus() {
+            this.$viewPanes[0].focus();
         }
 
 	}
