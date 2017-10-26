@@ -472,7 +472,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
 
                     if (items) return {
                         callback: (key, options) => {
-                            console.log('???');
+                            console.log(key);
                             return false;
                         },
                         items
@@ -481,19 +481,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
                     else {
                         this.contextMenuItemsGetter(rowCtrl.data.data, (items) => {
                             rowCtrl.data.data.$cachedCMItems = items;
-                            var event = jQuery.Event("contextmenu", {});
-/*
-                            event.clientX = e.clientX;
-                            event.clientY = e.clientY;
-                            event.offsetX = e.offsetX;
-                            event.offsetY = e.offsetY;
- */
-                            event.pageX = e.pageX;
-                            event.pageY = e.pageY;
-/*
-                            event.screenX = e.screenX;
-                            event.screenY = e.screenY;
-*/
+                            var event = jQuery.Event("contextmenu", {pageX: e.pageX, pageY: e.pageY});
                             $($trigger[0]).trigger(event);
                         });
 
