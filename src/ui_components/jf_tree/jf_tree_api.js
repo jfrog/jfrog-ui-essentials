@@ -38,6 +38,12 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
             return this;
         }
 
+        setContextMenuItemsGetter(contextMenuItemsGetter) {
+            this.contextMenuItemsGetter = contextMenuItemsGetter;
+            this._createContextMenu();
+            return this;
+        }
+
         setChildrenGetter(childrenGetter) {
             this.childrenGetter = childrenGetter;
             this._getRoot();
@@ -455,6 +461,48 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
             this.$viewPanes.forEach(vp => vp._buildFlatItems());
         }
 
+        _createContextMenu() {
+            $.contextMenu({
+                selector: '.jf-tree .jf-tree-item',
+                build: ($trigger, e) => {
+
+                    let rowCtrl = angular.element($trigger[0]).controller('jfTreeItem');
+
+                    let items = rowCtrl.data.data.$cachedCMItems;
+
+                    if (items) return {
+                        callback: (key, options) => {
+                            console.log('???');
+                            return false;
+                        },
+                        items
+                    }
+
+                    else {
+                        this.contextMenuItemsGetter(rowCtrl.data.data, (items) => {
+                            rowCtrl.data.data.$cachedCMItems = items;
+                            var event = jQuery.Event("contextmenu", {});
+/*
+                            event.clientX = e.clientX;
+                            event.clientY = e.clientY;
+                            event.offsetX = e.offsetX;
+                            event.offsetY = e.offsetY;
+ */
+                            event.pageX = e.pageX;
+                            event.pageY = e.pageY;
+/*
+                            event.screenX = e.screenX;
+                            event.screenY = e.screenY;
+*/
+                            $($trigger[0]).trigger(event);
+                        });
+
+                        return false;
+                    }
+
+                }
+            })
+        }
 	}
 	return JFTreeApiClass;
 
