@@ -1,5 +1,5 @@
 import {TreeViewPane} from './tree_view_pane';
-export function JFTreeApi($q, $timeout, AdvancedStringMatch, JFrogUIUtils) {
+export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
 	'ngInject';
 	class JFTreeApiClass {
 		/* @ngInject */
@@ -7,7 +7,6 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, JFrogUIUtils) {
             this.$timeout = $timeout;
             this.$q = $q;
             this.AdvancedStringMatch = AdvancedStringMatch;
-            this.JFrogUIUtils = JFrogUIUtils;
             this.$root = [];
             this.$viewPanes = [];
             this.$openedNodes = [];
@@ -444,6 +443,16 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, JFrogUIUtils) {
 
         focus() {
             this.$viewPanes[0].focus();
+        }
+
+        onViewUpdate(originView) {
+            this.$viewPanes.forEach(vp => {
+                if (vp !== originView) vp.update(false);
+            });
+        }
+
+        refreshPaneSelection() {
+            this.$viewPanes.forEach(vp => vp._buildFlatItems());
         }
 
 	}

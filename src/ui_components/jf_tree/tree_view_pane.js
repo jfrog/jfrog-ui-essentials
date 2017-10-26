@@ -18,12 +18,14 @@ export class TreeViewPane {
         return this;
     }
 
-    update() {
+    update(notifyTree = true) {
         this.refreshFilter();
         if (this.dirCtrl) {
             this.dirCtrl.refresh();
         }
-        this.treeApi.JFrogUIUtils.fireResizeEvent();
+
+        if (this.autoHeight) this._setAutoItemsPerPage();
+        if (notifyTree) this.treeApi.onViewUpdate(this);
     }
 
     _setDirectiveController(directiveController) {
