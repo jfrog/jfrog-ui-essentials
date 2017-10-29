@@ -35,6 +35,7 @@ import {jfMarkupEditor} from "./jf_markup_editor/jf_markup_editor";
 import {jfJsTreeWrap} from "./jf_js_tree_wrap/jf_js_tree_wrap";
 import {jfAutoComplete} from "./jf_auto_complete/jf_auto_complete";
 import {jfDatetimepicker} from "./jf_datetimepicker/jf_datetimepicker";
+import {jfContextMenu} from "./jf_context_menu/jf_context_menu.component";
 
 angular.module('jfrog.ui.essentials.directives', [])
     .directive({
@@ -74,5 +75,6 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfJsTreeWrap': jfJsTreeWrap,
         'jfAutoComplete': jfAutoComplete,
 	    'jfRadioButton': jfRadioButton,
-        'jfDatetimepicker': jfDatetimepicker
+        'jfDatetimepicker': jfDatetimepicker,
+        'jfContextMenu': jfContextMenu
     });

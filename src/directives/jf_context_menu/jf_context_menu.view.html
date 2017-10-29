@@ -1,0 +1,10 @@
+<div class="jf-context-menu"
+     ng-show="contextMenu.isOpen">
+	<div ng-repeat="action in contextMenu.actions"
+	     ng-click="contextMenu._onActionClick($event,action)"
+	     class="action-item" icon-name="{{action.icon || ''}}">
+		<i class="action-icon"
+		   ng-class="action.icon"></i>
+		<span>{{action.name}}</span>
+	</div>
+</div>

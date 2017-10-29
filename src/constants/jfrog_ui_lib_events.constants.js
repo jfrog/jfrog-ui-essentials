@@ -13,7 +13,9 @@ let events = {
 
     RESET_GRID_PAGINATION:          'reset:grid:pagination',
 
-	TABLEVIEW_HIDE_ACTIONS_DROPDOWN:'tableview:hide:actions:dropdown'
+	TABLEVIEW_HIDE_ACTIONS_DROPDOWN:'tableview:hide:actions:dropdown',
+
+    CONTEXT_MENU_OPEN :'context:menu:open',
 };
 
 export default events;
