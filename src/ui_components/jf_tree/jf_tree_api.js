@@ -81,6 +81,11 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
             return this;
         }
 
+        setClassGetter(classGetter) {
+            this.classGetter = classGetter;
+            return this;
+        }
+
         setUniqueIdGetter(uniqueIdGetter) {
             this.uniqueIdGetter = uniqueIdGetter;
             return this;

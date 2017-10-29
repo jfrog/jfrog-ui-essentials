@@ -50,6 +50,16 @@ class jfTreeItemController {
             else return false;
         }
     }
+
+    getCustomClasses() {
+        if (!this.tree.api.classGetter) return [];
+        else {
+            let classes = this.tree.api.classGetter(this.data.data);
+            if (!classes) classes = [];
+            else if (!_.isArray(classes)) classes = [classes];
+            return classes;
+        }
+    }
 }
 
 export function jfTreeItem() {
