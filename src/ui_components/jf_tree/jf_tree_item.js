@@ -18,7 +18,7 @@ class jfTreeItemController {
     }
 
     isExpanded() {
-        return this.tree.api.isNodeOpen(this.data.data);
+        return this.tree.viewPane.isNodeOpen(this.data.data);
     }
 
     toggleExpansion() {

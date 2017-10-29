@@ -99,6 +99,7 @@ export class TreeViewPane {
     _unFreeze() {
         delete this.$freezedItems;
         delete this.$freezedOpened;
+        this.refreshFilter();
     }
 
     _addChildren(children, level = 0, parent = null) {
@@ -174,46 +175,58 @@ export class TreeViewPane {
         return flat;
     }
 
+    _recursiveOpenRestore(node) {
+        let defer = this.treeApi.$q.defer();
+
+        let id = this.treeApi.uniqueIdGetter(node);
+        let opened = _.find(this.treeApi.$openedNodes, n => this.treeApi.uniqueIdGetter(n) === id);
+        if (opened) {
+            _.remove(this.treeApi.$openedNodes, n => n === opened);
+            this.treeApi.openNode(node).then(() => {
+                let children = node.$childrenCache;
+                if (!children.length) defer.resolve();
+                else {
+                    let pendingPromises = children.length;
+                    children.forEach(child => {
+                        this._recursiveOpenRestore(child, defer).then(() => {
+                            pendingPromises--;
+                            if (pendingPromises === 0) {
+                                defer.resolve();
+                            }
+                        })
+                    })
+                }
+            })
+        }
+        else {
+            defer.resolve();
+        }
+
+        return defer.promise;
+    }
+    refreshNode(node) {
+        let flat = this._flatFromNode(node);
+        if (flat) {
+            this._freeze();
+            this._removeChildren(flat);
+            delete flat.data.$childrenCache;
+            this._recursiveOpenRestore(flat.data).then(() => {
+                this._unFreeze()
+            });
+        }
+    }
+
     refreshView() {
         let mainDefer = this.treeApi.$q.defer();
-
-        let recursiveOpenRestore = (node) => {
-            let defer = this.treeApi.$q.defer();
-
-            let id = this.treeApi.uniqueIdGetter(node);
-            let opened = _.find(this.treeApi.$openedNodes, n => this.treeApi.uniqueIdGetter(n) === id);
-            if (opened) {
-                _.remove(this.treeApi.$openedNodes, n => n === opened);
-                this.treeApi.openNode(node).then(() => {
-                    let children = node.$childrenCache;
-                    if (!children.length) defer.resolve();
-                    else {
-                        let pendingPromises = children.length;
-                        children.forEach(child => {
-                            recursiveOpenRestore(child, defer).then(() => {
-                                pendingPromises--;
-                                if (pendingPromises === 0) {
-                                    defer.resolve();
-                                }
-                            })
-                        })
-                    }
-                })
-            }
-            else {
-                defer.resolve();
-            }
-
-            return defer.promise;
-        };
 
         this._freeze();
         this.treeApi._getRoot().then(() => {
             if (this.treeApi.uniqueIdGetter) {
                 let resolveCount = 0;
                 let itemsCount = this.$flatItems.length;
+                if (!this.$flatItems.length) mainDefer.resolve();
                 this.$flatItems.forEach((fi, ind) => {
-                    recursiveOpenRestore(fi.data).then(() => {
+                    this._recursiveOpenRestore(fi.data).then(() => {
                         resolveCount++;
                         if (resolveCount === itemsCount) {
                             let selectedId = this.treeApi.uniqueIdGetter(this.treeApi.$selectedNode);

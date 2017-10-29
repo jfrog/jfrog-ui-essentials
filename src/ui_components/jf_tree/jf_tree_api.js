@@ -105,6 +105,13 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
             return this;
         }
 
+        refreshNode(node) {
+            let viewPane = _.find(this.$viewPanes, vp => {
+                return vp.findNode(n => n === node);
+            })
+            if (viewPane) viewPane.refreshNode(node);
+        }
+
         refreshTree() {
             let defer = $q.defer();
             delete this.$rootCache;
@@ -461,6 +468,12 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
             this.$viewPanes.forEach(vp => vp._buildFlatItems());
         }
 
+        getParentNode(node) {
+            let flat = this._flatFromNode(node);
+            let parent = flat.parent;
+            return parent.data;
+        }
+
         _createContextMenu() {
             $.contextMenu({
                 selector: '.jf-tree .jf-tree-item',
@@ -468,12 +481,41 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
 
                     let rowCtrl = angular.element($trigger[0]).controller('jfTreeItem');
 
+                    let treeApi = rowCtrl.tree.api;
+
                     let items = rowCtrl.data.data.$cachedCMItems;
 
-                    if (items) return {items}
+                    if (items) {
+                        $timeout(() => {
+                            $('.context-menu-item').on('click', (e) => {
+                                if (treeApi.actionToDo) {
+                                    $(e.target).trigger('contextmenu:hide');
+                                    $timeout(() => {
+                                        treeApi.actionToDo();
+                                        delete treeApi.actionToDo;
+                                    }, 100);
+                                }
+                            });
+                        });
+
+                        return {
+                            items,
+                            callback: (key, options) => {
+                                treeApi.actionToDo = () => {
+                                    items[key].action();
+                                }
+                                return false;
+                            }
+                        }
+                    }
 
                     else {
                         this.contextMenuItemsGetter(rowCtrl.data.data, (items) => {
+                            items = _.map(items, item => {
+                                item.action = item.callback;
+                                delete item.callback;
+                                return item;
+                            })
                             rowCtrl.data.data.$cachedCMItems = items;
                             var event = jQuery.Event("contextmenu", {pageX: e.pageX, pageY: e.pageY});
                             $($trigger[0]).trigger(event);
