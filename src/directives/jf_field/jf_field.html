@@ -1,7 +1,7 @@
 <div ng-class="{'input-label': animated}" class="jf-field">
     <ng-transclude></ng-transclude>
 </div>
-<jf-validation ng-if="formField.showErrors || alwaysShowErrors || (formField.initialValue && !formField.$error.required)"
+<jf-validation ng-if="(formField.showErrors || alwaysShowErrors || (formField.initialValue && !formField.$error.required)) && !formField.isAutoFocused"
                field="formField"
                validations-params="validationsParams"
                dont-push-down="dontPushDownErrors"

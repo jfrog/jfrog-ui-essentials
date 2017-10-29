@@ -73,6 +73,10 @@ export function jfField($timeout, JFrogEventBus, $rootScope) {
 
             function focusInput() {
                 if (scope.autofocus && scope.autofocus != 'false') {
+	                if (scope.formField) {
+		                scope.formField.isAutoFocused = true;
+		                scope.formField.isAutoFocusedFlag = true;
+                    }
                     $timeout(() => {
                         if (inputElement.scrollParent && inputElement.scrollParent()) {
                             var y = inputElement.scrollParent().scrollTop();
@@ -118,7 +122,18 @@ export function jfField($timeout, JFrogEventBus, $rootScope) {
                 if (force || (scope.formField && scope.formField.$valid) || (scope.formField && scope.formField.preventShowErrors)) {
                     inputElement.removeClass('invalid');
                 } else {
-                    inputElement.addClass('invalid');
+                    if (scope.formField && !scope.formField.isAutoFocused) inputElement.addClass('invalid');
+                }
+
+
+                if (scope.formField && scope.formField.isAutoFocused) {
+                    if (!scope.formField.isAutoFocusedFlag) {
+	                    scope.formField.isAutoFocused = false;
+	                    scope.formField.showErrors = true;
+	                    if (!scope.formField.isAutoFocused) inputElement.addClass('invalid');
+                    } else {
+	                    scope.formField.isAutoFocusedFlag = false;
+                    }
                 }
             }
 
@@ -134,7 +149,10 @@ export function jfField($timeout, JFrogEventBus, $rootScope) {
                 });
             }
             function _onKeyDown() {
-                if (scope.formField) scope.formField.initialValue = false;
+                if (scope.formField) {
+                    scope.formField.initialValue = false;
+	                scope.formField.isAutoFocusedFlag = false;
+                }
             }
 
             function _onKeyUp() {
