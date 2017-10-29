@@ -470,13 +470,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
 
                     let items = rowCtrl.data.data.$cachedCMItems;
 
-                    if (items) return {
-                        callback: (key, options) => {
-                            console.log(key);
-                            return false;
-                        },
-                        items
-                    }
+                    if (items) return {items}
 
                     else {
                         this.contextMenuItemsGetter(rowCtrl.data.data, (items) => {

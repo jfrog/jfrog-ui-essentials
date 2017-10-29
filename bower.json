@@ -37,7 +37,7 @@
     "angular-ui-utils": "bower",
     "angular-messages": "1.5.11",
     "tooltipster": "3.3.0",
-    "jQuery-contextMenu": "2.6.2",
+    "jQuery-contextMenu": "1.8.1",
     "clipboard": "~1.5.5",
     "jstree": "500tech/jstree#3.0.0-beta10-patch7",
     "angular-eonasdan-datetimepicker": "^0.3.9"
