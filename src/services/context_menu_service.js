@@ -58,7 +58,7 @@ export class ContextMenuService {
 			this.JFrogEventBus.dispatch(this.EVENTS.CONTEXT_MENU_OPEN, options);
 		};
 
-		let cbResponse = actionsCallback(trigger, clickEvent);
+		let cbResponse = actionsCallback(trigger);
 		if (cbResponse.then) {
 			cbResponse.then((actions) => {
 				_launchContextMenuEvent(actions);

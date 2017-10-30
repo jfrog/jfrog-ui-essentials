@@ -30,7 +30,7 @@ class jfContextMenuController {
 		this.JFrogEventBus.registerOnScope(this.$scope, this.EVENTS.CONTEXT_MENU_OPEN, (options) => {
 			this.actions = options.actions;
 			this.clickedItemData = options.clickedItemData;
-			this._setContextMenuPosition(options.actions.length, options.event.pageX, options.event.pageY);
+			this._setContextMenuPosition(options.actions.length || Object.keys(options.actions).length, options.event.pageX, options.event.pageY);
 			this.isOpen = true;
 		});
 	}
@@ -39,23 +39,27 @@ class jfContextMenuController {
 	 * _setContextMenuPosition - Set a new position to the context menu , according to the click position ,
 	 * while making sure it is contained in the screen bounds
 	 * @private
-	 * @param $event - the action click event
-	 * @param action - the action to fire
+	 * @param numberOfActions
+	 * @param pageX
+	 * @param pageY
 	 * */
 	_setContextMenuPosition(numberOfActions, pageX, pageY) {
 		if (numberOfActions === 0) {
 			return;
 		}
-		let left = (pageX + ERROR_MARGIN),
+		let windowElem = $(window);
+		let windowHeight = windowElem.innerHeight();
+		let windowWidth = windowElem.innerWidth();
+		let left = pageX + ERROR_MARGIN,
 			top = (pageY + ERROR_MARGIN/2),
 			contextMenuHeight = numberOfActions * CONTEXT_MENU_ROW_HEIGHT;
-		if (pageX >= CONTEXT_MENU_WIDTH + ERROR_MARGIN) {
+		if (pageX + (CONTEXT_MENU_WIDTH + ERROR_MARGIN) >= windowWidth) {
 			left = pageX - (CONTEXT_MENU_WIDTH + ERROR_MARGIN);
 		}
-		if (pageY + contextMenuHeight + (ERROR_MARGIN/2) >= document.body.clientHeight) {
-			top = pageY - (contextMenuHeight + ERROR_MARGIN/2);
+        if (pageY + contextMenuHeight + (ERROR_MARGIN/2) >= windowHeight) {
+            top = pageY - (contextMenuHeight + ERROR_MARGIN/2);
 		}
-		this.contextMenuElement.css({
+        this.contextMenuElement.css({
 			left: left,
 			top : top
 		});

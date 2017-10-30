@@ -1,5 +1,5 @@
 import {TreeViewPane} from './tree_view_pane';
-export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
+export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService) {
 	'ngInject';
 	class JFTreeApiClass {
 		/* @ngInject */
@@ -10,6 +10,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
             this.$root = [];
             this.$viewPanes = [];
             this.$openedNodes = [];
+            this.ContextMenuService = ContextMenuService;
             this.actions = [];
             this.listeners = {};
             this.supportedEvents = ['ready', 'pagination.change', 'item.clicked', 'item.selected', 'keydown'];
@@ -480,10 +481,30 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch) {
         }
 
         _createContextMenu() {
+            this.ContextMenuService.contextMenu({
+                selector: '.jf-tree .jf-tree-item',
+                build: ($trigger) => {
+                    let defer = this.$q.defer();
+                    let rowCtrl = angular.element($trigger[0]).controller('jfTreeItem');
+                    let items = rowCtrl.data.data.$cachedCMItems;
+                    if (items) {
+                        defer.resolve(items);
+                    }
+                    else {
+                        this.contextMenuItemsGetter(rowCtrl.data.data, (items) => {
+                            rowCtrl.data.data.$cachedCMItems = items;
+                            defer.resolve(items);
+                        })
+                    }
+                    return defer.promise;
+                }
+            })
+        }
+
+        old_createContextMenu() {
             $.contextMenu({
                 selector: '.jf-tree .jf-tree-item',
                 build: ($trigger, e) => {
-
                     let rowCtrl = angular.element($trigger[0]).controller('jfTreeItem');
 
                     let treeApi = rowCtrl.tree.api;
