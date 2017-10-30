@@ -111,11 +111,27 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             return this;
         }
 
-        refreshNode(node) {
+        _getViewPaneForNode(node) {
             let viewPane = _.find(this.$viewPanes, vp => {
                 return vp.findNode(n => n === node);
             })
-            if (viewPane) viewPane.refreshNode(node);
+            return viewPane;
+        }
+
+        centerOnNode(node) {
+            let viewPane = this._getViewPaneForNode(node);
+            if (viewPane) viewPane.centerOnNode(node);
+        }
+
+        refreshNode(node) {
+            let viewPane = this._getViewPaneForNode(node);
+            if (viewPane) return viewPane.refreshNode(node);
+            else return this.$q.when();
+        }
+
+        refreshNodeContextMenu(node) {
+            let viewPane = this._getViewPaneForNode(node);
+            if (viewPane) viewPane.refreshNodeContextMenu(node);
         }
 
         refreshTree() {

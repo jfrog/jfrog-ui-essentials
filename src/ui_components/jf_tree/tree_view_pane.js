@@ -204,16 +204,25 @@ export class TreeViewPane {
 
         return defer.promise;
     }
+
     refreshNode(node) {
+        let defer = this.treeApi.$q.defer();
         let flat = this._flatFromNode(node);
         if (flat) {
             this._freeze();
             this._removeChildren(flat);
             delete flat.data.$childrenCache;
+            this.refreshNodeContextMenu(flat.data);
             this._recursiveOpenRestore(flat.data).then(() => {
-                this._unFreeze()
+                this._unFreeze();
+                defer.resolve();
             });
         }
+        return defer.promise;
+    }
+
+    refreshNodeContextMenu(node) {
+        delete node.$cachedCMItems;
     }
 
     refreshView() {
