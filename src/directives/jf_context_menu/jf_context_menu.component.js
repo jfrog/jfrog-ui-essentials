@@ -29,7 +29,7 @@ class jfContextMenuController {
 	_registerToEvents(){
 		this.JFrogEventBus.registerOnScope(this.$scope, this.EVENTS.CONTEXT_MENU_OPEN, (options) => {
 			this.actions = options.actions;
-			this.clickedItemData = options.clickedItemdata;
+			this.clickedItemData = options.clickedItemData;
 			this._setContextMenuPosition(options.actions.length, options.event.pageX, options.event.pageY);
 			this.isOpen = true;
 		});

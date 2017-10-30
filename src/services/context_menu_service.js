@@ -48,7 +48,7 @@ export class ContextMenuService {
 	 * @param clickedItem - a $element that represents the clicked element.
 	 * @param event - the click event passed by using code
 	 * */
-	 _openContextMenu(actionsCallback, clickedItemData, clickEvent) {
+	 _openContextMenu(actionsCallback, clickedItemData, clickEvent, trigger) {
 		let _launchContextMenuEvent = (actions) => {
 			let options = {
 				actions        : actions,
@@ -58,7 +58,7 @@ export class ContextMenuService {
 			this.JFrogEventBus.dispatch(this.EVENTS.CONTEXT_MENU_OPEN, options);
 		};
 
-		let cbResponse = actionsCallback(clickEvent.target);
+		let cbResponse = actionsCallback(trigger, clickEvent);
 		if (cbResponse.then) {
 			cbResponse.then((actions) => {
 				_launchContextMenuEvent(actions);
@@ -75,17 +75,17 @@ export class ContextMenuService {
 	 * */
 	contextMenu(settings) {
 		$(document).contextmenu((e) => {
-			let elems = $(settings.selector);
 			let target = $(e.target);
-			if(elems && (target.parents(settings.selector).length || target.is(settings.selector) || target.is(elems))){
-				e.preventDefault();
-				e.stopPropagation();
-				this.$timeout(() => {
-					if (settings.build && typeof settings.build === 'function') {
-						this._openContextMenu(settings.build, settings.data, e);
-					}
-				});
-				return false;
+			let closest = target.closest(settings.selector);
+			if (closest.length) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.$timeout(() => {
+                    if (settings.build && typeof settings.build === 'function') {
+                        this._openContextMenu(settings.build, settings.data, e, closest);
+                    }
+                });
+                return false;
 			}
 		});
 	}
