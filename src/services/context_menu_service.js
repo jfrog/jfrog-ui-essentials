@@ -58,7 +58,7 @@ export class ContextMenuService {
 			this.JFrogEventBus.dispatch(this.EVENTS.CONTEXT_MENU_OPEN, options);
 		};
 
-		let cbResponse = actionsCallback();
+		let cbResponse = actionsCallback(clickEvent.target);
 		if (cbResponse.then) {
 			cbResponse.then((actions) => {
 				_launchContextMenuEvent(actions);
@@ -74,15 +74,19 @@ export class ContextMenuService {
 	 * @param settings - gets a settings object consisted of
 	 * */
 	contextMenu(settings) {
-		$(settings.selector).contextmenu((e) => {
-			e.preventDefault();
-			e.stopPropagation();
-			this.$timeout(() => {
-				if (settings.build && typeof settings.build === 'function') {
-					this._openContextMenu(settings.build, settings.data, e);
-				}
-			});
-			return false;
+		$(document).contextmenu((e) => {
+			let elems = $(settings.selector);
+			let target = $(e.target);
+			if(elems && (target.parents(settings.selector).length || target.is(settings.selector) || target.is(elems))){
+				e.preventDefault();
+				e.stopPropagation();
+				this.$timeout(() => {
+					if (settings.build && typeof settings.build === 'function') {
+						this._openContextMenu(settings.build, settings.data, e);
+					}
+				});
+				return false;
+			}
 		});
 	}
 
