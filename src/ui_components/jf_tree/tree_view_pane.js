@@ -184,7 +184,7 @@ export class TreeViewPane {
             _.remove(this.treeApi.$openedNodes, n => n === opened);
             this.treeApi.openNode(node).then(() => {
                 let children = node.$childrenCache;
-                if (!children.length) defer.resolve();
+                if (!children || !children.length) defer.resolve();
                 else {
                     let pendingPromises = children.length;
                     children.forEach(child => {
@@ -326,6 +326,13 @@ export class TreeViewPane {
     findNode(findFunction) {
         let item = _.find(this.$flatItems, fi => {
             return findFunction(fi.data);
+        })
+        if (item) return item.data;
+    }
+
+    findNodeByUniqueId(uniqueId) {
+        let item = _.find(this.$flatItems, fi => {
+            return this.treeApi.uniqueIdGetter(fi.data) === uniqueId;
         })
         if (item) return item.data;
     }

@@ -161,7 +161,16 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             if (viewPane) {
                 return viewPane.findNode(findFunction);
             }
+        }
 
+        findNodeByUniqueId(uniqueId) {
+            let viewPane = _.find(this.$viewPanes, vp => {
+                return !!vp.findNodeByUniqueId(uniqueId);
+            })
+
+            if (viewPane) {
+                return viewPane.findNodeByUniqueId(uniqueId);
+            }
         }
 
         selectNode(node) {
