@@ -502,7 +502,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         getParentNode(node) {
             let flat = this._flatFromNode(node);
             let parent = flat.parent;
-            return parent.data;
+            if (parent) return parent.data;
         }
 
         _createContextMenu() {
