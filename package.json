@@ -58,6 +58,7 @@
     "lodash": "3.10.1"
   },
   "dependencies": {
+    "angular-eonasdan-datetimepicker": "^0.3.9",
     "js-beautify": "1.6.11"
   }
 }

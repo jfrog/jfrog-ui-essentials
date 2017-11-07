@@ -44,6 +44,8 @@ module.exports = {
         'vendor/draggable-rows.js',
         'components/clipboard/dist/clipboard.min.js',
         'node_modules/js-beautify/js/lib/beautify.js',
+        'components/moment/min/moment.min.js',
+        'components/moment-jdateformatparser/moment-jdateformatparser.min.js',
         'components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
         'components/angular-eonasdan-datetimepicker/dist/angular-eonasdan-datetimepicker.js'
     ],
@@ -64,7 +66,8 @@ module.exports = {
 //        'components/selectize/dist/css/selectize.bootstrap3.css',
 //        'components/font-awesome/css/font-awesome.css',
         'components/tooltipster/css/tooltipster.css',
-        'components/codemirror/addon/dialog/dialog.css', 'components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css'
+        'components/codemirror/addon/dialog/dialog.css',
+        'components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css'
     ],
 
     FONTS: [
