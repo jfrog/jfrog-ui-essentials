@@ -290,6 +290,10 @@
             jf-table-compiled-cell {
               display: inline-table;
             }
+            .icon{
+              padding: 5px;
+              vertical-align: middle;
+            }
           }
         }
         &.group-header {
@@ -362,7 +366,8 @@
             .action-icon {
               top: 0 !important;
               &:before {
-                font-size: 22px !important;
+                font-size: 17px !important;
+                line-height: 2;
               }
             }
             .action-icon:hover {
@@ -389,11 +394,21 @@
       }
     }
   }
+
   .overflow-ellipsis {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     display: block;
+    a {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: block;
+    }
+    &:not(.jf-table-avatar){
+      padding-right: 40px;
+    }
   }
   .row-drag-helper {
     opacity: 0.7 !important;

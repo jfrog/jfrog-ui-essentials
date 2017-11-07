@@ -269,6 +269,10 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			});
 		}
 
+		setNoFilterResultsMessage(message){
+			this.noFilterResultsText = message;
+		}
+
 		setColumns(columns) {
 
 			this.defaultFilterByAll = !_.filter(columns, c => c.filterable === true).length;

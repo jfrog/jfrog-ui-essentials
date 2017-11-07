@@ -49,7 +49,7 @@
         </div>
         <div class="empty-table-placeholder filter-no-results"
              ng-if="jfTableView.noFilterResults">
-            Current filter has no results. <a href ng-click="jfTableView.clearFilter()">Clear filter</a>
+            {{jfTableView.options.noFilterResultsText || 'Current filter has no results.'}} <a href ng-click="jfTableView.clearFilter()">Clear filter</a>
         </div>
     </div>
 
