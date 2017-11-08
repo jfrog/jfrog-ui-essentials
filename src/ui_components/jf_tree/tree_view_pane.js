@@ -47,8 +47,9 @@ export class TreeViewPane {
     }
 
     _getPageData() {
-        return this._getPrePagedData().slice(this.dirCtrl.virtualScrollIndex,
-            this.dirCtrl.virtualScrollIndex + this.itemsPerPage);
+        let prePage = this._getPrePagedData();
+        return prePage.slice(this.dirCtrl.virtualScrollIndex,
+            this.dirCtrl.virtualScrollIndex + this.itemsPerPage + (this.dirCtrl.virtualScrollIndex + this.itemsPerPage < prePage.length ? 1 : 0));
     }
 
     _getPrePagedData() {
