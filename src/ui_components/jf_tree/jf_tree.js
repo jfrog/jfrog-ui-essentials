@@ -120,9 +120,9 @@ class jfTreeController {
 
     onMouseWheel($event, $delta, $deltaX, $deltaY) {
         let scrollAbount = .03 * Math.abs($deltaY);
+        let tempVSI = this.virtualScrollIndex;
         if ($deltaY<0) { // scrollUp
             if (this.virtualScrollIndex + this.viewPane.itemsPerPage < this.viewPane._getPrePagedData().length - scrollAbount) {
-                $event.preventDefault();
                 this.virtualScrollIndex += scrollAbount;
             }
             else {
@@ -131,13 +131,15 @@ class jfTreeController {
         }
         else if ($deltaY>0) { // scrollDown
             if (this.virtualScrollIndex > scrollAbount) {
-                $event.preventDefault();
                 this.virtualScrollIndex -= scrollAbount;
             }
             else {
                 this.virtualScrollIndex = 0;
             }
         }
+
+        if (tempVSI !== this.virtualScrollIndex) $event.preventDefault();
+
         this.currentPage = Math.floor((this.virtualScrollIndex + this.viewPane.itemsPerPage - 1) / this.viewPane.itemsPerPage);
 //        this.api.update(true,true);
         this.virtScrollDisplacement = this.virtualScrollIndex - Math.floor(this.virtualScrollIndex);
