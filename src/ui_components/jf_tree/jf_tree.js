@@ -126,7 +126,7 @@ class jfTreeController {
                 this.virtualScrollIndex += scrollAbount;
             }
             else {
-                this.virtualScrollIndex = this.viewPane._getPrePagedData().length - this.viewPane.itemsPerPage;
+                this.virtualScrollIndex = this.viewPane._getPrePagedData().length > this.viewPane.itemsPerPage ? this.viewPane._getPrePagedData().length - this.viewPane.itemsPerPage : 0;
             }
         }
         else if ($deltaY>0) { // scrollDown
