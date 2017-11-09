@@ -30,7 +30,7 @@ class jfTreeController {
             if (this.api && !this.paginationApi) {
                 this.paginationApi = new PaginationApi(this);
 
-                this.paginationApi.registerChangeListener(()=>{
+                this.paginationApi.registerChangeListener(() => {
                     this.$timeout(()=>this.refresh(false));
                 })
 

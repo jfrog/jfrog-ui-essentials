@@ -13,7 +13,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             this.ContextMenuService = ContextMenuService;
             this.actions = [];
             this.listeners = {};
-            this.supportedEvents = ['ready', 'pagination.change', 'item.clicked', 'item.selected', 'keydown'];
+            this.supportedEvents = ['ready', 'pagination.change', 'item.clicked', 'item.selected', 'item.before.open', 'keydown'];
             this.appScope = appScope;
             this.objectName = 'Item';
 
@@ -277,6 +277,8 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
 
         openNode(node) {
 
+            if (!this.fire('item.before.open', node)) return $q.when();
+
             let defer = $q.defer();
 
             let flat = this._flatFromNode(node);
@@ -434,9 +436,14 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         }
 
         fire(event, ...params) {
+            let stopped = false;
             if (this.listeners[event]) {
-                this.listeners[event].forEach(listener=>listener(...params))
+                this.listeners[event].forEach(listener => {
+                    if (stopped) return;
+                    if (listener(...params) === false) stopped = true;
+                })
             }
+            return !stopped;
         }
 
         setObjectName(objectName, useAn = false) {

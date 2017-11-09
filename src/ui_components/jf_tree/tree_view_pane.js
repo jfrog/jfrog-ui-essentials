@@ -239,14 +239,14 @@ export class TreeViewPane {
                     this._recursiveOpenRestore(fi.data).then(() => {
                         resolveCount++;
                         if (resolveCount === itemsCount) {
-                            let selectedId = this.treeApi.uniqueIdGetter(this.treeApi.$selectedNode);
-                            let newSelected = _.find(this.$flatItems, fi => this.treeApi.uniqueIdGetter(fi.data) === selectedId);
+                            let selectedId = this.treeApi.$selectedNode ? this.treeApi.uniqueIdGetter(this.treeApi.$selectedNode) : null;
+                            let newSelected = selectedId !== null ? _.find(this.$flatItems, fi => this.treeApi.uniqueIdGetter(fi.data) === selectedId) : null;
                             if (newSelected) {
                                 this.treeApi._setSelected(newSelected);
                                 this._unFreeze();
                                 mainDefer.resolve();
                             }
-                            else {
+                            else if (selectedId) {
                                 this.treeApi.nodeByIdGetter(selectedId).then(node => {
                                     this._unFreeze();
                                     this.treeApi.openDeepNode(node).then(() => {
@@ -257,6 +257,9 @@ export class TreeViewPane {
                                     this._unFreeze();
                                     mainDefer.resolve();
                                 })
+                            }
+                            else {
+                                this._unFreeze();
                             }
                         }
                     })
