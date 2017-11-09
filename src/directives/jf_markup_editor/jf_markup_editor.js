@@ -1,12 +1,16 @@
 import "./codemirror-asciidoc";
 
+const PREVIEW_MODE  = 'Preview';
+const EDIT_MODE = 'Edit';
+
 class jfMarkupEditorController {
 	/* @ngInject */
     constructor($timeout,$scope, JFrogUIWebWorker) {
 
         this.$timeout = $timeout;
         this.$scope = $scope;
-
+        this.EDIT_MODE = EDIT_MODE;
+        this.PREVIEW_MODE = PREVIEW_MODE;
         this.instanceId = Math.floor(Math.random()*10000000000);
 
         this.JFrogUIWebWorker = new JFrogUIWebWorker();
@@ -33,11 +37,13 @@ class jfMarkupEditorController {
     }
 
     init() {
-        this.mode = this.mode || 'Edit';
+        this.mode = this.mode || EDIT_MODE;
         this.markup = this.markup || '';
-        this.language = this.language || 'Markdown';
-        if (this.editable === undefined) this.editable = true;
-        this.modeOptions = ['Edit', 'Preview'];
+        this.markupBackup = this.markup;
+        this.language = this.language || PREVIEW_MODE;
+	    this.languageBackup = this.language;
+	    if (this.editable === undefined) this.editable = true;
+        this.modeOptions = [EDIT_MODE, PREVIEW_MODE];
 
         this.updatePreviewButton();
 
@@ -65,7 +71,7 @@ class jfMarkupEditorController {
     }
 
     updatePreviewButton() {
-        this.modeOptions = ['Edit', 'Preview'];
+        this.modeOptions = [EDIT_MODE, PREVIEW_MODE];
     }
     onLanguageChange() {
         this.updatePreviewButton();
@@ -74,7 +80,7 @@ class jfMarkupEditorController {
         this.$timeout(()=>this.switchController.updateOptionObjects());
     }
     onChangeModeInternal() {
-        if (this.mode === 'Preview') this.renderPreview();
+        if (this.mode === PREVIEW_MODE) this.renderPreview();
         if (this.onModeChange) this.onModeChange({mode:this.mode})
     }
 
@@ -92,13 +98,37 @@ class jfMarkupEditorController {
             }
         }
     }
-	onClear(){
+
+	onCancel(){
 		this.$timeout(()=>{
-			this.markup = '';
+			this.language = this.languageBackup;
+			this.markup = this.markupBackup;
 			this.preview = '';
+			this.renderPreview();
+			this.mode = PREVIEW_MODE;
+			this.showControls = false;
+		});
+    }
+
+    onSaveClick(){
+	    this.$timeout(()=>{
+	        if(this.onSave && typeof this.onSave === 'function'){
+		        this.languageBackup = this.language;
+		        this.markupBackup = this.markup;
+		        this.onSave();
+		        this.showControls = false;
+	        }
         });
     }
 
+    activateEditor(){
+	    this.mode = EDIT_MODE;
+	    this.showControls = true;
+    }
+
+    isInEditMode(){
+	    return this.showControls && this.mode === this.EDIT_MODE;
+    }
 }
 
 export function jfMarkupEditor() {
@@ -114,7 +144,8 @@ export function jfMarkupEditor() {
             onModeChange: '&?',
             editable: '=?',
             showControls: '=?',
-	        shouldHaveClearButton: '=?'
+	        hideCancelButton: '<?',
+            editorLabel:'@'
         },
         controller: jfMarkupEditorController,
         controllerAs: 'jfMarkup',

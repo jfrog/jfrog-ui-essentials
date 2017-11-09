@@ -6,21 +6,41 @@
   }
   .controls {
     position: relative;
-    margin-bottom: 10px;
     .switch-wrapper {
+      display: inline-block;
+      margin-top: 20px;
+      margin-bottom: 27px;
       float: right;
-      .jf-switch {
-        .jf-switch-options {
-
-        }
+      .jf-switch ,
+      .jf-switch .form-group-cell {
+        margin-bottom: 0;
       }
     }
+    .editor-label{
+      font-weight: 600;
+      display: inline-block;
+      padding-bottom: 0px;
+      margin-top: 20px;
+      margin-bottom: 27px;
+      float: left;
 
-    .lang-select-wrapper {
-      max-width: 150px;
+      &.editor-label-position{
+        display: block;
+        padding-bottom:10px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        float: none;
+      }
     }
-    & > button {
-      float: right;
+    .lang-select-wrapper {
+      display: inline-block;
+      margin-bottom: 0;
+    }
+    & > button.edit-button {
+      margin-left: ~"calc(100% - 100px)";
+      transition-property: none;
+      transition:none;
+      margin-bottom: 27px;
     }
   }
   .preview-wrapper,
@@ -31,7 +51,7 @@
   .code-mirror-wrapper {
     button.btn{
       margin-top: 20px;
-      &.clear-button{
+      &.clancel-button{
         margin-right: 15px;
       }
     }
@@ -40,5 +60,17 @@
     overflow: auto;
     border: 1px solid #eee;
     padding: 15px;
+    .preview{
+      padding: 15px;
+    }
+  }
+
+  &.has-editor-label {
+    .controls {
+     & > button.btn.edit-button {
+        float: right;
+        margin-left: 0;
+      }
+    }
   }
 }
