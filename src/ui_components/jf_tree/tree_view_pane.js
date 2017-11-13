@@ -332,7 +332,7 @@ export class TreeViewPane {
 
     findNode(findFunction) {
         let item = _.find(this.$flatItems, fi => {
-            return findFunction(fi.data);
+            return fi.data !== this.treeApi.GO_UP_NODE && findFunction(fi.data);
         })
         if (item) return item.data;
     }
