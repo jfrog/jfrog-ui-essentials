@@ -147,6 +147,13 @@ class jfTreeController {
 
     }
 
+    resetScroll() {
+        this.virtualScrollIndex = 0;
+        this.virtScrollDisplacement = 0;
+        this.currentPage = 1;
+        this.syncFakeScroller(false);
+    }
+
     getTotalScrollHeight() {
         return this.viewPane._getPrePagedData().length * parseFloat(this.viewPane.itemHeight);
     }

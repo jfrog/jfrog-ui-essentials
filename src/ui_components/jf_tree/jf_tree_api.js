@@ -34,6 +34,12 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             }
         }
 
+        setDrillDownMode() {
+            this.$drillDownMode = true;
+            this.GO_UP_NODE = {$specialNode: 'GO_UP'};
+            return this;
+        }
+
         setSortingFunction(sortingFunction) {
             this.sortingFunction = sortingFunction;
             return this;
@@ -305,7 +311,12 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                     flat.$pending = true;
                     this.getChildren(node).then(children => {
                         if (!children.length) node.$noChildren = true;
-                        flat.pane._addChildren(children, flat.level + 1, flat);
+                        if (this.$drillDownMode) {
+                            this.drillDown(flat);
+                        }
+                        else {
+                            flat.pane._addChildren(children, flat.level + 1, flat);
+                        }
                         defer.resolve();
                         flat.$pending = false;
                     })
@@ -325,6 +336,34 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                 let flat = this._flatFromNode(node);
                 flat.pane._removeChildren(flat)
             }
+        }
+
+        drillUp() {
+            if (!this.$drillDownMode) return;
+
+            this.closeNode(this.$currParentFlat.$origFlat.data);
+            let parent = this.$currParentFlat.$origFlat.parent;
+            if (parent && parent.data !== this.GO_UP_NODE) {
+                this.drillDown(parent);
+            }
+            else {
+                this.$openedNodes = [];
+                this.$currParentFlat.$origFlat.pane.dirCtrl.resetScroll();
+                this.setTreeData(this.$rootCache);
+            }
+        }
+
+        drillDown(flatItem) {
+            let goUpFlat = flatItem.pane._createFlatItem(this.GO_UP_NODE);
+            this.$currParentFlat = flatItem.pane._createFlatItem(flatItem.data, 1, goUpFlat);
+            let orig = flatItem;
+            while (orig.$origFlat) {
+                orig = orig.$origFlat;
+            }
+            this.$currParentFlat.$origFlat = orig;
+            flatItem.pane.dirCtrl.resetScroll();
+            flatItem.pane.$flatItems = [goUpFlat, this.$currParentFlat];
+            flatItem.pane._addChildren(flatItem.data.$childrenCache, 2, this.$currParentFlat);
         }
 
         openDeepNode(node) {

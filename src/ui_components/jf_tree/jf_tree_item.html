@@ -9,7 +9,8 @@
          ng-style="{height: jfTreeItem.tree.viewPane.itemHeight, 'line-height': jfTreeItem.tree.viewPane.itemHeight}">
         <div class="indentation-unit"
              ng-style="{width: (jfTreeItem.data.level * 26) + 'px'}"></div>
-        <div class="node-expander">
+        <span class="drill-back" ng-if="jfTreeItem.data.data === jfTreeItem.tree.api.GO_UP_NODE">&nbsp;&nbsp;..</span>
+        <div class="node-expander" ng-if="jfTreeItem.data.data !== jfTreeItem.tree.api.GO_UP_NODE">
             <div class="action-icon icon icon-more" ng-if="jfTreeItem.data.hasChildren && !jfTreeItem.data.data.$noChildren && !jfTreeItem.data.$pending"
                  ng-click="jfTreeItem.toggleExpansion(); $event.stopPropagation();"
                  ng-class="{'expanded': jfTreeItem.isExpanded()}"></div>

@@ -13,8 +13,13 @@ class jfTreeItemController {
     }
 
     onItemClick() {
-        this.tree.api._setSelected(this.data);
-        this.tree.api.fire('item.clicked', this.data.data);
+        if (this.data.data === this.tree.api.GO_UP_NODE) {
+            this.tree.api.drillUp();
+        }
+        else {
+            this.tree.api._setSelected(this.data);
+            this.tree.api.fire('item.clicked', this.data.data);
+        }
     }
 
     onItemDoubleClick() {
@@ -53,7 +58,7 @@ class jfTreeItemController {
     }
 
     getCustomClasses() {
-        if (!this.tree.api.classGetter) return [];
+        if (this.data.data === this.tree.api.GO_UP_NODE || !this.tree.api.classGetter) return [];
         else {
             let classes = this.tree.api.classGetter(this.data.data);
             if (!classes) classes = [];

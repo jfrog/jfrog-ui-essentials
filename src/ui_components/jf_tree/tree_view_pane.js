@@ -68,13 +68,13 @@ export class TreeViewPane {
                     let parentIsFilteredOut = false;
                     let curr = item.parent;
                     while (curr && !parentIsFilteredOut) {
-                        if (!this.treeApi.filterCallbcak(curr.data)) {
+                        if (curr.data !== this.treeApi.GO_UP_NODE && !this.treeApi.filterCallbcak(curr.data)) {
                             parentIsFilteredOut = true;
                         }
                         curr = curr.parent;
                     }
 
-                    return !parentIsFilteredOut && this.treeApi.filterCallbcak(item.data);
+                    return item.data === this.treeApi.GO_UP_NODE || !parentIsFilteredOut && this.treeApi.filterCallbcak(item.data);
                 })
             }
             return this.filterCache;
