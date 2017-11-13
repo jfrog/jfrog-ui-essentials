@@ -93,11 +93,14 @@ export class TreeViewPane {
     }
 
     _freeze() {
+        if (this.treeApi.$userFreeze) return;
         this.$freezedItems = [].concat(this.$flatItems);
         this.$freezedOpened = [].concat(this.treeApi.$openedNodes);
     }
 
     _unFreeze() {
+        if (this.treeApi.$userFreeze) return;
+
         delete this.$freezedItems;
         delete this.$freezedOpened;
         this.refreshFilter();

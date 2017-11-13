@@ -13,7 +13,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             this.ContextMenuService = ContextMenuService;
             this.actions = [];
             this.listeners = {};
-            this.supportedEvents = ['ready', 'pagination.change', 'item.clicked', 'item.selected', 'item.before.open', 'keydown'];
+            this.supportedEvents = ['ready', 'pagination.change', 'item.clicked', 'item.dblClicked', 'item.selected', 'item.before.open', 'keydown'];
             this.appScope = appScope;
             this.objectName = 'Item';
 
@@ -129,6 +129,16 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             else return this.$q.when();
         }
 
+        freeze() {
+            this.$viewPanes.forEach(vp => vp._freeze());
+            this.$userFreeze = true;
+        }
+
+        unFreeze() {
+            this.$userFreeze = false;
+            this.$viewPanes.forEach(vp => vp._unFreeze());
+        }
+
         refreshNodeContextMenu(node) {
             let viewPane = this._getViewPaneForNode(node);
             if (viewPane) viewPane.refreshNodeContextMenu(node);
@@ -137,6 +147,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         refreshTree() {
             let defer = $q.defer();
             delete this.$rootCache;
+            this.$openedNodes = [];
             let pendingPromises = this.$viewPanes.length;
             this.$viewPanes.forEach(vp => {
                 vp.refreshView().then(() => {
@@ -145,6 +156,11 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                         defer.resolve();
                     }
                 })
+            });
+
+            this.$openedNodes = _.filter(this.$openedNodes, node => {
+                let fi = this._flatFromNode(node);
+                return !!fi;
             });
             return defer.promise;
         }

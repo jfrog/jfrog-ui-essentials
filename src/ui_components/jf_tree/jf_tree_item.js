@@ -17,6 +17,10 @@ class jfTreeItemController {
         this.tree.api.fire('item.clicked', this.data.data);
     }
 
+    onItemDoubleClick() {
+        this.tree.api.fire('item.dblClicked', this.data.data);
+    }
+
     isExpanded() {
         return this.tree.viewPane.isNodeOpen(this.data.data);
     }
@@ -28,10 +32,7 @@ class jfTreeItemController {
         }
         else {
             let node = this.data;
-//            node.$pending = true;
-            this.tree.api.openNode(node.data)/*.then(() => {
-                node.$pending = false;
-            });*/
+            this.tree.api.openNode(node.data);
         }
     }
 
