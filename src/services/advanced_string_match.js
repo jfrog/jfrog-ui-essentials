@@ -38,6 +38,8 @@ function getMatchCount(str,match,searchInside = false) {
 }
 
 function doMatch(str, match) {
+    if (!str) return;
+
     str=str.toLowerCase();
     match=match.toLowerCase();
     if (!match || !str) return {

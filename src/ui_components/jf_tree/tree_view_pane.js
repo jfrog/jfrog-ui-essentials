@@ -282,7 +282,8 @@ export class TreeViewPane {
         else {
             let matches = _.filter(this.$flatItems, (fi, ind) => {
                 let text = this.treeApi.textGetter(fi);
-                let matched = this.treeApi.AdvancedStringMatch.match(text, this.treeApi.quickFindTerm).matched;
+                let matchObj = this.treeApi.AdvancedStringMatch.match(text, this.treeApi.quickFindTerm);
+                let matched = matchObj ? matchObj.matched : null;
                 if (matched) fi.$$index = ind;
                 return matched;
             })

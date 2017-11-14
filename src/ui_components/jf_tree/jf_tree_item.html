@@ -18,7 +18,7 @@
                 <div class="icon-hourglass-local"></div>
             </div>
         </div>
-        <div class="jf-tree-item-content">
+        <div class="jf-tree-item-content" ng-if="jfTreeItem.data.data !== jfTreeItem.tree.api.GO_UP_NODE">
             <jf-tree-compiled-cell item-id="jfTreeItem.itemId"
                                    tree-item="jfTreeItem">
             </jf-tree-compiled-cell>
