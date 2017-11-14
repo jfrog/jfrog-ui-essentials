@@ -195,8 +195,8 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             }
         }
 
-        selectNode(node) {
-            this._setSelected(this._flatFromNode(node));
+        selectNode(node, fireEvent = true) {
+            this._setSelected(this._flatFromNode(node), fireEvent);
         }
 
         _onArrowKey(down, viewPane) {
@@ -298,14 +298,13 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         }
 
         openNode(node) {
-
             if (!this.fire('item.before.open', node)) return $q.when();
 
             let defer = $q.defer();
 
             let flat = this._flatFromNode(node);
 
-            if (flat.hasChildren && !flat.data.$noChildren && !flat.$pending) {
+            if (flat && flat.hasChildren && !flat.data.$noChildren && !flat.$pending) {
                 if (!_.includes(this.$openedNodes, node)) {
                     this.$openedNodes.push(node);
                     flat.$pending = true;
@@ -347,9 +346,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                 this.drillDown(parent);
             }
             else {
-                this.$openedNodes = [];
-                this.$currParentFlat.$origFlat.pane.dirCtrl.resetScroll();
-                this.setTreeData(this.$rootCache);
+                this.drillUpToRoot();
             }
         }
 
@@ -364,9 +361,21 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             flatItem.pane.dirCtrl.resetScroll();
             flatItem.pane.$flatItems = [goUpFlat, this.$currParentFlat];
             flatItem.pane._addChildren(flatItem.data.$childrenCache, 2, this.$currParentFlat);
+            this.selectNode(this.$currParentFlat.data, false);
+        }
+
+        drillUpToRoot() {
+            if (!this.$currParentFlat) return;
+            this.$openedNodes = [];
+            this.$currParentFlat.$origFlat.pane.dirCtrl.resetScroll();
+            this.setTreeData(this.$rootCache);
         }
 
         openDeepNode(node) {
+
+            if (this.$drillDownMode) {
+                this.drillUpToRoot();
+            }
 
             let defer = $q.defer();
 
@@ -385,7 +394,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                 if (index + 1 < nodesToOpen.length) {
                     let idToOpen = this.uniqueIdGetter(nodesToOpen[index]);
                     let nodeToOpen = this.findNode(n => this.uniqueIdGetter(n) === idToOpen);
-                    this.openNode(nodeToOpen).then(() => {
+                    if (nodeToOpen) this.openNode(nodeToOpen).then(() => {
                         index++;
                         handleNext();
                     })
@@ -448,9 +457,13 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         }
 
 
-        _setSelected(item) {
-            this.$selectedNode = item.data;
-            this.fire('item.selected', item.data);
+        _setSelected(item, fireEvent = true) {
+            if (item.data !== this.$selectedNode) {
+                this.$selectedNode = item.data;
+                if (fireEvent && item.data !== this.GO_UP_NODE) {
+                    this.fire('item.selected', item.data);
+                }
+            }
         }
 
         _isSelected(item) {
