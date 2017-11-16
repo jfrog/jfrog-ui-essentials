@@ -192,7 +192,7 @@ export class TreeViewPane {
                 else {
                     let pendingPromises = children.length;
                     children.forEach(child => {
-                        this._recursiveOpenRestore(child, defer).then(() => {
+                        this._recursiveOpenRestore(child).then(() => {
                             pendingPromises--;
                             if (pendingPromises === 0) {
                                 defer.resolve();
@@ -263,6 +263,7 @@ export class TreeViewPane {
                             }
                             else {
                                 this._unFreeze();
+                                mainDefer.resolve();
                             }
                         }
                     })
@@ -328,7 +329,7 @@ export class TreeViewPane {
     }
 
     focus() {
-        $(this.dirCtrl.$element).find('.jf-tree').focus();
+        if (this.dirCtrl) $(this.dirCtrl.$element).find('.jf-tree').focus();
     }
 
     findNode(findFunction) {

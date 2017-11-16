@@ -16,6 +16,8 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             this.supportedEvents = ['ready', 'pagination.change', 'item.clicked', 'item.dblClicked', 'item.selected', 'item.before.open', 'keydown'];
             this.appScope = appScope;
             this.objectName = 'Item';
+            this.GO_UP_NODE = {$specialNode: 'GO_UP'};
+
 
             this.paneSelector = () => 'default';
         }
@@ -34,9 +36,8 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             }
         }
 
-        setDrillDownMode() {
-            this.$drillDownMode = true;
-            this.GO_UP_NODE = {$specialNode: 'GO_UP'};
+        setDrillDownMode(drillDownMode = true) {
+            this.$drillDownMode = drillDownMode;
             return this;
         }
 
@@ -150,13 +151,13 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             if (viewPane) viewPane.refreshNodeContextMenu(node);
         }
 
-        refreshTree() {
+        refreshTree(deleteCache = true) {
             let defer = $q.defer();
-            delete this.$rootCache;
+            if (deleteCache) delete this.$rootCache;
             this.$openedNodes = [];
             let pendingPromises = this.$viewPanes.length;
             this.$viewPanes.forEach(vp => {
-                vp.refreshView().then(() => {
+                vp.refreshView(deleteCache).then(() => {
                     pendingPromises--;
                     if (!pendingPromises) {
                         defer.resolve();
@@ -358,10 +359,10 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                 orig = orig.$origFlat;
             }
             this.$currParentFlat.$origFlat = orig;
-            flatItem.pane.dirCtrl.resetScroll();
+            if (flatItem.pane.dirCtrl) flatItem.pane.dirCtrl.resetScroll();
             flatItem.pane.$flatItems = [goUpFlat, this.$currParentFlat];
             flatItem.pane._addChildren(flatItem.data.$childrenCache, 2, this.$currParentFlat);
-            this.selectNode(this.$currParentFlat.data, false);
+            this.selectNode(this.$currParentFlat.data);
         }
 
         drillUpToRoot() {
@@ -398,6 +399,9 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                         index++;
                         handleNext();
                     })
+                    else {
+                        defer.resolve();
+                    }
                 }
                 else {
                     let idToSelect = this.uniqueIdGetter(nodesToOpen[index]);
@@ -429,7 +433,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                 defer.resolve(node.$childrenCache);
             }
             else if (!node && this.$rootCache) {
-                defer.resolve(node.$rootCache);
+                defer.resolve(this.$rootCache);
             }
             else {
                 let childrenOrPromise = this.childrenGetter(node);
@@ -458,11 +462,15 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
 
 
         _setSelected(item, fireEvent = true) {
-            if (item.data !== this.$selectedNode) {
+            if (fireEvent && item.data !== this.GO_UP_NODE) {
+                let entityChange = !this.uniqueIdGetter || (item.data && this.$selectedNode && this.uniqueIdGetter(item.data) !== this.uniqueIdGetter(this.$selectedNode)) || (!this.$selectedNode && item.data) || (this.$selectedNode && !item.data);
                 this.$selectedNode = item.data;
-                if (fireEvent && item.data !== this.GO_UP_NODE) {
+                if (entityChange) {
                     this.fire('item.selected', item.data);
                 }
+            }
+            else {
+                this.$selectedNode = item.data;
             }
         }
 
