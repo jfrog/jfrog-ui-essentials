@@ -284,9 +284,17 @@
           &.sortable {
             cursor: pointer;
           }
+
+          @-moz-document url-prefix(){
+            .jf-table-cell-content {
+                font-weight:500;
+              }
+            }
+
           .jf-table-cell-content {
             font-size: 14px;
             font-weight: 700;
+
             jf-table-compiled-cell {
               display: inline-table;
             }

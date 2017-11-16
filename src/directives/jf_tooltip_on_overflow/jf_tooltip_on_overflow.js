@@ -25,7 +25,7 @@ export function jfTooltipOnOverflow($sanitize) {
                     let target = targets[i];
 
 	                let targetContent = target.children(':not(:visible)').length ? target.children(':visible').text().trim() : target.text().trim();
-	                targetContent = $sanitize(targetContent);
+	                targetContent = (targetContent === '' ? null : $sanitize(targetContent));
 		            if (!isNoTooltip(target) && target[0].scrollWidth > Math.round(target.innerWidth())) {
                         if (!!targetContent && !target.hasClass('tooltipstered')) {
 			                target.tooltipster({

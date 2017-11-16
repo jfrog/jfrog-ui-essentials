@@ -2,7 +2,7 @@ export function jfTooltip($sanitize) {
     return {
         restrict: 'A',
         link: function($scope, $element, $attrs) {
-	        let content = $sanitize($attrs.jfTooltip);
+	        let content = ($attrs.jfTooltip === '' ? null : $sanitize($attrs.jfTooltip));
 	        $($element).tooltipster({
                 animation: 'fade',
                 contentAsHTML : 'true',
@@ -14,9 +14,9 @@ export function jfTooltip($sanitize) {
                 content: content
             });
 
-            $attrs.$observe('jfTooltip', function(val){
-                if (val === '') val = null;
-                $($element).tooltipster('content', $sanitize(val));
+            $attrs.$observe('jfTooltip', (val) => {
+	            val = (val === '' ? null : $sanitize(val));
+                $($element).tooltipster('content',val);
             });
         }
     }
