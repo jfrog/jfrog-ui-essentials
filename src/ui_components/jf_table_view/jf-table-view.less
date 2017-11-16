@@ -113,12 +113,13 @@
       cursor: pointer;
     }
     .empty-table-placeholder {
-      font-size: 20px;
-      height: 50px;
+      height: 80px;
       line-height: 50px;
       width: 100%;
-      //background-color: lightgoldenrodyellow;
       text-align: center;
+      padding: 30px;
+      margin-top: 30px;
+      background-color: rgba(218, 218, 218, 0.6);
     }
     .jf-table-row {
       display: flex;
@@ -284,12 +285,6 @@
           &.sortable {
             cursor: pointer;
           }
-
-          @-moz-document url-prefix(){
-            .jf-table-cell-content {
-                font-weight:500;
-              }
-            }
 
           .jf-table-cell-content {
             font-size: 14px;
