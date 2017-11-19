@@ -1,6 +1,6 @@
 <div class="jf-tree-item"
      ng-class="[jfTreeItem.tree.api._isSelected(jfTreeItem.data) ? 'selected' : '', jfTreeItem.isQuickFindMatch() ? 'quick-find-match' : ''].concat(jfTreeItem.getCustomClasses())"
-     ng-click="jfTreeItem.onItemClick()"
+     ng-click="jfTreeItem.onItemClick($event)"
      ng-dblclick="jfTreeItem.onItemDoubleClick()"
      ng-style="{height: jfTreeItem.tree.viewPane.itemHeight, 'line-height': jfTreeItem.tree.viewPane.itemHeight}">
 

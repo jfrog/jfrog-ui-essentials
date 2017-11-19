@@ -12,13 +12,16 @@ class jfTreeItemController {
         return $(this.tree.$element).find('.jf-tree-container');
     }
 
-    onItemClick() {
-        if (this.data.data === this.tree.api.GO_UP_NODE) {
-            this.tree.api.drillUp();
-        }
-        else {
-            this.tree.api._setSelected(this.data);
-            this.tree.api.fire('item.clicked', this.data.data);
+    onItemClick(e) {
+        if (e.type === 'click') {
+            if (this.data.data === this.tree.api.GO_UP_NODE) {
+                this.tree.api.drillUp();
+            }
+            else {
+                this.tree.api._setSelected(this.data);
+                console.log('***');
+                this.tree.api.fire('item.clicked', this.data.data);
+            }
         }
     }
 

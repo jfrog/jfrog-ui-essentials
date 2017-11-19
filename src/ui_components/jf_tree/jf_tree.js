@@ -60,7 +60,10 @@ class jfTreeController {
                         break;
                     case 'Enter':
                         e.preventDefault();
-                        this.api.toggleSelected();
+                        if (this.api.getSelectedNode() === this.api.GO_UP_NODE) {
+                            this.api.drillUp();
+                        }
+                        else this.api.toggleSelected();
                         break;
                     case 'ArrowRight':
                         e.preventDefault();

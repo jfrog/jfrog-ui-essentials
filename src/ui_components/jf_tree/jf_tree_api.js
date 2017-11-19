@@ -32,7 +32,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             this.$viewPanes.forEach(vp => vp._buildFlatItems())
             if (!this.$isReady) {
                 this.$isReady = true;
-                this.fire('ready');
+                this.$timeout(() => this.fire('ready'));
             }
         }
 
@@ -216,7 +216,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                 }
                 else {
                     let currIndex = _.findIndex(items, fi => fi.data === this.$selectedNode);
-                    if (down && items[currIndex + 1] || !down && currIndex - 1 >= 0) {
+                    if ((down && items[currIndex + 1]) || (!down && currIndex - 1 >= 0)) {
                         selectedItem = items[currIndex + (down ? 1 : -1)];
                     }
                     else {
@@ -299,7 +299,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         }
 
         openNode(node) {
-            if (!this.fire('item.before.open', node)) return $q.when();
+            if (this.fire('item.before.open', node) === false) return $q.when();
 
             let defer = $q.defer();
 
@@ -389,13 +389,15 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             }
 
             nodesToOpen.reverse();
-
+window.zazazaza = nodesToOpen;
+window.tree = this;
             let index = 0;
             let handleNext = () => {
+                let nextId = this.uniqueIdGetter(nodesToOpen[index]);
+                let nextNode = this.findNode(n => this.uniqueIdGetter(n) === nextId);
+                console.log('++', nextNode, index + 1, nodesToOpen.length);
                 if (index + 1 < nodesToOpen.length) {
-                    let idToOpen = this.uniqueIdGetter(nodesToOpen[index]);
-                    let nodeToOpen = this.findNode(n => this.uniqueIdGetter(n) === idToOpen);
-                    if (nodeToOpen) this.openNode(nodeToOpen).then(() => {
+                    if (nextNode) this.openNode(nextNode).then(() => {
                         index++;
                         handleNext();
                     })
@@ -404,16 +406,18 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                     }
                 }
                 else {
-                    let idToSelect = this.uniqueIdGetter(nodesToOpen[index]);
-                    let nodeToSelect = this.findNode(n => this.uniqueIdGetter(n) === idToSelect);
                     $timeout(() => {
-                        if (nodeToSelect) {
-                            let flat = this._flatFromNode(nodeToSelect);
-                            if (flat) flat.pane.centerOnNode(nodeToSelect);
-                            else this.selectFirst();
+                        if (nextNode) {
+                            let flat = this._flatFromNode(nextNode);
+                            if (flat) flat.pane.centerOnNode(nextNode);
+                            else {
+                                console.log('???1');
+                                this.selectFirst();
+                            }
                             //                        this.treeApi.openNode(nodeToSelect)
                         }
                         else {
+                            console.log('???2');
                             this.selectFirst();
                         }
                         defer.resolve();
