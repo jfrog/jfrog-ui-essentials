@@ -1,0 +1,38 @@
+.jf-drawer {
+  margin: 5px 0;
+  position: relative;
+  .drawer-header {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .icon-drawer-arrow {
+      margin-right: 8px;
+      color: #707070;
+      transition: transform .2s ease-in-out;
+      &:before {
+        content: "\e919";
+      }
+      transform: rotate(90deg);
+      &.drawer-arrow-close {
+        transform: rotate(0deg);
+        top: -1px;
+      }
+    }
+    .drawer-header-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .drawer-header-description {
+      margin-left: 10px;
+      flex-grow: 1;
+      font-size: 12px;
+      font-weight: 500;
+    }
+  }
+  .drawer-content {
+    padding: 10px 0;
+    overflow: hidden;
+    transition: height .2s ease-in-out;
+  }
+}

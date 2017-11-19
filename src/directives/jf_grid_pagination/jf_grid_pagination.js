@@ -1,6 +1,6 @@
 class jfGridPaginationController {
 
-    constructor($scope,$timeout) {
+    constructor($scope, $timeout, JFrogEventBus) {
 
         this.$scope = $scope;
         this.gridApi = $scope.gridApi;
@@ -15,7 +15,7 @@ class jfGridPaginationController {
             }
         });
 
-
+        JFrogEventBus.registerOnScope($scope, JFrogEventBus.getEventsDefinition().RESET_GRID_PAGINATION, () => this.resetPagination());
 
     }
 
@@ -42,6 +42,11 @@ class jfGridPaginationController {
     getTotalPages() {
         this.gridApi.pagination.seek(this.currentPage);
         return this.gridApi.pagination.getTotalPages();
+    }
+
+    resetPagination() {
+        this.gridApi.pagination.seek(1);
+        this.currentPage = 1;
     }
 }
 

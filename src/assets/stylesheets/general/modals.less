@@ -8,25 +8,13 @@
   }
 
   .modal-header {
-    padding: 0 0 0 36px;
+    padding: 0 0 0 35px;
     line-height: 50px;
-    border-bottom: 1px solid #c9c9c9;
 
-    button.close {
-      margin: 5px 36px 0 0;
-      line-height: 50px;
+    .close {
+      margin: 0 20px;
+      line-height: 62px;
       font-size: 26px;
-    }
-
-    .modal-title {
-      color: #373737;
-      font-size: 20px;
-      font-weight: bold;
-      line-height: 1.5em;
-      padding: 15px 0 15px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
   }
 
@@ -34,6 +22,13 @@
     border-radius: 0;
   }
 
+  .modal-title {
+    color: @blueMain;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 48px;
+    padding-top: 2px;
+  }
 
   .modal-body {
     max-height: 575px;
@@ -41,17 +36,52 @@
     overflow-y: auto;
     overflow-x: hidden;
   }
-
+  // MODAL FOOTER
   .modal-footer {
-    background: transparent;
-    border-top: 1px solid #c9c9c9;
-    padding:19px 36px 20px;
-    button.btn + button.btn {
-      margin-left: 24px;
+    background-color: transparent;
+    border-top: 1px solid #f1f1f1;
+    height: 60px;
+    margin-top: 0;
+    .progress-indicator {
+      width: 50%;
+      position: absolute;
+      left: 25%;
+      top: 35%;
+      text-align: center;
+      .progress-indicator-led {
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 6px;
+        background: #e6e6e6;
+        border: 1px solid #d2d2d2;
+        width: 8px;
+        height: 8px;
+        &.current {
+          background: #b8b8b8;
+          border-color: #b8b8b8;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    .modal-footer-buttons-container {
+      margin-top: -3px;
+      .btn {
+        min-width: 0;
+        height: auto;
+        line-height: 26px;
+        background-color: transparent;
+        border: 0;
+        transition: none;
+        color: #707070;
+        &[disabled] {
+          color: #c9c9c9;
+        }
+      }
     }
   }
-/////////////////////////////////////////////
-
 }
 
 .copy-to-clip.code-mirror-copy {

@@ -1,6 +1,13 @@
 <div class="grid-container" ng-if="gridOptions.data"
      ng-class="{'single-select':gridOptions.allowSingleSelect}"
      ng-style="{overflow: gridOptions.moreActionsController.isDropdownOpen ? 'visible' : 'hidden'}">
+    <div class="columns-customization pull-right"
+         ng-if="gridOptions.columnsCustomization">
+        <jf-multi-dropdown title="Columns"
+                           filter-placeholder="Filter Columns"
+                           items="gridOptions.availableColumns"
+                           on-change="gridOptions.updateCustomizedColumns()"></jf-multi-dropdown>
+    </div>
     <div class="wrapper-grid-actions" ng-show="!noPagination || !noCount || gridOptions.batchActions.length || filterField">
 
         <div class="counter-and-filter">
@@ -34,5 +41,6 @@
          ui-grid-grouping
          ui-grid-edit
          ui-grid-resize-columns
+         ng-style="{visibility: gridOptions.columnDefs.length ? 'visible' : 'hidden'}"
          class="grid"></div>
 </div>

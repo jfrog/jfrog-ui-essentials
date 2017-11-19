@@ -49,9 +49,18 @@
 
   .list-maker-list {
     border: 1px solid #e4e4e4;
-    
+    box-sizing: content-box;
+    max-height: 200px;
+    overflow: auto;
+
+    .list-maker-list-row {
+      position: relative;
+    }
     .list-maker-list-row div.list-maker-list-buttons {
-      padding-right: 15px;
+      padding-right: 24px;
+      position: absolute;
+      right: 0;
+      top: -2px;
     }
   }
 
@@ -122,6 +131,7 @@
       &.list-maker-list-buttons {
         text-align: right;
         padding-right: 20px;
+        height: 40px;
 
         a {
           &[disabled]:hover {

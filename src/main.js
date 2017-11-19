@@ -24,6 +24,7 @@ angular.module('jfrog.ui.essentials', [
         'ui.bootstrap',
         'ngClipboard',
         'ui.grid.draggable-rows',
+        'ae-datetimepicker',
 
         // Library modules
         'jfrog.ui.essentials.templates',

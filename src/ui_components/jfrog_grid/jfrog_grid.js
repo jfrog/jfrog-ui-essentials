@@ -2,7 +2,7 @@ const TEMPLATES_FOLDER = "ui_components/jfrog_grid/templates/",
         MIN_COLUMN_WIDTH = 50;
 let headerCellTemplate = require("raw!./templates/headerCellDefaultTemplate.html");
 let groupHeaderCellTemplate = require("raw!./templates/headerCellTemplate.html");
-let $timeout, $window, $state, $modal, $rootScope, download;
+let $timeout, $window, $state, $modal, $rootScope, download, JFrogEventBus;
 
 const COMMON_ACTIONS = {
     delete: {
@@ -49,7 +49,13 @@ class JFrogGrid {
     }
 
     resetPagination() {
-        this.paginationCurrentPage = 1;
+        JFrogEventBus.dispatch(JFrogEventBus.getEventsDefinition().RESET_GRID_PAGINATION);
+        if (this.paginationCurrentPage === 1) {
+            this.getPage();
+        }
+        else {
+            this.paginationCurrentPage = 1;
+        }
     }
 
     getPagination() {
@@ -141,6 +147,14 @@ class JFrogGrid {
             if (!_.isNaN(w)) return acc + w;
             else return acc;
         },0);
+        let average = totalSize/columnDefs.length;
+        if (average === 0) average = 100;
+        columnDefs.forEach(column => {
+            if (!column.width) {
+                column.width = average + '%';
+                totalSize += average;
+            }
+        });
         if (totalSize !== 100) {
             let ratio = 100/totalSize;
             columnDefs.forEach(column => {
@@ -152,7 +166,25 @@ class JFrogGrid {
         }
     }
 
+    refreshColumns() {
+        if (this.origColumnDefs) {
+            this.setColumns(_.cloneDeep(this.origColumnDefs))
+            this.firstRenderedIteration=false;
+        }
+    }
+    filterColumns(columns) {
+        return _.filter(columns,col=>{
+            return (!col.isVisible || col.isVisible()) && (!this.visibleFields || this.visibleFields.indexOf(col.field) !== -1)
+        });
+    }
     setColumns(columnDefs) {
+        if (!this.origColumnDefs) this.origColumnDefs = _.cloneDeep(columnDefs);
+        if (this.columnsCustomization && !this.availableColumns) {
+            this.loadCustomizedColumnsState();
+            this.createAvailableColumnsArray();
+            this.updateCustomizedColumns(false);
+        }
+        columnDefs = this.filterColumns(columnDefs);
         this._normalizeColumnWidths(columnDefs);
         this.columnDefs = columnDefs;
 
@@ -310,11 +342,12 @@ class JFrogGrid {
                 indexChanged = index;
 
             if (item.visible)
-                totalColumnWidth = totalColumnWidth + item.width;
+                totalColumnWidth = totalColumnWidth + parseInt(item.width);
         });
 
         indexIterate = indexChanged + 1;
         pixelsToDivide = $(gridApi.grid.element[0]).width() - totalColumnWidth;
+
         gridApi.grid.columns[indexChanged].colDef.width = gridApi.grid.columns[indexChanged].width;
 
         // Resize the columns that follow the resized column
@@ -329,7 +362,7 @@ class JFrogGrid {
                 gridApi.grid.columns[indexIterate].width = gridApi.grid.columns[indexIterate].colDef.width = MIN_COLUMN_WIDTH;
             }
             else {
-                gridApi.grid.columns[indexIterate].width = gridApi.grid.columns[indexIterate].colDef.width = gridApi.grid.columns[indexIterate].width + pixelsToDivide;
+                gridApi.grid.columns[indexIterate].width = gridApi.grid.columns[indexIterate].colDef.width = parseInt(gridApi.grid.columns[indexIterate].width) + pixelsToDivide;
                 pixelsToDivide = 0;
             }
 
@@ -337,8 +370,9 @@ class JFrogGrid {
         }
 
         // If the column was resized too much, shorten it so the grid won't overflow
-        if (pixelsToDivide != 0)
-            gridApi.grid.columns[indexChanged].width = gridApi.grid.columns[indexChanged].colDef.width = gridApi.grid.columns[indexChanged].width + pixelsToDivide;
+        if (pixelsToDivide != 0) {
+            gridApi.grid.columns[indexChanged].width = gridApi.grid.columns[indexChanged].colDef.width = parseInt(gridApi.grid.columns[indexChanged].width) + pixelsToDivide;
+        }
 
         gridApi.grid.refreshCanvas(true);
     }
@@ -759,6 +793,7 @@ class JFrogGrid {
 
     refreshGridAfterFiltering(gridFilter) {
 
+        this.gridFilter = gridFilter;
         gridFilter.column.name += ' ';
         if (gridFilter.column2) gridFilter.column2.name += ' ';
         var data = [];
@@ -852,17 +887,76 @@ class JFrogGrid {
         }
         else return false;
     }
+
+    allowColumnsCustomization() {
+        this.columnsCustomization = true;
+        this.loadCustomizedColumnsState();
+        this.createAvailableColumnsArray();
+        this.updateCustomizedColumns();
+        return this;
+    }
+
+    createAvailableColumnsArray() {
+        if (!this.origColumnDefs) return;
+        this.availableColumns = [];
+        this.origColumnDefs.forEach(colDef=>{
+            let item = {
+                id: colDef.field,
+                text: colDef.displayName || colDef.name,
+                isSelected: ((!this.visibleFields && !colDef.optional) || (this.visibleFields && this.visibleFields.indexOf(colDef.field) !== -1))
+            };
+            this.availableColumns.push(item);
+        })
+    }
+
+    updateCustomizedColumns(refresh = true) {
+        if (!this.availableColumns) return;
+        this.visibleFields = _.map(_.filter(this.availableColumns, col=>col.isSelected),'id');
+        this.saveCustomizedColumnsState();
+        if (refresh) this.refreshColumns();
+        if (this.gridFilter) this.gridFilter.doFilter();
+    }
+
+    setGridSettingsId(id) {
+        this.gridSettingsId = id;
+        return this;
+    }
+
+    saveCustomizedColumnsState() {
+        if (!this.gridSettingsId) return;
+        if (!localStorage.jfGridSettings) {
+            localStorage.jfGridSettings = JSON.stringify({
+                [this.gridSettingsId]: this.visibleFields
+            })
+        }
+        else {
+            let settings = JSON.parse(localStorage.jfGridSettings);
+            settings[this.gridSettingsId] = this.visibleFields;
+            localStorage.jfGridSettings = JSON.stringify(settings);
+        }
+    }
+    loadCustomizedColumnsState() {
+        if (!this.gridSettingsId) return;
+        let settings = localStorage.jfGridSettings;
+        if (settings) {
+            settings = JSON.parse(settings);
+            let mySetting = settings[this.gridSettingsId];
+            this.visibleFields = mySetting;
+        }
+    }
+
 }
 
 
 export class JFrogGridFactory {
-    constructor(uiGridConstants, _$timeout_, _$window_, _$state_, _$modal_,_$rootScope_, _JFrogDownload_) {
+    constructor(uiGridConstants, _$timeout_, _$window_, _$state_, _$modal_, _$rootScope_, _JFrogDownload_, _JFrogEventBus_) {
         $timeout = _$timeout_;
         $window = _$window_;
         $state = _$state_;
         $modal = _$modal_;
         download = _JFrogDownload_;
         $rootScope = _$rootScope_;
+        JFrogEventBus = _JFrogEventBus_;
 
         this.uiGridConstants = uiGridConstants;
         this._createContextMenu();
