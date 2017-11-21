@@ -189,11 +189,17 @@ fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
         expander.click();
         flushAndApply();
 
+        let expectedItems = [simpleTestData[2], simpleTestData[0]];
+        let index = 0;
         treeApi.on('item.clicked', item => {
-            expect(item).toEqual(simpleTestData[2]);
-            done();
+            expect(item).toEqual(expectedItems[index]);
+            index++;
+            if (index === expectedItems.length) {
+                done();
+            }
         })
         $(items[2]).click();
+        $(items[0]).click();
     });
 
 });
