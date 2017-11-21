@@ -235,6 +235,9 @@ class jfTreeController {
         */
     }
 
+    isEmpty() {
+        return !!(this.api.dataWasSet && !this.viewPane._getRawData().length);
+    }
 
 }
 

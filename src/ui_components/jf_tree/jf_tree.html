@@ -3,7 +3,7 @@
      tabindex="0"
      style="clear: both">
     <div class="jf-tree-container"
-         ng-style="{height: jfTree.getPageHeight() + 'px'}"
+         ng-style="{height: jfTree.getPageHeight() + 'px', overflow: jfTree.isEmpty() || !jfTree.api.dataGettersSet ? 'visible' : 'hidden'}"
          ng-if="jfTree.viewPane">
         <div class="tree-items-container"
              ng-style="{transform: 'translate(0, ' + (-jfTree.getTranslate()) + 'px)'}">
@@ -20,9 +20,14 @@
                           item-id="$index"
                           data="item"></jf-tree-item>
         </div>
+
+        <div class="missing-data-setters"
+             ng-if="!jfTree.api.dataGettersSet">
+            {{'jf-tree: Data getters was not set (call setDataGetters())'}}
+        </div>
         <div class="empty-tree-placeholder"
-             ng-if="jfTree.api.dataWasSet && !jfTree.viewPane._getRawData().length">
-            {{jfTree.api.emptyTableText || 'This tree is empty !'}}
+             ng-if="jfTree.isEmpty()">
+            {{jfTree.api.emptyTreeText || 'This tree is empty !'}}
         </div>
         <div class="empty-tree-placeholder filter-no-results"
              ng-if="jfTree.noFilterResults">

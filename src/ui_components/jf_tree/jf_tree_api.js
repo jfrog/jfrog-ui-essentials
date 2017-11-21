@@ -28,6 +28,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         }
 
         setTreeData(rootData) {
+            this.dataWasSet = true;
             this.$root = rootData;
             this.$viewPanes.forEach(vp => vp._buildFlatItems())
             if (!this.$isReady) {
@@ -46,62 +47,61 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             return this;
         }
 
-        setContextMenuItemsGetter(contextMenuItemsGetter) {
-            this.contextMenuItemsGetter = contextMenuItemsGetter;
-            this._createContextMenu();
-            return this;
-        }
+        setDataGetters(dataGetters) {
 
-        setChildrenGetter(childrenGetter) {
-            this.childrenGetter = childrenGetter;
+            this.dataGettersSet = true;
+
+            if (dataGetters.uniqueId) {
+                this.uniqueIdGetter = dataGetters.uniqueId;
+            }
+
+            if (dataGetters.nodeById) {
+                this.nodeByIdGetter = dataGetters.nodeById;
+            }
+
+            if (dataGetters.text) {
+                this.textGetter = dataGetters.text;
+            }
+
+            if (dataGetters.childrenChecker) {
+                this.childrenChecker = dataGetters.childrenChecker;
+            }
+
+            if (dataGetters.children) {
+                this.childrenGetter = dataGetters.children;
+            }
+
+            if (dataGetters.parent) {
+                this.parentGetter = dataGetters.parent;
+            }
+
+            if (dataGetters.classes) {
+                this.classGetter = dataGetters.classes;
+            }
+
+            if (dataGetters.pane) {
+                this.paneSelector = dataGetters.pane;
+            }
+
+            if (dataGetters.contextMenuItems) {
+                this.contextMenuItemsGetter = dataGetters.contextMenuItems;
+                this._createContextMenu();
+            }
+
             this._getRoot();
-            return this;
-        }
 
-        setPaneSelector(paneSelector) {
-            this.paneSelector = paneSelector;
-            return this;
-        }
-
-        setParentGetter(parentGetter) {
-            this.parentGetter = parentGetter;
-            return this;
-        }
-
-        setNodeByIdGetter(nodeByIdGetter) {
-            this.nodeByIdGetter = nodeByIdGetter;
             return this;
         }
 
         _getRoot() {
             let defer = $q.defer();
             this.getChildren(null).then(rootData => {
-                if (rootData && rootData.length) {
+                if (rootData && _.isArray(rootData)) {
                     this.setTreeData(rootData)
                     defer.resolve();
                 }
             })
             return defer.promise;
-        }
-
-        setTextGetter(textGetter) {
-            this.textGetter = textGetter;
-            return this;
-        }
-
-        setClassGetter(classGetter) {
-            this.classGetter = classGetter;
-            return this;
-        }
-
-        setUniqueIdGetter(uniqueIdGetter) {
-            this.uniqueIdGetter = uniqueIdGetter;
-            return this;
-        }
-
-        setChildrenChecker(childrenChecker) {
-            this.childrenChecker = childrenChecker;
-            return this;
         }
 
         setFilterCallback(filterCallback) {
@@ -389,13 +389,12 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             }
 
             nodesToOpen.reverse();
-window.zazazaza = nodesToOpen;
-window.tree = this;
+
             let index = 0;
             let handleNext = () => {
                 let nextId = this.uniqueIdGetter(nodesToOpen[index]);
                 let nextNode = this.findNode(n => this.uniqueIdGetter(n) === nextId);
-                console.log('++', nextNode, index + 1, nodesToOpen.length);
+
                 if (index + 1 < nodesToOpen.length) {
                     if (nextNode) this.openNode(nextNode).then(() => {
                         index++;
@@ -411,13 +410,11 @@ window.tree = this;
                             let flat = this._flatFromNode(nextNode);
                             if (flat) flat.pane.centerOnNode(nextNode);
                             else {
-                                console.log('???1');
                                 this.selectFirst();
                             }
                             //                        this.treeApi.openNode(nodeToSelect)
                         }
                         else {
-                            console.log('???2');
                             this.selectFirst();
                         }
                         defer.resolve();
@@ -433,34 +430,41 @@ window.tree = this;
 
         getChildren(node) {
             let defer = $q.defer();
-            if (node && node.$childrenCache) {
-                defer.resolve(node.$childrenCache);
-            }
-            else if (!node && this.$rootCache) {
-                defer.resolve(this.$rootCache);
-            }
-            else {
-                let childrenOrPromise = this.childrenGetter(node);
-                if (childrenOrPromise && childrenOrPromise.then) {
-                    childrenOrPromise.then(children => {
-                        if (this.sortingFunction) {
-                            children = children.sort(this.sortingFunction);
-                        }
-                        if (node) node.$childrenCache = children;
-                        else this.$rootCache = children;
-                        defer.resolve(children);
-                    })
+
+            if (this.childrenGetter) {
+                if (node && node.$childrenCache) {
+                    defer.resolve(node.$childrenCache);
+                }
+                else if (!node && this.$rootCache) {
+                    defer.resolve(this.$rootCache);
                 }
                 else {
-                    if (this.sortingFunction) {
-                        childrenOrPromise = childrenOrPromise.sort(this.sortingFunction);
+                    let childrenOrPromise = this.childrenGetter(node);
+                    if (childrenOrPromise && childrenOrPromise.then) {
+                        childrenOrPromise.then(children => {
+                            if (this.sortingFunction) {
+                                children = children.sort(this.sortingFunction);
+                            }
+                            if (node) node.$childrenCache = children;
+                            else this.$rootCache = children;
+                            defer.resolve(children);
+                        })
                     }
-                    if (node) node.$childrenCache = childrenOrPromise;
-                    else this.$rootCache = childrenOrPromise;
+                    else {
+                        if (this.sortingFunction) {
+                            childrenOrPromise = childrenOrPromise.sort(this.sortingFunction);
+                        }
+                        if (node) node.$childrenCache = childrenOrPromise;
+                        else this.$rootCache = childrenOrPromise;
 
-                    defer.resolve(childrenOrPromise || []);
+                        defer.resolve(childrenOrPromise || []);
+                    }
                 }
             }
+            else {
+                defer.resolve([]);
+            }
+
             return defer.promise;
         }
 
@@ -613,58 +617,6 @@ window.tree = this;
             })
         }
 
-        old_createContextMenu() {
-            $.contextMenu({
-                selector: '.jf-tree .jf-tree-item',
-                build: ($trigger, e) => {
-                    let rowCtrl = angular.element($trigger[0]).controller('jfTreeItem');
-
-                    let treeApi = rowCtrl.tree.api;
-
-                    let items = rowCtrl.data.data.$cachedCMItems;
-
-                    if (items) {
-                        $timeout(() => {
-                            $('.context-menu-item').on('click', (e) => {
-                                if (treeApi.actionToDo) {
-                                    $(e.target).trigger('contextmenu:hide');
-                                    $timeout(() => {
-                                        treeApi.actionToDo();
-                                        delete treeApi.actionToDo;
-                                    }, 100);
-                                }
-                            });
-                        });
-
-                        return {
-                            items,
-                            callback: (key, options) => {
-                                treeApi.actionToDo = () => {
-                                    items[key].action();
-                                }
-                                return false;
-                            }
-                        }
-                    }
-
-                    else {
-                        this.contextMenuItemsGetter(rowCtrl.data.data, (items) => {
-                            items = _.map(items, item => {
-                                item.action = item.callback;
-                                delete item.callback;
-                                return item;
-                            })
-                            rowCtrl.data.data.$cachedCMItems = items;
-                            var event = jQuery.Event("contextmenu", {pageX: e.pageX, pageY: e.pageY});
-                            $($trigger[0]).trigger(event);
-                        });
-
-                        return false;
-                    }
-
-                }
-            })
-        }
 	}
 	return JFTreeApiClass;
 
