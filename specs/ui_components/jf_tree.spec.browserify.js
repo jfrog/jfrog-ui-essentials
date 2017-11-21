@@ -166,4 +166,34 @@ fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
         expect(nodeTexts[2].textContent.trim()).toEqual('Sub Item 2');
 
     })
+
+    it("should collapse the node, after a second click", () => {
+        setDataGetters();
+        flushAndApply();
+        let expander = $(items[0]).find('.node-expander .action-icon');
+        expander.click();
+        flushAndApply();
+        expander.click();
+        flushAndApply();
+
+        expect(items.length).toEqual(1);
+        expect(nodeTexts.length).toEqual(1);
+        expect(nodeTexts[0].textContent.trim()).toEqual('Item 1');
+
+    });
+
+    it("should fire event when clicking an item", (done) => {
+        setDataGetters();
+        flushAndApply();
+        let expander = $(items[0]).find('.node-expander .action-icon');
+        expander.click();
+        flushAndApply();
+
+        treeApi.on('item.clicked', item => {
+            expect(item).toEqual(simpleTestData[2]);
+            done();
+        })
+        $(items[2]).click();
+    });
+
 });
