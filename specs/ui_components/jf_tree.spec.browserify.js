@@ -1,5 +1,5 @@
 'use strict';
-fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
+describe('unit test: jf_tree directive & JFTreeApi service', function () {
 
     var $scope;
     var $rootScope;
@@ -29,6 +29,11 @@ fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
             text: 'Sub Item 2',
             id: 'sub2',
             parentId: 'item1'
+        },
+        {
+            text: 'Level 3 Item',
+            id: 'sub3',
+            parentId: 'sub2'
         }
     ]
 
@@ -165,6 +170,17 @@ fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
         expect(nodeTexts[1].textContent.trim()).toEqual('Sub Item 1');
         expect(nodeTexts[2].textContent.trim()).toEqual('Sub Item 2');
 
+        expander = $(items[2]).find('.node-expander .action-icon');
+        expander.click();
+
+        flushAndApply();
+
+        expect(treeApi.isNodeOpen(simpleTestData[2])).toEqual(true);
+
+        expect(items.length).toEqual(4);
+        expect(nodeTexts.length).toEqual(4);
+        expect(nodeTexts[3].textContent.trim()).toEqual('Level 3 Item');
+
     })
 
     it("should collapse the node, after a second click", () => {
@@ -202,4 +218,53 @@ fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
         $(items[0]).click();
     });
 
+    it("should work in drill down mode", () => {
+
+        setDataGetters();
+        treeApi.setDrillDownMode();
+        flushAndApply();
+
+        expect(treeApi.isNodeOpen(simpleTestData[0])).toEqual(false);
+
+        let expander = $(items[0]).find('.node-expander .action-icon');
+        expander.click();
+
+        flushAndApply();
+
+        expect(treeApi.isNodeOpen(simpleTestData[0])).toEqual(true);
+
+        expect(items.length).toEqual(4);
+        expect(nodeTexts.length).toEqual(3);
+        expect(items[0].textContent.trim()).toEqual('..');
+        expect(nodeTexts[0].textContent.trim()).toEqual('Item 1');
+        expect(nodeTexts[1].textContent.trim()).toEqual('Sub Item 1');
+        expect(nodeTexts[2].textContent.trim()).toEqual('Sub Item 2');
+
+        expander = $(items[3]).find('.node-expander .action-icon');
+        expander.click();
+
+        flushAndApply();
+
+        expect(treeApi.isNodeOpen(simpleTestData[2])).toEqual(true);
+
+        expect(items.length).toEqual(3);
+        expect(nodeTexts.length).toEqual(2);
+        expect(items[0].textContent.trim()).toEqual('..');
+        expect(nodeTexts[0].textContent.trim()).toEqual('Sub Item 2');
+        expect(nodeTexts[1].textContent.trim()).toEqual('Level 3 Item');
+
+
+        //click on '..' - should go one level up
+        $(items[0]).click();
+        flushAndApply();
+
+        expect(items.length).toEqual(4);
+        expect(nodeTexts.length).toEqual(3);
+        expect(items[0].textContent.trim()).toEqual('..');
+        expect(nodeTexts[0].textContent.trim()).toEqual('Item 1');
+        expect(nodeTexts[1].textContent.trim()).toEqual('Sub Item 1');
+        expect(nodeTexts[2].textContent.trim()).toEqual('Sub Item 2');
+
+
+    });
 });

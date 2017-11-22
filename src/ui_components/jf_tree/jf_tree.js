@@ -122,7 +122,7 @@ class jfTreeController {
     }
 
     onMouseWheel($event, $delta, $deltaX, $deltaY) {
-        let scrollAbount = .03 * Math.abs($deltaY);
+        let scrollAbount = .05 * Math.abs($deltaY);
         let tempVSI = this.virtualScrollIndex;
         if ($deltaY<0) { // scrollUp
             if (this.virtualScrollIndex + this.viewPane.itemsPerPage < this.viewPane._getPrePagedData().length - scrollAbount) {
