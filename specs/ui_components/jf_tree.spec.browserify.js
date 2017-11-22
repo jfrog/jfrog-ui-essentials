@@ -1,5 +1,5 @@
 'use strict';
-fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
+describe('unit test: jf_tree directive & JFTreeApi service', function () {
 
     var $scope;
     var $rootScope;
@@ -14,7 +14,11 @@ fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
     var emptyTreePlaceholder;
     var items;
     var nodeTexts;
+    var pane2Items;
+    var pane2NodeTexts;
     var qfHighlights;
+
+    var pane2Node = null;
 
     let simpleTestData = [
         {
@@ -51,6 +55,8 @@ fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
         emptyTreePlaceholder= $('.empty-tree-placeholder');
         items = $('.jf-tree-item');
         nodeTexts = $('.node-text');
+        pane2Items = $('.pane2-container .jf-tree-item');
+        pane2NodeTexts = $('.pane2-container .node-text');
         qfHighlights = $('.jf-tree-item .highlight');
     }
 
@@ -65,7 +71,7 @@ fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
         getElements();
     }
 
-    function compileDirective(attr) {
+    function compileDirectives(attr, parentElement = null) {
         let attributes = '';
         for (let key in attr) {
             let kebab = _.kebabCase(key);
@@ -76,7 +82,7 @@ fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
                 attributes += ` ${kebab}="data.${key}"`;
             }
         }
-        $scope = compileHtml(`<jf-tree ${attributes}></jf-tree>`, {data: attr});
+        $scope = compileHtml(`<jf-tree ${attributes}></jf-tree>`, {data: attr}, parentElement);
         $scope.$digest();
 
         getElements();
@@ -87,7 +93,8 @@ fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
             children: node => {
                 return node ? _.filter(simpleTestData, {parentId: node.id}) : _.filter(simpleTestData, item => !item.parentId)
             },
-            text: node => node.text
+            text: node => node.text,
+            pane: node => !pane2Node || node !== pane2Node ? 'default' : 'pane2'
         });
     }
 
@@ -104,7 +111,7 @@ fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
                .setItemsPerPage(10);
 
 
-        compileDirective({
+        compileDirectives({
             api: treeApi
         });
     })
@@ -322,5 +329,45 @@ fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
 
     });
 
+    it("should support multi view panes", () => {
+        treeApi.createViewPane('pane2');
+        setDataGetters();
 
+        flushAndApply();
+        let pane2Container = $('<div class="pane2-container"></div>');
+        $(document.body).append(pane2Container)
+        compileDirectives({api: treeApi, '@viewPaneName': 'pane2'}, pane2Container);
+
+
+        let expander = $(items[0]).find('.node-expander .action-icon');
+        expander.click();
+        flushAndApply();
+
+        expect(items.length).toEqual(3);
+        expect(nodeTexts.length).toEqual(3);
+        expect(nodeTexts[0].textContent.trim()).toEqual('Item 1');
+        expect(nodeTexts[1].textContent.trim()).toEqual('Sub Item 1');
+        expect(nodeTexts[2].textContent.trim()).toEqual('Sub Item 2');
+
+        expect(pane2Items.length).toEqual(0);
+        expect(pane2NodeTexts.length).toEqual(0);
+
+        pane2Node = simpleTestData[0];
+        treeApi.refreshPaneSelection();
+
+        flushAndApply();
+
+        expect(items.length).toEqual(3);
+        expect(nodeTexts.length).toEqual(3);
+        expect(nodeTexts[0].textContent.trim()).toEqual('Item 1');
+        expect(nodeTexts[1].textContent.trim()).toEqual('Sub Item 1');
+        expect(nodeTexts[2].textContent.trim()).toEqual('Sub Item 2');
+
+        expect(pane2Items.length).toEqual(3);
+        expect(pane2NodeTexts.length).toEqual(3);
+        expect(pane2NodeTexts[0].textContent.trim()).toEqual('Item 1');
+        expect(pane2NodeTexts[1].textContent.trim()).toEqual('Sub Item 1');
+        expect(pane2NodeTexts[2].textContent.trim()).toEqual('Sub Item 2');
+
+    });
 });

@@ -1,13 +1,14 @@
 window.m = angular.mock.module;
-window.compileHtml = function(htmlStr, data) {
+window.compileHtml = function(htmlStr, data, parentElement = null) {
     data = data || {};
     var $scope;
     inject(function($compile, $rootScope) {
-      angular.element(document.body).html(htmlStr);
-      $scope = $rootScope.$new();
-      angular.extend($scope, data);
-      $compile(document.body)($scope);
-      $scope.$digest();
+        parentElement = parentElement || document.body;
+        angular.element(parentElement).html(htmlStr);
+        $scope = $rootScope.$new();
+        angular.extend($scope, data);
+        $compile(parentElement)($scope);
+        $scope.$digest();
     });
     return $scope;
 }
