@@ -72,15 +72,14 @@ export function JFrogUIWebWorker($q, JFrogUILibConfig, WebWorkersPool) {
 			this.wwPool.kill({cmd: 'convertMarkup', instanceId});
 			this.wwPool.send({cmd: 'convertMarkup', instanceId, type, markup})
 			    .then(response => {
-				    if (response.html) {
+				    if (response.html !== undefined) {
 					    defer.resolve(response.html);
 				    }
 				    else defer.reject();
 			    })
 			    .catch(e => {
-					    defer.reject();
-				    }
-			    );
+				    defer.reject();
+			    });
 
 			return defer.promise;
 		}
