@@ -94,6 +94,8 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
                 return node ? _.filter(simpleTestData, {parentId: node.id}) : _.filter(simpleTestData, item => !item.parentId)
             },
             text: node => node.text,
+            parent: node => _.find(simpleTestData, {id: node.parentId}),
+            uniqueId: node => node.id,
             pane: node => !pane2Node || node !== pane2Node ? 'default' : 'pane2'
         });
     }
@@ -176,6 +178,31 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
         expect(items.length).toEqual(4);
         expect(nodeTexts.length).toEqual(4);
         expect(nodeTexts[3].textContent.trim()).toEqual('Level 3 Item');
+
+    })
+
+    it("should open deep node", (done) => {
+        treeApi.on('ready', () => {
+            treeApi.openDeepNode(simpleTestData[3]).then(() => {
+                getElements();
+
+                expect(treeApi.isNodeOpen(simpleTestData[0])).toEqual(true);
+                expect(treeApi.isNodeOpen(simpleTestData[2])).toEqual(true);
+
+                expect(items.length).toEqual(4);
+                expect(nodeTexts.length).toEqual(4);
+                expect(nodeTexts[0].textContent.trim()).toEqual('Item 1');
+                expect(nodeTexts[1].textContent.trim()).toEqual('Sub Item 1');
+                expect(nodeTexts[2].textContent.trim()).toEqual('Sub Item 2');
+                expect(nodeTexts[3].textContent.trim()).toEqual('Level 3 Item');
+                done();
+            })
+
+        });
+
+        setDataGetters();
+        flushAndApply();
+
 
     })
 
@@ -369,5 +396,33 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
         expect(pane2NodeTexts[1].textContent.trim()).toEqual('Sub Item 1');
         expect(pane2NodeTexts[2].textContent.trim()).toEqual('Sub Item 2');
 
+        pane2Node = null; //Must reset single view pane configuration, for following tests
     });
+
+    it("should support custom sorting", () => {
+        let revSort = false;
+        treeApi.setSortingFunction((a,b) => {
+            return a.text > b.text ? (revSort ? -1 : 1) : b.text > a.text ? (revSort ? 1 : -1) : 0;
+        })
+        setDataGetters();
+        flushAndApply();
+        let expander = $(items[0]).find('.node-expander .action-icon');
+        expander.click();
+        flushAndApply();
+
+        expect(nodeTexts[0].textContent.trim()).toEqual('Item 1');
+        expect(nodeTexts[1].textContent.trim()).toEqual('Sub Item 1');
+        expect(nodeTexts[2].textContent.trim()).toEqual('Sub Item 2');
+
+        revSort = true;
+        treeApi.refreshNode(simpleTestData[0]);
+
+        flushAndApply();
+
+        expect(nodeTexts[0].textContent.trim()).toEqual('Item 1');
+        expect(nodeTexts[1].textContent.trim()).toEqual('Sub Item 2');
+        expect(nodeTexts[2].textContent.trim()).toEqual('Sub Item 1');
+
+    });
+
 });
