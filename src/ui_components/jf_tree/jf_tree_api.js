@@ -111,11 +111,19 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
 
         quickFind(quickFindTerm) {
             this.quickFindTerm = quickFindTerm;
-            let matches = [];
-            this.$viewPanes.forEach(vp => matches = matches.concat(vp.getQuickFindMatches()))
-            this.quickFindMatches = matches;
+            this.quickFindMatches = this._getQuickFindFlatMatches();
             delete this.quickFindIndex;
             return this;
+        }
+
+        _getQuickFindFlatMatches() {
+            let matches = [];
+            this.$viewPanes.forEach(vp => matches = matches.concat(vp.getQuickFindMatches()));
+            return matches;
+        }
+
+        getQuickFindMatches() {
+            return _.map(this._getQuickFindFlatMatches(), 'data');
         }
 
         _getViewPaneForNode(node) {

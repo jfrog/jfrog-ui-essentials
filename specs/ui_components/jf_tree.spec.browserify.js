@@ -1,5 +1,5 @@
 'use strict';
-describe('unit test: jf_tree directive & JFTreeApi service', function () {
+fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
 
     var $scope;
     var $rootScope;
@@ -14,6 +14,7 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
     var emptyTreePlaceholder;
     var items;
     var nodeTexts;
+    var qfHighlights;
 
     let simpleTestData = [
         {
@@ -50,6 +51,7 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
         emptyTreePlaceholder= $('.empty-tree-placeholder');
         items = $('.jf-tree-item');
         nodeTexts = $('.node-text');
+        qfHighlights = $('.jf-tree-item .highlight');
     }
 
     function flushAndApply() {
@@ -84,23 +86,10 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
         treeApi.setDataGetters({
             children: node => {
                 return node ? _.filter(simpleTestData, {parentId: node.id}) : _.filter(simpleTestData, item => !item.parentId)
-            }
+            },
+            text: node => node.text
         });
     }
-
-    beforeEach(function () {
-        jasmine.addMatchers({
-            toDeepEqual: function (util, customEqualityTesters) {
-                return {
-                    compare: function (actual, expected) {
-                        var result = {};
-                        result.pass = _.isEqual(actual, expected);
-                        return result;
-                    }
-                }
-            }
-        });
-    });
 
     beforeEach(m('jfrog.ui.essentials'));
     beforeEach(inject(setup));
@@ -109,7 +98,7 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
         testAppScope = $rootScope.$new();
         treeApi = new JFTreeApi(testAppScope);
 
-        treeApi.setNodeTemplate('<div class="node-text">{{node.data.text}}</div>');
+        treeApi.setNodeTemplate('<div class="node-text">{{node.text}}</div>');
 
         treeApi.createViewPane('default')
                .setItemsPerPage(10);
@@ -265,6 +254,73 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
         expect(nodeTexts[1].textContent.trim()).toEqual('Sub Item 1');
         expect(nodeTexts[2].textContent.trim()).toEqual('Sub Item 2');
 
+    });
+
+    it("should support fuzzy quick find", () => {
+        setDataGetters();
+        flushAndApply();
+        let expander = $(items[0]).find('.node-expander .action-icon');
+        expander.click();
+        flushAndApply();
+
+        treeApi.quickFind('sub');
+
+        flushAndApply();
+
+        let matches = _.map(treeApi.getQuickFindMatches(),'text');
+        expect(matches).toEqual(['Sub Item 1', 'Sub Item 2'])
+        expect(qfHighlights.length).toEqual(2);
+        expect(qfHighlights[0].textContent.trim()).toEqual('Sub');
+        expect(qfHighlights[1].textContent.trim()).toEqual('Sub');
+
+
+
+        treeApi.quickFind('1');
+
+        flushAndApply();
+
+        matches = _.map(treeApi.getQuickFindMatches(),'text');
+        expect(matches).toEqual(['Item 1', 'Sub Item 1'])
+        expect(qfHighlights.length).toEqual(2);
+        expect(qfHighlights[0].textContent.trim()).toEqual('1');
+        expect(qfHighlights[1].textContent.trim()).toEqual('1');
 
     });
+
+    it("should support filtering", () => {
+        setDataGetters();
+        flushAndApply();
+        let expander = $(items[0]).find('.node-expander .action-icon');
+        expander.click();
+        flushAndApply();
+
+        treeApi.setFilterCallback(node => {
+            return node !== simpleTestData[1];
+        })
+
+        treeApi.refreshFilter();
+
+        flushAndApply();
+
+        expect(items.length).toEqual(2);
+        expect(nodeTexts.length).toEqual(2);
+        expect(nodeTexts[0].textContent.trim()).toEqual('Item 1');
+        expect(nodeTexts[1].textContent.trim()).toEqual('Sub Item 2');
+
+
+        //Now, we'll filter the root node, so it's children should also disappear
+        treeApi.setFilterCallback(node => {
+            return node !== simpleTestData[0];
+        })
+
+        treeApi.refreshFilter();
+
+        flushAndApply();
+
+        expect(items.length).toEqual(0);
+        expect(nodeTexts.length).toEqual(0);
+
+    });
+
+
 });

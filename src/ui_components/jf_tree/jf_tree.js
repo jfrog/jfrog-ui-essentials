@@ -104,7 +104,7 @@ class jfTreeController {
             this.cellScopes.push(itemScope);
 
             _.extend(itemScope, {
-                node,
+                node: node.data,
                 appScope: this.api.appScope,
                 tree: {
                     api: this.api
@@ -113,7 +113,7 @@ class jfTreeController {
         }
         else itemScope = existingScope;
 
-        let template = _.isFunction(this.api.nodeTemplate) ? this.api.nodeTemplate(node) : this.api.nodeTemplate;
+        let template = _.isFunction(this.api.nodeTemplate) ? this.api.nodeTemplate(node.data) : this.api.nodeTemplate;
 
         let templateElem = $(template);
 	    this.$compile(templateElem)(itemScope);
