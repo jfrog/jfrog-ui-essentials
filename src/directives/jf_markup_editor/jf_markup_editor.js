@@ -40,7 +40,7 @@ class jfMarkupEditorController {
         this.mode = this.mode || EDIT_MODE;
         this.markup = this.markup || '';
         this.markupBackup = this.markup;
-        this.language = this.language || PREVIEW_MODE;
+        this.language = this.language || 'Markdown';
 	    this.languageBackup = this.language;
 	    if (this.editable === undefined) this.editable = true;
         this.modeOptions = [EDIT_MODE, PREVIEW_MODE];
@@ -48,7 +48,9 @@ class jfMarkupEditorController {
         this.updatePreviewButton();
 
         this.$scope.$watch('jfMarkup.markup',()=>{
-            if (this.webworkerOk && (!this.previewRenderers || !this.previewRenderers[this.language.toLowerCase()])) this.renderPreview();
+            if (this.canRenderPreview()) {
+                this.renderPreview();
+            }
         })
     }
 
@@ -56,16 +58,24 @@ class jfMarkupEditorController {
         this.preview = preview;
     }
 
+    currentLanguageHasPreviewRenderer() {
+        return this.previewRenderers && this.previewRenderers[this.language.toLowerCase()];
+    }
+
+    canRenderPreview() {
+        return this.webworkerOk && !this.currentLanguageHasPreviewRenderer();
+    }
+
     renderPreview() {
 
         if (this.language.toLowerCase() === 'plain text') {
             this.setPreview(this.markup.replace(/\n/g,'<br>'));
         }
-        else if (this.previewRenderers && this.previewRenderers[this.language.toLowerCase()]) {
+        else if (this.currentLanguageHasPreviewRenderer()) {
             this.previewRenderers[this.language.toLowerCase()](this.markup, (preview)=>this.setPreview(preview));
         }
-        else if (this.webworkerOk) {
-            this.JFrogUIWebWorker.markupPreview(this.language.toLowerCase(), this.markup, this.instanceId)
+        else if (this.webworkerOk,this.language, this.language.toLowerCase(),this.instanceId) {
+	        this.JFrogUIWebWorker.markupPreview(this.language.toLowerCase(), this.markup, this.instanceId)
                 .then(html => this.setPreview(html))
         }
     }
@@ -73,12 +83,16 @@ class jfMarkupEditorController {
     updatePreviewButton() {
         this.modeOptions = [EDIT_MODE, PREVIEW_MODE];
     }
+
     onLanguageChange() {
         this.updatePreviewButton();
         this.preview = '';
-        if (this.webworkerOk && (!this.previewRenderers || !this.previewRenderers[this.language.toLowerCase()])) this.renderPreview();
+        if (this.canRenderPreview()) {
+            this.renderPreview();
+        }
         this.$timeout(()=>this.switchController.updateOptionObjects());
     }
+
     onChangeModeInternal() {
         if (this.mode === PREVIEW_MODE) this.renderPreview();
         if (this.onModeChange) this.onModeChange({mode:this.mode})
@@ -101,10 +115,10 @@ class jfMarkupEditorController {
 
 	onCancel(){
 		this.$timeout(()=>{
-			this.language = this.languageBackup;
-			this.markup = this.markupBackup;
-			this.preview = '';
-			this.renderPreview();
+            this.language = this.languageBackup;
+            this.markup = this.markupBackup;
+            this.preview = '';
+            this.renderPreview();
 			this.mode = PREVIEW_MODE;
 			this.showControls = false;
 		});
