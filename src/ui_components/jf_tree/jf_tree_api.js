@@ -159,10 +159,10 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             if (viewPane) viewPane.refreshNodeContextMenu(node);
         }
 
-        refreshTree(deleteCache = true) {
+        refreshTree(deleteCache = true, resetOpenedNodes = true) {
             let defer = $q.defer();
             if (deleteCache) delete this.$rootCache;
-            this.$openedNodes = [];
+            if (resetOpenedNodes) this.$openedNodes = [];
             let pendingPromises = this.$viewPanes.length;
             this.$viewPanes.forEach(vp => {
                 vp.refreshView(deleteCache).then(() => {
