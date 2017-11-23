@@ -309,15 +309,17 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
 
 
 
-        treeApi.quickFind('1');
+        treeApi.quickFind('i1');
 
         flushAndApply();
 
         matches = _.map(treeApi.getQuickFindMatches(),'text');
         expect(matches).toEqual(['Item 1', 'Sub Item 1'])
-        expect(qfHighlights.length).toEqual(2);
-        expect(qfHighlights[0].textContent.trim()).toEqual('1');
+        expect(qfHighlights.length).toEqual(4);
+        expect(qfHighlights[0].textContent.trim()).toEqual('I');
         expect(qfHighlights[1].textContent.trim()).toEqual('1');
+        expect(qfHighlights[2].textContent.trim()).toEqual('I');
+        expect(qfHighlights[3].textContent.trim()).toEqual('1');
 
     });
 
