@@ -62,6 +62,7 @@
   },
   "dependencies": {
     "angular-mousewheel": "^1.0.5",
+    "angular-eonasdan-datetimepicker": "^0.3.9",
     "js-beautify": "1.6.11"
   }
 }

@@ -52,6 +52,12 @@ class jfMultiDropdownController {
         })
     }
 
+    getSelectedForTitle() {
+        let selected = _.filter(this.items, (item) => item.isSelected);
+        selected = _.map(selected, s => s.selectedText || s.text);
+        return selected.join(', ')
+    }
+
     onClick() {
         if (this.disabled !== true) {
             if (!this.items) return;
@@ -79,19 +85,19 @@ class jfMultiDropdownController {
 
     sortItems() {
         if (!this.items) return;
-        let selected = _.sortBy(_.filter(this.items, (item) => item.isSelected), 'text');
-        let unSelected = _.sortBy(_.filter(this.items, (item) => !item.isSelected), 'text');
+        let selected = this.noSort ? _.filter(this.items, (item) => item.isSelected) : _.sortBy(_.filter(this.items, (item) => item.isSelected), 'text');
+        let unSelected = this.noSort ? _.filter(this.items, (item) => !item.isSelected) : _.sortBy(_.filter(this.items, (item) => !item.isSelected), 'text');
         this.lastSelectedIndex = selected.length-1;
         let combined = selected.concat(unSelected);
         this.items.splice.apply(this.items, [0,this.items.length].concat(combined));
     }
     selectAll() {
-        this.filter(this.items, this.filterText).forEach((item)=>{item.isSelected = true;});
+        this.filter(this.items, this.filterText).forEach((item)=>{if (!item.disabled) item.isSelected = true;})
         this.onSelection();
     }
     unSelectAll() {
-        this.filter(this.items, this.filterText).forEach((item)=>{item.isSelected = false;})
-	    this.onSelection();
+        this.filter(this.items, this.filterText).forEach((item)=>{if (!item.disabled) item.isSelected = false;})
+        this.onSelection();
     }
 
 }
@@ -109,6 +115,7 @@ export function jfMultiDropdown() {
             items: '=',
             disabled: '=?',
             onChange: '&?',
+            noSort: '=?',
             onOpenStateChange: '&?',
             dropdownOpened: '=',
             showSelected: '@',

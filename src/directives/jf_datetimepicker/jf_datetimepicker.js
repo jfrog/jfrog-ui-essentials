@@ -4,15 +4,28 @@
 
 class jfDatetimepickerController {
 	/* @ngInject */
-	constructor() {}
+	constructor($timeout) {
+		this.$timeout = $timeout;
+	}
 	$onInit(){
 		this.dpOpitons = {
 			allowInputToggle : true,
 			toolbarPlacement : 'top',
 		};
+		this.setDatepickerOptions();
+	}
+	setDatepickerOptions(){
 		if(this.options){
 			this.dpOpitons = _.assign({}, this.options , this.dpOpitons);
 		}
+	}
+	onUpdate() {
+		this.$timeout(()=>{
+			if(this.onChange && typeof this.onChange === 'function'){
+				this.onChange();
+			}
+			this.setDatepickerOptions();
+		},100);
 	}
 	onBlur(){
 		this.isDatepickerOpen = false;
@@ -29,7 +42,10 @@ export function jfDatetimepicker() {
 			isDatepickerOpen: '=?',
 			isRequired      : '<',
 			model           : '=',
-			options         : '<?'
+			options         : '<?',
+			attrId          : '=',
+			onChange        : '&?',
+			isEnabled       : '='
 		},
 		controller : jfDatetimepickerController,
 		controllerAs: 'jfDatetimepicker',

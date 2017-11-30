@@ -4,7 +4,7 @@
          ng-class="{'selected-view' : jfMultiDropdown.selectedItems().length}"
          ng-click="jfMultiDropdown.onClick()">
         <span ng-if="!jfMultiDropdown.showSelected">{{jfMultiDropdown.title}} <span class="selected-counter">({{jfMultiDropdown.getSelectedCount()}})</span></span>
-        <span ng-if="jfMultiDropdown.showSelected && jfMultiDropdown.selectedItems().length">{{jfMultiDropdown.selectedItems().join(', ')}} <i class="icon icon-clear" ng-click="jfMultiDropdown.unSelectAll()"></i></span>
+        <span ng-if="jfMultiDropdown.showSelected && jfMultiDropdown.selectedItems().length">{{jfMultiDropdown.getSelectedForTitle()}} <i class="icon icon-clear" ng-click="jfMultiDropdown.unSelectAll()"></i></span>
         <span ng-if="jfMultiDropdown.showSelected && !jfMultiDropdown.selectedItems().length">{{jfMultiDropdown.title}}</span>
         <i class="caret pull-right"></i>
     </div>
@@ -32,9 +32,10 @@
         <div ng-if="jfMultiDropdown.items.length" class="list-container">
             <div class="drop-down-item"
                  ng-repeat="item in jfMultiDropdown.items | filter:{text: jfMultiDropdown.filterText} track by $index"
-                 ng-class="{'last-selected': $index === jfMultiDropdown.lastSelectedIndex && !jfMultiDropdown.filterText}">
+                 ng-class="{'last-selected': $index === jfMultiDropdown.lastSelectedIndex && !jfMultiDropdown.filterText, 'disabled': item.disabled}">
                 <label class="jf-checkbox">
                     <input type="checkbox"
+                           ng-disabled="item.disabled"
                            ng-change="jfMultiDropdown.onSelection()"
                            ng-model="item.isSelected">
                     <span></span> <i ng-if="item.iconClass" class="item-icon" ng-class="item.iconClass"></i> {{ item.text }}
