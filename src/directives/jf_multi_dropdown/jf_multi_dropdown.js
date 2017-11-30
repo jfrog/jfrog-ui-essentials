@@ -51,6 +51,12 @@ class jfMultiDropdownController {
         })
     }
 
+    getSelectedForTitle() {
+        let selected = _.filter(this.items, (item) => item.isSelected);
+        selected = _.map(selected, s => s.selectedText || s.text);
+        return selected.join(', ')
+    }
+
     onClick() {
         if (this.disabled !== true) {
             if (!this.items) return;
