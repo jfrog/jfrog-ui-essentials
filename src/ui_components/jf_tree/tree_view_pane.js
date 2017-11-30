@@ -312,7 +312,7 @@ export class TreeViewPane {
     }
 
     centerOnItem(item) {
-        let index = this.$flatItems.indexOf(item);
+        let index = this._getPrePagedData().indexOf(item);
         let halfPage = Math.floor(this.itemsPerPage / 2);
         if (index - halfPage < 0) {
             this.dirCtrl.virtualScrollIndex = 0;
@@ -348,6 +348,14 @@ export class TreeViewPane {
 
     isNodeOpen(node) {
         return (this.$freezedOpened && _.includes(this.$freezedOpened, node)) || (!this.$freezedOpened && _.includes(this.treeApi.$openedNodes, node));
+    }
+
+    getNodesCount() {
+        return this._getRawData().length;
+    }
+
+    getFilteredNodesCount() {
+        return this._getFilteredData().length;
     }
 
 }

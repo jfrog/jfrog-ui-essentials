@@ -625,6 +625,22 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             })
         }
 
+        getNodesCount() {
+            let count = 0;
+            this.$viewPanes.forEach(vp => {
+                count += vp.getNodesCount();
+            })
+            return count;
+        }
+
+        getFilteredNodesCount() {
+            let count = 0;
+            this.$viewPanes.forEach(vp => {
+                count += vp.getFilteredNodesCount();
+            })
+            return count;
+        }
+
 	}
 	return JFTreeApiClass;
 
