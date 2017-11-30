@@ -83,6 +83,7 @@ class jfMultiDropdownController {
     }
 
     sortItems() {
+        if (this.noSort) return;
         if (!this.items) return;
         let selected = _.sortBy(_.filter(this.items, (item) => item.isSelected), 'text');
         let unSelected = _.sortBy(_.filter(this.items, (item) => !item.isSelected), 'text');
@@ -91,11 +92,11 @@ class jfMultiDropdownController {
         this.items.splice.apply(this.items, [0,this.items.length].concat(combined));
     }
     selectAll() {
-        this.filter(this.items, this.filterText).forEach((item)=>{item.isSelected = true;})
+        this.filter(this.items, this.filterText).forEach((item)=>{if (!item.disabled) item.isSelected = true;})
         this.onSelection();
     }
     unSelectAll() {
-        this.filter(this.items, this.filterText).forEach((item)=>{item.isSelected = false;})
+        this.filter(this.items, this.filterText).forEach((item)=>{if (!item.disabled) item.isSelected = false;})
         this.onSelection();
     }
 
@@ -114,6 +115,7 @@ export function jfMultiDropdown() {
             items: '=',
             disabled: '=?',
             onChange: '&?',
+            noSort: '=?',
             onOpenStateChange: '&?',
             dropdownOpened: '=',
             showSelected: '@',
