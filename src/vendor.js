@@ -71,8 +71,7 @@ module.exports = {
 //        'components/font-awesome/css/font-awesome.css',
         'components/tooltipster/css/tooltipster.css',
         'components/codemirror/addon/dialog/dialog.css',
-        'components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css'
-        'components/codemirror/addon/dialog/dialog.css',
+        'components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
         'components/jstree/dist/themes/default/style.css',
     ],
 
