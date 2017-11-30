@@ -317,8 +317,8 @@ export class TreeViewPane {
         if (index - halfPage < 0) {
             this.dirCtrl.virtualScrollIndex = 0;
         }
-        else if (index + (this.itemsPerPage - halfPage) > this.$flatItems.length) {
-            this.dirCtrl.virtualScrollIndex = this.$flatItems.length - this.itemsPerPage;
+        else if (index + (this.itemsPerPage - halfPage) > this._getPrePagedData().length) {
+            this.dirCtrl.virtualScrollIndex = this._getPrePagedData().length - this.itemsPerPage;
         }
         else {
             this.dirCtrl.virtualScrollIndex = index - halfPage;
