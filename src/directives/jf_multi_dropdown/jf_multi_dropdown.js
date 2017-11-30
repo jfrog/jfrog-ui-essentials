@@ -83,10 +83,9 @@ class jfMultiDropdownController {
     }
 
     sortItems() {
-        if (this.noSort) return;
         if (!this.items) return;
-        let selected = _.sortBy(_.filter(this.items, (item) => item.isSelected), 'text');
-        let unSelected = _.sortBy(_.filter(this.items, (item) => !item.isSelected), 'text');
+        let selected = this.noSort ? _.filter(this.items, (item) => item.isSelected) : _.sortBy(_.filter(this.items, (item) => item.isSelected), 'text');
+        let unSelected = this.noSort ? _.filter(this.items, (item) => !item.isSelected) : _.sortBy(_.filter(this.items, (item) => !item.isSelected), 'text');
         this.lastSelectedIndex = selected.length-1;
         let combined = selected.concat(unSelected);
         this.items.splice.apply(this.items, [0,this.items.length].concat(combined));
