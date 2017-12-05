@@ -20,27 +20,7 @@ fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
 
     var pane2Node = null;
 
-    let simpleTestData = [
-        {
-            text: 'Item 1',
-            id: 'item1',
-        },
-        {
-            text: 'Sub Item 1',
-            id: 'sub1',
-            parentId: 'item1'
-        },
-        {
-            text: 'Sub Item 2',
-            id: 'sub2',
-            parentId: 'item1'
-        },
-        {
-            text: 'Level 3 Item',
-            id: 'sub3',
-            parentId: 'sub2'
-        }
-    ]
+    var simpleTestData;
 
     function setup(_$timeout_, _JFTreeApi_, _$q_, _$rootScope_) {
         $timeout = _$timeout_;
@@ -109,6 +89,28 @@ fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
     beforeEach(inject(setup));
 
     beforeEach(() => {
+        simpleTestData = [
+            {
+                text: 'Item 1',
+                id: 'item1',
+            },
+            {
+                text: 'Sub Item 1',
+                id: 'sub1',
+                parentId: 'item1'
+            },
+            {
+                text: 'Sub Item 2',
+                id: 'sub2',
+                parentId: 'item1'
+            },
+            {
+                text: 'Level 3 Item',
+                id: 'sub3',
+                parentId: 'sub2'
+            }
+        ]
+
         testAppScope = $rootScope.$new();
         treeApi = new JFTreeApi(testAppScope);
 
@@ -431,7 +433,6 @@ fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
     });
 
     it("should freeze and unFreeze", (done) => {
-
         setDataGetters();
         flushAndApply();
 
@@ -478,7 +479,7 @@ fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
         flushAndApply();
     });
 
-    fit("should switch from drill down mode to regular mode and back", (done) => {
+    it("should switch from drill down mode to regular mode and back", (done) => {
 
         setDataGetters();
         flushAndApply();
@@ -504,30 +505,19 @@ fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
         expect(nodeTexts[2].textContent.trim()).toEqual('Sub Item 2');
         expect(nodeTexts[3].textContent.trim()).toEqual('Level 3 Item');
 
-        treeApi.setDrillDownMode();
-        flushAndApply();
+        treeApi.setDrillDownMode().then(() => {
+            getElements();
 
-        treeApi.freeze();
-        flushAndApply();
+            expect(treeApi.isNodeOpen(simpleTestData[0])).toEqual(true);
+            expect(treeApi.isNodeOpen(simpleTestData[2])).toEqual(true);
 
-        treeApi.refreshTree().then(() => {
+            expect(items.length).toEqual(3);
+            expect(nodeTexts.length).toEqual(2);
+            expect(items[0].textContent.trim()).toEqual('..');
+            expect(nodeTexts[0].textContent.trim()).toEqual('Sub Item 2');
+            expect(nodeTexts[1].textContent.trim()).toEqual('Level 3 Item');
 
-            treeApi.unFreeze();
-
-            setTimeout(() => {
-                getElements();
-
-                expect(treeApi.isNodeOpen(simpleTestData[0])).toEqual(true);
-                expect(treeApi.isNodeOpen(simpleTestData[2])).toEqual(true);
-
-                expect(items.length).toEqual(3);
-                expect(nodeTexts.length).toEqual(2);
-                expect(items[0].textContent.trim()).toEqual('..');
-                expect(nodeTexts[0].textContent.trim()).toEqual('Sub Item 2');
-                expect(nodeTexts[1].textContent.trim()).toEqual('Level 3 Item');
-
-                done();
-            })
+            done();
         });
         flushAndApply();
 
