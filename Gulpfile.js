@@ -28,6 +28,7 @@ var file = require('gulp-file');
 require("any-promise/register")("bluebird");
 var inject = require('gulp-inject');
 var karma = require('karma');
+var fs = require('fs');
 
 // default task runs the development tasks seq
 gulp.task('default',['build', 'watch']);
@@ -55,6 +56,7 @@ gulp.task('build:common',
             'concatAllJS',
             'preprocessJS',
             'preprocessBowerJSON',
+            'announceBuildCompletion',
             'writeBuildVersion',
             'copyWebworkers',
             'cleanTemp',
@@ -335,4 +337,8 @@ gulp.task('copyWebworkers', function() {
     return gulp.src(['src/webworkers/**/*'])
         .pipe(uglify({mangle:true}))
         .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET + '/workers'));
+})
+
+gulp.task('announceBuildCompletion', function(cb) {
+    fs.writeFile('.announceBuildCompletion', '*', cb)
 })
