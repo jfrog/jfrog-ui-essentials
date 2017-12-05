@@ -38,8 +38,24 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         }
 
         setDrillDownMode(drillDownMode = true) {
+            let defer = this.$q.defer();
+            let oldVal = this.$drillDownMode;
             this.$drillDownMode = drillDownMode;
-            return this;
+            if (!!oldVal !== !!drillDownMode) {
+                this.freeze();
+                this.refreshTree(false).then(() => {
+                    this.unFreeze();
+                    this.$timeout(() => {
+                        this.centerOnSelected();
+                        defer.resolve()
+                    });
+                });
+            }
+            else {
+                defer.resolve();
+            }
+
+            return defer.promise;
         }
 
         setSortingFunction(sortingFunction) {
@@ -109,6 +125,10 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             return this;
         }
 
+        isNodeFiltered(node) {
+            return this.filterCallbcak(node);
+        }
+
         quickFind(quickFindTerm) {
             this.quickFindTerm = quickFindTerm;
             this.quickFindMatches = this._getQuickFindFlatMatches();
@@ -138,6 +158,14 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             if (viewPane) viewPane.centerOnNode(node);
         }
 
+        centerOnSelected() {
+            let selected = this.getSelectedNode();
+            if (selected) {
+                let flat = this._flatFromNode(selected);
+                if (flat) flat.pane.centerOnItem(flat);
+            }
+        }
+
         refreshNode(node) {
             let viewPane = this._getViewPaneForNode(node);
             if (viewPane) return viewPane.refreshNode(node);
@@ -145,11 +173,13 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         }
 
         freeze() {
+            if (this.$userFreeze) return;
             this.$viewPanes.forEach(vp => vp._freeze());
             this.$userFreeze = true;
         }
 
         unFreeze() {
+            if (!this.$userFreeze) return;
             this.$userFreeze = false;
             this.$viewPanes.forEach(vp => vp._unFreeze());
         }
@@ -165,7 +195,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             if (resetOpenedNodes) this.$openedNodes = [];
             let pendingPromises = this.$viewPanes.length;
             this.$viewPanes.forEach(vp => {
-                vp.refreshView(deleteCache).then(() => {
+                vp.refreshView().then(() => {
                     pendingPromises--;
                     if (!pendingPromises) {
                         defer.resolve();
@@ -180,8 +210,8 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             return defer.promise;
         }
 
-        isNodeOpen(node) {
-            return !!_.find(this.$viewPanes, vp => vp.isNodeOpen(node))
+        isNodeOpen(node, ignoreFreeze = false) {
+            return !!_.find(this.$viewPanes, vp => vp.isNodeOpen(node, ignoreFreeze))
         }
 
         findNode(findFunction) {
@@ -205,7 +235,8 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         }
 
         selectNode(node, fireEvent = true) {
-            this._setSelected(this._flatFromNode(node), fireEvent);
+            let flat = this._flatFromNode(node);
+            if (flat) this._setSelected(flat, fireEvent);
         }
 
         _onArrowKey(down, viewPane) {
@@ -416,7 +447,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                     $timeout(() => {
                         if (nextNode) {
                             let flat = this._flatFromNode(nextNode);
-                            if (flat) flat.pane.centerOnNode(nextNode);
+                            if (flat) this.selectNode(nextNode);
                             else {
                                 this.selectFirst();
                             }
@@ -478,7 +509,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
 
 
         _setSelected(item, fireEvent = true) {
-            if (fireEvent && item.data !== this.GO_UP_NODE) {
+            if (fireEvent && item.data !== this.GO_UP_NODE && this.$selectedNode !== this.GO_UP_NODE) {
                 let entityChange = !this.uniqueIdGetter || (item.data && this.$selectedNode && this.uniqueIdGetter(item.data) !== this.uniqueIdGetter(this.$selectedNode)) || (!this.$selectedNode && item.data) || (this.$selectedNode && !item.data);
                 this.$selectedNode = item.data;
                 if (entityChange) {

@@ -179,6 +179,10 @@ class jfTreeController {
                 if (len) {
                     let maxScrollTop = scrollParent[0].scrollHeight - scrollParent.outerHeight();
                     let relativePosition = scrollParent.scrollTop() / maxScrollTop;
+                    if (_.isNaN(relativePosition)) {
+                        console.error('scroll -> relativePosition is NaN !');
+                        relativePosition = 1;
+                    }
                     this.virtualScrollIndex = relativePosition * (len - this.viewPane.itemsPerPage);
                     this.virtScrollDisplacement = this.virtualScrollIndex - Math.floor(this.virtualScrollIndex);
                     this.currentPage = Math.floor((this.virtualScrollIndex + this.viewPane.itemsPerPage - 1) / this.viewPane.itemsPerPage);
@@ -236,7 +240,7 @@ class jfTreeController {
     }
 
     isEmpty() {
-        return !!(this.api.dataWasSet && !this.viewPane._getRawData().length);
+        return !!(this.api.dataWasSet && !this.viewPane._getRawData().length && !this.viewPane.$freezed);
     }
 
 }

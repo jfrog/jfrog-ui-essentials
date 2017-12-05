@@ -96,6 +96,7 @@ export class TreeViewPane {
         if (this.treeApi.$userFreeze) return;
         this.$freezedItems = [].concat(this.$flatItems);
         this.$freezedOpened = [].concat(this.treeApi.$openedNodes);
+        this.$freezed = true;
     }
 
     _unFreeze() {
@@ -103,17 +104,18 @@ export class TreeViewPane {
 
         delete this.$freezedItems;
         delete this.$freezedOpened;
+        this.$freezed = false;
+
         this.refreshFilter();
     }
 
     _addChildren(children, level = 0, parent = null) {
         let parentIndex = this.$flatItems.indexOf(parent);
         let added = [];
-        children.forEach((node, i) => {
+        children.forEach((node) => {
             let flatItem = this._createFlatItem(node, level, parent);
-            //                this.$flatItems.splice(parentIndex + 1 + i, 0, flatItem);
             added.push(flatItem);
-            if (this.treeApi.isNodeOpen(node)) {
+            if (this.treeApi.isNodeOpen(node, true)) {
                 this.treeApi.getChildren(node).then(_children => {
                     if (_children && _children.length) {
                         this._addChildren(_children, level + 1, flatItem);
@@ -243,8 +245,9 @@ export class TreeViewPane {
                         resolveCount++;
                         if (resolveCount === itemsCount) {
                             let selectedId = this.treeApi.$selectedNode ? this.treeApi.uniqueIdGetter(this.treeApi.$selectedNode) : null;
-                            let newSelected = selectedId !== null ? _.find(this.$flatItems, fi => this.treeApi.uniqueIdGetter(fi.data) === selectedId) : null;
+                            let newSelected = selectedId !== null ? _.find(this.$flatItems, fi => fi.data !== this.treeApi.GO_UP_NODE && this.treeApi.uniqueIdGetter(fi.data) === selectedId) : null;
                             if (newSelected) {
+
                                 this.treeApi._setSelected(newSelected);
                                 this._unFreeze();
                                 mainDefer.resolve();
@@ -275,7 +278,7 @@ export class TreeViewPane {
     }
 
     selectFirst() {
-        if (this.$flatItems.length) this.treeApi._setSelected(this.$flatItems[0])
+        if (this._getPrePagedData().length) this.treeApi._setSelected(this._getPrePagedData()[0])
     }
 
     getQuickFindMatches() {
@@ -304,11 +307,24 @@ export class TreeViewPane {
     }
 
     centerOnNode(node) {
-        this.centerOnItem(this._flatFromNode(node));
+        let flat = this._flatFromNode(node);
+        if (flat) this.centerOnItem(flat);
     }
 
     _flatFromNode(node) {
-        return _.find(this.$flatItems, flat => flat.data === node);
+        let refMatch = _.find(this.$flatItems, flat => flat.data === node);
+        if (!refMatch) {
+            let nodeId = this.treeApi.uniqueIdGetter(node);
+            let idMatch = _.find(this.$flatItems, flat => {
+                if (flat.data === this.treeApi.GO_UP_NODE) return false;
+                else {
+                    let flatId = this.treeApi.uniqueIdGetter(flat.data);
+                    return  flatId === nodeId;
+                }
+            });
+            return idMatch;
+        }
+        return refMatch;
     }
 
     centerOnItem(item) {
@@ -346,8 +362,8 @@ export class TreeViewPane {
         if (item) return item.data;
     }
 
-    isNodeOpen(node) {
-        return (this.$freezedOpened && _.includes(this.$freezedOpened, node)) || (!this.$freezedOpened && _.includes(this.treeApi.$openedNodes, node));
+    isNodeOpen(node, ignoreFreeze = false) {
+        return (!ignoreFreeze && this.$freezedOpened && _.includes(this.$freezedOpened, node)) || (!this.$freezedOpened && _.includes(this.treeApi.$openedNodes, node));
     }
 
     getNodesCount() {
