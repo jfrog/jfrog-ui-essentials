@@ -184,6 +184,7 @@ class jfTreeController {
                         relativePosition = 1;
                     }
                     this.virtualScrollIndex = relativePosition * (len - this.viewPane.itemsPerPage);
+                    if (this.virtualScrollIndex < 0) this.virtualScrollIndex = 0;
                     this.virtScrollDisplacement = this.virtualScrollIndex - Math.floor(this.virtualScrollIndex);
                     this.currentPage = Math.floor((this.virtualScrollIndex + this.viewPane.itemsPerPage - 1) / this.viewPane.itemsPerPage);
                 }

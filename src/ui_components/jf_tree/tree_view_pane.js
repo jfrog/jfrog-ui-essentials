@@ -330,7 +330,7 @@ export class TreeViewPane {
     centerOnItem(item) {
         let index = this._getPrePagedData().indexOf(item);
         let halfPage = Math.floor(this.itemsPerPage / 2);
-        if (index - halfPage < 0) {
+        if (this._getPrePagedData().length <= this.itemsPerPage || index - halfPage < 0) {
             this.dirCtrl.virtualScrollIndex = 0;
         }
         else if (index + (this.itemsPerPage - halfPage) > this._getPrePagedData().length) {
