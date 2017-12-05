@@ -1,5 +1,5 @@
 'use strict';
-describe('unit test: jf_tree directive & JFTreeApi service', function () {
+fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
 
     var $scope;
     var $rootScope;
@@ -66,8 +66,12 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
         }
         catch (e) {
         }
+        try {
+            $scope.$apply();
+        }
+        catch (e) {
+        }
 
-        $scope.$apply();
         getElements();
     }
 
@@ -96,6 +100,7 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
             text: node => node.text,
             parent: node => _.find(simpleTestData, {id: node.parentId}),
             uniqueId: node => node.id,
+            nodeById: id => $q.when(_.find(simpleTestData, {id})),
             pane: node => !pane2Node || node !== pane2Node ? 'default' : 'pane2'
         });
     }
@@ -307,8 +312,6 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
         expect(qfHighlights[0].textContent.trim()).toEqual('Sub');
         expect(qfHighlights[1].textContent.trim()).toEqual('Sub');
 
-
-
         treeApi.quickFind('i1');
 
         flushAndApply();
@@ -427,4 +430,106 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
 
     });
 
+    it("should freeze and unFreeze", (done) => {
+
+        setDataGetters();
+        flushAndApply();
+
+        expect(mainTreeElement.length).toEqual(1);
+        expect(missingDataGetters.length).toEqual(0);
+        expect(emptyTreePlaceholder.length).toEqual(0);
+        expect(items.length).toEqual(1);
+        expect(nodeTexts.length).toEqual(1);
+        expect(nodeTexts[0].textContent.trim()).toEqual('Item 1');
+        expect(treeApi.isNodeOpen(simpleTestData[0])).toEqual(false);
+
+        treeApi.freeze();
+        let expander = $(items[0]).find('.node-expander .action-icon');
+        expander.click();
+
+        flushAndApply();
+
+        expect(items.length).toEqual(1);
+        expect(nodeTexts.length).toEqual(1);
+        expect(nodeTexts[0].textContent.trim()).toEqual('Item 1');
+        expect(treeApi.isNodeOpen(simpleTestData[0])).toEqual(false);
+
+        treeApi.unFreeze();
+        flushAndApply();
+
+        expect(treeApi.isNodeOpen(simpleTestData[0])).toEqual(true);
+        expect(items.length).toEqual(3);
+        expect(nodeTexts.length).toEqual(3);
+        expect(nodeTexts[0].textContent.trim()).toEqual('Item 1');
+        expect(nodeTexts[1].textContent.trim()).toEqual('Sub Item 1');
+        expect(nodeTexts[2].textContent.trim()).toEqual('Sub Item 2');
+
+        treeApi.freeze();
+        treeApi.refreshTree(false, false).then(() => {
+            treeApi.unFreeze();
+            expect(treeApi.isNodeOpen(simpleTestData[0])).toEqual(true);
+            expect(items.length).toEqual(3);
+            expect(nodeTexts.length).toEqual(3);
+            expect(nodeTexts[0].textContent.trim()).toEqual('Item 1');
+            expect(nodeTexts[1].textContent.trim()).toEqual('Sub Item 1');
+            expect(nodeTexts[2].textContent.trim()).toEqual('Sub Item 2');
+            done();
+        })
+        flushAndApply();
+    });
+
+    fit("should switch from drill down mode to regular mode and back", (done) => {
+
+        setDataGetters();
+        flushAndApply();
+
+        let expander = $(items[0]).find('.node-expander .action-icon');
+        expander.click();
+        flushAndApply();
+
+        expander = $(items[2]).find('.node-expander .action-icon');
+        expander.click();
+        flushAndApply();
+
+        treeApi.selectNode(simpleTestData[3]);
+        flushAndApply();
+
+        expect(treeApi.isNodeOpen(simpleTestData[0])).toEqual(true);
+        expect(treeApi.isNodeOpen(simpleTestData[2])).toEqual(true);
+
+        expect(items.length).toEqual(4);
+        expect(nodeTexts.length).toEqual(4);
+        expect(nodeTexts[0].textContent.trim()).toEqual('Item 1');
+        expect(nodeTexts[1].textContent.trim()).toEqual('Sub Item 1');
+        expect(nodeTexts[2].textContent.trim()).toEqual('Sub Item 2');
+        expect(nodeTexts[3].textContent.trim()).toEqual('Level 3 Item');
+
+        treeApi.setDrillDownMode();
+        flushAndApply();
+
+        treeApi.freeze();
+        flushAndApply();
+
+        treeApi.refreshTree().then(() => {
+
+            treeApi.unFreeze();
+
+            setTimeout(() => {
+                getElements();
+
+                expect(treeApi.isNodeOpen(simpleTestData[0])).toEqual(true);
+                expect(treeApi.isNodeOpen(simpleTestData[2])).toEqual(true);
+
+                expect(items.length).toEqual(3);
+                expect(nodeTexts.length).toEqual(2);
+                expect(items[0].textContent.trim()).toEqual('..');
+                expect(nodeTexts[0].textContent.trim()).toEqual('Sub Item 2');
+                expect(nodeTexts[1].textContent.trim()).toEqual('Level 3 Item');
+
+                done();
+            })
+        });
+        flushAndApply();
+
+    });
 });
