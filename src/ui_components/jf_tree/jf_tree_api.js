@@ -42,9 +42,9 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             let oldVal = this.$drillDownMode;
             this.$drillDownMode = drillDownMode;
             if (!!oldVal !== !!drillDownMode) {
-                this.freeze();
+                this._freeze();
                 this.refreshTree(false).then(() => {
-                    this.unFreeze();
+                    this._unFreeze();
                     this.$timeout(() => {
                         this.centerOnSelected();
                         defer.resolve()
@@ -172,16 +172,24 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             else return this.$q.when();
         }
 
-        freeze() {
-            if (this.$userFreeze) return;
+        _freeze() {
             this.$viewPanes.forEach(vp => vp._freeze());
-            this.$userFreeze = true;
+        }
+
+        _unFreeze() {
+            this.$viewPanes.forEach(vp => vp._unFreeze());
+        }
+
+        freeze() {
+            if (this.$masterFreeze) return;
+            this._freeze();
+            this.$masterFreeze = true;
         }
 
         unFreeze() {
-            if (!this.$userFreeze) return;
-            this.$userFreeze = false;
-            this.$viewPanes.forEach(vp => vp._unFreeze());
+            if (!this.$masterFreeze) return;
+            this.$masterFreeze = false;
+            this._unFreeze();
         }
 
         refreshNodeContextMenu(node) {
@@ -401,7 +409,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             if (flatItem.pane.dirCtrl) flatItem.pane.dirCtrl.resetScroll();
             flatItem.pane.$flatItems = [goUpFlat, this.$currParentFlat];
             flatItem.pane._addChildren(flatItem.data.$childrenCache, 2, this.$currParentFlat);
-            this.selectNode(this.$currParentFlat.data);
+            this.selectNode(this.$currParentFlat.data, false);
         }
 
         drillUpToRoot() {

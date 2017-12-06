@@ -192,7 +192,6 @@ class jfTreeController {
                     this.virtualScrollIndex = 0;
                     this.currentPage = 0;
                 }
-//                this.api.update(true,true);
                 this.api.fire('pagination.change', this.paginationApi.getCurrentPage());
             })
         })
