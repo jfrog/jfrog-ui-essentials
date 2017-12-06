@@ -18,7 +18,6 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             this.objectName = 'Item';
             this.GO_UP_NODE = {$specialNode: 'GO_UP'};
 
-
             this.paneSelector = () => 'default';
         }
 
@@ -44,11 +43,9 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             if (!!oldVal !== !!drillDownMode) {
                 this._freeze();
                 this.refreshTree(false).then(() => {
+                    this.centerOnSelected();
                     this._unFreeze();
-                    this.$timeout(() => {
-                        this.centerOnSelected();
-                        defer.resolve()
-                    });
+                    defer.resolve()
                 });
             }
             else {
@@ -121,12 +118,21 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         }
 
         setFilterCallback(filterCallback) {
-            this.filterCallbcak = filterCallback;
+            this.filterCallback = (node) => {
+                if (node.$$$filterResultCache !== undefined) {
+                    return node.$$$filterResultCache;
+                }
+                else {
+                    let cbResult = filterCallback(node);
+                    node.$$$filterResultCache = cbResult;
+                    return cbResult;
+                }
+            }
             return this;
         }
 
         isNodeFiltered(node) {
-            return this.filterCallbcak(node);
+            return this.filterCallback ? this.filterCallback(node) : true;
         }
 
         quickFind(quickFindTerm) {
@@ -535,7 +541,15 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         }
 
         _isSelected(item) {
-            return this.$selectedNode === item.data;
+            return this.$freezedSelected ? this.$freezedSelected === item.data : this.$selectedNode === item.data;
+        }
+
+        _freezeSelected() {
+            this.$freezedSelected = this.$selectedNode;
+        }
+
+        _unFreezeSelected() {
+            delete this.$freezedSelected;
         }
 
         selectFirst() {
@@ -625,7 +639,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         }
 
         refreshFilter() {
-            this.$viewPanes.forEach(vp => vp.refreshFilter());
+            this.$viewPanes.forEach(vp => vp.refreshFilter(true));
         }
 
         focus() {

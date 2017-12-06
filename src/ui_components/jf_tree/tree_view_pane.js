@@ -52,50 +52,66 @@ export class TreeViewPane {
             this.dirCtrl.virtualScrollIndex + this.itemsPerPage + (this.dirCtrl.virtualScrollIndex + this.itemsPerPage < prePage.length ? 1 : 0));
     }
 
-    _getPrePagedData() {
-        return this._getSortedData(this._getFilteredData(this._getRawData()));
+    _getPrePagedData(ignoreFreeze = false) {
+        return this._getSortedData(this._getFilteredData(this._getRawData(ignoreFreeze), ignoreFreeze));
     }
 
     _getSortedData(sourceData) {
         return sourceData;
     }
 
-    _getFilteredData(sourceData) {
-        sourceData = sourceData || this._getRawData();
-        if (this.treeApi.filterCallbcak && sourceData.length) {
-            if (!this.filterCache) {
-                this.filterCache = _.filter(sourceData, item => {
+    _getFilteredData(sourceData, ignoreCache = false) {
+        sourceData = sourceData || this._getRawData(ignoreCache);
+        if (this.treeApi.filterCallback && sourceData.length) {
+            let filterCache;
+            if (!this.filterCache || ignoreCache) {
+                filterCache = _.filter(sourceData, item => {
                     let parentIsFilteredOut = false;
-                    let curr = item.parent;
-                    while (curr && !parentIsFilteredOut) {
-                        if (curr.data !== this.treeApi.GO_UP_NODE && !this.treeApi.filterCallbcak(curr.data)) {
-                            parentIsFilteredOut = true;
-                        }
+                    let curr = item;
+                    while (curr.parent) {
                         curr = curr.parent;
                     }
+                    if (curr.data !== this.treeApi.GO_UP_NODE && !this.treeApi.filterCallback(curr.data)) {
+                        parentIsFilteredOut = true;
+                    }
 
-                    return item.data === this.treeApi.GO_UP_NODE || !parentIsFilteredOut && this.treeApi.filterCallbcak(item.data);
+                    return item.data === this.treeApi.GO_UP_NODE || !parentIsFilteredOut && this.treeApi.filterCallback(item.data);
                 })
             }
-            return this.filterCache;
+            if (ignoreCache) {
+                return filterCache || [];
+            }
+            else if (filterCache) {
+                this.filterCache = filterCache;
+                return this.filterCache;
+            }
+            else {
+                return this.filterCache;
+            }
         }
         else {
             return sourceData;
         }
     }
 
-    refreshFilter() {
+    refreshFilter(full = false) {
+        if (full) this.$flatItems.forEach(fi => {
+            if (fi.data && fi.data.$$$filterResultCache !== undefined) {
+                delete fi.data.$$$filterResultCache;
+            }
+        });
         delete this.filterCache;
     }
 
-    _getRawData() {
-        return this.$freezedItems || this.$flatItems || [];
+    _getRawData(ignoreFreeze = false) {
+        return (!ignoreFreeze ? this.$freezedItems : null) || this.$flatItems || [];
     }
 
     _freeze() {
         if (this.treeApi.$masterFreeze) return;
         this.$freezedItems = [].concat(this.$flatItems);
         this.$freezedOpened = [].concat(this.treeApi.$openedNodes);
+        this.treeApi._freezeSelected();
         this.$freezed = true;
     }
 
@@ -104,9 +120,11 @@ export class TreeViewPane {
 
         delete this.$freezedItems;
         delete this.$freezedOpened;
+        this.treeApi._unFreezeSelected();
         this.$freezed = false;
 
         this.refreshFilter();
+        this.dirCtrl.syncFakeScroller();
     }
 
     _addChildren(children, level = 0, parent = null) {
@@ -328,13 +346,14 @@ export class TreeViewPane {
     }
 
     centerOnItem(item) {
-        let index = this._getPrePagedData().indexOf(item);
+        let prePaged = this._getPrePagedData(true);
+        let index = prePaged.indexOf(item);
         let halfPage = Math.floor(this.itemsPerPage / 2);
-        if (this._getPrePagedData().length <= this.itemsPerPage || index - halfPage < 0) {
+        if (prePaged.length <= this.itemsPerPage || index - halfPage < 0) {
             this.dirCtrl.virtualScrollIndex = 0;
         }
-        else if (index + (this.itemsPerPage - halfPage) > this._getPrePagedData().length) {
-            this.dirCtrl.virtualScrollIndex = this._getPrePagedData().length - this.itemsPerPage;
+        else if (index + (this.itemsPerPage - halfPage) > prePaged.length) {
+            this.dirCtrl.virtualScrollIndex = prePaged.length - this.itemsPerPage;
         }
         else {
             this.dirCtrl.virtualScrollIndex = index - halfPage;

@@ -151,6 +151,8 @@ class jfTreeController {
     }
 
     resetScroll() {
+        if (this.viewPane.$freezed) return;
+
         this.virtualScrollIndex = 0;
         this.virtScrollDisplacement = 0;
         this.currentPage = 1;
@@ -209,6 +211,7 @@ class jfTreeController {
     }
 
     syncFakeScroller(delay = true) {
+        if (this.viewPane.$freezed) return;
         let len = this.viewPane._getPrePagedData().length;
         let scrollParent = $(this.$element).find('.scroll-faker-container');
         let relativePosition = this.virtualScrollIndex / (len - this.viewPane.itemsPerPage);
