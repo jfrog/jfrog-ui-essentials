@@ -357,7 +357,7 @@ export class TreeViewPane {
 
     findNodeByUniqueId(uniqueId) {
         let item = _.find(this.$flatItems, fi => {
-            return this.treeApi.uniqueIdGetter(fi.data) === uniqueId;
+            return fi.data !== this.treeApi.GO_UP_NODE && this.treeApi.uniqueIdGetter(fi.data) === uniqueId;
         })
         if (item) return item.data;
     }
@@ -371,7 +371,7 @@ export class TreeViewPane {
     }
 
     getFilteredNodesCount() {
-        return this._getFilteredData().length;
+        return _.filter(this._getFilteredData(), fi => fi.data !== this.treeApi.GO_UP_NODE).length;
     }
 
 }

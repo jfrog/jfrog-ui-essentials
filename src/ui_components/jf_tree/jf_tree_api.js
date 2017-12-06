@@ -409,6 +409,11 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             this.$openedNodes = [];
             this.$currParentFlat.$origFlat.pane.dirCtrl.resetScroll();
             this.setTreeData(this.$rootCache);
+            delete this.$currParentFlat;
+        }
+
+        getCurrentParent() {
+            return this.$currParentFlat ? this.$currParentFlat.data : null;
         }
 
         openDeepNode(node) {
