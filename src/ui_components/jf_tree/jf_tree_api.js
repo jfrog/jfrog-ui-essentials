@@ -165,7 +165,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         }
 
         centerOnSelected() {
-            let selected = this.getSelectedNode();
+            let selected = this.getSelectedNode(true);
             if (selected) {
                 let flat = this._flatFromNode(selected);
                 if (flat) flat.pane.centerOnItem(flat);
@@ -556,8 +556,8 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             this.$viewPanes[0].selectFirst();
         }
 
-        getSelectedNode() {
-            return this.$selectedNode;
+        getSelectedNode(ignoreFreeze = false) {
+            return !ignoreFreeze ? this.$freezedSelected || this.$selectedNode : this.$selectedNode || null;
         }
 
         on(event, listener) {

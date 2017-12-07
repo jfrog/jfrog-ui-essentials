@@ -28,7 +28,7 @@ class jfTreeController {
                 this.api._setDirectiveController(this);
             }
             if (this.api && !this.paginationApi) {
-                this.paginationApi = new PaginationApi(this);
+                    this.paginationApi = new PaginationApi(this);
 
                 this.paginationApi.registerChangeListener(() => {
                     this.$timeout(()=>this.refresh(false));
@@ -211,8 +211,8 @@ class jfTreeController {
     }
 
     syncFakeScroller(delay = true) {
-        if (this.viewPane.$freezed) return;
-        let len = this.viewPane._getPrePagedData().length;
+
+        let len = this.viewPane._getPrePagedData(true).length;
         let scrollParent = $(this.$element).find('.scroll-faker-container');
         let relativePosition = this.virtualScrollIndex / (len - this.viewPane.itemsPerPage);
 
