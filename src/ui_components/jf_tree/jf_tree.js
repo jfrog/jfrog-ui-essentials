@@ -63,14 +63,19 @@ class jfTreeController {
                         if (this.api.getSelectedNode() === this.api.GO_UP_NODE) {
                             this.api.drillUp();
                         }
-                        else this.api.toggleSelected();
+                        else {
+                            this.api.selectPreSelected();
+                            this.api.toggleSelected();
+                        }
                         break;
                     case 'ArrowRight':
                         e.preventDefault();
+                        this.api.selectPreSelected();
                         this.api.openSelected();
                         break;
                     case 'ArrowLeft':
                         e.preventDefault();
+                        this.api.selectPreSelected();
                         this.api.closeNode(this.api.getSelectedNode());
                         break;
                     default:

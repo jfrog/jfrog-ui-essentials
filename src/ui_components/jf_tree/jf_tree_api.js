@@ -257,6 +257,8 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             let items = viewPane._getFilteredData();
             if (!items.length) return;
 
+            if (!this.$preSelectedNode) this.$preSelectedNode = this.$selectedNode;
+
             if (this.quickFindTerm) {
                 if (down) this._selectNextSearchResult();
                 else this._selectPreviousSearchResult();
@@ -264,11 +266,11 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             else {
                 let selectedItem;
 
-                if (this.$selectedNode === undefined) {
+                if (this.$preSelectedNode === undefined) {
                     selectedItem = items[down ? 0 : items.length - 1];
                 }
                 else {
-                    let currIndex = _.findIndex(items, fi => fi.data === this.$selectedNode);
+                    let currIndex = _.findIndex(items, fi => fi.data === this.$preSelectedNode);
                     if ((down && items[currIndex + 1]) || (!down && currIndex - 1 >= 0)) {
                         selectedItem = items[currIndex + (down ? 1 : -1)];
                     }
@@ -277,7 +279,8 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                     }
                 }
 //                this._setSelected(selectedItem);
-                viewPane.centerOnItem(selectedItem);
+//                viewPane.centerOnItem(selectedItem);
+                this._preSelect(selectedItem);
             }
 
         }
@@ -311,7 +314,8 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         _gotoCurrentSearchResult() {
             if (this.quickFindIndex !== undefined && this.quickFindMatches[this.quickFindIndex]) {
                 let item = this.quickFindMatches[this.quickFindIndex];
-                item.pane.centerOnItem(item);
+//                item.pane.centerOnItem(item);
+                this._preSelect(item);
             }
         }
 
@@ -538,18 +542,36 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             else {
                 this.$selectedNode = item.data;
             }
+            this.$preSelectedNode = null;
+        }
+
+        _preSelect(item) {
+            this.$preSelectedNode = item.data;
+            item.pane.bringItemToView(item);
+        }
+
+        selectPreSelected() {
+            if (this.$preSelectedNode) {
+                this._setSelected(this._flatFromNode(this.$preSelectedNode));
+            }
         }
 
         _isSelected(item) {
             return this.$freezedSelected ? this.$freezedSelected === item.data : this.$selectedNode === item.data;
         }
 
+        _isPreSelected(item) {
+            return this.$freezedPreSelected ? this.$freezedPreSelected === item.data : this.$preSelectedNode === item.data;
+        }
+
         _freezeSelected() {
             this.$freezedSelected = this.$selectedNode;
+            this.$freezedPreSelected = this.$preSelectedNode;
         }
 
         _unFreezeSelected() {
             delete this.$freezedSelected;
+            delete this.$freezedPreSelected;
         }
 
         selectFirst() {

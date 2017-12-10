@@ -350,6 +350,25 @@ export class TreeViewPane {
         return refMatch;
     }
 
+    bringItemToView(item) {
+        let prePaged = this._getPrePagedData(true);
+        let index = prePaged.indexOf(item);
+        let halfPage = Math.floor(this.itemsPerPage / 2);
+
+        if (index - 1 < this.dirCtrl.virtualScrollIndex) {
+            this.dirCtrl.virtualScrollIndex = index;
+            this.dirCtrl.virtScrollDisplacement = 0;
+        }
+        else if (index + 1 > this.dirCtrl.virtualScrollIndex + this.itemsPerPage) {
+            let fullItems = Math.floor(this.containerHeight/parseFloat(this.itemHeight));
+            this.dirCtrl.virtualScrollIndex = index - fullItems;
+            let displace = 1-(this.containerHeight/parseFloat(this.itemHeight) - fullItems);
+            this.dirCtrl.virtScrollDisplacement = displace;
+        }
+        this.dirCtrl.syncFakeScroller(false);
+
+    }
+
     centerOnItem(item) {
         let prePaged = this._getPrePagedData(true);
         let index = prePaged.indexOf(item);

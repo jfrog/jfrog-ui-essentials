@@ -14,22 +14,28 @@ class jfTreeItemController {
 
     _watchSelection() {
         //This is instead of using ng-class, which not working smoothly in safari
-        let toggleClass = (iAmSelected) => {
+        let toggleClass = (iAmSelected, className) => {
             if (iAmSelected) {
-                $(this.$element).addClass('selected');
+                $(this.$element).addClass(className);
             }
             else {
-                $(this.$element).removeClass('selected');
+                $(this.$element).removeClass(className);
             }
         };
 
         this.$scope.$watch('jfTreeItem.tree.api.$selectedNode', selected => {
             let iAmSelected = selected === this.data.data;
-            toggleClass(iAmSelected);
+            toggleClass(iAmSelected, 'selected');
+        })
+        this.$scope.$watch('jfTreeItem.tree.api.$preSelectedNode', preSelected => {
+            let iAmPreSelected = preSelected === this.data.data;
+            toggleClass(iAmPreSelected, 'pre-selected');
         })
         this.$scope.$watch('jfTreeItem.data', () => {
+            let iAmPreSelected = this.tree.api.$preSelectedNode === this.data.data;
             let iAmSelected = this.tree.api.$selectedNode === this.data.data;
-            toggleClass(iAmSelected);
+            toggleClass(iAmSelected, 'selected');
+            toggleClass(iAmPreSelected, 'pre-selected');
         })
     }
 
@@ -39,6 +45,10 @@ class jfTreeItemController {
 
     isSelected() {
         return this.tree.api._isSelected(this.data);
+    }
+
+    isPreSelected() {
+        return this.tree.api._isPreSelected(this.data);
     }
 
     onItemClick(e) {
