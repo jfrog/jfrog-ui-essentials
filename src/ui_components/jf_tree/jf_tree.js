@@ -121,7 +121,7 @@ class jfTreeController {
         elem.append(templateElem);
     }
 
-    _normalizeWheelEvent(e) {
+    _normalizeWheelEvent(event) {
         var PIXEL_STEP  = 10;
         var LINE_HEIGHT = 40;
         var PAGE_HEIGHT = 800;
