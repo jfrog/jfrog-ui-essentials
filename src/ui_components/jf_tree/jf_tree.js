@@ -70,13 +70,11 @@ class jfTreeController {
                         break;
                     case 'ArrowRight':
                         e.preventDefault();
-                        this.api.selectPreSelected();
-                        this.api.openSelected();
+                        this.api.openPreSelected();
                         break;
                     case 'ArrowLeft':
                         e.preventDefault();
-                        this.api.selectPreSelected();
-                        this.api.closeNode(this.api.getSelectedNode());
+                        this.api.closeNode(this.api.getPreSelectedNode());
                         break;
                     default:
                         if (!e.ctrlKey && !e.shiftKey && ! e.metaKey && e.key.toLowerCase() === String.fromCharCode(e.which).toLowerCase()) {

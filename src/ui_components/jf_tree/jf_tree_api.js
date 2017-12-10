@@ -342,6 +342,10 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             this.openNode(this.$selectedNode);
         }
 
+        openPreSelected() {
+            this.openNode(this.$preSelectedNode || this.$selectedNode);
+        }
+
         closeSelected() {
             this.closeNode(this.$selectedNode);
         }
@@ -356,6 +360,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         }
 
         openNode(node) {
+            if (!node) return;
             if (this.fire('item.before.open', node) === false) return $q.when();
 
             let defer = $q.defer();
@@ -372,15 +377,17 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                             this.drillDown(flat);
                         }
                         else {
+
+                            this._preSelect(flat);
+
                             let addedFlats = flat.pane._addChildren(children, flat.level + 1, flat);
 
-                            if (addedFlats.length >= 5) {
-                                flat.pane.bringItemToView(addedFlats[4]);
+                            if (addedFlats.length >= 3) {
+                                flat.pane.bringItemToView(addedFlats[2]);
                             }
                             else {
                                 flat.pane.bringItemToView(addedFlats[addedFlats.length - 1]);
                             }
-
 
                         }
                         defer.resolve();
@@ -589,6 +596,10 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
 
         getSelectedNode(ignoreFreeze = false) {
             return !ignoreFreeze ? this.$freezedSelected || this.$selectedNode : this.$selectedNode || null;
+        }
+
+        getPreSelectedNode(ignoreFreeze = false) {
+            return !ignoreFreeze ? this.$freezedPreSelected || this.$preSelectedNode : this.$preSelectedNode || null;
         }
 
         on(event, listener) {
