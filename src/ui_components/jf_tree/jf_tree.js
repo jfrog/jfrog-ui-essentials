@@ -121,20 +121,68 @@ class jfTreeController {
         elem.append(templateElem);
     }
 
+    _normalizeWheelEvent(e) {
+        var PIXEL_STEP  = 10;
+        var LINE_HEIGHT = 40;
+        var PAGE_HEIGHT = 800;
+
+        var sX = 0, sY = 0,
+            pX = 0, pY = 0;
+
+        if ('detail'      in event) { sY = event.detail; }
+        if ('wheelDelta'  in event) { sY = -event.wheelDelta / 120; }
+        if ('wheelDeltaY' in event) { sY = -event.wheelDeltaY / 120; }
+        if ('wheelDeltaX' in event) { sX = -event.wheelDeltaX / 120; }
+
+        // side scrolling on FF with DOMMouseScroll
+        if ( 'axis' in event && event.axis === event.HORIZONTAL_AXIS ) {
+            sX = sY;
+            sY = 0;
+        }
+
+        pX = sX * PIXEL_STEP;
+        pY = sY * PIXEL_STEP;
+
+        if ('deltaY' in event) { pY = event.deltaY; }
+        if ('deltaX' in event) { pX = event.deltaX; }
+
+        if ((pX || pY) && event.deltaMode) {
+            if (event.deltaMode == 1) {          // delta in LINE units
+                pX *= LINE_HEIGHT;
+                pY *= LINE_HEIGHT;
+            } else {                             // delta in PAGE units
+                pX *= PAGE_HEIGHT;
+                pY *= PAGE_HEIGHT;
+            }
+        }
+
+        if (pX && !sX) { sX = (pX < 1) ? -1 : 1; }
+        if (pY && !sY) { sY = (pY < 1) ? -1 : 1; }
+
+        return { spinX  : sX,
+            spinY  : sY,
+            pixelX : pX,
+            pixelY : pY };
+    }
+
     onMouseWheel($event, $delta, $deltaX, $deltaY) {
-        let scrollAbount = .05 * Math.abs($deltaY);
+
+        let normalized = this._normalizeWheelEvent($event.originalEvent);
+        let normalDelta = normalized.pixelY;
+
+        let scrollAmount = 0.02 * Math.abs(normalDelta);
         let tempVSI = this.virtualScrollIndex;
         if ($deltaY<0) { // scrollUp
-            if (this.virtualScrollIndex + this.viewPane.itemsPerPage < this.viewPane._getPrePagedData().length - scrollAbount) {
-                this.virtualScrollIndex += scrollAbount;
+            if (this.virtualScrollIndex + this.viewPane.itemsPerPage < this.viewPane._getPrePagedData().length - scrollAmount) {
+                this.virtualScrollIndex += scrollAmount;
             }
             else {
                 this.virtualScrollIndex = this.viewPane._getPrePagedData().length > this.viewPane.itemsPerPage ? this.viewPane._getPrePagedData().length - this.viewPane.itemsPerPage : 0;
             }
         }
         else if ($deltaY>0) { // scrollDown
-            if (this.virtualScrollIndex > scrollAbount) {
-                this.virtualScrollIndex -= scrollAbount;
+            if (this.virtualScrollIndex > scrollAmount) {
+                this.virtualScrollIndex -= scrollAmount;
             }
             else {
                 this.virtualScrollIndex = 0;
@@ -148,6 +196,7 @@ class jfTreeController {
         this.virtScrollDisplacement = this.virtualScrollIndex - Math.floor(this.virtualScrollIndex);
         this.syncFakeScroller(false);
 
+        this.viewPane.focus();
     }
 
     resetScroll() {

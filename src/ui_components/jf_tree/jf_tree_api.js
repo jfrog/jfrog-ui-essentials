@@ -276,7 +276,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                         selectedItem = items[down ? 0 : items.length - 1];
                     }
                 }
-                this._setSelected(selectedItem);
+//                this._setSelected(selectedItem);
                 viewPane.centerOnItem(selectedItem);
             }
 
