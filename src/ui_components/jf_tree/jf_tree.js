@@ -60,7 +60,7 @@ class jfTreeController {
                         break;
                     case 'Enter':
                         e.preventDefault();
-                        if (this.api.getSelectedNode() === this.api.GO_UP_NODE) {
+                        if (this.api.getPreSelectedNode() === this.api.GO_UP_NODE) {
                             this.api.drillUp();
                         }
                         else {
