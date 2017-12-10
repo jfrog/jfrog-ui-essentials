@@ -150,6 +150,7 @@ export class TreeViewPane {
         let after = this.$flatItems.slice(parentIndex + 1);
         this.$flatItems = before.concat(added).concat(after);
         this.update();
+        return added;
     }
 
     _removeChildren(parent) {

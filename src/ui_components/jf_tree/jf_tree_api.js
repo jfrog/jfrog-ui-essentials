@@ -372,7 +372,16 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                             this.drillDown(flat);
                         }
                         else {
-                            flat.pane._addChildren(children, flat.level + 1, flat);
+                            let addedFlats = flat.pane._addChildren(children, flat.level + 1, flat);
+
+                            if (addedFlats.length >= 5) {
+                                flat.pane.bringItemToView(addedFlats[4]);
+                            }
+                            else {
+                                flat.pane.bringItemToView(addedFlats[addedFlats.length - 1]);
+                            }
+
+
                         }
                         defer.resolve();
                         flat.$pending = false;
