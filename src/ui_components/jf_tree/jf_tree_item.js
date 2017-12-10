@@ -3,13 +3,42 @@ class jfTreeItemController {
     constructor($scope, $element, $timeout, AdvancedStringMatch) {
         this.$element = $element;
         this.$timeout = $timeout;
+        this.$scope = $scope;
         this.asm = AdvancedStringMatch;
 
         $(this.$element).prop('ctrl', this);
+
+        this._watchSelection();
+
+    }
+
+    _watchSelection() {
+        //This is instead of using ng-class, which not working smoothly in safari
+        let toggleClass = (iAmSelected) => {
+            if (iAmSelected) {
+                $(this.$element).addClass('selected');
+            }
+            else {
+                $(this.$element).removeClass('selected');
+            }
+        };
+
+        this.$scope.$watch('jfTreeItem.tree.api.$selectedNode', selected => {
+            let iAmSelected = selected === this.data.data;
+            toggleClass(iAmSelected);
+        })
+        this.$scope.$watch('jfTreeItem.data', () => {
+            let iAmSelected = this.tree.api.$selectedNode === this.data.data;
+            toggleClass(iAmSelected);
+        })
     }
 
     _getTreeContainer() {
         return $(this.tree.$element).find('.jf-tree-container');
+    }
+
+    isSelected() {
+        return this.tree.api._isSelected(this.data);
     }
 
     onItemClick(e) {
