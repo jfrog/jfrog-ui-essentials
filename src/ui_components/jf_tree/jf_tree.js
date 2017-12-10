@@ -167,8 +167,7 @@ class jfTreeController {
 
     onMouseWheel($event, $delta, $deltaX, $deltaY) {
 
-        let normalized = this._normalizeWheelEvent($event.originalEvent);
-        let normalDelta = normalized.pixelY;
+        let normalDelta = this._normalizeWheelEvent($event.originalEvent).pixelY;
 
         let scrollAmount = 0.02 * Math.abs(normalDelta);
         let tempVSI = this.virtualScrollIndex;
@@ -213,9 +212,15 @@ class jfTreeController {
     }
 
     getPageHeight() {
-        let len = this.viewPane._getPrePagedData().length;
-        if (len < this.viewPane.itemsPerPage) return len * parseFloat(this.viewPane.itemHeight);
-        else return this.viewPane.itemsPerPage * parseFloat(this.viewPane.itemHeight);
+
+        if (this.viewPane.containerHeight) {
+            return this.viewPane.containerHeight;
+        }
+        else {
+            let len = this.viewPane._getPrePagedData().length;
+            if (len < this.viewPane.itemsPerPage) return len * parseFloat(this.viewPane.itemHeight);
+            else return this.viewPane.itemsPerPage * parseFloat(this.viewPane.itemHeight);
+        }
     }
 
     initScrollFaker() {

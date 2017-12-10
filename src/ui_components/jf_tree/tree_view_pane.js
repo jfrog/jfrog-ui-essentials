@@ -42,14 +42,19 @@ export class TreeViewPane {
     _setAutoItemsPerPage() {
         this.treeApi.$timeout(() => {
             let containerHeight = $(this.dirCtrl.$element).parent().height();
+            this.containerHeight = containerHeight;
             this.setItemsPerPage(Math.floor(containerHeight / parseFloat(this.itemHeight)));
         })
     }
 
     _getPageData() {
         let prePage = this._getPrePagedData();
+/*
         return prePage.slice(this.dirCtrl.virtualScrollIndex,
             this.dirCtrl.virtualScrollIndex + this.itemsPerPage + (this.dirCtrl.virtualScrollIndex + this.itemsPerPage < prePage.length ? 1 : 0));
+*/
+        return prePage.slice(this.dirCtrl.virtualScrollIndex,
+            this.dirCtrl.virtualScrollIndex + this.itemsPerPage + 2);
     }
 
     _getPrePagedData(ignoreFreeze = false) {
