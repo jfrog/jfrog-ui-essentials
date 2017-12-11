@@ -411,6 +411,11 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             }
         }
 
+        deleteNode(node) {
+            let flat = this._flatFromNode(node);
+            flat.pane._deleteItem(flat);
+        }
+
         drillUp() {
             if (!this.$drillDownMode) return;
 
@@ -520,7 +525,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                     let childrenOrPromise = this.childrenGetter(node);
                     if (childrenOrPromise && childrenOrPromise.then) {
                         childrenOrPromise.then(children => {
-                            if (this.sortingFunction) {
+                            if (children && this.sortingFunction) {
                                 children = children.sort(this.sortingFunction);
                             }
                             if (node) node.$childrenCache = children;
@@ -529,7 +534,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                         })
                     }
                     else {
-                        if (this.sortingFunction) {
+                        if (this.sortingFunction && childrenOrPromise) {
                             childrenOrPromise = childrenOrPromise.sort(this.sortingFunction);
                         }
                         if (node) node.$childrenCache = childrenOrPromise;
@@ -591,7 +596,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         }
 
         selectFirst() {
-            this.$viewPanes[0].selectFirst();
+            if (this.$viewPanes[0]) this.$viewPanes[0].selectFirst();
         }
 
         getSelectedNode(ignoreFreeze = false) {
@@ -685,7 +690,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         }
 
         focus() {
-            this.$viewPanes[0].focus();
+            if (this.$viewPanes[0]) this.$viewPanes[0].focus();
         }
 
         onViewUpdate(originView) {

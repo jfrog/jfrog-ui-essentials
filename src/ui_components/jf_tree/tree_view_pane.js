@@ -170,6 +170,11 @@ export class TreeViewPane {
 
     }
 
+    _deleteItem(item) {
+        _.remove(this.$flatItems, fi => fi === item);
+        this._removeChildren(item);
+    }
+
     _buildFlatItems() {
         this.$flatItems = [];
         let paneRoot = _.filter(this.treeApi.$root, node => {
