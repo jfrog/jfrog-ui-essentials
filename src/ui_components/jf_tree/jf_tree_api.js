@@ -385,7 +385,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                             if (addedFlats.length >= 3) {
                                 flat.pane.bringItemToView(addedFlats[2]);
                             }
-                            else {
+                            else if (addedFlats.length) {
                                 flat.pane.bringItemToView(addedFlats[addedFlats.length - 1]);
                             }
 

@@ -366,9 +366,9 @@ export class TreeViewPane {
             this.dirCtrl.virtScrollDisplacement = 0;
         }
         else if (index + 1 > this.dirCtrl.virtualScrollIndex + this.itemsPerPage) {
-            let fullItems = Math.floor(this.containerHeight/parseFloat(this.itemHeight));
+            let fullItems = this.containerHeight ? Math.floor(this.containerHeight/parseFloat(this.itemHeight)) : this.itemsPerPage;
             this.dirCtrl.virtualScrollIndex = index - fullItems >= 0 ? index - fullItems : 0;
-            let displace = 1-(this.containerHeight/parseFloat(this.itemHeight) - fullItems);
+            let displace = this.containerHeight ? 1-(this.containerHeight/parseFloat(this.itemHeight) - fullItems) : 1;
             this.dirCtrl.virtScrollDisplacement = displace;
         }
         this.dirCtrl.syncFakeScroller(false);
