@@ -13,7 +13,7 @@
                         class="input-text"
                         ng-model="jfListMaker.newValue"
                         placeholder="{{jfListMaker.placeholder || 'New ' + (jfListMaker.objectName || 'Value')}}"
-                        id="newValueField"
+                        id="newValueField-{{jfListMaker.listId}}"
                         name="newValueField"
                         jf-enter-press="jfListMaker.addValue()"
                         ng-change="jfListMaker.errorMessage=null"
