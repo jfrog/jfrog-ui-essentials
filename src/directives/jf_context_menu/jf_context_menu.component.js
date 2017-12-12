@@ -74,7 +74,9 @@ class jfContextMenuController {
 	_onActionClick($event, action) {
 		$event.stopPropagation();
 		this.isOpen = false;
-		action.callback(this.clickedItemData);
+		if (action.callback) {
+			action.callback(this.clickedItemData);
+        }
 		if (this.onAnyActionFired && typeof this.onAnyActionFired === 'function') {
 			this.onAnyActionFired();
 		}

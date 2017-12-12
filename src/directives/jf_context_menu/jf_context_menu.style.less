@@ -8,6 +8,8 @@ jf-context-menu {
     z-index: 10000003;
     box-shadow: 0 2px 12px rgba(0, 0, 0, .25);
     .action-item {
+      display: block;
+      color: inherit;
       cursor: pointer;
       height: 40px;
       line-height: 40px;
@@ -32,6 +34,11 @@ jf-context-menu {
         &[icon-name~="icon-clear"] {
           color: @redError;
           background: #F4E7E7 !important;
+          .action-icon {
+            &:before {
+              color: @redError;
+            }
+          }
           box-shadow: inset 3px 0 0 0 @redError;
         }
       }
