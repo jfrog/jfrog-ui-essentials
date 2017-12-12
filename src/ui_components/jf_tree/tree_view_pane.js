@@ -172,6 +172,7 @@ export class TreeViewPane {
 
     _deleteItem(item) {
         _.remove(this.$flatItems, fi => fi === item);
+        _.remove(item.parent.data.$childrenCache, node => node === item.data);
         this._removeChildren(item);
     }
 
