@@ -17,7 +17,7 @@ describe('unit test:jf_list_maker directive', function () {
     listRows = $('.list-maker-list-row>div:first-child');
     removeButtons = $('.list-maker-list-row>div:nth-child(2)>a');
     newButton = $('.icon-new');
-    newValueInput = $('#newValueField');
+    newValueInput = $('input.input-text');
     errElement = $('.jf-validation');
   }
 
