@@ -39,7 +39,7 @@ class jfTableViewController {
             }
         })
 
-        let on_resize = () => this.$timeout(()=>this.options._normalizeWidths());
+        let on_resize = () => this.options._normalizeWidths();
         
         $(window).on('resize',on_resize);
         $scope.$on('$destroy', ()=>{

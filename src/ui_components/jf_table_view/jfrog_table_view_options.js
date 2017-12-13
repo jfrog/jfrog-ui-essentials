@@ -456,7 +456,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
 		}
 
-		_normalizeWidths(delay = true) {
+		_normalizeWidths(delay = true, recurse = false) {
 			if (!this.dirCtrl) {
 				return;
 			}
@@ -514,7 +514,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
                     if (width && width.trim().endsWith('%')) {
                         let origVal = parseFloat(width);
                         let newVal = normalizer * origVal * percSpace / 100;
-                        let normalizerIgnoringThreshold = (100 / (totalPerc + origVal))
+                        let normalizerIgnoringThreshold = (100 / (totalPerc + (col.underWidthThresholde ? origVal : 0)))
                         let newValIgnoringThreshold = normalizerIgnoringThreshold * origVal * percSpace / 100;
                         if (!col.underWidthThresholde && col.pixelWidthThreshold && newVal < col.pixelWidthThreshold) {
                             shouldReCalc = true;
@@ -538,8 +538,8 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
                     }
                 });
                 //                console.log(totalFinalPerc);
-                if (shouldReCalc) {
-                    this._normalizeWidths(false);
+                if (shouldReCalc && !recurse) {
+                    this._normalizeWidths(false, true);
                 }
                 else {
                     this.ready = true;
