@@ -264,8 +264,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
 		filterColumns(columns) {
 			return _.filter(columns, col => {
-				return (!col.isVisible || col.isVisible()) && (!this.visibleFields || this.visibleFields.indexOf(
-						col.field) !== -1);
+				return (!col.isVisible || col.isVisible()) && (!this.visibleFields || this.visibleFields.indexOf(col.field) !== -1);
 			});
 		}
 
@@ -457,7 +456,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
 		}
 
-		_normalizeWidths() {
+		_normalizeWidths(delay = true) {
 			if (!this.dirCtrl) {
 				return;
 			}
@@ -473,13 +472,19 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
 			let totalAbs = actionsWidth + selectionWidth;
 			let totalPerc = 0;
+			let percsOfUnderThresholdColumns = 0;
 			this.columns.forEach(col => {
 				if (col.origWidth === undefined) {
 					col.origWidth = col.width;
 				}
 				let width = col.origWidth;
 				if (width && width.trim().endsWith('%')) {
-					totalPerc += parseFloat(width);
+				    if (col.underWidthThresholde) {
+                        percsOfUnderThresholdColumns += parseFloat(width);
+                    }
+                    else {
+                        totalPerc += parseFloat(width);
+                    }
 				}
 				else if (width && width.trim().endsWith('px')) {
 					totalAbs += parseFloat(width);
@@ -490,36 +495,60 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				}
 			});
 
+			let setNormalWidths = () => {
+                let containerWidth;
+                if (this.data.length) {
+                    containerWidth = $(this.dirCtrl.$element).find('.jf-table-row').innerWidth();
+                }
+                else {
+                    containerWidth = $(this.dirCtrl.$element).find('.jf-table-view-container').width();
+                }
 
-			$timeout(() => {
-				let containerWidth;
-				if (this.data.length) {
-					containerWidth = $(this.dirCtrl.$element).find('.jf-table-row').innerWidth();
-				}
-				else {
-					containerWidth = $(this.dirCtrl.$element).find('.jf-table-view-container').width();
-				}
+                let percSpace = containerWidth - totalAbs;
+                //                let absPerc = (totalAbs/containerWidth)*100;
+                let normalizer = (100 / totalPerc);
+                let totalFinalPerc = ((actionsWidth + selectionWidth) / containerWidth) * 100;
+                let shouldReCalc = false;
+                this.columns.forEach(col => {
+                    let width = col.origWidth;
+                    if (width && width.trim().endsWith('%')) {
+                        let origVal = parseFloat(width);
+                        let newVal = normalizer * origVal * percSpace / 100;
+                        let normalizerIgnoringThreshold = (100 / (totalPerc + origVal))
+                        let newValIgnoringThreshold = normalizerIgnoringThreshold * origVal * percSpace / 100;
+                        if (!col.underWidthThresholde && col.pixelWidthThreshold && newVal < col.pixelWidthThreshold) {
+                            shouldReCalc = true;
+                            col.underWidthThresholde = true;
+                        }
+                        else if (col.underWidthThresholde && newValIgnoringThreshold >= col.pixelWidthThreshold) {
+                            shouldReCalc = true;
+                            delete col.underWidthThresholde;
+                        }
+                        else if (!col.underWidthThresholde) {
+                            let newPerc = (newVal / containerWidth) * 100;
+                            col.width = newPerc + '%';
+                            totalFinalPerc += newPerc;
+                        }
+                        else if (col.underWidthThresholde && col.pixelWidthThreshold && newValIgnoringThreshold < col.pixelWidthThreshold) {
+                            col.width = 0;
+                        }
+                    }
+                    else if (width) {
+                        totalFinalPerc += 100 * parseFloat(width) / containerWidth;
+                    }
+                });
+                //                console.log(totalFinalPerc);
+                if (shouldReCalc) {
+                    this._normalizeWidths(false);
+                }
+                else {
+                    this.ready = true;
+                }
 
-				let percSpace = containerWidth - totalAbs;
-				//                let absPerc = (totalAbs/containerWidth)*100;
-				let normalizer = (100 / totalPerc);
-				let totalFinalPerc = ((actionsWidth + selectionWidth) / containerWidth) * 100;
-				this.columns.forEach(col => {
-					let width = col.origWidth;
-					if (width && width.trim().endsWith('%')) {
-						let origVal = parseFloat(width);
-						let newVal = normalizer * origVal * percSpace / 100;
-						let newPerc = (newVal / containerWidth) * 100;
-						col.width = newPerc + '%';
-						totalFinalPerc += newPerc;
-					}
-					else if (width) {
-						totalFinalPerc += 100 * parseFloat(width) / containerWidth;
-					}
-				});
-				//                console.log(totalFinalPerc);
-				this.ready = true;
-			});
+            }
+
+			if (delay) $timeout(() => setNormalWidths());
+			else setNormalWidths();
 		}
 
 		getDisplayNameForField(field) {
