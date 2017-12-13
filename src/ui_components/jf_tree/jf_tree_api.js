@@ -457,6 +457,11 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
 
         openDeepNode(node) {
 
+            if (!node) {
+                console.error('openDeepNode was called with undefined node')
+                return;
+            }
+
             if (this.$drillDownMode) {
                 this.drillUpToRoot();
             }
@@ -469,6 +474,11 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             while (curr) {
                 nodesToOpen.push(curr);
                 curr = this.parentGetter(curr);
+            }
+
+            if (!nodesToOpen.length) {
+                this.selectNode(node);
+                return;
             }
 
             nodesToOpen.reverse();
