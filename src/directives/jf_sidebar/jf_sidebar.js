@@ -104,7 +104,7 @@ class jfSidebarController {
 				}, 300);
 			}
 
-		} else if (this.menu.width != '200px' && !$('.pin-menu').is(':hover') && ($('.sub-menu:hover').length < 1)) {     // if menu isn't open
+		} else if (this.menu.width != '200px' && !$('.pin-menu:hover').length && ($('.sub-menu:hover').length < 1)) {     // if menu isn't open
 			if (!angular.isDefined(this.openMenu)) {
 				this.openMenu = this.$timeout(() => {
 					let widthToOpen = ($('.sub-menu').length > 0 && $(
