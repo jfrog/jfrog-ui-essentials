@@ -18,6 +18,8 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             this.objectName = 'Item';
             this.GO_UP_NODE = {$specialNode: 'GO_UP'};
 
+//            this.showLines();
+
             this.paneSelector = () => 'default';
         }
 
@@ -43,8 +45,10 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             if (!!oldVal !== !!drillDownMode) {
                 this._freeze();
                 this.refreshTree(false).then(() => {
+                    this._refreshIndentations();
                     this.centerOnSelected();
                     this._unFreeze();
+
                     defer.resolve()
                 });
             }
@@ -53,6 +57,10 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             }
 
             return defer.promise;
+        }
+
+        _refreshIndentations() {
+            this.$viewPanes.forEach(vp => vp._refreshIndentations());
         }
 
         setSortingFunction(sortingFunction) {
@@ -427,6 +435,8 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             else {
                 this.drillUpToRoot();
             }
+            this._refreshIndentations();
+
         }
 
         drillDown(flatItem) {
@@ -441,6 +451,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             flatItem.pane.$flatItems = [goUpFlat, this.$currParentFlat];
             flatItem.pane._addChildren(flatItem.data.$childrenCache, 2, this.$currParentFlat);
             this.selectNode(this.$currParentFlat.data, false);
+            this._refreshIndentations();
         }
 
         drillUpToRoot() {
@@ -449,6 +460,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             this.$currParentFlat.$origFlat.pane.dirCtrl.resetScroll();
             this.setTreeData(this.$rootCache);
             delete this.$currParentFlat;
+            this._refreshIndentations();
         }
 
         getCurrentParent() {
@@ -754,6 +766,13 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                 count += vp.getFilteredNodesCount();
             })
             return count;
+        }
+
+        showLines() {
+            this.linesVisible = true;
+        }
+        hideLines() {
+            this.linesVisible = false;
         }
 
 	}

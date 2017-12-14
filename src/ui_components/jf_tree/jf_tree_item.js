@@ -107,6 +107,39 @@ class jfTreeItemController {
             return classes;
         }
     }
+
+    getIndentation() {
+        if (!this.data.data.$indentation) {
+            this.createIndentation();
+        }
+        return this.data.data.$indentation;
+    }
+
+    createIndentation() {
+        let flats = this.data.pane.$flatItems;
+        let isLastChild = (item) => {
+            if (item.$isLastChild === undefined) {
+                let parent = item.parent;
+                let children = _.filter(flats, {parent});
+                let index = children.indexOf(item);
+                item.$isLastChild = index !== -1 && index === children.length - 1;
+            }
+            return item.$isLastChild;
+        };
+
+        let indentation = [];
+        let relevantItem = this.data;
+        for (let i = this.data.level - 1; i >= 0; i--) {
+            let isLast = isLastChild(relevantItem);
+            let unit = {
+                index: i,
+                class: i === this.data.level - 1 ? (isLast ? 'last-connection-point' : 'connection-point') : (isLast ? '' : 'vertical-line')
+            }
+            indentation.push(unit);
+            relevantItem = relevantItem.parent;
+        }
+        this.data.data.$indentation = indentation.reverse();
+    }
 }
 
 export function jfTreeItem() {

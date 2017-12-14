@@ -1,0 +1,10 @@
+<div class="indentation-wrap"
+     ng-style="{width: (jfTreeIndentation.indentation.length * 26) + 'px'}">
+    <div class="indentation-flex-wrap" ng-if="jfTreeIndentation.visible">
+        <div ng-repeat="indentation in jfTreeIndentation.indentation"
+             class="indentation-unit"
+             ng-style="{height: jfTreeIndentation.height}"
+             ng-class="indentation.class">
+        </div>
+    </div>
+</div>

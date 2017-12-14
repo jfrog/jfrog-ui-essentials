@@ -424,4 +424,10 @@ export class TreeViewPane {
         return _.filter(this._getFilteredData(), fi => fi.data !== this.treeApi.GO_UP_NODE).length;
     }
 
+    _refreshIndentations() {
+        this.$flatItems.forEach(fi => {
+            if (fi.data.$indentation) delete fi.data.$indentation;
+        })
+    }
+
 }
