@@ -6,10 +6,13 @@ export class TreeViewPane {
 
         this.itemHeight = '50px';
         this.itemsPerPage = 25;
+
+        this.renderLinesBackgrounds();
     }
 
     setItemsPerPage(rpp) {
         this.itemsPerPage = rpp;
+        this.renderLinesBackgrounds();
         return this;
     }
 
@@ -428,6 +431,43 @@ export class TreeViewPane {
         this.$flatItems.forEach(fi => {
             if (fi.data.$indentation) delete fi.data.$indentation;
         })
+    }
+
+    renderLinesBackgrounds() {
+        let height = parseFloat(this.itemHeight);
+        let canvas = $(`<canvas width="26" height="${height}"></canvas>`)[0];
+        let ctx = canvas.getContext('2d');
+        ctx.strokeStyle = '#000099';
+
+        ctx.beginPath();
+        ctx.moveTo(13,0);
+        ctx.lineTo(13,height);
+        ctx.stroke();
+        let verticalLine = canvas.toDataURL('image/png', 1.0);
+
+        ctx.clearRect(0,0,26,height);
+        ctx.beginPath();
+        ctx.moveTo(13,0);
+        ctx.lineTo(13,height);
+        ctx.moveTo(13,height/2);
+        ctx.lineTo(26,height/2);
+        ctx.stroke();
+        let connectionPoint = canvas.toDataURL('image/png', 1.0);
+
+        ctx.clearRect(0,0,26,height);
+        ctx.beginPath();
+        ctx.moveTo(13,0);
+        ctx.lineTo(13,height/2);
+        ctx.lineTo(26,height/2);
+        ctx.stroke();
+        let lastConnectionPoint = canvas.toDataURL('image/png', 1.0);
+
+
+        this.linesBackgrounds = {
+            'vertical-line': verticalLine,
+            'connection-point': connectionPoint,
+            'last-connection-point': lastConnectionPoint
+        }
     }
 
 }

@@ -18,8 +18,6 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             this.objectName = 'Item';
             this.GO_UP_NODE = {$specialNode: 'GO_UP'};
 
-//            this.showLines();
-
             this.paneSelector = () => 'default';
         }
 
@@ -771,6 +769,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         showLines() {
             this.linesVisible = true;
             this._refreshIndentations();
+            return this;
         }
         hideLines() {
             this.linesVisible = false;

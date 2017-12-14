@@ -138,7 +138,7 @@ class jfTreeItemController {
             let isLast = isLastChild(relevantItem);
             let unit = {
                 index: i,
-                class: i === this.data.level - 1 ? (isLast ? 'last-connection-point' : 'connection-point') : (isLast ? '' : 'vertical-line')
+                background: i === this.data.level - 1 ? (isLast ? 'last-connection-point' : 'connection-point') : (isLast ? '' : 'vertical-line')
             }
             indentation.push(unit);
             relevantItem = relevantItem.parent;
