@@ -116,6 +116,11 @@ class jfTreeItemController {
     }
 
     createIndentation() {
+        if (!this.tree.api.linesVisible) {
+            this.data.data.$indentation = _.map(new Array(this.data.level), i => ({}));
+            return;
+        }
+
         let flats = this.data.pane.$flatItems;
         let isLastChild = (item) => {
             if (item.$isLastChild === undefined) {

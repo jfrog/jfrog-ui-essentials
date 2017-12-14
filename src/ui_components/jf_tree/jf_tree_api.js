@@ -770,9 +770,11 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
 
         showLines() {
             this.linesVisible = true;
+            this._refreshIndentations();
         }
         hideLines() {
             this.linesVisible = false;
+            this._refreshIndentations();
         }
 
 	}
