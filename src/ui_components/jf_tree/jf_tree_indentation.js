@@ -5,7 +5,12 @@ class jfTreeIndentationController {
             // Build the inner html for the units here in js, it is much faster than using ng-repeat
             let indentationHtml = '';
             let htmlForIndentation = (indentation) => {
-                return `<div class="indentation-unit" style="height: ${this.height}; background-image: url('${this.linesBackgrounds[indentation.background]}')"></div>`;
+                if (this.linesBackgrounds[indentation.background]) {
+                    return `<div class="indentation-unit" style="height: ${this.height}; background-image: url('${this.linesBackgrounds[indentation.background]}')"></div>`;
+                }
+                else {
+                    return `<div class="indentation-unit" style="height: ${this.height};"></div>`;
+                }
             }
             this.indentation.forEach(indentation => {
                 indentationHtml += htmlForIndentation(indentation);
