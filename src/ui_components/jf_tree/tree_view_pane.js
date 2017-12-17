@@ -174,6 +174,11 @@ export class TreeViewPane {
     }
 
     _deleteItem(item) {
+        let index = this.$flatItems.indexOf(item);
+        if (index > 0) {
+            delete this.$flatItems[index-1].$isLastChild;
+            delete this.$flatItems[index-1].data.$indentation;
+        }
         _.remove(this.$flatItems, fi => fi === item);
         _.remove(item.parent.data.$childrenCache, node => node === item.data);
         this._removeChildren(item);
@@ -438,6 +443,10 @@ export class TreeViewPane {
         let canvas = $(`<canvas width="26" height="${height}"></canvas>`)[0];
         let ctx = canvas.getContext('2d');
         ctx.strokeStyle = '#000099';
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = '#0000ff';
 
         ctx.beginPath();
         ctx.moveTo(13,0);
