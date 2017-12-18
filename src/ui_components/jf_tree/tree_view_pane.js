@@ -435,6 +435,11 @@ export class TreeViewPane {
     _refreshIndentations() {
         this.$flatItems.forEach(fi => {
             if (fi.data.$indentation) delete fi.data.$indentation;
+            if (fi.data.$childrenCache) {
+                fi.data.$childrenCache.forEach(node => {
+                    if (node.$indentation) delete node.$indentation;
+                })
+            }
         })
     }
 
