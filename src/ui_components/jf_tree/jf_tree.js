@@ -239,7 +239,6 @@ class jfTreeController {
                     let maxScrollTop = scrollParent[0].scrollHeight - scrollParent.outerHeight();
                     let relativePosition = scrollParent.scrollTop() / maxScrollTop;
                     if (_.isNaN(relativePosition)) {
-                        console.error('scroll -> relativePosition is NaN !');
                         relativePosition = 1;
                     }
                     this.virtualScrollIndex = relativePosition * (len - this.viewPane.itemsPerPage);
