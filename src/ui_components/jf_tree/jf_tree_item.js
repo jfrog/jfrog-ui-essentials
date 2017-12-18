@@ -23,17 +23,17 @@ class jfTreeItemController {
             }
         };
 
-        this.$scope.$watch('jfTreeItem.tree.api.$selectedNode', selected => {
+        this.$scope.$watch('jfTreeItem.tree.api.$freezedSelected || jfTreeItem.tree.api.$selectedNode', selected => {
             let iAmSelected = selected === this.data.data;
             toggleClass(iAmSelected, 'selected');
         })
-        this.$scope.$watch('jfTreeItem.tree.api.$preSelectedNode', preSelected => {
+        this.$scope.$watch('jfTreeItem.tree.api.$freezedPreSelected || jfTreeItem.tree.api.$preSelectedNode', preSelected => {
             let iAmPreSelected = preSelected === this.data.data;
             toggleClass(iAmPreSelected, 'pre-selected');
         })
         this.$scope.$watch('jfTreeItem.data', () => {
-            let iAmPreSelected = this.tree.api.$preSelectedNode === this.data.data;
-            let iAmSelected = this.tree.api.$selectedNode === this.data.data;
+            let iAmPreSelected = (this.tree.api.$freezedPreSelected || this.tree.api.$preSelectedNode) === this.data.data;
+            let iAmSelected = (this.tree.api.$freezedSelected || this.tree.api.$selectedNode) === this.data.data;
             toggleClass(iAmSelected, 'selected');
             toggleClass(iAmPreSelected, 'pre-selected');
         })
