@@ -78,7 +78,7 @@ class jfTreeItemController {
         }
         else {
             let node = this.data;
-            this.tree.api.openNode(node.data);
+            this.tree.api.openNode(node.data, true);
         }
     }
 

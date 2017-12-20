@@ -344,28 +344,28 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             if (pane) return pane._flatFromNode(node);
         }
 
-        openSelected() {
-            this.openNode(this.$selectedNode);
+        openSelected(scrollUpIfNeeded = false) {
+            this.openNode(this.$selectedNode, scrollUpIfNeeded);
         }
 
-        openPreSelected() {
-            this.openNode(this.$preSelectedNode || this.$selectedNode);
+        openPreSelected(scrollUpIfNeeded = false) {
+            this.openNode(this.$preSelectedNode || this.$selectedNode, scrollUpIfNeeded);
         }
 
         closeSelected() {
             this.closeNode(this.$selectedNode);
         }
 
-        toggleSelected() {
+        toggleSelected(scrollUpIfNeeded) {
             if (this.isNodeOpen(this.$selectedNode)) {
                 this.closeSelected();
             }
             else {
-                this.openSelected();
+                this.openSelected(scrollUpIfNeeded);
             }
         }
 
-        openNode(node) {
+        openNode(node, scrollUpIfNeeded = false) {
             if (!node) return;
             if (this.fire('item.before.open', node) === false) return $q.when();
 
@@ -388,11 +388,13 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
 
                             let addedFlats = flat.pane._addChildren(children, flat.level + 1, flat);
 
-                            if (addedFlats.length >= 3) {
-                                flat.pane.bringItemToView(addedFlats[2]);
-                            }
-                            else if (addedFlats.length) {
-                                flat.pane.bringItemToView(addedFlats[addedFlats.length - 1]);
+                            if (scrollUpIfNeeded) {
+                                if (addedFlats.length >= 3) {
+                                    flat.pane.bringItemToView(addedFlats[2], false);
+                                }
+                                else if (addedFlats.length) {
+                                    flat.pane.bringItemToView(addedFlats[addedFlats.length - 1], false);
+                                }
                             }
 
                         }
