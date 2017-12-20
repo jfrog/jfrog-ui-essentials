@@ -20,6 +20,8 @@
 
       .jf-tree-item {
         cursor: pointer;
+        position: relative;
+
         &.quick-find-match {
           .node-text {
             font-weight: 900;
@@ -41,7 +43,7 @@
         }
 //        border: 1px red solid;
         .jf-tree-item-container {
-          position: relative;
+          display: inline-block;
           jf-tree-indentation {
             .indentation-wrap {
               display: inline-block;

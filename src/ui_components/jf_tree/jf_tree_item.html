@@ -2,7 +2,7 @@
      ng-class="[jfTreeItem.isQuickFindMatch() ? 'quick-find-match' : ''].concat(jfTreeItem.getCustomClasses())"
      ng-click="jfTreeItem.onItemClick($event)"
      ng-dblclick="jfTreeItem.onItemDoubleClick()"
-     ng-style="{height: jfTreeItem.tree.viewPane.itemHeight, 'line-height': jfTreeItem.tree.viewPane.itemHeight}">
+     ng-style="{height: jfTreeItem.tree.viewPane.itemHeight, 'line-height': jfTreeItem.tree.viewPane.itemHeight, width: jfTreeItem.tree.getWidth() + 'px'}">
 
     <div class="jf-tree-item-container"
          style="white-space: nowrap"

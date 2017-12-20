@@ -93,6 +93,14 @@ class jfTreeController {
         this.onUpdateFilter();
     }
 
+    getWidth() {
+        let scrollWidth = $(this.$element).find('.h-scroll-wrapper')[0].scrollWidth;
+        let scrollPos = $(this.$element).find('.h-scroll-wrapper').scrollLeft();
+//        let contentWidth = $(this.$element).find('.jf-tree-item').width();
+        let contentWidth = Math.max.apply(Math, $(this.$element).find('.jf-tree-item-container').map(function () { return $(this).width() }).get()) + 30;
+        let parentWidth = $(this.$element).parent().width();
+        return Math.max(parentWidth, contentWidth);
+    }
 
     compileTemplate(elem, itemId) {
         let node = this.viewPane._getPageData()[itemId];
@@ -172,6 +180,9 @@ class jfTreeController {
     onMouseWheel($event, $delta, $deltaX, $deltaY) {
 
         let normalDelta = this._normalizeWheelEvent($event.originalEvent).pixelY;
+        let xDelta = this._normalizeWheelEvent($event.originalEvent).pixelX;
+
+        if (Math.abs(normalDelta) < Math.abs(xDelta)) return;
 
         let scrollAmount = 0.02 * Math.abs(normalDelta);
         let scrollPosBefore = this.viewPane._getCurrentScrollPos();

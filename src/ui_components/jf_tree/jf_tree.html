@@ -14,11 +14,15 @@
                      ng-style="{height: (jfTree.getTotalScrollHeight() > jfTree.maxFakeScrollHeight ? jfTree.maxFakeScrollHeight : jfTree.getTotalScrollHeight()) + 'px'}">
                 </div>
             </div>
-            <jf-tree-item ng-repeat="item in jfTree.viewPane._getPageData() track by $index"
-                          tree="jfTree"
-                          msd-wheel="jfTree.onMouseWheel($event, $delta, $deltaX, $deltaY)"
-                          item-id="$index"
-                          data="item"></jf-tree-item>
+            <div class="h-scroll-wrapper"
+                 ng-style="{height: (jfTree.getPageHeight() + jfTree.getTranslate()) + 'px'}"
+                 style="overflow-x: auto; overflow-y: hidden"
+                 msd-wheel="jfTree.onMouseWheel($event, $delta, $deltaX, $deltaY)">
+                <jf-tree-item ng-repeat="item in jfTree.viewPane._getPageData() track by $index"
+                              tree="jfTree"
+                              item-id="$index"
+                              data="item"></jf-tree-item>
+            </div>
         </div>
 
         <div class="missing-data-setters"
