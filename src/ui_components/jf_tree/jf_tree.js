@@ -22,8 +22,12 @@ class jfTreeController {
         this.$scope = $scope;
 	    this.$rootScope = $rootScope;
         this.cellScopes = [];
-        this.virtScrollDisplacement = 0;
         this.maxFakeScrollHeight = 1000000;
+
+        $scope.$watch('jfTree.parentWidth', () => {
+            this.calcItemsWidth();
+        })
+
         $scope.$watch('jfTree.api',(api) => {
             if (this.api) {
                 this.api._setDirectiveController(this);
@@ -37,6 +41,9 @@ class jfTreeController {
 
                 this.currentPage = 0;
                 this.virtualScrollIndex = 0;
+                this.virtScrollDisplacement = 0;
+
+                this.calcItemsWidth();
             }
         })
 
@@ -46,6 +53,7 @@ class jfTreeController {
 
         $(window).on('resize', () => {
             if (this.viewPane.autoHeight) this.viewPane._setAutoItemsPerPage();
+            this.calcItemsWidth();
         });
 
         $(this.$element).find('.jf-tree').keydown(e => {
@@ -93,13 +101,14 @@ class jfTreeController {
         this.onUpdateFilter();
     }
 
-    getWidth() {
-        let scrollWidth = $(this.$element).find('.h-scroll-wrapper')[0].scrollWidth;
-        let scrollPos = $(this.$element).find('.h-scroll-wrapper').scrollLeft();
-//        let contentWidth = $(this.$element).find('.jf-tree-item').width();
+    calcItemsWidth() {
         let contentWidth = Math.max.apply(Math, $(this.$element).find('.jf-tree-item-container').map(function () { return $(this).width() }).get()) + 30;
         let parentWidth = $(this.$element).parent().width();
-        return Math.max(parentWidth, contentWidth);
+        this.itemsWidth = Math.max(parentWidth, contentWidth);
+    }
+
+    get parentWidth() {
+        return $(this.$element).parent().width();
     }
 
     compileTemplate(elem, itemId) {
@@ -179,10 +188,18 @@ class jfTreeController {
 
     onMouseWheel($event, $delta, $deltaX, $deltaY) {
 
+        if (this.viewPane.scrollTimeout) {
+            this.$timeout.cancel(this.viewPane.scrollTimeout);
+            delete this.viewPane.scrollTimeout;
+        }
+
         let normalDelta = this._normalizeWheelEvent($event.originalEvent).pixelY;
         let xDelta = this._normalizeWheelEvent($event.originalEvent).pixelX;
 
-        if (Math.abs(normalDelta) < Math.abs(xDelta)) return;
+        if (Math.abs(normalDelta) < Math.abs(xDelta)) {
+            $event.stopPropagation();
+            return;
+        }
 
         let scrollAmount = 0.02 * Math.abs(normalDelta);
         let scrollPosBefore = this.viewPane._getCurrentScrollPos();
@@ -247,6 +264,10 @@ class jfTreeController {
                 delete this.$$settingScroll;
                 return;
             }
+            if (this.viewPane.scrollTimeout) {
+                this.$timeout.cancel(this.viewPane.scrollTimeout);
+                delete this.viewPane.scrollTimeout;
+            }
             this.$scope.$apply(()=>{
                 let len = this.viewPane._getPrePagedData().length;
                 if (len) {
@@ -266,6 +287,7 @@ class jfTreeController {
                     this.virtScrollDisplacement = 0;
                     this.currentPage = 0;
                 }
+                this.calcItemsWidth();
                 this.api.fire('pagination.change', this.paginationApi.getCurrentPage());
             })
         })
@@ -293,6 +315,7 @@ class jfTreeController {
             let scrollTop = Math.floor(maxScrollTop * relativePosition);
             this.$$settingScroll = true;
             scrollParent.scrollTop(scrollTop);
+            this.calcItemsWidth();
         }
         if (delay) this.$timeout(sync);
         else sync();

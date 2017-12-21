@@ -52,7 +52,10 @@ export class TreeViewPane {
         }
 
         let $timeout = this.treeApi.$timeout;
-        if (this.scrollTimeout) $timeout.cancel(this.scrollTimeout);
+        if (this.scrollTimeout) {
+            $timeout.cancel(this.scrollTimeout);
+            delete this.scrollTimeout;
+        }
         let quadraticEase = (k) => k * (2 - k);
 
         let interval = 40;
@@ -119,6 +122,16 @@ export class TreeViewPane {
             this.containerHeight = containerHeight;
             this.setItemsPerPage(Math.floor(containerHeight / parseFloat(this.itemHeight)));
         })
+    }
+
+    _hasHorizontalScrollbar() {
+        let hScrollWrapper = $(this.dirCtrl.$element).find('.h-scroll-wrapper');
+        return hScrollWrapper[0].scrollWidth > hScrollWrapper.width();
+    }
+
+    _getHorizontalScrollbarHeight() {
+        let hScrollWrapper = $(this.dirCtrl.$element).find('.h-scroll-wrapper');
+        return hScrollWrapper.height() - hScrollWrapper[0].clientHeight;
     }
 
     _getPageData() {
@@ -443,11 +456,16 @@ export class TreeViewPane {
         if (index - 1 < this.dirCtrl.virtualScrollIndex) {
             this.scrollTo(index, jump ? 0 : undefined);
         }
-        else if (index + 1 > this.dirCtrl.virtualScrollIndex + this.itemsPerPage) {
+        else if (index + 1 >= this.dirCtrl.virtualScrollIndex + this.itemsPerPage) {
             let fullItems = this.containerHeight ? Math.floor(this.containerHeight/parseFloat(this.itemHeight)) : this.itemsPerPage;
             let scrollIndex = index - fullItems >= 0 ? index - fullItems : 0;
             let displace = this.containerHeight ? 1-(this.containerHeight/parseFloat(this.itemHeight) - fullItems) : 1;
-            this.scrollTo(scrollIndex + displace, jump ? 0 : undefined);
+            let hScrollFactor = 0;
+            if (this._hasHorizontalScrollbar()) {
+                let pixelFactor = this._getHorizontalScrollbarHeight();
+                hScrollFactor = pixelFactor / parseFloat(this.itemHeight);
+            }
+            this.scrollTo(scrollIndex + displace + hScrollFactor, jump ? 0 : undefined);
         }
         this.dirCtrl.syncFakeScroller(false);
 
