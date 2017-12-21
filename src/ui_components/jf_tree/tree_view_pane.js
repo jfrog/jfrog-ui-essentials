@@ -456,7 +456,7 @@ export class TreeViewPane {
         if (index - 1 < this.dirCtrl.virtualScrollIndex) {
             this.scrollTo(index, jump ? 0 : undefined);
         }
-        else if (index + 1 >= this.dirCtrl.virtualScrollIndex + this.itemsPerPage) {
+        else if (index + 1 > this.dirCtrl.virtualScrollIndex + this.itemsPerPage) {
             let fullItems = this.containerHeight ? Math.floor(this.containerHeight/parseFloat(this.itemHeight)) : this.itemsPerPage;
             let scrollIndex = index - fullItems >= 0 ? index - fullItems : 0;
             let displace = this.containerHeight ? 1-(this.containerHeight/parseFloat(this.itemHeight) - fullItems) : 1;
