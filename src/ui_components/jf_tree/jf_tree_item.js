@@ -108,6 +108,10 @@ class jfTreeItemController {
         }
     }
 
+    shouldShowExpander() {
+        return this.data.hasChildren && !this.data.data.$noChildren && !this.data.$pending;
+    }
+
     getIndentation() {
         if (!this.data.data.$indentation) {
             this.createIndentation();

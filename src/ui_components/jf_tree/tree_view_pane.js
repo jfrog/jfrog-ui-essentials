@@ -546,6 +546,13 @@ export class TreeViewPane {
 
         ctx.clearRect(0,0,26,height);
         ctx.beginPath();
+        ctx.moveTo(0,height/2);
+        ctx.lineTo(26,height/2);
+        ctx.stroke();
+        let horizontalLine = canvas.toDataURL('image/png', 1.0);
+
+        ctx.clearRect(0,0,26,height);
+        ctx.beginPath();
         ctx.moveTo(13,0);
         ctx.lineTo(13,height);
         ctx.moveTo(13,height/2);
@@ -564,6 +571,7 @@ export class TreeViewPane {
 
         this.linesBackgrounds = {
             'vertical-line': verticalLine,
+            'horizontal-line': horizontalLine,
             'connection-point': connectionPoint,
             'last-connection-point': lastConnectionPoint
         }
