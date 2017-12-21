@@ -125,6 +125,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
 
         setFilterCallback(filterCallback) {
             this.filterCallback = (node) => {
+                if (node === this.GO_UP_NODE) return true;
                 if (node.$$$filterResultCache !== undefined) {
                     return node.$$$filterResultCache;
                 }

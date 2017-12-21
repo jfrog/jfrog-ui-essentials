@@ -366,10 +366,10 @@ export class TreeViewPane {
                     this._recursiveOpenRestore(fi.data).then(() => {
                         resolveCount++;
                         if (resolveCount === itemsCount) {
-                            let selectedId = this.treeApi.$selectedNode ? this.treeApi.uniqueIdGetter(this.treeApi.$selectedNode) : null;
+                            let selectedId = this.treeApi.$selectedNode && this.treeApi.$selectedNode !== this.treeApi.GO_UP_NODE ? this.treeApi.uniqueIdGetter(this.treeApi.$selectedNode) : null;
                             let newSelected = selectedId !== null ? _.find(this.$flatItems, fi => fi.data !== this.treeApi.GO_UP_NODE && this.treeApi.uniqueIdGetter(fi.data) === selectedId) : null;
+                            if (this.treeApi.$selectedNode === this.treeApi.GO_UP_NODE) newSelected = _.find(this.$flatItems, fi => fi.data === this.treeApi.GO_UP_NODE);
                             if (newSelected) {
-
                                 this.treeApi._setSelected(newSelected);
                                 this._unFreeze();
                                 mainDefer.resolve();
@@ -434,6 +434,8 @@ export class TreeViewPane {
     }
 
     _flatFromNode(node) {
+        if (node === this.treeApi.GO_UP_NODE) return _.find(this.$flatItems, {$specialNode: "GO_UP"});
+
         let refMatch = _.find(this.$flatItems, flat => flat.data === node);
         if (!refMatch) {
             let nodeId = this.treeApi.uniqueIdGetter(node);
@@ -512,11 +514,11 @@ export class TreeViewPane {
     }
 
     getNodesCount() {
-        return this._getRawData().length;
+        return this._getRawData(true).length;
     }
 
     getFilteredNodesCount() {
-        return _.filter(this._getFilteredData(), fi => fi.data !== this.treeApi.GO_UP_NODE).length;
+        return _.filter(this._getFilteredData(null, true), fi => fi.data !== this.treeApi.GO_UP_NODE).length;
     }
 
     _refreshIndentations() {
