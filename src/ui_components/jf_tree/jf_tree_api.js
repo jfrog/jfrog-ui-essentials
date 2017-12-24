@@ -501,6 +501,10 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                 let nextId = this.uniqueIdGetter(nodesToOpen[index]);
                 let nextNode = this.findNode(n => this.uniqueIdGetter(n) === nextId);
 
+                if (nextNode) {
+                    delete nextNode.$childrenCache;
+                    nextNode.data.invalidateChildren();
+                }
                 if (index + 1 < nodesToOpen.length) {
                     if (nextNode) this.openNode(nextNode).then(() => {
                         index++;

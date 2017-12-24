@@ -20,7 +20,7 @@
                 <div class="icon-hourglass-local"></div>
             </div>
             <div class="no-children-line-extension"
-                 ng-if="jfTreeItem.data.level > 1 && jfTreeItem.tree.api.linesVisible && !jfTreeItem.shouldShowExpander() && !jfTreeItem.data.$pending"
+                 ng-if="jfTreeItem.data.level >= 1 && jfTreeItem.tree.api.linesVisible && !jfTreeItem.shouldShowExpander() && !jfTreeItem.data.$pending"
                  ng-style="{height: jfTreeItem.tree.viewPane.itemHeight, 'background-image': 'url(\'' + jfTreeItem.tree.viewPane.linesBackgrounds['horizontal-line'] + '\')'}">
             </div>
         </div>
