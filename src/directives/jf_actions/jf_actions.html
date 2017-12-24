@@ -22,7 +22,13 @@
                   ng-if="!actionObj.visibleWhen || actionObj.visibleWhen()">
                   <a href="" class="action-container" ng-click="jfActions.doAction(actionObj,$event)">
                       <span class="action-icon icon"
-                            ng-class="actionObj.icon"></span>
+                            ng-if="actionObj.icon"
+                            ng-class="actionObj.icon">
+                      </span>
+                      <span class="action-icon"
+                            ng-if="actionObj.image && !actionObj.icon">
+                          <img src="{{actionObj.image}}"/>
+                      </span>
                       <span class="action-name">{{actionObj.title}}</span>
                   </a>
               </li>

@@ -1,6 +1,7 @@
 .action-button {
   padding: 0 8px !important;
   font-size: 15px;
+  font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
 
   a {
     color: @grayFontGeneral;
@@ -19,6 +20,13 @@
     font-size: 16px;
     top: 2px;
   }
+  .action-icon {
+    img {
+      width: 25px;
+      height: 25px;
+      vertical-align: sub;
+    }
+  }
 }
 
 .action-button, .action-item {
@@ -30,6 +38,63 @@
       span.action-icon:before,
       i.action-icon:before {
         color: lightgrey !important;
+      }
+    }
+  }
+}
+
+
+jf-actions {
+  display: inline-block;
+  ul.list-inline {
+    li {
+      padding: 0 0 0 5px !important;
+      margin: 0;
+    }
+  }
+  .actions-dropdown {
+    .action-item {
+      &:first-child:after {
+        right: 30px;
+      }
+      &.bordered {
+        border-top: 1px solid @grayBorderLighter;
+      }
+      &.bordered + .bordered {
+        border: none;
+      }
+    }
+    .action-name {
+      color: @blackFontDark;
+      font-weight: 500;
+    }
+    &:after {
+      display: none;
+    }
+    li:hover {
+      box-shadow: inset 3px 0 0 0 @grayBGLight;
+      background: @grayBGLight !important;
+    }
+  }
+  .action-icon.icon-more {
+    margin-left: 5px;
+    margin-right: 0;
+    font-size: 12px;
+    top: 0;
+    &:before {
+      content: 'A' !important;
+      transform: rotate(90deg);
+      display: inline-block;
+    }
+  }
+
+  .dropdown {
+    .dropdown-menu {
+      display: none;
+    }
+    &.open {
+      .dropdown-menu {
+        display: block;
       }
     }
   }
