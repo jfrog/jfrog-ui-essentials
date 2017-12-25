@@ -72,8 +72,8 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
         getElements();
     }
 
-    function setDataGetters() {
-        treeApi.setDataGetters({
+    function setDataDriver() {
+        treeApi.setDataDriver({
             children: node => {
                 return node ? _.filter(simpleTestData, {parentId: node.id}) : _.filter(simpleTestData, item => !item.parentId)
             },
@@ -133,7 +133,7 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
     })
 
     it('should show empty tree placeholder text', () => {
-        treeApi.setDataGetters({});
+        treeApi.setDataDriver({});
         flushAndApply();
 
         expect(mainTreeElement.length).toEqual(1);
@@ -143,7 +143,7 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
     })
 
     it('should show root level items', () => {
-        setDataGetters();
+        setDataDriver();
         flushAndApply();
 
         expect(mainTreeElement.length).toEqual(1);
@@ -157,7 +157,7 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
     })
 
     it("should show children after pressing parent's expansion icon", () => {
-        setDataGetters();
+        setDataDriver();
         flushAndApply();
 
         expect(treeApi.isNodeOpen(simpleTestData[0])).toEqual(false);
@@ -207,14 +207,14 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
 
         });
 
-        setDataGetters();
+        setDataDriver();
         flushAndApply();
 
 
     })
 
     it("should collapse the node, after a second click", () => {
-        setDataGetters();
+        setDataDriver();
         flushAndApply();
         let expander = $(items[0]).find('.node-expander .action-icon');
         expander.click();
@@ -229,7 +229,7 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
     });
 
     it("should fire event when clicking an item", (done) => {
-        setDataGetters();
+        setDataDriver();
         flushAndApply();
         let expander = $(items[0]).find('.node-expander .action-icon');
         expander.click();
@@ -250,7 +250,7 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
 
     it("should work in drill down mode", () => {
 
-        setDataGetters();
+        setDataDriver();
         treeApi.setDrillDownMode();
         flushAndApply();
 
@@ -298,7 +298,7 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
     });
 
     it("should support fuzzy quick find", () => {
-        setDataGetters();
+        setDataDriver();
         flushAndApply();
         let expander = $(items[0]).find('.node-expander .action-icon');
         expander.click();
@@ -329,7 +329,7 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
     });
 
     it("should support filtering", () => {
-        setDataGetters();
+        setDataDriver();
         flushAndApply();
         let expander = $(items[0]).find('.node-expander .action-icon');
         expander.click();
@@ -365,7 +365,7 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
 
     it("should support multi view panes", () => {
         treeApi.createViewPane('pane2');
-        setDataGetters();
+        setDataDriver();
 
         flushAndApply();
         let pane2Container = $('<div class="pane2-container"></div>');
@@ -411,7 +411,7 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
         treeApi.setSortingFunction((a,b) => {
             return a.text > b.text ? (revSort ? -1 : 1) : b.text > a.text ? (revSort ? 1 : -1) : 0;
         })
-        setDataGetters();
+        setDataDriver();
         flushAndApply();
         let expander = $(items[0]).find('.node-expander .action-icon');
         expander.click();
@@ -433,7 +433,7 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
     });
 
     it("should freeze and unFreeze", (done) => {
-        setDataGetters();
+        setDataDriver();
         flushAndApply();
 
         expect(mainTreeElement.length).toEqual(1);
@@ -481,7 +481,7 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
 
     it("should switch from drill down mode to regular mode and back", (done) => {
 
-        setDataGetters();
+        setDataDriver();
         flushAndApply();
 
         let expander = $(items[0]).find('.node-expander .action-icon');

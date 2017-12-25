@@ -66,44 +66,44 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             return this;
         }
 
-        setDataGetters(dataGetters) {
+        setDataDriver(dataDriver) {
 
             this.dataGettersSet = true;
 
-            if (dataGetters.uniqueId) {
-                this.uniqueIdGetter = dataGetters.uniqueId;
+            if (dataDriver.uniqueId) {
+                this.uniqueIdGetter = dataDriver.uniqueId;
             }
 
-            if (dataGetters.nodeById) {
-                this.nodeByIdGetter = dataGetters.nodeById;
+            if (dataDriver.nodeById) {
+                this.nodeByIdGetter = dataDriver.nodeById;
             }
 
-            if (dataGetters.text) {
-                this.textGetter = dataGetters.text;
+            if (dataDriver.text) {
+                this.textGetter = dataDriver.text;
             }
 
-            if (dataGetters.childrenChecker) {
-                this.childrenChecker = dataGetters.childrenChecker;
+            if (dataDriver.childrenChecker) {
+                this.childrenChecker = dataDriver.childrenChecker;
             }
 
-            if (dataGetters.children) {
-                this.childrenGetter = dataGetters.children;
+            if (dataDriver.children) {
+                this.childrenGetter = dataDriver.children;
             }
 
-            if (dataGetters.parent) {
-                this.parentGetter = dataGetters.parent;
+            if (dataDriver.parent) {
+                this.parentGetter = dataDriver.parent;
             }
 
-            if (dataGetters.classes) {
-                this.classGetter = dataGetters.classes;
+            if (dataDriver.classes) {
+                this.classGetter = dataDriver.classes;
             }
 
-            if (dataGetters.pane) {
-                this.paneSelector = dataGetters.pane;
+            if (dataDriver.pane) {
+                this.paneSelector = dataDriver.pane;
             }
 
-            if (dataGetters.contextMenuItems) {
-                this.contextMenuItemsGetter = dataGetters.contextMenuItems;
+            if (dataDriver.contextMenuItems) {
+                this.contextMenuItemsGetter = dataDriver.contextMenuItems;
                 this._createContextMenu();
             }
 
