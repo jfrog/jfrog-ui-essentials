@@ -468,6 +468,12 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             return this.$currParentFlat ? this.$currParentFlat.data : null;
         }
 
+        openDeepNodeByUniqueId(uniqueId) {
+            return this.nodeByIdGetter(uniqueId).then(node => {
+                this.openDeepNode(node);
+            });
+        }
+
         openDeepNode(node) {
 
             if (!node) {

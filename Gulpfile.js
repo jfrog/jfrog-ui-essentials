@@ -327,10 +327,10 @@ gulp.task("revreplace", ['revision'], function() {
 });
 
 gulp.task('karma', function (done) {
-    karma.server.start({
+    (new karma.Server({
         configFile: __dirname + '/karma.conf.js',
         singleRun: true
-    }, done);
+    }, done)).start();
 });
 
 gulp.task('copyWebworkers', function() {
