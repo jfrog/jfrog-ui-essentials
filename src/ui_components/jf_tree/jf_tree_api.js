@@ -469,9 +469,16 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         }
 
         openDeepNodeByUniqueId(uniqueId) {
-            return this.nodeByIdGetter(uniqueId).then(node => {
-                this.openDeepNode(node);
+            let defer = $q.defer();
+
+            this.nodeByIdGetter(uniqueId).then(node => {
+                this.openDeepNode(node).then(() => {
+                    defer.resolve();
+                })
             });
+
+            return defer.promise;
+
         }
 
         openDeepNode(node) {

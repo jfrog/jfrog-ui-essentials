@@ -295,11 +295,12 @@ class jfTreeController {
     }
 
     getTranslate() {
-        if (!this.virtScrollDisplacement) {
+        let displacement = this.$freezedVScrollDisplacement !== undefined ? this.$freezedVScrollDisplacement : this.virtScrollDisplacement;
+        if (!displacement) {
             return 0;
         }
         else {
-            let pixels = this.virtScrollDisplacement * parseFloat(this.viewPane.itemHeight);
+            let pixels = displacement * parseFloat(this.viewPane.itemHeight);
             return pixels;
         }
     }
@@ -341,6 +342,15 @@ class jfTreeController {
         return !!(this.api.dataWasSet && !this.viewPane._getRawData().length && !this.viewPane.$freezed);
     }
 
+    _freezeVScroll() {
+        this.$freezedVScrollIndex = this.virtualScrollIndex;
+        this.$freezedVScrollDisplacement = this.virtScrollDisplacement;
+    }
+
+    _unFreezeVScroll() {
+        delete this.$freezedVScrollIndex;
+        delete this.$freezedVScrollDisplacement;
+    }
 }
 
 jfTreeController.$inject = ['$scope','$element', '$timeout', '$compile', '$rootScope'];

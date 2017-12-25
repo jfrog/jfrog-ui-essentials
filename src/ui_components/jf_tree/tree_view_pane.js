@@ -136,12 +136,9 @@ export class TreeViewPane {
 
     _getPageData() {
         let prePage = this._getPrePagedData();
-/*
-        return prePage.slice(this.dirCtrl.virtualScrollIndex,
-            this.dirCtrl.virtualScrollIndex + this.itemsPerPage + (this.dirCtrl.virtualScrollIndex + this.itemsPerPage < prePage.length ? 1 : 0));
-*/
-        return prePage.slice(this.dirCtrl.virtualScrollIndex,
-            this.dirCtrl.virtualScrollIndex + this.itemsPerPage + 2);
+        let vScrollIndex = this.dirCtrl.$freezedVScrollIndex || this.dirCtrl.virtualScrollIndex;
+        return prePage.slice(vScrollIndex,
+            vScrollIndex + this.itemsPerPage + 2);
     }
 
     _getPrePagedData(ignoreFreeze = false) {
@@ -204,6 +201,7 @@ export class TreeViewPane {
         this.$freezedItems = [].concat(this.$flatItems);
         this.$freezedOpened = [].concat(this.treeApi.$openedNodes);
         this.treeApi._freezeSelected();
+        if (this.dirCtrl) this.dirCtrl._freezeVScroll();
         this.$freezed = true;
     }
 
@@ -213,6 +211,7 @@ export class TreeViewPane {
         delete this.$freezedItems;
         delete this.$freezedOpened;
         this.treeApi._unFreezeSelected();
+        if (this.dirCtrl) this.dirCtrl._unFreezeVScroll();
         this.$freezed = false;
 
         this.refreshFilter();
