@@ -11,6 +11,10 @@
                              height="jfTreeItem.tree.viewPane.itemHeight"
                              lines-backgrounds="jfTreeItem.tree.viewPane.linesBackgrounds"
                              indentation="jfTreeItem.getIndentation()"></jf-tree-indentation>
+        <div class="no-children-line-extension"
+             ng-if="jfTreeItem.data.level >= 1 && jfTreeItem.tree.api.linesVisible && !jfTreeItem.shouldShowExpander() && !jfTreeItem.data.$pending"
+             ng-style="{height: jfTreeItem.tree.viewPane.itemHeight, 'background-image': 'url(\'' + jfTreeItem.tree.viewPane.linesBackgrounds['horizontal-line'] + '\')'}">
+        </div>
         <span class="drill-back" ng-if="jfTreeItem.data.data === jfTreeItem.tree.api.GO_UP_NODE">&nbsp;&nbsp;..</span>
         <div class="node-expander" ng-if="jfTreeItem.data.data !== jfTreeItem.tree.api.GO_UP_NODE">
             <div class="action-icon icon icon-more" ng-if="jfTreeItem.shouldShowExpander()"
@@ -18,10 +22,6 @@
                  ng-class="{'expanded': jfTreeItem.isExpanded()}"></div>
             <div class="spinner-msg-local" ng-if="jfTreeItem.data.$pending">
                 <div class="icon-hourglass-local"></div>
-            </div>
-            <div class="no-children-line-extension"
-                 ng-if="jfTreeItem.data.level >= 1 && jfTreeItem.tree.api.linesVisible && !jfTreeItem.shouldShowExpander() && !jfTreeItem.data.$pending"
-                 ng-style="{height: jfTreeItem.tree.viewPane.itemHeight, 'background-image': 'url(\'' + jfTreeItem.tree.viewPane.linesBackgrounds['horizontal-line'] + '\')'}">
             </div>
         </div>
         <div class="jf-tree-item-content" ng-if="jfTreeItem.data.data !== jfTreeItem.tree.api.GO_UP_NODE">
