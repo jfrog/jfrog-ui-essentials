@@ -72,14 +72,7 @@ class jfTreeItemController {
     }
 
     toggleExpansion() {
-
-        if (this.isExpanded()) {
-            this.tree.api.closeNode(this.data.data);
-        }
-        else {
-            let node = this.data;
-            this.tree.api.openNode(node.data, true);
-        }
+        this.tree.api.toggleExpansion(this.data.data);
     }
 
     isQuickFindMatch() {

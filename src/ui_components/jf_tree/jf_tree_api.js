@@ -420,6 +420,16 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             }
         }
 
+        toggleExpansion(node) {
+            let flat = this._flatFromNode(node);
+            if (flat.pane.isNodeOpen(node)) {
+                this.closeNode(node);
+            }
+            else {
+                this.openNode(node, true);
+            }
+        }
+
         deleteNode(node) {
             let flat = this._flatFromNode(node);
             flat.pane._deleteItem(flat);
