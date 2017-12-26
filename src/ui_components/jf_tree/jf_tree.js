@@ -260,15 +260,15 @@ class jfTreeController {
     initScrollFaker() {
         let scrollParent = $(this.$element).find('.scroll-faker-container');
         scrollParent.on('scroll',(e) => {
-            if (this.$$settingScroll) {
-                delete this.$$settingScroll;
-                return;
-            }
-            if (this.viewPane.scrollTimeout) {
-                this.$timeout.cancel(this.viewPane.scrollTimeout);
-                delete this.viewPane.scrollTimeout;
-            }
             this.$scope.$apply(()=>{
+                if (this.$$settingScroll) {
+                    delete this.$$settingScroll;
+                    return;
+                }
+                if (this.viewPane.scrollTimeout) {
+                    this.$timeout.cancel(this.viewPane.scrollTimeout);
+                    delete this.viewPane.scrollTimeout;
+                }
                 let len = this.viewPane._getPrePagedData().length;
                 if (len) {
                     let maxScrollTop = scrollParent[0].scrollHeight - scrollParent.outerHeight();
