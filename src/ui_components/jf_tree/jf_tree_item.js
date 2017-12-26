@@ -98,6 +98,12 @@ class jfTreeItemController {
         }
     }
 
+    getClasses() {
+        let classes = [];
+        if (this.isQuickFindMatch()) classes.push('quick-find-match');
+        return classes;
+    }
+
     getCustomClasses() {
         if (!this.data.data || this.data.data === this.tree.api.GO_UP_NODE || !this.tree.api.classGetter) return [];
         else {
