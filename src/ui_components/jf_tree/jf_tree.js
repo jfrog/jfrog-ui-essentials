@@ -210,7 +210,8 @@ class jfTreeController {
                 this.virtScrollDisplacement = newScrollIndex - this.virtualScrollIndex;
             }
             else {
-                this.virtualScrollIndex = this.viewPane._getPrePagedData().length > this.viewPane.itemsPerPage ? this.viewPane._getPrePagedData().length - this.viewPane.itemsPerPage : 0;
+                let actualItemsPerPage = this.viewPane._getPageData().length;
+                this.virtualScrollIndex = this.viewPane._getPrePagedData().length > actualItemsPerPage ? this.viewPane._getPrePagedData().length - actualItemsPerPage : 0;
             }
         }
         else if ($deltaY>0) { // scrollDown
