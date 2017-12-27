@@ -47,7 +47,8 @@
   "resolutions": {
     "angular": "1.5.11",
     "codemirror": "5.0.0",
-    "bootstrap": "3.1.1"
+    "bootstrap": "3.1.1",
+    "jquery": "3.2.1"
   },
   "devDependencies": {
     "jasmine-jquery": "2.1.0"
