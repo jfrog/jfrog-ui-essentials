@@ -29,17 +29,14 @@ jf-context-menu {
       }
       &:hover {
         color: @greenFontHeader;
-        background-color: @greenBGDropdownHover !important;
-        box-shadow: inset 3px 0 0 0 @greenFontHeader;
+        background-color: @grayBGLight !important;
         &[icon-name~="icon-clear"] {
           color: @redError;
-          background: #F4E7E7 !important;
           .action-icon {
             &:before {
               color: @redError;
             }
           }
-          box-shadow: inset 3px 0 0 0 @redError;
         }
       }
     }
