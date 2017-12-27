@@ -8,8 +8,7 @@ const ERROR_MARGIN = 15;
 
 class jfContextMenuController {
 	/* @ngInject */
-	constructor($scope, $element, $timeout, JFrogEventBus) {
-		this.$element = $element;
+	constructor($scope, $timeout, JFrogEventBus) {
 		this.$timeout = $timeout;
 		this.$scope = $scope;
 		this.JFrogEventBus = JFrogEventBus;
@@ -19,7 +18,6 @@ class jfContextMenuController {
 	$onInit() {
 		this.actions = [];
 		this.isOpen = false;
-		this.contextMenuElement = $(this.$element).find('.jf-context-menu');
 		this._registerToEvents();
 		this._handleDocumentClick();
 	}
@@ -59,10 +57,10 @@ class jfContextMenuController {
         if (pageY + contextMenuHeight + (ERROR_MARGIN/2) >= windowHeight) {
             top = pageY - (contextMenuHeight + ERROR_MARGIN/2);
 		}
-        this.contextMenuElement.css({
-			left: left,
-			top : top
-		});
+        this.position = {
+            left: left,
+            top: top
+        }
 	}
 
 	/***

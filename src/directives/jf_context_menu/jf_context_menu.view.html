@@ -1,5 +1,6 @@
 <div class="jf-context-menu"
-     ng-show="contextMenu.isOpen">
+     ng-style="contextMenu.position"
+     ng-if="contextMenu.isOpen">
 	<a href ng-repeat="action in contextMenu.actions"
 	     ng-click="contextMenu._onActionClick($event,action)"
 	     ng-href="{{action.link}}"
