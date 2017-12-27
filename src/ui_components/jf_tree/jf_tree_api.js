@@ -328,7 +328,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
 
 
         handleKeyEvent(e) {
-            if (_.includes(['ArrowDown', 'ArrowUp'], e.key)) {
+            if (_.includes(['ArrowDown', 'Down', 'ArrowUp', 'Up'], e.key)) {
                 let keydown = $.Event('keydown', {
                     keyCode: e.keyCode,
                     which: e.which,
