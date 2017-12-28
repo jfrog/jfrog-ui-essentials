@@ -9,13 +9,26 @@ class jfTreeItemController {
         $(this.$element).prop('ctrl', this);
 
         this._watchSelection();
+        this._watchExpansion();
 
+    }
+
+    _watchExpansion() {
+        this.$scope.$watch('jfTreeItem.isExpanded()', expanded => {
+            let iconElem = $(this.$element).find('.node-expander');
+            if (expanded) {
+                iconElem.addClass('expanded');
+            }
+            else {
+                iconElem.removeClass('expanded');
+            }
+        });
     }
 
     _watchSelection() {
         //This is instead of using ng-class, which not working smoothly in safari
-        let toggleClass = (iAmSelected, className) => {
-            if (iAmSelected) {
+        let toggleClass = (add, className) => {
+            if (add) {
                 $(this.$element).addClass(className);
             }
             else {
