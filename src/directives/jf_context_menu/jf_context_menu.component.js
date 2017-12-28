@@ -90,9 +90,9 @@ class jfContextMenuController {
 				this.isOpen = false;
 			});
 		};
-		$(document).on('click', handler);
+		$(document).on('mousedown', handler);
 		this.$scope.$on('$destroy', () => {
-			$(document).off('click', handler);
+			$(document).off('mousedown', handler);
 		});
 	}
 
