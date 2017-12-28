@@ -2,6 +2,13 @@
 	box-shadow: 0 0 @spread @color;
 }
 
+.user-select(@select) {
+  -webkit-user-select: @select;
+  -moz-user-select: @select;
+  -ms-user-select: @select; // IE10+
+  user-select: @select;
+}
+
 .icon-tall() {
   background-size: 80% auto !important;
 }
