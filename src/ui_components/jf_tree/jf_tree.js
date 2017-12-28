@@ -106,7 +106,7 @@ class jfTreeController {
     }
 
     calcItemsWidth() {
-        let contentWidth = Math.max.apply(Math, $(this.$element).find('.jf-tree-item-container').map(function () { return $(this).width() }).get()) + 30;
+        let contentWidth = Math.max.apply(Math, $(this.$element).find('.jf-tree-item-container').map(function () { return $(this).width() + $(this).find('.jf-tree-item-content').width() }).get()) + 30;
         let parentWidth = $(this.$element).parent().width();
         this.itemsWidth = Math.max(parentWidth, contentWidth);
     }
@@ -260,6 +260,10 @@ class jfTreeController {
             if (len < this.viewPane.itemsPerPage) return len * parseFloat(this.viewPane.itemHeight);
             else return this.viewPane.itemsPerPage * parseFloat(this.viewPane.itemHeight);
         }
+    }
+
+    initHScroll() {
+        $(this.$element).find('.h-scroll-wrapper').scroll(() => this.calcItemsWidth());
     }
 
     initScrollFaker() {

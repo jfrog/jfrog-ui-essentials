@@ -15,6 +15,7 @@
                 </div>
             </div>
             <div class="h-scroll-wrapper"
+                 ng-init="jfTree.initHScroll()"
                  ng-style="{height: (jfTree.getPageHeight() + jfTree.getTranslate()) + 'px'}"
                  msd-wheel="jfTree.onMouseWheel($event, $delta, $deltaX, $deltaY)">
                 <jf-tree-item ng-repeat="item in jfTree.viewPane._getPageData() track by $index"
