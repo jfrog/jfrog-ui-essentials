@@ -2,7 +2,7 @@
      ng-style="contextMenu.position"
      ng-if="contextMenu.isOpen">
 	<a href ng-repeat="action in contextMenu.actions"
-	     ng-click="contextMenu._onActionClick($event,action)"
+	     ng-mousedown="contextMenu._onActionClick($event,action)"
 	     ng-href="{{action.link}}"
 	     class="action-item" icon-name="{{action.icon || ''}}">
 		<i class="action-icon"
