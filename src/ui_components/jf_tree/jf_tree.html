@@ -17,10 +17,12 @@
             <div class="h-scroll-wrapper"
                  ng-style="{height: (jfTree.getPageHeight() + jfTree.getTranslate()) + 'px'}"
                  msd-wheel="jfTree.onMouseWheel($event, $delta, $deltaX, $deltaY)">
-                <jf-tree-item ng-repeat="item in jfTree.viewPane._getPageData() track by $index"
-                              tree="jfTree"
-                              item-id="$index"
-                              data="item"></jf-tree-item>
+                <div class="h-scroll-content">
+                    <jf-tree-item ng-repeat="item in jfTree.viewPane._getPageData() track by $index"
+                                  tree="jfTree"
+                                  item-id="$index"
+                                  data="item"></jf-tree-item>
+                </div>
             </div>
         </div>
 
