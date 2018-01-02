@@ -179,7 +179,8 @@ class jfTableRowController {
         }
     }
 
-    toggleExpansion() {
+    toggleExpansion($event) {
+	    $event.stopPropagation();
         this.tableView.options.toggleExpansion(this.data);
     }
 
