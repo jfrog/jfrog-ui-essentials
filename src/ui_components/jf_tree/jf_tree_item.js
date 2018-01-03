@@ -13,16 +13,24 @@ class jfTreeItemController {
 
     }
 
+    initExpander() {
+        this._syncExpansionClass(this.isExpanded());
+    }
+
+    _syncExpansionClass(expanded) {
+        let iconElem = $(this.$element).find('.node-expander');
+        if (expanded) {
+            iconElem.addClass('expanded');
+        }
+        else {
+            iconElem.removeClass('expanded');
+        }
+    }
+
     _watchExpansion() {
-        this.$scope.$watch('jfTreeItem.isExpanded()', expanded => {
-            let iconElem = $(this.$element).find('.node-expander');
-            if (expanded) {
-                iconElem.addClass('expanded');
-            }
-            else {
-                iconElem.removeClass('expanded');
-            }
-        });
+        this.$scope.$watch('jfTreeItem.isExpanded()', expanded => this._syncExpansionClass(expanded));
+
+        this.$scope.$watch('jfTreeItem.data', () => this._syncExpansionClass(this.isExpanded()));
     }
 
     _watchSelection() {

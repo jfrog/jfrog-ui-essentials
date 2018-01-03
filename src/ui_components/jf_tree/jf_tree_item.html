@@ -16,6 +16,7 @@
         </div>
         <span class="drill-back" ng-if="jfTreeItem.data.data === jfTreeItem.tree.api.GO_UP_NODE">&nbsp;&nbsp;..</span>
         <div class="node-expander"
+             ng-init="jfTreeItem.initExpander()"
              ng-style="{height: jfTreeItem.tree.viewPane.itemHeight}"
              ng-if="jfTreeItem.data.data !== jfTreeItem.tree.api.GO_UP_NODE && (jfTreeItem.shouldShowExpander() || jfTreeItem.data.$pending || jfTreeItem.data.level === 0)">
             <div class="action-icon icon icon-addons-arrow-right"
