@@ -146,6 +146,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             this.quickFindTerm = quickFindTerm;
             this.quickFindMatches = this._getQuickFindFlatMatches();
             delete this.quickFindIndex;
+            this._selectNextSearchResult();
             return this;
         }
 
