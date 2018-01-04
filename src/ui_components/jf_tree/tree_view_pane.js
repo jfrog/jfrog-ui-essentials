@@ -256,6 +256,19 @@ export class TreeViewPane {
 
     }
 
+    _normalizeScroll() {
+        this.treeApi.$timeout(() => {
+            if (!this.dirCtrl) return;
+            if (this.dirCtrl.virtualScrollIndex + this.itemsPerPage > this.$flatItems.length) {
+                console.log(this.itemsPerPage);
+                this._scrollTo(this.$flatItems.length - this.itemsPerPage + 1.999);
+            }
+            if (this.$flatItems.length < this.itemsPerPage) {
+                this.dirCtrl.resetScroll();
+            }
+        });
+    }
+
     _deleteItem(item) {
         let index = this.$flatItems.indexOf(item);
         if (index > 0) {
