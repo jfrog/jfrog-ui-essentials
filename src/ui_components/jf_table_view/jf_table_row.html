@@ -64,7 +64,7 @@
              jf-tooltip-on-overflow
              ng-if="(!col.cellTemplate && jfTableRow.rowId !== 'headers') || (!col.headerCellTemplate && jfTableRow.rowId === 'headers')">
             {{jfTableRow.getField(col.field)}}
-            <i ng-if="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.sortable && jfTableRow.tableView.options.sortByField === col.field"
+            <i ng-if="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.sortable && jfTableRow.tableView.options.sortByField === col.field && col.sortable"
                class="icon"
                ng-class="{'icon-down-arrow': jfTableRow.tableView.options.revSort, 'icon-up-arrow': !jfTableRow.tableView.options.revSort}"></i>
             <div class="group-button-wrapper" ng-if="jfTableRow.rowId === 'headers' && col.allowGrouping">

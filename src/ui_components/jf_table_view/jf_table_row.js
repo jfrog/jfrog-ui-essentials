@@ -165,7 +165,7 @@ class jfTableRowController {
 
     onClickCell(col, event) {
 //        event.stopPropagation();
-        if (this.rowId === 'headers' && col.header && this.tableView.options.sortable && !this.hoveringResize) {
+        if (this.rowId === 'headers' && col.header && this.tableView.options.sortable && !this.hoveringResize && col.sortable) {
             this.tableView.options.sortBy(col.field);
         }
     }

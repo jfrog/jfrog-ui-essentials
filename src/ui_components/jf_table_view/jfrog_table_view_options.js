@@ -304,6 +304,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				if (col.customActions && col.customActions.length) {
 					actions = actions.concat(col.customActions);
 				}
+				if (col.sortable === undefined) col.sortable = true;
 			});
 			if (actions.length && !this.actionsAggregated) {
 				this.actionsAggregated = true;
