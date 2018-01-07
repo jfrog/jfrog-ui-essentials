@@ -30,6 +30,8 @@ import {jfMarquee}       from './jf_marquee/jf_marquee';
 import {jfPasswordStrength} from './jf_password_strength/jf_password_strength';
 import {jfClearErrors} from "./jf_clear_errors/jf_clear_errors";
 import {jfDatetimepicker} from "./jf_datetimepicker/jf_datetimepicker";
+import {jfDynamicTemplate} from "./jf_dynamic_template/jf_dynamic_template";
+import {jfListSelection} from "./jf_list_selection/jf_list_selection";
 
 angular.module('jfrog.ui.essentials.directives', [])
     .directive({
@@ -64,5 +66,7 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfMarquee': jfMarquee,
         'jfPasswordStrength': jfPasswordStrength,
         'jfClearErrors': jfClearErrors,
-	    'jfDatetimepicker': jfDatetimepicker
+	    'jfDatetimepicker': jfDatetimepicker,
+	    'jfDynamicTemplate': jfDynamicTemplate,
+	    'jfListSelection': jfListSelection
     });
