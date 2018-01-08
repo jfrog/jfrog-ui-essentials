@@ -133,7 +133,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			else {
 				this.origData = _.sortBy(data, '');
 				if (this.subRowsEnabled) {
-					this.data = this._transformDataForSubRowsSupport(data, false);
+					this.data = this._transformDataForSubRowsSupport(data, true);
 				}
 				else {
 					this.data = data;
@@ -148,19 +148,22 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 		}
 
 		_transformDataForSubRowsSupport(data, autoExpand) {
+			let rowsToExpand = [];
 			data.forEach((row) => {
 				if (row.$subRows && row.$subRows.length) {
 					row.$expandable = true;
 					row.$subRows.forEach((sub) => {
 						sub.$parentRow = row;
-						if (autoExpand && row.$expanded) {
-							data.push(sub);
-						}
 					});
+                    if (row.$expanded) {
+                        rowsToExpand.push(row);
+                    }
 				}
 			});
 
-			return data;
+			if (autoExpand) rowsToExpand.forEach(row => this._addSubRows(row, data))
+
+            return data;
 		}
 
 		toggleExpansion(row) {
@@ -734,7 +737,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 		}
 
 		_saveAndRemoveSubRows(data) {
-			if (!this.subRowsEnabled) {
+            if (!this.subRowsEnabled) {
 				return data;
 			}
 			this.savedSubRowsParents = _.filter(data, d => d.$subRows && d.$expanded);
@@ -742,7 +745,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 		}
 
 		_reInsertSubRows(data) {
-			if (!this.subRowsEnabled) {
+            if (!this.subRowsEnabled) {
 				return data;
 			}
 			let newData = [].concat(data);
