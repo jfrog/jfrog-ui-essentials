@@ -803,6 +803,13 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             this._refreshIndentations();
         }
 
+        bringNodeToView(node, doScroll = false) {
+            let fi = this._flatFromNode(node);
+            if (fi) {
+                fi.pane.bringItemToView(fi, !doScroll);
+            }
+        }
+
 	}
 	return JFTreeApiClass;
 
