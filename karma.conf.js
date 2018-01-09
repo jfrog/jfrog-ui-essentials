@@ -47,7 +47,7 @@ module.exports = function (config) {
         // define browsers
         customLaunchers: browserStack.browsers,
 
-        browsers: ['Chrome'],
+        browsers: ['Chrome', 'Firefox'],
 
         singleRun: false
     });
