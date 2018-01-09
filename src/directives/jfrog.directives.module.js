@@ -75,7 +75,7 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfClearErrors': jfClearErrors,
 	    'jfDatetimepicker': jfDatetimepicker,
 	    'jfDynamicTemplate': jfDynamicTemplate,
-	    'jfListSelection': jfListSelection
+	    'jfListSelection': jfListSelection,
         'jfMarkupEditor': jfMarkupEditor,
         'jfJsTreeWrap': jfJsTreeWrap,
         'jfAutoComplete': jfAutoComplete,

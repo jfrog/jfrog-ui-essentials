@@ -1079,18 +1079,22 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			return this;
 		}
 
-		updateData(data) {
+		updateData(data, removeIfMissing = false) {
 			if (!this.data || !this.data.length) {
 				this.setData(data);
 			}
 			else if (!this.keyFn) {
 				throw new Error('Cannot update data, no key was defined. (use setKey(key|keyFn))');
-			} else {
+			}
+			else {
+				let existingRows = [];
+				let doUpdate = false;
 				data.forEach((row) => {
 					let exists = _.find(this.data, (r) => {
 						return this.keyFn(r) === this.keyFn(row);
 					});
 					if (exists) {
+                        existingRows.push(exists);
 						for (let key in exists) {
 							if (!key.startsWith('$')) {
 								exists[key] = row[key];
@@ -1112,8 +1116,20 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 							});
 						}
 					}
+					else {
+						this.data.push(row);
+                        existingRows.push(row);
+                        doUpdate = true;
+					}
 				});
-				//                this.update();
+				if (removeIfMissing) {
+                    let removed = _.difference(this.data, existingRows);
+                    if (removed.length) {
+                        doUpdate = true;
+                        _.remove(this.data, row => _.includes(removed, row));
+                    }
+				}
+				if (doUpdate) this.update();
 			}
 		}
 
