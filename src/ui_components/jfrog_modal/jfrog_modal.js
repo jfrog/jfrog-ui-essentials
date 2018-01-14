@@ -99,7 +99,7 @@ export class JFrogModal {
                     this._clickFirstFoundButton(['.wizard-modal button#wizard-popup-next', '.wizard-modal button#wizard-popup-next-custom', '.wizard-modal button#wizard-popup-finish'])
                 }
                 else {
-                    this._clickFirstFoundButton(['.modal-dialog button.btn-primary'])
+                    this._clickFirstFoundButton(['.modal-dialog button.btn-primary:not(.ignore-enter)'])
                 }
                 event.preventDefault();
             }
