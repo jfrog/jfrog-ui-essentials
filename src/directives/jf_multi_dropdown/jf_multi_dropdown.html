@@ -33,13 +33,22 @@
             <div class="drop-down-item"
                  ng-repeat="item in jfMultiDropdown.items | filter:{text: jfMultiDropdown.filterText} track by $index"
                  ng-class="{'last-selected': $index === jfMultiDropdown.lastSelectedIndex && !jfMultiDropdown.filterText, 'disabled': item.disabled}">
-                <label class="jf-checkbox">
+                <label class="jf-checkbox" ng-if="!jfMultiDropdown.singleSelection">
                     <input type="checkbox"
                            ng-disabled="item.disabled"
                            ng-change="jfMultiDropdown.onSelection()"
                            ng-model="item.isSelected">
                     <span></span> <i ng-if="item.iconClass" class="item-icon" ng-class="item.iconClass"></i> {{ item.text }}
                 </label>
+                <jf-radio-button ng-if="jfMultiDropdown.singleSelection"
+                                 text="{{item.text}}">
+                    <input type="radio"
+                           ng-model="jfMultiDropdown.singleSelectionIndex"
+                           value="{{item.$id}}"
+                           ng-change="jfMultiDropdown.onSingleSelection()"
+                           ng-disabled="item.disabled">
+                </jf-radio-button>
+
             </div>
         </div>
         <div ng-if="!jfMultiDropdown.items.length && jfMultiDropdown.noItemsMessage"

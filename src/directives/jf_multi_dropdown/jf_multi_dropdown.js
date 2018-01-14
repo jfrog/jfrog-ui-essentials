@@ -13,6 +13,16 @@ class jfMultiDropdownController {
         this.$scope.$watch('jfMultiDropdown.items', (newVal, oldVal) => {
             if (newVal) {
                 this.sortItems();
+                if (this.singleSelection) {
+                    this.items.forEach((item, index) => item.$id = index);
+                    let disabled = _.filter(this.items, item => item.disabled);
+                    disabled.forEach(item => item.isSelected = false);
+                    let selected = _.filter(this.items, item => item.isSelected);
+                    if (selected.length > 1) {
+                        selected.slice(1).forEach(item => item.isSelected = false);
+                    }
+                    if (selected.length) this.singleSelectionIndex = selected[0].$id;
+                }
             }
         });
         this.$scope.$watch('jfMultiDropdown.dropdownOpened', (val) => {
@@ -72,6 +82,15 @@ class jfMultiDropdownController {
     onSelection() {
         if (this.onChange) this.onChange();
     }
+
+    onSingleSelection() {
+        this.items.forEach((item)=>{if (!item.disabled) item.isSelected = false;});
+        let selected = _.find(this.items, item => item.$id == this.singleSelectionIndex);
+        selected.isSelected = true;
+        if (this.onChange) this.onChange();
+    }
+
+
     getSelectedCount() {
         let selected = _.filter(this.items, (item) => item.isSelected);
         return selected.length;
@@ -84,6 +103,7 @@ class jfMultiDropdownController {
     }
 
     sortItems() {
+        if (this.noSelectedFirst) return;
         if (!this.items) return;
         let selected = this.noSort ? _.filter(this.items, (item) => item.isSelected) : _.sortBy(_.filter(this.items, (item) => item.isSelected), 'text');
         let unSelected = this.noSort ? _.filter(this.items, (item) => !item.isSelected) : _.sortBy(_.filter(this.items, (item) => !item.isSelected), 'text');
@@ -120,7 +140,9 @@ export function jfMultiDropdown() {
             dropdownOpened: '=',
             showSelected: '@',
 	        showLabelCounter: '@',
-            noFilter: '=?'
+            noFilter: '=?',
+            noSelectedFirst: '=?',
+            singleSelection: '=?'
         },
         templateUrl: 'directives/jf_multi_dropdown/jf_multi_dropdown.html'
     }
