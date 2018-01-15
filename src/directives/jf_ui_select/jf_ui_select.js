@@ -112,6 +112,7 @@ export function jfUiSelect() {
             jfSelectModel: '=',
             jfSelectOptions: '=',
             jfSelectDisabled: '=',
+            jfSelectMultiple: '@?',
             jfSelectChange: '&?',
             jfSelectDisplayAttr: '@',
             jfSelectDisplayFunc: '&?',
@@ -120,6 +121,11 @@ export function jfUiSelect() {
             jfSelectLoadChunks: '@?',
             jfSelectLoadMoreLabel: '@?',
             jfSelectHelpTooltips: '&?'
+        },
+        compile: function compile(tElement, tAttrs, transclude) {
+            if (_.has(tAttrs,'jfSelectMultiple')) {
+                $(tElement).find('ui-select').attr('multiple','');
+            }
         },
         templateUrl: 'directives/jf_ui_select/jf_ui_select.html'
     }
