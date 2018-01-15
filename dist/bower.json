@@ -1,6 +1,6 @@
 {
   "name": "jfrog-ui-essentials",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "homepage": "http://www.jfrog.com",
   "description": "JFrog UI Essentials",
   "license": "Apache-2.0",
@@ -32,7 +32,7 @@
     "lodash": "3.9.3",
     "angular-ui-codemirror": "0.2.3",
     "codemirror": "5.0.0",
-    "angular-ui-select": "0.18.0",
+    "angular-ui-select": "0.18.1",
     "lessfonts-open-sans": "1.0.2",
     "zeroclipboard": "2.2.0",
     "ng-clip": "0.2.6",
