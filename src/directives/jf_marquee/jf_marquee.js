@@ -42,7 +42,8 @@ class jfMarqueeController {
         }, delay);
     }
     checkOverflow() {
-        if (this.container.innerWidth() < this.container[0].scrollWidth) {
+        console.log(this.container.innerWidth(), this.container[0].scrollWidth);
+        if (Math.round(this.container.innerWidth()) < Math.round(this.container[0].scrollWidth)) {
             this.container.addClass('overflowing');
             this.overflowing = true;
         }
