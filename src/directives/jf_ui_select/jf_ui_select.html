@@ -1,6 +1,6 @@
 <ui-select jf-disable-ng-animate ng-model="jfUiSelect.jfSelectModel" on-select="jfUiSelect.onSelect($item,$model)" ng-disabled="jfUiSelect.jfSelectDisabled" remove-selected="false">
     <ui-select-match id="select-header" placeholder="{{ jfUiSelect.jfSelectPlaceholder }}" ng-click="jfUiSelect.onOpenList()">
-        <jf-marquee>{{ jfUiSelect.displayLabel($select.selected) }}</jf-marquee>
+        <jf-marquee ng-bind-html="jfUiSelect.displayLabel($select.selected)"></jf-marquee>
     </ui-select-match>
     <ui-select-choices jf-disable-ng-animate
                        refresh-delay="100"
