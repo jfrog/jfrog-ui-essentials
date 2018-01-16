@@ -22,9 +22,10 @@
                 <div class="batch-selection-wrapper">
                     <div class="batch-selection">
                         <a href
+                           ng-if="!jfMultiDropdown.singleSelection"
                            ng-click="jfMultiDropdown.selectAll()">Select All</a>
                         <a href
-                           ng-click="jfMultiDropdown.unSelectAll()">Unselect All</a>
+                           ng-click="jfMultiDropdown.unSelectAll()">{{ jfMultiDropdown.singleSelection ? 'Clear selection' : 'Unselect All' }}</a>
                     </div>
                 </div>
             </form>

@@ -8,6 +8,8 @@ class jfMultiDropdownController {
         this.filter = $filter('filter');
         this.opened = false;
 
+        this.singleSelectionIndex = -1;
+
         this.handleOutsideClick();
 
         this.$scope.$watch('jfMultiDropdown.items', (newVal, oldVal) => {
@@ -118,6 +120,7 @@ class jfMultiDropdownController {
     unSelectAll() {
         this.filter(this.items, this.filterText).forEach((item)=>{if (!item.disabled) item.isSelected = false;})
         this.onSelection();
+        this.singleSelectionIndex = -1;
     }
 
 }
