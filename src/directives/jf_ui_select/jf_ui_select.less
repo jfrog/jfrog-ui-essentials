@@ -16,8 +16,6 @@
   opacity: 1 !important;
 }
 
-
-
 //Work arround for ui-select bug #533
 .ui-select-container input.ui-select-search {
   width: 100% !important;
@@ -25,4 +23,10 @@
 
 .ui-select-bootstrap .ui-select-toggle[disabled="disabled"]>.caret{
   color: @grayPlaceholderLight;
+}
+
+.ui-select-multiple.ui-select-bootstrap .ui-select-match-item {
+  background: @greenBGDropdownHover !important;
+  color: @greenFontHeader !important;
+  border: 1px solid black;
 }

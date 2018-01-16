@@ -51,7 +51,29 @@ class jfUiSelectController {
         }
     }
 
+    onOpenClose(isOpen) {
+        if (isOpen) this.onOpenList();
+        else {
+            if (this.jfSelectAsyncOptions) {
+                this.jfSelectOptions = [];
+                this.jfSelectOptionsView = [];
+            }
+        }
+    }
+
     onOpenList() {
+        if (this.jfSelectAsyncOptions) {
+            this.jfSelectAsyncOptions({$options: {}}).then(data => {
+                this.jfSelectOptions = data;
+                this.loadInitialChunk();
+            })
+        }
+        else {
+            this.loadInitialChunk();
+        }
+    }
+
+    loadInitialChunk() {
         if (this.jfSelectOptionsView) {
             this.filter = '';
             this.filtered = null;
@@ -64,6 +86,21 @@ class jfUiSelectController {
     }
 
     refresh(search) {
+
+        if (this.jfSelectAsyncOptions) {
+            let options = {}
+            if (search.trim()) options.filter = search;
+            this.jfSelectAsyncOptions({$options: options}).then(data => {
+                this.jfSelectOptions = data;
+                this.updateChunkBySearchTerm(search);
+            })
+        }
+        else {
+            this.updateChunkBySearchTerm(search);
+        }
+    }
+
+    updateChunkBySearchTerm(search) {
         if (!this.jfSelectOptionsView) return;
 
         if (!search.trim()) {
@@ -110,7 +147,8 @@ export function jfUiSelect() {
         bindToController: true,
         scope: {
             jfSelectModel: '=',
-            jfSelectOptions: '=',
+            jfSelectOptions: '=?',
+            jfSelectAsyncOptions: '&?',
             jfSelectDisabled: '=',
             jfSelectMultiple: '@?',
             jfSelectChange: '&?',
