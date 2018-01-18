@@ -318,7 +318,7 @@ export class TreeViewPane {
         }
     }
 
-    _recursiveOpenRestore(node, recursed = false) {
+    _recursiveOpenRestore(node, restoreIfClosed = true) {
         let defer = this.treeApi.$q.defer();
 
         let openRestoreNode = (node) => {
@@ -329,7 +329,7 @@ export class TreeViewPane {
                 else {
                     let pendingPromises = children.length;
                     children.forEach(child => {
-                        this._recursiveOpenRestore(child, true).then(() => {
+                        this._recursiveOpenRestore(child, false).then(() => {
                             pendingPromises--;
                             if (pendingPromises === 0) {
                                 defer.resolve();
@@ -347,8 +347,8 @@ export class TreeViewPane {
             openRestoreNode(node);
         }
         else {
-            let closedRoot = _.find(this.$flatItems, fi => fi.level === 0 && fi.data && this.treeApi.uniqueIdGetter(fi.data) === id);
-            if (closedRoot && !recursed) {
+            let closedRoot = _.find(this.$flatItems, fi => fi.level === 0 && fi.data && fi.data !== this.treeApi.GO_UP_NODE && !_.includes(this.treeApi.$openedNodes, fi.data) && this.treeApi.uniqueIdGetter(fi.data) === id);
+            if (closedRoot && restoreIfClosed) {
                 defer.promise.then(() => {
                     this.treeApi.closeNode(closedRoot.data);
                 })
@@ -397,7 +397,7 @@ export class TreeViewPane {
                 let itemsCount = this.$flatItems.length;
                 if (!this.$flatItems.length) mainDefer.resolve();
                 this.$flatItems.forEach((fi, ind) => {
-                    this._recursiveOpenRestore(fi.data).then(() => {
+                    this._recursiveOpenRestore(fi.data, false).then(() => {
                         resolveCount++;
                         if (resolveCount === itemsCount) {
                             let selectedId = this.treeApi.$selectedNode && this.treeApi.$selectedNode !== this.treeApi.GO_UP_NODE ? this.treeApi.uniqueIdGetter(this.treeApi.$selectedNode) : null;

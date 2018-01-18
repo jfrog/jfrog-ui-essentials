@@ -410,7 +410,18 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                     defer.resolve();
                 }
             }
-            else defer.resolve();
+            else {
+                if (flat.$pending) {
+                    this.$timeout(() => {
+                        this.openNode(node, scrollUpIfNeeded).then(() => {
+                            defer.resolve();
+                        })
+                    },100)
+                }
+                else {
+                    defer.resolve();
+                }
+            }
 
             return defer.promise;
         }
