@@ -86,9 +86,13 @@ class jfContextMenuController {
 	 * */
 	_handleDocumentClick() {
 		let handler = (e) => {
-			this.$timeout(() => {
-				this.isOpen = false;
-			});
+			let target = $(e.target);
+			let insideContextMenu = !!target.parents('.jf-context-menu').length;
+			if (!insideContextMenu) {
+				this.$timeout(() => {
+                    this.isOpen = false;
+                });
+            }
 		};
 		$(document).on('mousedown', handler);
 		this.$scope.$on('$destroy', () => {
