@@ -297,8 +297,14 @@ export class TreeViewPane {
             hasChildren: undefined
         }
 
+        this._refreshFlatChildrenCheck(flat);
+
+        return flat;
+    }
+
+    _refreshFlatChildrenCheck(flat) {
         if (this.treeApi.childrenChecker) {
-            let check = this.treeApi.childrenChecker(node);
+            let check = this.treeApi.childrenChecker(flat.data);
             if (check && check.then) {
                 check.then((_check) => {
                     flat.hasChildren = _check;
@@ -307,12 +313,10 @@ export class TreeViewPane {
             else flat.hasChildren = check;
         }
         else {
-            this.treeApi.getChildren(node).then(children => {
+            this.treeApi.getChildren(flat.data).then(children => {
                 flat.hasChildren = !!(children && children.length);
             });
         }
-
-        return flat;
     }
 
     _recursiveOpenRestore(node) {
@@ -351,7 +355,13 @@ export class TreeViewPane {
         if (flat) {
             this._freeze();
             this._removeChildren(flat);
+
             delete flat.data.$childrenCache;
+            delete flat.data.$noChildren
+            delete flat.hasChildren;
+
+            this._refreshFlatChildrenCheck(flat);
+
             this.refreshNodeContextMenu(flat.data);
             this._recursiveOpenRestore(flat.data).then(() => {
                 this._unFreeze();
