@@ -375,12 +375,14 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
 
             let flat = this._flatFromNode(node);
 
-            if (flat && flat.hasChildren && !flat.data.$noChildren && !flat.$pending) {
+            if (flat && flat.hasChildren !== false && !flat.data.$noChildren && !flat.$pending) {
                 if (!_.includes(this.$openedNodes, node)) {
                     this.$openedNodes.push(node);
                     flat.$pending = true;
                     this.getChildren(node).then(children => {
                         if (!children.length) node.$noChildren = true;
+                        else flat.hasChildren = true;
+
                         if (this.$drillDownMode) {
                             this.drillDown(flat);
                         }

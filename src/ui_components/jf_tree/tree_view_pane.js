@@ -260,7 +260,6 @@ export class TreeViewPane {
         this.treeApi.$timeout(() => {
             if (!this.dirCtrl) return;
             if (this.dirCtrl.virtualScrollIndex + this.itemsPerPage > this.$flatItems.length) {
-                console.log(this.itemsPerPage);
                 this._scrollTo(this.$flatItems.length - this.itemsPerPage + 1.999);
             }
             if (this.$flatItems.length < this.itemsPerPage) {
@@ -319,20 +318,18 @@ export class TreeViewPane {
         }
     }
 
-    _recursiveOpenRestore(node) {
+    _recursiveOpenRestore(node, recursed = false) {
         let defer = this.treeApi.$q.defer();
 
-        let id = this.treeApi.uniqueIdGetter(node);
-        let opened = _.find(this.treeApi.$openedNodes, n => this.treeApi.uniqueIdGetter(n) === id);
-        if (opened) {
-            _.remove(this.treeApi.$openedNodes, n => n === opened);
+        let openRestoreNode = (node) => {
+
             this.treeApi.openNode(node).then(() => {
                 let children = node.$childrenCache;
                 if (!children || !children.length) defer.resolve();
                 else {
                     let pendingPromises = children.length;
                     children.forEach(child => {
-                        this._recursiveOpenRestore(child).then(() => {
+                        this._recursiveOpenRestore(child, true).then(() => {
                             pendingPromises--;
                             if (pendingPromises === 0) {
                                 defer.resolve();
@@ -342,8 +339,24 @@ export class TreeViewPane {
                 }
             })
         }
+
+        let id = this.treeApi.uniqueIdGetter(node);
+        let opened = _.find(this.treeApi.$openedNodes, n => this.treeApi.uniqueIdGetter(n) === id);
+        if (opened) {
+            _.remove(this.treeApi.$openedNodes, n => n === opened);
+            openRestoreNode(node);
+        }
         else {
-            defer.resolve();
+            let closedRoot = _.find(this.$flatItems, fi => fi.level === 0 && fi.data && this.treeApi.uniqueIdGetter(fi.data) === id);
+            if (closedRoot && !recursed) {
+                defer.promise.then(() => {
+                    this.treeApi.closeNode(closedRoot.data);
+                })
+                openRestoreNode(closedRoot.data);
+            }
+            else {
+                defer.resolve();
+            }
         }
 
         return defer.promise;
@@ -357,13 +370,12 @@ export class TreeViewPane {
             this._removeChildren(flat);
 
             delete flat.data.$childrenCache;
-            delete flat.data.$noChildren
+            delete flat.data.$noChildren;
             delete flat.hasChildren;
-
-            this._refreshFlatChildrenCheck(flat);
 
             this.refreshNodeContextMenu(flat.data);
             this._recursiveOpenRestore(flat.data).then(() => {
+//                this._refreshFlatChildrenCheck(flat);
                 this._unFreeze();
                 defer.resolve();
             });
