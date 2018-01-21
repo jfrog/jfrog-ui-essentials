@@ -199,6 +199,7 @@ class jfTreeController {
             else {
                 let actualItemsPerPage = this.viewPane._getPageData().length;
                 this.virtualScrollIndex = this.viewPane._getPrePagedData().length > actualItemsPerPage ? this.viewPane._getPrePagedData().length - actualItemsPerPage : 0;
+                this.virtScrollDisplacement = 1;
             }
         }
         else if ($deltaY>0) { // scrollDown
@@ -209,6 +210,7 @@ class jfTreeController {
             }
             else {
                 this.virtualScrollIndex = 0;
+                this.virtScrollDisplacement = 0;
             }
         }
 
