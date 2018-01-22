@@ -229,7 +229,6 @@ class jfTreeController {
     }
 
     resetScroll() {
-        if (this.viewPane.$freezed) return;
 
         this.virtualScrollIndex = 0;
         this.virtScrollDisplacement = 0;

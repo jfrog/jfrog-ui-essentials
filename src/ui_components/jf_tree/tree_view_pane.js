@@ -373,12 +373,20 @@ export class TreeViewPane {
             delete flat.data.$noChildren;
             delete flat.hasChildren;
 
-            this.refreshNodeContextMenu(flat.data);
-            this._recursiveOpenRestore(flat.data).then(() => {
-//                this._refreshFlatChildrenCheck(flat);
-                this._unFreeze();
-                defer.resolve();
-            });
+            let doRefresh = () => {
+                this.refreshNodeContextMenu(flat.data);
+                this._recursiveOpenRestore(flat.data).then(() => {
+                    //                this._refreshFlatChildrenCheck(flat);
+                    this._unFreeze();
+                    defer.resolve();
+                });
+            }
+            if (_.find(this.treeApi.$root, node => node === flat.data)) {
+                delete this.treeApi.$rootCache;
+                this.treeApi.getChildren().then(() => doRefresh());
+            }
+            else doRefresh();
+
         }
         return defer.promise;
     }

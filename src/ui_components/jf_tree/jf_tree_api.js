@@ -486,6 +486,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             this.setTreeData(this.$rootCache);
             delete this.$currParentFlat;
             this._refreshIndentations();
+            this.centerOnSelected();
         }
 
         getCurrentParent() {
