@@ -57,6 +57,7 @@ class jfContextMenuController {
         if (pageY + contextMenuHeight + (ERROR_MARGIN/2) >= windowHeight) {
             top = pageY - (contextMenuHeight + ERROR_MARGIN/2);
 		}
+        if (top < ERROR_MARGIN) top = ERROR_MARGIN;
         this.position = {
             left: left,
             top: top
