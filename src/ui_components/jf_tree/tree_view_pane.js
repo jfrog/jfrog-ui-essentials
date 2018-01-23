@@ -31,82 +31,6 @@ export class TreeViewPane {
         if (notifyTree) this.treeApi.onViewUpdate(this);
     }
 
-    _getCurrentScrollPos() {
-        return this.dirCtrl.virtualScrollIndex + this.dirCtrl.virtScrollDisplacement;
-    }
-
-    scrollTo(scrollPos, duration = 500) {
-        let dist = scrollPos - this._getCurrentScrollPos();
-        this.scroll(dist, duration);
-    }
-
-    _scrollTo(scrollPos) {
-        let dist = scrollPos - this._getCurrentScrollPos();
-        this._scroll(dist);
-    }
-
-    scroll(numOfRows, duration = 500) {
-        if (duration === 0) {
-            this._scroll(numOfRows);
-            return;
-        }
-
-        let $timeout = this.treeApi.$timeout;
-        if (this.scrollTimeout) {
-            $timeout.cancel(this.scrollTimeout);
-            delete this.scrollTimeout;
-        }
-        let quadraticEase = (k) => k * (2 - k);
-
-        let interval = 40;
-        let currentScrollPos = this._getCurrentScrollPos();
-
-        let steps = Math.ceil(duration/interval);
-        let currentStep = 1;
-
-        let cycle = () => {
-            let progress = currentStep/steps;
-            this._scrollTo(currentScrollPos + quadraticEase(progress)*numOfRows);
-            currentStep++;
-            if (currentStep <= steps) {
-                this.scrollTimeout = $timeout(() => cycle(), interval);
-            }
-            else delete this.scrollTimeout;
-        }
-        cycle();
-
-    }
-
-    _scroll(numOfRows) {
-        if (!numOfRows) return;
-
-        let abs = Math.abs(numOfRows);
-        let sign = numOfRows/abs;
-        let full = Math.floor(abs);
-        this.dirCtrl.virtualScrollIndex += sign*full;
-        this.dirCtrl.virtScrollDisplacement += sign*(abs - full);
-        if (this.dirCtrl.virtScrollDisplacement >= 1) {
-            this.dirCtrl.virtualScrollIndex += 1;
-            this.dirCtrl.virtScrollDisplacement -= 1;
-        }
-        if (this.dirCtrl.virtScrollDisplacement < 0) {
-            this.dirCtrl.virtualScrollIndex -= 1;
-            this.dirCtrl.virtScrollDisplacement = 1 - Math.abs(this.dirCtrl.virtScrollDisplacement);
-        }
-        if (this.dirCtrl.virtualScrollIndex < 0) {
-            this.dirCtrl.virtualScrollIndex = 0;
-            this.dirCtrl.virtScrollDisplacement = 0;
-        }
-        if (this.dirCtrl.virtualScrollIndex + this.itemsPerPage >= this._getPrePagedData().length) {
-            this.dirCtrl.virtualScrollIndex = this._getPrePagedData().length - this.itemsPerPage;
-            this.dirCtrl.virtScrollDisplacement = 0;
-        }
-
-        if (this.dirCtrl.virtualScrollIndex < 0) this.dirCtrl.virtualScrollIndex = 0;
-
-        this.dirCtrl.syncFakeScroller(false);
-    }
-
     _setDirectiveController(directiveController) {
         this.dirCtrl = directiveController;
         this.dirCtrl.viewPane = this;
@@ -126,14 +50,8 @@ export class TreeViewPane {
         })
     }
 
-    _hasHorizontalScrollbar() {
-        let hScrollWrapper = $(this.dirCtrl.$element).find('.h-scroll-wrapper');
-        return hScrollWrapper[0].scrollWidth > hScrollWrapper.width();
-    }
-
-    _getHorizontalScrollbarHeight() {
-        let hScrollWrapper = $(this.dirCtrl.$element).find('.h-scroll-wrapper');
-        return hScrollWrapper.height() - hScrollWrapper[0].clientHeight;
+    bringItemToView(item, jump = true) {
+        this.dirCtrl.vsApi.bringItemToView(item, jump);
     }
 
     _getPageData() {
@@ -206,7 +124,7 @@ export class TreeViewPane {
         this.$freezedItems = [].concat(this.$flatItems);
         this.$freezedOpened = [].concat(this.treeApi.$openedNodes);
         this.treeApi._freezeSelected();
-        if (this.dirCtrl) this.dirCtrl._freezeVScroll();
+        if (this.dirCtrl) this.dirCtrl.vsApi.freezeScroll();
         this.$freezed = true;
     }
 
@@ -216,11 +134,11 @@ export class TreeViewPane {
         delete this.$freezedItems;
         delete this.$freezedOpened;
         this.treeApi._unFreezeSelected();
-        if (this.dirCtrl) this.dirCtrl._unFreezeVScroll();
+        if (this.dirCtrl) this.dirCtrl.vsApi.unFreezeScroll();
         this.$freezed = false;
 
         this.refreshFilter();
-        this.dirCtrl.syncFakeScroller();
+        this.dirCtrl.vsApi.sync();
     }
 
     _addChildren(children, level = 0, parent = null) {
@@ -498,43 +416,8 @@ export class TreeViewPane {
         return refMatch;
     }
 
-    bringItemToView(item, jump = true) {
-        let prePaged = this._getPrePagedData(true);
-        let index = prePaged.indexOf(item);
-
-        if (index - 1 < this.dirCtrl.virtualScrollIndex) {
-            this.scrollTo(index, jump ? 0 : undefined);
-        }
-        else if (index + 1 > this.dirCtrl.virtualScrollIndex + this.itemsPerPage) {
-            let fullItems = this.containerHeight ? Math.floor(this.containerHeight/parseFloat(this.itemHeight)) : this.itemsPerPage;
-            let scrollIndex = index - fullItems >= 0 ? index - fullItems : 0;
-            let displace = this.containerHeight ? 1-(this.containerHeight/parseFloat(this.itemHeight) - fullItems) : 1;
-            let hScrollFactor = 0;
-            if (this._hasHorizontalScrollbar()) {
-                let pixelFactor = this._getHorizontalScrollbarHeight();
-                hScrollFactor = pixelFactor / parseFloat(this.itemHeight);
-            }
-            this.scrollTo(scrollIndex + displace + hScrollFactor, jump ? 0 : undefined);
-        }
-        this.dirCtrl.syncFakeScroller(false);
-
-    }
-
     centerOnItem(item) {
-        let prePaged = this._getPrePagedData(true);
-        let index = prePaged.indexOf(item);
-        let halfPage = Math.floor(this.itemsPerPage / 2);
-        if (prePaged.length <= this.itemsPerPage || index - halfPage < 0) {
-            this.dirCtrl.virtualScrollIndex = 0;
-        }
-        else if (index + (this.itemsPerPage - halfPage) > prePaged.length) {
-            this.dirCtrl.virtualScrollIndex = prePaged.length - this.itemsPerPage;
-        }
-        else {
-            this.dirCtrl.virtualScrollIndex = index - halfPage;
-        }
-
-        this.dirCtrl.syncFakeScroller(false);
+        this.dirCtrl.vsApi.centerOnItem(item);
         this.treeApi._setSelected(item);
     }
 

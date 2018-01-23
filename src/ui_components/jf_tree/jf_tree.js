@@ -22,23 +22,11 @@ class jfTreeController {
         this.$scope = $scope;
 	    this.$rootScope = $rootScope;
         this.cellScopes = [];
-        this.maxFakeScrollHeight = 1000000;
         this.vsApi = {};
 
         $scope.$watch('jfTree.api',(api) => {
             if (this.api) {
                 this.api._setDirectiveController(this);
-            }
-            if (this.api && !this.paginationApi) {
-                    this.paginationApi = new PaginationApi(this);
-
-                this.paginationApi.registerChangeListener(() => {
-                    this.$timeout(()=>this.refresh(false));
-                })
-
-                this.currentPage = 0;
-                this.virtualScrollIndex = 0;
-                this.virtScrollDisplacement = 0;
             }
         })
 
@@ -174,45 +162,6 @@ class jfTreeController {
             pixelY : pY };
     }
 
-    onMouseWheel($event, $delta, $deltaX, $deltaY) {
-
-        if (this.viewPane.scrollTimeout) {
-            this.$timeout.cancel(this.viewPane.scrollTimeout);
-            delete this.viewPane.scrollTimeout;
-        }
-
-        let normalDelta = this._normalizeWheelEvent($event.originalEvent).pixelY;
-        let xDelta = this._normalizeWheelEvent($event.originalEvent).pixelX;
-
-        if (Math.abs(normalDelta) < Math.abs(xDelta)) {
-            $event.stopPropagation();
-            return;
-        }
-
-        let scrollAmount = 0.02 * Math.abs(normalDelta);
-        let scrollPosBefore = this.viewPane._getCurrentScrollPos();
-        if ($deltaY<0) { // scrollUp
-            this.viewPane._scrollTo(scrollPosBefore + scrollAmount);
-        }
-        else if ($deltaY>0) { // scrollDown
-            this.viewPane._scrollTo(scrollPosBefore - scrollAmount);
-        }
-
-
-        this.currentPage = Math.floor((this.virtualScrollIndex + this.viewPane.itemsPerPage - 1) / this.viewPane.itemsPerPage);
-        if (scrollPosBefore !== this.viewPane._getCurrentScrollPos()) $event.preventDefault();
-        this.syncFakeScroller(false);
-
-        this.viewPane.focus();
-    }
-
-    resetScroll() {
-
-        this.virtualScrollIndex = 0;
-        this.virtScrollDisplacement = 0;
-        this.currentPage = 1;
-        this.syncFakeScroller(false);
-    }
 
     getTotalScrollHeight() {
         return this.viewPane._getPrePagedData().length * parseFloat(this.viewPane.itemHeight);
@@ -230,68 +179,6 @@ class jfTreeController {
         }
     }
 
-    initScrollFaker() {
-        let scrollParent = $(this.$element).find('.scroll-faker-container');
-        scrollParent.on('scroll',(e) => {
-            this.$scope.$apply(()=>{
-                if (this.$$settingScroll) {
-                    delete this.$$settingScroll;
-                    return;
-                }
-                if (this.viewPane.scrollTimeout) {
-                    this.$timeout.cancel(this.viewPane.scrollTimeout);
-                    delete this.viewPane.scrollTimeout;
-                }
-                let len = this.viewPane._getPrePagedData().length;
-                if (len) {
-                    let maxScrollTop = scrollParent[0].scrollHeight - scrollParent.outerHeight();
-                    let relativePosition = scrollParent.scrollTop() / maxScrollTop;
-                    if (_.isNaN(relativePosition)) {
-                        relativePosition = 1;
-                    }
-                    let newScrollIndex = relativePosition * (len - this.viewPane.itemsPerPage);
-                    if (newScrollIndex < 0) newScrollIndex = 0;
-                    this.virtualScrollIndex = Math.floor(newScrollIndex);
-                    this.virtScrollDisplacement = newScrollIndex - this.virtualScrollIndex;
-                    this.currentPage = Math.floor((this.virtualScrollIndex + this.viewPane.itemsPerPage - 1) / this.viewPane.itemsPerPage);
-                }
-                else {
-                    this.virtualScrollIndex = 0;
-                    this.virtScrollDisplacement = 0;
-                    this.currentPage = 0;
-                }
-                this.api.fire('pagination.change', this.paginationApi.getCurrentPage());
-            })
-        })
-
-    }
-
-    getTranslate() {
-        let displacement = this.$freezedVScrollDisplacement !== undefined ? this.$freezedVScrollDisplacement : this.virtScrollDisplacement;
-        if (!displacement) {
-            return 0;
-        }
-        else {
-            let pixels = displacement * parseFloat(this.viewPane.itemHeight);
-            return pixels;
-        }
-    }
-
-    syncFakeScroller(delay = true) {
-
-        let len = this.viewPane._getPrePagedData(true).length;
-        let scrollParent = $(this.$element).find('.scroll-faker-container');
-        let relativePosition = this.viewPane._getCurrentScrollPos() / (len - this.viewPane.itemsPerPage);
-
-        let sync = () => {
-            let maxScrollTop = scrollParent[0].scrollHeight - scrollParent.outerHeight();
-            let scrollTop = Math.floor(maxScrollTop * relativePosition);
-            this.$$settingScroll = true;
-            scrollParent.scrollTop(scrollTop);
-        }
-        if (delay) this.$timeout(sync);
-        else sync();
-    }
 
     getScrollWidth() {
         let el = $(this.$element).find('.scroll-faker-container')[0];
@@ -313,71 +200,6 @@ class jfTreeController {
         return !!(this.api.dataWasSet && !this.viewPane._getRawData().length && !this.viewPane.$freezed);
     }
 
-    _freezeVScroll() {
-        this.$freezedVScrollIndex = this.virtualScrollIndex;
-        this.$freezedVScrollDisplacement = this.virtScrollDisplacement;
-    }
-
-    _unFreezeVScroll() {
-        delete this.$freezedVScrollIndex;
-        delete this.$freezedVScrollDisplacement;
-    }
 }
 
 jfTreeController.$inject = ['$scope','$element', '$timeout', '$compile', '$rootScope'];
-
-class PaginationApi {
-    constructor(treeCtrl) {
-        this.treeCtrl = treeCtrl;
-    }
-    getTotalPages() {
-        return Math.ceil(this.treeCtrl.viewPane.getTotalLengthOfData() / this.treeCtrl.viewPane.itemsPerPage);
-    }
-    getCurrentPage() {
-        return this.treeCtrl.currentPage + 1;
-    }
-    nextPage() {
-        if (this.getCurrentPage() === this.getTotalPages()) return;
-        this.treeCtrl.currentPage++;
-        this.syncVirtualScroll();
-        this.update();
-	    this.treeCtrl.api.fire('pagination.change', this.getCurrentPage());
-    }
-
-    prevPage() {
-        if (this.getCurrentPage() === 1) return;
-        this.treeCtrl.currentPage--;
-        this.syncVirtualScroll();
-        this.update();
-	    this.treeCtrl.api.fire('pagination.change', this.getCurrentPage());
-    }
-
-    setPage(pageNum) {
-	    if (pageNum < 1 || pageNum > this.getTotalPages()) return;
-
-	    this.treeCtrl.currentPage = pageNum - 1;
-
-	    this.syncVirtualScroll()
-	    this.update();
-	    this.treeCtrl.api.fire('pagination.change', this.getCurrentPage());
-    }
-
-    update() {
-        if (this.getCurrentPage() > this.getTotalPages()) {
-            this.setPage(this.getTotalPages());
-        }
-
-        if (this.listeners) this.listeners.forEach(listener=>listener(this.getCurrentPage()));
-    }
-
-    registerChangeListener(listener) {
-        if (!this.listeners) this.listeners = []
-        this.listeners.push(listener);
-    }
-
-    syncVirtualScroll() {
-        this.treeCtrl.virtualScrollIndex = this.treeCtrl.currentPage*this.treeCtrl.viewPane.itemsPerPage;
-        this.treeCtrl.syncFakeScroller();
-    }
-
-}

@@ -472,7 +472,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                 orig = orig.$origFlat;
             }
             this.$currParentFlat.$origFlat = orig;
-            if (flatItem.pane.dirCtrl) flatItem.pane.dirCtrl.resetScroll();
+            if (flatItem.pane.dirCtrl) flatItem.pane.dirCtrl.vsApi.reset();
             flatItem.pane.$flatItems = [goUpFlat, this.$currParentFlat];
             flatItem.pane._addChildren(flatItem.data.$childrenCache, 2, this.$currParentFlat);
             this.selectNode(this.$currParentFlat.data, false);
@@ -482,7 +482,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
         drillUpToRoot() {
             if (!this.$currParentFlat) return;
             this.$openedNodes = [];
-            this.$currParentFlat.$origFlat.pane.dirCtrl.resetScroll();
+            this.$currParentFlat.$origFlat.pane.dirCtrl.vsApi.reset();
             this.setTreeData(this.$rootCache);
             delete this.$currParentFlat;
             this._refreshIndentations();
