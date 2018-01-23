@@ -378,7 +378,7 @@ export class TreeViewPane {
             let doRefresh = () => {
                 this.refreshNodeContextMenu(flat.data);
                 this._recursiveOpenRestore(flat.data).then(() => {
-                    //                this._refreshFlatChildrenCheck(flat);
+                    this._refreshFlatChildrenCheck(flat);
                     this._unFreeze();
                     defer.resolve();
                 });
