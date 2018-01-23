@@ -78,7 +78,6 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfMarquee': jfMarquee,
         'jfPasswordStrength': jfPasswordStrength,
         'jfClearErrors': jfClearErrors,
-	    'jfDatetimepicker': jfDatetimepicker,
 	    'jfDynamicTemplate': jfDynamicTemplate,
 	    'jfListSelection': jfListSelection,
         'jfMarkupEditor': jfMarkupEditor,
