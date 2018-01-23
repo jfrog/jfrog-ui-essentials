@@ -102,6 +102,8 @@ export class TreeViewPane {
             this.dirCtrl.virtScrollDisplacement = 0;
         }
 
+        if (this.dirCtrl.virtualScrollIndex < 0) this.dirCtrl.virtualScrollIndex = 0;
+
         this.dirCtrl.syncFakeScroller(false);
     }
 

@@ -191,33 +191,10 @@ class jfTreeController {
         let scrollAmount = 0.02 * Math.abs(normalDelta);
         let scrollPosBefore = this.viewPane._getCurrentScrollPos();
         if ($deltaY<0) { // scrollUp
-            if (scrollPosBefore + this.viewPane.itemsPerPage  < this.viewPane._getPrePagedData().length - scrollAmount) {
-                let newScrollIndex = scrollPosBefore + scrollAmount;
-                this.virtualScrollIndex = Math.floor(newScrollIndex);
-                this.virtScrollDisplacement = newScrollIndex - this.virtualScrollIndex;
-            }
-            else {
-                let actualItemsPerPage = this.viewPane._getPageData().length;
-                if (this.viewPane._getPrePagedData().length > actualItemsPerPage) {
-                    this.virtualScrollIndex = this.viewPane._getPrePagedData().length - actualItemsPerPage;
-                    this.virtScrollDisplacement = 1;
-                }
-                else {
-                    this.virtualScrollIndex = 0;
-                    this.virtScrollDisplacement = 0;
-                }
-            }
+            this.viewPane._scrollTo(scrollPosBefore + scrollAmount);
         }
         else if ($deltaY>0) { // scrollDown
-            if (scrollPosBefore > scrollAmount) {
-                let newScrollIndex = scrollPosBefore - scrollAmount;
-                this.virtualScrollIndex = Math.floor(newScrollIndex);
-                this.virtScrollDisplacement = newScrollIndex - this.virtualScrollIndex;
-            }
-            else {
-                this.virtualScrollIndex = 0;
-                this.virtScrollDisplacement = 0;
-            }
+            this.viewPane._scrollTo(scrollPosBefore - scrollAmount);
         }
 
 
