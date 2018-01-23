@@ -23,6 +23,7 @@ class jfTreeController {
 	    this.$rootScope = $rootScope;
         this.cellScopes = [];
         this.maxFakeScrollHeight = 1000000;
+        this.vsApi = {};
 
         $scope.$watch('jfTree.api',(api) => {
             if (this.api) {

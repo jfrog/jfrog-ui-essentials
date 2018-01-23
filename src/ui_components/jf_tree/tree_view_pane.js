@@ -137,10 +137,13 @@ export class TreeViewPane {
     }
 
     _getPageData() {
+        return this.dirCtrl.vsApi.getPageData();
+/*
         let prePage = this._getPrePagedData();
         let vScrollIndex = this.dirCtrl.$freezedVScrollIndex !== undefined ? this.dirCtrl.$freezedVScrollIndex : this.dirCtrl.virtualScrollIndex;
         let additionals = vScrollIndex + this.itemsPerPage + 2 <= prePage.length ? 2 : vScrollIndex + this.itemsPerPage + 1 <= prePage.length ? 1 : 0;
         return prePage.slice(vScrollIndex, vScrollIndex + this.itemsPerPage + additionals);
+*/
     }
 
     _getPrePagedData(ignoreFreeze = false) {

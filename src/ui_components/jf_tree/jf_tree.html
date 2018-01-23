@@ -5,7 +5,13 @@
     <div class="jf-tree-container"
          ng-style="{height: jfTree.getPageHeight() + 'px', overflow: jfTree.isEmpty() || !jfTree.api.dataGettersSet ? 'visible' : 'hidden'}"
          ng-if="jfTree.viewPane">
-        <div class="tree-items-container"
+        <jf-vscroll with-each="item" in="jfTree.viewPane._getPrePagedData()" api="jfTree.vsApi">
+            <jf-tree-item ng-non-bindable
+                          tree="jfTree"
+                          item-id="$index"
+                          data="item"></jf-tree-item>
+        </jf-vscroll>
+        <!--<div class="tree-items-container"
              ng-style="{transform: 'translate(0, ' + (-jfTree.getTranslate()) + 'px)'}">
             <div class="scroll-faker-container"
                  ng-style="{transform: 'translate(0, ' + (jfTree.getTranslate()) + 'px)', right: 0, height: jfTree.getPageHeight() + 'px'}">
@@ -25,7 +31,7 @@
                 </div>
             </div>
         </div>
-
+-->
         <div class="missing-data-setters"
              ng-if="!jfTree.api.dataGettersSet">
             {{'jf-tree: Data getters was not set (call setDataGetters())'}}
