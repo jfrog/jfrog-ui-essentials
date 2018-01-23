@@ -394,10 +394,10 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
 
                             if (scrollUpIfNeeded) {
                                 if (addedFlats.length >= 3) {
-                                    flat.pane.bringItemToView(addedFlats[2], false);
+                                    this.$timeout(() => flat.pane.bringItemToView(addedFlats[2], false));
                                 }
                                 else if (addedFlats.length) {
-                                    flat.pane.bringItemToView(addedFlats[addedFlats.length - 1], false);
+                                    this.$timeout(() => flat.pane.bringItemToView(addedFlats[addedFlats.length - 1], false));
                                 }
                             }
 

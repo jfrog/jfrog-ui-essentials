@@ -316,7 +316,6 @@ class jfVScrollController {
     bringItemToView(item, jump = true) {
         let prePaged = this.origArray;
         let index = prePaged.indexOf(item);
-
         if (index - 1 < this.virtualScrollIndex) {
             this.scrollTo(index, jump ? 0 : undefined);
         }
