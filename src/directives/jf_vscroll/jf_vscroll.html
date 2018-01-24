@@ -1,5 +1,5 @@
 <div class="v-scroll-container"
-     ng-style="{transform: 'translate(0, ' + (-jfVScroll.getTranslate()) + 'px)', height: jfVScroll.containerHeight + 'px'}">
+     ng-style="{transform: 'translate(0, ' + (-jfVScroll.getTranslate()) + 'px)', height: jfVScroll.containerHeight + 'px', opacity: jfVScroll.ready ? 1 : 0}">
     <div class="scroll-faker-container"
          ng-style="{transform: 'translate(0, ' + (jfVScroll.getTranslate()) + 'px)', right: 0, height: jfVScroll.getPageHeight() + 'px'}">
         <div class="scroll-faker"

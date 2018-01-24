@@ -32,7 +32,8 @@ class jfVScrollElementController {
     constructor($scope, $element, $timeout) {
 
         $timeout(() => {
-            this.vscroll.setItemHeight($($element).children().height());
+            let height = $($element).children().height();
+            if (height) this.vscroll.setItemHeight(height);
         });
 
         $scope.$watch('jfVScrollElement.data', () => {

@@ -3,7 +3,7 @@ export function jfVScroll($timeout, $rootScope) {
         restrict: 'E',
         scope: {
             itemVariableName: '@withEach',
-            origArray: '=in',
+            origArray: '&in',
             api: '='
         },
         templateUrl: 'directives/jf_vscroll/jf_vscroll.html',
@@ -25,7 +25,7 @@ export function jfVScroll($timeout, $rootScope) {
 }
 
 class jfVScrollController {
-    constructor($scope, $timeout, $element) {
+    constructor($scope, $timeout, $element, $q) {
         this.$timeout = $timeout;
         this.$scope = $scope;
         this.$element = $element;
@@ -37,6 +37,14 @@ class jfVScrollController {
 
         this.itemsPerPage = 1;
         this.itemHeight = undefined;
+
+        this.ready = false;
+        let whenReadyDefer = $q.defer();
+        this.whenReady = whenReadyDefer.promise;
+        $scope.$watch('jfVScroll.ready', () => {
+            if (this.ready) whenReadyDefer.resolve();
+        })
+
 
         this._initApi();
 
@@ -58,6 +66,7 @@ class jfVScrollController {
         if (this.itemHeight === undefined) {
             this.itemHeight = itemHeight;
             this._setAutoItemsPerPage();
+            this.ready = true;
         }
     }
 
@@ -78,7 +87,7 @@ class jfVScrollController {
                     this.$timeout.cancel(this.scrollTimeout);
                     delete this.scrollTimeout;
                 }
-                let len = this.origArray.length;
+                let len = this.origArray().length;
                 if (len) {
                     let maxScrollTop = scrollParent[0].scrollHeight - scrollParent.outerHeight();
                     let relativePosition = scrollParent.scrollTop() / maxScrollTop;
@@ -99,7 +108,7 @@ class jfVScrollController {
     }
 
     syncFakeScroller(delay = true) {
-        let len = this.origArray.length;
+        let len = this.origArray().length;
         let scrollParent = $(this.$element).find('.scroll-faker-container');
         let relativePosition = this._getCurrentScrollPos() / (len - this.itemsPerPage);
 
@@ -115,8 +124,8 @@ class jfVScrollController {
 
     getPage() {
         let vScrollIndex = this.virtualScrollIndex;
-        let additionals = vScrollIndex + this.itemsPerPage + 2 <= this.origArray.length ? 2 : vScrollIndex + this.itemsPerPage + 1 <= this.origArray.length ? 1 : 0;
-        return this.origArray.slice(vScrollIndex, vScrollIndex + this.itemsPerPage + additionals);
+        let additionals = vScrollIndex + this.itemsPerPage + 2 <= this.origArray().length ? 2 : vScrollIndex + this.itemsPerPage + 1 <= this.origArray().length ? 1 : 0;
+        return this.origArray().slice(vScrollIndex, vScrollIndex + this.itemsPerPage + additionals);
     }
 
     getTranslate() {
@@ -135,14 +144,14 @@ class jfVScrollController {
             return this.containerHeight;
         }
         else {
-            let len = this.origArray.length;
+            let len = this.origArray().length;
             if (len < this.itemsPerPage) return len * this.itemHeight;
             else return this.itemsPerPage * this.itemHeight;
         }
     }
 
     getTotalScrollHeight() {
-        return this.origArray.length * this.itemHeight;
+        return this.origArray().length * this.itemHeight;
     }
 
     onMouseWheel($event, $delta, $deltaX, $deltaY) {
@@ -237,8 +246,8 @@ class jfVScrollController {
             this.virtualScrollIndex = 0;
             this.virtScrollDisplacement = 0;
         }
-        if (this.virtualScrollIndex + this.itemsPerPage >= this.origArray.length) {
-            this.virtualScrollIndex = this.origArray.length - this.itemsPerPage;
+        if (this.virtualScrollIndex + this.itemsPerPage >= this.origArray().length) {
+            this.virtualScrollIndex = this.origArray().length - this.itemsPerPage;
             this.virtScrollDisplacement = 0;
         }
 
@@ -297,21 +306,16 @@ class jfVScrollController {
         this.syncFakeScroller(false);
     }
 
-    onNextOrigArrayUpdate(callback) {
-        let unwatch = this.$scope.$watch('jfVScroll.origArray', () => {
-            callback();
-            unwatch();
-        })
-    }
-
-    centerOnItem(item, _recursed = false) {
-        let prePaged = this.origArray;
-        let index = prePaged.indexOf(item);
-        if (index === -1 && !_recursed) {
-            this.onNextOrigArrayUpdate(() => {
-                this.$timeout(() => this.centerOnItem(item, true));
-            })
+    centerOnItem(item) {
+        if (!this.ready) {
+            this.whenReady.then(() => {
+                this.centerOnItem(item)
+            });
+            return;
         }
+
+        let prePaged = this.origArray();
+        let index = prePaged.indexOf(item);
 
         let halfPage = Math.floor(this.itemsPerPage / 2);
         if (prePaged.length <= this.itemsPerPage || index - halfPage < 0) {
@@ -328,7 +332,7 @@ class jfVScrollController {
     }
 
     bringItemToView(item, jump = true) {
-        let prePaged = this.origArray;
+        let prePaged = this.origArray();
         let index = prePaged.indexOf(item);
         if (index - 1 < this.virtualScrollIndex) {
             this.scrollTo(index, jump ? 0 : undefined);

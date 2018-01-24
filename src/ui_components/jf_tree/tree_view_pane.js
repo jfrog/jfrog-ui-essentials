@@ -65,6 +65,7 @@ export class TreeViewPane {
     }
 
     _getPrePagedData(ignoreFreeze = false) {
+        if (this.ignoreFreeze) ignoreFreeze = true;
         return this._getSortedData(this._getFilteredData(this._getRawData(ignoreFreeze), ignoreFreeze));
     }
 
@@ -423,7 +424,9 @@ export class TreeViewPane {
     }
 
     centerOnItem(item) {
+        this.ignoreFreeze = true;
         this.dirCtrl.vsApi.centerOnItem(item);
+        this.ignoreFreeze = false;
         this.treeApi._setSelected(item);
     }
 
