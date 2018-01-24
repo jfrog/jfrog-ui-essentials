@@ -2,7 +2,7 @@ export function JFrogIFrameDownload(JFrogNotifications, $timeout) {
 	'ngInject';
     return function(url,defaultErrorMessage) {
         let iframe=$('<iframe style="display: none">');
-        iframe.load((event)=>{
+        iframe.on('load', (event)=>{
             let responseObjStr, response,defaultMessage;
             try {
                 responseObjStr = $(event.target).contents().find('pre').text();
