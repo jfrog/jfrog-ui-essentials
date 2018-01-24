@@ -350,12 +350,17 @@ export class TreeViewPane {
             openRestoreNode(node);
         }
         else {
-            let closedRoot = _.find(this.$flatItems, fi => fi.data && fi.data !== this.treeApi.GO_UP_NODE && !_.includes(this.treeApi.$openedNodes, fi.data) && this.treeApi.uniqueIdGetter(fi.data) === id);
-            if (closedRoot && restoreIfClosed) {
-                defer.promise.then(() => {
-                    this.treeApi.closeNode(closedRoot.data);
-                })
-                openRestoreNode(closedRoot.data);
+            if (restoreIfClosed) {
+                let closedRoot = _.find(this.$flatItems, fi => fi.data && fi.data !== this.treeApi.GO_UP_NODE && !_.includes(this.treeApi.$openedNodes, fi.data) && this.treeApi.uniqueIdGetter(fi.data) === id);
+                if (closedRoot) {
+                    defer.promise.then(() => {
+                        this.treeApi.closeNode(closedRoot.data);
+                    })
+                    openRestoreNode(closedRoot.data);
+                }
+                else {
+                    defer.resolve();
+                }
             }
             else {
                 defer.resolve();
