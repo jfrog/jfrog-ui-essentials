@@ -296,9 +296,23 @@ class jfVScrollController {
         this.virtScrollDisplacement = 0;
         this.syncFakeScroller(false);
     }
-    centerOnItem(item) {
+
+    onNextOrigArrayUpdate(callback) {
+        let unwatch = this.$scope.$watch('jfVScroll.origArray', () => {
+            callback();
+            unwatch();
+        })
+    }
+
+    centerOnItem(item, _recursed = false) {
         let prePaged = this.origArray;
         let index = prePaged.indexOf(item);
+        if (index === -1 && !_recursed) {
+            this.onNextOrigArrayUpdate(() => {
+                this.$timeout(() => this.centerOnItem(item, true));
+            })
+        }
+
         let halfPage = Math.floor(this.itemsPerPage / 2);
         if (prePaged.length <= this.itemsPerPage || index - halfPage < 0) {
             this.virtualScrollIndex = 0;
