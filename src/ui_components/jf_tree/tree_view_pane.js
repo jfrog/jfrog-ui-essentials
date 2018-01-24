@@ -329,6 +329,7 @@ export class TreeViewPane {
                 let children = node.$childrenCache;
                 if (!children || !children.length) defer.resolve();
                 else {
+                    node.children = true;
                     let pendingPromises = children.length;
                     children.forEach(child => {
                         this._recursiveOpenRestore(child, false).then(() => {
@@ -349,7 +350,7 @@ export class TreeViewPane {
             openRestoreNode(node);
         }
         else {
-            let closedRoot = _.find(this.$flatItems, fi => fi.level === 0 && fi.data && fi.data !== this.treeApi.GO_UP_NODE && !_.includes(this.treeApi.$openedNodes, fi.data) && this.treeApi.uniqueIdGetter(fi.data) === id);
+            let closedRoot = _.find(this.$flatItems, fi => fi.data && fi.data !== this.treeApi.GO_UP_NODE && !_.includes(this.treeApi.$openedNodes, fi.data) && this.treeApi.uniqueIdGetter(fi.data) === id);
             if (closedRoot && restoreIfClosed) {
                 defer.promise.then(() => {
                     this.treeApi.closeNode(closedRoot.data);
