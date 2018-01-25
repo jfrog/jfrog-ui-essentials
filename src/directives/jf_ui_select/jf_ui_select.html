@@ -11,14 +11,14 @@
               name="select-item"
               ng-class="{'more-ph': jfUiSelect.isMorePlaceholder(item)}"
               ng-click="jfUiSelect.onClick(item,$event)">
-            <jf-marquee><inner-html ng-bind-html="jfUiSelect.displayLabel(item) | highlight: $select.search"></inner-html></jf-marquee>
+            <jf-marquee><inner-html ng-bind-html="jfUiSelect.displayLabel(item) | jfHighlight: $select.search"></inner-html></jf-marquee>
         </div>
         <div  ng-if="jfUiSelect.jfSelectHelpTooltips">
             <span class="jf-ui-select-item"
                   name="select-item"
                   ng-class="{'more-ph': jfUiSelect.isMorePlaceholder(item)}"
                   ng-click="jfUiSelect.onClick(item,$event)"
-                  ng-bind-html="jfUiSelect.displayLabel(item) | highlight: $select.search"></span>
+                  ng-bind-html="jfUiSelect.displayLabel(item) | jfHighlight: $select.search"></span>
             <span ng-if="jfUiSelect.jfSelectHelpTooltips({$item: item})">
                 <jf-help-tooltip text="{{jfUiSelect.jfSelectHelpTooltips({$item: item})}}"></jf-help-tooltip>
             </span>
