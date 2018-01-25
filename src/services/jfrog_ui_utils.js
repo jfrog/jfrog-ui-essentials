@@ -48,4 +48,72 @@ export class JFrogUIUtils {
         });
     }
 
+	stringifyData(value, separator) {
+		if (_.isEmpty(value)) {
+			return '';
+		}
+
+		if (_.isArray(value)) {
+			let resultArray = _.map(value, (item) => {
+				if (item.name) {
+					return item.name;
+				}
+				return item;
+			});
+			if (separator && typeof separator === 'string') {
+				return resultArray.join(separator);
+			}
+			return resultArray.join(', ');
+		}
+
+		return value;
+	}
+
+	formatHtmlList(list,maxInRow) {
+		let result = ``;
+		let temp = [];
+		_.forEach(list,(item)=>{
+			if(temp.length === maxInRow) {
+				result += this.stringifyData(temp) + `<br>`;
+				temp = [item];
+			} else {
+				temp.push(item);
+			}
+		});
+		if(temp.length > 0) {
+			result += this.stringifyData(temp) + `<br>`;
+		}
+
+		return result;
+	}
+
+	capitalizeFirstLetter(string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
+
+	saveTextAsFile(text,fileName) {
+		let textFileAsBlob = new Blob([text], {type:'text/plain'});
+		let fileNameToSaveAs = fileName;
+
+		let downloadLink = document.createElement("a");
+		downloadLink.download = fileNameToSaveAs;
+		downloadLink.innerHTML = "Download File";
+		if (window.URL != null) {
+			// Chrome allows the link to be clicked
+			// without actually adding it to the DOM.
+			downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+		} else {
+			// Firefox requires the link to be added to the DOM
+			// before it can be clicked.
+			downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+			downloadLink.onclick = (event) =>{
+				document.body.removeChild(event.target);
+			};
+			downloadLink.style.display = "none";
+			document.body.appendChild(downloadLink);
+		}
+
+		downloadLink.click();
+	}
 }

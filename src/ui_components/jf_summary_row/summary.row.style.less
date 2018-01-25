@@ -1,0 +1,55 @@
+
+.summary-row {
+  display: grid;
+  // The default 4 fractions division is arbitrary and should be overwritten by code using this class
+  grid-template-columns: repeat(4, 1fr);
+
+  width: 100%;
+  height: 120px;
+  padding: 20px 10px;
+  &.jf-content-section {
+    margin-bottom: 0;
+  }
+  .summery-labeled-item {
+    padding: 0 20px;
+    vertical-align: top;
+    font-size: 12px;
+    display: block;
+    &:not(:first-child):not(.no-separator) {
+      border-left: 1px solid @grayBorderLighter;
+    }
+
+    line-height: 28px;
+    white-space: normal;
+    color: lighten(@grayFontGeneral, 20%);
+
+    span {
+      display: block;
+      font-size: 14px;
+      font-weight: normal;
+      color: @greenBGSecondaryText;
+    }
+    i:not(.colored-icon) {
+      color: @greenBGSecondaryText;
+    }
+
+    &:not(.downloads) {
+      display: inline-block;
+      overflow: hidden;
+      span {
+        width: 100% !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        a {
+          width: 100% !important;
+          max-width: 500px;
+          display: inline-block;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+}
