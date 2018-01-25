@@ -367,7 +367,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             }
         }
 
-        openNode(node, scrollUpIfNeeded = false) {
+        openNode(node, scrollUpIfNeeded = false, drillDown = true, preSelect = true) {
             if (!node) return;
             if (this.fire('item.before.open', node) === false) return $q.when();
 
@@ -383,12 +383,12 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                         if (!children.length) node.$noChildren = true;
                         else flat.hasChildren = true;
 
-                        if (this.$drillDownMode) {
+                        if (this.$drillDownMode && drillDown) {
                             this.drillDown(flat);
                         }
                         else {
 
-                            this._preSelect(flat);
+                            if (preSelect) this._preSelect(flat);
 
                             let addedFlats = flat.pane._addChildren(children, flat.level + 1, flat);
 
@@ -411,7 +411,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                 }
             }
             else {
-                if (flat.$pending) {
+                if (flat && flat.$pending) {
                     this.$timeout(() => {
                         this.openNode(node, scrollUpIfNeeded).then(() => {
                             defer.resolve();
@@ -430,7 +430,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             if (_.includes(this.$openedNodes, node)) {
                 _.remove(this.$openedNodes, n => n === node);
                 let flat = this._flatFromNode(node);
-                flat.pane._removeChildren(flat)
+                if (flat) flat.pane._removeChildren(flat)
             }
         }
 

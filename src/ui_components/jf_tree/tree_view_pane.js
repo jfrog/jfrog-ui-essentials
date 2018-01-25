@@ -325,7 +325,7 @@ export class TreeViewPane {
 
         let openRestoreNode = (node) => {
 
-            this.treeApi.openNode(node).then(() => {
+            this.treeApi.openNode(node, false, false, false).then(() => {
                 let children = node.$childrenCache;
                 if (!children || !children.length) defer.resolve();
                 else {
