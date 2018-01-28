@@ -49,6 +49,7 @@ gulp.task('build:common',
                 'vendorScripts',
                 'vendorStyles',
                 'less',
+                'copyLessVariables',
                 'fonts',
                 'images',
                 'copyBowerJson'
@@ -255,6 +256,7 @@ gulp.task('less', function () {
     var injectOptions = {
         transform: function(filePath) {
             filePath='../../'+filePath;
+	        console.log(filePath);
             return '@import "' + filePath + '";';
         },
         starttag: '// injector',
@@ -282,8 +284,8 @@ gulp.task('less', function () {
 
 
 // copy styleguide file to dest - for development only
-gulp.task('copyStyleguide', function () {
-    return gulp.src(CONFIG.SOURCES.STYLEGUIDE)
+gulp.task('copyLessVariables', function () {
+    return gulp.src(CONFIG.SOURCES.LESS_DEPENDENCIES)
         .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET))
 });
 

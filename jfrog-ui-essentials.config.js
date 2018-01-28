@@ -12,6 +12,7 @@ module.exports = {
         VENDOR_ASSETS: vendorPaths.ASSETS,
         VENDOR_FONTS: vendorPaths.FONTS,
         LESS: 'src/assets/stylesheets/**/*.less',
+        LESS_DEPENDENCIES: ['src/assets/stylesheets/variables.less'],
         DIRECTIVES_LESS: ['src/directives/**/*.less','src/ui_components/**/**/*.less'],
         LESS_MAIN_FILE: 'src/assets/stylesheets/main.less',
         FONTS : 'src/assets/fonts/**',
