@@ -256,7 +256,6 @@ gulp.task('less', function () {
     var injectOptions = {
         transform: function(filePath) {
             filePath='../../'+filePath;
-	        console.log(filePath);
             return '@import "' + filePath + '";';
         },
         starttag: '// injector',
