@@ -1,0 +1,13 @@
+<div class="summary-row jf-content-section"
+     ng-style="$ctrl.inlineStyle">
+	<div class="summery-labeled-item"
+	     ng-class="col.class"
+	     ng-repeat="col in $ctrl.columnsToShow track by $index">
+		{{col.label}}
+		<jf-summary-row-item
+				no-wrap="col.noWrap"
+				col-template="col.template"
+				col-scope="$ctrl.parentScope">
+		</jf-summary-row-item>
+	</div>
+</div>

@@ -9,6 +9,7 @@ import {JFrogUIWebWorker}                           from './jfrog_ui_webworker';
 import {recursiveDirective} from "./recursive_directive";
 import {AdvancedStringMatch} from "./advanced_string_match";
 import {ContextMenuService} from "./context_menu_service";
+import JfFullTextService from './full.text.service';
 
 angular.module('jfrog.ui.essentials.services', ['ui.router', 'jfrog.ui_components', 'toaster'])
     .provider('JFrogUILibConfig', JFrogUILibConfig)
@@ -22,4 +23,5 @@ angular.module('jfrog.ui.essentials.services', ['ui.router', 'jfrog.ui_component
     .factory('JFrogUIWebWorker', JFrogUIWebWorker)
     .service('AdvancedStringMatch', AdvancedStringMatch)
     .service('ContextMenuService', ContextMenuService)
+    .service('JfFullTextService', JfFullTextService)
 
