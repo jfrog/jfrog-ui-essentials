@@ -285,7 +285,7 @@ gulp.task('less', function () {
 // copy styleguide file to dest - for development only
 gulp.task('copyLessVariables', function () {
     return gulp.src(CONFIG.SOURCES.LESS_DEPENDENCIES)
-        .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET))
+        .pipe(gulp.dest(`${CONFIG.DESTINATIONS.TARGET}/less`))
 });
 
 //copy fonts
