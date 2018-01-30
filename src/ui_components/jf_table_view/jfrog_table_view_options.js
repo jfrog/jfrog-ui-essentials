@@ -38,6 +38,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			this.PAGINATION = 0;
 			this.VIRTUAL_SCROLL = 1;
 			this.EXTERNAL_PAGINATION = 2;
+			this.INFINITE_SCROLL = 3;
 
 			this._setDefaults();
 		}
@@ -129,6 +130,9 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
 			if (this.paginationMode === this.EXTERNAL_PAGINATION && internalCall !== '$$internal$$') {
 				console.error('When using external pagination, you should not call setData directly !');
+			}
+			else if (this.paginationMode === this.INFINITE_SCROLL && internalCall !== '$$internal$$') {
+				console.error('When using infinite scroll, you should not call setData directly !');
 			}
 			else {
 				this.origData = _.sortBy(data, '');
@@ -319,15 +323,23 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			}
 			this._normalizeWidths();
 
-			let groupables = _.filter(this.columns, c => !!c.allowGrouping);
-			if (this.subRowsEnabled && groupables.length) {
-				console.error('jf-table-view: Grouping is not supported with sub rows !');
-				groupables.forEach(c => c.allowGrouping = false);
-			}
+			this._checkGroupingSupport();
 
 			this.showHeaders(this.headersVisible);
 
 			return this;
+		}
+
+		_checkGroupingSupport() {
+            let groupables = _.filter(this.columns, c => !!c.allowGrouping);
+            if (this.subRowsEnabled && groupables.length) {
+                console.error('jf-table-view: Grouping is not supported with sub rows !');
+                groupables.forEach(c => c.allowGrouping = false);
+            }
+            else if (this.paginationMode === this.INFINITE_SCROLL && groupables.length) {
+                console.error('jf-table-view: Grouping is not supported with infinite scroll !');
+                groupables.forEach(c => c.allowGrouping = false);
+            }
 		}
 
 		setRowHeight(height, headerHeight) {
@@ -353,21 +365,44 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			return this;
 		}
 
-		setPaginationMode(pagiMode, externalPaginationCallback) {
+		setPaginationMode(pagiMode, paginationCallback) {
 			this.paginationMode = pagiMode;
 			if (this.paginationMode === this.EXTERNAL_PAGINATION) {
-				if (!externalPaginationCallback || typeof externalPaginationCallback !== 'function') {
+				if (!paginationCallback || typeof paginationCallback !== 'function') {
 					console.error(
 						'Setting pagination mode to EXTERNAL_PAGINATION require pagination callback function as the second parameter of setPaginationMode');
 					this.paginationMode = this.PAGINATION;
 				}
-				this.externalPaginationCallback = externalPaginationCallback;
-				this.pendingExternalPaging = true;
-				if (this.dirCtrl && !this.initialExternalPaginationSent) {
-					$timeout(() => this.sendExternalPageRequest());
+				else {
+                    this.externalPaginationCallback = paginationCallback;
+                    this.pendingExternalPaging = true;
+                    if (this.dirCtrl && !this.initialExternalPaginationSent) {
+                        $timeout(() => this.sendExternalPageRequest());
+                    }
 				}
 			}
-			return this;
+			else if (this.paginationMode === this.INFINITE_SCROLL) {
+                if (!paginationCallback || typeof paginationCallback !== 'function') {
+                    console.error('Setting pagination mode to INFINITE_SCROLL require pagination callback function as the second parameter of setPaginationMode');
+                    this.paginationMode = this.PAGINATION;
+                }
+                else {
+                    this.infiniteScrollCallback = paginationCallback;
+                    this.showPagination(false);
+                    this.showCounter(false);
+                    this.showFilter(false);
+                    this.setSortable(false);
+                    this.infiniteScrollOffset = 0;
+                    if (this.dirCtrl && !this.initialInfiniteScrollRequestSent) {
+                        if (!this.infiniteScrollChunkSize && this.rowsPerPage) this.infiniteScrollChunkSize = this.rowsPerPage;
+                        $timeout(() => this.sendInfiniteScrollRequest());
+                    }
+                }
+            }
+
+            this._checkGroupingSupport();
+
+            return this;
 		}
 
 		hasSelection() {
@@ -457,7 +492,43 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				$timeout(() => this.sendExternalPageRequest());
 				this.initialExternalPaginationSent = true;
 			}
+            else if (this.paginationMode === this.INFINITE_SCROLL) {
+				this._initInfiniteScroll();
+                $timeout(() => {
+                    if (!this.infiniteScrollChunkSize && this.rowsPerPage) this.infiniteScrollChunkSize = this.rowsPerPage;
+                	this.sendInfiniteScrollRequest()
+                    this.initialInfiniteScrollRequestSent = true;
+                });
+            }
+		}
 
+		_initInfiniteScroll() {
+            let scrollParent = $(this.dirCtrl.$element).scrollParent();
+
+            const EDGE = 50;
+
+            scrollParent.on('scroll',(e) => {
+            	if (!this.infiniteScrollHasMore || this.pendingInfiniteScroll) return;
+            	this.dirCtrl.$scope.$apply(() => {
+                    let bottomReached = false;
+                    if (scrollParent[0] === document) {
+                        if($(window).scrollTop() + $(window).height() >= $(document).height() - EDGE) {
+                            bottomReached = true;
+                        }
+                    }
+                    else {
+                        if(scrollParent[0].scrollHeight - scrollParent.scrollTop() <= scrollParent[0].clientHeight + EDGE) {
+                            bottomReached = true;
+                        }
+                    }
+                    if (bottomReached) {
+                        e.preventDefault();
+                        this.infiniteScrollOffset += this.infiniteScrollChunkSize;
+                        this.rowsPerPage += this.infiniteScrollChunkSize;
+                        this.sendInfiniteScrollRequest()
+                    }
+	            })
+            })
 		}
 
 		_normalizeWidths(delay = true, recurse = false) {
@@ -662,7 +733,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				return this.getPrePagedData().slice(this.dirCtrl.virtualScrollIndex,
 					this.dirCtrl.virtualScrollIndex + this.rowsPerPage);
 			}
-			else if (this.paginationMode === this.EXTERNAL_PAGINATION) {
+			else if (this.paginationMode === this.EXTERNAL_PAGINATION || this.paginationMode === this.INFINITE_SCROLL) {
 				return this.getRawData();
 			}
 		}
@@ -690,6 +761,27 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 					this.pendingExternalPaging = false;
 					this.dirCtrl.noFilterResults = this.externalTotalCount.filtered === 0 && this.externalTotalCount.total > 0;
 				});
+			}
+		}
+
+		sendInfiniteScrollRequest() {
+			if (!this.dirCtrl || this.pendingInfiniteScroll) {
+				return;
+			}
+			let promise = this.infiniteScrollCallback({
+				offset: this.infiniteScrollOffset,
+				numOfRows: this.infiniteScrollChunkSize
+			});
+			if (!promise || !promise.then) {
+				console.error('Infinite scroll callback should return promise');
+			}
+			else {
+                this.pendingInfiniteScroll = true;
+                return promise.then(moreData => {
+                    this.setData(this.data.concat(moreData.data), '$$internal$$');
+                    this.infiniteScrollHasMore = moreData.hasMore;
+                    this.pendingInfiniteScroll = false;
+                });
 			}
 		}
 
