@@ -17,8 +17,10 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-right actions-dropdown text-left">
               <li ng-repeat="actionObj in jfActions.dynamicActions"
-                  class="action-item menu-item-{{actionObj.icon}}"
-                  ng-class="{disabled: actionObj.disabled}"
+                  class="action-item"
+                  ng-class="{disabled: actionObj.disabled,
+                    'menu-item-{{actionObj.icon}}': actionObj.icon,
+                    'menu-item-no-icon': !actionObj.icon}"
                   ng-if="!actionObj.visibleWhen || actionObj.visibleWhen()">
                   <a href="" class="action-container" ng-click="jfActions.doAction(actionObj,$event)">
                       <span class="action-icon icon"

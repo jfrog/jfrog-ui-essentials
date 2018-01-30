@@ -81,7 +81,6 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfJsTreeWrap': jfJsTreeWrap,
         'jfAutoComplete': jfAutoComplete,
 	    'jfRadioButton': jfRadioButton,
-        'jfDatetimepicker': jfDatetimepicker,
         'jfContextMenu': jfContextMenu,
         'jfVscroll': jfVScroll,
         'jfVscrollElement': jfVScrollElement,

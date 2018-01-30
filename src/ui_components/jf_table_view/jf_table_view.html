@@ -51,6 +51,15 @@
              ng-if="jfTableView.noFilterResults">
             {{jfTableView.options.noFilterResultsText || 'Current filter has no results.'}} <a href ng-click="jfTableView.clearFilter()">Clear filter</a>
         </div>
+        <div ng-if="jfTableView.options.pendingInfiniteScroll"
+             ng-style="{height: jfTableView.options.rowHeight}"
+             class="loading-more">
+            <div class="spinner-msg-local">
+                <div class="icon-hourglass-local"></div>
+            </div>
+        </div>
+
     </div>
+
 
 </div>
