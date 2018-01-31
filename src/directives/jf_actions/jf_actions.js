@@ -32,16 +32,19 @@ class jfActionsController {
 
     doAction(actionObj,e) {
         if (actionObj.disabled) {
-            e.stopPropagation();
-            e.preventDefault();
-            return;
-        }
-        if (this.actionsHandler) {
-            this.actionsHandler.perform(actionObj, this.currentEntity);
-        }
-        else if (actionObj.action) {
-            actionObj.action(this.currentEntity);
-        }
+		    e.stopPropagation();
+		    e.preventDefault();
+		    return;
+	    }
+	    if (actionObj.name === 'Download' && actionObj.xrayShouldValidate) {
+		    e.preventDefault();
+	    }
+	    if (this.actionsHandler) {
+		    this.actionsHandler.perform(actionObj, this.currentEntity);
+	    }
+	    else if (actionObj.action) {
+		    actionObj.action(this.currentEntity);
+	    }
     }
 
     getActiveActionsCount() {
