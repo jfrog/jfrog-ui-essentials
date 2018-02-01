@@ -42,6 +42,9 @@ class jfMultiDropdownController {
             }
         });
 
+	    this.isAllSelected = false;
+	    this.showSelectAllCheckbox = this.items && this.items.length && this.enableSelectAllCheckbox && !this.singleSelection;
+
     }
 
     sendOpenStateChange() {
@@ -81,8 +84,18 @@ class jfMultiDropdownController {
         }
 
     }
-    onSelection() {
-        if (this.onChange) this.onChange();
+
+    onSelection(toggleAll) {
+	    this.applyChanges();
+	    if (toggleAll) {
+		    if (this.isAllSelected) {
+			    this.selectAll();
+		    } else {
+			    this.unSelectAll();
+		    }
+	    } else {
+		    this.isAllSelected = false;
+        }
     }
 
     onSingleSelection() {
@@ -92,10 +105,13 @@ class jfMultiDropdownController {
         if (this.onChange) this.onChange();
     }
 
-
     getSelectedCount() {
-        let selected = _.filter(this.items, (item) => item.isSelected);
+        let selected = _.filter(this.items, (item) => item.isSelected && !item.isAllToggleCheckbox);
         return selected.length;
+    }
+
+    applyChanges() {
+	    if (this.onChange) this.onChange();
     }
 
     selectedItems() {
@@ -115,11 +131,11 @@ class jfMultiDropdownController {
     }
     selectAll() {
         this.filter(this.items, this.filterText).forEach((item)=>{if (!item.disabled) item.isSelected = true;})
-        this.onSelection();
+	    this.applyChanges();
     }
     unSelectAll() {
         this.filter(this.items, this.filterText).forEach((item)=>{if (!item.disabled) item.isSelected = false;})
-        this.onSelection();
+	    this.applyChanges();
         this.singleSelectionIndex = -1;
     }
 
@@ -145,7 +161,9 @@ export function jfMultiDropdown() {
 	        showLabelCounter: '@',
             noFilter: '=?',
             noSelectedFirst: '=?',
-            singleSelection: '=?'
+            singleSelection: '=?',
+	        textInputs: '<?',
+	        enableSelectAllCheckbox: '<?'
         },
         templateUrl: 'directives/jf_multi_dropdown/jf_multi_dropdown.html'
     }

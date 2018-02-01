@@ -1,4 +1,4 @@
-<div ng-class="{'disabled':jfMultiDropdown.disabled}" class="jf-multi-dropdown">
+<div ng-class="{'disabled':jfMultiDropdown.disabled,'wide-dropdown':jfMultiDropdown.textInputs}" class="jf-multi-dropdown">
     <label ng-if="jfMultiDropdown.label">{{jfMultiDropdown.label}} <span ng-if="jfMultiDropdown.showLabelCounter && jfMultiDropdown.selectedItems().length">({{jfMultiDropdown.selectedItems().length}})</span></label>
     <div class="main-box"
          ng-class="{'selected-view' : jfMultiDropdown.selectedItems().length}"
@@ -10,7 +10,7 @@
     </div>
     <div ng-if="jfMultiDropdown.opened"
          class="drop-down-container">
-        <div class="filter-container" ng-if="!jfMultiDropdown.noFilter">
+        <div class="filter-container" ng-if="!jfMultiDropdown.noFilter" ng-class="{'with-select-all-checkbox':jfMultiDropdown.showSelectAllCheckbox}">
             <form>
                 <jf-field autofocus="true">
                     <input type="text"
@@ -20,12 +20,21 @@
                            placeholder="{{jfMultiDropdown.filterPlaceholder}}"/>
                 </jf-field>
                 <div class="batch-selection-wrapper">
-                    <div class="batch-selection">
+                    <div class="batch-selection" ng-if="!jfMultiDropdown.showSelectAllCheckbox">
                         <a href
                            ng-if="!jfMultiDropdown.singleSelection"
                            ng-click="jfMultiDropdown.selectAll()">Select All</a>
                         <a href
                            ng-click="jfMultiDropdown.unSelectAll()">{{ jfMultiDropdown.singleSelection ? 'Clear selection' : 'Unselect All' }}</a>
+                    </div>
+                    <div class="batch-selection-checkbox" ng-if="jfMultiDropdown.showSelectAllCheckbox">
+                        <label class="jf-checkbox">
+                            <input type="checkbox"
+                                   ng-disabled="jfMultiDropdown.filterText"
+                                   ng-change="jfMultiDropdown.onSelection(true)"
+                                   ng-model="jfMultiDropdown.isAllSelected">
+                            <span></span> All
+                        </label>
                     </div>
                 </div>
             </form>
@@ -49,6 +58,13 @@
                            ng-change="jfMultiDropdown.onSingleSelection()"
                            ng-disabled="item.disabled">
                 </jf-radio-button>
+                <span class="text-input-wrapper" ng-if="jfMultiDropdown.textInputs">
+                    <input type="text"
+                           name="items-filter"
+                           class="input-text"
+                           ng-model="item.inputTextValue"
+                           placeholder="{{item.inputPlaceholder || 'Free text'}}"/>
+                </span>
 
             </div>
         </div>
