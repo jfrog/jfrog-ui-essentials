@@ -1,5 +1,5 @@
 import {TreeViewPane} from './tree_view_pane';
-export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService) {
+export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService, JFrogEventBus) {
 	'ngInject';
 	class JFTreeApiClass {
 		/* @ngInject */
@@ -7,6 +7,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             this.$timeout = $timeout;
             this.$q = $q;
             this.AdvancedStringMatch = AdvancedStringMatch;
+            this.JFrogEventBus = JFrogEventBus;
             this.$root = [];
             this.$viewPanes = [];
             this.$openedNodes = [];
@@ -822,6 +823,11 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             if (fi) {
                 fi.pane.bringItemToView(fi, !doScroll);
             }
+        }
+
+        registerEventOnNode(event, callback) {
+            if (!this.eventsToRegisterOnNode) this.eventsToRegisterOnNode = [];
+            this.eventsToRegisterOnNode.push({ event, callback });
         }
 
 	}
