@@ -73,15 +73,32 @@ class jfTreeController {
                         }
                         break;
                     case 'Right':
-                    case 'ArrowRight':
+                    case 'ArrowRight': {
                         e.preventDefault();
-                        this.api.openPreSelected(true);
+                        let relevant = this.api.getPreSelectedNode() || this.api.getSelectedNode();
+                        if (relevant) {
+                            if (!this.api.isNodeOpen(relevant)) this.api.openNode(relevant, true);
+                            else {
+                                if (relevant.$childrenCache && relevant.$childrenCache.length) {
+                                    this.api.preSelectNode(relevant.$childrenCache[0]);
+                                }
+                            }
+                        }
                         break;
+                    }
                     case 'Left':
-                    case 'ArrowLeft':
+                    case 'ArrowLeft': {
                         e.preventDefault();
-                        this.api.closeNode(this.api.getPreSelectedNode());
+                        let relevant = this.api.getPreSelectedNode() || this.api.getSelectedNode();
+                        if (relevant) {
+                            if (this.api.isNodeOpen(relevant)) this.api.closeNode(relevant);
+                            else {
+                                let parent = this.api.getParentNode(relevant);
+                                if (parent) this.api.preSelectNode(parent);
+                            }
+                        }
                         break;
+                    }
                     default:
                         if (!e.ctrlKey && !e.shiftKey && ! e.metaKey && e.key.toLowerCase() === String.fromCharCode(e.which).toLowerCase()) {
                             this.api.fire('keydown', e);
