@@ -109,8 +109,7 @@ class jfTreeController {
 
         if (!node) return;
 
-        let existingScope = _.find(this.cellScopes, s => s.node === node);
-
+        let existingScope = _.find(this.cellScopes, s => s.node === node.data);
         let itemScope;
         if (!existingScope) {
             itemScope = this.$rootScope.$new();
