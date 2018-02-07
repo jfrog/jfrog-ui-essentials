@@ -262,6 +262,11 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService,
             if (flat) this._setSelected(flat, fireEvent);
         }
 
+        preSelectNode(node) {
+            let flat = this._flatFromNode(node);
+            if (flat) this._preSelect(flat);
+        }
+
         _onArrowKey(down, viewPane) {
             let items = viewPane._getFilteredData();
             if (!items.length) return;
