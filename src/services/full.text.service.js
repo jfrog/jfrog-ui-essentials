@@ -10,7 +10,7 @@ export default class JfFullTextService {
 	}
 
 
-	showFullTextModal(text, textSubject) {
+	showFullTextModal(text, textSubject, modalWidth) {
 		if (!text || !text.length) {
 			return;
 		}
@@ -22,13 +22,13 @@ export default class JfFullTextService {
 		};
 
 		this.modalScope.text = this.toHtmlRows(text);
-		this.modalInstance = this.modal.launchModal('@full.text.modal', this.modalScope, 'lg');
+		this.modalInstance = this.modal.launchModal('@full.text.modal', this.modalScope, modalWidth);
 	}
 
-	toHtmlRows(text){
-		if(typeof text === 'string'){
+	toHtmlRows(text) {
+		if (typeof text === 'string') {
 			return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
-		} else if (Array.isArray(text)){
+		} else if (Array.isArray(text)) {
 			return text.join('<br />');
 		}
 	}

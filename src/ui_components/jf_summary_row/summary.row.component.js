@@ -30,7 +30,8 @@ class JfSummaryRowController {
 			layout += `${col.width} `;
 		});
 		this.inlineStyle = {
-			gridTemplateColumns: layout
+			gridTemplateColumns: layout,
+			'-ms-grid-columns': layout
 		};
 	}
 }

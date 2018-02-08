@@ -2,16 +2,33 @@
 .summary-row {
   display: grid;
   // The default 4 fractions division is arbitrary and should be overwritten by code using this class
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  @padding: 20px;
+  @height: 120px;
 
   width: 100%;
-  height: 120px;
-  padding: 20px 10px;
+  height: @height;
+  padding: @padding @padding/2;
   &.jf-content-section {
     margin-bottom: 0;
   }
   .summery-labeled-item {
-    padding: 0 20px;
+    /* IE10+ CSS styles */
+    -ms-grid-row: 1;
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      height: ~"calc( @{height} - 2*@{padding} )";
+    }
+    .loop(@i) when (@i > 0) {
+      .loop((@i - 1));    // next iteration
+      // Loop body - set ms grid col
+      @t: ~":nth-child(@{i})";
+      &@{t} {
+        -ms-grid-column: @i;
+      }
+    }
+    .loop(100);
+
+    padding: 0 @padding;
     vertical-align: top;
     font-size: 12px;
     display: block;
