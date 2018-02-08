@@ -93,11 +93,25 @@ export class JFrogUIUtils {
 
 
 	saveTextAsFile(text,fileName) {
+		let ie = navigator.userAgent.match(/MSIE\s([\d.]+)/),
+			ie11 = navigator.userAgent.match(/Trident\/7.0/) && navigator.userAgent.match(/rv:11/),
+			ieEDGE = navigator.userAgent.match(/Edge/g),
+			ieVer=(ie ? ie[1] : (ie11 ? 11 : (ieEDGE ? 12 : -1)));
+
+		if (ie && ieVer<10) {
+			console.log("No blobs on IE ver<10");
+			return;
+		}
+
 		let textFileAsBlob = new Blob([text], {type:'text/plain'});
-		let fileNameToSaveAs = fileName;
+
+		if (ieVer>-1) {
+			window.navigator.msSaveBlob(textFileAsBlob, fileName)
+			return;
+		}
 
 		let downloadLink = document.createElement("a");
-		downloadLink.download = fileNameToSaveAs;
+		downloadLink.download = fileName;
 		downloadLink.innerHTML = "Download File";
 		if (window.URL != null) {
 			// Chrome allows the link to be clicked
@@ -109,9 +123,11 @@ export class JFrogUIUtils {
 			downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
 			downloadLink.onclick = (event) =>{
 				document.body.removeChild(event.target);
+				console.log('oh my blob');
 			};
 			downloadLink.style.display = "none";
 			document.body.appendChild(downloadLink);
+			console.log(downloadLink);
 		}
 
 		downloadLink.click();

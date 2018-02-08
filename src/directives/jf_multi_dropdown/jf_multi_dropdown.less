@@ -56,21 +56,6 @@
     .filter-container {
       padding: 8px 10px;
       border-bottom: 1px solid @grayBorderLighter;
-      .batch-selection-wrapper {
-        position: relative;
-        .batch-selection {
-          position: absolute;
-          right: 0px;
-          top: -3px;
-          a {
-            font-size: 10px;
-            margin-right: 5px;
-          }
-        }
-        .batch-selection-checkbox {
-          padding-top: 10px;
-        }
-      }
     }
     .list-container {
       max-height: 200px;
@@ -109,6 +94,12 @@
         }
       }
     }
+    .batch-action-buttons {
+      button {
+        font-weight: 600;
+        font-size: 12px;
+      }
+    }
   }
 
   &.disabled {
@@ -127,6 +118,7 @@
     }
     i.icon-addons-arrow-right {
       transform: rotate(90deg) scale(.7, ps .7);
+      -ms-transform: rotate(90deg) scale(0.7);
       -webkit-transform: rotate(90deg) scale(.7, .7);
       position: relative;
       left: -7px;
@@ -161,6 +153,8 @@
             position: absolute;
             right: 10px;
             display: inline-block;
+            line-height: 0;
+            top: 13px;
             input {
               padding: 0 10px;
               width: 220px;
@@ -168,7 +162,7 @@
           }
         }
       }
-      .clear-all-button {
+      .batch-action-buttons {
         button {
           height: 60px;
         }
