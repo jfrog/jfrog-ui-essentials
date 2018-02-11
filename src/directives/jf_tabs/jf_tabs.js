@@ -36,7 +36,6 @@ class jfTabsController {
                 // Otherwise - make sure it's visible
                 this._ensureTabVisible(this.currentTab);
             }
-	        this.checkMarked(tab);
         });
     }
 
@@ -86,7 +85,6 @@ class jfTabsController {
         this._ensureTabVisible(tab);
         this.state.go(this.state.current, {tab: tab.name},{notify: false});
         this.currentTab.name = tab.name;
-	    this.checkMarked(tab);
     }
 
     _ensureTabVisible(tab) {
@@ -109,12 +107,7 @@ class jfTabsController {
 
     _getTab(tab) {
         let currentTab = _.findWhere(this.tabs, {name: tab.name});
-	    this.checkMarked(currentTab);
         return currentTab;
-    }
-
-	checkMarked(tab) {
-		if (tab.class && tab.class === 'marked') delete tab.class;
     }
 
     _getCollapsedTab(tab) {
