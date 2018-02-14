@@ -389,7 +389,14 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService,
                         if (!children.length) node.$noChildren = true;
                         else flat.hasChildren = true;
 
-                        if (this.$drillDownMode && drillDown) {
+                        let reDrill = false;
+                        if (this.$drillDownMode && this.$currParentFlat) {
+                            if (flat.data !== this.GO_UP_NODE && this.uniqueIdGetter(flat.data) === this.uniqueIdGetter(this.$currParentFlat.data)) {
+                                reDrill = true;
+                            }
+                        }
+
+                        if (this.$drillDownMode && (reDrill || drillDown)) {
                             this.drillDown(flat);
                         }
                         else {
