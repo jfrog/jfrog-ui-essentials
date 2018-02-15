@@ -1,5 +1,6 @@
 import {jfListMaker}          from './jf_list_maker/jf_list_maker';
 import {jfActions}       from './jf_actions/jf_actions';
+import {jfTabularDnD}      from './jf_tabular_dnd/jf_tabular_dnd'
 import {jfDragDrop}      from './jf_drag_drop/jf_drag_drop'
 import {jfDragDropPagination}      from './jf_drag_drop_pagination/jf_drag_drop_pagination'
 import {jfTooltip}       from './jf_tooltip/jf_tooltip';
@@ -43,6 +44,7 @@ import {jfVScrollElement} from "./jf_vscroll/jf_vscroll_element";
 
 angular.module('jfrog.ui.essentials.directives', [])
     .directive({
+        'jfTabularDnd': jfTabularDnD,
         'jfDragDrop': jfDragDrop,
         'jfDragDropPagination': jfDragDropPagination,
         'jfActions': jfActions,
