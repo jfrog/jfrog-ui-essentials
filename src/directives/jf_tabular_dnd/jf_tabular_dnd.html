@@ -1,0 +1,38 @@
+<div class="jf-tabular-dnd" tabindex="0">
+    <div class="row">
+        <div class="col-lg-5">
+            <jf-table-view options="jfTabularDnD.availableItemsTableOptions"></jf-table-view>
+        </div>
+
+        <div class="col-lg-2">
+            <h5 class="text-primary" ng-if="jfTabularDnD.headers.leftTitle || jfTabularDnD.headers.rightTitle">&nbsp;</h5>
+            <ul class="dnd-actions">
+                <li>
+                    <span ng-click="jfTabularDnD.excludeAll()"
+                          ng-disabled="jfTabularDnD.isIncludeListEmpty() || jfTabularDnD.isIncludeListFixed() || jfTabularDnD.disabled">&laquo;
+                    </span>
+                </li>
+                <li>
+                    <span ng-click="jfTabularDnD.excludeSelected()"
+                          ng-disabled="!jfTabularDnD.isIncludeListItemSelected() || jfTabularDnD.disabled">&lsaquo;
+                    </span>
+                </li>
+                <li>
+                    <span ng-click="jfTabularDnD.includeSelected()"
+                          ng-disabled="!jfTabularDnD.isExcludeListItemSelected() || jfTabularDnD.disabled">&rsaquo;
+                    </span>
+                </li>
+                <li>
+                    <span ng-click="jfTabularDnD.includeAll()"
+                          ng-disabled="jfTabularDnD.isExcludeListEmpty() || jfTabularDnD.disabled">&raquo;
+                    </span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-lg-5">
+            <jf-table-view options="jfTabularDnD.selectedItemsTableOptions"></jf-table-view>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>

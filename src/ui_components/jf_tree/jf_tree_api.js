@@ -1,5 +1,5 @@
 import {TreeViewPane} from './tree_view_pane';
-export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService) {
+export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService, JFrogEventBus) {
 	'ngInject';
 	class JFTreeApiClass {
 		/* @ngInject */
@@ -7,6 +7,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             this.$timeout = $timeout;
             this.$q = $q;
             this.AdvancedStringMatch = AdvancedStringMatch;
+            this.JFrogEventBus = JFrogEventBus;
             this.$root = [];
             this.$viewPanes = [];
             this.$openedNodes = [];
@@ -261,6 +262,11 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             if (flat) this._setSelected(flat, fireEvent);
         }
 
+        preSelectNode(node) {
+            let flat = this._flatFromNode(node);
+            if (flat) this._preSelect(flat);
+        }
+
         _onArrowKey(down, viewPane) {
             let items = viewPane._getFilteredData();
             if (!items.length) return;
@@ -383,7 +389,14 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
                         if (!children.length) node.$noChildren = true;
                         else flat.hasChildren = true;
 
-                        if (this.$drillDownMode && drillDown) {
+                        let reDrill = false;
+                        if (this.$drillDownMode && this.$currParentFlat) {
+                            if (flat.data !== this.GO_UP_NODE && this.uniqueIdGetter(flat.data) === this.uniqueIdGetter(this.$currParentFlat.data)) {
+                                reDrill = true;
+                            }
+                        }
+
+                        if (this.$drillDownMode && (reDrill || drillDown)) {
                             this.drillDown(flat);
                         }
                         else {
@@ -822,6 +835,11 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService)
             if (fi) {
                 fi.pane.bringItemToView(fi, !doScroll);
             }
+        }
+
+        registerEventOnNode(event, callback) {
+            if (!this.eventsToRegisterOnNode) this.eventsToRegisterOnNode = [];
+            this.eventsToRegisterOnNode.push({ event, callback });
         }
 
 	}

@@ -11,6 +11,18 @@ class jfTreeItemController {
         this._watchSelection();
         this._watchExpansion();
 
+        this._registerEvents();
+
+    }
+
+    _registerEvents() {
+        if (this.tree.api.eventsToRegisterOnNode) {
+            this.tree.api.eventsToRegisterOnNode.forEach(registeredEvent => {
+                this.tree.api.JFrogEventBus.registerOnScope(this.$scope, registeredEvent.event, (...params) => {
+                    registeredEvent.callback(this.data.data, params);
+                });
+            })
+        }
     }
 
     initExpander() {
