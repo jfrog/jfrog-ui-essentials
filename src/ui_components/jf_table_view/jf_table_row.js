@@ -191,6 +191,8 @@ class jfTableRowController {
     }
 
     initDragAndDrop() {
+        if (this.rowId === 'headers') return;
+
         $(this.$element).draggable({
             helper: 'clone',
             scroll: true,
@@ -205,7 +207,6 @@ class jfTableRowController {
     dragStart(event, ui) {
         this.tableView.options.dragRow(this.data);
         this.initDragHelper(ui.helper);
-
     }
 
     initDragHelper(helper) {
@@ -215,7 +216,13 @@ class jfTableRowController {
     dragStop(event, ui) {
         let target = $(event.toElement).parents('.jf-table-row')[0];
         if (target) {
-            this.tableView.options.dropDraggedRow($(target).prop('ctrl').data);
+            if (this.isForeignDrop(target)) {
+                this.tableView.options.registeredTabularDnd.dndOther.dropDraggedRow($(target).prop('ctrl').data, this.tableView.options.draggedRow);
+                this.tableView.options.markDropTarget(null)
+            }
+            else {
+                this.tableView.options.dropDraggedRow($(target).prop('ctrl').data);
+            }
         }
         else {
             this.tableView.options.dropDraggedRow();
@@ -224,9 +231,18 @@ class jfTableRowController {
 
     dragMove(event, ui) {
         let target = $(event.toElement).parents('.jf-table-row')[0];
+
         if (target) {
             this.tableView.options.markDropTarget($(target));
-            console.log();
+        }
+    }
+
+    isForeignDrop(dropTarget) {
+        if (!this.tableView.options.registeredTabularDnd) return false;
+        else {
+            let targetTableView = $(dropTarget).prop('ctrl') ? $(dropTarget).prop('ctrl').tableView : null;
+            if (targetTableView && targetTableView.options === this.tableView.options.registeredTabularDnd.dndOther) return true;
+            else return false;
         }
     }
 }

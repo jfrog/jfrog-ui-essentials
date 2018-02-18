@@ -1323,7 +1323,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
             this.refreshFilter();
         }
 
-        dropDraggedRow(targetRow) {
+        dropDraggedRow(targetRow, draggedRow = null) {
             if (this.markedDropTarget) {
                 this.markedDropTarget.removeClass('drop-target-mark');
             }
@@ -1334,9 +1334,10 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
             }
             else {
                 targetIndex = _.findIndex(this.data, r => r === targetRow);
+                if (targetIndex === -1) targetIndex = this.draggedIndex;
             }
 
-            this.data.splice(targetIndex, 0, this.draggedRow);
+            this.data.splice(targetIndex, 0, draggedRow || this.draggedRow);
             this.draggedRow = null;
             this.update();
             this.refreshFilter();
@@ -1348,8 +1349,18 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 		    if (this.markedDropTarget) {
                 this.markedDropTarget.removeClass('drop-target-mark');
             }
-            rowElem.addClass('drop-target-mark');
-            this.markedDropTarget = rowElem;
+            if (rowElem && !rowElem.is('.headers')) {
+                rowElem.addClass('drop-target-mark');
+                this.markedDropTarget = rowElem;
+            }
+        }
+
+        _registerTabularDnd(tabularDndController, role, otherTableOptions) {
+			this.registeredTabularDnd = {
+				dndCtrl: tabularDndController,
+				dndRole: role,
+				dndOther: otherTableOptions
+			}
         }
 
 	}
