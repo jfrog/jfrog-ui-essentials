@@ -25,8 +25,8 @@ class jfTabularDnDController {
         this.JFrogTableViewOptions = JFrogTableViewOptions;
 
         if (this.columns) {
-            this.availableItemsColumns = this.columns;
-            this.selectedItemsColumns = this.columns;
+            this.availableItemsColumns = _.cloneDeep(this.columns);
+            this.selectedItemsColumns = _.cloneDeep(this.columns);
         }
 
         this.createTables();
