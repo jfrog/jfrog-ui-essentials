@@ -38,6 +38,7 @@ import {jfAutoComplete} from "./jf_auto_complete/jf_auto_complete";
 import {jfDatetimepicker} from "./jf_datetimepicker/jf_datetimepicker";
 import {jfDynamicTemplate} from "./jf_dynamic_template/jf_dynamic_template";
 import {jfListSelection} from "./jf_list_selection/jf_list_selection";
+import {jfDragAndDropTxt} from './jf_drag_and_drop_txt/jf_drag_and_drop_txt';
 import {jfContextMenu} from "./jf_context_menu/jf_context_menu.component";
 
 angular.module('jfrog.ui.essentials.directives', [])
@@ -82,5 +83,6 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfJsTreeWrap': jfJsTreeWrap,
         'jfAutoComplete': jfAutoComplete,
 	    'jfRadioButton': jfRadioButton,
+        'jfDragAndDropTxt': jfDragAndDropTxt,
         'jfContextMenu': jfContextMenu
     });
