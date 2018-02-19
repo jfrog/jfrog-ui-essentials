@@ -1,0 +1,17 @@
+<div class="drag-and-drop-txt-wrapper"
+     ng-class="{'ready-for-upload':jfDragAndDropTxt.shouldDisplayUploadIcon()}">
+    <label ng-if="jfDragAndDropTxt.dndHeadingHtml"
+           ng-bind-html="jfDragAndDropTxt.dndHeadingHtml"></label>
+    <jf-field autofocus="jfDragAndDropTxt.dndAutoFocus">
+        <textarea name="dndtext"
+                  class="input-text monospaced"
+                  ng-model="jfDragAndDropTxt.dndContent"
+                  ng-change="jfDragAndDropTxt.dndChange()"
+                  ng-style="jfDragAndDropTxt.dndStyle"
+                  ng-required="jfDragAndDropTxt.dndRequired"
+                  spellcheck="false"></textarea>
+        <label class="call-to-action-label"
+               ng-bind-html="jfDragAndDropTxt.dndCallToAction"
+               ng-class="{'icon-upload':jfDragAndDropTxt.shouldDisplayUploadIcon()}"></label>
+    </jf-field>
+</div>
