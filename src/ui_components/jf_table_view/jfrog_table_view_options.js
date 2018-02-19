@@ -450,7 +450,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 		}
 
 		setSortable(sortable = true) {
-		    if (sortable && this.draggableRows) return;
+		    if (sortable && this.draggableRows && !this.registeredTabularDnd) return;
 			this.sortable = sortable;
 			if (sortable && !this.sortByField) {
 				this.sortBy(this._sortableFields ? this._sortableFields[0] : undefined);
