@@ -121,6 +121,9 @@
       padding: 30px;
       margin-top: 30px;
       background-color: @grayBGLight;
+      &.drop-target-mark {
+        border: dashed black 1px;
+      }
     }
 
     .jf-table-row {
@@ -130,6 +133,23 @@
       padding: 0;
       margin: 0;
       position: relative;
+
+      &.selected,
+      &:hover {
+        &.drag-mark {
+          &:before {
+            font-family: artifactory!important;
+            font-size: 26px;
+            content: "\\";
+            position: absolute;
+            z-index: 10;
+            top: ~"calc(50% - 13px)";
+            right: 0;
+            color: #bbb;
+          }
+        }
+      }
+
 
       &.drop-target-mark {
         border-top: 2px solid green !important;
@@ -173,18 +193,6 @@
       &:hover {
         .jf-table-cell {
           .jf-table-cell-content {
-            &.drag-mark {
-              &:before {
-                font-family: artifactory!important;
-                font-size: 26px;
-                content: "\\";
-                position: absolute;
-                z-index: 10;
-                top: ~"calc(50% - 13px)";
-                left: -13px;
-                color: #bbb;
-              }
-            }
           }
           &.actions {
             display: inline-table !important;
