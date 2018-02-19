@@ -218,22 +218,38 @@ class jfTableRowController {
         if (target) {
             if (this.isForeignDrop(target)) {
                 this.tableView.options.registeredTabularDnd.dndOther.dropDraggedRow($(target).prop('ctrl').data, this.tableView.options.draggedRow);
-                this.tableView.options.markDropTarget(null)
+                this.tableView.options.markDropTarget(null);
+                this.tableView.options.registeredTabularDnd.dndCtrl.onDragTransfer(this.tableView.options.draggedRow);
             }
             else {
                 this.tableView.options.dropDraggedRow($(target).prop('ctrl').data);
             }
         }
         else {
-            this.tableView.options.dropDraggedRow();
+            if (this.tableView.options.registeredTabularDnd &&
+                $(event.toElement).is('.empty-table-placeholder') &&
+                $(event.toElement).parents('.jf-table-view')[0] !== $(this.tableView.$element).find('.jf-table-view')[0]) {
+                this.tableView.options.registeredTabularDnd.dndOther.dropDraggedRow(null, this.tableView.options.draggedRow);
+                this.tableView.options.markDropTarget(null);
+                this.tableView.options.registeredTabularDnd.dndCtrl.onDragTransfer(this.tableView.options.draggedRow);
+
+            }
+            else {
+                this.tableView.options.dropDraggedRow();
+            }
         }
     }
 
     dragMove(event, ui) {
         let target = $(event.toElement).parents('.jf-table-row')[0];
 
+        if (!target && $(event.toElement).is('.empty-table-placeholder')) target = event.toElement;
+
         if (target) {
             this.tableView.options.markDropTarget($(target));
+        }
+        else {
+            this.tableView.options.markDropTarget(null);
         }
     }
 
