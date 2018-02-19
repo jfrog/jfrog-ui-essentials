@@ -4,7 +4,7 @@
      ng-mouseup="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.resizableColumns && jfTableRow.onMouseUp($event)"
      ng-mouseleave="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.resizableColumns && jfTableRow.onMouseUp($event)"
      ng-click="jfTableRow.onRowClick()"
-     ng-class="{headers: jfTableRow.rowId === 'headers', 'group-header': jfTableRow.data.$groupHeader, 'expanded': jfTableRow.data.$groupHeader.$expanded, 'sub-row': jfTableRow.data.$parentRow, sticky: jfTableRow.data.$sticky, selected: jfTableRow.data.$selected}"
+     ng-class="{headers: jfTableRow.rowId === 'headers', 'group-header': jfTableRow.data.$groupHeader, 'expanded': jfTableRow.data.$groupHeader.$expanded, 'sub-row': jfTableRow.data.$parentRow, sticky: jfTableRow.data.$sticky, selected: jfTableRow.data.$selected, 'drag-mark': jfTableRow.rowId !== 'headers' && jfTableRow.tableView.options.draggableRows}"
      ng-style="{height: jfTableRow.rowId === 'headers' ? '' : jfTableRow.tableView.options.rowHeight, opacity: jfTableRow.tableView.options.ready ? 1 : 0}">
 
     <div class="jf-table-cell selection"
@@ -59,7 +59,7 @@
                ng-class="{'expanded': jfTableRow.data.$expanded}"></i>
         </div>
         <div class="jf-table-cell-content"
-             ng-class="{'row-expander-content': $index === 0 && jfTableRow.tableView.options.subRowsEnabled, 'drag-mark': $index === 0 && jfTableRow.rowId !== 'headers' && jfTableRow.tableView.options.draggableRows}"
+             ng-class="{'row-expander-content': $index === 0 && jfTableRow.tableView.options.subRowsEnabled}"
              ng-style="{'text-align': col.textAlign || 'auto'}"
              jf-tooltip-on-overflow
              ng-if="(!col.cellTemplate && jfTableRow.rowId !== 'headers') || (!col.headerCellTemplate && jfTableRow.rowId === 'headers')">

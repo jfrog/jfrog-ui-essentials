@@ -46,7 +46,8 @@ class jfTabularDnDController {
             .showPagination(false)
             .setDraggable()
             .setRowsPerPage(8)
-            .setObjectName(availableObjectName);
+            .setObjectName(availableObjectName)
+            .setEmptyTableText('Drag Row Here');
 
         this.selectedItemsTableOptions.setColumns(this.selectedItemsColumns)
             .setSelection(this.selectedItemsTableOptions.MULTI_SELECTION)
@@ -54,7 +55,8 @@ class jfTabularDnDController {
             .showPagination(false)
             .setDraggable()
             .setRowsPerPage(8)
-            .setObjectName(selectedObjectName);
+            .setObjectName(selectedObjectName)
+            .setEmptyTableText('Drag Row Here');
 
         this.availableItemsTableOptions.setData(this.availableItems);
         this.selectedItemsTableOptions.setData(this.selectedItems);
@@ -100,27 +102,52 @@ class jfTabularDnDController {
     }
 
     excludeAll() {
-        Array.prototype.splice.apply(this.availableItems, [this.availableItems.length, 0].concat(this.selectedItems));
-        this.selectedItems.splice(0, this.selectedItems.length);
+        let selected = this.selectedItemsTableOptions.getSelected();
+        selected.forEach(s => delete s.$selected);
+        let filtered = this.selectedItemsTableOptions.getFilteredData();
+        Array.prototype.splice.apply(this.availableItems, [this.availableItems.length, 0].concat(filtered));
+        _.remove(this.selectedItems, i => _.includes(filtered, i));
+        this._refreshBothTables();
     }
 
     includeAll() {
-        Array.prototype.splice.apply(this.selectedItems, [this.selectedItems.length, 0].concat(this.availableItems));
-        this.availableItems.splice(0, this.availableItems.length);
+        let selected = this.availableItemsTableOptions.getSelected();
+        selected.forEach(s => delete s.$selected);
+        let filtered = this.availableItemsTableOptions.getFilteredData();
+        Array.prototype.splice.apply(this.selectedItems, [this.selectedItems.length, 0].concat(filtered));
+        _.remove(this.availableItems, i => _.includes(filtered, i));
+        this._refreshBothTables();
     }
 
     excludeSelected() {
         let selected = this.selectedItemsTableOptions.getSelected();
         selected.forEach(s => delete s.$selected);
+        let filtered = this.selectedItemsTableOptions.getFilteredData();
+        _.remove(selected, i => !_.includes(filtered, i));
         Array.prototype.splice.apply(this.availableItems, [this.availableItems.length, 0].concat(selected));
         _.remove(this.selectedItems, item => _.includes(selected, item));
+        this._refreshBothTables();
     }
 
     includeSelected() {
         let selected = this.availableItemsTableOptions.getSelected();
         selected.forEach(s => delete s.$selected);
+        let filtered = this.availableItemsTableOptions.getFilteredData();
+        _.remove(selected, i => !_.includes(filtered, i));
         Array.prototype.splice.apply(this.selectedItems, [this.selectedItems.length, 0].concat(selected));
         _.remove(this.availableItems, item => _.includes(selected, item));
+        this._refreshBothTables();
+    }
+
+    _refreshBothTables() {
+        this.availableItemsTableOptions.update();
+        this.availableItemsTableOptions.refreshFilter();
+        this.selectedItemsTableOptions.update();
+        this.selectedItemsTableOptions.refreshFilter();
+    }
+
+    onDragTransfer(draggedRow) {
+        delete draggedRow.$selected;
     }
 }
 
