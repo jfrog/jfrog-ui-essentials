@@ -6,6 +6,7 @@
     <span class="pin-menu" ng-click="jfSidebar.pinMenu()"><i class="icon-menu-arrow" ng-class="{'menu-arrow-close' : jfSidebar.pinMenuStatus}"></i></span>
     <ul class="sidebar-wrapper-inner" ng-click="jfSidebar.closeSubMenu(0,true,true)">
         <li ng-repeat="item in jfSidebar.menuItems"
+            ng-if="!item.isHidden"
             ng-click="$event.stopPropagation(); jfSidebar.itemClick(item)"
             ng-class="{disabled: item.isDisabled, active: (item.stateParent | includedByState) || jfSidebar.isCurrentItem(item) || jfSidebar.highLightOnState(item.stateRelated), 'icon-arrow-left':item.children }">
 
