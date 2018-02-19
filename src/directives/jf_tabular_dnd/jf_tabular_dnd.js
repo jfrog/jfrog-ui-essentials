@@ -8,6 +8,7 @@ export function jfTabularDnD() {
             columns: '=',
             availableItemsColumns: '=?',
             selectedItemsColumns: '=?',
+            onChange: '&?',
             entityName: '@?'
         },
         templateUrl: 'directives/jf_tabular_dnd/jf_tabular_dnd.html',
@@ -108,6 +109,7 @@ class jfTabularDnDController {
         Array.prototype.splice.apply(this.availableItems, [this.availableItems.length, 0].concat(filtered));
         _.remove(this.selectedItems, i => _.includes(filtered, i));
         this._refreshBothTables();
+        this._fireOnChange();
     }
 
     includeAll() {
@@ -117,6 +119,7 @@ class jfTabularDnDController {
         Array.prototype.splice.apply(this.selectedItems, [this.selectedItems.length, 0].concat(filtered));
         _.remove(this.availableItems, i => _.includes(filtered, i));
         this._refreshBothTables();
+        this._fireOnChange();
     }
 
     excludeSelected() {
@@ -127,6 +130,7 @@ class jfTabularDnDController {
         Array.prototype.splice.apply(this.availableItems, [this.availableItems.length, 0].concat(selected));
         _.remove(this.selectedItems, item => _.includes(selected, item));
         this._refreshBothTables();
+        this._fireOnChange();
     }
 
     includeSelected() {
@@ -137,6 +141,7 @@ class jfTabularDnDController {
         Array.prototype.splice.apply(this.selectedItems, [this.selectedItems.length, 0].concat(selected));
         _.remove(this.availableItems, item => _.includes(selected, item));
         this._refreshBothTables();
+        this._fireOnChange();
     }
 
     _refreshBothTables() {
@@ -148,6 +153,11 @@ class jfTabularDnDController {
 
     onDragTransfer(draggedRow) {
         delete draggedRow.$selected;
+        this._fireOnChange();
+    }
+
+    _fireOnChange() {
+        if (this.onChange) this.onChange();
     }
 }
 
