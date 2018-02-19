@@ -35,6 +35,9 @@ class jfTabularDnDController {
         this.availableItemsTableOptions = new this.JFrogTableViewOptions(this.$scope);
         this.selectedItemsTableOptions = new this.JFrogTableViewOptions(this.$scope);
 
+        this.availableItemsTableOptions._registerTabularDnd(this, 'available', this.selectedItemsTableOptions);
+        this.selectedItemsTableOptions._registerTabularDnd(this, 'selected', this.availableItemsTableOptions);
+
         let {availableObjectName, selectedObjectName} = this._getObjectNames();
 
         this.availableItemsTableOptions.setColumns(this.availableItemsColumns)
@@ -52,10 +55,6 @@ class jfTabularDnDController {
             .setDraggable()
             .setRowsPerPage(8)
             .setObjectName(selectedObjectName);
-
-
-        this.availableItemsTableOptions._registerTabularDnd(this, 'available', this.selectedItemsTableOptions);
-        this.selectedItemsTableOptions._registerTabularDnd(this, 'selected', this.availableItemsTableOptions);
 
         this.availableItemsTableOptions.setData(this.availableItems);
         this.selectedItemsTableOptions.setData(this.selectedItems);
