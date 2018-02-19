@@ -38,6 +38,7 @@ import {jfAutoComplete} from "./jf_auto_complete/jf_auto_complete";
 import {jfDatetimepicker} from "./jf_datetimepicker/jf_datetimepicker";
 import {jfDynamicTemplate} from "./jf_dynamic_template/jf_dynamic_template";
 import {jfListSelection} from "./jf_list_selection/jf_list_selection";
+import {jfDragAndDropTxt} from './jf_drag_and_drop_txt/jf_drag_and_drop_txt';
 import {jfContextMenu} from "./jf_context_menu/jf_context_menu.component";
 import {jfVScroll} from "./jf_vscroll/jf_vscroll";
 import {jfVScrollElement} from "./jf_vscroll/jf_vscroll_element";
@@ -77,12 +78,14 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfMarquee': jfMarquee,
         'jfPasswordStrength': jfPasswordStrength,
         'jfClearErrors': jfClearErrors,
+	    'jfDatetimepicker': jfDatetimepicker,
 	    'jfDynamicTemplate': jfDynamicTemplate,
 	    'jfListSelection': jfListSelection,
         'jfMarkupEditor': jfMarkupEditor,
         'jfJsTreeWrap': jfJsTreeWrap,
         'jfAutoComplete': jfAutoComplete,
 	    'jfRadioButton': jfRadioButton,
+        'jfDragAndDropTxt': jfDragAndDropTxt,
         'jfContextMenu': jfContextMenu,
         'jfVscroll': jfVScroll,
         'jfVscrollElement': jfVScrollElement,
