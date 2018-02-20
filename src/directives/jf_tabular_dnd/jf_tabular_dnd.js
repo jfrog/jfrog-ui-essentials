@@ -20,7 +20,7 @@ export function jfTabularDnD() {
 
 class jfTabularDnDController {
 	/* @ngInject */
-    constructor($scope, JFrogTableViewOptions) {
+    constructor($element, $scope, JFrogTableViewOptions) {
         this.$scope = $scope;
         this.JFrogTableViewOptions = JFrogTableViewOptions;
 
@@ -28,6 +28,10 @@ class jfTabularDnDController {
             this.availableItemsColumns = _.cloneDeep(this.columns);
             this.selectedItemsColumns = _.cloneDeep(this.columns);
         }
+
+        this.availableContainer = $($element).find('.available-table');
+        this.selectedContainer = $($element).find('.selected-table');
+
 
         this.createTables();
     }
@@ -48,7 +52,7 @@ class jfTabularDnDController {
             .setDraggable()
             .setRowsPerPage(8)
             .setObjectName(availableObjectName)
-            .setEmptyTableText('Drag Row Here');
+            .setEmptyTableText(!this.availableItems.length && !this.selectedItems.length ? 'No Data Found' : 'Drag Row Here');
 
         this.selectedItemsTableOptions.setColumns(this.selectedItemsColumns)
             .setSelection(this.selectedItemsTableOptions.MULTI_SELECTION)
@@ -159,7 +163,6 @@ class jfTabularDnDController {
     }
 
     onDragTransfer(draggedRows) {
-        console.log(draggedRows);
         draggedRows.forEach(draggedRow => delete draggedRow.$selected);
         this._fireOnChange();
     }
