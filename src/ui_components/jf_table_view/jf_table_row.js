@@ -176,7 +176,7 @@ class jfTableRowController {
 	        this.toggleGroupExpansion()
 	    }
 	    else {
-		    this.tableView.options.fire('row.clicked', {entity: this.data})
+		    if (this.rowId !== 'headers') this.tableView.options.fire('row.clicked', {entity: this.data})
         }
     }
 
@@ -223,27 +223,41 @@ class jfTableRowController {
     dragStop(event, ui) {
         let draggedRowsArrayForDndEvent = this.tableView.options.draggedRow ? [this.tableView.options.draggedRow] : _.map(this.tableView.options.draggedRows, 'row');
         let target = $(event.toElement).parents('.jf-table-row')[0];
+        let handleForeignDrop = (targetRow) => {
+            this.tableView.options.registeredTabularDnd.dndOther.dropDraggedRow(targetRow, (this.tableView.options.draggedRow || this.tableView.options.draggedRows), true);
+            this.tableView.options.markDropTarget(null);
+            this.tableView.options.registeredTabularDnd.dndCtrl.onDragTransfer(draggedRowsArrayForDndEvent);
+            delete this.tableView.options.draggedRow;
+            delete this.tableView.options.draggedRows;
+        }
         if (target) {
             if (this.isForeignDrop(target)) {
-                this.tableView.options.registeredTabularDnd.dndOther.dropDraggedRow($(target).prop('ctrl').data, (this.tableView.options.draggedRow || this.tableView.options.draggedRows));
-                this.tableView.options.markDropTarget(null);
-                this.tableView.options.registeredTabularDnd.dndCtrl.onDragTransfer(draggedRowsArrayForDndEvent);
-                delete this.tableView.options.draggedRow;
-                delete this.tableView.options.draggedRows;
+                handleForeignDrop($(target).prop('ctrl').data);
             }
             else {
                 this.tableView.options.dropDraggedRow($(target).prop('ctrl').data);
             }
         }
         else {
-            if (this.tableView.options.registeredTabularDnd &&
-                $(event.toElement).is('.empty-table-placeholder') &&
-                $(event.toElement).parents('.jf-table-view')[0] !== $(this.tableView.$element).find('.jf-table-view')[0]) {
-                this.tableView.options.registeredTabularDnd.dndOther.dropDraggedRow(null, this.tableView.options.draggedRow || this.tableView.options.draggedRows);
-                this.tableView.options.markDropTarget(null);
-                this.tableView.options.registeredTabularDnd.dndCtrl.onDragTransfer(draggedRowsArrayForDndEvent);
-                delete this.tableView.options.draggedRow;
-                delete this.tableView.options.draggedRows;
+            if (this.tableView.options.registeredTabularDnd) {
+                if ($(event.toElement).is('.empty-table-placeholder') &&
+                    $(event.toElement).parents('.jf-table-view')[0] !== $(this.tableView.$element).find('.jf-table-view')[0]) {
+
+                    handleForeignDrop(null);
+
+                }
+                else {
+                    let container = $(event.toElement).is('.tabular-dnd-table-container') ? $(event.toElement) : $(event.toElement).parents('.tabular-dnd-table-container');
+                    let myRole = this.tableView.options.registeredTabularDnd.dndRole;
+
+                    if (container && ( (container.is('.available-table') && myRole === 'selected') || (container.is('.selected-table') && myRole === 'available'))) {
+                        handleForeignDrop(null);
+                    }
+                    else {
+                        this.tableView.options.dropDraggedRow();
+                    }
+
+                }
             }
             else {
                 this.tableView.options.dropDraggedRow();
