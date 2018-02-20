@@ -3,6 +3,7 @@ class jfTableRowController {
     constructor($scope, $element, $timeout, JFrogEventBus) {
         this.$element = $element;
         this.$timeout = $timeout;
+        this.$scope = $scope;
         this.JFrogEventBus = JFrogEventBus;
         this.EVENTS = JFrogEventBus.getEventsDefinition()
         this.templatesCount = _.filter(this.tableView.options.columns,col=>!!col.cellTemplate).length;
@@ -197,9 +198,9 @@ class jfTableRowController {
             helper: 'clone',
             scroll: true,
             distance: 10,
-            start: (event, ui) => this.dragStart(event,ui),
-            stop: (event, ui) => this.dragStop(event,ui),
-            drag: (event, ui) => this.dragMove(event,ui)
+            start: (event, ui) => this.$scope.$apply(() => this.dragStart(event,ui)),
+            stop: (event, ui) => this.$scope.$apply(() => this.dragStop(event,ui)),
+            drag: (event, ui) => this.$scope.$apply(() => this.dragMove(event,ui))
         });
         $(this.$element).addClass('drag-enabled');
     }
