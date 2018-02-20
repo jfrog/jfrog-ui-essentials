@@ -2,6 +2,7 @@
   .dnd-actions {
     margin-top: 100px;
     padding: 0;
+    text-align: center;
 
     li {
       display: block;
@@ -9,16 +10,21 @@
       text-align: center;
 
       span {
-        display: block;
-        font-size: 38px;
-        font-weight: 400;
-        color: @greenFontHeader;
-        line-height: 28px;
+        display: inline-block;
+        font-size: 24px;
+        font-weight: 100;
+        background-color: @greenFontHeader;
+        color: white;
+        line-height: 20px;
+        width: 26px;
+        height: 26px;
         cursor: pointer;
         overflow: hidden;
+        padding-right: 1px;
+        border-radius: 50%;
 
         &[disabled] {
-          color: @grayBGDarker;
+          background-color: @grayBGDarker;
         }
       }
     }
