@@ -211,15 +211,24 @@ class jfTableRowController {
 
     initDragHelper(helper) {
         helper.addClass('row-drag-helper');
+        if (this.tableView.options.registeredTabularDnd) {
+            let numOfDraggedRows = this.tableView.options.draggedRows ? this.tableView.options.draggedRows.length : 1;
+            if (numOfDraggedRows > 1) {
+                helper.addClass('multiple').html('<span>&equiv;</span>' + numOfDraggedRows + ' ' + this.tableView.getObjectNameByCount(numOfDraggedRows, this.tableView.options.registeredTabularDnd.dndCtrl.entityName || 'Item'));
+            }
+        }
     }
 
     dragStop(event, ui) {
+        let draggedRowsArrayForDndEvent = this.tableView.options.draggedRow ? [this.tableView.options.draggedRow] : _.map(this.tableView.options.draggedRows, 'row');
         let target = $(event.toElement).parents('.jf-table-row')[0];
         if (target) {
             if (this.isForeignDrop(target)) {
-                this.tableView.options.registeredTabularDnd.dndOther.dropDraggedRow($(target).prop('ctrl').data, this.tableView.options.draggedRow);
+                this.tableView.options.registeredTabularDnd.dndOther.dropDraggedRow($(target).prop('ctrl').data, (this.tableView.options.draggedRow || this.tableView.options.draggedRows));
                 this.tableView.options.markDropTarget(null);
-                this.tableView.options.registeredTabularDnd.dndCtrl.onDragTransfer(this.tableView.options.draggedRow);
+                this.tableView.options.registeredTabularDnd.dndCtrl.onDragTransfer(draggedRowsArrayForDndEvent);
+                delete this.tableView.options.draggedRow;
+                delete this.tableView.options.draggedRows;
             }
             else {
                 this.tableView.options.dropDraggedRow($(target).prop('ctrl').data);
@@ -229,10 +238,11 @@ class jfTableRowController {
             if (this.tableView.options.registeredTabularDnd &&
                 $(event.toElement).is('.empty-table-placeholder') &&
                 $(event.toElement).parents('.jf-table-view')[0] !== $(this.tableView.$element).find('.jf-table-view')[0]) {
-                this.tableView.options.registeredTabularDnd.dndOther.dropDraggedRow(null, this.tableView.options.draggedRow);
+                this.tableView.options.registeredTabularDnd.dndOther.dropDraggedRow(null, this.tableView.options.draggedRow || this.tableView.options.draggedRows);
                 this.tableView.options.markDropTarget(null);
-                this.tableView.options.registeredTabularDnd.dndCtrl.onDragTransfer(this.tableView.options.draggedRow);
-
+                this.tableView.options.registeredTabularDnd.dndCtrl.onDragTransfer(draggedRowsArrayForDndEvent);
+                delete this.tableView.options.draggedRow;
+                delete this.tableView.options.draggedRows;
             }
             else {
                 this.tableView.options.dropDraggedRow();

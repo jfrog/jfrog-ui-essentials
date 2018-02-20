@@ -151,8 +151,9 @@ class jfTabularDnDController {
         this.selectedItemsTableOptions.refreshFilter();
     }
 
-    onDragTransfer(draggedRow) {
-        delete draggedRow.$selected;
+    onDragTransfer(draggedRows) {
+        console.log(draggedRows);
+        draggedRows.forEach(draggedRow => delete draggedRow.$selected);
         this._fireOnChange();
     }
 
