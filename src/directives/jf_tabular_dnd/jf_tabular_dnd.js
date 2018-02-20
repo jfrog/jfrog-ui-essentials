@@ -59,6 +59,13 @@ class jfTabularDnDController {
             .setObjectName(selectedObjectName)
             .setEmptyTableText('Drag Row Here');
 
+        let toggleSelection = (row) => {
+            row.entity.$selected = !row.entity.$selected;
+        }
+
+        this.availableItemsTableOptions.on('row.clicked', toggleSelection);
+        this.selectedItemsTableOptions.on('row.clicked', toggleSelection);
+
         this.availableItemsTableOptions.setData(this.availableItems);
         this.selectedItemsTableOptions.setData(this.selectedItems);
     }
