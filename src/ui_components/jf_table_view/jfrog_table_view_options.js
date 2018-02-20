@@ -1316,6 +1316,12 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
         }
 
         dragRow(row) {
+			if (this.registeredTabularDnd && this.getSelectedCount()) {
+				row.$selected = true;
+				this.startMultiDrag();
+				return;
+			}
+
 		    this.draggedRow = row;
 		    this.draggedIndex = _.findIndex(this.data, r => r === row);
             _.remove(this.data, r => r === row);
@@ -1323,7 +1329,26 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
             this.refreshFilter();
         }
 
+        startMultiDrag() {
+			let selected = this.getSelectedRows();
+			this.draggedRows = _.map(selected, selectedRow => {
+				return {
+					row: selectedRow,
+					index: _.findIndex(this.data, r => r === selectedRow)
+				}
+            })
+            _.remove(this.data, r => _.includes(selected, r));
+            this.update();
+            this.refreshFilter();
+        }
+
         dropDraggedRow(targetRow, draggedRow = null) {
+
+			if (this.registeredTabularDnd && (this.draggedRows || _.isArray(draggedRow))) {
+				this.dropDraggedRows(targetRow, draggedRow);
+				return;
+			}
+
             if (this.markedDropTarget) {
                 this.markedDropTarget.removeClass('drop-target-mark');
             }
@@ -1339,6 +1364,30 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
             this.data.splice(targetIndex, 0, draggedRow || this.draggedRow);
             this.draggedRow = null;
+            this.update();
+            this.refreshFilter();
+
+            this.fire('row.dragged', this.data);
+        }
+
+        dropDraggedRows(targetRow, draggedRows = null) {
+            if (this.markedDropTarget) {
+                this.markedDropTarget.removeClass('drop-target-mark');
+            }
+
+	        (draggedRows || this.draggedRows).forEach((draggedRow, i) => {
+                let targetIndex;
+                if (!targetRow) {
+                    targetIndex = draggedRow.index;
+                }
+                else {
+                    targetIndex = _.findIndex(this.data, r => r === targetRow);
+                    if (targetIndex === -1) targetIndex = draggedRow.index;
+                }
+
+                this.data.splice(targetIndex, 0, draggedRow.row);
+	        })
+            this.draggedRows = null;
             this.update();
             this.refreshFilter();
 

@@ -256,20 +256,28 @@ class jfTableViewController {
         if (!this.options) return;
 
         let count = this.options.getRawData().length;
+
+        return count + ' ' + this.getObjectNameByCount(count);
+    }
+
+    getObjectNameByCount(count, objectName) {
+        objectName = objectName || this.options.objectName;
         let recordsName;
 
-        if (this.options.objectName) {
-            if (this.options.objectName.indexOf('/')>=0) {
-                let splited = this.options.objectName.split('/');
+        if (objectName) {
+            if (objectName.indexOf('/')>=0) {
+                let splited = objectName.split('/');
                 recordsName = count !== 1 ? splited[1] : splited[0];
             }
-            else
-                recordsName = count !== 1 ? this.options.objectName + 's' : this.options.objectName;
+            else {
+                recordsName = count !== 1 ? objectName + 's' : objectName;
+            }
         }
-        else
+        else {
             recordsName = count !== 1 ? 'records' : 'record';
+        }
 
-        return count + ' ' + _.startCase(recordsName);
+        return _.startCase(recordsName);
     }
 
     getSelectedRecords() {
