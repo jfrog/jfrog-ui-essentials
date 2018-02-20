@@ -1342,10 +1342,10 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
             this.refreshFilter();
         }
 
-        dropDraggedRow(targetRow, draggedRow = null) {
+        dropDraggedRow(targetRow, draggedRow = null, tabularDndDrag = false) {
 
 			if (this.registeredTabularDnd && (this.draggedRows || _.isArray(draggedRow))) {
-				this.dropDraggedRows(targetRow, draggedRow);
+				this.dropDraggedRows(targetRow, draggedRow, tabularDndDrag);
 				return;
 			}
 
@@ -1355,7 +1355,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
             let targetIndex;
 		    if (!targetRow) {
-                targetIndex = this.draggedIndex;
+                targetIndex = tabularDndDrag ? this.data.length : this.draggedIndex;
             }
             else {
                 targetIndex = _.findIndex(this.data, r => r === targetRow);
@@ -1370,7 +1370,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
             this.fire('row.dragged', this.data);
         }
 
-        dropDraggedRows(targetRow, draggedRows = null) {
+        dropDraggedRows(targetRow, draggedRows = null, tabularDndDrag = false) {
             if (this.markedDropTarget) {
                 this.markedDropTarget.removeClass('drop-target-mark');
             }
@@ -1378,7 +1378,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 	        (draggedRows || this.draggedRows).forEach((draggedRow, i) => {
                 let targetIndex;
                 if (!targetRow) {
-                    targetIndex = draggedRow.index;
+                    targetIndex = tabularDndDrag ? this.data.length : draggedRow.index;
                 }
                 else {
                     targetIndex = _.findIndex(this.data, r => r === targetRow);
