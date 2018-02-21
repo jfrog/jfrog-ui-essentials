@@ -16,7 +16,7 @@
     }
     .jf-table-view {
       .jf-table-view-container {
-        .empty-table-placeholder {
+        .empty-table-placeholder:not(.filter-no-results) {
           height: 400px;
           font-size: 40px;
           line-height: 300px;
@@ -35,7 +35,7 @@
     &.no-data {
       .jf-table-view {
         .jf-table-view-container {
-          .empty-table-placeholder {
+          .empty-table-placeholder:not(.filter-no-results) {
             background-color: @grayBGLighter;
             border: dashed transparent 6px;
           }

@@ -226,7 +226,7 @@ class jfTableRowController {
         let handleForeignDrop = (targetRow) => {
             this.tableView.options.registeredTabularDnd.dndOther.dropDraggedRow(targetRow, (this.tableView.options.draggedRow || this.tableView.options.draggedRows), true);
             this.tableView.options.markDropTarget(null);
-            this.tableView.options.registeredTabularDnd.dndCtrl.onDragTransfer(draggedRowsArrayForDndEvent);
+            this.tableView.options.registeredTabularDnd.dndCtrl.onDragTransfer(draggedRowsArrayForDndEvent, this.tableView.options);
             delete this.tableView.options.draggedRow;
             delete this.tableView.options.draggedRows;
         }
