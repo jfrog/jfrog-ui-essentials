@@ -98,24 +98,35 @@ class jfTabularDnDController {
     }
 
     isIncludeListEmpty() {
-        return !this.selectedItems.length;
+        if (!this.selectedItemsTableOptions.dirCtrl) return true;
+        return !this.selectedItemsTableOptions.getFilteredData().length;
     }
 
     isExcludeListEmpty() {
-        return !this.availableItems.length;
+        if (!this.availableItemsTableOptions.dirCtrl) return true;
+        return !this.availableItemsTableOptions.getFilteredData().length;
     }
 
     isIncludeListItemSelected() {
-        return !!this.selectedItemsTableOptions.getSelectedCount()
+        if (!this.selectedItemsTableOptions.dirCtrl) return false;
+        let selected = this.selectedItemsTableOptions.getSelected()
+        let filtered = this.selectedItemsTableOptions.getFilteredData();
+        selected = _.filter(selected, item => _.includes(filtered, item))
+        return !!selected.length;
     }
 
     isExcludeListItemSelected() {
-        return !!this.availableItemsTableOptions.getSelectedCount()
+        if (!this.availableItemsTableOptions.dirCtrl) return false;
+        let selected = this.availableItemsTableOptions.getSelected()
+        let filtered = this.availableItemsTableOptions.getFilteredData();
+        selected = _.filter(selected, item => _.includes(filtered, item))
+        return !!selected.length;
     }
 
     excludeAll() {
         let selected = this.selectedItemsTableOptions.getSelected();
         selected.forEach(s => delete s.$selected);
+        this.selectedItemsTableOptions.dirCtrl.allSelected = false;
         let filtered = this.selectedItemsTableOptions.getFilteredData();
         Array.prototype.splice.apply(this.availableItems, [this.availableItems.length, 0].concat(filtered));
         _.remove(this.selectedItems, i => _.includes(filtered, i));
@@ -126,6 +137,7 @@ class jfTabularDnDController {
     includeAll() {
         let selected = this.availableItemsTableOptions.getSelected();
         selected.forEach(s => delete s.$selected);
+        this.availableItemsTableOptions.dirCtrl.allSelected = false;
         let filtered = this.availableItemsTableOptions.getFilteredData();
         Array.prototype.splice.apply(this.selectedItems, [this.selectedItems.length, 0].concat(filtered));
         _.remove(this.availableItems, i => _.includes(filtered, i));
@@ -136,6 +148,7 @@ class jfTabularDnDController {
     excludeSelected() {
         let selected = this.selectedItemsTableOptions.getSelected();
         selected.forEach(s => delete s.$selected);
+        this.selectedItemsTableOptions.dirCtrl.allSelected = false;
         let filtered = this.selectedItemsTableOptions.getFilteredData();
         _.remove(selected, i => !_.includes(filtered, i));
         Array.prototype.splice.apply(this.availableItems, [this.availableItems.length, 0].concat(selected));
@@ -147,6 +160,7 @@ class jfTabularDnDController {
     includeSelected() {
         let selected = this.availableItemsTableOptions.getSelected();
         selected.forEach(s => delete s.$selected);
+        this.availableItemsTableOptions.dirCtrl.allSelected = false;
         let filtered = this.availableItemsTableOptions.getFilteredData();
         _.remove(selected, i => !_.includes(filtered, i));
         Array.prototype.splice.apply(this.selectedItems, [this.selectedItems.length, 0].concat(selected));
@@ -156,14 +170,15 @@ class jfTabularDnDController {
     }
 
     _refreshBothTables() {
-        this.availableItemsTableOptions.update();
-        this.availableItemsTableOptions.refreshFilter();
-        this.selectedItemsTableOptions.update();
-        this.selectedItemsTableOptions.refreshFilter();
+        [this.availableItemsTableOptions, this.selectedItemsTableOptions].forEach(tableOptions => {
+            tableOptions.update();
+            tableOptions.refreshFilter();
+        })
     }
 
-    onDragTransfer(draggedRows) {
+    onDragTransfer(draggedRows, originTableOptions) {
         draggedRows.forEach(draggedRow => delete draggedRow.$selected);
+        originTableOptions.dirCtrl.allSelected = false;
         this._fireOnChange();
     }
 
