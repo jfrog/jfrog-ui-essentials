@@ -4,25 +4,37 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .jf-ui-select-item.more-ph {
   font-weight: 800;
   font-size: 18px;
   font-style: italic !important;
 }
 
-
 //Work arround for ui-select bug #1652
 .ui-select-choices.ui-select-dropdown:not(.ng-hide) {
   opacity: 1 !important;
 }
-
-
 
 //Work arround for ui-select bug #533
 .ui-select-container input.ui-select-search {
   width: 100% !important;
 }
 
-.ui-select-bootstrap .ui-select-toggle[disabled="disabled"]>.caret{
+.ui-select-bootstrap .ui-select-toggle[disabled="disabled"] > .caret {
   color: @grayPlaceholderLight;
+}
+
+jf-ui-select {
+  .ui-select-bootstrap {
+    .ui-select-choices-row.active,
+    .ui-select-choices-row {
+      &.disabled > a,
+      &.disabled > a i:before,
+      &.disabled > a:hover {
+        background: @grayBGLighter!important;
+        color:@grayFontGeneral;
+      }
+    }
+  }
 }

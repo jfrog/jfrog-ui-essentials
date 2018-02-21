@@ -12,6 +12,9 @@
 export function jfTooltipOnOverflow($sanitize) {
 
     return {
+    	scope: {
+    		trustTooltipText: '<?'
+	    },
         restrict: 'A',
         link: ($scope, $element ) => {
 	        $($element).on('mouseenter',(e)=>{
@@ -28,15 +31,19 @@ export function jfTooltipOnOverflow($sanitize) {
 	                targetContent = (targetContent === '' ? null : $sanitize(targetContent));
 		            if (!isNoTooltip(target) && target[0].scrollWidth > Math.round(target.innerWidth())) {
                         if (!!targetContent && !target.hasClass('tooltipstered')) {
-			                target.tooltipster({
-				                animation: 'fade',
-				                trigger: 'hover',
-				                onlyOne: 'true',
-				                interactive: 'true',
-				                position: 'bottom',
-				                theme: 'tooltipster-default bottom',
-				                content: targetContent
-			                });
+                        	let options = {
+		                        animation: 'fade',
+		                        trigger: 'hover',
+		                        onlyOne: 'true',
+		                        interactive: 'true',
+		                        position: 'bottom',
+		                        theme: 'tooltipster-default bottom',
+		                        content: targetContent
+	                        };
+	                        if($scope.trustTooltipText) {
+		                        options.contentAsHTML = 'true';
+	                        }
+	                        target.tooltipster(options);
 			                target.tooltipster('show');
 		                }
 		                else if (!!targetContent) {

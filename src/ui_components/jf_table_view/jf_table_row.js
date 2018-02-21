@@ -170,12 +170,12 @@ class jfTableRowController {
         }
     }
 
-    onRowClick() {
+    onRowClick($event) {
 	    if (this.data.$groupHeader) {
 	        this.toggleGroupExpansion()
 	    }
 	    else {
-		    this.tableView.options.fire('row.clicked', {entity: this.data})
+		    if (this.rowId !== 'headers') this.tableView.options.fire('row.clicked', {entity: this.data, event: $event});
         }
     }
 

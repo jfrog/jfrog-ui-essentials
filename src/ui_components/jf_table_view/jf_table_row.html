@@ -3,7 +3,7 @@
      ng-mousedown="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.resizableColumns && jfTableRow.onMouseDown($event)"
      ng-mouseup="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.resizableColumns && jfTableRow.onMouseUp($event)"
      ng-mouseleave="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.resizableColumns && jfTableRow.onMouseUp($event)"
-     ng-click="jfTableRow.onRowClick()"
+     ng-click="jfTableRow.onRowClick($event)"
      ng-class="{headers: jfTableRow.rowId === 'headers', 'group-header': jfTableRow.data.$groupHeader, 'expanded': jfTableRow.data.$groupHeader.$expanded, 'sub-row': jfTableRow.data.$parentRow, sticky: jfTableRow.data.$sticky, selected: jfTableRow.data.$selected}"
      ng-style="{height: jfTableRow.rowId === 'headers' ? '' : jfTableRow.tableView.options.rowHeight, opacity: jfTableRow.tableView.options.ready ? 1 : 0}">
 

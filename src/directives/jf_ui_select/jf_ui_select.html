@@ -5,7 +5,8 @@
     <ui-select-choices jf-disable-ng-animate
                        refresh-delay="100"
                        refresh="jfUiSelect.refresh($select.search)"
-                       repeat="item in jfUiSelect[jfUiSelect.jfSelectOptionsView ? 'jfSelectOptionsView' : 'jfSelectOptions'] | filter: (!jfUiSelect.jfSelectFilterAttr ? $select.search : { [jfUiSelect.jfSelectFilterAttr || 'dummyfield']: $select.search}) track by $index">
+                       repeat="item in jfUiSelect[jfUiSelect.jfSelectOptionsView ? 'jfSelectOptionsView' : 'jfSelectOptions'] | filter: (!jfUiSelect.jfSelectFilterAttr ? $select.search : { [jfUiSelect.jfSelectFilterAttr || 'dummyfield']: $select.search}) track by $index"
+                       ui-disable-choice="item.isDisabled">
         <div  ng-if="!jfUiSelect.jfSelectHelpTooltips"
               class="jf-ui-select-item"
               name="select-item"
