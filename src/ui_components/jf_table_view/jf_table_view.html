@@ -28,20 +28,13 @@
                           row-id="'headers'"
                           data="jfTableView.options.headersRow"></jf-table-row>
         </div>
-        <div class="table-rows-container">
-            <div class="scroll-faker-container"
-                 ng-style="{right: -jfTableView.getScrollWidth()+'px'}"
-                 ng-if="jfTableView.options.paginationMode === jfTableView.options.VIRTUAL_SCROLL">
-                <div class="scroll-faker"
-                     ng-init="jfTableView.initScrollFaker()"
-                     ng-style="{height: jfTableView.getTotalScrollHeight()}">
-                </div>
-            </div>
-            <jf-table-row ng-repeat="entity in jfTableView.options.getPageData() track by $index"
-                          table-view="jfTableView"
-                          msd-wheel="jfTableView.onMouseWheel($event, $delta, $deltaX, $deltaY)"
-                          row-id="$index"
-                          data="entity"></jf-table-row>
+        <div class="table-rows-container" ng-style="{height: jfTableView.getActualPageHeight() + 'px'}">
+            <jf-vscroll with-each="entity" in="jfTableView.options.getPrePagedData()" api="jfTableView.vsApi">
+                <jf-table-row ng-non-bindable
+                              table-view="jfTableView"
+                              row-id="$index"
+                              data="entity"></jf-table-row>
+            </jf-vscroll>
         </div>
         <div class="empty-table-placeholder"
              ng-if="jfTableView.options.dataWasSet && !jfTableView.options.getRawData().length && !jfTableView.options.pendingExternalPaging && (!jfTableView.options.externalTotalCount || jfTableView.options.externalTotalCount.total === 0)">

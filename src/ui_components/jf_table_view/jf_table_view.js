@@ -23,6 +23,9 @@ class jfTableViewController {
 	    this.EVENTS = JFrogEventBus.getEventsDefinition();
 	    this.$rootScope = $rootScope;
         this.cellScopes = [];
+
+        this.vsApi = {};
+
         $scope.$watch('jfTableView.options',(options) => {
             if (this.options) {
                 this.options._setDirectiveController(this);
@@ -56,6 +59,9 @@ class jfTableViewController {
         this.onUpdateFilter();
     }
 
+    getActualPageHeight() {
+        return parseFloat(this.options.rowHeight) * Math.min(this.options.rowsPerPage, this.options.getPrePagedData().length) + 2;
+    }
 
     compileTemplate(elem,field,rowId) {
         let column = field;

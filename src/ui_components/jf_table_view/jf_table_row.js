@@ -198,6 +198,7 @@ class jfTableRowController {
             helper: 'clone',
             scroll: true,
             distance: 10,
+            appendTo: $(this.tableView.$element).find('.jf-table-view-container'),
             start: (event, ui) => this.$scope.$apply(() => this.dragStart(event,ui)),
             stop: (event, ui) => this.$scope.$apply(() => this.dragStop(event,ui)),
             drag: (event, ui) => this.$scope.$apply(() => this.dragMove(event,ui))

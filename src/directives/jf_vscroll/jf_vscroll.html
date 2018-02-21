@@ -1,22 +1,24 @@
-<div class="v-scroll-container"
-     ng-style="{transform: 'translate(0, ' + (-jfVScroll.getTranslate()) + 'px)', height: jfVScroll.containerHeight + 'px', opacity: jfVScroll.ready ? 1 : 0}">
-    <div class="scroll-faker-container"
-         ng-style="{transform: 'translate(0, ' + (jfVScroll.getTranslate()) + 'px)', right: 0, height: jfVScroll.getPageHeight() + 'px'}">
-        <div class="scroll-faker"
-             ng-init="jfVScroll.initScrollFaker()"
-             ng-style="{height: (jfVScroll.getTotalScrollHeight() > jfVScroll.maxFakeScrollHeight ? jfVScroll.maxFakeScrollHeight : jfVScroll.getTotalScrollHeight()) + 'px'}">
+<div class="v-scroll-container">
+    <div class="v-scroll-inner-container"
+         ng-style="{transform: 'translate(0, ' + (-jfVScroll.getTranslate()) + 'px)', height: jfVScroll.containerHeight + 'px', opacity: jfVScroll.ready ? 1 : 0}">
+        <div class="scroll-faker-container"
+             ng-style="{transform: 'translate(0, ' + (jfVScroll.getTranslate()) + 'px)', right: 0, height: jfVScroll.getPageHeight() + 'px'}">
+            <div class="scroll-faker"
+                 ng-init="jfVScroll.initScrollFaker()"
+                 ng-style="{height: (jfVScroll.getTotalScrollHeight() > jfVScroll.maxFakeScrollHeight ? jfVScroll.maxFakeScrollHeight : jfVScroll.getTotalScrollHeight()) + 'px'}">
+            </div>
         </div>
-    </div>
-    <div class="h-scroll-wrapper"
-         ng-style="{height: (jfVScroll.getPageHeight() + jfVScroll.getTranslate()) + 'px'}"
-         msd-wheel="jfVScroll.onMouseWheel($event, $delta, $deltaX, $deltaY)">
-        <div class="h-scroll-content">
-            <jf-vscroll-element ng-repeat="item in jfVScroll.getPage() track by $index"
-                                vscroll="jfVScroll"
-                                data="item"
-                                index="$index"
-                                template="jfVScroll.transcludedContent"
-                                variable="jfVScroll.itemVariableName"></jf-vscroll-element>
+        <div class="h-scroll-wrapper"
+             ng-style="{height: (jfVScroll.getPageHeight() + jfVScroll.getTranslate()) + 'px'}"
+             msd-wheel="jfVScroll.onMouseWheel($event, $delta, $deltaX, $deltaY)">
+            <div class="h-scroll-content">
+                <jf-vscroll-element ng-repeat="item in jfVScroll.getPage() track by $index"
+                                    vscroll="jfVScroll"
+                                    data="item"
+                                    index="$index"
+                                    template="jfVScroll.transcludedContent"
+                                    variable="jfVScroll.itemVariableName"></jf-vscroll-element>
+            </div>
         </div>
     </div>
 </div>
