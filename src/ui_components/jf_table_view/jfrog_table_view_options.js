@@ -1331,6 +1331,9 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
         startMultiDrag() {
 			let selected = this.getSelectedRows();
+			let filtered = this.getFilteredData();
+			selected = _.filter(selected, item => _.includes(filtered, item));
+
 			this.draggedRows = _.map(selected, selectedRow => {
 				return {
 					row: selectedRow,
