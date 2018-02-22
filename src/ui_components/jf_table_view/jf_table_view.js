@@ -42,7 +42,6 @@ class jfTableViewController {
                 })
 
                 this.currentPage = 0;
-                this.virtualScrollIndex = 0;
             }
         })
 

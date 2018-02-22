@@ -731,10 +731,6 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			}
 			else if (this.paginationMode === this.VIRTUAL_SCROLL) {
 				return this.dirCtrl.vsApi.getPageData();
-/*
-				return this.getPrePagedData().slice(this.dirCtrl.virtualScrollIndex,
-					this.dirCtrl.virtualScrollIndex + this.rowsPerPage);
-*/
 			}
 			else if (this.paginationMode === this.EXTERNAL_PAGINATION || this.paginationMode === this.INFINITE_SCROLL) {
 				return this.getRawData();
