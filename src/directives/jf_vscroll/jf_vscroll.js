@@ -381,6 +381,8 @@ class jfVScrollController {
             this.api.freezeScroll = () => this._freezeVScroll();
             this.api.unFreezeScroll = () => this._unFreezeVScroll();
             this.api.sync = () => this.syncFakeScroller(false);
+            this.api.scroll = (numOfRows, duration = 500) => this.scroll(numOfRows, duration);
+            this.api.scrollTo = (scrollPos, duration = 500) => this.scrollTo(scrollPos, duration);
         }
     }
 
