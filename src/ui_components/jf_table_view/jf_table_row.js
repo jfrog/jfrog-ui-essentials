@@ -198,6 +198,7 @@ class jfTableRowController {
             helper: 'clone',
             scroll: true,
             distance: 10,
+            appendTo: $(this.tableView.$element).find('.jf-table-view-container'),
             start: (event, ui) => this.$scope.$apply(() => this.dragStart(event,ui)),
             stop: (event, ui) => this.$scope.$apply(() => this.dragStop(event,ui)),
             drag: (event, ui) => this.$scope.$apply(() => this.dragMove(event,ui))
@@ -270,8 +271,38 @@ class jfTableRowController {
         }
     }
 
+    handleScrollOnDrag(target) {
+        if (this.tableView.options.paginationMode === this.tableView.options.VIRTUAL_SCROLL) {
+
+            let tableView = this.tableView;
+
+            if (this.tableView.options.registeredTabularDnd && target) {
+                let rowCtrl = $(target).prop('ctrl');
+                tableView = rowCtrl.tableView;
+            }
+
+            let container = $(tableView.$element).find('.table-rows-container');
+            let containerY = container[0].getClientRects()[0].y;
+            let relativeY = event.clientY - containerY;
+            let containerHeight = container.height();
+
+            let vsApi = tableView.vsApi;
+
+            if (relativeY < 50) {
+                vsApi.scroll(-.1 * (50 - relativeY));
+            }
+            else if (relativeY > containerHeight - 50) {
+                vsApi.scroll(.1 * (50 - (containerHeight - relativeY)));
+            }
+        }
+
+    }
+
     dragMove(event, ui) {
+
         let target = $(event.toElement).parents('.jf-table-row')[0];
+
+        this.handleScrollOnDrag(target);
 
         if (!target && $(event.toElement).is('.empty-table-placeholder')) target = event.toElement;
 

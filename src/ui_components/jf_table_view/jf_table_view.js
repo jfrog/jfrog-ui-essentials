@@ -23,6 +23,13 @@ class jfTableViewController {
 	    this.EVENTS = JFrogEventBus.getEventsDefinition();
 	    this.$rootScope = $rootScope;
         this.cellScopes = [];
+
+        this.vsApi = {
+            onInit: () => {
+                this.vsApi.registerScrollListener(scrollPos => this.onVScroll(scrollPos))
+            }
+        };
+
         $scope.$watch('jfTableView.options',(options) => {
             if (this.options) {
                 this.options._setDirectiveController(this);
@@ -56,6 +63,9 @@ class jfTableViewController {
         this.onUpdateFilter();
     }
 
+    getActualPageHeight() {
+        return parseFloat(this.options.rowHeight) * Math.min(this.options.rowsPerPage, this.options.getPrePagedData().length) + 2;
+    }
 
     compileTemplate(elem,field,rowId) {
         let column = field;
@@ -169,60 +179,17 @@ class jfTableViewController {
         }
 
     }
-    onMouseWheel($event, $delta, $deltaX, $deltaY) {
-        if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
-            if ($deltaY<0) { // scrollUp
-                if (this.virtualScrollIndex + this.options.rowsPerPage < this.options.getPrePagedData().length) {
-                    $event.preventDefault();
-                    this.virtualScrollIndex++;
-                }
-            }
-            else if ($deltaY>0) { // scrollDown
-                if (this.virtualScrollIndex > 0) {
-                    $event.preventDefault();
-                    this.virtualScrollIndex--;
-                }
-            }
-            this.currentPage = Math.floor((this.virtualScrollIndex + this.options.rowsPerPage - 1) / this.options.rowsPerPage);
-            this.options.update(true,true);
-            this.syncFakeScroller();
-        }
+
+    onVScroll(scrollPos) {
+        let virtualScrollIndex = Math.floor(scrollPos);
+        let virtualScrollDisplacement = scrollPos - virtualScrollIndex;
+        this.currentPage = Math.floor((virtualScrollIndex + this.options.rowsPerPage - 1) / this.options.rowsPerPage);
+        this.paginationApi.update();
+
     }
 
     getTotalScrollHeight() {
         return ((this.options.getPrePagedData().length * parseFloat(this.options.rowHeight)) + 'px');
-    }
-
-    initScrollFaker() {
-        if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
-            let scrollParent = $(this.$element).find('.scroll-faker-container');
-            scrollParent.on('scroll',(e)=>{
-                this.$scope.$apply(()=>{
-                    let len = this.options.getPrePagedData().length;
-                    if (len) {
-                        let relativePosition = scrollParent.scrollTop()/(len * parseFloat(this.options.rowHeight))
-                        this.virtualScrollIndex = Math.floor(relativePosition*len);
-                        this.currentPage = Math.floor((this.virtualScrollIndex + this.options.rowsPerPage - 1) / this.options.rowsPerPage);
-                    }
-                    else {
-                        this.virtualScrollIndex = 0;
-                        this.currentPage = 0;
-                    }
-                    this.options.update(true,true);
-	                this.options.fire('pagination.change', this.paginationApi.getCurrentPage());
-
-                })
-            })
-        }
-    }
-    syncFakeScroller() {
-        if (this.options.paginationMode === this.options.VIRTUAL_SCROLL) {
-            let len = this.options.getPrePagedData().length;
-            let scrollParent = $(this.$element).find('.scroll-faker-container');
-            let relativePosition = this.virtualScrollIndex / len;
-            let scrollTop = relativePosition * len * parseFloat(this.options.rowHeight);
-            scrollParent.scrollTop(scrollTop);
-        }
     }
 
     getScrollWidth() {
@@ -364,8 +331,7 @@ class PaginationApi {
 
     syncVirtualScroll() {
         if (this.tableCtrl.options.paginationMode === this.tableCtrl.options.VIRTUAL_SCROLL) {
-            this.tableCtrl.virtualScrollIndex = this.tableCtrl.currentPage*this.tableCtrl.options.rowsPerPage;
-            this.tableCtrl.syncFakeScroller();
+            this.tableCtrl.vsApi.scrollTo(this.tableCtrl.currentPage*this.tableCtrl.options.rowsPerPage);
         }
     }
 

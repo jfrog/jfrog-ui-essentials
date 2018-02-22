@@ -372,6 +372,18 @@ class jfVScrollController {
         delete this.$freezedVScrollDisplacement;
     }
 
+    registerScrollListener(listener) {
+        if (!this.scrollListener) {
+            this.scrollListener = listener;
+            this.$scope.$watch('jfVScroll.virtualScrollIndex', () => {
+                this.scrollListener(this._getCurrentScrollPos());
+            })
+            this.$scope.$watch('jfVScroll.virtScrollDisplacement', () => {
+                this.scrollListener(this._getCurrentScrollPos());
+            })
+        }
+    }
+
     _initApi() {
         if (this.api) {
             this.api.getPageData = () => this.getPage();
@@ -383,6 +395,9 @@ class jfVScrollController {
             this.api.sync = () => this.syncFakeScroller(false);
             this.api.scroll = (numOfRows, duration = 500) => this.scroll(numOfRows, duration);
             this.api.scrollTo = (scrollPos, duration = 500) => this.scrollTo(scrollPos, duration);
+            this.api.registerScrollListener = (listener) => this.registerScrollListener(listener);
+
+            if (this.api.onInit) this.api.onInit();
         }
     }
 
