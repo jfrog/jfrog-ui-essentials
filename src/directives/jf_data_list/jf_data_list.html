@@ -1,0 +1,6 @@
+<ul class="data-list">
+	<li class="data-list-row" ng-repeat="item in jfDataList.formattedItems" ng-if="!item.isHidden">
+		<div class="data-list-item data-label">{{item.label}}:</div>
+		<div class="data-list-item data-value">{{item.value}}</div> <!-- TODO: copy button support (ng-if="item.copy") -->
+	</li>
+</ul>
