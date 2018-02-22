@@ -207,6 +207,11 @@ class jfTableRowController {
     }
 
     dragStart(event, ui) {
+        if (this.tableView.options.registeredTabularDnd && this.tableView.options.registeredTabularDnd.dndCtrl.disabled) {
+            event.preventDefault();
+            return;
+        }
+
         this.tableView.options.dragRow(this.data);
         this.initDragHelper(ui.helper);
     }

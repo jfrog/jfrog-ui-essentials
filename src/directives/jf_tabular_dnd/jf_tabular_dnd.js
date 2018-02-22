@@ -9,7 +9,8 @@ export function jfTabularDnD() {
             availableItemsColumns: '=?',
             selectedItemsColumns: '=?',
             onChange: '&?',
-            entityName: '@?'
+            entityName: '@?',
+            disabled: '=ngDisabled'
         },
         templateUrl: 'directives/jf_tabular_dnd/jf_tabular_dnd.html',
         controller: jfTabularDnDController,
@@ -64,11 +65,26 @@ class jfTabularDnDController {
             .setEmptyTableText('Drag Row Here');
 
         let toggleSelection = (row) => {
+            if (this.disabled) return;
             row.entity.$selected = !row.entity.$selected;
         }
 
         this.availableItemsTableOptions.on('row.clicked', toggleSelection);
         this.selectedItemsTableOptions.on('row.clicked', toggleSelection);
+
+        this.availableItemsTableOptions.on('selection.change', () => {
+            if (this.disabled) this.availableItemsTableOptions.clearSelection();
+        });
+        this.selectedItemsTableOptions.on('selection.change', () => {
+            if (this.disabled) this.selectedItemsTableOptions.clearSelection();
+        });
+
+        this.$scope.$watch('jfTabularDnD.disabled', () => {
+            if (this.disabled) {
+                this.selectedItemsTableOptions.clearSelection();
+                this.availableItemsTableOptions.clearSelection();
+            }
+        })
 
         this.availableItemsTableOptions.setData(this.availableItems);
         this.selectedItemsTableOptions.setData(this.selectedItems);
@@ -124,6 +140,8 @@ class jfTabularDnDController {
     }
 
     excludeAll() {
+        if (this.disabled) return;
+
         let selected = this.selectedItemsTableOptions.getSelected();
         selected.forEach(s => delete s.$selected);
         this.selectedItemsTableOptions.dirCtrl.allSelected = false;
@@ -135,6 +153,8 @@ class jfTabularDnDController {
     }
 
     includeAll() {
+        if (this.disabled) return;
+
         let selected = this.availableItemsTableOptions.getSelected();
         selected.forEach(s => delete s.$selected);
         this.availableItemsTableOptions.dirCtrl.allSelected = false;
@@ -146,6 +166,8 @@ class jfTabularDnDController {
     }
 
     excludeSelected() {
+        if (this.disabled) return;
+
         let selected = this.selectedItemsTableOptions.getSelected();
         selected.forEach(s => delete s.$selected);
         this.selectedItemsTableOptions.dirCtrl.allSelected = false;
@@ -158,6 +180,8 @@ class jfTabularDnDController {
     }
 
     includeSelected() {
+        if (this.disabled) return;
+
         let selected = this.availableItemsTableOptions.getSelected();
         selected.forEach(s => delete s.$selected);
         this.availableItemsTableOptions.dirCtrl.allSelected = false;
