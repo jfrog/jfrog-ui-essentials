@@ -20,6 +20,9 @@ window.compileDirective = function(directive, attr, parentElement = null) {
         if (key.startsWith('@')) {
             attributes += ` ${kebab}="{{ data['${key}'] }}"`;
         }
+        else if (key.startsWith('&')) {
+            attributes += ` ${kebab}="data['${key}']()"`;
+        }
         else {
             attributes += ` ${kebab}="data.${key}"`;
         }
