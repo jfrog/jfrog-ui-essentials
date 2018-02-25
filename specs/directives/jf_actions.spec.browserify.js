@@ -1,5 +1,5 @@
 'use strict';
-fdescribe('unit test: jf_actions', function () {
+describe('unit test: jf_actions', function () {
 
 	var $scope;
 
