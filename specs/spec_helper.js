@@ -13,7 +13,7 @@ window.compileHtml = function(htmlStr, data, parentElement = null) {
     return $scope;
 }
 
-window.compileDirective = function(directive, attr) {
+window.compileDirective = function(directive, attr, parentElement = null) {
     let attributes = '';
     for (let key in attr) {
         let kebab = _.kebabCase(key);
@@ -24,7 +24,7 @@ window.compileDirective = function(directive, attr) {
             attributes += ` ${kebab}="data.${key}"`;
         }
     }
-    let scope = compileHtml(`<${directive} ${attributes}></${directive}>`, {data: attr});
+    let scope = compileHtml(`<${directive} ${attributes}></${directive}>`, {data: attr}, parentElement);
     scope.$digest();
 
     return scope;

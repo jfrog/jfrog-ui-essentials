@@ -1,5 +1,5 @@
 'use strict';
-describe('unit test: jf_tree directive & JFTreeApi service', function () {
+fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
 
     var $scope;
     var $rootScope;
@@ -56,17 +56,7 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
     }
 
     function compileDirectives(attr, parentElement = null) {
-        let attributes = '';
-        for (let key in attr) {
-            let kebab = _.kebabCase(key);
-            if (key.startsWith('@')) {
-                attributes += ` ${kebab}="{{ data['${key}'] }}"`;
-            }
-            else {
-                attributes += ` ${kebab}="data.${key}"`;
-            }
-        }
-        $scope = compileHtml(`<jf-tree ${attributes}></jf-tree>`, {data: attr}, parentElement);
+        $scope = window.compileDirective(`jf-tree`, attr, parentElement)
         $scope.$digest();
 
         getElements();
