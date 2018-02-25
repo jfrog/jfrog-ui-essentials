@@ -10,6 +10,8 @@ describe('unit test: jf-tabular-dnd directive', function () {
     var selectedItems;
     var columns;
 
+    var events = {onChange: () => {}};
+
     var container;
     var availableRowElements;
     var selectedRowElements;
@@ -99,6 +101,7 @@ describe('unit test: jf-tabular-dnd directive', function () {
         compileDirective({
             availableItems: _.cloneDeep(availableItems),
             selectedItems: _.cloneDeep(selectedItems),
+            '&onChange': (params) => events.onChange(params),
             '@entityName': 'Something',
             columns
         });
@@ -174,5 +177,16 @@ describe('unit test: jf-tabular-dnd directive', function () {
         expect(availableRowElements.length).toEqual(3);
         expect(selectedRowElements.length).toEqual(1);
     });
+
+    it('should fire change event', () => {
+
+        spyOn(events, 'onChange');
+
+        includeAllButton.click();
+        flushAndApply();
+        getElements();
+
+        expect(events.onChange).toHaveBeenCalled();
+    })
 
 })
