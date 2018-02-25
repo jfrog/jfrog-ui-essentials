@@ -13,6 +13,24 @@ window.compileHtml = function(htmlStr, data, parentElement = null) {
     return $scope;
 }
 
+window.compileDirective = function(directive, attr) {
+    let attributes = '';
+    for (let key in attr) {
+        let kebab = _.kebabCase(key);
+        if (key.startsWith('@')) {
+            attributes += ` ${kebab}="{{ data['${key}'] }}"`;
+        }
+        else {
+            attributes += ` ${kebab}="data.${key}"`;
+        }
+    }
+    let scope = compileHtml(`<${directive} ${attributes}></${directive}>`, {data: attr});
+    scope.$digest();
+
+    return scope;
+}
+
+
 function angularEquality(first, second) {
   return angular.equals(first, second);
 }
