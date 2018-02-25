@@ -1,5 +1,5 @@
 'use strict';
-fdescribe('unit test: jf_tree directive & JFTreeApi service', function () {
+describe('unit test: jf_tree directive & JFTreeApi service', function () {
 
     var $scope;
     var $rootScope;
