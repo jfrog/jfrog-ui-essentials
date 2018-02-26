@@ -10,6 +10,8 @@ export function jfTabularDnD() {
             selectedItemsColumns: '=?',
             onChange: '&?',
             entityName: '@?',
+            appScope: '=?',
+            disableWholeRowSelection: '=?',
             disabled: '=ngDisabled'
         },
         templateUrl: 'directives/jf_tabular_dnd/jf_tabular_dnd.html',
@@ -38,8 +40,9 @@ class jfTabularDnDController {
     }
 
     createTables() {
-        this.availableItemsTableOptions = new this.JFrogTableViewOptions(this.$scope);
-        this.selectedItemsTableOptions = new this.JFrogTableViewOptions(this.$scope);
+        console.log(this.appScope);
+        this.availableItemsTableOptions = new this.JFrogTableViewOptions(this.appScope || this.$scope);
+        this.selectedItemsTableOptions = new this.JFrogTableViewOptions(this.appScope || this.$scope);
 
         this.availableItemsTableOptions._registerTabularDnd(this, 'available', this.selectedItemsTableOptions);
         this.selectedItemsTableOptions._registerTabularDnd(this, 'selected', this.availableItemsTableOptions);
@@ -64,13 +67,15 @@ class jfTabularDnDController {
             .setObjectName(selectedObjectName)
             .setEmptyTableText('Drag Row Here');
 
-        let toggleSelection = (row) => {
-            if (this.disabled) return;
-            row.entity.$selected = !row.entity.$selected;
-        }
 
-        this.availableItemsTableOptions.on('row.clicked', toggleSelection);
-        this.selectedItemsTableOptions.on('row.clicked', toggleSelection);
+        if (!this.disableWholeRowSelection) {
+            let toggleSelection = (row) => {
+                if (this.disabled) return;
+                row.entity.$selected = !row.entity.$selected;
+            }
+            this.availableItemsTableOptions.on('row.clicked', toggleSelection);
+            this.selectedItemsTableOptions.on('row.clicked', toggleSelection);
+        }
 
         this.availableItemsTableOptions.on('selection.change', () => {
             if (this.disabled) this.availableItemsTableOptions.clearSelection();
