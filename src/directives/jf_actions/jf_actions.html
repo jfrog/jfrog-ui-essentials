@@ -6,7 +6,7 @@
         class="action-button"
         ng-if="!actionObj.visibleWhen || actionObj.visibleWhen()">
 
-        <a ng-href="{{ actionObj.href }}">
+        <a ng-href="{{ actionObj.href }}" download>
             <i class="action-icon icon" ng-class="actionObj.icon"></i> {{actionObj.title}}
         </a>
     </li>
