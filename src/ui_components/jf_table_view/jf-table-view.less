@@ -42,6 +42,7 @@
       min-width: 150px;
       width: 100%;
       .table-counter {
+        white-space: nowrap;
         font-size: 16px;
         font-weight: 700;
         height: 16px;
@@ -92,16 +93,6 @@
     .table-rows-container {
       position: relative;
       border-top: 2px solid @grayBorderDarker;
-      .scroll-faker-container {
-        position: absolute;
-        width: 30px;
-        height: 100%;
-        overflow: auto;
-        overflow-x: hidden;
-        z-index: 0;
-        .scroll-faker {
-        }
-      }
       .jf-table-row {
       }
     }
@@ -120,6 +111,9 @@
       padding: 30px;
       margin-top: 30px;
       background-color: @grayBGDark;
+      &.drop-target-mark {
+        border: dashed black 1px;
+      }
     }
 
     .jf-table-row {
@@ -129,6 +123,23 @@
       padding: 0;
       margin: 0;
       position: relative;
+
+      &.selected,
+      &:hover {
+        &.drag-mark {
+          &:before {
+            font-family: artifactory!important;
+            font-size: 30px;
+            content: "\\";
+            position: absolute;
+            z-index: 10;
+            top: ~"calc(50% - 16px)";
+            right: 10px;
+            color: black;
+          }
+        }
+      }
+
 
       &.drop-target-mark {
         border-top: 2px solid green !important;
@@ -172,18 +183,6 @@
       &:hover {
         .jf-table-cell {
           .jf-table-cell-content {
-            &.drag-mark {
-              &:before {
-                font-family: artifactory!important;
-                font-size: 26px;
-                content: "\\";
-                position: absolute;
-                z-index: 10;
-                top: ~"calc(50% - 13px)";
-                left: -13px;
-                color: #bbb;
-              }
-            }
           }
           &.actions {
             display: inline-table !important;
@@ -445,6 +444,11 @@
     pointer-events: none;
     background-color: lightgray !important;
     border: 1px lightgreen dotted !important;
+    &.multiple {
+      font-size: 20px;
+      opacity: 1 !important;
+      padding: 10px;
+    }
   }
 }
 

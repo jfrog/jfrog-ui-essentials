@@ -1,0 +1,84 @@
+.jf-tabular-dnd {
+
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  .tabular-dnd-table-container {
+    width: 42%;
+    display: flex;
+    flex-direction: column;
+    .jf-table-row {
+      &:not(.headers) {
+        &.selected {
+          background-color: @grayBGLight;
+        }
+      }
+    }
+    .jf-table-view {
+      .jf-table-view-container {
+        .empty-table-placeholder:not(.filter-no-results) {
+          height: 400px;
+          font-size: 40px;
+          line-height: 300px;
+          margin-top: 0;
+          color: @grayBGDark;
+          background-color: white;
+          border: dashed @grayBGDark 6px;
+          &.drop-target-mark {
+            border: dashed black 6px;
+            color: black;
+          }
+
+        }
+      }
+    }
+    &.no-data {
+      .jf-table-view {
+        .jf-table-view-container {
+          .empty-table-placeholder:not(.filter-no-results) {
+            background-color: @grayBGLighter;
+            border: dashed transparent 6px;
+          }
+        }
+      }
+
+    }
+  }
+
+  .dnd-actions-wrap {
+    width: 16%;
+    .dnd-actions {
+      margin-top: 100px;
+      padding: 0;
+      text-align: center;
+
+      li {
+        display: block;
+        padding: 5px 0;
+        text-align: center;
+
+        span {
+          display: inline-block;
+          font-size: 24px;
+          font-weight: 100;
+          background-color: @greenFontHeader;
+          color: white;
+          line-height: 20px;
+          width: 26px;
+          height: 26px;
+          cursor: pointer;
+          overflow: hidden;
+          padding-right: 1px;
+          border-radius: 50%;
+
+          &[disabled] {
+            background-color: @grayBGDarker;
+          }
+        }
+      }
+    }
+  }
+
+}
+
+

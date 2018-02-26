@@ -1,0 +1,38 @@
+<div class="jf-tabular-dnd" tabindex="0">
+    <div class="tabular-dnd-table-container available-table" ng-class="{'no-data': !jfTabularDnD.availableItems.length && !jfTabularDnD.availableItemsTableOptions.draggedRow && !jfTabularDnD.availableItemsTableOptions.draggedRows && !jfTabularDnD.selectedItems.length && !jfTabularDnD.selectedItemsTableOptions.draggedRow && !jfTabularDnD.selectedItemsTableOptions.draggedRows}">
+        <jf-table-view options="jfTabularDnD.availableItemsTableOptions"></jf-table-view>
+    </div>
+
+    <div class="dnd-actions-wrap">
+        <ul class="dnd-actions">
+            <li>
+                <span ng-click="jfTabularDnD.excludeAll()"
+                      class="dnd-exclude-all"
+                      ng-disabled="jfTabularDnD.isIncludeListEmpty() || jfTabularDnD.disabled">&laquo;
+                </span>
+            </li>
+            <li>
+                <span ng-click="jfTabularDnD.excludeSelected()"
+                      class="dnd-exclude-selected"
+                      ng-disabled="!jfTabularDnD.isIncludeListItemSelected() || jfTabularDnD.disabled">&lsaquo;
+                </span>
+            </li>
+            <li>
+                <span ng-click="jfTabularDnD.includeSelected()"
+                      class="dnd-include-selected"
+                      ng-disabled="!jfTabularDnD.isExcludeListItemSelected() || jfTabularDnD.disabled">&rsaquo;
+                </span>
+            </li>
+            <li>
+                <span ng-click="jfTabularDnD.includeAll()"
+                      class="dnd-include-all"
+                      ng-disabled="jfTabularDnD.isExcludeListEmpty() || jfTabularDnD.disabled">&raquo;
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="tabular-dnd-table-container selected-table">
+        <jf-table-view options="jfTabularDnD.selectedItemsTableOptions"></jf-table-view>
+    </div>
+</div>

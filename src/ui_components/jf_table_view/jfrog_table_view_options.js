@@ -450,7 +450,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 		}
 
 		setSortable(sortable = true) {
-		    if (sortable && this.draggableRows) return;
+		    if (sortable && this.draggableRows && !this.registeredTabularDnd) return;
 			this.sortable = sortable;
 			if (sortable && !this.sortByField) {
 				this.sortBy(this._sortableFields ? this._sortableFields[0] : undefined);
@@ -730,8 +730,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 					this.dirCtrl.currentPage * this.rowsPerPage + this.rowsPerPage);
 			}
 			else if (this.paginationMode === this.VIRTUAL_SCROLL) {
-				return this.getPrePagedData().slice(this.dirCtrl.virtualScrollIndex,
-					this.dirCtrl.virtualScrollIndex + this.rowsPerPage);
+				return this.dirCtrl.vsApi.getPageData();
 			}
 			else if (this.paginationMode === this.EXTERNAL_PAGINATION || this.paginationMode === this.INFINITE_SCROLL) {
 				return this.getRawData();
@@ -1316,6 +1315,12 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
         }
 
         dragRow(row) {
+			if (this.registeredTabularDnd && this.getSelectedCount()) {
+				row.$selected = true;
+				this.startMultiDrag();
+				return;
+			}
+
 		    this.draggedRow = row;
 		    this.draggedIndex = _.findIndex(this.data, r => r === row);
             _.remove(this.data, r => r === row);
@@ -1323,21 +1328,68 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
             this.refreshFilter();
         }
 
-        dropDraggedRow(targetRow) {
+        startMultiDrag() {
+			let selected = this.getSelectedRows();
+			let filtered = this.getFilteredData();
+			selected = _.filter(selected, item => _.includes(filtered, item));
+
+			this.draggedRows = _.map(selected, selectedRow => {
+				return {
+					row: selectedRow,
+					index: _.findIndex(this.data, r => r === selectedRow)
+				}
+            })
+            _.remove(this.data, r => _.includes(selected, r));
+            this.update();
+            this.refreshFilter();
+        }
+
+        dropDraggedRow(targetRow, draggedRow = null, tabularDndDrag = false) {
+
+			if (this.registeredTabularDnd && (this.draggedRows || _.isArray(draggedRow))) {
+				this.dropDraggedRows(targetRow, draggedRow, tabularDndDrag);
+				return;
+			}
+
             if (this.markedDropTarget) {
                 this.markedDropTarget.removeClass('drop-target-mark');
             }
 
             let targetIndex;
 		    if (!targetRow) {
-                targetIndex = this.draggedIndex;
+                targetIndex = tabularDndDrag ? this.data.length : this.draggedIndex;
             }
             else {
                 targetIndex = _.findIndex(this.data, r => r === targetRow);
+                if (targetIndex === -1) targetIndex = this.draggedIndex;
             }
 
-            this.data.splice(targetIndex, 0, this.draggedRow);
+            this.data.splice(targetIndex, 0, draggedRow || this.draggedRow);
             this.draggedRow = null;
+            this.update();
+            this.refreshFilter();
+
+            this.fire('row.dragged', this.data);
+        }
+
+        dropDraggedRows(targetRow, draggedRows = null, tabularDndDrag = false) {
+            if (this.markedDropTarget) {
+                this.markedDropTarget.removeClass('drop-target-mark');
+            }
+
+	        (draggedRows || this.draggedRows).forEach((draggedRow, i) => {
+                let targetIndex;
+                if (!targetRow) {
+                    targetIndex = tabularDndDrag ? this.data.length : draggedRow.index;
+                }
+                else {
+                    targetIndex = _.findIndex(this.data, r => r === targetRow);
+                    if (targetIndex === -1) targetIndex = draggedRow.index;
+                }
+
+                this.data.splice(targetIndex, 0, draggedRow.row);
+	        })
+            this.draggedRows = null;
             this.update();
             this.refreshFilter();
 
@@ -1348,8 +1400,18 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 		    if (this.markedDropTarget) {
                 this.markedDropTarget.removeClass('drop-target-mark');
             }
-            rowElem.addClass('drop-target-mark');
-            this.markedDropTarget = rowElem;
+            if (rowElem && !rowElem.is('.headers')) {
+                rowElem.addClass('drop-target-mark');
+                this.markedDropTarget = rowElem;
+            }
+        }
+
+        _registerTabularDnd(tabularDndController, role, otherTableOptions) {
+			this.registeredTabularDnd = {
+				dndCtrl: tabularDndController,
+				dndRole: role,
+				dndOther: otherTableOptions
+			}
         }
 
 	}

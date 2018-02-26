@@ -1,5 +1,6 @@
 import {jfListMaker}          from './jf_list_maker/jf_list_maker';
 import {jfActions}       from './jf_actions/jf_actions';
+import {jfTabularDnD}      from './jf_tabular_dnd/jf_tabular_dnd'
 import {jfDragDrop}      from './jf_drag_drop/jf_drag_drop'
 import {jfDragDropPagination}      from './jf_drag_drop_pagination/jf_drag_drop_pagination'
 import {jfTooltip}       from './jf_tooltip/jf_tooltip';
@@ -37,10 +38,14 @@ import {jfAutoComplete} from "./jf_auto_complete/jf_auto_complete";
 import {jfDatetimepicker} from "./jf_datetimepicker/jf_datetimepicker";
 import {jfDynamicTemplate} from "./jf_dynamic_template/jf_dynamic_template";
 import {jfListSelection} from "./jf_list_selection/jf_list_selection";
+import {jfDragAndDropTxt} from './jf_drag_and_drop_txt/jf_drag_and_drop_txt';
 import {jfContextMenu} from "./jf_context_menu/jf_context_menu.component";
+import {jfVScroll} from "./jf_vscroll/jf_vscroll";
+import {jfVScrollElement} from "./jf_vscroll/jf_vscroll_element";
 
 angular.module('jfrog.ui.essentials.directives', [])
     .directive({
+        'jfTabularDnd': jfTabularDnD,
         'jfDragDrop': jfDragDrop,
         'jfDragDropPagination': jfDragDropPagination,
         'jfActions': jfActions,
@@ -80,5 +85,8 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfJsTreeWrap': jfJsTreeWrap,
         'jfAutoComplete': jfAutoComplete,
 	    'jfRadioButton': jfRadioButton,
-        'jfContextMenu': jfContextMenu
+        'jfDragAndDropTxt': jfDragAndDropTxt,
+        'jfContextMenu': jfContextMenu,
+        'jfVscroll': jfVScroll,
+        'jfVscrollElement': jfVScrollElement,
     });

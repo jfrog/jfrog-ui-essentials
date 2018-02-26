@@ -98,18 +98,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
     }
 
     function compileDirective(attr) {
-        let attributes = '';
-        for (let key in attr) {
-            let kebab = _.kebabCase(key);
-            if (key.startsWith('@')) {
-                attributes += ` ${kebab}="{{ data['${key}'] }}"`;
-            }
-            else {
-                attributes += ` ${kebab}="data.${key}"`;
-            }
-        }
-        $scope = compileHtml(`<jf-table-view ${attributes}></jf-table-view>`, {data: attr});
-        $scope.$digest();
+        $scope = window.compileDirective('jf-table-view', attr);
 
         getElements();
     }
