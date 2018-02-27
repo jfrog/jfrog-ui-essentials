@@ -435,7 +435,12 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
 			this.sortByField = field;
 
-			if (this.paginationMode === this.EXTERNAL_PAGINATION && sendExternal) {
+            if (this.externalSortCallback && sendExternal) {
+                this.externalSortCallback(field, this.revSort ? 'desc' : 'asc');
+                return;
+            }
+
+            if (this.paginationMode === this.EXTERNAL_PAGINATION && sendExternal) {
 				this.sendExternalPageRequest();
 			}
 
@@ -854,7 +859,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
 		getSortedData(sourceData) {
 
-			if (this.paginationMode === this.EXTERNAL_PAGINATION || !this.sortByField) {
+			if (this.paginationMode === this.EXTERNAL_PAGINATION || this.externalSortCallback || !this.sortByField) {
 				return sourceData;
 			}
 			else {
@@ -1412,6 +1417,11 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				dndRole: role,
 				dndOther: otherTableOptions
 			}
+        }
+
+        useExternalSortCallback(externalSortCallback) {
+			this.externalSortCallback = externalSortCallback;
+			return this;
         }
 
 	}
