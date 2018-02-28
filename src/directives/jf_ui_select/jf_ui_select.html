@@ -4,6 +4,7 @@
     </ui-select-match>
     <ui-select-choices jf-disable-ng-animate
                        refresh-delay="100"
+                       ui-disable-choice="item.disabled"
                        refresh="jfUiSelect.refresh($select.search)"
                        repeat="item in jfUiSelect[jfUiSelect.jfSelectOptionsView ? 'jfSelectOptionsView' : 'jfSelectOptions'] | filter: (!jfUiSelect.jfSelectFilterAttr ? $select.search : { [jfUiSelect.jfSelectFilterAttr || 'dummyfield']: $select.search}) track by $index">
         <div  ng-if="!jfUiSelect.jfSelectHelpTooltips"
@@ -11,7 +12,9 @@
               name="select-item"
               ng-class="{'more-ph': jfUiSelect.isMorePlaceholder(item)}"
               ng-click="jfUiSelect.onClick(item,$event)">
-            <jf-marquee><inner-html ng-bind-html="jfUiSelect.displayLabel(item) | highlight: $select.search"></inner-html></jf-marquee>
+            <jf-marquee ng-class="[item.customClass]">
+                <inner-html ng-bind-html="jfUiSelect.displayLabel(item) | highlight: $select.search"></inner-html>
+            </jf-marquee>
         </div>
         <div  ng-if="jfUiSelect.jfSelectHelpTooltips">
             <span class="jf-ui-select-item"
