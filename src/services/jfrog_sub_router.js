@@ -6,6 +6,7 @@ export class JFrogSubRouter {
         this.$timeout = $timeout;
         this.$location = $location;
 
+        this.supportedEvents = ['state.change', 'params.change']
         this._watchStateChanges();
         this._watchLocationChanges();
 
@@ -26,13 +27,31 @@ export class JFrogSubRouter {
             console.warn('In order for JFrogSubRouter to work properly, you must define the sub path in your ui-router state, as being of type \'JFrogSubRouterPath\'. In your ui-router state definition, set the \'url\' field as \'/YOUR/BASE/PATH/{anySubRouteParamName:JFrogSubRouterPath}\' ')
         }
 
+        this.$config.$listeners = {};
+
         this._initParams();
 
         this._mapPathToParams();
 
         this._createScope();
 
+        this._createApiOnConfig();
+
+        this.$config.parentScope.$on('$destroy', () => {
+            console.log('Parent scope is dead, killing route !');
+            this._exitState();
+        })
+
+        return this.$config.$api;
+    }
+
+    getActiveRouter() {
+        return this.$config.$api;
+    }
+
+    _createApiOnConfig() {
         let THIS = this;
+
         this.$config.$api = {
             get params() {
                 return THIS.$config.$params;
@@ -53,21 +72,37 @@ export class JFrogSubRouter {
             },
             goto(stateName, params) {
                 THIS._gotoState(stateName, params);
+            },
+            on(event, listener) {
+                if (!_.includes(THIS.supportedEvents, event)) {
+                    console.error('JFrogSubRouter: Unsupported Event: ' + event);
+                    return;
+                }
+                if (!THIS.$config.$listeners[event]) THIS.$config.$listeners[event] = [];
+                THIS.$config.$listeners[event].push(listener);
+            },
+            off(event, listener) {
+                if (!_.includes(THIS.supportedEvents, event)) {
+                    console.error('jf-table-view: Unsupported Event: ' + event);
+                    return;
+                }
+                if (THIS.$config.$listeners[event]) {
+                    if (listener) {
+                        _.remove(THIS.$config.$listeners[event],l=>l===listener);
+                    }
+                    else {
+                        THIS.$config.$listeners[event] = [];
+                    }
+                }
+            },
+            fire(event, ...params) {
+                if (THIS.$config.$listeners[event]) {
+                    THIS.$config.$listeners[event].forEach(listener=>listener(...params))
+                }
             }
+
         }
-
-        this.$config.parentScope.$on('$destroy', () => {
-            console.log('Parent scope is dead, killing route !');
-            this._exitState();
-        })
-
-        return this.$config.$api;
     }
-
-    getActiveRouter() {
-        return this.$config.$api;
-    }
-
     _sharedStartOfString(array){
         let A= array.concat().sort(),
             a1= A[0], a2= A[A.length-1], L= a1.length, i= 0;
@@ -95,6 +130,7 @@ export class JFrogSubRouter {
                 else {
                     if (this.$config.onStateChange) {
                         this.$config.onStateChange(oldVal, newVal);
+                        this.$config.$api.fire('state.change', oldVal, newVal)
                     }
                 }
             }
@@ -189,6 +225,7 @@ export class JFrogSubRouter {
                 }
                 if (!_.isEqual(beforeParams, this.$config.$params)) {
                     if (this.$config.onChangeFromUrl) this.$config.onChangeFromUrl(beforeParams, this.$config.$params)
+                    this.$config.$api.fire('params.change', beforeParams, this.$config.$params)
                 }
             }
         })
@@ -200,7 +237,11 @@ export class JFrogSubRouter {
                 if (toState.name === this.$config.baseStateName && fromState.name === this.$config.baseStateName) {
                     let search = this.$location.search();
                     this.$state.go(toState.name, toParams, {notify: false, reload: false, location: 'replace', inherit: true});
-                    this.$timeout(() => this.$location.search(search));
+                    this.unwatchUrl();
+                    this.$timeout(() => {
+                        this.$location.search(search).replace();
+                        this._watchLocationChanges();
+                    });
                     e.preventDefault();
                 }
             }
