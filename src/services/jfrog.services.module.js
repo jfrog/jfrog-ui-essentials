@@ -10,8 +10,10 @@ import {recursiveDirective} from "./recursive_directive";
 import {AdvancedStringMatch} from "./advanced_string_match";
 import {ContextMenuService} from "./context_menu_service";
 import JfFullTextService from './full.text.service';
+import {JFrogSubRouter} from './jfrog_sub_router';
 
 angular.module('jfrog.ui.essentials.services', ['ui.router', 'jfrog.ui_components', 'toaster'])
+    .config(config)
     .provider('JFrogUILibConfig', JFrogUILibConfig)
     .service('JFrogEventBus', JFrogEventBus)
     .factory('JFrogDownload', JFrogDownload)
@@ -24,4 +26,20 @@ angular.module('jfrog.ui.essentials.services', ['ui.router', 'jfrog.ui_component
     .service('AdvancedStringMatch', AdvancedStringMatch)
     .service('ContextMenuService', ContextMenuService)
     .service('JfFullTextService', JfFullTextService)
+    .service('JFrogSubRouter', JFrogSubRouter)
 
+
+
+function config($urlMatcherFactoryProvider) {
+    $urlMatcherFactoryProvider.type('JFrogSubRouterPath', {
+        encode: function (item) {
+            return item;
+        },
+        decode: function (item) {
+            return item;
+        },
+        is: function (item) {
+            return true;
+        }
+    });
+}
