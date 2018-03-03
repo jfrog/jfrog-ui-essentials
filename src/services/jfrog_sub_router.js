@@ -5,6 +5,7 @@ export class JFrogSubRouter {
         this.$state = $state;
         this.$timeout = $timeout;
         this.$location = $location;
+        this.$listeners = {};
 
         this.supportedEvents = ['state.change', 'params.change']
         this._watchStateChanges();
@@ -27,8 +28,6 @@ export class JFrogSubRouter {
             console.warn('In order for JFrogSubRouter to work properly, you must define the sub path in your ui-router state, as being of type \'JFrogSubRouterPath\'. In your ui-router state definition, set the \'url\' field as \'/YOUR/BASE/PATH/{anySubRouteParamName:JFrogSubRouterPath}\' ')
         }
 
-        this.$config.$listeners = {};
-
         this._initParams();
 
         this._mapPathToParams();
@@ -38,7 +37,6 @@ export class JFrogSubRouter {
         this._createApiOnConfig();
 
         this.$config.parentScope.$on('$destroy', () => {
-            console.log('Parent scope is dead, killing route !');
             this._exitState();
         })
 
@@ -73,31 +71,36 @@ export class JFrogSubRouter {
             goto(stateName, params) {
                 THIS._gotoState(stateName, params);
             },
-            on(event, listener) {
+            on(event, listener, scope) {
                 if (!_.includes(THIS.supportedEvents, event)) {
                     console.error('JFrogSubRouter: Unsupported Event: ' + event);
                     return;
                 }
-                if (!THIS.$config.$listeners[event]) THIS.$config.$listeners[event] = [];
-                THIS.$config.$listeners[event].push(listener);
+                if (!THIS.$listeners[event]) THIS.$listeners[event] = [];
+                THIS.$listeners[event].push(listener);
+                if (scope) {
+                    scope.$on('$destroy', () => {
+                        this.off(event, listener);
+                    })
+                }
             },
             off(event, listener) {
                 if (!_.includes(THIS.supportedEvents, event)) {
                     console.error('jf-table-view: Unsupported Event: ' + event);
                     return;
                 }
-                if (THIS.$config.$listeners[event]) {
+                if (THIS.$listeners[event]) {
                     if (listener) {
-                        _.remove(THIS.$config.$listeners[event],l=>l===listener);
+                        _.remove(THIS.$listeners[event],l=>l===listener);
                     }
                     else {
-                        THIS.$config.$listeners[event] = [];
+                        THIS.$listeners[event] = [];
                     }
                 }
             },
             fire(event, ...params) {
-                if (THIS.$config.$listeners[event]) {
-                    THIS.$config.$listeners[event].forEach(listener=>listener(...params))
+                if (THIS.$listeners[event]) {
+                    THIS.$listeners[event].forEach(listener=>listener(...params))
                 }
             }
 
