@@ -31,13 +31,21 @@ export function jfVScrollElement($compile) {
 class jfVScrollElementController {
     constructor($scope, $element, $timeout) {
 
-        $timeout(() => {
-            let height = $($element).children().height();
-            if (height) this.vscroll.setItemHeight(height);
-        });
+        this.$element = $element;
+
+        let unwatchHeight = $scope.$watch('jfVScrollElement.childrenHeight', () => {
+            if (this.childrenHeight) {
+                this.vscroll.setItemHeight(this.childrenHeight);
+                unwatchHeight();
+            }
+        })
 
         $scope.$watch('jfVScrollElement.data', () => {
             this.elementScope[this.variable] = this.data;
         })
+    }
+
+    get childrenHeight() {
+        return $(this.$element).children().height();
     }
 }
