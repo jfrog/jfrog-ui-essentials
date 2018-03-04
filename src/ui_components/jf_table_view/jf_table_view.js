@@ -64,7 +64,7 @@ class jfTableViewController {
 
     getActualPageHeight() {
         if (this.options.rowsPerPage === 'auto') {
-            return $(this.$element).parent().height() - $(this.$element).find('.table-rows-container').position().top;
+            return Math.min($(this.$element).parent().height() - $(this.$element).find('.table-rows-container').position().top, parseFloat(this.options.rowHeight) * this.options.getPrePagedData().length);
         }
         else {
             return parseFloat(this.options.rowHeight) * Math.min(this.options.rowsPerPage, this.options.getPrePagedData().length) + 2;
