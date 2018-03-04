@@ -71,6 +71,18 @@ export class JFrogSubRouter {
             goto(stateName, params) {
                 THIS._gotoState(stateName, params);
             },
+            listenForChanges(watchedParams, states, listener, scope = undefined) {
+                watchedParams = !_.isArray(watchedParams) ? [watchedParams] : watchedParams;
+                states = !_.isArray(states) ? (states ? [states] : []) : states;
+                this.on('params.change', (oldParams, newParams) => {
+                    if (!states.length || _.includes(states, this.state)) {
+                        let match = watchedParams.reduce((acc, curr) => {
+                            return acc || oldParams[curr] !== newParams[curr];
+                        }, false);
+                        if (match) listener(oldParams, newParams, this.state);
+                    }
+                }, scope)
+            },
             on(event, listener, scope) {
                 if (!_.includes(THIS.supportedEvents, event)) {
                     console.error('JFrogSubRouter: Unsupported Event: ' + event);
@@ -272,7 +284,7 @@ export class JFrogSubRouter {
         let configParams = this._getParametersFromConfig();
 
         let path = this.$location.path();
-        let search = this.$location.search();
+        let search = this._decodeSearchParams(this.$location.search());
 
         let basePathParts = this.$config.basePath.split('/');
         let pathParts = _.filter(path.split('/'), part => part !== '' && !_.includes(basePathParts, part));
@@ -320,7 +332,8 @@ export class JFrogSubRouter {
             if (!currentUrlParams[pathParam]) remove = true;
             if (remove) this.$config.$params[pathParam] = null;
         })
-        let search = this.$location.search();
+        let search = this._decodeSearchParams(this.$location.search());
+
         configParams.search.forEach(queryParam => {
             if (!search[queryParam]) {
                 this.$config.$params[queryParam] = null;
@@ -356,8 +369,56 @@ export class JFrogSubRouter {
             }
         })
 
-        this.$location.search(searchParams);
+        this.$location.search(this._encodeSearchParams(searchParams));
         this.$location.path(pathParts.join('/') + '/');
+    }
+
+    _encodeSearchParams(searchParams) {
+        if (this.$config.encodeSearchParamsAsBase64 === true) {
+            return {state: btoa(JSON.stringify(searchParams))}
+        }
+        else if (_.isString(this.$config.encodeSearchParamsAsBase64)) {
+            return {[this.$config.encodeSearchParamsAsBase64]: btoa(JSON.stringify(searchParams))}
+        }
+        else if (_.isObject(this.$config.encodeSearchParamsAsBase64)) {
+            let result = _.cloneDeep(searchParams);
+            for (let key in this.$config.encodeSearchParamsAsBase64) {
+                let params = this.$config.encodeSearchParamsAsBase64[key];
+                let toEncode = {}
+                params.forEach(param => {
+                    delete result[param];
+                    toEncode[param] = searchParams[param];
+                })
+                result[key] = btoa(JSON.stringify(toEncode))
+            }
+            return result;
+        }
+        else {
+            return searchParams;
+        }
+    }
+
+    _decodeSearchParams(searchParams) {
+        if (this.$config.encodeSearchParamsAsBase64 === true) {
+            return searchParams.state ? JSON.parse(atob(decodeURIComponent(searchParams.state))) : {};
+        }
+        else if (_.isString(this.$config.encodeSearchParamsAsBase64)) {
+            return searchParams[this.$config.encodeSearchParamsAsBase64] ? JSON.parse(atob(decodeURIComponent(searchParams[this.$config.encodeSearchParamsAsBase64]))) : {};
+        }
+        else if (_.isObject(this.$config.encodeSearchParamsAsBase64)) {
+            let result = _.cloneDeep(searchParams);
+            for (let key in this.$config.encodeSearchParamsAsBase64) {
+                if (result[key]) {
+                    let decoded = JSON.parse(atob(decodeURIComponent(result[key])))
+                    delete result[key];
+                    _.extend(result, decoded)
+                }
+            }
+            return result;
+        }
+        else {
+            return searchParams;
+        }
     }
 
 }
