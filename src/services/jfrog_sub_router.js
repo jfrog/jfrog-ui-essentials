@@ -374,22 +374,25 @@ export class JFrogSubRouter {
     }
 
     _encodeSearchParams(searchParams) {
+
+        let isEmptyObject = obj => Object.keys(obj).reduce((acc, curr) => acc && (obj[curr] === null || obj[curr] === undefined), true)
+
         if (this.$config.encodeSearchParamsAsBase64 === true) {
-            return {state: btoa(JSON.stringify(searchParams))}
+            return isEmptyObject(searchParams) ? {} : {state: btoa(JSON.stringify(searchParams))}
         }
         else if (_.isString(this.$config.encodeSearchParamsAsBase64)) {
-            return {[this.$config.encodeSearchParamsAsBase64]: btoa(JSON.stringify(searchParams))}
+            return isEmptyObject(searchParams) ? {} : {[this.$config.encodeSearchParamsAsBase64]: btoa(JSON.stringify(searchParams))}
         }
         else if (_.isObject(this.$config.encodeSearchParamsAsBase64)) {
             let result = _.cloneDeep(searchParams);
             for (let key in this.$config.encodeSearchParamsAsBase64) {
                 let params = this.$config.encodeSearchParamsAsBase64[key];
-                let toEncode = {}
+                let toEncode = {};
                 params.forEach(param => {
                     delete result[param];
                     toEncode[param] = searchParams[param];
                 })
-                result[key] = btoa(JSON.stringify(toEncode))
+                if (!isEmptyObject(toEncode)) result[key] = btoa(JSON.stringify(toEncode))
             }
             return result;
         }
