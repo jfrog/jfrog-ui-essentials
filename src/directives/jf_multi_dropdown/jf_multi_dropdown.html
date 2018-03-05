@@ -59,6 +59,7 @@
                 {{ jfMultiDropdown.singleSelection ? 'Clear selection' : 'Clear All' }}
             </button>
             <button class="btn btn-default pull-right"
+                    ng-if="!jfMultiDropdown.singleSelection"
                     ng-click="jfMultiDropdown.selectAll()">
                 <i class="icon icon-notif-success"></i>
                 Select All
