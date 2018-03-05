@@ -82,7 +82,7 @@
                                     row-id="jfTableRow.rowId"
                                     table-row="jfTableRow">
             </jf-table-compiled-cell>
-            <i ng-if="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.sortable && jfTableRow.tableView.options.sortByField === col.field"
+            <i ng-if="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.sortable && jfTableRow.tableView.options.sortByField === col.field && jfTableRow.tableView.options.getRawData().length"
                class="icon"
                ng-class="{'icon-down-arrow': jfTableRow.tableView.options.revSort, 'icon-up-arrow': !jfTableRow.tableView.options.revSort}"></i>
             <div class="group-button-wrapper" ng-if="jfTableRow.rowId === 'headers' && col.allowGrouping">
