@@ -8,12 +8,13 @@ export class JFrogSubRouter {
         this.$listeners = {};
 
         this.supportedEvents = ['state.change', 'params.change']
-        this._watchStateChanges();
-        this._watchLocationChanges();
 
     }
 
     createLocalRouter(config) {
+
+        this._watchStateChanges();
+        this._watchLocationChanges();
 
         if (this.$config) {
             this._exitState();
@@ -38,6 +39,8 @@ export class JFrogSubRouter {
 
         this.$config.parentScope.$on('$destroy', () => {
             this._exitState();
+            this.unwatchUIRouterState();
+            this.unwatchUrl();
         })
 
         return this.$config.$api;
@@ -227,7 +230,7 @@ export class JFrogSubRouter {
 
     _watchLocationChanges() {
         if (!this.$masterScope.$location) this.$masterScope.$location = this.$location;
-        this.unwatchUrl = this.$masterScope.$watch('$location.absUrl()', () => {
+        this.unwatchUrl = this.$masterScope.$watch('$location.absUrl()', (newVal, oldVal) => {
             if (this.$config) {
                 let beforeParams = _.cloneDeep(this.$config.$params);
                 this._mapPathToParams();
@@ -261,7 +264,7 @@ export class JFrogSubRouter {
                 }
             }
         }
-        this.$rootScope.$on('$stateChangeStart', onStateChange);
+        this.unwatchUIRouterState = this.$rootScope.$on('$stateChangeStart', onStateChange);
     }
 
     _getParametersFromConfig() {
