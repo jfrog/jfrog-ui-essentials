@@ -1424,6 +1424,11 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			return this;
         }
 
+        alwaysShowSortingArrows() {
+			this.showSortingArrowsAlways = true;
+			return this;
+        }
+
 	}
 
 
