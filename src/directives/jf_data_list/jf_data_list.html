@@ -1,0 +1,13 @@
+<table class="data-list">
+	<tr class="data-list-item" ng-repeat="item in jfDataList.formattedItems" ng-if="!item.isHidden">
+		<td class="data-list-item-label">{{item.label}}:</td>
+		<td class="data-list-item-value">
+			<div class="value">
+				<div jf-tooltip-on-overflow>{{item.value}}</div>
+				<div class="copy" ng-if="item.copy">
+					<jf-clip-copy text-to-copy="item.value"></jf-clip-copy>
+				</div>
+			</div>
+		</td>
+	</tr>
+</table>
