@@ -34,7 +34,7 @@ class jfVScrollElementController {
         this.$element = $element;
 
         let unwatchHeight = $scope.$watch('jfVScrollElement.childrenHeight', () => {
-            if (this.childrenHeight) {
+            if (this.childrenHeight && this.childrenHeight > 1) {
                 this.vscroll.setItemHeight(this.childrenHeight);
                 unwatchHeight();
             }

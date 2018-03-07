@@ -6,6 +6,7 @@ export function jfTabularDnD() {
             availableItems: '=',
             selectedItems: '=',
             columns: '=',
+            numberOfRows: '@?',
             availableItemsColumns: '=?',
             selectedItemsColumns: '=?',
             onChange: '&?',
@@ -40,7 +41,9 @@ class jfTabularDnDController {
     }
 
     createTables() {
-        console.log(this.appScope);
+
+        if (!this.numberOfRows) this.numberOfRows = 8;
+
         this.availableItemsTableOptions = new this.JFrogTableViewOptions(this.appScope || this.$scope);
         this.selectedItemsTableOptions = new this.JFrogTableViewOptions(this.appScope || this.$scope);
 
@@ -54,7 +57,7 @@ class jfTabularDnDController {
             .setPaginationMode(this.availableItemsTableOptions.VIRTUAL_SCROLL)
             .showPagination(false)
             .setDraggable()
-            .setRowsPerPage(8)
+            .setRowsPerPage(parseInt(this.numberOfRows))
             .setObjectName(availableObjectName)
             .setEmptyTableText(!this.availableItems.length && !this.selectedItems.length ? 'No Data Found' : 'Drag Row Here');
 
@@ -63,7 +66,7 @@ class jfTabularDnDController {
             .setPaginationMode(this.selectedItemsTableOptions.VIRTUAL_SCROLL)
             .showPagination(false)
             .setDraggable()
-            .setRowsPerPage(8)
+            .setRowsPerPage(parseInt(this.numberOfRows))
             .setObjectName(selectedObjectName)
             .setEmptyTableText('Drag Row Here');
 

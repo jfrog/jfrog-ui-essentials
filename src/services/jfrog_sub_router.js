@@ -300,7 +300,7 @@ export class JFrogSubRouter {
 
         pathParts.forEach((part, index) => {
             let param = configParams.path[index];
-            if (param) params[param] = part;
+            if (param) params[param] = decodeURIComponent(part);
         });
 
         configParams.search.forEach(searchParam => {
@@ -359,7 +359,7 @@ export class JFrogSubRouter {
                     stop = true;
                 }
                 else {
-                    pathParts.push(val);
+                    pathParts.push(encodeURIComponent(val));
                 }
             }
         })
