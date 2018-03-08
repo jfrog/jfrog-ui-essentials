@@ -67,6 +67,8 @@ class jfVScrollController {
             this.itemHeight = itemHeight;
             this._setAutoItemsPerPage();
             this.ready = true;
+            if (this.api.onInit) this.api.onInit();
+
         }
     }
 
@@ -375,10 +377,7 @@ class jfVScrollController {
     registerScrollListener(listener) {
         if (!this.scrollListener) {
             this.scrollListener = listener;
-            this.$scope.$watch('jfVScroll.virtualScrollIndex', () => {
-                this.scrollListener(this._getCurrentScrollPos());
-            })
-            this.$scope.$watch('jfVScroll.virtScrollDisplacement', () => {
+            this.$scope.$watch('jfVScroll.virtualScrollIndex + jfVScroll.virtScrollDisplacement', () => {
                 this.scrollListener(this._getCurrentScrollPos());
             })
         }
@@ -397,7 +396,6 @@ class jfVScrollController {
             this.api.scrollTo = (scrollPos, duration = 500) => this.scrollTo(scrollPos, duration);
             this.api.registerScrollListener = (listener) => this.registerScrollListener(listener);
 
-            if (this.api.onInit) this.api.onInit();
         }
     }
 

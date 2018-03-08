@@ -26,7 +26,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			this.actions = [];
 			this.columns = [];
 			this.listeners = {};
-			this.supportedEvents = ['pagination.change', 'selection.change', 'row.clicked', 'row.dragged'];
+			this.supportedEvents = ['pagination.change', 'selection.change', 'row.clicked', 'row.dragged', 'row.in.view'];
 			this.appScope = appScope;
 
 			// selection types
@@ -114,6 +114,10 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			}
 		}
 
+		hasListenersFor(event) {
+			return !!this.listeners[event];
+		}
+
 		fire(event, ...params) {
 			if (this.listeners[event]) {
 				this.listeners[event].forEach(listener=>listener(...params))
@@ -147,6 +151,11 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			}
 
 			this.dataWasSet = true;
+
+            if (this.paginationMode === this.VIRTUAL_SCROLL) {
+                this.dirCtrl.vsApi.reset();
+                this.dirCtrl._fireDebouncedRowsInView();
+            }
 
 			return this;
 		}

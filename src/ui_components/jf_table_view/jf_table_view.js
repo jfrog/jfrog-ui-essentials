@@ -190,6 +190,24 @@ class jfTableViewController {
         this.currentPage = Math.floor((virtualScrollIndex + this.options.rowsPerPage - 1) / this.options.rowsPerPage);
         this.paginationApi.update();
 
+        this._fireDebouncedRowsInView();
+
+    }
+    _fireDebouncedRowsInView() {
+
+        if (!this.options.hasListenersFor('row.in.view')) return;
+
+        let debounceCall = (debouncedFunc, debounceTime) => {
+            if (this.debounceTimeout) this.$timeout.cancel(this.debounceTimeout);
+            this.debounceTimeout = this.$timeout(() => {
+                debouncedFunc();
+            }, debounceTime)
+        }
+
+        debounceCall(() => {
+            let pageData = this.vsApi.getPageData();
+            pageData.forEach(row => this.options.fire('row.in.view', row));
+        }, 500);
     }
 
     getTotalScrollHeight() {
