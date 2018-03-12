@@ -45,7 +45,10 @@ class jfTableViewController {
             }
         })
 
-        let on_resize = () => this.options._normalizeWidths();
+        let on_resize = () => {
+            this.options._normalizeWidths();
+            this._fireDebouncedRowsInView()
+        }
         
         $(window).on('resize',on_resize);
         $scope.$on('$destroy', ()=>{
@@ -193,6 +196,7 @@ class jfTableViewController {
         this._fireDebouncedRowsInView();
 
     }
+
     _fireDebouncedRowsInView() {
 
         if (!this.options.hasListenersFor('row.in.view')) return;
@@ -206,6 +210,9 @@ class jfTableViewController {
 
         debounceCall(() => {
             let pageData = this.vsApi.getPageData();
+            let lriv = this.lastRowsInView || [];
+            this.lastRowsInView = pageData;
+            pageData = _.filter(pageData, row => !_.includes(lriv, row));
             pageData.forEach(row => this.options.fire('row.in.view', row));
         }, 500);
     }
