@@ -152,7 +152,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
 			this.dataWasSet = true;
 
-            if (this.paginationMode === this.VIRTUAL_SCROLL) {
+            if (this.paginationMode === this.VIRTUAL_SCROLL && this.dirCtrl) {
                 this.dirCtrl.vsApi.reset();
                 this.dirCtrl._fireDebouncedRowsInView();
             }
@@ -1359,8 +1359,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
         }
 
         dropDraggedRow(targetRow, draggedRow = null, tabularDndDrag = false) {
-
-			if (this.registeredTabularDnd && (this.draggedRows || _.isArray(draggedRow))) {
+            if (this.registeredTabularDnd && (this.draggedRows || _.isArray(draggedRow))) {
 				this.dropDraggedRows(targetRow, draggedRow, tabularDndDrag);
 				return;
 			}
