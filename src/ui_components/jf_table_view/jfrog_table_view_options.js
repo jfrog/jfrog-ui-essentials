@@ -1175,7 +1175,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			return this;
 		}
 
-		updateData(data, removeIfMissing = false) {
+		updateData(data, removeIfMissing = false, maxRowsLen) {
 			if (!this.data || !this.data.length) {
 				this.setData(data);
 			}
@@ -1197,19 +1197,38 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 							}
 						}
 						if (row.$subRows) {
+							let subRowsToSave = [];
 							row.$subRows.forEach((subRow) => {
 								let existsSub = _.find(exists.$subRows, (r) => {
 									return this.keyFn(r) === this.keyFn(subRow);
 								});
 								if (existsSub) {
+									subRowsToSave.push(existsSub);
 									for (let subKey in existsSub) {
 										if (!subKey.startsWith('$')) {
 											existsSub[subKey] = subRow[subKey];
 										}
 									}
 								}
-
+								else {
+									subRow.$parentRow = exists;
+									if(!exists.$subRows) {
+										exists.$subRows = [];
+										exists.$expandable = true;
+									}
+									exists.$subRows.push(subRow);
+									exists.$subRows.reverse();
+									subRowsToSave.push(subRow);
+									doUpdate = true;
+								}
 							});
+							if (removeIfMissing) {
+								let removed = _.difference(exists.$subRows, subRowsToSave);
+								if (removed.length) {
+									doUpdate = true;
+									_.remove(exists.$subRows, sr => _.includes(removed, sr));
+								}
+							}
 						}
 					}
 					else {

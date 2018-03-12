@@ -1,20 +1,28 @@
 .modal {
   overflow: hidden;
 
-  .modal-dialog{
+  .modal-dialog {
     width: auto !important;
     max-width: 875px;
     margin: 110px auto 0;
   }
 
   .modal-header {
-    padding: 0 0 0 35px;
+    padding: 5px 0 3px 35px;
     line-height: 50px;
+    background-color: @grayBGLighter;
 
     .close {
       margin: 0 20px;
       line-height: 50px;
-      font-size: 26px;
+      font-size: 24px;
+      font-weight: 300;
+      color: @blackFontDark;
+      opacity: 1;
+      &:hover {
+        filter: alpha(opacity=60);
+        opacity: 0.6;
+      }
     }
   }
 
@@ -23,9 +31,9 @@
   }
 
   .modal-title {
-    color: @blueMain;
-    font-size: 20px;
-    font-weight: 400;
+    color: @blackFontDark;
+    font-size: 16px;
+    font-weight: 600;
     line-height: 48px;
     padding-top: 2px;
   }
@@ -80,6 +88,16 @@
         }
       }
     }
+    .btn {
+      font-size: 12px;
+      height: 40px;
+      &.btn-secondary {
+        border: 1px solid @grayBorderLighter;
+      }
+      & + .btn {
+        margin-left: 15px;
+      }
+    }
   }
 }
 
@@ -89,7 +107,6 @@
   right: 4px;
   margin-top: 2px;
 }
-
 
 .wizard-modal {
   .modal-header {
@@ -115,7 +132,7 @@
       }
       .step-description {
         font-size: 16px;
-        font-weight:600;
+        font-weight: 600;
         line-height: 28px
       }
     }

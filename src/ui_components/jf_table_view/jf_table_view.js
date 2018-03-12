@@ -223,10 +223,11 @@ class jfTableViewController {
     }
 
     getTotalRecords() {
-
         if (!this.options) return;
-
-        let count = this.options.getRawData().length;
+	    let records = _.filter(this.options.getRawData(),(record)=>{
+            return !record.$parentRow;
+        });
+        let count = records.length;
 
         return count + ' ' + this.getObjectNameByCount(count);
     }
