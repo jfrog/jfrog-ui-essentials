@@ -88,7 +88,6 @@ angular.module('jfrog.ui.essentials.directives', [])
 	    'jfRadioButton': jfRadioButton,
         'jfDragAndDropTxt': jfDragAndDropTxt,
         'jfContextMenu': jfContextMenu,
-        'jfContextMenu': jfContextMenu,
         'jfVscroll': jfVScroll,
         'jfVscrollElement': jfVScrollElement,
         'jfDataList': jfDataList
