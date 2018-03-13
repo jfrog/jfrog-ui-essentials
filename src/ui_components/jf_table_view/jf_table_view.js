@@ -45,7 +45,10 @@ class jfTableViewController {
             }
         })
 
-        let on_resize = () => this.options._normalizeWidths();
+        let on_resize = () => {
+            this.options._normalizeWidths();
+            this._fireDebouncedRowsInView()
+        }
         
         $(window).on('resize',on_resize);
         $scope.$on('$destroy', ()=>{
@@ -190,6 +193,28 @@ class jfTableViewController {
         this.currentPage = Math.floor((virtualScrollIndex + this.options.rowsPerPage - 1) / this.options.rowsPerPage);
         this.paginationApi.update();
 
+        this._fireDebouncedRowsInView();
+
+    }
+
+    _fireDebouncedRowsInView() {
+
+        if (!this.options.hasListenersFor('row.in.view')) return;
+
+        let debounceCall = (debouncedFunc, debounceTime) => {
+            if (this.debounceTimeout) this.$timeout.cancel(this.debounceTimeout);
+            this.debounceTimeout = this.$timeout(() => {
+                debouncedFunc();
+            }, debounceTime)
+        }
+
+        debounceCall(() => {
+            let pageData = this.vsApi.getPageData();
+            let lriv = this.lastRowsInView || [];
+            this.lastRowsInView = pageData;
+            pageData = _.filter(pageData, row => !_.includes(lriv, row));
+            pageData.forEach(row => this.options.fire('row.in.view', row));
+        }, 500);
     }
 
     getTotalScrollHeight() {

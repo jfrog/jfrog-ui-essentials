@@ -304,9 +304,17 @@
             jf-table-compiled-cell {
               display: inline-table;
             }
-            .icon{
+            .icon.sorting-icon{
               padding: 5px;
               vertical-align: middle;
+              &:not(.active) {
+                color: @blackBorderLight;
+              }
+            }
+            &:hover {
+              .icon.sorting-icon:not(.active) {
+                color: @grayBorderDarker;
+              }
             }
           }
         }

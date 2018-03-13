@@ -228,7 +228,9 @@ class jfTableRowController {
 
     dragStop(event, ui) {
         let draggedRowsArrayForDndEvent = this.tableView.options.draggedRow ? [this.tableView.options.draggedRow] : _.map(this.tableView.options.draggedRows, 'row');
-        let target = $(event.toElement).parents('.jf-table-row')[0];
+        let target = $(event.originalEvent.target);
+        target = target.is('.jf-table-row') ? target[0] : target.parents('.jf-table-row')[0];
+
         let handleForeignDrop = (targetRow) => {
             this.tableView.options.registeredTabularDnd.dndOther.dropDraggedRow(targetRow, (this.tableView.options.draggedRow || this.tableView.options.draggedRows), true);
             this.tableView.options.markDropTarget(null);
@@ -246,14 +248,14 @@ class jfTableRowController {
         }
         else {
             if (this.tableView.options.registeredTabularDnd) {
-                if ($(event.toElement).is('.empty-table-placeholder') &&
-                    $(event.toElement).parents('.jf-table-view')[0] !== $(this.tableView.$element).find('.jf-table-view')[0]) {
+                if ($(event.originalEvent.target).is('.empty-table-placeholder') &&
+                    $(event.originalEvent.target).parents('.jf-table-view')[0] !== $(this.tableView.$element).find('.jf-table-view')[0]) {
 
                     handleForeignDrop(null);
 
                 }
                 else {
-                    let container = $(event.toElement).is('.tabular-dnd-table-container') ? $(event.toElement) : $(event.toElement).parents('.tabular-dnd-table-container');
+                    let container = $(event.originalEvent.target).is('.tabular-dnd-table-container') ? $(event.originalEvent.target) : $(event.originalEvent.target).parents('.tabular-dnd-table-container');
                     let myRole = this.tableView.options.registeredTabularDnd.dndRole;
 
                     if (container && ( (container.is('.available-table') && myRole === 'selected') || (container.is('.selected-table') && myRole === 'available'))) {
@@ -271,7 +273,7 @@ class jfTableRowController {
         }
     }
 
-    handleScrollOnDrag(target) {
+    handleScrollOnDrag(target, event) {
         if (this.tableView.options.paginationMode === this.tableView.options.VIRTUAL_SCROLL) {
 
             let tableView = this.tableView;
@@ -300,11 +302,12 @@ class jfTableRowController {
 
     dragMove(event, ui) {
 
-        let target = $(event.toElement).parents('.jf-table-row')[0];
+        let target = $(event.originalEvent.target);
+        target = target.is('.jf-table-row') ? target[0] : target.parents('.jf-table-row')[0];
 
-        this.handleScrollOnDrag(target);
+        this.handleScrollOnDrag(target, event);
 
-        if (!target && $(event.toElement).is('.empty-table-placeholder')) target = event.toElement;
+        if (!target && $(event.originalEvent.target).is('.empty-table-placeholder')) target = event.originalEvent.target;
 
         if (target) {
             this.tableView.options.markDropTarget($(target));

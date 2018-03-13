@@ -592,9 +592,8 @@ class jfDragDropController {
     }
 
     _dragMove (event,ui) {
-        //console.log(event.toElement);
         this.$scope.$apply(()=> {
-            let list_element = $(event.toElement);
+            let list_element = $(event.originalEvent.target);
 
             if (!list_element.hasClass('dnd-list-wrapper'))
                 list_element = list_element.parents('.dnd-list-wrapper');

@@ -132,4 +132,50 @@ export class JFrogUIUtils {
 
 		downloadLink.click();
 	}
+
+
+	compareVersions(aText,bText) {
+		let splitters = /\-|\.|_/
+		let aArr = aText.split(splitters);
+		let bArr = bText.split(splitters);
+		let minLength = Math.min(aArr.length,bArr.length);
+
+		let first;
+		for (let i = 0; i<minLength; i++) {
+			let aNum = parseInt(aArr[i]);
+			let bNum = parseInt(bArr[i]);
+			let aIsNum = !_.isNaN(aNum);
+			let bIsNum = !_.isNaN(bNum);
+			if (aIsNum && bIsNum && aNum < bNum) {
+				first = 'a';
+				break;
+			}
+			else if (aIsNum && bIsNum && aNum > bNum) {
+				first = 'b';
+				break;
+			}
+			else if (!aIsNum || !bIsNum || aNum === bNum) {
+				if (aArr[i]<bArr[i]) {
+					first = 'a';
+					break;
+				}
+				else if (aArr[i]>bArr[i]) {
+					first = 'b';
+					break;
+				}
+			}
+		}
+
+		if (!first) {
+			if (aArr.length > 3 && bArr.length > 3) {
+				if (aArr.length > bArr.length) first = 'b';
+				else if (aArr.length < bArr.length) first = 'a';
+			}
+			else {
+				if (aArr.length > bArr.length) first = 'a';
+				else if (aArr.length < bArr.length) first = 'b';
+			}
+		}
+		return first === 'a' ? -1 : first === 'b' ? 1 : 0;
+	}
 }
