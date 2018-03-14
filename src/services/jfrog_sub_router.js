@@ -243,7 +243,7 @@ export class JFrogSubRouter {
                 }
                 if (!_.isEqual(beforeParams, this.$config.$params)) {
                     if (this.$config.onChangeFromUrl) this.$config.onChangeFromUrl(beforeParams, this.$config.$params)
-                    this.$config.$api.fire('params.change', beforeParams, this.$config.$params)
+                    if (this.$config) this.$config.$api.fire('params.change', beforeParams, this.$config.$params)
                 }
             }
         })
