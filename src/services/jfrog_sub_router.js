@@ -148,7 +148,7 @@ export class JFrogSubRouter {
                 else {
                     if (this.$config.onStateChange) {
                         this.$config.onStateChange(oldVal, newVal);
-                        this.$config.$api.fire('state.change', oldVal, newVal)
+                        if (this.$config) this.$config.$api.fire('state.change', oldVal, newVal)
                     }
                 }
             }
