@@ -148,7 +148,7 @@ export class JFrogSubRouter {
                 else {
                     if (this.$config.onStateChange) {
                         this.$config.onStateChange(oldVal, newVal);
-                        this.$config.$api.fire('state.change', oldVal, newVal)
+                        if (this.$config) this.$config.$api.fire('state.change', oldVal, newVal)
                     }
                 }
             }
@@ -243,7 +243,7 @@ export class JFrogSubRouter {
                 }
                 if (!_.isEqual(beforeParams, this.$config.$params)) {
                     if (this.$config.onChangeFromUrl) this.$config.onChangeFromUrl(beforeParams, this.$config.$params)
-                    this.$config.$api.fire('params.change', beforeParams, this.$config.$params)
+                    if (this.$config) this.$config.$api.fire('params.change', beforeParams, this.$config.$params)
                 }
             }
         })
