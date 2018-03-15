@@ -1,4 +1,4 @@
-fdescribe('Unit: JFrogSubRouter Service', function () {
+describe('Unit: JFrogSubRouter Service', function () {
 
     let JFrogSubRouter;
     let subRouter;
