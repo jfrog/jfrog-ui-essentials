@@ -32,6 +32,7 @@ import {jfWidgetsLayout}       from './jf_widgets_layout/jf_widgets_layout';
 import {jfMarquee}       from './jf_marquee/jf_marquee';
 import {jfPasswordStrength} from './jf_password_strength/jf_password_strength';
 import {jfClearErrors} from "./jf_clear_errors/jf_clear_errors";
+import {jfFakeReadonly} from "./jf_fake_read_only/jf_fake_readonly";
 import {jfMarkupEditor} from "./jf_markup_editor/jf_markup_editor";
 import {jfJsTreeWrap} from "./jf_js_tree_wrap/jf_js_tree_wrap";
 import {jfAutoComplete} from "./jf_auto_complete/jf_auto_complete";
@@ -79,6 +80,7 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfMarquee': jfMarquee,
         'jfPasswordStrength': jfPasswordStrength,
         'jfClearErrors': jfClearErrors,
+        'jfFakeReadonly': jfFakeReadonly,
 	    'jfDatetimepicker': jfDatetimepicker,
 	    'jfDynamicTemplate': jfDynamicTemplate,
 	    'jfListSelection': jfListSelection,
