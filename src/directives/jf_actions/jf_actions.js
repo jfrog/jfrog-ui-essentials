@@ -82,6 +82,9 @@ class jfActionsController {
             }
             else {
                 this.dynamicActions.push(actionObj);
+	            if(actionObj.icon){
+		            this.anyActionHasAnIcon = true;
+	            }
             }
         });
         if (this.fixedActions.length === 0 && this.dynamicActions.length === 1 && !this.showDropDownForOneItem) {
