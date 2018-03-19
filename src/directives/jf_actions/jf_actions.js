@@ -63,7 +63,7 @@ class jfActionsController {
     _transformActionsData() {
         // extend action properties from ACTIONS dictionary
         this.actions.forEach((actionObj) => {
-            if (!this.actionsDictionary[actionObj.name]) {
+	        if (!this.actionsDictionary[actionObj.name]) {
                 console.log("Unrecognized action", actionObj.name);
                 return true;
             }
