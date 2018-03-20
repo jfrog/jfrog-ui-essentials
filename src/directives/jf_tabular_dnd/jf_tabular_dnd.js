@@ -47,8 +47,13 @@ class jfTabularDnDController {
         this.availableItemsTableOptions = new this.JFrogTableViewOptions(this.appScope || this.$scope);
         this.selectedItemsTableOptions = new this.JFrogTableViewOptions(this.appScope || this.$scope);
 
-        this.availableItemsTableOptions._registerTabularDnd(this, 'available', this.selectedItemsTableOptions);
-        this.selectedItemsTableOptions._registerTabularDnd(this, 'selected', this.availableItemsTableOptions);
+        let emptyPlaceholdersStyle = {
+            height: (50*this.numberOfRows) + 'px',
+            'line-height': (50*this.numberOfRows) + 'px'
+        }
+
+        this.availableItemsTableOptions._registerTabularDnd(this, 'available', this.selectedItemsTableOptions, emptyPlaceholdersStyle);
+        this.selectedItemsTableOptions._registerTabularDnd(this, 'selected', this.availableItemsTableOptions, emptyPlaceholdersStyle);
 
         let {availableObjectName, selectedObjectName} = this._getObjectNames();
 

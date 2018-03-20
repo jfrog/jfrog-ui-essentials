@@ -1445,11 +1445,12 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
             }
         }
 
-        _registerTabularDnd(tabularDndController, role, otherTableOptions) {
+        _registerTabularDnd(tabularDndController, role, otherTableOptions, emptyTableStyle = {}) {
 			this.registeredTabularDnd = {
 				dndCtrl: tabularDndController,
 				dndRole: role,
-				dndOther: otherTableOptions
+				dndOther: otherTableOptions,
+				emptyTableStyle
 			}
         }
 
