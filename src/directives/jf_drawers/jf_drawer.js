@@ -3,6 +3,11 @@ class jfDrawerController {
     constructor(JFrogUIUtils) {
         this.opened = false;
         this.utils = JFrogUIUtils;
+
+        if (this.openFirst === '0') {
+	        this.opened = true;
+        }
+
     }
 
     onClickHeader() {
@@ -16,7 +21,8 @@ export function jfDrawer() {
     return {
         scope: {
             header: '@',
-            description: '@'
+            description: '@',
+            openFirst: '@?'
         },
         require:'^jfDrawers',
         templateUrl: 'directives/jf_drawers/jf_drawer.html',

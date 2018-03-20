@@ -67,6 +67,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				this.tooltipFilterDisabled = defaultAppOptions.tooltipFilterDisabled;
 				this.subRowsEnabled = defaultAppOptions.subRowsEnabled;
                 this.draggableRows = defaultAppOptions.draggableRows;
+                this.rowInViewDebounceTime = defaultAppOptions.rowInViewDebounceTime;
             }
 			else {
 				this.objectName = 'Item';
@@ -87,6 +88,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				this.autoFocusFilter = false;
 				this.noCount = false;
                 this.draggableRows = false;
+                this.rowInViewDebounceTime = 500;
             }
 		}
 
@@ -270,6 +272,11 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 		setObjectName(objectName, useAn = false) {
 			this.objectName = objectName;
 			this.useAnWithObjectName = useAn;
+			return this;
+		}
+
+		setRowInViewDebounceTime(debounceTime) {
+			this.rowInViewDebounceTime = debounceTime;
 			return this;
 		}
 

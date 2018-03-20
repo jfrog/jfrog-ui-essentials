@@ -214,7 +214,7 @@ class jfTableViewController {
             this.lastRowsInView = pageData;
             pageData = _.filter(pageData, row => !_.includes(lriv, row));
             pageData.forEach(row => this.options.fire('row.in.view', row));
-        }, 500);
+        }, this.options.rowInViewDebounceTime);
     }
 
     getTotalScrollHeight() {
