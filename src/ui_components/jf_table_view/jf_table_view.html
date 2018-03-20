@@ -50,6 +50,7 @@
         </div>
 
         <div class="empty-table-placeholder"
+             ng-style="jfTableView.options.registeredTabularDnd.emptyTableStyle"
              ng-if="jfTableView.options.dataWasSet && !jfTableView.options.getRawData().length && !jfTableView.options.pendingExternalPaging && (!jfTableView.options.externalTotalCount || jfTableView.options.externalTotalCount.total === 0)">
             {{jfTableView.options.emptyTableText || 'This table is empty !'}}
         </div>

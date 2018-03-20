@@ -17,13 +17,14 @@
     .jf-table-view {
       .jf-table-view-container {
         .empty-table-placeholder:not(.filter-no-results) {
-          height: 400px;
-          font-size: 40px;
-          line-height: 300px;
+          font-size: 3.5vw;
           margin-top: 0;
+          padding: 0;
           color: @grayBGDark;
           background-color: white;
           border: dashed @grayBGDark 6px;
+          white-space: nowrap;
+          overflow: hidden;
           &.drop-target-mark {
             border: dashed black 6px;
             color: black;
