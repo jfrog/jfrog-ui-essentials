@@ -40,7 +40,20 @@ class jfTabularDnDController {
         this.createTables();
     }
 
+    createAutoColumns() {
+        ['availableItemsColumns', 'selectedItemsColumns'].forEach(columnsArrayName => {
+            let newColumnsArray = _.map(this[columnsArrayName], column => {
+                if (_.isObject(column)) return column;
+                else if (_.isString(column)) return {field: column}
+            })
+            // Replacing the content of the array without changing the reference to it, to support setting Array literals on templates.
+            Array.prototype.splice.apply(this[columnsArrayName], [0, this[columnsArrayName].length].concat(newColumnsArray));
+        })
+    }
+
     createTables() {
+
+        this.createAutoColumns();
 
         if (!this.numberOfRows) this.numberOfRows = 8;
 
