@@ -8,17 +8,21 @@ export default function jfWizard() {
         controllerAs: '$ctrl',
         transclude: true,
         link: ($scope, element, attrs) => {
-            $scope.$ctrl.active=$scope.$ctrl.tabs[0];
         }
     }
 }
 
 class jfWizardController {
     constructor() {
+        this.init=true;
         this.tabs=[];
     }
 
     registerTab(item){
+        if(this.init){
+            this.active=item;
+            this.init=false;
+        }
         this.tabs.push(item);
     }
 
