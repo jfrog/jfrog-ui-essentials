@@ -10,6 +10,7 @@ class jfMarqueeController {
         this.container.on('mouseleave',()=>this.onMouseLeave());
     }
     onMouseEnter() {
+        if (this.disabled) return;
         this.checkOverflow();
         if (this.overflowing) {
             this.animPeriod = (this.content.innerWidth() * 0.01);
@@ -17,6 +18,7 @@ class jfMarqueeController {
         }
     }
     onMouseLeave() {
+        if (this.disabled) return;
         if (this.overflowing) {
             this.content.css('transition','none');
             this.content.css('left','0');
@@ -57,12 +59,14 @@ export function jfMarquee() {
     return {
         restrict: 'E',
         transclude: {
-            innerHtml: '?innerHtml'
+            innerHtml: '?innerHtml',
         },
         scope: {
+            disabled: '=?'
         },
         controller: jfMarqueeController,
         controllerAs: 'jfMarquee',
+        bindToController: true,
         templateUrl: 'directives/jf_marquee/jf_marquee.html'
     }
 }

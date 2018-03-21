@@ -140,6 +140,12 @@
             right: 10px;
             color: black;
           }
+          .jf-table-cell:last-child {
+            .jf-table-cell-content {
+              padding-right: 35px;
+            }
+          }
+
         }
       }
 
@@ -184,6 +190,7 @@
 
       &.selected,
       &:hover {
+
         .jf-table-cell {
           .jf-table-cell-content {
           }
@@ -242,6 +249,7 @@
       &:not(:first-child) {
         border-top: none;
       }
+
       .jf-table-cell {
         display: inline-table;
         overflow: hidden;
