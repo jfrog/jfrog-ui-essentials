@@ -1610,14 +1610,15 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				let parenthesesOpenIndex = clickCommand.indexOf('(');
 				let funcName = clickCommand.substr(0,parenthesesOpenIndex);
 				let paramsString = clickCommand.substr(parenthesesOpenIndex).split('(').join('').split(')').join('').trim();
-                let param = _.get(objScope,paramsString);
+
+                let params = _.map(paramsString.split(','), paramString => _.get(objScope,_.trim(paramString)));
 
 				let funcThis = _.get(objScope,funcName.substr(0,funcName.lastIndexOf('.')));
 				let func = _.get(objScope,funcName).bind(funcThis);
 
 				return {
 					do: () => {
-						func(param);
+						func.apply(null, params);
 					}
 				}
 			}
