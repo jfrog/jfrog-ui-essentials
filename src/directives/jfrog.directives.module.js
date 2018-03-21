@@ -44,9 +44,13 @@ import {jfContextMenu} from "./jf_context_menu/jf_context_menu.component";
 import {jfDataList} from "./jf_data_list/jf_data_list";
 import {jfVScroll} from "./jf_vscroll/jf_vscroll";
 import {jfVScrollElement} from "./jf_vscroll/jf_vscroll_element";
+import jfWizard from './jf_wizard/jf.wizard.directive';
+import jfWizardElement from './jf_wizard/jf_wizard_element/jf.wizard.element.directive';
 
 angular.module('jfrog.ui.essentials.directives', [])
     .directive({
+        'jfWizardElement': jfWizardElement,
+        'jfWizard': jfWizard,
         'jfTabularDnd': jfTabularDnD,
         'jfDragDrop': jfDragDrop,
         'jfDragDropPagination': jfDragDropPagination,

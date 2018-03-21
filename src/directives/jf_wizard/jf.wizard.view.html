@@ -1,0 +1,14 @@
+<div class="wizard-container arrow-steps clearfix">
+	<ul class="wizard-bar">
+		<li ng-repeat="tab in $ctrl.tabs" ng-class="{'active': $ctrl.active===tab}">
+			<a href=""  ng-click="$ctrl.switch(tab)">{{tab}}</a>
+		</li>
+	</ul>
+
+	<div class="wizard-content" >
+		<div ng-transclude>
+
+		</div>
+	</div>
+</div>
+

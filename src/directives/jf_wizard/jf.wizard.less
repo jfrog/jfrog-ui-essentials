@@ -1,0 +1,123 @@
+jf-wizard {
+
+  .wizard-bar {
+    margin: 0;
+    list-style: none;
+    overflow: hidden;
+    font-size: 18px;
+
+    li {
+      float: left;
+
+      a {
+        color: @blackBGLight;
+        border: 1px solid @grayBorderLighter;
+        text-decoration: none;
+        padding: 4px 15px 4px 25px;
+        background: @white;
+        position: relative;
+        display: block;
+        float: left;
+      }
+
+      a:after {
+        content: " ";
+        display: block;
+        width: 0;
+        height: 0;
+        border-top: 21px solid transparent;
+        border-bottom: 21px solid transparent;
+        border-left: 10px solid @white;
+        position: absolute;
+        top: 50%;
+        margin-top: -21px;
+        margin-left: -1px;
+
+        left: 100%;
+        z-index: 2;
+      }
+
+      a:before {
+        content: " ";
+        display: block;
+        width: 0;
+        height: 0;
+        border-top: 21px solid transparent;
+        border-bottom: 21px solid transparent;
+        border-left: 10px solid @grayBorderLighter;
+        position: absolute;
+        top: 50%;
+        margin-top: -21px;
+        left: 100%;
+        z-index: 1;
+      }
+
+      &:first-child{
+        a{
+          border-top-left-radius: 2px;
+          border-bottom-left-radius: 2px;
+        }
+      }
+
+      &:last-child {
+        a {
+          border-top-right-radius: 2px;
+          border-bottom-right-radius: 2px;
+        }
+        a:after {
+          border: none;
+        }
+        a:before {
+          border: none;
+        }
+      }
+
+    }
+
+    li.active {
+      a {
+        color: @greenBGDark;
+        background: @white;
+      }
+
+      a:after {
+        border-left-color: @greenBGDark;
+      }
+    }
+  }
+
+  /* ============================= */
+  /* =     Wizard modifications  = */
+  /* ============================= */
+  ul.wizard-bar {
+    display: flex;
+
+    li {
+      flex-grow: 1;
+
+      a {
+        font-size: 14px;
+        height: 40px;
+        line-height: 33px;
+        width: 100%;
+        letter-spacing: 0.4px;
+      }
+
+      &.active {
+        a {
+          color: @white;
+          background: @greenBGDark;
+          &:after {
+            border-left-color: @greenBGDark;
+          }
+        }
+      }
+    }
+  }
+
+  .wizard-content {
+    margin-top: 30px;
+  }
+
+
+}
