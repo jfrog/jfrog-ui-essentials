@@ -112,6 +112,7 @@ export function jfUiSelect() {
             jfSelectModel: '=',
             jfSelectOptions: '=',
             jfSelectDisabled: '=',
+            jfSelectDisableMarquee: '=',
             jfSelectMultiple: '@?',
             jfSelectChange: '&?',
             jfSelectDisplayAttr: '@',
