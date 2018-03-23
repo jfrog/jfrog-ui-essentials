@@ -138,6 +138,7 @@ class jfMultiDropdownController {
 	}
 
 	selectAll() {
+		if (this.disabled) return;
 		this.filter(this.items, this.filterText).forEach((item) => {
 			if (!item.disabled) {
 				item.isSelected = true;
@@ -147,6 +148,7 @@ class jfMultiDropdownController {
 	}
 
 	unSelectAll() {
+        if (this.disabled) return;
 		this.filter(this.items, this.filterText).forEach((item) => {
 			if (!item.disabled) {
 				item.isSelected = false;
@@ -161,7 +163,8 @@ class jfMultiDropdownController {
 	}
 
 	clearSelection() {
-		if (this.textInputs) {
+        if (this.disabled) return;
+        if (this.textInputs) {
 			_.forEach(this.items, (item) => {
 				item.inputTextValue = '';
 			});
