@@ -217,7 +217,7 @@ export class TreeViewPane {
         this.$freezed = false;
 
         this.refreshFilter();
-        this.dirCtrl.syncFakeScroller();
+        if (this.dirCtrl) this.dirCtrl.syncFakeScroller();
     }
 
     _addChildren(children, level = 0, parent = null) {
@@ -411,7 +411,10 @@ export class TreeViewPane {
             if (this.treeApi.uniqueIdGetter) {
                 let resolveCount = 0;
                 let itemsCount = this.$flatItems.length;
-                if (!this.$flatItems.length) mainDefer.resolve();
+                if (!this.$flatItems.length) {
+                    this._unFreeze();
+                    mainDefer.resolve();
+                }
                 this.$flatItems.forEach((fi, ind) => {
                     this._recursiveOpenRestore(fi.data, false).then(() => {
                         resolveCount++;
@@ -443,6 +446,10 @@ export class TreeViewPane {
                         }
                     })
                 })
+            }
+            else {
+                this._unFreeze();
+                mainDefer.resolve();
             }
         })
 
