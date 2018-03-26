@@ -830,7 +830,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				return '';
 			} else {
 				let filterables = this.getFilterables();
-				if (filterables.length === this.columns.length) {
+				if (filterables.length === this.columns.length && this.columns.length >1) {
 					return 'Filter by any column';
 				}
 				else {

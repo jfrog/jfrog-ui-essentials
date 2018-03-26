@@ -69,7 +69,6 @@ class jfTabularDnDController {
         this.selectedItemsTableOptions._registerTabularDnd(this, 'selected', this.availableItemsTableOptions, emptyPlaceholdersStyle);
 
         let {availableObjectName, selectedObjectName} = this._getObjectNames();
-
         this.availableItemsTableOptions.setColumns(this.availableItemsColumns)
             .setSelection(this.availableItemsTableOptions.MULTI_SELECTION)
             .setPaginationMode(this.availableItemsTableOptions.VIRTUAL_SCROLL)

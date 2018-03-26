@@ -4,6 +4,11 @@
   flex-direction: row;
   width: 100%;
   outline: none;
+  padding: 30px 0;
+  margin: 30px 0;
+  border-top: 1px solid @grayBorderLighter;
+  border-bottom: 1px solid @grayBorderLighter;
+
   .tabular-dnd-table-container {
     width: 42%;
     display: flex;
@@ -13,24 +18,34 @@
         &.selected {
           background-color: @grayBGLight;
         }
+        &:hover,
+        &.selected {
+          cursor: grab;
+        }
       }
     }
     .jf-table-view {
       .jf-table-view-container {
+        .jf-table-top .counter-and-filter-wrapper .table-counter {
+          height: 22px;
+        }
         .empty-table-placeholder:not(.filter-no-results) {
-          font-size: 3.5vw;
           margin-top: 0;
           padding: 0;
           color: @grayBGDark;
           background-color: white;
-          border: dashed @grayBGDark 6px;
           white-space: nowrap;
           overflow: hidden;
+          font-size: 35px;
+          border:1px dashed;
+          border-image-source: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gMaDB0hVUNYJAAAADhJREFUOMtjfPDgwX8GLEBBQYGRAQ/ApY+JgcqA6gYyIjudkDeJ8f7g9/IoGAWDAYzArMc48gpYAE+5HpEKmyDIAAAAAElFTkSuQmCC");
+          border-image-width: 1.3px;
+          border-image-slice: 1;
+          border-image-repeat: round;
           &.drop-target-mark {
-            border: dashed black 6px;
-            color: black;
+            background-color: @grayBGLight;
+            cursor: grabbing!important;
           }
-
         }
       }
     }
@@ -39,24 +54,22 @@
         .jf-table-view-container {
           .empty-table-placeholder:not(.filter-no-results) {
             background-color: @grayBGLighter;
-            border: dashed transparent 6px;
           }
         }
       }
-
     }
   }
 
   .dnd-actions-wrap {
     width: 16%;
     .dnd-actions {
-      margin-top: 100px;
+      margin-top: 130px;
       padding: 0;
       text-align: center;
 
       li {
         display: block;
-        padding: 5px 0;
+        padding: 1px;
         text-align: center;
 
         span {
@@ -65,14 +78,25 @@
           font-weight: 100;
           background-color: @greenFontHeader;
           color: white;
-          line-height: 20px;
-          width: 26px;
-          height: 26px;
+          line-height: 19px;
+          width: 24px;
+          height: 24px;
           cursor: pointer;
           overflow: hidden;
           padding-right: 1px;
           border-radius: 50%;
-
+          &.dnd-exclude-selected {
+            padding-right: 2px;
+          }
+          &.dnd-include-selected {
+            padding-left: 2px;
+          }
+          &.dnd-exclude-all {
+            padding-left: 0px;
+          }
+          &.dnd-include-all {
+            padding-left: 2px;
+          }
           &[disabled] {
             background-color: @grayBGDarker;
           }
@@ -80,7 +104,11 @@
       }
     }
   }
+}
 
+
+body.grabbing {
+  cursor: grabbing!important;
 }
 
 

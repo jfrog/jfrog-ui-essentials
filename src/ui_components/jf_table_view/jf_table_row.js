@@ -211,7 +211,7 @@ class jfTableRowController {
             event.preventDefault();
             return;
         }
-
+        $('body').addClass('grabbing');
         this.tableView.options.dragRow(this.data);
         this.initDragHelper(ui.helper);
     }
@@ -230,6 +230,8 @@ class jfTableRowController {
         let draggedRowsArrayForDndEvent = this.tableView.options.draggedRow ? [this.tableView.options.draggedRow] : _.map(this.tableView.options.draggedRows, 'row');
         let target = $(event.originalEvent.target);
         target = target.is('.jf-table-row') ? target[0] : target.parents('.jf-table-row')[0];
+
+	    $('body').removeClass('grabbing');
 
         let handleForeignDrop = (targetRow) => {
             this.tableView.options.registeredTabularDnd.dndOther.dropDraggedRow(targetRow, (this.tableView.options.draggedRow || this.tableView.options.draggedRows), true);
