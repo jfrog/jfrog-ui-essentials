@@ -307,6 +307,9 @@
           &.sortable {
             cursor: pointer;
           }
+          &:not(.sortable) { //This is needed for some reason
+            cursor: default;
+          }
 
           .jf-table-cell-content {
             font-size: 14px;
