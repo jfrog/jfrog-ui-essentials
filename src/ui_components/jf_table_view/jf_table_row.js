@@ -61,11 +61,9 @@ class jfTableRowController {
 
     onMouseMove(e) {
         if (!this.resizingColumns) {
-            let container = this._getTableContainer();
             if (this.hoveringResize && this.hoveringResize.left) delete this.hoveringResize.left.$dragRightBorder;
             if (this.hoveringResize && this.hoveringResize.right) delete this.hoveringResize.right.$dragLeftBorder;
             this.hoveringResize = this._getHoveringResizePoint(e);
-            container.css('cursor',this.hoveringResize ? 'col-resize' : 'default');
         }
         else {
             this.dragColumnResize(e);

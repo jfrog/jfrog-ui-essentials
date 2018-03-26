@@ -307,10 +307,12 @@
           &.sortable {
             cursor: pointer;
           }
-          &:not(.sortable) { //This is needed for some reason
+          &:not(.column-resizer):not(.sortable) { //This is needed for some reason
             cursor: default;
           }
-
+          &.column-resizer {
+            cursor: col-resize;
+          }
           .jf-table-cell-content {
             font-size: 14px;
             font-weight: 700;
