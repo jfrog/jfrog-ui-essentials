@@ -1,13 +1,26 @@
 .jf-list-maker {
-  .form-group {
-    margin-bottom: 10px;
-  }
-  
+
   div.jf-validation {
     height: 22px;
     line-height: 22px;
     padding-left: 3px;
   }
+
+  .icon {
+    line-height: 42px;
+    font-size: 26px;
+    color: #999;
+
+    &[disabled] {
+      color: #ddd;
+      cursor: default;
+    }
+    &:not([disabled]):hover {
+      color: @greenFontHeader;
+      cursor: pointer;
+    }
+  }
+
 
   .list-new-value {
     width: 100% !important;
@@ -55,94 +68,60 @@
 
     .list-maker-list-row {
       position: relative;
-    }
-    .list-maker-list-row div.list-maker-list-buttons {
-      padding-right: 24px;
-      position: absolute;
-      right: 0;
-      top: -2px;
-    }
-  }
+      display: table;
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
 
-  .icon {
-    line-height: 42px;
-    font-size: 26px;
-    color: #999;
-
-    &[disabled] {
-      color: #ddd;
-      cursor: default;
-    }
-    &:not([disabled]):hover {
-      color: @greenFontHeader;
-      cursor: pointer;
-    }
-  }
-}
-
-.list-maker-list {
-  border-top: 1px solid @grayBGMedium;
-  border-bottom: 1px solid @grayBGMedium;
-
-  .list-maker-list-row {
-    display: table;
-    width: 100%;
-    height: 40px;
-    line-height: 40px;
-
-    &:nth-child(even) {
-      background-color: @white;
-    }
-    &:nth-child(odd) {
-      background-color: @grayGridRow;
-    }
-
-    div {
-      display: table-cell;
-
-      &:first-child {
-        padding-left: 10px;
-        width: 340px;
+      &:nth-child(even) {
+        background-color: @white;
+      }
+      &:nth-child(odd) {
+        background-color: @grayGridRow;
       }
 
-      a {
-        color: @grayFontLighter;
-        font-size: 16px;
-        position: relative;
-        top: 2px;
+      div {
+        display: table-cell;
 
-        &:hover {
-          color: @greenFontHeader;
+        &:first-child {
+          padding-left: 10px;
+          width: 340px;
         }
-        &:hover, &:focus, &:active {
-          text-decoration: none;
+
+        &.list-maker-row-value {
+
         }
-      }
 
-      jf-checkbox {
-        float: right;
-        margin-right: 20px;
+        &.list-maker-list-buttons {
+          text-align: right;
+          height: 40px;
+          padding-right: 24px;
+          position: absolute;
+          right: 0;
+          top: -2px;
 
-        label {
-          margin-bottom: 0;
-        }
-      }
-
-      &.list-maker-list-buttons {
-        text-align: right;
-        padding-right: 20px;
-        height: 40px;
-
-        a {
-          &[disabled]:hover {
+          a {
             color: @grayFontLighter;
-            cursor: default;
-          }
-          &.icon-clear:hover {
-            color: @redError;
+            font-size: 16px;
+            position: relative;
+            top: 2px;
+            &:hover {
+              color: @greenFontHeader;
+            }
+            &:hover, &:focus, &:active {
+              text-decoration: none;
+            }
+            &[disabled]:hover {
+              color: @grayFontLighter;
+              cursor: default;
+            }
+            &.icon-clear:hover {
+              color: @redError;
+            }
           }
         }
       }
     }
   }
 }
+
