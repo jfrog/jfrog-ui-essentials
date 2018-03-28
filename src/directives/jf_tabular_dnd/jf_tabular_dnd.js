@@ -167,7 +167,7 @@ class jfTabularDnDController {
     }
 
     excludeAll() {
-        if (this.disabled) return;
+        if (this.isIncludeListEmpty() || this.disabled) return;
 
         let selected = this.selectedItemsTableOptions.getSelected();
         selected.forEach(s => delete s.$selected);
@@ -180,7 +180,7 @@ class jfTabularDnDController {
     }
 
     includeAll() {
-        if (this.disabled) return;
+        if (this.isExcludeListEmpty() || this.disabled) return;
 
         let selected = this.availableItemsTableOptions.getSelected();
         selected.forEach(s => delete s.$selected);
@@ -193,7 +193,7 @@ class jfTabularDnDController {
     }
 
     excludeSelected() {
-        if (this.disabled) return;
+        if (!this.isIncludeListItemSelected() || this.disabled) return;
 
         let selected = this.selectedItemsTableOptions.getSelected();
         selected.forEach(s => delete s.$selected);
@@ -207,7 +207,7 @@ class jfTabularDnDController {
     }
 
     includeSelected() {
-        if (this.disabled) return;
+        if (!this.isExcludeListItemSelected() || this.disabled) return;
 
         let selected = this.availableItemsTableOptions.getSelected();
         selected.forEach(s => delete s.$selected);

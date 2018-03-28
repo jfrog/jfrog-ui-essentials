@@ -36,7 +36,7 @@
 
     <div id="{{jfListMaker.listId}}" class="list-maker-list" ng-if="jfListMaker.values.length">
         <div class="list-maker-list-row" ng-repeat="value in jfListMaker.values track by $index">
-            <div>{{value}}</div>
+            <div class="list-maker-row-value" jf-tooltip-on-overflow>{{value}}</div>
             <div class="list-maker-list-buttons">
                 <a href="" class="icon icon-clear"
                    ng-click="jfListMaker.removeValue($index)"
