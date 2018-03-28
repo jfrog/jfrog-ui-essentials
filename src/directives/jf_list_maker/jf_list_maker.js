@@ -15,7 +15,7 @@ export function jfListMaker() {
             placeholder: '@?',
             listId: '@',
             onAddValue: '&?',
-	        hideAddNewFields: '@',
+            hideAddNewFields: '@',
             validationRegex:'@',
             validationRegexMessage:'@'
         },
@@ -30,7 +30,7 @@ export function jfListMaker() {
  * API for the jfDragDrop directive
  */
 class jfListMakerController {
-	/* @ngInject */
+    /* @ngInject */
     constructor($attrs) {
         this.noSort = this.noSort || $attrs.hasOwnProperty('noSort');
         if (this.values && !this.noSort) this.values = _.sortBy(this.values);
