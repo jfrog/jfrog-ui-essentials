@@ -15,7 +15,9 @@ export function jfListMaker() {
             placeholder: '@?',
             listId: '@',
             onAddValue: '&?',
-	        hideAddNewFields: '@'
+	        hideAddNewFields: '@',
+            validationRegex:'@',
+            validationRegexMessage:'@'
         },
         templateUrl: 'directives/jf_list_maker/jf_list_maker.html',
         controller: jfListMakerController,
@@ -39,9 +41,12 @@ class jfListMakerController {
 
     }
     addValue() {
+
         if (!this.values) this.values = [];
 
         this.errorMessage = null;
+
+
 
         if (_.isEmpty(this.newValue)) {
             this.errorMessage = "Must input value";
@@ -49,6 +54,10 @@ class jfListMakerController {
         else if (!this._isValueUnique(this.newValue)) {
             this.errorMessage = "Value already exists";
         }
+        else if(!_.isEmpty(this.validationRegex) && !(new RegExp(this.validationRegex).test(this.newValue))){
+            this.errorMessage= _.isEmpty(this.validationRegexMessage) ? "Value not valid" : this.validationRegexMessage;
+        }
+
         else {
             if(this.onAddValue){
                 this.newValue = this.onAddValue({newValue: this.newValue})
