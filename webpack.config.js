@@ -25,7 +25,8 @@ module.exports = {
 	module : {
 		loaders: [
 			{test: /\.js$/, loader: 'babel'},
-			{test: /\.json$/, loader: 'json'}
+			{test: /\.json$/, loader: 'json'},
+			{test: /\.(html)$/, loader: 'html-loader'}
 		]
 	}
 };

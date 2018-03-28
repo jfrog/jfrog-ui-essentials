@@ -16,7 +16,7 @@ const COMMON_ACTIONS = {
 
 let defaultAppOptions;
 
-export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFrogDownload) {
+export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFrogDownload, JFrogModal) {
 	'ngInject';
 	createContextMenu();
 	class JFrogTableViewOptionsClass {
@@ -1317,12 +1317,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				return filteredResults.length === 0;
 			};
 
-			$modal.open({
-				scope: modalScope,
-				templateUrl: 'ui_components/jfrog_grid/show_all_modal.html',
-				backdrop: true,
-				size: 'sm'
-			});
+			JFrogModal.launchModalWithTemplateMarkup(require('../jfrog_grid/show_all_modal.html'), modalScope, 'sm', true);
 		}
 
 		asyncShowAll(rowName, col) {

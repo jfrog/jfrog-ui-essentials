@@ -27,71 +27,97 @@ export class JFrogModal {
      * and delegate to the $modal service
      * return the modal instance
      *
-     * @param template
+     * @param templateUri
      * @param scope
      * @returns {{Modal instance}}
      */
-    launchModal(template, scope, size, cancelable = true, options) {
+    launchModal(templateUri, scope, size, cancelable = true, options) {
         if (!size) size = 'lg';
 
         let customTemplate = true;
-        if (template.startsWith('@')) {
+        if (templateUri.startsWith('@')) {
             customTemplate = false;
-            template = template.substr(1);
+	        templateUri = templateUri.substr(1);
         }
 
         let customTemplatesBaseUrl = this.JFrogUILibConfig.getConfig().customModalTemplatesPath;
         if (customTemplatesBaseUrl && !customTemplatesBaseUrl.endsWith('/')) customTemplatesBaseUrl += '/';
 
-        let templateUrl = (customTemplate ? customTemplatesBaseUrl : this.templatesBaseUrl) + template + '.html';
+        let templateUrl = (customTemplate ? customTemplatesBaseUrl : this.templatesBaseUrl) + templateUri + '.html';
 
         let modalObj = {
-            templateUrl: templateUrl,
-            scope: scope,
-            size: size
-        };
-        if (!cancelable) {
-            modalObj.backdrop = 'static';
-            modalObj.keyboard = false;
-        }
-        if (options && _.isObject(options)) _.extend(modalObj,options);
+		    templateUrl: templateUrl,
+		    scope: scope,
+		    size: size
+	    };
 
-        let modalInstance =  this.modal.open(modalObj);
-        this.JFrogEventBus.registerOnScope(this.$rootScope, this.EVENTS.CLOSE_MODAL, () => {
-            modalInstance.dismiss();
-        });
-
-        if (typeof size == 'number') {
-            this.$timeout(() => {
-                $('.modal-dialog').css('max-width', size)
-            });
-        }
-        this._calculateMaxHeight();
-
-        let keyDownBinded = this._onKeyDown.bind(this);
-
-        if (modalInstance.result) {
-            // Modal close event handler is registered as result.then(errorCallback)
-            // In some cases the modal close event is caught by result.finally()
-            modalInstance.result.then(()=>{}, ()=>{
-                this.modalIsClosing = true;
-            }).finally(()=>{
-                this.modalIsClosing = true;
-                $(window).off('resize', this._calculateMaxHeight());
-                $(document).off('keydown', keyDownBinded);
-            });
-        }
-
-        $(window).resize(() => {
-            this._calculateMaxHeight();
-        });
-
-        $(document).on('keydown', keyDownBinded);
-
-        return modalInstance;
+        return this._launch(modalObj, scope, size, cancelable , options);
     }
 
-    _onKeyDown(event) {
+	/**
+	 * Use template markup
+	 * and delegate to the $modal service
+	 * return the modal instance
+	 *
+	 * @param templateMarkup
+	 * @param scope
+	 * @returns {{Modal instance}}
+	 */
+	launchModalWithTemplateMarkup(templateMarkup, scope, size, cancelable = true, options) {
+		if (!size) size = 'lg';
+
+		let modalObj = {
+			template: templateMarkup,
+			scope: scope,
+			size: size
+		};
+
+		return this._launch(modalObj, scope, size, cancelable , options);
+	}
+
+	_launch(modalObj, scope, size, cancelable , options) {
+		if (!cancelable) {
+			modalObj.backdrop = 'static';
+			modalObj.keyboard = false;
+		}
+		if (options && _.isObject(options)) _.extend(modalObj,options);
+
+		let modalInstance =  this.modal.open(modalObj);
+		this.JFrogEventBus.registerOnScope(this.$rootScope, this.EVENTS.CLOSE_MODAL, () => {
+			modalInstance.dismiss();
+		});
+
+		if (typeof size == 'number') {
+			this.$timeout(() => {
+				$('.modal-dialog').css('max-width', size)
+			});
+		}
+		this._calculateMaxHeight();
+
+		let keyDownBinded = this._onKeyDown.bind(this);
+
+		if (modalInstance.result) {
+			// Modal close event handler is registered as result.then(errorCallback)
+			// In some cases the modal close event is caught by result.finally()
+			modalInstance.result.then(()=>{}, ()=>{
+				this.modalIsClosing = true;
+			}).finally(()=>{
+				this.modalIsClosing = true;
+				$(window).off('resize', this._calculateMaxHeight());
+				$(document).off('keydown', keyDownBinded);
+			});
+		}
+
+		$(window).resize(() => {
+			this._calculateMaxHeight();
+		});
+
+		$(document).on('keydown', keyDownBinded);
+
+		return modalInstance;
+	}
+
+	_onKeyDown(event) {
         let target = $(event.target);
         if (event.keyCode === 13) {
             if (target.attr('jf-enter-press') === undefined) {
