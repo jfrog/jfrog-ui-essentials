@@ -27,6 +27,10 @@
     margin-right: 10px;
     position: relative;
 
+    input {
+      padding: 0 40px 0 10px;
+    }
+
     &.dropdown {
       .ui-select-container {
         .caret {
@@ -68,7 +72,7 @@
 
     .list-maker-list-row {
       position: relative;
-      display: table;
+      display: flex !important;
       width: 100%;
       height: 40px;
       line-height: 40px;
@@ -81,7 +85,9 @@
       }
 
       div {
-        display: table-cell;
+        display: inline-block;
+        white-space: nowrap;
+        width: 100%;
 
         &:first-child {
           padding-left: 10px;
@@ -89,7 +95,10 @@
         }
 
         &.list-maker-row-value {
-
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 100%;
+          padding-right: 45px;
         }
 
         &.list-maker-list-buttons {
@@ -98,6 +107,7 @@
           padding-right: 24px;
           position: absolute;
           right: 0;
+          width: 45px;
           top: -2px;
 
           a {
