@@ -76,6 +76,7 @@ class jfTabularDnDController {
             .setDraggable()
             .setRowsPerPage(parseInt(this.numberOfRows))
             .setObjectName(availableObjectName)
+            .disableFilterWhen(() => this.disabled)
             .setEmptyTableText(!this.availableItems.length && !this.selectedItems.length ? 'No Data Found' : 'Drag Row Here');
 
         this.selectedItemsTableOptions.setColumns(this.selectedItemsColumns)
@@ -85,6 +86,7 @@ class jfTabularDnDController {
             .setDraggable()
             .setRowsPerPage(parseInt(this.numberOfRows))
             .setObjectName(selectedObjectName)
+            .disableFilterWhen(() => this.disabled)
             .setEmptyTableText('Drag Row Here');
 
 

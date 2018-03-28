@@ -1464,6 +1464,11 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			return this;
         }
 
+        disableFilterWhen(isFilterDisabledCallback) {
+	      this.isFilterDisabledCallback = isFilterDisabledCallback;
+	      return this;
+        }
+
 	}
 
 
