@@ -1295,7 +1295,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			let modalScope = $rootScope.$new();
 
 			modalScope.items = model;
-			modalScope.colName = col.displayName || col.name;
+			modalScope.colName = col.header;
 			modalScope.rowName = rowName;
 			modalScope.objectName = objectName;
 

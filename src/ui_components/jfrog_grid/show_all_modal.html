@@ -14,7 +14,8 @@
         <div class="group-list-wrapper" ng-if="!noResults()">
             <ul class="group-list">
                 <li class="group-list-item"
-                    ng-repeat="item in items"
+                    jf-tooltip-on-overflow
+                    ng-repeat="item in items track by $index"
                     ng-if="filterItem(item)">
                     {{item}}
                 </li>
