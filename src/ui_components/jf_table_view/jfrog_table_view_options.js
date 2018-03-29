@@ -995,7 +995,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 								else {
 									this.sortedData = _.sortByOrder(sourceData, item => {
 										let val = _.get(item, this.sortByField);
-										return _.isString(val) ? val.toLowerCase() : val;
+										return _.isString(val) ? val.toLowerCase() : _.isArray(val) ? val.length : val;
 									}, !this.revSort);
 								}
 							}
