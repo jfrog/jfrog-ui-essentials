@@ -1,6 +1,6 @@
 {
   "name": "jfrog-ui-essentials",
-  "version": "1.2.0-dev.15",
+  "version": "1.2.0-dev.16",
   "license": "Apache-2.0",
   "description": "JFrog UI Essentials",
   "repository": {
@@ -63,8 +63,9 @@
     "webpack": "~1.12.12"
   },
   "dependencies": {
-    "angular-mousewheel": "^1.0.5",
     "angular-eonasdan-datetimepicker": "^0.3.9",
+    "angular-mousewheel": "^1.0.5",
+    "html-loader": "^0.5.5",
     "js-beautify": "1.6.11"
   }
 }
