@@ -178,4 +178,46 @@ export class JFrogUIUtils {
 		}
 		return first === 'a' ? -1 : first === 'b' ? 1 : 0;
 	}
+
+    sortData(aText, bText) {
+
+        aText = aText.toLowerCase();
+        bText = bText.toLowerCase();
+        let aScore = 0, bScore = 0;
+        let aHasNumVal = !_.isNaN(parseInt(aText));
+        let bHasNumVal = !_.isNaN(parseInt(bText));
+
+        if (aHasNumVal && bHasNumVal) {
+
+            let addTo = this.compareVersions(aText, bText);
+
+            if (addTo === -1) aScore += 100;
+            if (addTo === 1) bScore += 100;
+        }
+        else {
+
+            let aDigitIndex = aText.search(/\d/);
+            let bDigitIndex = bText.search(/\d/);
+
+            if (aDigitIndex === bDigitIndex && aDigitIndex !== -1) {
+                let aBeforeNum = aText.substr(0, aDigitIndex);
+                let bBeforeNum = bText.substr(0, bDigitIndex);
+                if (aBeforeNum === bBeforeNum) {
+                    let aFromNum = aText.substr(aDigitIndex);
+                    let bFromNum = bText.substr(bDigitIndex);
+
+                    let addTo = this.compareVersions(aFromNum, bFromNum);
+
+                    if (addTo === -1) aScore += 100;
+                    if (addTo === 1) bScore += 100;
+
+                }
+            }
+
+            if (aText < bText) aScore++;
+            if (aText > bText) bScore++;
+        }
+        return aScore < bScore ? 1 : -1;
+    }
+
 }
