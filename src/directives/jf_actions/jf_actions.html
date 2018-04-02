@@ -20,8 +20,9 @@
                   class="action-item"
                   ng-class="{disabled: actionObj.disabled,
                     'menu-item-{{actionObj.icon}}': actionObj.icon,
-                    'menu-item-no-icon': !actionObj.icon}"
-                  ng-if="(!actionObj.visibleWhen || actionObj.visibleWhen()) && !actionObj.isHidden">
+                    'menu-item-no-icon': !actionObj.icon,
+                    '{{actionObj.itemClass}}': actionObj.itemClass.length }"
+                  ng-if="!actionObj.visibleWhen || actionObj.visibleWhen()">
                   <a href="" class="action-container" ng-click="jfActions.doAction(actionObj,$event)">
                       <span class="action-icon icon"
                             ng-if="actionObj.icon"
