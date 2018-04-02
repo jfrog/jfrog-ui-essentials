@@ -61,6 +61,7 @@ describe('Unit: JFrogSubRouter Service', function () {
         return new Promise((res, rej) => {
             eventHandlers[eventHandler] = (...params) => {
                 check(...params);
+                delete eventHandlers[eventHandler];
                 res();
             }
 
@@ -74,6 +75,7 @@ describe('Unit: JFrogSubRouter Service', function () {
         return new Promise((res, rej) => {
             api.on(eventHandler, (...params) => {
                 check(...params);
+                api.off(eventHandler);
                 res();
             })
 
@@ -263,7 +265,6 @@ describe('Unit: JFrogSubRouter Service', function () {
             expect(oldState).toEqual(null);
             expect(newState).toEqual('state1');
             expect(subRouter.state).toEqual('state1');
-            delete eventHandlers.onStateChange;
         })
 
         eventHandlers.onInit = () => {
@@ -283,7 +284,7 @@ describe('Unit: JFrogSubRouter Service', function () {
                     expect(_.isEqual(params, {pathParam1: null, pathParam2: 'momo', pathParam3: null, searchParam1: null, searchParam2: null})).toBeTrue();
                 }))
                 .then(() => resetState1())
-                .then(() => checkEventHandler('onInvalidState', () =>{
+                .then(() => checkEventHandler('onInvalidState', () => {
                     $location.path('/base/path/');
                 }, (oldState, params) => {
                     expect(oldState).toEqual('state1');
@@ -318,7 +319,6 @@ describe('Unit: JFrogSubRouter Service', function () {
                 expect(newState).toEqual('state1');
             })
                 .then(() => checkSecondaryEventHandler(activeRouter, 'params.change', () => {
-                    activeRouter.off('state.change');
                     $location.path('/yaya/yuki')
                 }, (oldParams, newParams) => {
                     expect(oldParams.pathParam2).toEqual(null);
