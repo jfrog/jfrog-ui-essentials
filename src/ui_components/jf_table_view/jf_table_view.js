@@ -150,6 +150,7 @@ class jfTableViewController {
     onUpdateFilter() {
         this.options.refreshFilter();
         this.refresh();
+        this.paginationApi.setPage(1, true);
         this.paginationApi.update();
     }
     refresh(updatePagination = true) {
@@ -249,7 +250,7 @@ class jfTableViewController {
 
     getTotalRecords() {
         if (!this.options) return;
-	    let records = _.filter(this.options.getRawData(),(record)=>{
+	    let records = _.filter(this.options.getFilteredData(),(record)=>{
             return !record.$parentRow;
         });
         let count = records.length;
@@ -335,12 +336,12 @@ class PaginationApi {
             this.tableCtrl.options.sendExternalPageRequest();
         }
     }
-    setPage(pageNum) {
+    setPage(pageNum, jump = false) {
 	    if (pageNum < 1 || pageNum > this.getTotalPages()) return;
 
 	    this.tableCtrl.currentPage = pageNum - 1;
 
-	    this.syncVirtualScroll()
+	    this.syncVirtualScroll(jump);
 	    this.update();
 	    this.sendExternalPageRequest();
 	    this.tableCtrl.options.fire('pagination.change', this.getCurrentPage());
@@ -348,7 +349,7 @@ class PaginationApi {
 
     update() {
         if (this.getCurrentPage() > this.getTotalPages()) {
-            this.setPage(this.getTotalPages());
+            this.setPage(1, true);
         }
 
         if (this.listeners) this.listeners.forEach(listener=>listener(this.getCurrentPage()));
@@ -359,9 +360,9 @@ class PaginationApi {
         this.listeners.push(listener);
     }
 
-    syncVirtualScroll() {
+    syncVirtualScroll(jump = false) {
         if (this.tableCtrl.options.paginationMode === this.tableCtrl.options.VIRTUAL_SCROLL) {
-            this.tableCtrl.vsApi.scrollTo(this.tableCtrl.currentPage*this.tableCtrl.options.rowsPerPage);
+            this.tableCtrl.vsApi.scrollTo(this.tableCtrl.currentPage*this.tableCtrl.options.rowsPerPage, jump ? 0 : 500);
         }
     }
 
