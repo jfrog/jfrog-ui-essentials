@@ -1,7 +1,7 @@
 const TEMPLATES_FOLDER = "ui_components/jfrog_grid/templates/",
         MIN_COLUMN_WIDTH = 50;
-let headerCellTemplate = require("raw!./templates/headerCellDefaultTemplate.html");
-let groupHeaderCellTemplate = require("raw!./templates/headerCellTemplate.html");
+let headerCellTemplate = require("./templates/headerCellDefaultTemplate.html");
+let groupHeaderCellTemplate = require("./templates/headerCellTemplate.html");
 let globals = {};
 
 const COMMON_ACTIONS = {
