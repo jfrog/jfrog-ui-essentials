@@ -2,10 +2,9 @@
 
 	<div class="counter-and-filter-wrapper">
 		<div ng-if="!jfTableTop.tableView.options.noCount" class="table-counter">{{ jfTableTop.tableView.getTotalRecords() }}<span ng-if="jfTableTop.tableView.getSelectedRecords()"> ({{jfTableTop.tableView.getSelectedRecords()}} Selected)</span></div>
-		<div class="jf-table-filter"
-		     ng-if="jfTableTop.tableView.options.filterVisible && (jfTableTop.tableView.options.getRawData().length || jfTableTop.tableView.options.externalTotalCount.total > 0)">
+		<div class="jf-table-filter">
 			<input class="input-text"
-			       ng-disabled="jfTableTop.tableView.options.isFilterDisabledCallback && jfTableTop.tableView.options.isFilterDisabledCallback()"
+			       ng-disabled="jfTableTop.isFilterDisabled()"
 			       ng-model="jfTableTop.tableView.tableFilter"
 			       ng-model-options="{debounce: { 'default': 500 } }"
 			       ng-change="jfTableTop.tableView.onUpdateFilter()"

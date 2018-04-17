@@ -241,7 +241,7 @@ class jfTableViewController {
 
     initFilter() {
         this.$timeout(() => {
-            if (this.options.autoFocusFilter) {
+            if (this.options && this.options.autoFocusFilter) {
                 let filterInput = $(this.$element).find('.jf-table-filter input');
                 filterInput.focus();
             }

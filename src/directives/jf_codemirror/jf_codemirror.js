@@ -10,7 +10,8 @@ export function jfCodeMirror() {
             allowEdit: '=',
             height: '@?',
             apiAccess: '=',
-            autofocus: '@'
+            autofocus: '@',
+	        matchBrackets: '<'
         },
         controller: jfCodeController,
         controllerAs: 'jfCodeMirror',
@@ -38,6 +39,7 @@ class jfCodeController {
             viewportMargin: 65,
             autofocus: this.autofocus,
             mimeType: this.mimeType,
+	        matchBrackets: this.matchBrackets,
             onLoad: this._codeMirrorLoaded.bind(this)
         };
         // Hide cursor in readonly mode

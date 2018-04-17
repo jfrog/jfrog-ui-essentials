@@ -111,4 +111,19 @@ body.grabbing {
   cursor: grabbing!important;
 }
 
-
+jf-tabular-dnd[disabled="disabled"] {
+  .jf-tabular-dnd {
+    opacity: 0.45;
+  }
+  .jf-table-view .jf-table-view-container .jf-table-row {
+    &:not(.headers):last-child{
+      background: transparent;
+    }
+  }
+  .jf-tabular-dnd .dnd-actions-wrap .dnd-actions li span,
+  .jf-table-view .jf-table-view-container .jf-table-row .jf-table-cell .jf-table-cell-content {
+    &, .selection-icon, .selection-button {
+      cursor: default;
+    }
+  }
+}

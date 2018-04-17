@@ -2,7 +2,12 @@ class jfTableTopController {
 	/* @ngInject */
 	constructor() {
 	}
-
+	isFilterDisabled() {
+		return !(this.tableView.options && this.tableView.options.filterVisible &&
+				(this.tableView.options.getRawData().length ||
+					(this.tableView.options.externalTotalCount && this.tableView.options.externalTotalCount.total > 0))) ||
+			(this.tableView.options.isFilterDisabledCallback && this.tableView.options.isFilterDisabledCallback());
+	}
 }
 
 export function jfTableTop() {
