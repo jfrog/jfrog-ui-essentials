@@ -21,6 +21,8 @@ class jfSidebarController {
 		}
 		this.refreshMenu();
 
+		this.trim = _.trim;
+
 		this.currentTab = "Home";
 		this.$state = $state;
 		this.$timeout = $timeout;
@@ -87,6 +89,10 @@ class jfSidebarController {
 				e.preventDefault();
 			}
 		});
+	}
+
+	isCollapsed() {
+		return this.menu.width === '55px';
 	}
 
 	mouseOverMenu() {
