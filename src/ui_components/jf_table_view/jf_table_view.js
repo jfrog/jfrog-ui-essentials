@@ -38,7 +38,10 @@ class jfTableViewController {
                 this.paginationApi = new PaginationApi(this);
 
                 this.paginationApi.registerChangeListener(()=>{
-                    this.$timeout(()=>this.refresh(false));
+                    this.$timeout(()=>{
+                        this.refresh(false);
+                        this._fireDebouncedRowsInView();
+                    });
                 })
 
                 this.currentPage = 0;
@@ -210,7 +213,7 @@ class jfTableViewController {
         }
 
         debounceCall(() => {
-            let pageData = this.vsApi.getPageData();
+            let pageData = this.options.paginationMode === this.options.VIRTUAL_SCROLL ? this.vsApi.getPageData() : this.options.getPageData();
             let lriv = this.lastRowsInView || [];
             this.lastRowsInView = pageData;
             pageData = _.filter(pageData, row => !_.includes(lriv, row));
