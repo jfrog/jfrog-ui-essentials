@@ -159,7 +159,8 @@ export function jfMarkupEditor() {
             editable: '=?',
             showControls: '=?',
 	        hideCancelButton: '<?',
-            editorLabel:'@'
+            editorLabel:'@',
+	        preventAutoFocus: '=?'
         },
         controller: jfMarkupEditorController,
         controllerAs: 'jfMarkup',

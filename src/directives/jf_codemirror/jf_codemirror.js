@@ -30,8 +30,9 @@ class jfCodeController {
         this.$timeout = $timeout;
 
         this._formatModel();
+	    this.autofocus = this.autofocus === 'true';
 
-        this.editorOptions = {
+	    this.editorOptions = {
             lineNumbers: true,
             readOnly: !this.allowEdit, // Don't use nocursor - it disables search
             lineWrapping: true,

@@ -659,6 +659,16 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			return this;
 		}
 
+		setEmptyTableAction(cb) {
+			this.emptyTableAction = cb;
+			return this;
+		}
+
+		setEmptyTableCallToAction(text) {
+			this.emptyTableCallActionText = text;
+			return this;
+		}
+
 		disableFilterTooltip() {
 			this.tooltipFilterDisabled = true;
 			return this;

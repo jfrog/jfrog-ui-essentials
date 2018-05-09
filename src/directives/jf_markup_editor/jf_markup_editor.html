@@ -8,8 +8,9 @@
             {{jfMarkup.editorLabel}}
         </div>
         <div class="lang-select-wrapper"
-             ng-if="jfMarkup.isInEditMode()">
+             ng-if="jfMarkup.editable">
             <jf-ui-select class="form-group-cell"
+                          jf-select-disabled="!jfMarkup.isInEditMode()"
                           jf-select-model="jfMarkup.language"
                           jf-select-change="jfMarkup.onLanguageChange()"
                           jf-select-options="['Markdown','Asciidoc','Plain Text']">
@@ -32,6 +33,7 @@
             <span>Edit</span>
         </button>
     </div>
+
     <div class="code-mirror-wrapper" ng-if="jfMarkup.isInEditMode()">
         <jf-code-mirror
                 ng-if="jfMarkup.language === 'Markdown'"
@@ -39,7 +41,7 @@
                 mode="gfm"
                 allow-edit="true"
                 height="100%"
-                autofocus="true"
+                autofocus="{{ !jfMarkup.preventAutoFocus }}"
                 model="jfMarkup.markup">
         </jf-code-mirror>
         <jf-code-mirror
@@ -48,14 +50,14 @@
                 mode="asciidoc"
                 allow-edit="true"
                 height="100%"
-                autofocus="true"
+                autofocus="{{ !jfMarkup.preventAutoFocus }}"
                 model="jfMarkup.markup">
         </jf-code-mirror>
         <jf-code-mirror
                 ng-if="jfMarkup.language === 'Plain Text'"
                 allow-edit="true"
                 height="100%"
-                autofocus="true"
+                autofocus="{{ !jfMarkup.preventAutoFocus }}"
                 model="jfMarkup.markup">
         </jf-code-mirror>
         <button ng-if="jfMarkup.onSave"
