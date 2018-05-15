@@ -1,139 +1,90 @@
-jf-wizard {
+@wizardLightGray:   #E2E2E2;
+
+
+.jf-wizard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
   .wizard-bar {
-    margin: 0;
-    list-style: none;
-    overflow: hidden;
-    font-size: 18px;
+    border: 1px solid #ccc;
 
-    li {
-      float: left;
-
-      a {
-        color: @blackBGLight;
-        border: 1px solid @grayBorderLighter;
-        text-decoration: none;
-        padding: 4px 15px 4px 25px;
-        background: @white;
-        position: relative;
-        display: block;
-        float: left;
-      }
-
-      a:after {
-        content: " ";
-        display: block;
-        width: 0;
-        height: 0;
-        border-top: 21px solid transparent;
-        border-bottom: 21px solid transparent;
-        border-left: 10px solid @white;
-        position: absolute;
-        top: 50%;
-        margin-top: -21px;
-        margin-left: -1px;
-
-        left: 100%;
-        z-index: 2;
-      }
-
-      a:before {
-        content: " ";
-        display: block;
-        width: 0;
-        height: 0;
-        border-top: 21px solid transparent;
-        border-bottom: 21px solid transparent;
-        border-left: 10px solid @grayBorderLighter;
-        position: absolute;
-        top: 50%;
-        margin-top: -21px;
-        left: 100%;
-        z-index: 1;
-      }
-
-      &:first-child{
-        a{
-          border-top-left-radius: 2px;
-          border-bottom-left-radius: 2px;
-        }
-      }
-
-      &:last-child {
+    ul {
+      display: flex;
+      list-style: none;
+      li {
+        text-align: center;
+        flex-grow: 1;
         a {
-          border-top-right-radius: 2px;
-          border-bottom-right-radius: 2px;
-        }
-        a:after {
-          border: none;
-        }
-        a:before {
-          border: none;
-        }
-      }
+          display: block;
+          color: black;
+          height: 40px;
+          line-height: 40px;
+          position: relative;
+          padding-left: 15px;
 
-    }
+          &:after, &:before {
+            left: 0;
+            top: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+          }
 
-    li.active {
-      a {
-        color: @greenBGDark;
-        background: @white;
-      }
-
-      a:after {
-        border-left-color: @greenBGDark;
-      }
-    }
-  }
-
-  /* ============================= */
-  /* =     Wizard modifications  = */
-  /* ============================= */
-  ul.wizard-bar {
-    display: flex;
-
-    li {
-      flex-grow: 1;
-
-      a {
-        font-size: 14px;
-        height: 40px;
-        line-height: 30px;
-        width: 100%;
-        letter-spacing: 0.4px;
-      }
-
-      &.active {
-        a {
-          color: @white;
-          background: @greenBGDark;
           &:after {
-            border-left-color: @greenBGDark;
+            border-color: rgba(255, 255, 255, 0);
+            border-left-color: #ffffff;
+            border-width: 20px;
+            margin-top: -20px;
+          }
+          &:before {
+            border-color: rgba(201, 201, 201, 0);
+            border-left-color: #ccc;
+            border-width: 21px;
+            margin-top: -21px;
+          }
+        }
+
+        &:hover {
+          background: @wizardLightGray;
+          & + li {
+            a:after {border-left-color: @wizardLightGray;}
+          }
+        }
+        &.active {
+          background: @greenBGDark;
+          & + li {
+            a:after {border-left-color: @greenBGDark;}
+          }
+          a {color: #fff;}
+        }
+
+        &:first-child {
+          a:after, a:before {display: none;}
+        }
+
+        &.disabled {
+          a {color: @wizardLightGray;}
+          &:hover {
+            background: inherit;
+            a {
+              color: @wizardLightGray;
+              cursor: default;
+            }
+            & + li {
+              a:after {border-left-color: #fff;}
+            }
           }
         }
       }
     }
   }
-
-
-
-  .wizard-container{
-    height: 100%;
-    .wizard-content {
-      max-height: ~"calc(100vh - 350px)";
-      overflow-y: auto;
-      height: 100%;
-      .wizard-element-container{
-        margin-top:30px;
-        margin-bottom:30px;
-      }
-    }
+  .wizard-content {
+    flex-grow: 2;
+    overflow: auto;
+    padding-top: 10px;
   }
-
-
-
-
-
-
-
 }

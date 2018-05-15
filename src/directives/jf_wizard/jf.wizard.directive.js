@@ -16,11 +16,12 @@ export default function jfWizard() {
 }
 
 class jfWizardController {
-	constructor($scope, JFrogEventBus) {
+	constructor($scope, JFrogEventBus, $element) {
 		JFrogEventBus.registerOnScope($scope, JFrogEventBus.getEventsDefinition().WIZARD_TAB_CHANGE, tab => {
 			this.switch(tab)
 		});
 		this.$scope = $scope;
+		this.$element = $element;
 		this.onTabSwitch = $scope.onTabSwitch;
 		this.init = true;
 		this.tabs = [];
@@ -35,6 +36,7 @@ class jfWizardController {
 	}
 
 	switch(tab) {
+		this.$element.find('.wizard-content').scrollTop(0);
 		this.active = tab;
 		if (this.onTabSwitch) {
 			this.onTabSwitch({tab: tab});
