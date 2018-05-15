@@ -1,12 +1,12 @@
 class jfDrawerController {
 
-    constructor(JFrogUIUtils) {
+    constructor(JFrogUIUtils, $timeout) {
         this.opened = false;
         this.utils = JFrogUIUtils;
 
-        if (this.openFirst === '0') {
+	    $timeout(() => {
 	        this.opened = true;
-        }
+        })
 
     }
 
