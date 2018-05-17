@@ -8,7 +8,7 @@
             {{jfMarkup.editorLabel}}
         </div>
         <div class="lang-select-wrapper"
-             ng-if="jfMarkup.editable">
+             ng-if="jfMarkup.showControls && jfMarkup.editable">
             <jf-ui-select class="form-group-cell"
                           jf-select-disabled="!jfMarkup.isInEditMode()"
                           jf-select-model="jfMarkup.language"

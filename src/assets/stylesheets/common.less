@@ -21,6 +21,14 @@
       text-decoration: none;
       color: inherit;
     }
+
+    &.underline {
+      text-decoration: underline;
+      color: @blackBGLight;
+      &:hover {
+        text-decoration: none;
+      }
+    }
   }
 
   b {
@@ -109,6 +117,16 @@
         width: 95px;
         vertical-align: middle;
       }
+    }
+  }
+}
+
+a {
+  &.underline {
+    text-decoration: underline;
+    color: @blackBGLight;
+    &:hover {
+      text-decoration: none;
     }
   }
 }

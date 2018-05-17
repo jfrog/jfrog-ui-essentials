@@ -52,12 +52,12 @@
         <div class="empty-table-placeholder"
              ng-style="jfTableView.options.registeredTabularDnd.emptyTableStyle"
              ng-if="jfTableView.options.dataWasSet && !jfTableView.options.getRawData().length && !jfTableView.options.pendingExternalPaging && (!jfTableView.options.externalTotalCount || jfTableView.options.externalTotalCount.total === 0)">
-            {{jfTableView.options.emptyTableText || 'This table is empty !'}} <a href ng-if="jfTableView.options.emptyTableAction && jfTableView.options.emptyTableCallActionText"
+            {{jfTableView.options.emptyTableText || 'This table is empty !'}} <a href class="underline" ng-if="jfTableView.options.emptyTableAction && jfTableView.options.emptyTableCallActionText"
                                                                                  ng-click="jfTableView.options.emptyTableAction()">{{jfTableView.options.emptyTableCallActionText}}</a>
         </div>
         <div class="empty-table-placeholder filter-no-results"
              ng-if="jfTableView.noFilterResults">
-            {{jfTableView.options.noFilterResultsText || 'Current filter has no results.'}} <a href ng-click="jfTableView.clearFilter()">Clear filter</a>
+            {{jfTableView.options.noFilterResultsText || 'Current filter has no results.'}} <a href class="underline" ng-click="jfTableView.clearFilter()">Clear filter</a>
         </div>
         <div ng-if="jfTableView.options.pendingInfiniteScroll"
              ng-style="{height: jfTableView.options.rowHeight}"
