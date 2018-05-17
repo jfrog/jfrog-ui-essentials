@@ -1,3 +1,4 @@
+import JfDivider from './jf_divider/jf.divider.module';
 import Grid     from './jfrog_grid/jfrog_grid.module';
 import Modal    from './jfrog_modal/jfrog_modal.module';
 import Uploader    from './jfrog_uploader/jfrog_uploader.module';
@@ -11,5 +12,6 @@ angular.module('jfrog.ui_components', [
     Uploader.name,
     JFTableView.name,
     JFTree.name,
-    SummaryRow.name
+    SummaryRow.name,
+    JfDivider.name
 ]);
