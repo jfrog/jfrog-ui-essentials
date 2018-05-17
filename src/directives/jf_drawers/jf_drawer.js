@@ -8,7 +8,7 @@ class jfDrawerController {
 		    if (this.openFirst === '0') {
 	            this.opened = true;
 		    }
-        })
+        });
 
     }
 
