@@ -5,7 +5,9 @@ class jfDrawerController {
         this.utils = JFrogUIUtils;
 
 	    $timeout(() => {
-	        this.opened = true;
+		    if (this.openFirst === '0') {
+	            this.opened = true;
+		    }
         })
 
     }
