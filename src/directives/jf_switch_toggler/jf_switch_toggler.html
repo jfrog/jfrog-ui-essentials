@@ -1,0 +1,9 @@
+<div class="jf-switch-toggler"
+     ng-class="{'left-option-selected' : $ctrl.selected === $ctrl.leftOption,
+                'right-option-selected' : $ctrl.selected !== $ctrl.leftOption}">
+    <span class="left-option-text" ng-bind-html="$ctrl.leftOption"></span>
+    <jf-toggler on-toggle="$ctrl.toggleSelection()"
+                is-toggled-to-left="$ctrl.isLeftOptionOn">
+    </jf-toggler>
+    <span class="right-option-text" ng-bind-html="$ctrl.rightOption"></span>
+</div>

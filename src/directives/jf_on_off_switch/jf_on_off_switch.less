@@ -1,0 +1,33 @@
+.jf-on-off-toggler {
+  &.on-selected {
+    span {
+      &.on-option-text {
+        color: @greenBGPrimary;
+      }
+      &.off-option-text {
+        display: none;
+      }
+    }
+  }
+  &.off-selected {
+    span {
+      &.on-option-text {
+        display: none;
+      }
+      &.off-option-text {
+        color: @redToggleOff;
+      }
+    }
+  }
+  span[class^="text-"] {
+    font-size: 12px;
+  }
+  .switch-toggle {
+    &.left {
+      background: @greenBGPrimary; // fallback
+    }
+    &.right {
+      background: @redToggleOff; // fallback
+    }
+  }
+}

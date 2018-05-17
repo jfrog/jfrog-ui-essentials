@@ -1,8 +1,11 @@
 import {jfListMaker}          from './jf_list_maker/jf_list_maker';
 import {jfActions}       from './jf_actions/jf_actions';
+import jfOnOffSwitch from './jf_on_off_switch/jf_on_off_switch';
+import jfSwitchToggler from './jf_switch_toggler/jf_switch_toggler';
 import {jfTabularDnD}      from './jf_tabular_dnd/jf_tabular_dnd'
 import {jfDragDrop}      from './jf_drag_drop/jf_drag_drop'
 import {jfDragDropPagination}      from './jf_drag_drop_pagination/jf_drag_drop_pagination'
+import jfToggler from './jf_toggler/jf_toggler';
 import {jfTooltip}       from './jf_tooltip/jf_tooltip';
 import {jfHelpTooltip}       from './jf_help_tooltip/jf_help_tooltip';
 import {jfCheckbox}      from './jf_checkbox/jf_checkbox';
@@ -96,5 +99,8 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfContextMenu': jfContextMenu,
         'jfVscroll': jfVScroll,
         'jfVscrollElement': jfVScrollElement,
-        'jfDataList': jfDataList
+        'jfDataList': jfDataList,
+        'jfToggler' :jfToggler,
+        'jfSwitchToggler': jfSwitchToggler,
+        'jfOnOffSwitch': jfOnOffSwitch
     });

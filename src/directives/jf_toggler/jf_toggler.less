@@ -1,0 +1,36 @@
+jf-toggler {
+  .switch-toggle {
+    display: inline-block;
+    width: 35px;
+    padding: 2px;
+    border-radius: 20px;
+    position: relative;
+    height: 19px;
+    cursor: pointer;
+    vertical-align: middle;
+    margin:  -2px 5px 0px 5px;
+    transition: all .25s ease-in;
+    span {
+      display: inline-block;
+      background: #fff;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      transition: all .15s ease-in;
+    }
+    &.left {
+      background: @greenBGPrimary; // fallback
+      span {
+        left: 2px;
+      }
+    }
+    &.right {
+      background: @grayBGDisabled; // fallback
+      span {
+        left: 18px;
+      }
+    }
+  }
+}
