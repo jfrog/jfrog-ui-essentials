@@ -13,15 +13,18 @@
 
             <a ng-if="item.isDisabled"
                class="menu-item disabled"
+               ng-class="{{item.customClasses}}"
                id="{{item.id}}"><i class="{{item.icon}}"></i><span>{{item.label}}</span></a>
 
             <a class="menu-item"
                id="{{item.id}}"
+               ng-class="{{item.customClasses}}"
                ng-mouseover="jfSidebar.onMouseOverSimpleItem(item)"
                ng-if="!item.isDisabled && !item.children && !item.template"><i class="{{item.icon}}"></i><span>{{item.label}}</span></a>
 
             <a class="menu-item"
                id="{{item.id}}"
+               ng-class="{{item.customClasses}}"
                ng-mouseover="jfSidebar.onMouseOverSimpleItem(item)"
                ng-if="!item.isDisabled && !item.children && item.template" jf-dynamic-template="item.template"></a>
 
@@ -30,7 +33,7 @@
                  id="{{item.id}}"
                  ng-mouseover="jfSidebar.onMouseOverExtendedItem(item)"
                  ng-mouseleave="jfSidebar.onMouseLeaveExtendedItem(item)"
-                 ng-class="{'hover-like': jfSidebar.openSub === item && jfSidebar.isSubMenuOpen()}"
+                 ng-class="{'hover-like': jfSidebar.openSub === item && jfSidebar.isSubMenuOpen() {{item.customClasses ? ', ' + jfSidebar.trim(item.customClasses, '{} ') : ''}}}"
                  ng-if="!item.isDisabled && item.children"><i class="{{item.icon}}"></i><span>{{item.label}}</span>
             </a>
 

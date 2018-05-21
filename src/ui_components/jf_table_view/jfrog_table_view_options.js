@@ -156,10 +156,12 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
             if (this.paginationMode === this.VIRTUAL_SCROLL && this.dirCtrl) {
                 this.dirCtrl.vsApi.reset();
+            }
+            if (this.dirCtrl) {
                 this.dirCtrl._fireDebouncedRowsInView();
             }
 
-			return this;
+            return this;
 		}
 
 		_transformDataForSubRowsSupport(data, autoExpand) {
@@ -521,7 +523,10 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
                     this.initialInfiniteScrollRequestSent = true;
                 });
             }
-		}
+
+            this.dirCtrl._fireDebouncedRowsInView();
+
+        }
 
 		_initInfiniteScroll() {
             let scrollParent = $(this.dirCtrl.$element).scrollParent();
