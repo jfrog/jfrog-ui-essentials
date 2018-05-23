@@ -271,7 +271,7 @@ gulp.task('less', function () {
             grid:true,
 	        browsers:  [
 		        "> 1%",
-		        "last 2 versions"
+		        "last 4 versions"
 	        ]
         }),
         concat('jfrog-ui-essentials.css'),
