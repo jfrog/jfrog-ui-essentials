@@ -4,7 +4,7 @@
      ng-mouseup="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.resizableColumns && jfTableRow.onMouseUp($event)"
      ng-mouseleave="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.resizableColumns && jfTableRow.onMouseUp($event)"
      ng-click="jfTableRow.onRowClick($event)"
-     ng-class="{headers: jfTableRow.rowId === 'headers', 'group-header': jfTableRow.data.$groupHeader, 'expanded': jfTableRow.data.$groupHeader.$expanded, 'sub-row': jfTableRow.data.$parentRow, sticky: jfTableRow.data.$sticky, selected: jfTableRow.data.$selected, 'drag-mark': jfTableRow.rowId !== 'headers' && jfTableRow.tableView.options.draggableRows && !(jfTableRow.tableView.options.registeredTabularDnd.dndCtrl.disabled)}"
+     ng-class="{headers: jfTableRow.rowId === 'headers', 'group-header': jfTableRow.data.$groupHeader, 'expanded': jfTableRow.data.$groupHeader.$expanded, 'sub-row': jfTableRow.data.$parentRow, sticky: jfTableRow.data.$sticky, selected: jfTableRow.data.$selected, 'drag-mark': jfTableRow.rowId !== 'headers' && jfTableRow.tableView.options.draggableRows && !(jfTableRow.tableView.options.registeredTabularDnd.dndCtrl.disabled) && jfTableRow.isRowDraggable(), [jfTableRow.data[jfTableRow.tableView.options.rowClassAttr]]: jfTableRow.tableView.options.rowClassAttr && jfTableRow.data[jfTableRow.tableView.options.rowClassAttr]}"
      ng-style="{height: jfTableRow.rowId === 'headers' ? '' : jfTableRow.tableView.options.rowHeight, opacity: jfTableRow.tableView.options.ready ? 1 : 0}">
 
     <div class="jf-table-cell selection"

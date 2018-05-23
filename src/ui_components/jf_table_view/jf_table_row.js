@@ -209,9 +209,27 @@ class jfTableRowController {
             event.preventDefault();
             return;
         }
+
+        if (!this.isRowDraggable()) {
+
+            event.preventDefault();
+            return;
+        }
+
         $('body').addClass('grabbing');
         this.tableView.options.dragRow(this.data);
         this.initDragHelper(ui.helper);
+    }
+
+    isRowDraggable() {
+        if (this.tableView.options.registeredTabularDnd &&
+            this.tableView.options.registeredTabularDnd.dndCtrl.itemDraggableAttr &&
+            !_.isUndefined(this.data[this.tableView.options.registeredTabularDnd.dndCtrl.itemDraggableAttr]) &&
+            !this.data[this.tableView.options.registeredTabularDnd.dndCtrl.itemDraggableAttr]) {
+
+            return false;
+        }
+        else return true;
     }
 
     initDragHelper(helper) {

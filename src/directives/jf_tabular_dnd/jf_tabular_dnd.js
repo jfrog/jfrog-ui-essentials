@@ -5,6 +5,8 @@ export function jfTabularDnD() {
         scope: {
             availableItems: '=',
             selectedItems: '=',
+            itemClassAttr: '@?',
+            itemDraggableAttr: '@?',
             columns: '=',
             numberOfRows: '@?',
             availableItemsColumns: '=?',
@@ -76,6 +78,7 @@ class jfTabularDnDController {
             .setDraggable()
             .setRowsPerPage(parseInt(this.numberOfRows))
             .setObjectName(availableObjectName)
+            .setRowClassAttr(this.itemClassAttr)
             .disableFilterWhen(() => this.disabled)
             .setEmptyTableText(!this.availableItems.length && !this.selectedItems.length ? 'No Data Found' : 'Drag Row Here');
 
@@ -86,8 +89,11 @@ class jfTabularDnDController {
             .setDraggable()
             .setRowsPerPage(parseInt(this.numberOfRows))
             .setObjectName(selectedObjectName)
+            .setRowClassAttr(this.itemClassAttr)
             .disableFilterWhen(() => this.disabled)
             .setEmptyTableText('Drag Row Here');
+
+        this.selectedItemsTableOptions.isRowSelectable = this.availableItemsTableOptions.isRowSelectable = row => this._isItemDraggable(row.entity);
 
 
         if (!this.disableWholeRowSelection) {
@@ -173,6 +179,7 @@ class jfTabularDnDController {
         selected.forEach(s => delete s.$selected);
         this.selectedItemsTableOptions.dirCtrl.allSelected = false;
         let filtered = this.selectedItemsTableOptions.getFilteredData();
+        filtered = this._getOnlyDraggables(filtered);
         Array.prototype.splice.apply(this.availableItems, [this.availableItems.length, 0].concat(filtered));
         _.remove(this.selectedItems, i => _.includes(filtered, i));
         this._refreshBothTables();
@@ -186,6 +193,7 @@ class jfTabularDnDController {
         selected.forEach(s => delete s.$selected);
         this.availableItemsTableOptions.dirCtrl.allSelected = false;
         let filtered = this.availableItemsTableOptions.getFilteredData();
+        filtered = this._getOnlyDraggables(filtered);
         Array.prototype.splice.apply(this.selectedItems, [this.selectedItems.length, 0].concat(filtered));
         _.remove(this.availableItems, i => _.includes(filtered, i));
         this._refreshBothTables();
@@ -200,6 +208,7 @@ class jfTabularDnDController {
         this.selectedItemsTableOptions.dirCtrl.allSelected = false;
         let filtered = this.selectedItemsTableOptions.getFilteredData();
         _.remove(selected, i => !_.includes(filtered, i));
+        selected = this._getOnlyDraggables(selected);
         Array.prototype.splice.apply(this.availableItems, [this.availableItems.length, 0].concat(selected));
         _.remove(this.selectedItems, item => _.includes(selected, item));
         this._refreshBothTables();
@@ -214,10 +223,25 @@ class jfTabularDnDController {
         this.availableItemsTableOptions.dirCtrl.allSelected = false;
         let filtered = this.availableItemsTableOptions.getFilteredData();
         _.remove(selected, i => !_.includes(filtered, i));
+        selected = this._getOnlyDraggables(selected);
         Array.prototype.splice.apply(this.selectedItems, [this.selectedItems.length, 0].concat(selected));
         _.remove(this.availableItems, item => _.includes(selected, item));
         this._refreshBothTables();
         this._fireOnChange();
+    }
+
+    _getOnlyDraggables(array) {
+        if (this.itemDraggableAttr) {
+            return _.filter(array, item => this._isItemDraggable(item))
+        }
+        else return array;
+    }
+
+    _isItemDraggable(item) {
+        if (this.itemDraggableAttr) {
+            return _.isUndefined(item[this.itemDraggableAttr]) || item[this.itemDraggableAttr];
+        }
+        else return true;
     }
 
     _refreshBothTables() {

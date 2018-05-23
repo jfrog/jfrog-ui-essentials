@@ -277,6 +277,11 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			return this;
 		}
 
+        setRowClassAttr(rowClassAttr) {
+		    this.rowClassAttr = rowClassAttr;
+		    return this;
+        }
+
 		setRowInViewDebounceTime(debounceTime) {
 			this.rowInViewDebounceTime = debounceTime;
 			return this;
