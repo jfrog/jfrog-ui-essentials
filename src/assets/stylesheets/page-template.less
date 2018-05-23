@@ -11,13 +11,13 @@
   grid-gap: 15px;
   grid-template-columns: 1fr;
   grid-template-rows: 120px 120px 1fr;
-  -ms-grid-rows: 120px 15px 120px 15px 1fr;
+  //-ms-grid-rows: 120px 15px 120px 15px 1fr;
   grid-template-areas: "header-area" "summary-area" "content-area";
 
   .jf-page-header {
     grid-area: header-area;
-    -ms-grid-row: 1;
-    -ms-grid-row-span: 1;
+    //-ms-grid-row: 1;
+    //-ms-grid-row-span: 1;
     
     display: grid;
     width: 100%;
@@ -25,7 +25,7 @@
     grid-gap: 15px;
     grid-template-rows: 120px;
     grid-template-columns: 2fr 4fr;
-    -ms-grid-columns: 2fr 15px 4fr;
+    //-ms-grid-columns: 2fr 15px 4fr;
     .jf-header-item {
       padding: 0 15px;
       h1 {
@@ -39,8 +39,8 @@
   }
   .jf-page-summary {
     grid-area: summary-area;
-    -ms-grid-row: 3;
-    -ms-grid-row-span: 1;
+    //-ms-grid-row: 3;
+    //-ms-grid-row-span: 1;
     padding: 0 15px 0 15px;
     .summary-row {
       span {
@@ -56,7 +56,7 @@
   }
   .jf-page-content {
     grid-area: content-area;
-    -ms-grid-row: 5;
+    //-ms-grid-row: 5;
     padding: 0 15px 15px 15px;
     position: relative;
     .jf-content-section {
