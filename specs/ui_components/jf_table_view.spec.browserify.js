@@ -141,7 +141,8 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         expect(headersCells.length).toEqual(0);
         expect(dataRows.length).toEqual(0);
         expect(dataCells.length).toEqual(0);
-        expect(filter.length).toEqual(0);
+        expect(filter.length).toEqual(1);
+        expect(filter.find('input')).toHaveAttr('disabled'); // filter should be disabled, when no there is no data.
         expect(pagination.children().children().length).toEqual(0);
         expect(selectionButtons.length).toEqual(0);
 
