@@ -17,7 +17,8 @@ export function jfListMaker() {
             onAddValue: '&?',
             hideAddNewFields: '@',
             validationRegex:'@',
-            validationRegexMessage:'@'
+            validationRegexMessage:'@',
+	        caseInsensitive: '<?'
         },
         templateUrl: 'directives/jf_list_maker/jf_list_maker.html',
         controller: jfListMakerController,
@@ -75,6 +76,11 @@ class jfListMakerController {
     }
 
     _isValueUnique(text) {
+        if(this.caseInsensitive) {
+            return !this.values || !_.find(this.values, (val) => {
+                val.toLowerCase() === text.toLowerCase();
+            });
+        }
         return !this.values || this.values.indexOf(text) == -1;
     }
 }
