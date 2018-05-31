@@ -87,7 +87,7 @@ class jfListMakerController {
     _isValueUnique(text) {
         if(this.caseInsensitive) {
             return !this.values || !_.find(this.values, (val) => {
-                val.toLowerCase() === text.toLowerCase();
+                return val.toLowerCase() === text.toLowerCase();
             });
         }
         return !this.values || this.values.indexOf(text) == -1;
