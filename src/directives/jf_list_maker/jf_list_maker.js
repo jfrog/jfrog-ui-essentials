@@ -15,6 +15,8 @@ export function jfListMaker() {
             placeholder: '@?',
             listId: '@',
             onAddValue: '&?',
+	        onAfterAddValue: '&?',
+	        onAfterDeleteValue: '&?',
             hideAddNewFields: '@',
             validationRegex:'@',
             validationRegexMessage:'@',
@@ -65,6 +67,9 @@ class jfListMakerController {
             }
             this.values.push(this.newValue);
             this.newValue = null;
+	        if(this.onAfterAddValue){
+		        this.onAfterAddValue()
+	        }
         }
         if (!this.noSort) {
             this.values = _.sortBy(this.values);
@@ -73,6 +78,10 @@ class jfListMakerController {
 
     removeValue(index) {
         this.values.splice(index,1);
+
+        if(this.onAfterDeleteValue && typeof this.onAfterDeleteValue === 'function') {
+		    this.onAfterDeleteValue();
+	    }
     }
 
     _isValueUnique(text) {
