@@ -22,11 +22,11 @@
       color: inherit;
     }
 
-    &.underline {
+    &.jf-link {
       text-decoration: underline;
       color: @blackBGLight;
-      &:hover {
-        text-decoration: none;
+      &:active, &:focus, &:hover {
+        text-decoration: underline;
       }
     }
   }
@@ -122,11 +122,11 @@
 }
 
 a {
-  &.underline {
+  &.jf-link {
     text-decoration: underline;
     color: @blackBGLight;
-    &:hover {
-      text-decoration: none;
+    &:active, &:focus, &:hover {
+      text-decoration: underline;
     }
   }
 }
