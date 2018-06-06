@@ -79,18 +79,18 @@ class jfTableRowController {
         let offset = mouseXPerc - this.resizeDragStart;
 
         let newLeftWidth,newRightWidth;
-        if (this.hoveringResize.origLeftWidth.endsWith('%')) {
+        if (_.isString(this.hoveringResize.origLeftWidth) && this.hoveringResize.origLeftWidth.endsWith('%')) {
             newLeftWidth = (parseFloat(this.hoveringResize.origLeftWidth) + offset) + '%';
         }
-        else if (this.hoveringResize.origLeftWidth.endsWith('px')) {
+        else if (_.isString(this.hoveringResize.origLeftWidth) && this.hoveringResize.origLeftWidth.endsWith('px')) {
             let perc = (parseFloat(this.hoveringResize.origLeftWidth)/containerWidth)*100;
             newLeftWidth = (perc + offset) + '%';
         }
         if (this.hoveringResize.right) {
-            if (this.hoveringResize.origRightWidth.endsWith('%')) {
+            if (_.isString(this.hoveringResize.origRightWidth) && this.hoveringResize.origRightWidth.endsWith('%')) {
                 newRightWidth = (parseFloat(this.hoveringResize.origRightWidth) - offset) + '%';
             }
-            else if (this.hoveringResize.origRightWidth.endsWith('px')) {
+            else if (_.isString(this.hoveringResize.origRightWidth) && this.hoveringResize.origRightWidth.endsWith('px')) {
                 let perc = (parseFloat(this.hoveringResize.origRightWidth)/containerWidth)*100;
                 newRightWidth = (perc - offset) + '%';
             }
@@ -137,10 +137,10 @@ class jfTableRowController {
 
         for (let colI = 0; colI < columns.length; colI++) {
             let col = columns[colI];
-            if (col.width.endsWith('%')) {
+            if (_.isString(col.width) && col.width.endsWith('%')) {
                 percCount += parseFloat(col.width);
             }
-            else if (col.width.endsWith('px')) {
+            else if (_.isString(col.width) && col.width.endsWith('px')) {
                 let perc = (parseFloat(col.width)/containerWidth)*100;
                 percCount += perc;
             }
