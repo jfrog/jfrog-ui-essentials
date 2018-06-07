@@ -2,7 +2,7 @@
 
 class jfTabsController {
 	/* @ngInject */
-    constructor($scope, $state, $timeout, $element, $stateParams, JFrogEventBus) {
+    constructor($scope, $state, $timeout, $element, $stateParams, JFrogEventBus, $rootScope) {
         this.$scope = $scope;
         this.$element = $element;
         this.stateParams = $stateParams;
@@ -10,6 +10,7 @@ class jfTabsController {
         this.state = $state;
         this.tabsCollapsed = [];
         this.JFrogEventBus = JFrogEventBus;
+        this.$rootScope = $rootScope;
 
         this.EVENTS = JFrogEventBus.getEventsDefinition();
 
@@ -65,6 +66,10 @@ class jfTabsController {
             this._calculateTabsSize();
         },true);
 
+	    let stateChangeListner = this.$rootScope.$on('$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) => {
+		    toState.tabChange = false;
+	    });
+
         $(window).on('resize.tabs', () => {
             this.initTabs();
             this.$scope.$digest();
@@ -72,6 +77,7 @@ class jfTabsController {
         this.$scope.$on('$destroy', () => {
             $(window).off('resize.tabs');
             unwatch();
+	        stateChangeListner();
         });
 
     }
@@ -85,6 +91,7 @@ class jfTabsController {
         this._ensureTabVisible(tab);
         this.state.go(this.state.current, {tab: tab.name},{notify: false});
         this.currentTab.name = tab.name;
+	    this.state.current.tabChange = true;
     }
 
     _ensureTabVisible(tab) {
