@@ -1,9 +1,13 @@
+// config object description
+// enableNgShow - (default false) enable tab switch with ngShow
+
 export default function jfWizard() {
 
 	return {
 		restrict: 'E',
 		scope: {
-			onTabSwitch: '&?'
+			onTabSwitch: '&?',
+			config : '<'
 		},
 		templateUrl: 'directives/jf_wizard/jf.wizard.view.html',
 		controller: jfWizardController,
@@ -23,6 +27,7 @@ class jfWizardController {
 		this.$scope = $scope;
 		this.$element = $element;
 		this.onTabSwitch = $scope.onTabSwitch;
+        this.config = $scope.config;
 		this.init = true;
 		this.tabs = [];
 	}

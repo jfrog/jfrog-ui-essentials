@@ -1,3 +1,6 @@
-<div class="wizard-element-container" ng-if="$ctrl.title===$ctrl.jfWizardCtl.active">
+<div class="wizard-element-container"  ng-if="$ctrl.config.enableNgShow"   ng-show="$ctrl.title===$ctrl.jfWizardCtl.active"    >
+	<div ng-transclude></div>
+</div>
+<div class="wizard-element-container"  ng-if="!$ctrl.config.enableNgShow && $ctrl.title===$ctrl.jfWizardCtl.active"    >
 	<div ng-transclude></div>
 </div>

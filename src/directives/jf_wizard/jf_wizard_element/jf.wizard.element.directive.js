@@ -10,9 +10,9 @@ export default function jfWizardElement() {
         transclude: true,
         link: ($scope, element, attrs, jfWizardCtl) => {
             jfWizardCtl.registerTab(attrs.title);
-
             $scope.$ctrl.jfWizardCtl=jfWizardCtl;
             $scope.$ctrl.title=attrs.title;
+            $scope.$ctrl.config = $scope.$ctrl.jfWizardCtl.config;
         },
         controller: jfWizardElementController,
         bindToController: true,
@@ -23,3 +23,4 @@ export default function jfWizardElement() {
 class jfWizardElementController {
     constructor($scope) {}
 }
+
