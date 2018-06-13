@@ -20,12 +20,13 @@ export default function jfWizard() {
 }
 
 class jfWizardController {
-	constructor($scope, JFrogEventBus, $element) {
+	constructor($scope, JFrogEventBus, $element, JFrogUIUtils) {
 		JFrogEventBus.registerOnScope($scope, JFrogEventBus.getEventsDefinition().WIZARD_TAB_CHANGE, tab => {
 			this.switch(tab)
 		});
 		this.$scope = $scope;
 		this.$element = $element;
+        this.JFrogUIUtils = JFrogUIUtils;
 		this.onTabSwitch = $scope.onTabSwitch;
         this.config = $scope.config;
 		this.init = true;
@@ -46,5 +47,6 @@ class jfWizardController {
 		if (this.onTabSwitch) {
 			this.onTabSwitch({tab: tab});
 		}
+        this.JFrogUIUtils.fireResizeEvent();
 	}
 }
