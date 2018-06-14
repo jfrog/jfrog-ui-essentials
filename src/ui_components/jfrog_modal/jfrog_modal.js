@@ -82,7 +82,11 @@ export class JFrogModal {
 		}
 		if (options && _.isObject(options)) _.extend(modalObj,options);
 
-		let modalInstance =  this.modal.open(modalObj);
+
+        let focused = $(':focus');
+        if (focused.length) focused.blur();
+
+        let modalInstance =  this.modal.open(modalObj);
 		this.JFrogEventBus.registerOnScope(this.$rootScope, this.EVENTS.CLOSE_MODAL, () => {
 			modalInstance.dismiss();
 		});
