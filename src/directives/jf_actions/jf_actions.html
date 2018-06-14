@@ -2,7 +2,7 @@
     <li ng-show="jfActions.fixedActions.length"
         ng-repeat="actionObj in jfActions.fixedActions"
         ng-click="jfActions.doAction(actionObj,$event)"
-        ng-class="{disabled: actionObj.disabled}"
+        ng-class="{disabled: actionObj.disabled || (actionObj.disabledWhen && actionObj.disabledWhen())}"
         class="action-button"
         ng-if="!actionObj.visibleWhen || actionObj.visibleWhen()">
 
@@ -18,7 +18,7 @@
           <ul class="dropdown-menu dropdown-menu-right actions-dropdown text-left">
               <li ng-repeat="actionObj in jfActions.dynamicActions"
                   class="action-item"
-                  ng-class="{disabled: actionObj.disabled,
+                  ng-class="{disabled: actionObj.disabled || (actionObj.disabledWhen && actionObj.disabledWhen()),
                     'menu-item-{{actionObj.icon}}': actionObj.icon,
                     'menu-item-no-icon': !actionObj.icon && jfActions.anyActionHasAnIcon,
                     'menu-item-no-action-icons': !jfActions.anyActionHasAnIcon,

@@ -31,7 +31,7 @@ class jfActionsController {
     }
 
     doAction(actionObj,e) {
-        if (actionObj.disabled) {
+        if (actionObj.disabled || (actionObj.disabledWhen && actionObj.disabledWhen()) ) {
 		    e.stopPropagation();
 		    e.preventDefault();
 		    return;
