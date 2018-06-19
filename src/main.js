@@ -50,6 +50,8 @@ function main($httpBackend, $animate) {
     //$httpBackend.whenDELETE(/.*/).passThrough();
     //$httpBackend.whenPATCH(/.*/).passThrough();
 
+    //angular.uppercase was removed in 1.7.0, we polyfill it here, to prevent breakage of 3rd party (ui-grid)
+    angular.uppercase = (str) => str.toUpperCase();
 
     tempFixForAnimateParamsReversal($animate);
 }

@@ -13,17 +13,17 @@
     "!LICENSE"
   ],
   "dependencies": {
-    "angular": "1.6.10",
-    "angular-sanitize": "1.6.10",
+    "angular": "1.7.2",
+    "angular-sanitize": "1.7.2",
     "angular-ui-router": "0.4.3",
     "moment": "^2.19.1",
     "bootstrap": "3.1.1",
     "angular-cookies": "1.3.13",
     "angular-bootstrap": "0.13.1",
     "angular-ui-grid": "500tech/bower-ui-grid#v3.0.0-rc.21-patch4",
-    "angular-resource": "1.6.10",
-    "angular-mocks": "1.6.10",
-    "angular-animate": "1.6.10",
+    "angular-resource": "1.7.2",
+    "angular-mocks": "1.7.2",
+    "angular-animate": "1.7.2",
     "animate.css": "3.2.1",
     "angularjs-toaster": "*",
     "angular-file-upload": "1.1.5",
@@ -37,7 +37,7 @@
     "zeroclipboard": "2.2.0",
     "ng-clip": "0.2.6",
     "angular-ui-utils": "bower",
-    "angular-messages": "1.6.10",
+    "angular-messages": "1.7.2",
     "tooltipster": "3.3.0",
     "jQuery-contextMenu": "1.8.1",
     "clipboard": "~1.5.5",
@@ -45,7 +45,7 @@
     "moment-jdateformatparser": "^1.1.0"
   },
   "resolutions": {
-    "angular": "1.6.10",
+    "angular": "1.7.2",
     "codemirror": "5.0.0",
     "bootstrap": "3.1.1",
     "jquery": "3.2.1"
