@@ -35,7 +35,10 @@ angular.module('jfrog.ui.essentials', [
         'jfrog.ui.essentials.services',
         'jfrog.ui.essentials.filters'
     ])
-    .run(main);
+       .config(['$qProvider', ($qProvider) => {
+           $qProvider.errorOnUnhandledRejections(false);
+       }])
+       .run(main);
 
 /* @ngInject */
 function main($httpBackend, $animate) {

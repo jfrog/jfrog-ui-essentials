@@ -14,6 +14,10 @@ class jfMarkupEditorController {
         this.instanceId = Math.floor(Math.random()*10000000000);
 
         this.JFrogUIWebWorker = new JFrogUIWebWorker();
+
+    }
+
+    $onInit() {
         this.checkPreviewers();
         if (this.previewersCount === 2) {
             this.init();
@@ -30,10 +34,9 @@ class jfMarkupEditorController {
             })
         }
 
-        $scope.$on('$destroy',() => {
+        this.$scope.$on('$destroy',() => {
             if (this.webworkerOk) this.JFrogUIWebWorker.close();
         })
-
     }
 
     init() {
@@ -99,6 +102,7 @@ class jfMarkupEditorController {
     }
 
     checkPreviewers() {
+        console.log(this.previewRenderers);
         if (!this.previewRenderers) {
             this.previewRenderers = {};
             this.previewersCount = 0;

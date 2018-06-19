@@ -15,8 +15,12 @@ class jfGridFilterController {
     constructor($scope,$timeout) {
 
         this.$timeout = $timeout;
+        this.$scope = $scope;
         this.gridFilter = '';
 
+    }
+
+    $onInit() {
         this.grid.enableFiltering = true;
 
         this.grid.setFilter = (filterString) => {
@@ -37,7 +41,7 @@ class jfGridFilterController {
 
         this.attachColumns();
 
-        $scope.$on('$destroy', () => this.onDestroy());
+        this.$scope.$on('$destroy', () => this.onDestroy());
     }
 
     attachColumns() {

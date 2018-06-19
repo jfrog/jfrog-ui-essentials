@@ -1,25 +1,8 @@
 class jfSidebarController {
 	/* @ngInject */
 	constructor($scope, $state, $timeout, $interval, $window, $rootScope, JFrogEventBus) {
-		this.subMenuWidth = this.defaultSubMenuWidth || this.openAdminSize || '900px';
-		this.defaultSubWidth = this.subMenuWidth;
-
-		this.defaultSubMenuId = this.defaultSubMenuId || 'admin';
 
 		$rootScope.jfSidebar = this;
-		if (!this.driver) {
-			console.error('jf-sidebar: No driver is provided');
-			this.driver = {};
-		}
-
-		this.legacyAdminMenuItems = this.driver.getAdminMenuItems ? this.driver.getAdminMenuItems() : [];
-		if (this.driver.setMenu) {
-			this.driver.setMenu(this);
-		}
-		if (this.driver.registerEvents) {
-			this.driver.registerEvents();
-		}
-		this.refreshMenu();
 
 		this.trim = _.trim;
 
@@ -39,9 +22,6 @@ class jfSidebarController {
 			"transition-duration": ".3s"
 		};
 
-		if (this.driver.getFooterData) {
-			this.driver.getFooterData().then(footerData => this.footerData = footerData);
-		}
 
 
 		$scope.$on('$destroy', () => {
@@ -49,9 +29,37 @@ class jfSidebarController {
 
 		})
 
-		this._init();
 
 	}
+
+	$onInit() {
+        this.subMenuWidth = this.defaultSubMenuWidth || this.openAdminSize || '900px';
+        this.defaultSubWidth = this.subMenuWidth;
+
+        this.defaultSubMenuId = this.defaultSubMenuId || 'admin';
+
+        if (!this.driver) {
+            console.error('jf-sidebar: No driver is provided');
+            this.driver = {};
+        }
+
+        this.legacyAdminMenuItems = this.driver.getAdminMenuItems ? this.driver.getAdminMenuItems() : [];
+        if (this.driver.setMenu) {
+            this.driver.setMenu(this);
+        }
+        if (this.driver.registerEvents) {
+            this.driver.registerEvents();
+        }
+        this.refreshMenu();
+
+        if (this.driver.getFooterData) {
+            this.driver.getFooterData().then(footerData => this.footerData = footerData);
+        }
+
+        this._init();
+
+
+    }
 
 
 	_init() {

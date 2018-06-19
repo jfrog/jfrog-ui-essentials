@@ -1,7 +1,11 @@
 class jfTogglerController {
 	constructor() {
-		this.isToggledToLeft = this.isToggledToLeft || true;
 	}
+
+	$onInit() {
+        this.isToggledToLeft = this.isToggledToLeft || true;
+	}
+
 	toggleSelection() {
 		this.isToggledToLeft = !this.isToggledToLeft;
 		if(this.onToggle && typeof this.onToggle === 'function') {

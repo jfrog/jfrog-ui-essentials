@@ -35,14 +35,18 @@ export function jfListMaker() {
 class jfListMakerController {
     /* @ngInject */
     constructor($attrs) {
-        this.noSort = this.noSort || $attrs.hasOwnProperty('noSort');
+        this.$attrs = $attrs;
+    }
+
+    $onInit() {
+        this.noSort = this.noSort || this.$attrs.hasOwnProperty('noSort');
         if (this.values && !this.noSort) this.values = _.sortBy(this.values);
         this.minLength = this.minLength || 0;
 
         let randomId = Math.floor(1000000000*Math.random());
         if (!this.listId) this.listId = 'list-id-' + randomId;
-
     }
+
     addValue() {
 
         if (!this.values) this.values = [];

@@ -1,5 +1,8 @@
 class jfSwitchController {
     constructor() {
+    }
+
+    $onInit() {
         if (!this.options) throw 'Must supply options';
         // Supports 2 methods of options:
         // array of strings

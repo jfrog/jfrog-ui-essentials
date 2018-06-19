@@ -6,12 +6,6 @@ class jfClipCopyController {
 
         this.$timeout = $timeout;
 
-        if (this.objectName) {
-            this.origTooltip = this.tooltipText = "Copy " + this.objectName.toLowerCase() + " to clipboard";
-        }
-        else {
-            this.origTooltip = this.tooltipText = "Copy to clipboard";
-        }
         this.timeoutPromise = null;
 
         this.isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
@@ -33,6 +27,16 @@ class jfClipCopyController {
             });
         }
 
+
+    }
+
+    $onInit() {
+        if (this.objectName) {
+            this.origTooltip = this.tooltipText = "Copy " + this.objectName.toLowerCase() + " to clipboard";
+        }
+        else {
+            this.origTooltip = this.tooltipText = "Copy to clipboard";
+        }
 
     }
 

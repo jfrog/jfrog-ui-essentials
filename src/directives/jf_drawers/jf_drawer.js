@@ -4,12 +4,12 @@ class jfDrawerController {
         this.opened = false;
         this.utils = JFrogUIUtils;
 
-	    $timeout(() => {
-		    if (this.openFirst === '0') {
-	            this.opened = true;
-		    }
-        });
+    }
 
+    $onInit() {
+        if (this.openFirst === '0') {
+            this.opened = true;
+        }
     }
 
     onClickHeader() {

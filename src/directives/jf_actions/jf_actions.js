@@ -5,6 +5,9 @@ class jfActionsController {
         this.$timeout = $timeout;
         this.isDropdownOpen = false;
 
+    }
+
+    $onInit() {
         if (!this.label) this.label = 'Actions';
 
         if (this.parentController && this.initMethod && this.parentController[this.initMethod]) {

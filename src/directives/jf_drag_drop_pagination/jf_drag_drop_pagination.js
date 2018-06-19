@@ -1,7 +1,9 @@
 class jfDragDropPaginationController {
 	/* @ngInject */
     constructor() {
+    }
 
+    $onInit() {
         this.currentPage = 0;
 
         if (this.paginationApi) {
@@ -11,9 +13,7 @@ class jfDragDropPaginationController {
                 this.currentPage = pageNum;
             });
         }
-
     }
-
 
     pageChanged() {
 

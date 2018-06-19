@@ -29,10 +29,13 @@ class jfCodeController {
         this.$scope = $scope;
         this.$timeout = $timeout;
 
-        this._formatModel();
-	    this.autofocus = this.autofocus === 'true';
+    }
 
-	    this.editorOptions = {
+    $onInit() {
+        this._formatModel();
+        this.autofocus = this.autofocus === 'true';
+
+        this.editorOptions = {
             lineNumbers: true,
             readOnly: !this.allowEdit, // Don't use nocursor - it disables search
             lineWrapping: true,
@@ -40,7 +43,7 @@ class jfCodeController {
             viewportMargin: 65,
             autofocus: this.autofocus,
             mimeType: this.mimeType,
-	        matchBrackets: this.matchBrackets,
+            matchBrackets: this.matchBrackets,
             onLoad: this._codeMirrorLoaded.bind(this)
         };
         // Hide cursor in readonly mode

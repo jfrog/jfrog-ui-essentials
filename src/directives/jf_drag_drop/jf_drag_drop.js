@@ -68,6 +68,9 @@ class jfDragDropController {
         this.draggedObject = null;
         this.PLACEHOLDER = {'@@@DNDPH@@@': '@@@DNDPH@@@'};
         this.selectedItems = [];
+    }
+
+    $onInit() {
         if (!this.includeList) this.includeList = [];
         _.remove(this.excludeList, (excludeItem) => {
             return _.find(this.includeList, (includeItem) => angular.equals(includeItem, excludeItem))
@@ -95,7 +98,6 @@ class jfDragDropController {
 
         this._initWatchers();
     }
-
     /**
      * watch the original include and exclude lists
      * and update the filtered lists when they change

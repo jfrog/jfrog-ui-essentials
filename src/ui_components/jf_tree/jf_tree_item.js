@@ -8,11 +8,13 @@ class jfTreeItemController {
 
         $(this.$element).prop('ctrl', this);
 
+    }
+
+    $onInit() {
         this._watchSelection();
         this._watchExpansion();
 
         this._registerEvents();
-
     }
 
     _registerEvents() {

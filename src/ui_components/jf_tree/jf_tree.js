@@ -15,7 +15,6 @@ export function jfTree() {
 class jfTreeController {
 	/* @ngInject */
     constructor($scope, $element, $timeout, $compile, $rootScope) {
-        this.viewPaneName = this.viewPaneName || 'default';
         this.$element = $element;
         this.$timeout = $timeout;
         this.$compile = $compile;
@@ -109,6 +108,9 @@ class jfTreeController {
 
     }
 
+    $onInit() {
+        this.viewPaneName = this.viewPaneName || 'default';
+    }
 
     clearFilter() {
         this.treeFilter = '';

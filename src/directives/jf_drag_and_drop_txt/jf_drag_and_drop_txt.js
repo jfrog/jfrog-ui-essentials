@@ -23,6 +23,9 @@ class jfDragAndDropTxtController{
         this.$element.bind('drop', this.handleDropEvent.bind(this));
         this.draggedFileSizeLimit = 400; // limit file size (in KB)
         this.entered = false;
+    }
+
+    $onInit() {
         this.dndAutoFocus = this.dndAutoFocus=== undefined ? true : this.dndAutoFocus;
 
         this.dndCallToAction = this.dndCallToAction || "Copy your text or <b>drop a file</b>";

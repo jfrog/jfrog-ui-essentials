@@ -1,12 +1,15 @@
 class jfOnOffSwitchController {
 	constructor() {
-		if (!this.options) throw 'Must supply options';
-		this.on = this.options[0];
-		this.off = this.options[1];
-		if (_.isEmpty(this.selected)) {
-			this.selected = this.on;
-		}
-		this.isOn = this.selected === this.on;
+	}
+
+	$onInit() {
+        if (!this.options) throw 'Must supply options';
+        this.on = this.options[0];
+        this.off = this.options[1];
+        if (_.isEmpty(this.selected)) {
+            this.selected = this.on;
+        }
+        this.isOn = this.selected === this.on;
 	}
 
 	toggleSelection() {

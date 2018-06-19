@@ -1,10 +1,13 @@
 class jfUiSelectController {
 	/* @ngInject */
-    constructor($element, $timeout) {
+    constructor() {
         // 3 methods are allowed for passing the options:
         // Passing an array of objects, and the attribute to display
         // Passing an array (of anything), and a function that returns the label to display
         // Passing an array of strings (and then the string is displayed)
+    }
+
+    $onInit() {
         this.displayLabel = (item) => {
             if (item === null || item === undefined) return null;
             if (this.isMorePlaceholder(item)) return this.jfSelectLoadMoreLabel || 'More Options...';
@@ -29,8 +32,6 @@ class jfUiSelectController {
             this.chunkSize = parseInt(this.jfSelectLoadChunks) < 4 ? 4 : parseInt(this.jfSelectLoadChunks);
             this.jfSelectOptionsView = [];
         }
-
-
     }
 
     onSelect($item,$model) {

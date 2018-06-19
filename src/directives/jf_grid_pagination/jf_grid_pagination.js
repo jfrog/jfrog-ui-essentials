@@ -3,20 +3,23 @@ class jfGridPaginationController {
     constructor($scope, $timeout, JFrogEventBus) {
 
         this.$scope = $scope;
-        this.gridApi = $scope.gridApi;
-
+        this.$timeout = $timeout;
         this.currentPage = 1;
 
-        $timeout(()=>{
+
+        JFrogEventBus.registerOnScope($scope, JFrogEventBus.getEventsDefinition().RESET_GRID_PAGINATION, () => this.resetPagination());
+
+    }
+
+    $onInit() {
+        this.gridApi = this.$scope.gridApi;
+        this.$timeout(()=>{
             if (this.gridApi.pagination) {
-                this.gridApi.pagination.on.paginationChanged($scope, (pageNum)=> {
+                this.gridApi.pagination.on.paginationChanged(this.$scope, (pageNum)=> {
                     this.currentPage = pageNum;
                 });
             }
         });
-
-        JFrogEventBus.registerOnScope($scope, JFrogEventBus.getEventsDefinition().RESET_GRID_PAGINATION, () => this.resetPagination());
-
     }
 
 

@@ -31,6 +31,9 @@ class jfWidgetsLayoutController {
         this.$compile = $compile;
         this.$templateRequest = $templateRequest;
 
+    }
+
+    $onInit() {
         this.setDefaultOptions();
 
         let onChange = (newval,oldval) => {
@@ -51,11 +54,11 @@ class jfWidgetsLayoutController {
                     if (this._isWidgetInUse(id)) delete this.widgets[id].$compiled;
                 });
                 this.loadTemplates().then(()=>{
-                    $timeout(()=>this.compileElements());
+                    this.$timeout(()=>this.compileElements());
                 })
             }
         };
-        $scope.$watch('jfWidgetsLayout.options.editMode', (editMode) => {
+        this.$scope.$watch('jfWidgetsLayout.options.editMode', (editMode) => {
             this.editMode = editMode === undefined ? false : editMode;
             this.subOptions.editMode = this.editMode;
 
@@ -73,9 +76,9 @@ class jfWidgetsLayoutController {
             this.wasEditing = this.editMode;
         });
 
-        $scope.$watch('jfWidgetsLayout.layout', onChange);
+        this.$scope.$watch('jfWidgetsLayout.layout', onChange);
 
-        $scope.$watch('jfWidgetsLayout.widgets', (widgets) => {
+        this.$scope.$watch('jfWidgetsLayout.widgets', (widgets) => {
             if (widgets) {
                 this.widgetKeys = Object.keys(widgets);
             }
@@ -85,10 +88,9 @@ class jfWidgetsLayoutController {
             this.parentCell.$$childLayout = this;
         }
 
-        $scope.$on('$destroy',()=>{
+        this.$scope.$on('$destroy',()=>{
             if (this.scopes) this.scopes.forEach(s=>s.$destroy());
         })
-
     }
 
 

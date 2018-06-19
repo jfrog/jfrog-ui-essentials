@@ -28,16 +28,18 @@ class jfTabularDnDController {
 	/* @ngInject */
     constructor($element, $scope, JFrogTableViewOptions) {
         this.$scope = $scope;
+        this.$element = $element;
         this.JFrogTableViewOptions = JFrogTableViewOptions;
 
+    }
+
+    $onInit() {
         if (this.columns) {
             this.availableItemsColumns = _.cloneDeep(this.columns);
             this.selectedItemsColumns = _.cloneDeep(this.columns);
         }
-
-        this.availableContainer = $($element).find('.available-table');
-        this.selectedContainer = $($element).find('.selected-table');
-
+        this.availableContainer = $(this.$element).find('.available-table');
+        this.selectedContainer = $(this.$element).find('.selected-table');
 
         this.createTables();
     }

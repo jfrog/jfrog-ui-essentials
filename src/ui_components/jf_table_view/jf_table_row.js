@@ -6,16 +6,20 @@ class jfTableRowController {
         this.$scope = $scope;
         this.JFrogEventBus = JFrogEventBus;
         this.EVENTS = JFrogEventBus.getEventsDefinition()
-        this.templatesCount = _.filter(this.tableView.options.columns,col=>!!col.cellTemplate).length;
-
-        JFrogEventBus.registerOnScope($scope, this.EVENTS.TABLEVIEW_HIDE_ACTIONS_DROPDOWN, (tableView) => {
-	        if (tableView === this.tableView) this.actionsDropdownOpen = false
-        });
 
         $(this.$element).prop('ctrl', this);
 
-        if (this.tableView.options.draggableRows) $timeout(()=>this.initDragAndDrop());
     }
+
+    $onInit() {
+        this.templatesCount = _.filter(this.tableView.options.columns,col=>!!col.cellTemplate).length;
+
+        this.JFrogEventBus.registerOnScope(this.$scope, this.EVENTS.TABLEVIEW_HIDE_ACTIONS_DROPDOWN, (tableView) => {
+            if (tableView === this.tableView) this.actionsDropdownOpen = false
+        });
+        if (this.tableView.options.draggableRows) this.$timeout(()=>this.initDragAndDrop());
+    }
+
     getField(field) {
         return _.get(this.data,field);
     }

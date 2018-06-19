@@ -45,13 +45,13 @@ class jfVScrollController {
             if (this.ready) whenReadyDefer.resolve();
         })
 
-
-        this._initApi();
-
-
         $scope.$watch('jfVScroll.containerHeight', () => {
             this._setAutoItemsPerPage();
         })
+    }
+
+    $onInit() {
+        this._initApi();
     }
 
     get containerHeight() {
