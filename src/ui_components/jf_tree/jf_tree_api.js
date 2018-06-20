@@ -447,9 +447,9 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService,
             }
         }
 
-        toggleExpansion(node) {
+         toggleExpansion(node) {
             let flat = this._flatFromNode(node);
-            if (flat.pane.isNodeOpen(node)) {
+            if (flat && flat.pane.isNodeOpen(node)) {
                 this.closeNode(node);
             }
             else {
