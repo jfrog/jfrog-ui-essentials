@@ -34,7 +34,7 @@ class jfTabsController {
                 // If current tab doesn't exist on the tabs list at all - select the first tab
                 let firstValidTab = _.findIndex(this.tabs, (tab) => {return tab.isVisible !== false && !tab.isDisabled});
 
-                if (firstValidTab !== -1) this.onClickTab(this.tabs[firstValidTab]);
+                if (firstValidTab !== -1) this.onClickTab(this.tabs[firstValidTab], false);
             }
             else {
                 // Otherwise - make sure it's visible
@@ -85,7 +85,7 @@ class jfTabsController {
 
     }
 
-    onClickTab(tab) {
+    onClickTab(tab, tabChange) {
         // if the tab is in the more section replace it
         // with the last tab in the main tabs.
         if ((this.onTabChange({tab:tab}) === false) || tab.isDisabled) {
@@ -94,7 +94,8 @@ class jfTabsController {
         this._ensureTabVisible(tab);
         this.state.go(this.state.current, {tab: tab.name},{notify: false});
         this.currentTab.name = tab.name;
-	    this.state.current.tabChange = true;
+
+	    this.state.current.tabChange = tabChange;
     }
 
     _ensureTabVisible(tab) {
