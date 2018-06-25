@@ -140,7 +140,9 @@ export class JFrogModal {
         for (let i in selectorsArray) {
             let selector = selectorsArray[i];
             if ($(selector).length) {
-                $(selector).click();
+                if (!$(selector).is('[disabled]')) {
+                    $(selector).click();
+                }
                 break;
             }
         }
