@@ -1,6 +1,6 @@
 class jfTogglerController {
 	constructor() {
-		this.isToggledToLeft = this.isToggledToLeft || true;
+		this.isToggledToLeft = !!this.isToggledToLeft;
 	}
 	toggleSelection() {
 		this.isToggledToLeft = !this.isToggledToLeft;
