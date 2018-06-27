@@ -3,25 +3,42 @@ class jfSwitchTogglerController {
     }
 
     $onInit() {
-        if (!this.options) throw 'Must supply options';
-        this.leftOption = this.options[0];
-        this.rightOption = this.options[1];
-        if (_.isEmpty(this.selected)) {
-            this.selected = this.leftOption;
-        }
-        this.isLeftOptionOn = this.selected === this.leftOption;
+	    if (!this.options) throw 'Must supply options';
+	    // Supports 2 methods of options:
+	    // array of strings
+	    // array of objects of type {'value': ..., 'text': ...}
+	    // The model is assigned the value, and the text is displayed
+
+	    this.setOptionObjects();
+	    if (_.isEmpty(this.model)) {
+		    this.model = this.leftOption.value;
+	    }
+	    this.isLeftOptionOn = this.model === this.leftOption.value;
     }
 
 	toggleSelection() {
-		this.selected = (this.selected === this.leftOption ? this.rightOption : this.leftOption);
+		this.model = (this.model === this.leftOption.value ? this.rightOption.value : this.leftOption.value);
     }
+
+	setOptionObjects() {
+		let optionObjects = this.options.map((option) => {
+			if (typeof(option) === 'string')
+				return {value: option, text: option};
+			else {
+				return option;
+			}
+		});
+
+		this.leftOption = optionObjects[0];
+		this.rightOption = optionObjects[1];
+	}
 }
 
 export default function jfSwitchToggler() {
     return {
         restrict: 'E',
         scope: {
-        	selected: '=',
+        	model: '=',
         	options: '<',
         },
         controller: jfSwitchTogglerController,
