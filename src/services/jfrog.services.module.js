@@ -3,6 +3,7 @@ import {JFrogNotifications}                     from './jfrog_notifications';
 import {JFrogUILibConfig}                       from './jfrog_ui_lib_config';
 import {JFrogDownload}                          from './jfrog_download';
 import {JFrogIFrameDownload}                    from './jfrog_iframe_download';
+import {JFrogUIModelSaverFactory}               from './jfrog_ui_model_saver';
 import {JFrogUIUtils}                           from './jfrog_ui_utils';
 import {WebWorkersPool}                           from './WebWorkersPool';
 import {JFrogUIWebWorker}                           from './jfrog_ui_webworker';
@@ -27,6 +28,7 @@ angular.module('jfrog.ui.essentials.services', ['ui.router', 'jfrog.ui_component
     .service('ContextMenuService', ContextMenuService)
     .service('JfFullTextService', JfFullTextService)
     .service('JFrogSubRouter', JFrogSubRouter)
+    .factory('JFrogUIModelSaverFactory', JFrogUIModelSaverFactory)
 
 
 
