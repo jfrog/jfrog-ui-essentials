@@ -89,4 +89,6 @@
     </ul>
 
     <ng-include ng-if="jfSidebar.footerTemplate" src="jfSidebar.footerTemplate"></ng-include>
+    <div ng-if="jfSidebar.footerTemplateHtml"  ng-bind-html="jfSidebar.footerTemplateHtml"  ></div>
+
 </div>
