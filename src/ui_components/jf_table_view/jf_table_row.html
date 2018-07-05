@@ -118,7 +118,7 @@
                  ng-style="{height: jfTableRow.tableView.options.rowHeight, width: jfTableRow.tableView.options.actionButtonSize + 'px', visibility: jfTableRow.tableView.options.hasVisibleActionsFor(jfTableRow.data) ? 'visible' : 'hidden'}"
                  ng-if="jfTableRow.tableView.options.actions.length > 3 && jfTableRow.tableView.options">
                 <div class="action-icon icon-more"
-                     ng-click="jfTableRow.toggleActionsDropdown()"
+                     ng-click="jfTableRow.toggleActionsDropdown($event)"
                      jf-tooltip="Actions"></div>
             </div>
         </div>
