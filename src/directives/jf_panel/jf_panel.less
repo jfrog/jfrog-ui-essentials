@@ -8,10 +8,10 @@
     position: relative;
     top: 10px;
     left: 4px;
-    color: @greenBGDark;
+    color: #373737; // TODO: set color variable
     width: auto;
     padding: 0 4px 0 4px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     z-index: 300;
 
@@ -23,9 +23,23 @@
       padding-right: 17px;
     }
 
-    .panel-container .panel &, .wizard-content &, &.borderless {
+    //.panel-container .panel &, .wizard-content &, &.borderless {
+    //  left: 0;
+    //  padding-left: 0;
+    //}
+  }
+  &.borderless {
+    .panel-heading {
       left: 0;
       padding-left: 0;
+      padding-right: px;
+    }
+    .panel {
+        left: 0;
+        padding-left: 0;
+        border-width: 1px 0 05;
+        margin-top: 4px;
+        padding-top: 15px;
     }
   }
 
@@ -43,12 +57,12 @@
       margin-right: 0;
     }
 
-    .panel-container .panel &, .wizard-content &, &.borderless {
-      border-width: 0;
-      border-top-width: 1px;
-      padding-right: 0;
-      padding-left: 0;
-    }
+    //.panel-container .panel &, .wizard-content &, &.borderless {
+    //  border-width: 0;
+    //  border-top-width: 1px;
+    //  padding-right: 0;
+    //  padding-left: 0;
+    //}
 
     .form-group:last-child {
       margin-bottom: 10px;

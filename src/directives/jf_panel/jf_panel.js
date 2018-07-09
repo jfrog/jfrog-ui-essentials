@@ -4,6 +4,7 @@ export function jfPanel() {
             jfPanelHeading: '@',
             jfPanelHelpTooltip: '@',
             jfPanelClasses: '@',
+            borderless: '=?'
         },
         templateUrl: 'directives/jf_panel/jf_panel.html',
         transclude: true
