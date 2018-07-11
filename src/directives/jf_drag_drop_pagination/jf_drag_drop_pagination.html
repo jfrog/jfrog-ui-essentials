@@ -1,17 +1,17 @@
 <div class="grid-pagination text-right" ng-if="jfDragDropPagination.paginationApi.getTotalPages()">
-    <p>
-        <a href
-           ng-click="jfDragDropPagination.prevPage()"
-           ng-class="{disabled: jfDragDropPagination.currentPage === 1}">&lsaquo;</a>
-        Page <input type="text"
-                    class="grid-page-box"
-                    ng-style="{'width': (14 + jfDragDropPagination.paginationApi.getTotalPages().toString().length * 7) + 'px'}"
-                    jf-tooltip="Jump to Page"
-                    ng-model="jfDragDropPagination.currentPage"
-                    ng-change="jfDragDropPagination.pageChanged()"/>
-        of {{ jfDragDropPagination.paginationApi.getTotalPages() }}
-        <a href
-           ng-click="jfDragDropPagination.nextPage()"
-           ng-class="{disabled: jfDragDropPagination.currentPage === jfDragDropPagination.paginationApi.getTotalPages()}">&rsaquo;</a>
-    </p>
+	<p>
+		<input type="text"
+		       class="grid-page-box"
+		       ng-style="{'width': (7 + jfDragDropPagination.paginationApi.getTotalPages().toString().length * 7) + 'px'}"
+		       jf-tooltip="Jump to Page"
+		       ng-model="jfDragDropPagination.currentPage"
+		       ng-change="jfDragDropPagination.pageChanged()" />
+		out of {{ jfDragDropPagination.paginationApi.getTotalPages() }}
+		<a href
+		   ng-click="jfDragDropPagination.prevPage()"
+		   ng-class="{disabled: jfDragDropPagination.currentPage === 1}">&lsaquo;</a>
+		<a href
+		   ng-click="jfDragDropPagination.nextPage()"
+		   ng-class="{disabled: jfDragDropPagination.currentPage === jfDragDropPagination.paginationApi.getTotalPages()}">&rsaquo;</a>
+	</p>
 </div>

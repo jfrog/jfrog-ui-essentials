@@ -1,19 +1,24 @@
 .grid-pagination {
   margin: 23px 10px 0 10px;
-  padding-bottom: 5px;
-  color: @grayFontGeneral;
+  padding-bottom: 9px;
+  font-size: 14px;
+  color: @blackBGLight;
+  border-bottom: 1px solid @grayBorderLighter;
+  position: relative;
+  top: 13px;
 
   p {
     margin-bottom: 0;
   }
 
   a {
-    color: @grayFontGeneral;
+    color: @blackBGLight;
     text-decoration: none;
     font-size: 24px;
     font-weight: 100;
-    line-height: 18px;
+    line-height: 20px;
     vertical-align: top;
+    padding-left: 9px;
 
     &.disabled {
       color: @grayBorderDark;
@@ -21,14 +26,16 @@
   }
 
   .grid-page-box {
-    border: 1px solid @grayBorderDark;
-    background-color: @grayBGLight;
-    padding: 0 5px;
+    border: none;
     margin: 2px 0 0 0;
-    width: 28px;
+    width: 20px;
     height: 20px;
-    font-size: 13px;
+    font-size: 14px;
     outline: none;
     text-align: center;
+    color: @grayBorderMiddleDark;
+    &:hover, &:focus, &:focus-within {
+      background-color: @bg-gray;
+    }
   }
 }
