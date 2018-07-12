@@ -23,7 +23,6 @@ angular.module('jfrog.ui.essentials', [
         'toaster',
         'ngSanitize',
         'ui.bootstrap',
-        'ngClipboard',
         'ui.grid.draggable-rows',
         'monospaced.mousewheel',
         'ae-datetimepicker',
