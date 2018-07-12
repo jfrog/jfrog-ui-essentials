@@ -24,7 +24,7 @@ module.exports = {
 	    'node_modules/angular-file-upload/angular-file-upload.js',
 	    'node_modules/jquery-contextmenu/dist/jquery.contextMenu.js',
 	    'node_modules/jquery-ui/jquery-ui.js',
-	    'node_modules/lodash/lodash.js',
+	    'node_modules/lodash/index.js',
 	    'node_modules/codemirror/lib/codemirror.js',
 	    'node_modules/codemirror/addon/mode/overlay.js',
 	    'node_modules/codemirror/mode/xml/xml.js',
