@@ -36,6 +36,8 @@ module.exports = {
 	    'node_modules/jf-angular-ui-codemirror/ui-codemirror.js',
 	    'node_modules/x2js/xml2json.js',
 	    'node_modules/ui-select/dist/select.js',
+	    'node_modules/zeroclipboard/dist/ZeroClipboard.js',
+	    'node_modules/ng-clip/dest/ng-clip.min.js',
 	    'node_modules/jf-angular-ui-utils/ui-utils.js',
 	    'node_modules/later/later.js',
 	    'vendor/jquery.highlight.js',
@@ -76,6 +78,6 @@ module.exports = {
     ],
 
     ASSETS: [
-        //'node_modules/zeroclipboard/dist/ZeroClipboard.swf'
+        'node_modules/zeroclipboard/dist/ZeroClipboard.swf'
     ]
 };

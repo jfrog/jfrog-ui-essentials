@@ -93,6 +93,8 @@
     "lodash": "3.9.3",
     "moment": "2.19.1",
     "moment-jdateformatparser": "^1.1.0",
-    "ui-select": "0.18.1"
+    "ng-clip": "0.2.6",
+    "ui-select": "0.18.1",
+    "zeroclipboard": "2.2.0"
   }
 }
