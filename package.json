@@ -90,7 +90,7 @@
     "jquery-contextmenu": "1.8.1",
     "jquery-ui": "1.12.1",
     "js-beautify": "1.6.11",
-    "lodash": "3.9.3",
+    "lodash": "3.10.1",
     "moment": "2.19.1",
     "moment-jdateformatparser": "^1.1.0",
     "ng-clip": "0.2.6",
