@@ -33,6 +33,7 @@ export function jfTooltipOnOverflow($sanitize) {
                         if (!!targetContent && !target.hasClass('tooltipstered')) {
                         	let options = {
 		                        animation: 'fade',
+		                        contentAsHTML : 'true',
 		                        trigger: 'hover',
 		                        onlyOne: 'true',
 		                        interactive: 'true',
