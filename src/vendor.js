@@ -48,7 +48,7 @@ module.exports = {
 	    'node_modules/js-beautify/js/lib/beautify.js',
 	    'node_modules/hamsterjs/hamster.js',
 	    'node_modules/angular-mousewheel/mousewheel.js',
-	    'node_modules/jstree/dist/jstree.js',
+	    'node_modules/jf-jstree/dist/jstree.js',
 	    'node_modules/moment/min/moment.min.js',
 	    'node_modules/moment-jdateformatparser/moment-jdateformatparser.min.js',
 	    'node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
