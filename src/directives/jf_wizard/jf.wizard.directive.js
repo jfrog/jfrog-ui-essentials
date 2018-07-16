@@ -1,5 +1,6 @@
 // config object description
 // enableNgShow - (default false) enable tab switch with ngShow
+// --
 
 export default function jfWizard() {
 

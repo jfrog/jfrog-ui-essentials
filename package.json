@@ -5,7 +5,7 @@
   "description": "JFrog UI Essentials",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/jfrog/jfrog-ui-essentials.git"
   },
   "devDependencies": {
     "any-promise": "~1.1.0",

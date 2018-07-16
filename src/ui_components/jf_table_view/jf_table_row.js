@@ -187,11 +187,12 @@ class jfTableRowController {
         this.tableView.options.toggleExpansion(this.data);
     }
 
-	toggleActionsDropdown() {
-        let origState = this.actionsDropdownOpen;
-        this.JFrogEventBus.dispatch(this.EVENTS.TABLEVIEW_HIDE_ACTIONS_DROPDOWN, this.tableView);
-	    this.actionsDropdownOpen = !origState;
-    }
+	toggleActionsDropdown(e) {
+		e.stopPropagation();
+		let origState = this.actionsDropdownOpen;
+		this.JFrogEventBus.dispatch(this.EVENTS.TABLEVIEW_HIDE_ACTIONS_DROPDOWN, this.tableView);
+		this.actionsDropdownOpen = !origState;
+	}
 
     initDragAndDrop() {
         if (this.rowId === 'headers') return;
