@@ -67,14 +67,14 @@ module.exports = {
         'node_modules/jf-tooltipster/css/tooltipster.css',
         'node_modules/codemirror/addon/dialog/dialog.css',
         'node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
-        'node_modules/jstree/dist/themes/default/style.css',
+        'node_modules/jf-jstree/dist/themes/default/style.css',
     ],
 
     FONTS: [
 //        'node_modules/jf-lessfonts-open-sans/dist/fonts/**/*.{svg,woff,ttf,eot}',
         'node_modules/jf-angular-ui-grid/*.{svg,woff,ttf,eot}',
 //        'node_modules/font-awesome/fonts/*.{svg,woff,ttf,eot}'
-        'node_modules/jstree/dist/themes/default/*.{png,gif}',
+        'node_modules/jf-jstree/dist/themes/default/*.{png,gif}',
     ],
 
     ASSETS: [
