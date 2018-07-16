@@ -14,6 +14,17 @@
   a, li {
     outline: 0;
   }
+  .icon-menu-arrow {
+    position: absolute;
+    right: 8px;
+    top: 1px;
+    color: #707070;
+    transition: all .2s ease-in-out .2s;
+    &.menu-arrow-close {
+      transform: rotate(-180deg);
+      top: -1px;
+    }
+  }
 }
 
 ul.sidebar-wrapper-inner {
@@ -290,14 +301,3 @@ ul.sidebar-wrapper-inner {
   }
 }
 
-.icon-menu-arrow {
-  position: absolute;
-  right: 8px;
-  top: 1px;
-  color: #707070;
-  transition: all .2s ease-in-out .2s;
-  &.menu-arrow-close {
-    transform: rotate(-180deg);
-    top: -1px;
-  }
-}

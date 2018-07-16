@@ -65,8 +65,10 @@
              ng-if="(!col.cellTemplate && jfTableRow.rowId !== 'headers') || (!col.headerCellTemplate && jfTableRow.rowId === 'headers')">
             {{jfTableRow.getField(col.field)}}
             <i ng-if="jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.sortable && (jfTableRow.tableView.options.sortByField === col.field || jfTableRow.tableView.options.showSortingArrowsAlways) && col.sortable && jfTableRow.tableView.options.getRawData().length && (col.header || col.headerCellTemplate)"
-               class="icon sorting-icon"
-               ng-class="{'icon-down-arrow': jfTableRow.tableView.options.revSort && jfTableRow.tableView.options.sortByField === col.field, 'icon-up-arrow': !jfTableRow.tableView.options.revSort || (jfTableRow.tableView.options.sortByField !== col.field && jfTableRow.tableView.options.showSortingArrowsAlways), active: jfTableRow.tableView.options.sortByField === col.field}"></i>
+               class="icon sorting-icon icon-"
+               ng-class="{'icon-down-arrow': jfTableRow.tableView.options.revSort && jfTableRow.tableView.options.sortByField === col.field,
+                          'icon-up-arrow': !jfTableRow.tableView.options.revSort || (jfTableRow.tableView.options.sortByField !== col.field && jfTableRow.tableView.options.showSortingArrowsAlways),
+                          active: jfTableRow.tableView.options.sortByField === col.field}"></i>
             <div class="group-button-wrapper" ng-if="jfTableRow.rowId === 'headers' && col.allowGrouping">
                 <div class="group-button icon-grouping-off"
                      ng-class="{'icon-grouping-on': jfTableRow.tableView.options.groupedBy === col.field}"
