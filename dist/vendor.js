@@ -34,7 +34,7 @@ module.exports = {
 	    'node_modules/codemirror/addon/search/searchcursor.js',
 	    'node_modules/codemirror/addon/edit/matchbrackets.js',
 	    'node_modules/jf-angular-ui-codemirror/ui-codemirror.js',
-	    'node_modules/x2js/xml2json.js', /////////////////////////////////////////
+	    'node_modules/x2js/xml2json.js',
 	    'node_modules/ui-select/dist/select.js',
 	    'node_modules/zeroclipboard/dist/ZeroClipboard.js',
 	    'node_modules/ng-clip/dest/ng-clip.min.js',
@@ -45,15 +45,15 @@ module.exports = {
 	    'node_modules/angular-capitalize-filter/capitalize.js',
 	    'vendor/draggable-rows.js',
 	    'node_modules/clipboard/dist/clipboard.min.js',
-	    'node_modules/js-beautify/js/lib/beautify.js', //////////////////////////
-	    'node_modules/hamsterjs/hamster.js', ///////////////////////////////////
-	    'node_modules/angular-mousewheel/mousewheel.js', /////////////////////
-	    'node_modules/jf-jstree/dist/jstree.js',
+	    'node_modules/js-beautify/js/lib/beautify.js',
+	    'node_modules/hamsterjs/hamster.js',
+	    'node_modules/angular-mousewheel/mousewheel.js',
+	    'node_modules/jstree/dist/jstree.js',
 	    'node_modules/moment/min/moment.min.js',
-	    'node_modules/moment-jdateformatparser/moment-jdateformatparser.min.js', /////////////////////////
+	    'node_modules/moment-jdateformatparser/moment-jdateformatparser.min.js',
 	    'node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
 	    'node_modules/angular-eonasdan-datetimepicker/dist/angular-eonasdan-datetimepicker.js',
-	    'node_modules/jasmine-expect/dist/jasmine-matchers.js' /////////////////////////////
+	    'node_modules/jasmine-expect/dist/jasmine-matchers.js'
     ],
 
     CSS: [
@@ -67,14 +67,14 @@ module.exports = {
         'node_modules/jf-tooltipster/css/tooltipster.css',
         'node_modules/codemirror/addon/dialog/dialog.css',
         'node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
-        'node_modules/jstree/dist/themes/default/style.css',
+        'node_modules/jf-jstree/dist/themes/default/style.css',
     ],
 
     FONTS: [
 //        'node_modules/jf-lessfonts-open-sans/dist/fonts/**/*.{svg,woff,ttf,eot}',
         'node_modules/jf-angular-ui-grid/*.{svg,woff,ttf,eot}',
 //        'node_modules/font-awesome/fonts/*.{svg,woff,ttf,eot}'
-        'node_modules/jstree/dist/themes/default/*.{png,gif}',
+        'node_modules/jf-jstree/dist/themes/default/*.{png,gif}',
     ],
 
     ASSETS: [
