@@ -59,7 +59,8 @@
     "raw-loader": "0.5.1",
     "run-sequence": "1.0.2",
     "stream-combiner2": "^1.0.2",
-    "webpack": "~1.12.12"
+    "webpack": "~1.12.12",
+    "xml2js": "*"
   },
   "dependencies": {
     "angular": "1.7.2",
@@ -95,6 +96,7 @@
     "moment-jdateformatparser": "^1.1.0",
     "ng-clip": "0.2.6",
     "ui-select": "0.18.1",
-    "zeroclipboard": "2.2.0"
+    "zeroclipboard": "2.2.0",
+    "later": "*"
   }
 }
