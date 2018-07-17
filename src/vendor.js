@@ -23,7 +23,7 @@ module.exports = {
 	    'node_modules/angularjs-toaster/toaster.js',
 	    'node_modules/angular-file-upload/angular-file-upload.js',
 	    'node_modules/jquery-contextmenu/dist/jquery.contextMenu.js',
-	    'node_modules/jquery-ui/ui/widget.js',
+	    'node_modules/components-jquery-ui/jquery-ui.js',
 	    'node_modules/lodash/index.js',
 	    'node_modules/codemirror/lib/codemirror.js',
 	    'node_modules/codemirror/addon/mode/overlay.js',
@@ -57,7 +57,7 @@ module.exports = {
     ],
 
     CSS: [
-        'node_modules/jquery-ui/themes/smoothness/jquery-ui.css',
+        'node_modules/components-jquery-ui/themes/smoothness/jquery-ui.css',
         'node_modules/jquery-contextmenu/dist/jquery.contextMenu.css',
         'node_modules/bootstrap/dist/css/bootstrap.css',
         'node_modules/jf-angular-ui-grid/ui-grid.min.css',

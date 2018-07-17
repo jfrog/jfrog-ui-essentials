@@ -89,7 +89,7 @@
     "jf-tooltipster": "3.3.0",
     "jquery": "3.3.1",
     "jquery-contextmenu": "1.8.1",
-    "jquery-ui": "1.12.1",
+    "components-jqueryui": "1.12.1",
     "js-beautify": "1.6.11",
     "lodash": "3.10.1",
     "moment": "2.19.1",
