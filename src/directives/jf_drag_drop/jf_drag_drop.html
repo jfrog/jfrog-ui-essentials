@@ -1,6 +1,6 @@
 <div class="dnd-panel" ng-keydown="jfDragDrop.onKeyDown($event)" tabindex="0">
     <div class="row dnd-filter-wrapper">
-        <div class="col-lg-5">
+        <div class="col-lg-5 col-md-5 col-sm-5">
             <input type="text"
                    ng-style="{color:jfDragDrop.noMatches ? 'red' : 'black'}"
                    ng-model="jfDragDrop.filterExcludeList"
@@ -10,8 +10,8 @@
                    ng-disabled="jfDragDrop.disabled"
                    class="input-text dnd-filter">
         </div>
-        <div class="col-lg-2"></div>
-        <div class="col-lg-5">
+        <div class="col-lg-2 col-md-2 col-sm-2"></div>
+        <div class="col-lg-5 col-md-5 col-sm-5">
             <input type="text"
                    ng-style="{color:jfDragDrop.noIncludeMatches ? 'red' : 'black'}"
                    ng-model="jfDragDrop.filterIncludeList"
@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-5 col-md-5 col-sm-5">
             <h5 class="text-primary" ng-if="jfDragDrop.headers.leftTitle">
                 {{jfDragDrop.headers.leftTitle}}
             </h5>
@@ -55,7 +55,7 @@
             <jf-drag-drop-pagination pagination-api="jfDragDrop.excludesPaginationApi"></jf-drag-drop-pagination>
         </div>
 
-        <div class="col-lg-2">
+        <div class="col-lg-2 col-md-2 col-sm-2">
             <h5 class="text-primary" ng-if="jfDragDrop.headers.leftTitle || jfDragDrop.headers.rightTitle">&nbsp;</h5>
             <ul class="dnd-actions">
                 <li>
@@ -81,7 +81,7 @@
             </ul>
         </div>
 
-        <div class="col-lg-5">
+        <div class="col-lg-5 col-md-5 col-sm-5">
             <h5 class="text-primary"
                 ng-if="jfDragDrop.headers.rightTitle">{{jfDragDrop.headers.rightTitle}}
             </h5>

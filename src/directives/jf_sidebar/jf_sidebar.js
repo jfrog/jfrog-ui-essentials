@@ -616,6 +616,7 @@ export function jfSidebar() {
 		scope: {
 			driver: '=',
 			footerTemplate: '@',
+			footerTemplateHtml:'@',
 			openAdminSize: '@?', //left here for backward compatibility, use defaultSubMenuWidth
 			defaultSubMenuWidth: '@?',
 			noSearchBox: '@?',

@@ -1,11 +1,11 @@
 {
   "name": "jfrog-ui-essentials",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0-beta.4",
   "license": "Apache-2.0",
   "description": "JFrog UI Essentials",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/jfrog/jfrog-ui-essentials.git"
   },
   "devDependencies": {
     "jasmine-jquery": "2.1.0",

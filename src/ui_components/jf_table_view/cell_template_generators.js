@@ -16,7 +16,7 @@ let cellTemplateGenerators = {
     },
     checkboxColumn: function(model, click, disabled) {
         return '<div><div class="grid-cell-checkbox"><jf-checkbox><input ng-model="' + model + '"' +
-            (click && click.length ? ' ng-click="' + click + '"' : '') +
+            (click && click.length ? ' ng-change="' + click + '"' : '') +
             (disabled && disabled.length ? ' ng-disabled="' + disabled + '"' : '') +
             ' type="checkbox"/></jf-checkbox></div></div>';
     },
