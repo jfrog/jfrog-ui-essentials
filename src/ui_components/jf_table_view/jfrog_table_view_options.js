@@ -167,13 +167,33 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 		_transformDataForSubRowsSupport(data, autoExpand) {
 			let rowsToExpand = [];
 			data.forEach((row) => {
-				if (row.$subRows && row.$subRows.length) {
+				if (row.$subRows) {
 					row.$expandable = true;
-					row.$subRows.forEach((sub) => {
-						sub.$parentRow = row;
-					});
-                    if (row.$expanded) {
-                        rowsToExpand.push(row);
+					if (_.isArray(row.$subRows)) {
+					    row.$subRows.forEach((sub) => {
+                            sub.$parentRow = row;
+                        });
+                        if (row.$expanded) {
+                            rowsToExpand.push(row);
+                        }
+                    }
+                    else if (_.isFunction(row.$subRows)) {
+					    let origFunc = row.$subRows;
+                        row.$subRows = () => {
+                            let promise = origFunc();
+                            row.$pendingSubRows = true;
+                            promise.then(subRows => {
+                                subRows.forEach((sub) => {
+                                    sub.$parentRow = row;
+                                });
+                                row.$subRows = subRows;
+                                delete row.$pendingSubRows;
+                            })
+                            return promise;
+                        }
+                        if (row.$expanded) {
+                            row.$subRows().then(() => this._addSubRows(row, data));
+                        }
                     }
 				}
 			});
@@ -184,17 +204,22 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 		}
 
 		toggleExpansion(row) {
-			if (row.$expandable) {
-				row.$expanded = !row.$expanded;
-				if (row.$expanded) {
-					this._addSubRows(row);
-				} else {
-					this._removeSubRows(row);
-				}
-			}
-			else if (row.$parentRow) {
-				this.toggleExpansion(row.$parentRow);
-			}
+		    if (_.isFunction(row.$subRows)) {
+		        row.$subRows().then(() => this.toggleExpansion(row));
+            }
+            else {
+                if (row.$expandable) {
+                    row.$expanded = !row.$expanded;
+                    if (row.$expanded) {
+                        this._addSubRows(row);
+                    } else {
+                        this._removeSubRows(row);
+                    }
+                }
+                else if (row.$parentRow) {
+                    this.toggleExpansion(row.$parentRow);
+                }
+            }
 		}
 
 		_addSubRows(row, addTo = null) {
