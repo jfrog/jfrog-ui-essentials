@@ -1,6 +1,6 @@
 {
   "name": "jfrog-ui-essentials",
-  "version": "1.4.5" ,
+  "version": "1.4.3-dev.8" ,
   "license": "Apache-2.0",
   "description": "JFrog UI Essentials",
   "repository": {
