@@ -12,6 +12,7 @@ export function jfTabularDnD() {
             availableItemsColumns: '=?',
             selectedItemsColumns: '=?',
             onChange: '&?',
+            onRowClick: '&?',
             entityName: '@?',
             appScope: '=?',
             disableWholeRowSelection: '=?',
@@ -105,6 +106,11 @@ class jfTabularDnDController {
             }
             this.availableItemsTableOptions.on('row.clicked', toggleSelection);
             this.selectedItemsTableOptions.on('row.clicked', toggleSelection);
+        }
+
+        if (this.onRowClick) {
+            this.availableItemsTableOptions.on('row.clicked', row => this.onRowClick({row: row.entity, list: 'available'}));
+            this.selectedItemsTableOptions.on('row.clicked', row => this.onRowClick({row: row.entity, list: 'selected'}));
         }
 
         this.availableItemsTableOptions.on('selection.change', () => {
