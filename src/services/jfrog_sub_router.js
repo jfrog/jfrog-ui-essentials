@@ -101,7 +101,7 @@ export class JFrogSubRouter {
             },
             off(event, listener) {
                 if (!_.includes(THIS.supportedEvents, event)) {
-                    console.error('jf-table-view: Unsupported Event: ' + event);
+                    console.error('JFrogSubRouter: Unsupported Event: ' + event);
                     return;
                 }
                 if (THIS.$listeners[event]) {
