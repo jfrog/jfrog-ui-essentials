@@ -875,5 +875,29 @@ class jfWidgetsLayoutController {
 
     }
 
+    expandPane(layoutObj) {
+        this.transformedLayout.forEach((rowOrColumn) => {
+            rowOrColumn.forEach((cell)=> {
+                if (!cell.dimBeforeExpansion) {
+                    cell.dimBeforeExpansion = {width: cell.percentWidth, height: cell.percentHeight};
+                    cell.percentHeight = cell.percentWidth = cell !== layoutObj ? 0 : 100;
+                }
+                else {
+                    cell.percentWidth = cell.dimBeforeExpansion.width;
+                    cell.percentHeight = cell.dimBeforeExpansion.height;
+                    delete cell.dimBeforeExpansion;
+                }
+            })
+        })
+
+        this.updateCss();
+        if (this.options.parent && this.parentCell) {
+            this.options.parent.expandPane(this.parentCell)
+        }
+
+        layoutObj.expanded = !layoutObj.expanded;
+
+    }
+
 }
 
