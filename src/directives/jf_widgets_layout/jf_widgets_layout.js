@@ -319,22 +319,26 @@ class jfWidgetsLayoutController {
                 if (widget.model) {
                     _.extend(scope,widget.model);
                 }
-                if (widget.controller) {
-
-                    widget.controller.prototype.$widgetLayoutManager = this;
-
-                    let controllerInstance = this.$injector.instantiate(widget.controller);
-
-                    controllerInstance.$element = children[0];
-                    controllerInstance.$layoutObject = this._getLayoutByWidget(elem.prop('id'));
-                    controllerInstance.$scope = scope;
-                    controllerInstance.$widgetObject = widget;
-
-                    let controllerObject = {};
-                    controllerObject[widget.controllerAs || 'ctrl'] = controllerInstance;
-
-                    _.extend(scope,controllerObject);
+                if (this.options.sharedModel) {
+                    _.extend(scope,this.options.sharedModel);
                 }
+                if (!widget.controller) {
+                    widget.controller = class Ctrl {}
+                }
+
+                widget.controller.prototype.$widgetLayoutManager = this;
+
+                let controllerInstance = this.$injector.instantiate(widget.controller);
+
+                controllerInstance.$element = children[0];
+                controllerInstance.$layoutObject = this._getLayoutByWidget(elem.prop('id'));
+                controllerInstance.$scope = scope;
+                controllerInstance.$widgetObject = widget;
+
+                let controllerObject = {};
+                controllerObject[widget.controllerAs || 'ctrl'] = controllerInstance;
+
+                _.extend(scope,controllerObject);
 
 
                 //We compile only first child, templates should have only one root element!
