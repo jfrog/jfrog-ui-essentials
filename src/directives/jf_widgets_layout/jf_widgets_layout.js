@@ -880,7 +880,18 @@ class jfWidgetsLayoutController {
             rowOrColumn.forEach((cell)=> {
                 if (!cell.dimBeforeExpansion) {
                     cell.dimBeforeExpansion = {width: cell.percentWidth, height: cell.percentHeight};
-                    cell.percentHeight = cell.percentWidth = cell !== layoutObj ? 0 : 100;
+                    if (cell === layoutObj) cell.percentWidth = cell.percentHeight = 100;
+                    else {
+                        let onTheSameRowOrColumn = rowOrColumn.indexOf(layoutObj) !== -1;
+                        if (onTheSameRowOrColumn) {
+                            cell[this.mainAxis === 'columns' ? 'percentHeight' : 'percentWidth'] = 0;
+                            cell[this.mainAxis === 'rows' ? 'percentHeight' : 'percentWidth'] = 100;
+                        }
+                        else {
+                            cell[this.mainAxis === 'rows' ? 'percentHeight' : 'percentWidth'] = 0;
+                            cell[this.mainAxis === 'columns' ? 'percentHeight' : 'percentWidth'] = 100;
+                        }
+                    }
                 }
                 else {
                     cell.percentWidth = cell.dimBeforeExpansion.width;
