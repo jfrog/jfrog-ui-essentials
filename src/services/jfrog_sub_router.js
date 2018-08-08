@@ -67,8 +67,8 @@ export class JFrogSubRouter {
             get config() {
                 return THIS.$config;
             },
-            updateUrl() {
-                if (THIS.$config.hotSyncUrl) return;
+            updateUrl(force = false) {
+                if (!force && THIS.$config.hotSyncUrl) return;
                 else THIS._mapParamsToPath();
             },
             goto(stateName, params) {
@@ -326,7 +326,6 @@ export class JFrogSubRouter {
         if (!this.$config) return;
 
         let currentUrlParams = this._getPathAsParams();
-
         _.extend(this.$config.$params, currentUrlParams);
 
         let configParams = this._getParametersFromConfig();
