@@ -102,7 +102,7 @@ class jfMarkupEditorController {
     }
 
     checkPreviewers() {
-        console.log(this.previewRenderers);
+
         if (!this.previewRenderers) {
             this.previewRenderers = {};
             this.previewersCount = 0;
