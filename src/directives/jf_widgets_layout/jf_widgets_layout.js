@@ -341,6 +341,8 @@ class jfWidgetsLayoutController {
                 _.extend(scope,controllerObject);
 
 
+                if (controllerInstance.$onInit) controllerInstance.$onInit();
+
                 //We compile only first child, templates should have only one root element!
                 let rootChild = $(children[0]);
                 if (!rootChild.prop('compiled')) {
