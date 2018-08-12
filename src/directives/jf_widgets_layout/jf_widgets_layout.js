@@ -30,7 +30,7 @@ class jfWidgetsLayoutController {
         this.$timeout = $timeout;
         this.$compile = $compile;
         this.$templateRequest = $templateRequest;
-
+        this.ANIM_DURATION = .5;
     }
 
     $onInit() {
@@ -222,6 +222,7 @@ class jfWidgetsLayoutController {
     }
 
     updateCss() {
+        let oldRules = _.cloneDeep(this.cssRules);
         this.cssRules = {};
 
         let currentX = 0, currentY = 0;
@@ -244,7 +245,8 @@ class jfWidgetsLayoutController {
                     left: currentX + '%',
                     bottom: (100 - (currentY + layoutDef.percentHeight)) + '%',
                     right: (100 - (currentX + layoutDef.percentWidth)) + '%',
-                    padding: (this.options.padding/2) + 'px'
+                    padding: (this.options.padding/2) + 'px',
+                    opacity: (oldRules && oldRules[layoutDef.cssId] && oldRules[layoutDef.cssId].opacity !== undefined) ? oldRules[layoutDef.cssId].opacity : 1
                 };
 
                 if (this.mainAxis === 'rows') {
@@ -815,7 +817,7 @@ class jfWidgetsLayoutController {
 
     _setTransitions(active) {
         if (active) {
-            $('.widgets-padder .widget-wrapper').css('transition','all 0.5s ease 0s')
+            $('.widgets-padder .widget-wrapper').css('transition',`all ${this.ANIM_DURATION}s ease-out`)
         }
         else {
             $('.widgets-padder .widget-wrapper').css('transition','none')
@@ -878,12 +880,16 @@ class jfWidgetsLayoutController {
     }
 
     expandPane(layoutObj) {
+        let expanding = this.$expanded = !this.$expanded ? layoutObj : null;
         this.transformedLayout.forEach((rowOrColumn) => {
             rowOrColumn.forEach((cell)=> {
-                if (!cell.dimBeforeExpansion) {
+                if (expanding) {
                     cell.dimBeforeExpansion = {width: cell.percentWidth, height: cell.percentHeight};
-                    if (cell === layoutObj) cell.percentWidth = cell.percentHeight = 100;
+                    if (cell === layoutObj) {
+                        cell.percentWidth = cell.percentHeight = 100;
+                    }
                     else {
+                        this.cssRules[cell.cssId].opacity = 0;
                         let onTheSameRowOrColumn = rowOrColumn.indexOf(layoutObj) !== -1;
                         if (onTheSameRowOrColumn) {
                             cell[this.mainAxis === 'columns' ? 'percentHeight' : 'percentWidth'] = 0;
@@ -903,7 +909,23 @@ class jfWidgetsLayoutController {
             })
         })
 
-        this.updateCss();
+        if (expanding) {
+            this.$timeout(() => {
+                this.updateCss();
+            }, this.ANIM_DURATION*1000);
+        }
+        else {
+            this.updateCss();
+            this.$timeout(() => {
+                this.transformedLayout.forEach((rowOrColumn) => {
+                    rowOrColumn.forEach((cell)=> {
+                        this.cssRules[cell.cssId].opacity = 1;
+                    })
+                })
+
+            }, this.ANIM_DURATION*1000);
+        }
+
         if (this.options.parent && this.parentCell) {
             this.options.parent.expandPane(this.parentCell)
         }
