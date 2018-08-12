@@ -8,11 +8,11 @@
 	</button>
 	<h3 class="modal-title">{{modalTitle}}</h3>
 </div>
-<div class="modal-body" ng-if="text">
-	<p ng-bind-html="text"></p>
+<div class="modal-body simple-text" ng-if="text">
+	<p ng-bind-html="text" class="full-text-item"></p>
 </div>
-<div class="modal-body" ng-if="list">
-	<p ng-repeat="item in list" ng-bind-html="item" ng-click="onItemClick(item)"></p>
+<div class="modal-body text-to-list" ng-if="list">
+	<p ng-repeat="item in list" class="full-text-item" ng-bind-html="item" ng-click="onItemClick(item)"></p>
 </div>
 <div class="modal-footer">
 	<button class="btn btn-secondary"
