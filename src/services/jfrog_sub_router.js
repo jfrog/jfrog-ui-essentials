@@ -300,7 +300,7 @@ export class JFrogSubRouter {
 
         pathParts.forEach((part, index) => {
             let param = configParams.path[index];
-            if (param) params[param] = decodeURIComponent(part);
+            if (param) params[param] = this._customPathPartDecode(part);
         });
 
         configParams.search.forEach(searchParam => {
@@ -358,7 +358,7 @@ export class JFrogSubRouter {
                     stop = true;
                 }
                 else {
-                    pathParts.push(encodeURIComponent(val));
+                    pathParts.push(this._customPathPartEncode(val));
                 }
             }
         })
@@ -424,6 +424,16 @@ export class JFrogSubRouter {
         else {
             return searchParams;
         }
+    }
+
+    _customPathPartEncode(pathPart) {
+        if (!pathPart) return pathPart;
+        return encodeURIComponent(pathPart).replace(/%2F/g,'~2F');
+    }
+
+    _customPathPartDecode(pathPart) {
+        if (!pathPart) return pathPart;
+        return decodeURIComponent(pathPart.replace(/~2F/g,'%2F'));
     }
 
 }
