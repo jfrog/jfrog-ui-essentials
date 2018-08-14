@@ -69,7 +69,7 @@ class jfTextBoxController {
         }
         else {
             $(this.$element).find('.jf-text-box-content-stage').text('');
-            let words = this.fullContent.split('');
+            let words = this.fullContent.split(/\s+/g);
             let i = 1;
             let numOfLines = $(this.$element).find('.jf-text-box-content-stage').height() / this.lineHeight;
             while (numOfLines <= this.numOfWholeRows && i <= words.length) {
