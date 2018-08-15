@@ -3,13 +3,14 @@ export function jfPendingData() {
         restrict: 'E',
         transclude: true,
         scope: {
-            waitFor: '='
+            waitFor: '=',
+            delaySpinner: '@?'
         },
         controller: jfTinySpinnerController,
         controllerAs: '$ctrl',
         bindToController: true,
         template: `
-            <div class="spinner-msg-local" ng-if="$ctrl.waitFor === undefined">
+            <div class="spinner-msg-local" ng-if="$ctrl.waitFor === undefined && (!$ctrl.delaySpinner || $ctrl.showSpinner)">
                 <div class="icon-hourglass-local"></div>
             </div>
             <ng-transclude ng-if="$ctrl.waitFor !== undefined"></ng-transclude>
@@ -19,9 +20,13 @@ export function jfPendingData() {
 
 class jfTinySpinnerController {
     constructor($timeout) {
-        const MINIMUM_WAIT_TO_SHOW_SPINNER = 400; //ms
-        $timeout(() => {
-            this.showSpinner = true;
-        }, MINIMUM_WAIT_TO_SHOW_SPINNER)
+        this.$timeout = $timeout;
+    }
+    $onInit() {
+        if (this.delaySpinner) {
+            this.$timeout(() => {
+                this.showSpinner = true;
+            }, !_.isNaN(parseInt(this.delaySpinner)) ? this.delaySpinner : 400)
+        }
     }
 }
