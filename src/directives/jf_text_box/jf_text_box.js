@@ -9,11 +9,11 @@ class jfTextBoxController {
         this.fullTextModal = JfFullTextService;
         this.$q = $q;
         this.$sce = $sce;
-
-        this.seeAllTemplate = '<div class="jf-text-box-show-all" ng-click="jfTextBox.seeAll()">(SEE ALL...)</div>';
     }
 
     $onInit() {
+
+        this.seeAllText = this.seeAllText || '(SEE ALL...)';
 
         this.measureLineHeight().then(() => {
             this.fullContent = this.text;
@@ -69,24 +69,39 @@ class jfTextBoxController {
         }
         else {
             $(this.$element).find('.jf-text-box-content-stage').text('');
-            let words = this.fullContent.split(/\s+/g);
+            let words = this.splitText(this.fullContent);
             let i = 1;
             let numOfLines = $(this.$element).find('.jf-text-box-content-stage').height() / this.lineHeight;
             while (numOfLines <= this.numOfWholeRows && i <= words.length) {
-                $(this.$element).find('.jf-text-box-content-stage').html(words.slice(0,i).join(' ') + ' ' + this.seeAllTemplate);
+                $(this.$element).find('.jf-text-box-content-stage').text(words.slice(0,i).join('') + ' ' + this.seeAllText);
                 numOfLines = $(this.$element).find('.jf-text-box-content-stage').height() / this.lineHeight;
                 i++;
             }
-            this.content = this.$sce.trustAsHtml(words.slice(0,i-2).join(' ') + ' ' + this.seeAllTemplate);
-
-            this.$timeout(() => {
-                let seeAll = $('.jf-text-box-show-all');
-                if (!seeAll.prop('compiled')) {
-                    this.$compile(seeAll)(this.$scope);
-                    seeAll.prop('compiled', true);
-                }
-            })
+            this.content = words.slice(0,i-2).join('');
         }
+    }
+
+    splitText(text) {
+
+        if (this.splitCache) return this.splitCache;
+        else {
+            let regex = /\s+/g;
+            let parts = [];
+            let match = regex.exec(text);
+            let lastIndex = 0;
+            while (match) {
+                parts.push(text.substr(lastIndex, match.index - lastIndex) + match[0]);
+                lastIndex = match.index + match[0].length;
+                match = regex.exec(text);
+            }
+            parts.push(text.substr(lastIndex, text.length - lastIndex));
+
+            if (parts.length === 1) parts = parts[0].split('');
+
+            this.splitCache = parts;
+            return parts;
+        }
+
     }
 
     measureLineHeight() {
@@ -117,7 +132,8 @@ export function jfTextBox() {
         scope: {
             text: '=',
             numOfLines: '@',
-            modalTitle: '@?'
+            modalTitle: '@?',
+            seeAllText: '@?'
         },
         controller: jfTextBoxController,
         controllerAs: 'jfTextBox',
