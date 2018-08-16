@@ -1,6 +1,6 @@
 class jfTextBoxController {
 	/* @ngInject */
-    constructor($scope, $element, $timeout, $interval, $compile, $q, $sce, JfFullTextService) {
+    constructor($scope, $element, $timeout, $interval, $compile, $q, JfFullTextService) {
         this.$scope = $scope;
         this.$compile = $compile;
         this.$timeout = $timeout;
@@ -8,12 +8,11 @@ class jfTextBoxController {
         this.$element = $element;
         this.fullTextModal = JfFullTextService;
         this.$q = $q;
-        this.$sce = $sce;
     }
 
     $onInit() {
 
-        this.seeAllText = this.seeAllText || '(SEE ALL...)';
+        this.seeAllText = this.seeAllText || '(Show All ...)';
 
         this.measureLineHeight().then(() => {
             this.fullContent = this.text;
@@ -29,11 +28,14 @@ class jfTextBoxController {
     }
 
     registerResize() {
-        this.onResize = () => {
+        let appliedRefresh = () => {
             this.$scope.$apply(() => {
                 this.refreshText();
             })
         }
+        let throttledRefresh = _.throttle(appliedRefresh, 150, {leading: false})
+
+        this.onResize = throttledRefresh;
 
         $(window).on('resize', this.onResize)
     }
@@ -51,34 +53,78 @@ class jfTextBoxController {
     }
 
     get numOfWholeRows() {
-        return Math.floor(this.containerHeight / this.lineHeight);
+        let auto = Math.floor(this.containerHeight / this.lineHeight);
+        return this.maxLines ? Math.min(parseInt(this.maxLines) + 1, auto) : auto;
     }
 
     get numOfActualRows() {
         let contentHeight = $(this.$element).find('.jf-text-box-content-full').height();
-        return contentHeight / this.lineHeight;
+        return Math.ceil(contentHeight / this.lineHeight);
+    }
+
+    get numOfVisibleRows() {
+        let contentHeight = $(this.$element).find('.jf-text-box-content-current').height();
+        return Math.ceil(contentHeight / this.lineHeight);
+    }
+
+    get numOfStageRows() {
+        let contentHeight = $(this.$element).find('.jf-text-box-content-stage').height();
+        return Math.ceil(contentHeight / this.lineHeight);
     }
 
     get isOverflowing() {
         return this.numOfActualRows > this.numOfWholeRows;
     }
 
-    refreshText() {
+    setStageText(text) {
+        $(this.$element).find('.jf-text-box-content-stage').text(text);
+    }
+
+    refreshText(minus = 1) {
+
         if (!this.isOverflowing) {
             this.content = this.fullContent;
         }
         else {
-            $(this.$element).find('.jf-text-box-content-stage').text('');
+            $(this.$element).find('.jf-text-box-content-stage').html('');
             let words = this.splitText(this.fullContent);
             let i = 1;
-            let numOfLines = $(this.$element).find('.jf-text-box-content-stage').height() / this.lineHeight;
-            while (numOfLines <= this.numOfWholeRows && i <= words.length) {
-                $(this.$element).find('.jf-text-box-content-stage').text(words.slice(0,i).join('') + ' ' + this.seeAllText);
-                numOfLines = $(this.$element).find('.jf-text-box-content-stage').height() / this.lineHeight;
+            let getNumOfLinesUntil = (index, withSeeAll = true) => {
+                this.setStageText(_.trimRight(words.slice(0,index).join('')) + (withSeeAll ? ' ' : ''))
+                if (withSeeAll) $(this.$element).find('.jf-text-box-content-stage').append($(`  <div class="jf-text-box-show-all">${this.seeAllText}</div>`));
+                return this.numOfStageRows;
+            }
+            while (getNumOfLinesUntil(i) <= this.numOfWholeRows && i <= words.length) {
                 i++;
             }
-            this.content = words.slice(0,i-2).join('');
+
+            let saved = i;
+            i-=minus;
+            while (getNumOfLinesUntil(i, false) !== getNumOfLinesUntil(i) && i > 0) {
+                i--;
+            }
+
+            if  (i === 0) {
+                i = saved;
+                this.wrapSeeAll = true;
+            }
+            else this.wrapSeeAll = false;
+
+            let fit = words.slice(0,i);
+
+            this.setStageText(_.trimRight(fit.join('')) + (this.isOverflowing ? ' ' : ''));
+            if (this.isOverflowing) $(this.$element).find('.jf-text-box-content-stage').append($(`  <div class="jf-text-box-show-all">${this.seeAllText}</div>`));
+
+            this.$timeout(() => {
+                if (this.numOfStageRows > this.numOfWholeRows) {
+                    this.refreshText(minus+1);
+                }
+                else {
+                    this.content = _.trimRight(fit.join(''));
+                }
+            })
         }
+        this.ready = true;
     }
 
     splitText(text) {
@@ -96,7 +142,12 @@ class jfTextBoxController {
             }
             parts.push(text.substr(lastIndex, text.length - lastIndex));
 
-            if (parts.length === 1) parts = parts[0].split('');
+            parts = _.map(parts, part => {
+                if (part.length > 16) return part.split('');
+                else return part;
+            })
+
+            parts = _.flatten(parts);
 
             this.splitCache = parts;
             return parts;
@@ -116,12 +167,18 @@ class jfTextBoxController {
     }
 
     seeAll() {
+        if (this.noAction) return;
         let text = this.fullContent;
-        this.fullTextModal.showFullTextModal(text, this.modalTitle || 'Full Text', 500, false, null, 'text-box-show-all-modal');
-        this.deregisterResize();
-        this.fullTextModal.modalInstance.result.finally(() => {
-            this.$timeout(() => this.registerResize());
-        })
+        if (this.customAction) {
+            this.customAction({text})
+        }
+        else {
+            this.fullTextModal.showFullTextModal(text, this.modalTitle || 'Full Text', 500, false, null, 'text-box-show-all-modal');
+            this.deregisterResize();
+            this.fullTextModal.modalInstance.result.finally(() => {
+                this.$timeout(() => this.registerResize());
+            })
+        }
     }
 
 }
@@ -133,7 +190,10 @@ export function jfTextBox() {
             text: '=',
             numOfLines: '@',
             modalTitle: '@?',
-            seeAllText: '@?'
+            seeAllText: '@?',
+            maxLines: '@?',
+            customAction: '&?',
+            noAction: '@?'
         },
         controller: jfTextBoxController,
         controllerAs: 'jfTextBox',
