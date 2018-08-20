@@ -1,10 +1,11 @@
-<div class="panel-container">
+<div class="panel-container{{ jfPanelClasses ? ' ' + jfPanelClasses : '' }}" ng-class="{'bordered': bordered || $ctrl.hasNestedJfPanel()}">
     <span class="panel-heading" ng-if="jfPanelHeading">
         {{jfPanelHeading}} <jf-help-tooltip html="jfPanelHelpTooltip" ng-if="jfPanelHelpTooltip"></jf-help-tooltip>
     </span>
     <div class="panel-body">
-        <div class="panel panel-default clearfix {{ jfPanelClasses }}">
+        <div class="panel panel-default clearfix">
             <ng-transclude></ng-transclude>
         </div>
     </div>
 </div>
+

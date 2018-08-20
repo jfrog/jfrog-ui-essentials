@@ -7,11 +7,11 @@
     border: none;
     position: relative;
     top: 10px;
-    left: 4px;
-    color: @greenBGDark;
+    left: 0;
+    color: @jfColorBlack;
     width: auto;
-    padding: 0 4px 0 4px;
-    font-size: 16px;
+    padding: 0 4px 0 0;
+    font-size: 14px;
     font-weight: 600;
     z-index: 300;
 
@@ -23,10 +23,23 @@
       padding-right: 17px;
     }
 
-    .panel-container .panel &, .wizard-content &, &.borderless {
-      left: 0;
-      padding-left: 0;
-    }
+    //.panel-container .panel &, .wizard-content &, &.borderless {
+    //  left: 0;
+    //  padding-left: 0;
+    //}
+  }
+  &.bordered {
+      & > .panel-heading {
+        left: 4px;
+        padding: 0 4px 0 4px;
+      }
+      & > .panel-body {
+        .panel {
+          left: 0;
+          border-width: 1px;
+          padding: 21px 21px 12px;
+        }
+      }
   }
 
   .panel-body {
@@ -34,11 +47,16 @@
   }
 
   .panel {
-    padding: 21px 21px 12px;
+    padding: 15px 21px 12px 0;
     margin-bottom: 0;
+    margin-right: 15px;
     border-radius: 0;
     box-shadow: 0 0 0;
-    margin-right: 15px;
+
+    left: 0;
+    border-width: 1px 0 0;
+    margin-top: 4px;
+
     &.clearfix {
       margin-right: 0;
     }

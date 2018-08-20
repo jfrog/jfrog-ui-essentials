@@ -25,6 +25,14 @@
         <ng-include src="$wizardDef.steps[$wizardCtrl.currentStep-1].templateUrl"></ng-include>
     </div>
     <div class="modal-footer" jf-disable-ng-animate>
+        <div class="pull-left"
+             ng-if="$wizardCtrl.doNotShowWizardAgain">
+            <jf-checkbox text="{{$wizardCtrl.doNotShowWizardAgain.label}}">
+                <input type="checkbox"
+                       ng-change="$wizardCtrl.preventShowingWizardAgain()"
+                       ng-model="$wizardCtrl.doNotShowWizardAgain.model">
+            </jf-checkbox>
+        </div>
         <div class="progress-indicator">
             <div class="progress-indicator-led"
                  ng-class="{current: $index === $wizardCtrl.currentStep-1}"
