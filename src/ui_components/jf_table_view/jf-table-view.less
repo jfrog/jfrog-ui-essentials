@@ -152,40 +152,6 @@
         border-top: 2px solid green !important;
       }
 
-      .row-actions-dropdown {
-        background: white;
-        position: absolute;
-        top: ~"calc(100% - 21px)";
-        right: 26px;
-        z-index: 9999999;
-        box-shadow: 0 2px 12px rgba(0,0,0,.25);
-        .action-item {
-          cursor: pointer;
-          height: 40px;
-          line-height: 40px;
-          padding: 0 10px;
-          font-size: 13px;
-          span {
-            margin-left: 8px;
-          }
-          .action-icon {
-            &:before {
-              width: auto!important;
-              font-size: 18px;
-              line-height: 40px;
-              float: left;
-            }
-          }
-          &:hover {
-            color: @greenFontHeader;
-            background-color: @grayBGLight!important;
-            &[icon-name="icon icon-clear"] {
-              color: @redError;
-            }
-          }
-        }
-      }
-
       &.selected,
       &:hover {
 
@@ -479,6 +445,40 @@
       top: 5px;
     }
   }
+  .jf-table-row-actions-dropdown {
+    background: white;
+    position: absolute;
+    top: ~"calc(100% - 21px)";
+    right: 26px;
+    z-index: 9999999;
+    box-shadow: 0 2px 12px rgba(0,0,0,.25);
+    .action-item {
+      cursor: pointer;
+      height: 40px;
+      line-height: 40px;
+      padding: 0 10px;
+      font-size: 13px;
+      span {
+        margin-left: 8px;
+      }
+      .action-icon {
+        &:before {
+          width: auto!important;
+          font-size: 18px;
+          line-height: 40px;
+          float: left;
+        }
+      }
+      &:hover {
+        color: @greenFontHeader;
+        background-color: @grayBGLight!important;
+        &[icon-name="icon icon-clear"] {
+          color: @redError;
+        }
+      }
+    }
+  }
+
 }
 
 // CSS for the 'show all' modal
