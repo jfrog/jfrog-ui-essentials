@@ -30,7 +30,7 @@
   }
 
   .grid-items-container {
-    height: 40px;
+    height: 50px;
     overflow: auto;
   }
 
@@ -75,7 +75,7 @@
   }
 
   .ui-grid-header-cell-wrapper, .ui-grid-header-canvas {
-    height: 40px;
+    height: 50px;
   }
 
   .selected-row(){
@@ -197,12 +197,12 @@
     }
 
     .ui-grid-cell-contents {
-      height: 40px;
-      line-height: 40px;
+      height: 50px;
+      line-height: 50px;
       padding: 0 5px 0 15px;
 
       a::before {
-        line-height: 40px;
+        line-height: 50px;
       }
 
       .group-button {
@@ -297,13 +297,36 @@
 
   .ui-grid-icon-down-dir, .ui-grid-icon-up-dir {
     position: absolute;
-    right: 0;
-    font-size: 19px;
+    right: auto;
+    font-size: 14px;
+    padding: 0 5px;
+    vertical-align: middle;
+    top: 2px;
+    &:before {
+      font-family: artifactory!important;
+      box-sizing: border-box;
+      font-weight: 400!important;
+      line-height: 1;
+      font-style: normal!important;
+      font-variant: normal!important;
+      text-transform: none!important;
+      speak: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  }
+
+  .ui-grid-icon-down-dir:before {
+    content: "\e935";
+  }
+
+  .ui-grid-icon-up-dir:before {
+    content: "\e934";
   }
 
   .ui-grid-selection-row-header-buttons {
     opacity: 1;
-    line-height: 40px;
+    line-height: 50px;
   }
 
   // selection checkbox icons
@@ -318,11 +341,11 @@
       font-family: "artifactory" !important;
 
       width: 40px;
-      height: 40px;
+      height: 50px;
       display: block;
       position: relative;
       margin-left: 0;
-      top: 13px;
+      top: 17px;
       font-size: 16px;
       color: @grayBGDarker;
     }
@@ -346,8 +369,8 @@
       font-size: 18px;
       margin: 0;
       width: 30px;
-      height: 40px;
-      line-height: 40px;
+      height: 50px;
+      line-height: 50px;
     }
   }
 
@@ -381,12 +404,12 @@
   }
 
   .grid-cell-checkbox {
-    line-height: 40px;
+    line-height: 50px;
     text-align: center;
   }
 
   .ui-grid-draggable-row {
-    height: 40px;
+    height: 50px;
     overflow: hidden;
 
     //.grid-action-bar + .ui-grid-cell .ui-grid-cell-contents {
@@ -430,8 +453,8 @@
 .btn-action {
   color: @blackFontDark !important;
   width: 40px;
-  height: 40px;
-  line-height: 40px;
+  height: 50px;
+  line-height: 50px;
   border-radius: 0;
   border: none;
   padding: 0 !important;
@@ -455,7 +478,7 @@
     font-size: 16px;
 
     &:before {
-      line-height: 40px;
+      line-height: 50px;
     }
   }
 }
@@ -465,7 +488,7 @@
 }
 
 div.ui-grid-cell input.ng-valid {
-  height: 36px;
+  height: 46px;
   margin-top: 2px;
 }
 
@@ -487,7 +510,7 @@ div.ui-grid-cell input.ng-valid {
     color: @blueMain;
 
     &:before {
-      line-height: 40px;
+      line-height: 50px;
     }
   }
 
@@ -503,7 +526,7 @@ div.ui-grid-cell input.ng-valid {
   i {
     font-size: 17px;
     &:before {
-      line-height: 40px;
+      line-height: 50px;
     }
   }
 }
@@ -511,7 +534,7 @@ div.ui-grid-cell input.ng-valid {
 .wrapper-grid-actions {
   height: 68px;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: row;
   .counter-and-filter {
@@ -530,7 +553,7 @@ div.ui-grid-cell input.ng-valid {
   }
   jf-grid-pagination {
     order: 1;
-    min-width: 130px;
+    //min-width: 130px;
     align-self: flex-end;
     margin-left: -6px;
     .grid-pagination {
@@ -543,7 +566,7 @@ div.ui-grid-cell input.ng-valid {
     white-space: nowrap;
     min-width: 80px;
     .grid-batch-actions {
-      bottom: -1px;
+      bottom: 4px;
     }
   }
 }
@@ -618,7 +641,7 @@ div.ui-grid-cell input.ng-valid {
   cursor: pointer;
   background-color: @grayBGDark;
   width: 10px;
-  height: 40px;
+  height: 50px;
   
   i:before {
     width: 10px !important;

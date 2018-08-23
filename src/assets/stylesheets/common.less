@@ -21,14 +21,6 @@
       text-decoration: none;
       color: inherit;
     }
-
-    &.jf-link {
-      text-decoration: underline;
-      color: @jfColorBlack;
-      &:active, &:focus, &:hover {
-        text-decoration: underline;
-      }
-    }
   }
 
   b {
@@ -121,9 +113,10 @@
   }
 }
 
-a {
+a, .alert a {
   &.jf-link {
     text-decoration: underline;
+    text-decoration-color: @jfColorSmokedGrey;
     color: @jfColorBlack;
     &:active, &:focus, &:hover {
       text-decoration: underline;
