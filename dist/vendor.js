@@ -34,6 +34,7 @@ const essentialVendors = {
 			'vendor/draggable-rows.js',
 			'node_modules/hamsterjs/hamster.js',
 			'node_modules/angular-mousewheel/mousewheel.js',
+			'node_modules/moment/min/moment.min.js',
 			'node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
 			'node_modules/angular-eonasdan-datetimepicker/dist/angular-eonasdan-datetimepicker.js',
 			'node_modules/clipboard/dist/clipboard.min.js',
@@ -52,7 +53,6 @@ const essentialVendors = {
 			later: 	'node_modules/later/later.js',
 			jsBeautify: 'node_modules/js-beautify/js/lib/beautify.js',
 			jsTree: 'node_modules/jf-jstree/dist/jstree.js',
-			moment: 'node_modules/moment/min/moment.min.js',
 			momentDateFormatParser: 'node_modules/moment-jdateformatparser/moment-jdateformatparser.min.js',
 			jasmineMatchers: 'node_modules/jasmine-expect/dist/jasmine-matchers.js'
 		}
@@ -111,7 +111,6 @@ module.exports = {
 	    essentialVendors.js.optional.later,
 	    essentialVendors.js.optional.jsBeautify,
 	    essentialVendors.js.optional.jsTree,
-	    essentialVendors.js.optional.moment,
 	    essentialVendors.js.optional.momentDateFormatParser,
 	    essentialVendors.js.optional.jasmineMatchers,
     ],
