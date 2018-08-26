@@ -3,7 +3,7 @@
  * @type {{JS: string[], CSS: string[]}}
  */
 
-const essentialVendors = {
+const vendorsPathes = {
 	js: {
 		core: [
 			'node_modules/jquery/dist/jquery.js',
@@ -93,41 +93,41 @@ const essentialVendors = {
 };
 
 module.exports = {
-
+	ESSENTIALS_VENDORS: vendorsPathes,
     JS: [
         'vendor/jquery.highlight.js',
         'vendor/draggable-rows.js'
     ],
     JS_FOR_KARMA: [
-	    ...essentialVendors.js.core,
-	    essentialVendors.js.optional.codemirror.xml,
-	    essentialVendors.js.optional.codemirror.js,
-	    essentialVendors.js.optional.codemirror.click,
-	    essentialVendors.js.optional.codemirror.dialog,
-	    essentialVendors.js.optional.codemirror.search,
-	    essentialVendors.js.optional.codemirror.edit,
-	    essentialVendors.js.optional.codemirror.overlay,
-	    essentialVendors.js.optional.xml2js,
-	    essentialVendors.js.optional.later,
-	    essentialVendors.js.optional.jsBeautify,
-	    essentialVendors.js.optional.jsTree,
-	    essentialVendors.js.optional.momentDateFormatParser,
-	    essentialVendors.js.optional.jasmineMatchers,
+	    ...vendorsPathes.js.core,
+	    vendorsPathes.js.optional.codemirror.xml,
+	    vendorsPathes.js.optional.codemirror.js,
+	    vendorsPathes.js.optional.codemirror.click,
+	    vendorsPathes.js.optional.codemirror.dialog,
+	    vendorsPathes.js.optional.codemirror.search,
+	    vendorsPathes.js.optional.codemirror.edit,
+	    vendorsPathes.js.optional.codemirror.overlay,
+	    vendorsPathes.js.optional.xml2js,
+	    vendorsPathes.js.optional.later,
+	    vendorsPathes.js.optional.jsBeautify,
+	    vendorsPathes.js.optional.jsTree,
+	    vendorsPathes.js.optional.momentDateFormatParser,
+	    vendorsPathes.js.optional.jasmineMatchers,
     ],
 
     CSS: [
-	    ...essentialVendors.css.core,
-	    essentialVendors.css.optional.codemirror.dialog,
-	    essentialVendors.css.optional.jsTree,
+	    ...vendorsPathes.css.core,
+	    vendorsPathes.css.optional.codemirror.dialog,
+	    vendorsPathes.css.optional.jsTree,
     ],
 
     FONTS: [
-	    ...essentialVendors.fonts.core,
-	    essentialVendors.fonts.optional.jsTree
+	    ...vendorsPathes.fonts.core,
+	    vendorsPathes.fonts.optional.jsTree
     ],
 
     ASSETS: [
-	    ...essentialVendors.assets.core
+	    ...vendorsPathes.assets.core
     ]
 };
 
