@@ -122,7 +122,7 @@
                  ng-if="jfTableRow.tableView.options.actions.length > 3 && jfTableRow.tableView.options">
                 <div class="action-icon icon-more"
                      ng-click="jfTableRow.toggleActionsDropdown($event)"
-                     jf-tooltip="Actions"></div>
+                     jf-tooltip="{{jfTableRow.actionsDropdownOpen ? '' : 'Actions'}}"></div>
             </div>
         </div>
     </div>
