@@ -587,6 +587,10 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
             })
 		}
 
+		getActionsContainerWidthInPixels() {
+			return this.actionButtonSize * (this.actions.length <= 3 || this.isRowActionGroupingDisabled ? this.actions.length : 1);
+		}
+
 		_normalizeWidths(delay = true, recurse = false) {
 			if (!this.dirCtrl) {
 				return;
@@ -595,7 +599,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			let actionsWidth = 0;
 			let selectionWidth = 0;
 			if (this.actions) {
-				actionsWidth = this.actionButtonSize * (this.actions.length <= 3 ? this.actions.length : 1);
+				actionsWidth = this.getActionsContainerWidthInPixels();
 			}
 			if (this.hasSelection()) {
 				selectionWidth = this.selectionColumnWidth;
@@ -1506,6 +1510,11 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
         disableFilterWhen(isFilterDisabledCallback) {
 	      this.isFilterDisabledCallback = isFilterDisabledCallback;
+	      return this;
+        }
+
+		disableRowActionGrouping() {
+	      this.isRowActionGroupingDisabled = true;
 	      return this;
         }
 
