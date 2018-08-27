@@ -214,12 +214,12 @@
           }
       }
       &.group-header {
-        background-color: white !important;
-        color: @greenBGDark;
-        cursor: pointer;
-        &.expanded {
-          background-color: @greenBGSmallHover !important;
-        }
+        //background-color: white !important;
+        //color: @greenBGDark;
+        //cursor: pointer;
+        //&.expanded {
+        //  background-color: @greenBGSmallHover !important;
+        //}
       }
       &:not(.headers) {
         border: none;
@@ -319,10 +319,17 @@
               display: inline-table;
             }
             .icon.sorting-icon{
-              padding: 5px;
-              vertical-align: middle;
+              line-height: 1em;
+              padding: 0 5px;
               &:not(.active) {
                 color: @blackBorderLight;
+              }
+            }
+            .icon-small-arrow-down {
+              display: inline-block;
+              transition: transform .2s ease-in-out;
+              &.rotate180 {
+                transform: rotate(-180deg);
               }
             }
             &:hover {
@@ -333,21 +340,27 @@
           }
         }
         &.group-header {
-          .icon-more {
-            transform: rotate(-90deg) translate(-15px, 0) scale(1.5, 1.5);
-            margin: 4px 18px 0 7px;
+          color: @black;
+          .icon-small-arrow-down {
             display: inline-block;
-            &.expanded {
-              transform: rotate(0deg) translate(0, 16px) scale(1.5, 1.5);
-            }
+            transition: transform .2s ease-in-out;
+            transform: rotate(-90deg); // translate(-15px, 0) scale(1.5, 1.5)
           }
-          .group-header-count {
-            display: table-cell;
-            padding-left: 10px;
-            font-weight: 800;
-            font-size: 20px;
+          &.jf-table-cell {
+            position: absolute;
+            left: 0;
+            right: 0;
+            width: 100%;
+            cursor: pointer;
+          }
+
+          & > .icon-small-arrow-down {margin-right: 14px;}
+          & > .jf-table-cell-content,
+          & > .group-header-count {
+            display: inline-block;
+            margin-right: 2px;
+            font-weight: 600;
             vertical-align: middle;
-            padding-bottom: 4px;
           }
         }
         .jf-table-cell-content {
@@ -357,6 +370,7 @@
           vertical-align: middle;
           white-space: nowrap;
           text-overflow: ellipsis;
+          padding: 0 14px;
 
           &:not(.group-header):not(.row-expander-content) {
             max-width: 0;
@@ -420,6 +434,17 @@
               }
             }
           }
+        }
+      }
+
+      // Group expanded
+      &.expanded {
+        .icon-small-arrow-down {
+          transform: rotate(0deg) !important;
+        }
+        .jf-table-cell-content,
+        .group-header-count {
+          color: @green;
         }
       }
     }
