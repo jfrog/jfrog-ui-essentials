@@ -11,7 +11,7 @@
             <div ng-repeat="layoutObj in rowOrColumn"
                  ng-style="jfWidgetsLayout.cssRules[layoutObj.cssId]"
                  class="widget-wrapper"
-                 ng-class="'widget-wrapper-' + jfWidgetsLayout.widgets[layoutObj.widget].id.toLowerCase()">
+                 ng-class="{['widget-wrapper-' + jfWidgetsLayout.widgets[layoutObj.widget].id.toLowerCase()]: true, 'atom': !layoutObj.subLayout}">
                 <div ng-if="!layoutObj.subLayout && jfWidgetsLayout.editMode"
                      class="edit-mode-actions"
                      ng-mousemove="jfWidgetsLayout.onWidgetMouseMove($event)">
@@ -38,6 +38,13 @@
                                       jf-select-placeholder="Select A Widget"
                                       jf-select-change="jfWidgetsLayout.onWidgetChange(layoutObj)"
                                       jf-select-options="jfWidgetsLayout.widgetKeys"></jf-ui-select>
+                    </div>
+                </div>
+                <div ng-if="!layoutObj.subLayout && (jfWidgetsLayout._getRootDirective().transformedLayout.length > 1 || jfWidgetsLayout._getRootDirective().transformedLayout[0].length > 1) && jfWidgetsLayout.options.expandablePanes"
+                     ng-style="{top: jfWidgetsLayout.top, left: jfWidgetsLayout.left}"
+                     class="expansion-corner-mask">
+                    <div class="expansion-corner-fill" ng-click="jfWidgetsLayout.expandPane(layoutObj)">
+                        <div class="icon icon-arrow2" ng-class="{expanded: layoutObj.expanded}"></div>
                     </div>
                 </div>
                 <div class="widget-container"

@@ -26,7 +26,7 @@ class jfTabsController {
 
     initTabs() {
         // wait for the element to render and calculate how many tabs should display
-//        this.$timeout(() => {
+        this.$timeout(() => {
             this._calculateTabsSize();
 
             let tab = this._getTab(this.currentTab);
@@ -40,7 +40,7 @@ class jfTabsController {
                 // Otherwise - make sure it's visible
                 this._ensureTabVisible(this.currentTab);
             }
-  //      });
+        });
     }
 
     _calculateTabsSize() {

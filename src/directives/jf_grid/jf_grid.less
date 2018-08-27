@@ -16,14 +16,16 @@
   overflow: hidden;
 
   .ui-grid a {
-    color: @blueMain;
+    &:not(.jf-link) {
+      color: @blueMain;
+      &:hover {
+        text-decoration: none;
+      }
+    }
     &.gridcell-showall{
       display: inline-block;
       padding-left: 8px;
       white-space: nowrap;
-    }
-    &:hover {
-      text-decoration: none;
     }
   }
 

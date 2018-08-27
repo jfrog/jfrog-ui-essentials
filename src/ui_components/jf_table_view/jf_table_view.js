@@ -111,7 +111,10 @@ class jfTableViewController {
                 }
             });
         }
-        else rowScope = existingScope;
+        else {
+            existingScope.row.uid = rowId;
+            rowScope = existingScope;
+        }
 
         let template = row !== 'headers' ? columnObj.cellTemplate : columnObj.headerCellTemplate;
         let templateElem = $(template);
