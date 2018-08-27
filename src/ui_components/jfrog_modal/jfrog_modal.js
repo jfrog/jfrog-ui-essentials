@@ -305,7 +305,7 @@ export class JFrogModal {
 
         wizardModalScope.$wizardCtrl.$userCtrl = controllerInstance;
 
-        let modalInstance = this.launchModal('@wizard_modal', wizardModalScope, 'lg', wizardDefinitionObject.cancelable && wizardDefinitionObject.backdropCancelable, wizardDefinitionObject.modalOptions);
+        let modalInstance = this.launchModal('@wizard_modal', wizardModalScope, wizardDefinitionObject.size || 'lg', wizardDefinitionObject.cancelable && wizardDefinitionObject.backdropCancelable, wizardDefinitionObject.modalOptions);
 
 
         wizardModalScope.$wizardCtrl.$modalInstance = modalInstance;

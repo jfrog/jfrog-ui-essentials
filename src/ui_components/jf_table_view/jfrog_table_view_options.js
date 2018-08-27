@@ -293,6 +293,8 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				//This is for updating header cell templates
 				let temp = _.cloneDeep(this.headersRow);
 				this.headersRow = temp;
+
+				this.refreshFilter();
 			}
 		}
 

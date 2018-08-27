@@ -6,6 +6,7 @@
   .jf-text-box-content-full,
   .jf-text-box-content-stage,
   .jf-text-box-content-current {
+    white-space: pre-wrap;
     width: 100%;
     word-wrap: break-word;
   }
@@ -16,7 +17,13 @@
   }
   .jf-text-box-show-all {
     display: inline;
-    color: blue;
+    font-weight: 800;
     cursor: pointer;
+  }
+}
+
+.text-box-show-all-modal {
+  .modal-body.simple-text {
+    word-wrap: break-word;
   }
 }
