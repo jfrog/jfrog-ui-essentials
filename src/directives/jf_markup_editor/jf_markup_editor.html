@@ -71,9 +71,14 @@
             Cancel
         </button>
     </div>
+
     <div class="preview-wrapper" ng-if="!jfMarkup.isInEditMode()">
-        <div class="preview"
-             ng-bind-html="jfMarkup.preview"></div>
+        <div class="preview" ng-bind-html="jfMarkup.preview"></div>
+        <div class="no-markup" ng-if="!jfMarkup.preview">
+            <span>No markup available. </span>
+            <a class="jf-link" ng-if="!jfMarkup.showControls && jfMarkup.editable" ng-click="jfMarkup.activateEditor()"> Add markup.</a>
+        </div>
     </div>
+
 </div>
 

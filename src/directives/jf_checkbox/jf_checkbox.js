@@ -1,11 +1,13 @@
 class jfCheckboxController {
 	/* @ngInject */
-    constructor($element, $transclude, $timeout) {
-        $transclude(function(clone) {
-            // (Adam) TODO: Find out why checkbox appears only when grid appears in jf_properties
-            $timeout(function() {
-                $element.find('label').prepend(clone);
-            }, 0, false);
+    constructor($element, $transclude) {
+        this.$element = $element;
+        this.$transclude = $transclude;
+    }
+
+    $postLink() {
+        this.$transclude(clone => {
+            this.$element.find('label').prepend(clone);
         });
     }
 }
@@ -18,6 +20,8 @@ export function jfCheckbox() {
             text: '@?'
         },
         controller: jfCheckboxController,
+        controllerAs: 'jfCheckbox',
+        bindToController: true,
         templateUrl: 'directives/jf_checkbox/jf_checkbox.html'
     }
 }

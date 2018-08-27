@@ -102,6 +102,7 @@ class jfMarkupEditorController {
     }
 
     checkPreviewers() {
+
         if (!this.previewRenderers) {
             this.previewRenderers = {};
             this.previewersCount = 0;

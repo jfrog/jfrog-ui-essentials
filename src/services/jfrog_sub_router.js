@@ -67,8 +67,8 @@ export class JFrogSubRouter {
             get config() {
                 return THIS.$config;
             },
-            updateUrl() {
-                if (THIS.$config.hotSyncUrl) return;
+            updateUrl(force = false) {
+                if (!force && THIS.$config.hotSyncUrl) return;
                 else THIS._mapParamsToPath();
             },
             goto(stateName, params) {
@@ -101,7 +101,7 @@ export class JFrogSubRouter {
             },
             off(event, listener) {
                 if (!_.includes(THIS.supportedEvents, event)) {
-                    console.error('jf-table-view: Unsupported Event: ' + event);
+                    console.error('JFrogSubRouter: Unsupported Event: ' + event);
                     return;
                 }
                 if (THIS.$listeners[event]) {
@@ -300,7 +300,7 @@ export class JFrogSubRouter {
 
         pathParts.forEach((part, index) => {
             let param = configParams.path[index];
-            if (param) params[param] = decodeURIComponent(part);
+            if (param) params[param] = this._customPathPartDecode(part);
         });
 
         configParams.search.forEach(searchParam => {
@@ -326,7 +326,6 @@ export class JFrogSubRouter {
         if (!this.$config) return;
 
         let currentUrlParams = this._getPathAsParams();
-
         _.extend(this.$config.$params, currentUrlParams);
 
         let configParams = this._getParametersFromConfig();
@@ -359,7 +358,7 @@ export class JFrogSubRouter {
                     stop = true;
                 }
                 else {
-                    pathParts.push(encodeURIComponent(val));
+                    pathParts.push(this._customPathPartEncode(val));
                 }
             }
         })
@@ -425,6 +424,16 @@ export class JFrogSubRouter {
         else {
             return searchParams;
         }
+    }
+
+    _customPathPartEncode(pathPart) {
+        if (!pathPart) return pathPart;
+        return encodeURIComponent(pathPart).replace(/%2F/g,'~2F');
+    }
+
+    _customPathPartDecode(pathPart) {
+        if (!pathPart) return pathPart;
+        return decodeURIComponent(pathPart.replace(/~2F/g,'%2F'));
     }
 
 }

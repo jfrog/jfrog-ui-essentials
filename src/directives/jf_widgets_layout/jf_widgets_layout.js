@@ -30,7 +30,7 @@ class jfWidgetsLayoutController {
         this.$timeout = $timeout;
         this.$compile = $compile;
         this.$templateRequest = $templateRequest;
-
+        this.ANIM_DURATION = .5;
     }
 
     $onInit() {
@@ -222,6 +222,7 @@ class jfWidgetsLayoutController {
     }
 
     updateCss() {
+        let oldRules = _.cloneDeep(this.cssRules);
         this.cssRules = {};
 
         let currentX = 0, currentY = 0;
@@ -244,7 +245,8 @@ class jfWidgetsLayoutController {
                     left: currentX + '%',
                     bottom: (100 - (currentY + layoutDef.percentHeight)) + '%',
                     right: (100 - (currentX + layoutDef.percentWidth)) + '%',
-                    padding: (this.options.padding/2) + 'px'
+                    padding: (this.options.padding/2) + 'px',
+                    opacity: (oldRules && oldRules[layoutDef.cssId] && oldRules[layoutDef.cssId].opacity !== undefined) ? oldRules[layoutDef.cssId].opacity : 1
                 };
 
                 if (this.mainAxis === 'rows') {
@@ -319,23 +321,29 @@ class jfWidgetsLayoutController {
                 if (widget.model) {
                     _.extend(scope,widget.model);
                 }
-                if (widget.controller) {
-
-                    widget.controller.prototype.$widgetLayoutManager = this;
-
-                    let controllerInstance = this.$injector.instantiate(widget.controller);
-
-                    controllerInstance.$element = children[0];
-                    controllerInstance.$layoutObject = this._getLayoutByWidget(elem.prop('id'));
-                    controllerInstance.$scope = scope;
-                    controllerInstance.$widgetObject = widget;
-
-                    let controllerObject = {};
-                    controllerObject[widget.controllerAs || 'ctrl'] = controllerInstance;
-
-                    _.extend(scope,controllerObject);
+                if (this.options.sharedModel) {
+                    _.extend(scope,this.options.sharedModel);
+                }
+                if (!widget.controller) {
+                    widget.controller = class Ctrl {}
                 }
 
+                widget.controller.prototype.$widgetLayoutManager = this;
+
+                let controllerInstance = this.$injector.instantiate(widget.controller);
+
+                controllerInstance.$element = children[0];
+                controllerInstance.$layoutObject = this._getLayoutByWidget(elem.prop('id'));
+                controllerInstance.$scope = scope;
+                controllerInstance.$widgetObject = widget;
+
+                let controllerObject = {};
+                controllerObject[widget.controllerAs || 'ctrl'] = controllerInstance;
+
+                _.extend(scope,controllerObject);
+
+
+                if (controllerInstance.$onInit) controllerInstance.$onInit();
 
                 //We compile only first child, templates should have only one root element!
                 let rootChild = $(children[0]);
@@ -809,7 +817,7 @@ class jfWidgetsLayoutController {
 
     _setTransitions(active) {
         if (active) {
-            $('.widgets-padder .widget-wrapper').css('transition','all 0.5s ease 0s')
+            $('.widgets-padder .widget-wrapper').css('transition',`all ${this.ANIM_DURATION}s ease-out`)
         }
         else {
             $('.widgets-padder .widget-wrapper').css('transition','none')
@@ -868,6 +876,61 @@ class jfWidgetsLayoutController {
             this.cleanLayout();
 
         }
+
+    }
+
+    expandPane(layoutObj) {
+        let expanding = this.$expanded = !this.$expanded ? layoutObj : null;
+        this.transformedLayout.forEach((rowOrColumn) => {
+            rowOrColumn.forEach((cell)=> {
+                if (expanding) {
+                    cell.dimBeforeExpansion = {width: cell.percentWidth, height: cell.percentHeight};
+                    if (cell === layoutObj) {
+                        cell.percentWidth = cell.percentHeight = 100;
+                    }
+                    else {
+                        this.cssRules[cell.cssId].opacity = 0;
+                        let onTheSameRowOrColumn = rowOrColumn.indexOf(layoutObj) !== -1;
+                        if (onTheSameRowOrColumn) {
+                            cell[this.mainAxis === 'columns' ? 'percentHeight' : 'percentWidth'] = 0;
+                            cell[this.mainAxis === 'rows' ? 'percentHeight' : 'percentWidth'] = 100;
+                        }
+                        else {
+                            cell[this.mainAxis === 'rows' ? 'percentHeight' : 'percentWidth'] = 0;
+                            cell[this.mainAxis === 'columns' ? 'percentHeight' : 'percentWidth'] = 100;
+                        }
+                    }
+                }
+                else {
+                    cell.percentWidth = cell.dimBeforeExpansion.width;
+                    cell.percentHeight = cell.dimBeforeExpansion.height;
+                    delete cell.dimBeforeExpansion;
+                }
+            })
+        })
+
+        if (expanding) {
+            this.$timeout(() => {
+                this.updateCss();
+            }, this.ANIM_DURATION*1000);
+        }
+        else {
+            this.updateCss();
+            this.$timeout(() => {
+                this.transformedLayout.forEach((rowOrColumn) => {
+                    rowOrColumn.forEach((cell)=> {
+                        this.cssRules[cell.cssId].opacity = 1;
+                    })
+                })
+
+            }, this.ANIM_DURATION*1000);
+        }
+
+        if (this.options.parent && this.parentCell) {
+            this.options.parent.expandPane(this.parentCell)
+        }
+
+        layoutObj.expanded = !layoutObj.expanded;
 
     }
 

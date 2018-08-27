@@ -3,7 +3,7 @@
 	<div class="summery-labeled-item"
 	     ng-class="col.class"
 	     ng-repeat="col in $ctrl.columnsToShow track by $index">
-		{{col.label}}
+        <div class="summary-item-label">{{col.label}}</div>
 		<jf-summary-row-item
 				no-wrap="col.noWrap"
 				col-template="col.template"

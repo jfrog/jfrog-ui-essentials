@@ -10,7 +10,7 @@ export default class JfFullTextService {
 	}
 
 
-	showFullTextModal(text, textSubject, modalWidth) {
+	showFullTextModal(text, textSubject, modalWidth, showAsList = false, listItemClickCB = null, windowClass = '') {
 		if (!text || !text.length) {
 			return;
 		}
@@ -21,8 +21,16 @@ export default class JfFullTextService {
 			return this.modalInstance.close();
 		};
 
-		this.modalScope.text = this.toHtmlRows(text);
-		this.modalInstance = this.modal.launchModal('@full.text.modal', this.modalScope, modalWidth);
+		if (!showAsList) this.modalScope.text = this.toHtmlRows(text);
+		else {
+			this.modalScope.list = text;
+            this.modalScope.onItemClick = (item) => {
+                this.modalInstance.close();
+                if (listItemClickCB) listItemClickCB(item);
+            }
+        }
+
+		this.modalInstance = this.modal.launchModal('@full.text.modal', this.modalScope, modalWidth, true, {windowClass: 'full-text-modal' + (windowClass ? ' ' + windowClass : '')});
 	}
 
 	toHtmlRows(text) {
