@@ -813,14 +813,20 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			if (!this.dirCtrl || _.isUndefined(this.dirCtrl.currentPage)) {
 				return;
 			}
-			let promise = this.externalPaginationCallback({
-				pageNum: this.dirCtrl.currentPage,
-				numOfRows: this.rowsPerPage,
-				direction: !this.sortByField ? null : this.revSort ? 'desc' : 'asc',
-				orderBy: this.sortByField,
-				filter: this.dirCtrl.tableFilter || null,
-				filterBy: _.map(this.getFilterables(), 'field')
-			});
+			let paginationParams = {
+                pageNum: this.dirCtrl.currentPage,
+                numOfRows: this.rowsPerPage,
+                direction: !this.sortByField ? null : this.revSort ? 'desc' : 'asc',
+                orderBy: this.sortByField,
+                filter: this.dirCtrl.tableFilter || null,
+                filterBy: _.map(this.getFilterables(), 'field')
+            }
+            if (_.isEqual(this.lastPaginationParams, paginationParams)) {
+				return;
+            }
+            this.lastPaginationParams = paginationParams;
+
+			let promise = this.externalPaginationCallback(paginationParams);
 			if (!promise || !promise.then) {
 				console.error('External pagination callback should return promise');
 			}
