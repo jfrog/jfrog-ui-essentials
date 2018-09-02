@@ -11,7 +11,9 @@ export function jfCodeMirror() {
             height: '@?',
             apiAccess: '=',
             autofocus: '@',
-	        matchBrackets: '<'
+	        matchBrackets: '<',
+	        autoFormat: '<',
+            autoIndent: '<'
         },
         controller: jfCodeController,
         controllerAs: 'jfCodeMirror',
@@ -28,7 +30,7 @@ class jfCodeController {
         this.$element = $element;
         this.$scope = $scope;
         this.$timeout = $timeout;
-
+	    this.defineExtensions();
     }
 
     $onInit() {
@@ -68,7 +70,7 @@ class jfCodeController {
                 codeMirrorElement.css('height', this.height);
             }
         }
-        $(_editor.display.wrapper).on('click', '.cm-link', function (e) {
+        $(_editor.display.wrapper).on('click', '.cm-link', (e) => {
             let url = $(this).text();
             if (url) {
                 window.open(url, '_blank');
@@ -86,6 +88,18 @@ class jfCodeController {
         }
     }
 
+    autoFormatText(indent) {
+	    let last = this.cmApi.lineCount();
+	    let start = {line:0,ch:0},
+		    end = {line:last};
+	    if(indent) {
+	        this.cmApi.autoIndentRange(start,end);
+	    } else {
+		    this.cmApi.autoFormatRange(start,end);
+        }
+	    this.cmApi.setCursor(start);
+    }
+
     _isJSON(str) {
         try {
             JSON.parse(str);
@@ -98,7 +112,16 @@ class jfCodeController {
 
     _formatModel() {
         let format = (content) => {
-            if (this._isJSON(content)) {
+	        if (this.autoFormat && (this.mode === 'javascript' || this.mode === 'htmlmixed')) {
+		        this.$timeout(() => {
+			        if(this.cmApi && this.cmApi.getValue().length > 0) {
+				        this.autoFormatText();
+				        this.formattedModel = this.cmApi.getValue();
+				        this.cmApi.refresh();
+			        }
+		        });
+	        }
+	        if (this._isJSON(content)) {
                 this.formattedModel = require('js-beautify').js_beautify(content);
             }
             else {
@@ -154,5 +177,55 @@ class jfCodeController {
         let cmText = $(this.$element).find('.CodeMirror-code').find('pre').text().replace(/\u200B/g,'');
         this.expectingChange = true;
         this.lastVal = cmText;
+    }
+
+    defineExtensions() {
+	    CodeMirror.defineExtension("autoFormatRange", (from, to) => {
+		    let cm = this.cmApi;
+		    let outer = cm.getMode(), text = cm.getRange(from, to).split("\n");
+		    let state = CodeMirror.copyState(outer, cm.getTokenAt(from).state);
+		    let tabSize = cm.getOption("tabSize");
+
+		    let out = "", lines = 0, atSol = from.ch == 0;
+		    let newline = () => {
+			    out += "\n";
+			    atSol = true;
+			    ++lines;
+		    };
+
+		    for (let i = 0; i < text.length; ++i) {
+			    let stream = new CodeMirror.StringStream(text[i], tabSize);
+			    while (!stream.eol()) {
+				    let inner = CodeMirror.innerMode(outer, state);
+				    let style = outer.token(stream, state), cur = stream.current();
+				    stream.start = stream.pos;
+				    if (!atSol || /\S/.test(cur)) {
+					    out += cur;
+					    atSol = false;
+				    }
+				    if (!atSol && inner.mode.newlineAfterToken &&
+					    inner.mode.newlineAfterToken(style, cur, stream.string.slice(stream.pos) || text[i+1] || "", inner.state))
+					    newline();
+			    }
+			    if (!stream.pos && outer.blankLine) outer.blankLine(state);
+			    if (!atSol) newline();
+		    }
+
+		    cm.operation(() => {
+			    cm.replaceRange(out, from, to);
+			    for (let cur = from.line + 1, end = from.line + lines; cur <= end; ++cur)
+				    cm.indentLine(cur, "smart");
+		    });
+	    });
+
+	    // Applies automatic mode-aware indentation to the specified range
+	    CodeMirror.defineExtension("autoIndentRange", (from, to) => {
+		    let cmInstance = this.cmApi;
+		    this.cmApi.operation(() => {
+			    for (let i = from.line; i <= to.line; i++) {
+				    cmInstance.indentLine(i, "smart");
+			    }
+		    });
+	    });
     }
 }
