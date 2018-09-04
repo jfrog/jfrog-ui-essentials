@@ -1,6 +1,6 @@
 class jfTextBoxController {
 	/* @ngInject */
-    constructor($scope, $element, $timeout, $interval, $compile, $q, $sce, JfFullTextService) {
+    constructor($scope, $element, $timeout, $interval, $compile, $q, JfFullTextService) {
         this.$scope = $scope;
         this.$compile = $compile;
         this.$timeout = $timeout;
@@ -8,20 +8,15 @@ class jfTextBoxController {
         this.$element = $element;
         this.fullTextModal = JfFullTextService;
         this.$q = $q;
-        this.$sce = $sce;
-
-        this.seeAllTemplate = '<div class="jf-text-box-show-all" ng-click="jfTextBox.seeAll()">(SEE ALL...)</div>';
     }
 
     $onInit() {
 
-        this.measureLineHeight().then(() => {
-            this.fullContent = this.text;
-            this.$timeout(() => {
-                this.registerResize();
-                this.refreshText();
-            })
-        })
+        this.seeAllText = this.seeAllText || '(Show All ...)';
+
+        this.fullTextElement.text(this.text)
+        this.registerResize();
+        this.$timeout(() => this.refreshText());
 
         this.$scope.$on('$destroy', () => {
             this.deregisterResize();
@@ -29,11 +24,16 @@ class jfTextBoxController {
     }
 
     registerResize() {
-        this.onResize = () => {
+
+        let appliedRefresh = () => {
             this.$scope.$apply(() => {
                 this.refreshText();
             })
         }
+        let debouncedRefresh = _.debounce(appliedRefresh, 0, {leading: true});
+//        let throttledRefresh = _.throttle(appliedRefresh, 150, {/*leading: false*/})
+
+        this.onResize = debouncedRefresh;
 
         $(window).on('resize', this.onResize)
     }
@@ -42,71 +42,176 @@ class jfTextBoxController {
         $(window).off('resize', this.onResize)
     }
 
+    get containerElement() {
+        if (!this.cachedContainerElement) {
+            this.cachedContainerElement = $(this.$element).find('.jf-text-box-container');
+        }
+        return this.cachedContainerElement;
+    }
+
+    get fullTextElement() {
+        if (!this.cachedFullTextElement) {
+            this.cachedFullTextElement = $(this.$element).find('.jf-text-box-content-full')
+        }
+        return this.cachedFullTextElement;
+    }
+
+    get currentTextElement() {
+        if (!this.cachedCurrentTextElement) {
+            this.cachedCurrentTextElement = $(this.$element).find('.jf-text-box-content-current')
+        }
+        return this.cachedCurrentTextElement;
+    }
+
+    get stageElement() {
+        if (!this.cachedStageElement) {
+            this.cachedStageElement = $(this.$element).find('.jf-text-box-content-stage')
+        }
+        return this.cachedStageElement;
+    }
+
     get containerHeight() {
-        return $(this.$element).find('.jf-text-box-container').height();
+        return this.containerElement.height();
     }
 
     get containerWidth() {
-        return $(this.$element).find('.jf-text-box-container').width();
+        return this.containerElement.width();
     }
 
     get numOfWholeRows() {
-        return Math.floor(this.containerHeight / this.lineHeight);
+        let auto = Math.floor(this.containerHeight / this.lineHeight + 0.1);
+        return this.maxLines ? Math.min(parseInt(this.maxLines), auto) : auto;
     }
 
     get numOfActualRows() {
-        let contentHeight = $(this.$element).find('.jf-text-box-content-full').height();
-        return contentHeight / this.lineHeight;
+        let contentHeight = this.fullTextElement.height();
+        return Math.ceil(contentHeight / this.lineHeight - 0.1);
+    }
+
+    get numOfVisibleRows() {
+        let contentHeight = this.currentTextElement.height();
+        return Math.ceil(contentHeight / this.lineHeight - 0.1);
+    }
+
+    get numOfStageRows() {
+        let contentHeight = this.stageElement.height();
+        return Math.ceil(contentHeight / this.lineHeight - 0.1);
     }
 
     get isOverflowing() {
         return this.numOfActualRows > this.numOfWholeRows;
     }
 
+    setStageText(text) {
+        this.stageElement.text(text);
+    }
+
     refreshText() {
+        this.measureLineHeight();
+
         if (!this.isOverflowing) {
-            this.content = this.fullContent;
+            this.content = this.text;
         }
         else {
-            $(this.$element).find('.jf-text-box-content-stage').text('');
-            let words = this.fullContent.split(/\s+/g);
+            this.stageElement.html('');
+            let words = this.splitText(this.text);
             let i = 1;
-            let numOfLines = $(this.$element).find('.jf-text-box-content-stage').height() / this.lineHeight;
-            while (numOfLines <= this.numOfWholeRows && i <= words.length) {
-                $(this.$element).find('.jf-text-box-content-stage').html(words.slice(0,i).join(' ') + ' ' + this.seeAllTemplate);
-                numOfLines = $(this.$element).find('.jf-text-box-content-stage').height() / this.lineHeight;
+            let getNumOfLinesUntil = (index, withSeeAll = true) => {
+                this.setStageText(_.trimRight(words.slice(0,index).join('')) + (withSeeAll ? ' ' : ''))
+                if (withSeeAll) this.stageElement.append($(`  <div class="jf-text-box-show-all">${this.seeAllText}</div>`));
+                return this.numOfStageRows;
+            }
+            while (getNumOfLinesUntil(i) <= this.numOfWholeRows && i <= words.length) {
                 i++;
             }
-            this.content = this.$sce.trustAsHtml(words.slice(0,i-2).join(' ') + ' ' + this.seeAllTemplate);
 
-            this.$timeout(() => {
-                let seeAll = $('.jf-text-box-show-all');
-                if (!seeAll.prop('compiled')) {
-                    this.$compile(seeAll)(this.$scope);
-                    seeAll.prop('compiled', true);
-                }
-            })
+            if (getNumOfLinesUntil(i, false) !== getNumOfLinesUntil(i)) {
+                this.wrapSeeAll = true;
+            }
+            else this.wrapSeeAll = false;
+/*
+            let saved = i;
+            i--;
+            while (getNumOfLinesUntil(i, false) !== getNumOfLinesUntil(i) && i > 0) {
+                console.log('?');
+                i--;
+            }
+
+            if  (i === 0) {
+                i = saved;
+                this.wrapSeeAll = true;
+            }
+            else this.wrapSeeAll = false;
+*/
+
+            let fit = words.slice(0,i);
+
+            this.setStageText(_.trimRight(fit.join('')) + (this.isOverflowing ? ' ' : ''));
+            if (this.isOverflowing) this.stageElement.append($(`<div class="jf-text-box-show-all">${this.seeAllText}</div>`));
+
+            let m = 0;
+            while (this.numOfStageRows > this.numOfWholeRows && i > m) {
+                m++;
+
+                fit = words.slice(0,i - m);
+                this.setStageText(_.trimRight(fit.join('')) + (this.isOverflowing ? ' ' : ''));
+                if (this.isOverflowing) this.stageElement.append($(`<div class="jf-text-box-show-all">${this.seeAllText}</div>`));
+            }
+            this.content = _.trimRight(fit.join(''));
+
         }
+        this.ready = true;
+    }
+
+    splitText(text) {
+
+        if (this.splitCache) return this.splitCache;
+        else {
+            let regex = /\s+/g;
+            let parts = [];
+            let match = regex.exec(text);
+            let lastIndex = 0;
+            while (match) {
+                parts.push(text.substr(lastIndex, match.index - lastIndex) + match[0]);
+                lastIndex = match.index + match[0].length;
+                match = regex.exec(text);
+            }
+            parts.push(text.substr(lastIndex, text.length - lastIndex));
+
+            parts = _.map(parts, part => {
+                if (part.length > 16) return part.split('');
+                else return part;
+            })
+
+            parts = _.flatten(parts);
+
+            this.splitCache = parts;
+            return parts;
+        }
+
     }
 
     measureLineHeight() {
-        let defer = this.$q.defer();
-        $(this.$element).find('.jf-text-box-content-stage').text('*');
-        this.$timeout(() => {
-            this.lineHeight = $(this.$element).find('.jf-text-box-content-stage').height();
-            $(this.$element).find('.jf-text-box-content-stage').text('');
-            defer.resolve();
-        })
-        return defer.promise;
+        this.stageElement.text('*');
+        this.lineHeight = this.stageElement.height();
+        if (this.maxLines) {
+            this.containerElement.height(parseInt(this.maxLines)*this.lineHeight);
+        }
     }
 
     seeAll() {
-        let text = this.fullContent;
-        this.fullTextModal.showFullTextModal(text, this.modalTitle || 'Full Text', 500, false, null, 'text-box-show-all-modal');
-        this.deregisterResize();
-        this.fullTextModal.modalInstance.result.finally(() => {
-            this.$timeout(() => this.registerResize());
-        })
+        if (this.noAction) return;
+        let text = this.text;
+        if (this.customAction) {
+            this.customAction({text})
+        }
+        else {
+            this.fullTextModal.showFullTextModal(text, this.modalTitle || 'Full Text', 500, false, null, 'text-box-show-all-modal');
+            this.deregisterResize();
+            this.fullTextModal.modalInstance.result.finally(() => {
+                this.$timeout(() => this.registerResize());
+            })
+        }
     }
 
 }
@@ -117,7 +222,11 @@ export function jfTextBox() {
         scope: {
             text: '=',
             numOfLines: '@',
-            modalTitle: '@?'
+            modalTitle: '@?',
+            seeAllText: '@?',
+            maxLines: '@?',
+            customAction: '&?',
+            noAction: '@?'
         },
         controller: jfTextBoxController,
         controllerAs: 'jfTextBox',

@@ -1,9 +1,9 @@
 <div class="jf-switch-toggler"
      ng-class="{'left-option-selected' : $ctrl.isLeftOptionOn,
                 'right-option-selected' : !$ctrl.isLeftOptionOn}">
-    <span class="left-option-text" ng-bind-html="$ctrl.leftOption.text"></span>
+    <span class="left-option-text jf-toggler-text" ng-bind-html="$ctrl.leftOption.text"></span>
     <jf-toggler on-toggle="$ctrl.toggleSelection()"
                 is-toggled-to-left="$ctrl.isLeftOptionOn">
     </jf-toggler>
-    <span class="right-option-text" ng-bind-html="$ctrl.rightOption.text"></span>
+    <span class="right-option-text jf-toggler-text" ng-bind-html="$ctrl.rightOption.text"></span>
 </div>
