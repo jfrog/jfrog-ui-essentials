@@ -161,7 +161,8 @@
         <i class="icon-menu-arrow"></i>
     </div>
 
-    <div class="jf-table-row-actions-dropdown" ng-if="jfTableRow.actionsDropdownOpen" jf-reparent="jfTableRow.tableView.$containerElement">
+    <div class="jf-table-row-actions-dropdown" ng-if="jfTableRow.actionsDropdownOpen"
+         jf-reparent="jfTableRow.tableView.$containerElement">
         <div ng-repeat="action in jfTableRow.tableView.options.actions"
              ng-if="!action.visibleWhen || action.visibleWhen(jfTableRow.data)"
              ng-click="jfTableRow.fireAction(action);$event.stopPropagation();jfTableRow.actionsDropdownOpen=false;"

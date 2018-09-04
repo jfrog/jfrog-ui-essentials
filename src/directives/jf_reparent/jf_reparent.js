@@ -2,15 +2,15 @@
  * Created by tomere on 29/06/2017.
  */
 class jfReparentController {
-	/* @ngInject */
-	constructor($element, $timeout) {
+    /* @ngInject */
+    constructor($element, $timeout) {
 
-		this.$element = $element;
-		this.$timeout = $timeout;
+        this.$element = $element;
+        this.$timeout = $timeout;
 
-	}
+    }
 
-	$onInit() {
+    $onInit() {
 
         this.$timeout(() => {
             let target = this.target ? $(this.target) : $(document.body);
@@ -33,19 +33,19 @@ class jfReparentController {
         var rect = el.getBoundingClientRect(),
             scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
             scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
+        return {top: rect.top + scrollTop, left: rect.left + scrollLeft}
     }
 
 }
 
 export function jfReparent() {
 
-	return {
-		restrict: 'A',
-		scope: {
-		    target: '=jfReparent'
+    return {
+        restrict: 'A',
+        scope: {
+            target: '=jfReparent'
         },
         bindToController: true,
-		controller: jfReparentController
-	};
+        controller: jfReparentController
+    };
 }
