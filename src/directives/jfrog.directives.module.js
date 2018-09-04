@@ -47,9 +47,12 @@ import {jfContextMenu} from "./jf_context_menu/jf_context_menu.component";
 import {jfDataList} from "./jf_data_list/jf_data_list";
 import {jfVScroll} from "./jf_vscroll/jf_vscroll";
 import {jfVScrollElement} from "./jf_vscroll/jf_vscroll_element";
+import {jfPendingData} from "./jf_pending_data/jf_pending_data";
 import {jfTextBox} from './jf_text_box/jf_text_box';
+import {jfReparent} from './jf_reparent/jf_reparent';
 import jfWizard from './jf_wizard/jf.wizard.directive';
 import jfWizardElement from './jf_wizard/jf_wizard_element/jf.wizard.element.directive';
+import {jfBillboard} from './jf_billboard/jf_billboard';
 
 angular.module('jfrog.ui.essentials.directives', [])
     .directive({
@@ -105,4 +108,7 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfSwitchToggler': jfSwitchToggler,
         'jfOnOffSwitch': jfOnOffSwitch,
         'jfTextBox': jfTextBox,
+        'jfReparent': jfReparent,
+        'jfPendingData': jfPendingData,
+        'jfBillboard': jfBillboard
     });

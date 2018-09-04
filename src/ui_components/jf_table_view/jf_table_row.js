@@ -348,6 +348,10 @@ class jfTableRowController {
             else return false;
         }
     }
+
+    _getRowActionsWidth() {
+	    return this.tableView.options.getActionsContainerWidthInPixels() + 'px';
+    }
 }
 
 export function jfTableRow() {

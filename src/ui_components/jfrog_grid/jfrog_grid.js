@@ -30,8 +30,8 @@ class JFrogGrid {
         this.multiSelect = false;
         this.noUnselect = false;
         this.enableColumnMenus = false;
-        this.rowHeight = 40;
-        this.headerRowHeight = 41;
+        this.rowHeight = 50;
+        this.headerRowHeight = 51;
         this.enableHorizontalScrollbar = uiGridConstants.scrollbars.NEVER;
         this.enableVerticalScrollbar = uiGridConstants.scrollbars.NEVER;
         this.groupingShowCounts = false;

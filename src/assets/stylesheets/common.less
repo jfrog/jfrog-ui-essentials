@@ -37,14 +37,6 @@ h2 {
       text-decoration: none;
       color: inherit;
     }
-
-    &.jf-link {
-      text-decoration: underline;
-      color: @blackBGLight;
-      &:active, &:focus, &:hover {
-        text-decoration: underline;
-      }
-    }
   }
 
   b {
@@ -58,7 +50,7 @@ h2 {
     position: absolute;
     left: 18px;
     top: 50%;
-    margin-top: -16px;
+    margin-top: -12.5px;
   }
 
   // Success
@@ -137,10 +129,11 @@ h2 {
   }
 }
 
-a {
+a, .alert a {
   &.jf-link {
     text-decoration: underline;
-    color: @blackBGLight;
+    text-decoration-color: @jfColorSmokedGrey;
+    color: @jfColorBlack;
     &:active, &:focus, &:hover {
       text-decoration: underline;
     }
@@ -159,4 +152,35 @@ a {
   background-size: 20px 20px;
   width: 20px;
   height: 20px;
+}
+
+.jf-back-link {
+  color: @jfColorBlack;
+  &:hover {
+    color: @jfColorGreen;
+    i:before {
+      color: @jfColorGreen;
+    }
+  }
+  i:before {
+    font-size: 10px;
+    position: relative;
+    top: -1px;
+  }
+  &:before {
+    margin-right: 5px;
+    font-size: 10px;
+    position: relative;
+    top: -1px;
+    content: "\e92e";
+    font-style: normal!important;
+    font-weight: 400!important;
+    font-variant: normal!important;
+    text-transform: none!important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: artifactory!important;
+  }
 }

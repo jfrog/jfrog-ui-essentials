@@ -293,6 +293,8 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				//This is for updating header cell templates
 				let temp = _.cloneDeep(this.headersRow);
 				this.headersRow = temp;
+
+				this.refreshFilter();
 			}
 		}
 
@@ -587,6 +589,10 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
             })
 		}
 
+		getActionsContainerWidthInPixels() {
+			return this.actionButtonSize * (this.actions.length <= 3 || this.isRowActionGroupingDisabled ? this.actions.length : 1);
+		}
+
 		_normalizeWidths(delay = true, recurse = false) {
 			if (!this.dirCtrl) {
 				return;
@@ -595,7 +601,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			let actionsWidth = 0;
 			let selectionWidth = 0;
 			if (this.actions) {
-				actionsWidth = this.actionButtonSize * (this.actions.length <= 3 ? this.actions.length : 1);
+				actionsWidth = this.getActionsContainerWidthInPixels();
 			}
 			if (this.hasSelection()) {
 				selectionWidth = this.selectionColumnWidth;
@@ -807,14 +813,20 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			if (!this.dirCtrl || _.isUndefined(this.dirCtrl.currentPage)) {
 				return;
 			}
-			let promise = this.externalPaginationCallback({
-				pageNum: this.dirCtrl.currentPage,
-				numOfRows: this.rowsPerPage,
-				direction: !this.sortByField ? null : this.revSort ? 'desc' : 'asc',
-				orderBy: this.sortByField,
-				filter: this.dirCtrl.tableFilter || null,
-				filterBy: _.map(this.getFilterables(), 'field')
-			});
+			let paginationParams = {
+                pageNum: this.dirCtrl.currentPage,
+                numOfRows: this.rowsPerPage,
+                direction: !this.sortByField ? null : this.revSort ? 'desc' : 'asc',
+                orderBy: this.sortByField,
+                filter: this.dirCtrl.tableFilter || null,
+                filterBy: _.map(this.getFilterables(), 'field')
+            }
+            if (_.isEqual(this.lastPaginationParams, paginationParams)) {
+				return;
+            }
+            this.lastPaginationParams = paginationParams;
+
+			let promise = this.externalPaginationCallback(paginationParams);
 			if (!promise || !promise.then) {
 				console.error('External pagination callback should return promise');
 			}
@@ -1506,6 +1518,11 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
         disableFilterWhen(isFilterDisabledCallback) {
 	      this.isFilterDisabledCallback = isFilterDisabledCallback;
+	      return this;
+        }
+
+		disableRowActionGrouping() {
+	      this.isRowActionGroupingDisabled = true;
 	      return this;
         }
 

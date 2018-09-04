@@ -16,6 +16,7 @@ class jfTableViewController {
 	/* @ngInject */
     constructor($scope, $element, $timeout, $compile, $rootScope, JFrogEventBus) {
         this.$element = $element;
+        this.$containerElement = $element.find('.jf-table-view');
         this.$timeout = $timeout;
         this.$compile = $compile;
         this.$scope = $scope;

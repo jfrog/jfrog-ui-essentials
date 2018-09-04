@@ -305,7 +305,7 @@ export class JFrogModal {
 
         wizardModalScope.$wizardCtrl.$userCtrl = controllerInstance;
 
-        let modalInstance = this.launchModal('@wizard_modal', wizardModalScope, 'lg', wizardDefinitionObject.cancelable && wizardDefinitionObject.backdropCancelable, wizardDefinitionObject.modalOptions);
+        let modalInstance = this.launchModal('@wizard_modal', wizardModalScope, wizardDefinitionObject.size || 'lg', wizardDefinitionObject.cancelable && wizardDefinitionObject.backdropCancelable, wizardDefinitionObject.modalOptions);
 
 
         wizardModalScope.$wizardCtrl.$modalInstance = modalInstance;
@@ -328,6 +328,10 @@ class WizardController {
             let index = _.findIndex(wizardDefinitionObject.steps,{id: this.wizardDefinitionObject.initialStep});
             this.currentStep = index + 1;
         }
+        // doNotShowWizardAgain object consists of:
+	    // 'label' for the checkbox
+	    // 'globalFlagName' for the flag to be set inlocal storage
+        this.doNotShowWizardAgain = this.wizardDefinitionObject.doNotShowWizardAgain;
     }
 
     cancel() {
@@ -398,4 +402,11 @@ class WizardController {
     isFunction(val) {
         return _.isFunction(val);
     }
+
+	preventShowingWizardAgain() {
+		if(this.doNotShowWizardAgain && this.doNotShowWizardAgain.globalFlagName) {
+			localStorage[this.doNotShowWizardAgain.globalFlagName] = true;
+			this.finish();
+		}
+	}
 }
