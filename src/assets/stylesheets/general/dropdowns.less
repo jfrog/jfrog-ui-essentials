@@ -12,7 +12,7 @@
   & > a {
     height: 40px;
     line-height: 40px;
-    color: @grayFontGeneral;
+    color: @jfColorBlack;
   }
 }
 
@@ -33,7 +33,8 @@
     }
 
     .action-icon {
-      margin: 0 10px 0 12px;
+      margin: 0 0;
+      margin-left: -5px;
       line-height: 42px !important;
       &::before {
         color: @grayFontGeneral;
@@ -42,7 +43,7 @@
 
     .action-container {
       .action-icon {
-        margin-right: 6px;
+        margin-right: 9px;
         &.icon-re-index {
           font-size: 20px;
           margin-left: 10px;
@@ -57,8 +58,8 @@
 
       & > span:not(.action-icon) {
         display: inline-block;
-        font-weight: 300;
-        color: @grayFontGeneral;
+        font-weight: 400;
+        color: @jfColorBlack;
         vertical-align: top;
       }
     }
@@ -76,10 +77,6 @@
 
     &:hover {
       background: @grayBGLight !important;
-
-      & > a, > a > span, .action-icon::before, &.context-menu-item, &.context-menu-item:before {
-        color: @greenFontHeader;
-      }
 
       .action-container {
         background: transparent;
