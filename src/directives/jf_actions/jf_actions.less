@@ -4,13 +4,19 @@
   font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
 
   a {
-    color: @jfColorBlack;
+    color: @grayFontGeneral;
     text-decoration: none;
+  }
+
+  a:hover, & .dropdown.open a {
+    &, & i:before {
+      color: @greenBGDark;
+    }
   }
 
   & > a > .action-icon, .actions-more .action-icon {
     position: relative;
-    margin-right: 1px;
+    margin-right: 4px;
     font-size: 16px;
     top: 2px;
   }
@@ -26,11 +32,12 @@
 .action-button, .action-item {
   &.disabled {
     a {
-      color: @darkGray !important;
+      cursor: not-allowed !important;
+      color: lightgrey !important;
       span.action-name,
       span.action-icon:before,
       i.action-icon:before {
-        color: @darkGray !important;
+        color: lightgrey !important;
       }
     }
   }
@@ -41,7 +48,7 @@ jf-actions {
   display: inline-block;
   ul.list-inline {
     li {
-      padding: 0 0 0 20px !important;
+      padding: 0 0 0 5px !important;
       margin: 0;
     }
   }

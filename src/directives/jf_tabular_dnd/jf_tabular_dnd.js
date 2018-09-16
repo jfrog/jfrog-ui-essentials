@@ -83,7 +83,7 @@ class jfTabularDnDController {
             .setObjectName(availableObjectName)
             .setRowClassAttr(this.itemClassAttr)
             .disableFilterWhen(() => this.disabled)
-            .setEmptyTableText(!this.availableItems.length && !this.selectedItems.length ? 'No data found' : 'Drag row here');
+            .setEmptyTableText(!this.availableItems.length && !this.selectedItems.length ? 'No Data Found' : 'Drag Row Here');
 
         this.selectedItemsTableOptions.setColumns(this.selectedItemsColumns)
             .setSelection(this.selectedItemsTableOptions.MULTI_SELECTION)
@@ -94,7 +94,7 @@ class jfTabularDnDController {
             .setObjectName(selectedObjectName)
             .setRowClassAttr(this.itemClassAttr)
             .disableFilterWhen(() => this.disabled)
-            .setEmptyTableText('Drag row here');
+            .setEmptyTableText('Drag Row Here');
 
         this.selectedItemsTableOptions.isRowSelectable = this.availableItemsTableOptions.isRowSelectable = row => this._isItemDraggable(row.entity);
 

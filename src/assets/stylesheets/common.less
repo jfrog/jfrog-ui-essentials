@@ -1,25 +1,9 @@
-body {
-  font: 14px 'Open Sans', 'Helvetica', 'Arial', sans-serif;
-}
-// Typography
-h1 {
-  color: @black;
-  font-weight: 600;
-  font-size: 26px;
-  letter-spacing: -0.5px;
-}
-
-h2 {
-  font-size: 16px;
-  font-weight: 600;
-}
-
 .alert {
   position: relative;
   border-radius: 0;
   background: #f9f8f8;
   border: 0 none;
-  padding: 14px 30px 14px 49px;
+  padding: 14px 30px 14px 60px;
   color: black;
   font-weight: 500;
 
@@ -37,14 +21,6 @@ h2 {
       text-decoration: none;
       color: inherit;
     }
-
-    &.jf-link {
-      text-decoration: underline;
-      color: @blackBGLight;
-      &:active, &:focus, &:hover {
-        text-decoration: underline;
-      }
-    }
   }
 
   b {
@@ -56,8 +32,8 @@ h2 {
     font-size: 24px;
     font-weight: normal;
     position: absolute;
-    left: 14px;
-    top: 48%;
+    left: 18px;
+    top: 50%;
     margin-top: -12.5px;
   }
 
@@ -65,7 +41,7 @@ h2 {
   &.alert-success {
     border-left: 3px solid #50ac59;
     &:before {
-      content: "\e97f";
+      content: "\e91b";
       color: #50ac59;
     }
   }
@@ -74,9 +50,8 @@ h2 {
   &.alert-warning {
     border-left: 3px solid #fb8c00;
     &:before {
-      content: "\e97e";
+      content: "\e91c";
       color: #fb8c00;
-      left: 14px;
     }
   }
 
@@ -84,7 +59,7 @@ h2 {
   &.alert-danger {
     border-left: 3px solid #d7593e;
     &:before {
-      content: "\e97a";
+      content: "\e91d";
       color: #d7593e;
     }
   }
@@ -92,11 +67,9 @@ h2 {
   // Info
   &.alert-info {
     border-left: 3px solid #006cab;
-    padding-left: 49px;
     &:before {
-      content: "\e97d";
+      content: "\e940";
       color: #006cab;
-      left: 14px;
     }
   }
 
@@ -140,10 +113,11 @@ h2 {
   }
 }
 
-a {
+a, .alert a {
   &.jf-link {
     text-decoration: underline;
-    color: @blackBGLight;
+    text-decoration-color: @jfColorSmokedGrey;
+    color: @jfColorBlack;
     &:active, &:focus, &:hover {
       text-decoration: underline;
     }

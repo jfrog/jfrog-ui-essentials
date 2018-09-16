@@ -2,76 +2,57 @@
   position: relative;
   display: inline-block;
 
+  label {
+    font-weight: 100;
+  }
+
+  .icon-clear {
+    position: absolute !important;
+    font-size: 18px !important;
+    right: 25px;
+    margin-top: 0px;
+  }
   .main-box {
     width: 280px;
     height: 40px;
     line-height: 40px;
-    //padding: 0 10px;
-    padding-left: 14px;
+    padding: 0 10px;
     border: 1px solid @grayBorderLighter;
     position: relative;
     cursor: pointer;
-    outline: 0;
-    display: flex;
-    & > span:first-child {
-      flex-grow: 1;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-
+    background-color: white;
     .selected-counter {
       font-size: 12px;
       font-weight: 600;
       margin-left: 10px;
       vertical-align: top;
     }
-    i {
-      outline: 0;
-    }
-    &.no-items + .drop-down-container {
-      top: 63px;
-    }
-    &.no-items.no-label + .drop-down-container {
-      top: 39px;
+    .caret {
+      position: absolute;
+      height: 10px;
+      top: 50%;
+      right: 10px;
+      margin-top: -2px;
     }
   }
 
-  // actions
-  span.actions {
+  .selected-view > span {
+    display: block;
+    padding-right: 40px;
     white-space: nowrap;
-    margin: 0 8px;
-    .icon-small-arrow-down,
-    .clear-field {
-      color: @black;
-      font-style: normal;
-      margin-right: 8px;
-      &:hover {
-        color: darken(@black, 20%);
-      }
-    }
-    .icon-small-arrow-down {
-      font-size: 18px;
-    }
-    .clear-field {
-      font-size: 22px;
-    }
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
-
-
-
-  // DROP DOWN
   .drop-down-container {
     position: absolute;
     background-color: white;
-    top: 25px;
+    top: 30px;
     left: 0;
     width: 100%;
     border: 1px solid @grayBorderLighter;
     border-top: none;
     z-index: 99;
-    box-shadow: @shadow;
     .filter-container {
       padding: 8px 10px;
       border-bottom: 1px solid @grayBorderLighter;
@@ -80,26 +61,18 @@
       max-height: 200px;
       overflow: hidden;
       overflow-y: auto;
-
-
-      // No items message
       .no-items-message {
-        height: 80px;
         text-align: center;
         color: @redError;
         font-size: 12px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-top: 1px solid @grayBorderLighter;
+        font-weight: 800;
       }
-
       .drop-down-item {
         position: relative;
         height: 40px;
         line-height: 40px;
         padding: 0 10px;
-        //border-bottom: 1px solid @grayBorderLighter;
+        border-bottom: 1px solid @grayBorderLighter;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -107,15 +80,14 @@
           margin: 0 8px;
           vertical-align: middle;
         }
-        &:hover:not(.disabled) {
-          background: @lightgrey;
-          label {
-            cursor: pointer;
+        &.disabled {
+          background: @grayBGLighter !important;
+          &:hover {
+            background: @grayBGLighter !important;
           }
         }
-        &.disabled,
-        &.disabled:hover {
-          color: @darkGray;
+        &:hover {
+          background: @greenBGDropdownHover !important;
         }
         &.last-selected {
           border-bottom: 1px solid @blackBGDark;
@@ -123,16 +95,9 @@
       }
     }
     .batch-action-buttons {
-      display: flex;
-      border-top: 1px solid @grayBorderLighter;
       button {
-        flex: 1;
         font-weight: 600;
         font-size: 12px;
-        border-right: 1px solid @grayBorderLighter;
-        &:last-child {
-          border-right: 0;
-        }
       }
     }
   }
@@ -143,7 +108,6 @@
       cursor: default;
     }
   }
-
   &.borderless {
     .main-box {
       border: none;
