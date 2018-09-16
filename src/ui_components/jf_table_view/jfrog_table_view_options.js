@@ -294,7 +294,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				let temp = _.cloneDeep(this.headersRow);
 				this.headersRow = temp;
 
-				this.refreshFilter();
+				this.refreshFilter(true);
 			}
 		}
 
@@ -745,12 +745,12 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			this.refreshSorting();
 		}
 
-		refreshFilter() {
+		refreshFilter(noGroupsRefresh = false) {
 			delete this.filterCache;
 			if (this.paginationMode === this.EXTERNAL_PAGINATION) {
 				this.sendExternalPageRequest();
 			}
-			this.refreshGrouping();
+			if (!noGroupsRefresh) this.refreshGrouping();
 		}
 
 		refreshSorting() {

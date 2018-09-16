@@ -14,6 +14,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
     var headers;
     var headersCells;
     var dataRows;
+    var groupHeaders;
     var dataCells;
     var filter;
     var filterInput;
@@ -69,7 +70,8 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         headers = $('.jf-table-row.headers')
         headersCells = $('.jf-table-cell.header');
         dataCells = $('.jf-table-cell:not(.header)');
-        dataRows = $('.jf-table-row:not(.headers)');
+        dataRows = $('.jf-table-row:not(.headers):not(.group-header)');
+        groupHeaders = $('.jf-table-row.group-header');
         filter = $('.jf-table-filter');
         filterInput = $('.jf-table-filter > input');
         pagination = $('.pagination-controls');
@@ -700,6 +702,33 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         expect(options.getSelectedCount()).toEqual(0);
 
     });
+
+    it('should support grouping and expanding group headers', () => {
+        var testData = createTestData(100);
+        options.setRowsPerPage(101)
+        options.setData(testData);
+        options.groupBy('number');
+
+        flushAndApply();
+
+        expect(dataRows.length).toEqual(0);
+        expect(groupHeaders.length).toEqual(1);
+
+        $(groupHeaders[0]).click();
+
+        flushAndApply();
+
+        expect(dataRows.length).toEqual(100);
+        expect(groupHeaders.length).toEqual(1);
+
+        $(groupHeaders[0]).click();
+
+        flushAndApply();
+
+        expect(dataRows.length).toEqual(0);
+        expect(groupHeaders.length).toEqual(1);
+
+    })
 
     it('should support sub rows', () => {
         var testData = createTestData(15);
