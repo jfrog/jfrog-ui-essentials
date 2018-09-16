@@ -12,9 +12,6 @@
     </li>
     <li ng-show="jfActions.dynamicActions.length" class="action-button">
         <span class="dropdown" dropdown is-open="jfActions.isDropdownOpen">
-          <a href class="dropdown-toggle actions-more" dropdown-toggle>
-              <i class="action-icon icon icon-more"></i> {{jfActions.label}}
-          </a>
           <ul class="dropdown-menu dropdown-menu-right actions-dropdown text-left">
               <li ng-repeat="actionObj in jfActions.dynamicActions"
                   class="action-item"
@@ -37,6 +34,9 @@
                   </a>
               </li>
           </ul>
+          <a href class="dropdown-toggle actions-more" dropdown-toggle>
+             {{jfActions.label}} <i class="action-icon icon icon-small-arrow-down"></i>
+          </a>
         </span>
 
     </li>

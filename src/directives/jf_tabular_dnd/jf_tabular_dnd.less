@@ -24,24 +24,30 @@
         }
       }
     }
+    .jf-table-view .jf-table-top .counter-and-filter-wrapper .jf-table-filter input {
+      width: 280px;
+    }
     .jf-table-view {
       .jf-table-view-container {
         .jf-table-top .counter-and-filter-wrapper .table-counter {
           height: 22px;
         }
         .empty-table-placeholder:not(.filter-no-results) {
-          margin-top: 0;
+          margin-top: 2px;
           padding: 0;
           color: @grayBGDark;
           background-color: white;
           white-space: nowrap;
           overflow: hidden;
-          font-size: 35px;
-          border:1px dashed;
-          border-image-source: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gMaDB0hVUNYJAAAADhJREFUOMtjfPDgwX8GLEBBQYGRAQ/ApY+JgcqA6gYyIjudkDeJ8f7g9/IoGAWDAYzArMc48gpYAE+5HpEKmyDIAAAAAElFTkSuQmCC");
-          border-image-width: 1.3px;
-          border-image-slice: 1;
-          border-image-repeat: round;
+          font-size: 26px;
+          border:2px dashed;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          //border-image-source: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gMaDB0hVUNYJAAAADhJREFUOMtjfPDgwX8GLEBBQYGRAQ/ApY+JgcqA6gYyIjudkDeJ8f7g9/IoGAWDAYzArMc48gpYAE+5HpEKmyDIAAAAAElFTkSuQmCC");
+          //border-image-width: 1.3px;
+          //border-image-slice: 1;
+          //border-image-repeat: round;
           &.drop-target-mark {
             background-color: @grayBGLight;
             cursor: grabbing!important;
