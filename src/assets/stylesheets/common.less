@@ -37,6 +37,14 @@ h2 {
       text-decoration: none;
       color: inherit;
     }
+
+    &.jf-link {
+      text-decoration: underline;
+      color: @blackBGLight;
+      &:active, &:focus, &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   b {
@@ -132,11 +140,10 @@ h2 {
   }
 }
 
-a, .alert a {
+a {
   &.jf-link {
     text-decoration: underline;
-    text-decoration-color: @jfColorSmokedGrey;
-    color: @jfColorBlack;
+    color: @blackBGLight;
     &:active, &:focus, &:hover {
       text-decoration: underline;
     }

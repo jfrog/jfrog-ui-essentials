@@ -14,11 +14,9 @@ export function jfPanel() {
             jfPanelHeading: '@',
             jfPanelHelpTooltip: '@',
             jfPanelClasses: '@',
-            bordered: '=?'
+	        borderless: '=?'
         },
         templateUrl: 'directives/jf_panel/jf_panel.html',
-        transclude: true,
-        controller: jfPanelController,
-        controllerAs: '$ctrl',
+        transclude: true
     }
 }
