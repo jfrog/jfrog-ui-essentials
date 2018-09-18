@@ -329,8 +329,8 @@ class WizardController {
             this.currentStep = index + 1;
         }
         // doNotShowWizardAgain object consists of:
-	    // 'label' for the checkbox
-	    // 'globalFlagName' for the flag to be set inlocal storage
+        // 'label' for the checkbox
+        // 'globalFlagName' for the flag to be set inlocal storage
         this.doNotShowWizardAgain = this.wizardDefinitionObject.doNotShowWizardAgain;
     }
 
@@ -403,10 +403,10 @@ class WizardController {
         return _.isFunction(val);
     }
 
-	preventShowingWizardAgain() {
-		if(this.doNotShowWizardAgain && this.doNotShowWizardAgain.globalFlagName) {
-			localStorage[this.doNotShowWizardAgain.globalFlagName] = true;
-			this.finish();
-		}
-	}
+    preventShowingWizardAgain() {
+        if (this.doNotShowWizardAgain && this.doNotShowWizardAgain.globalFlagName) {
+            localStorage[this.doNotShowWizardAgain.globalFlagName] = true;
+            this.finish();
+        }
+    }
 }

@@ -3,7 +3,7 @@
   border-radius: 0;
   background: #f9f8f8;
   border: 0 none;
-  padding: 14px 30px 14px 60px;
+  padding: 14px 30px 14px 49px;
   color: black;
   font-weight: 500;
 
@@ -32,8 +32,8 @@
     font-size: 24px;
     font-weight: normal;
     position: absolute;
-    left: 18px;
-    top: 50%;
+    left: 14px;
+    top: 48%;
     margin-top: -12.5px;
   }
 
@@ -41,7 +41,7 @@
   &.alert-success {
     border-left: 3px solid #50ac59;
     &:before {
-      content: "\e91b";
+      content: "\e97f";
       color: #50ac59;
     }
   }
@@ -50,8 +50,9 @@
   &.alert-warning {
     border-left: 3px solid #fb8c00;
     &:before {
-      content: "\e91c";
+      content: "\e97e";
       color: #fb8c00;
+      left: 14px;
     }
   }
 
@@ -59,7 +60,7 @@
   &.alert-danger {
     border-left: 3px solid #d7593e;
     &:before {
-      content: "\e91d";
+      content: "\e97a";
       color: #d7593e;
     }
   }
@@ -67,9 +68,11 @@
   // Info
   &.alert-info {
     border-left: 3px solid #006cab;
+    padding-left: 49px;
     &:before {
-      content: "\e940";
+      content: "\e97d";
       color: #006cab;
+      left: 14px;
     }
   }
 
@@ -157,14 +160,14 @@ a, .alert a {
     position: relative;
     top: -1px;
     content: "\e92e";
-    font-style: normal!important;
-    font-weight: 400!important;
-    font-variant: normal!important;
-    text-transform: none!important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    font-variant: normal !important;
+    text-transform: none !important;
     speak: none;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-family: artifactory!important;
+    font-family: artifactory !important;
   }
 }

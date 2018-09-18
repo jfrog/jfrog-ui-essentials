@@ -31,7 +31,32 @@
     &:hover {
       color: @blackFontDark;
     }
+    &[disabled] {
+      color: @jfColorGrey!important;
+    }
   }
+
+  &.btn-icon-action {
+    transition: none;
+    font-weight: 700;
+    font-size: 14px;
+    color: @jfColorBlack;
+    border: 0;
+    &:hover, &:focus {
+      outline: unset;
+      border: 0;
+      box-shadow: none;
+    }
+    i {
+      font-size: 16px;
+      margin-right: 8px;
+    }
+    &[disabled] {
+      color: @jfColorGrey;
+      background-color: transparent;
+    }
+  }
+
   &.btn-primary {
     background: @greenBGPrimary;
     color: @greenBGPrimaryText;
@@ -64,6 +89,9 @@
     &:hover, &:focus {
       background: @greenBGSecondaryHover;
       border: 1px solid @greenBGSecondaryHoverBorder;
+    }
+    &[disabled] {
+      color: @jfColorGrey!important;
     }
   }
 

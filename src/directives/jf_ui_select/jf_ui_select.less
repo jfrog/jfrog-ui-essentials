@@ -1,6 +1,76 @@
+.ui-select-container {
+  span.ui-select-toggle:first-child,
+  .jf-ui-select-item {
+    font-weight: normal;
+    color: inherit;
+    outline: 0;
+  }
+
+  // Fix minor text glitch
+  .text-muted {
+    position: relative;
+    top: -1px;
+  }
+}
+
+//---ui select design---//
+.ui-select-container {
+  box-shadow: none !important;
+  outline: none !important;
+
+  .ui-select-match span.ui-select-toggle:first-child,
+  input.ui-select-search {
+    outline: none !important;
+    padding: 0 14px;
+    box-shadow: none !important;
+    //transition: border-color 0.5s ease;
+    border-radius: 0 !important;
+    line-height: 40px;
+    //background: white !important;
+    .input-text;
+
+    &:focus {
+      border-color: @mediumGray;
+    }
+  }
+
+  span.ui-select-toggle {
+    overflow: hidden;
+  }
+
+  .text-muted {
+    .jf-placeholder();
+  }
+}
+
+.ui-select-choices {
+  border: 1px solid @mediumGray;
+  box-shadow: @shadow;
+
+  .ui-select-choices-row {
+    a {
+      padding: 0 14px;
+      color: inherit;
+    }
+    &:not(.disabled) > a{
+      cursor: pointer;
+    }
+    & > a:hover {
+      background: @lightgrey;
+      color: inherit;
+    }
+    &.active > a {
+      background: @lightgrey;
+      font-weight: 600;
+      color: inherit;
+    }
+  }
+}
+
+
 .ui-select-match-text {
   font-weight: normal;
-  width: 96%;
+  width: 92%;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -21,8 +91,39 @@
   width: 100% !important;
 }
 
-.ui-select-bootstrap .ui-select-toggle[disabled="disabled"] > .caret {
-  color: @grayPlaceholderLight;
+.ui-select-bootstrap .ui-select-toggle {
+  & > .caret {
+    border: 0;
+    height: auto;
+    position: static;
+    font-family: artifactory!important;
+    //float: none !important;
+    font-style: normal;
+    margin-right: 14px;
+    &:before {
+      content: "\e974";
+      font-size: 18px;
+      &:hover {
+        color: darken(@black, 10%);
+      }
+    }
+  }
+  &[disabled="disabled"] > .caret {
+    color: @grayPlaceholderLight;
+  }
+
+
+  // TODO <Matan> - Clear Button
+  //.btn {
+  //  min-width: auto;
+  //  padding: 0;
+  //  line-height: 1em;
+  //
+  //  .glyphicon-remove:before {
+  //    content: "\0000D7";
+  //    font-size: 22px;
+  //  }
+  //}
 }
 
 jf-ui-select {

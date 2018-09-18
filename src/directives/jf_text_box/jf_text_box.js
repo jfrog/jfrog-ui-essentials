@@ -117,7 +117,7 @@ class jfTextBoxController {
             let words = this.splitText(this.text);
             let i = 1;
             let getNumOfLinesUntil = (index, withSeeAll = true) => {
-                this.setStageText(_.trimRight(words.slice(0,index).join('')) + (withSeeAll ? ' ' : ''))
+                this.setStageText(_.trimRight(words.slice(0, index).join('')) + (withSeeAll ? ' ' : ''))
                 if (withSeeAll) this.stageElement.append($(`  <div class="jf-text-box-show-all">${this.seeAllText}</div>`));
                 return this.numOfStageRows;
             }
@@ -129,22 +129,22 @@ class jfTextBoxController {
                 this.wrapSeeAll = true;
             }
             else this.wrapSeeAll = false;
-/*
-            let saved = i;
-            i--;
-            while (getNumOfLinesUntil(i, false) !== getNumOfLinesUntil(i) && i > 0) {
-                console.log('?');
-                i--;
-            }
+            /*
+                        let saved = i;
+                        i--;
+                        while (getNumOfLinesUntil(i, false) !== getNumOfLinesUntil(i) && i > 0) {
+                            console.log('?');
+                            i--;
+                        }
 
-            if  (i === 0) {
-                i = saved;
-                this.wrapSeeAll = true;
-            }
-            else this.wrapSeeAll = false;
-*/
+                        if  (i === 0) {
+                            i = saved;
+                            this.wrapSeeAll = true;
+                        }
+                        else this.wrapSeeAll = false;
+            */
 
-            let fit = words.slice(0,i);
+            let fit = words.slice(0, i);
 
             this.setStageText(_.trimRight(fit.join('')) + (this.isOverflowing ? ' ' : ''));
             if (this.isOverflowing) this.stageElement.append($(`<div class="jf-text-box-show-all">${this.seeAllText}</div>`));
@@ -153,7 +153,7 @@ class jfTextBoxController {
             while (this.numOfStageRows > this.numOfWholeRows && i > m) {
                 m++;
 
-                fit = words.slice(0,i - m);
+                fit = words.slice(0, i - m);
                 this.setStageText(_.trimRight(fit.join('')) + (this.isOverflowing ? ' ' : ''));
                 if (this.isOverflowing) this.stageElement.append($(`<div class="jf-text-box-show-all">${this.seeAllText}</div>`));
             }
@@ -195,7 +195,7 @@ class jfTextBoxController {
         this.stageElement.text('*');
         this.lineHeight = this.stageElement.height();
         if (this.maxLines) {
-            this.containerElement.height(parseInt(this.maxLines)*this.lineHeight);
+            this.containerElement.height(parseInt(this.maxLines) * this.lineHeight);
         }
     }
 

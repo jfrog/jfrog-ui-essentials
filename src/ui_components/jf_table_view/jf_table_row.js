@@ -350,7 +350,7 @@ class jfTableRowController {
     }
 
     _getRowActionsWidth() {
-	    return this.tableView.options.getActionsContainerWidthInPixels() + 'px';
+        return this.tableView.options.getActionsContainerWidthInPixels() + 'px';
     }
 }
 

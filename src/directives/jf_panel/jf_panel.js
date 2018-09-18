@@ -1,7 +1,8 @@
 class jfPanelController {
     constructor($element) {
-    	this.$element = $element;
+        this.$element = $element;
     }
+
     hasNestedJfPanel() {
         return this.$element.has('jf-panel').length > 0;
     }
@@ -13,11 +14,11 @@ export function jfPanel() {
             jfPanelHeading: '@',
             jfPanelHelpTooltip: '@',
             jfPanelClasses: '@',
-	        bordered: '=?'
+            bordered: '=?'
         },
         templateUrl: 'directives/jf_panel/jf_panel.html',
         transclude: true,
-	    controller: jfPanelController,
-	    controllerAs: '$ctrl',
+        controller: jfPanelController,
+        controllerAs: '$ctrl',
     }
 }

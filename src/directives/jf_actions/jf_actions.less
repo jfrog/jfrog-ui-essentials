@@ -4,19 +4,13 @@
   font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
 
   a {
-    color: @grayFontGeneral;
+    color: @jfColorBlack;
     text-decoration: none;
-  }
-
-  a:hover, & .dropdown.open a {
-    &, & i:before {
-      color: @greenBGDark;
-    }
   }
 
   & > a > .action-icon, .actions-more .action-icon {
     position: relative;
-    margin-right: 4px;
+    margin-right: 1px;
     font-size: 16px;
     top: 2px;
   }
@@ -32,12 +26,11 @@
 .action-button, .action-item {
   &.disabled {
     a {
-      cursor: not-allowed !important;
-      color: lightgrey !important;
+      color: @darkGray !important;
       span.action-name,
       span.action-icon:before,
       i.action-icon:before {
-        color: lightgrey !important;
+        color: @darkGray !important;
       }
     }
   }

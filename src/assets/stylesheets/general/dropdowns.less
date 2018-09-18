@@ -12,7 +12,7 @@
   & > a {
     height: 40px;
     line-height: 40px;
-    color: @grayFontGeneral;
+    color: @jfColorBlack;
   }
 }
 
@@ -43,6 +43,10 @@
     .action-container {
       .action-icon {
         margin-right: 6px;
+        &.icon-re-index {
+          font-size: 20px;
+          margin-left: 10px;
+        }
       }
     }
 
@@ -53,8 +57,8 @@
 
       & > span:not(.action-icon) {
         display: inline-block;
-        font-weight: 300;
-        color: @grayFontGeneral;
+        font-weight: 400;
+        color: @jfColorBlack;
         vertical-align: top;
       }
     }
@@ -73,20 +77,8 @@
     &:hover {
       background: @grayBGLight !important;
 
-      & > a, > a > span, .action-icon::before, &.context-menu-item, &.context-menu-item:before {
-        color: @greenFontHeader;
-      }
-
       .action-container {
         background: transparent;
-      }
-    }
-
-    &.icon-clear, &.menu-item-icon-clear, &.menu-item-icon-trashcan {
-      &:hover {
-        & > a, > a > span, .action-icon::before, &.context-menu-item, &.context-menu-item:before {
-          color: @redError;
-        }
       }
     }
   }
@@ -317,15 +309,11 @@
 
   .dropdown-item {
     border-bottom: 1px solid @grayBorderLight;
-
     a {
       padding: 10px 0 9px 0 !important;
-      font-weight: 100;
-      color: @grayFontDark !important;
 
       &:hover {
-        background: @greenBGLighter;
-        color: @greenFontDark !important;
+        background: @lightgrey;
       }
     }
 
