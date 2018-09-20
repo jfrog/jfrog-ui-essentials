@@ -70,7 +70,7 @@
     width: 100%;
     border: 1px solid @grayBorderLighter;
     border-top: none;
-    z-index: 99;
+    z-index: 201;
     box-shadow: @shadow;
     .filter-container {
       padding: 8px 10px;
@@ -135,6 +135,10 @@
         }
       }
     }
+  }
+
+  .no-label + .drop-down-container {
+    top: 0;
   }
 
   &.disabled {

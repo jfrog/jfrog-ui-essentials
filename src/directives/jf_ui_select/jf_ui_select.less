@@ -130,12 +130,25 @@ jf-ui-select {
   .ui-select-bootstrap {
     .ui-select-choices-row.active,
     .ui-select-choices-row {
+      &.disabled:hover {
+        background-color: transparent;
+      }
       &.disabled > a,
       &.disabled > a i:before,
       &.disabled > a:hover {
-        background: @grayBGLighter!important;
+        cursor: default;
+        background-color: transparent;
         color:@grayFontLighter;
       }
+    }
+  }
+}
+
+.ui-select-bootstrap {
+  .ui-select-choices-row.active,
+  .ui-select-choices-row {
+    & > a:hover i:before{
+      color: inherit;
     }
   }
 }
