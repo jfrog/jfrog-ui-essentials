@@ -1,43 +1,33 @@
-@charset "UTF-8";
-// asaf
 @font-face {
-  font-family: "artifactory";
-  src:url("fonts/artifactory.eot");
-  src:url("fonts/artifactory.eot?#iefix") format("embedded-opentype"),
-  url("fonts/artifactory.woff") format("woff"),
-  url("fonts/artifactory.ttf") format("truetype"),
-  url("fonts/artifactory.svg#artifactory") format("svg");
+  font-family: 'artifactory';
+  src:  url('fonts/artifactory.eot?yl0jgj');
+  src:  url('fonts/artifactory.eot?yl0jgj#iefix') format('embedded-opentype'),
+  url('fonts/artifactory.woff2?yl0jgj') format('woff2'),
+  url('fonts/artifactory.ttf?yl0jgj') format('truetype'),
+  url('fonts/artifactory.woff?yl0jgj') format('woff'),
+  url('fonts/artifactory.svg?yl0jgj#artifactory') format('svg');
   font-weight: normal;
   font-style: normal;
-
 }
 
-[data-icon]:before {
-  font-family: "artifactory" !important;
-  content: attr(data-icon);
-  font-style: normal !important;
-  font-weight: normal !important;
-  font-variant: normal !important;
-  text-transform: none !important;
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'artifactory' !important;
   speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
   line-height: 1;
+
+  /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-[class^="icon-"]:before,
-[class*=" icon-"]:before {
-  font-family: "artifactory" !important;
-  font-style: normal !important;
-  font-weight: normal !important;
-  font-variant: normal !important;
-  text-transform: none !important;
-  speak: none;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.icon-icons8-jenkins-filled:before {
+  content: "\e981";
 }
-
 .icon-failure:before {
   content: "\e97a";
 }
@@ -188,7 +178,6 @@
 .icon-css:before {
   content: "\66";
 }
-.icon-deb:before,
 .icon-debian:before {
   content: "\67";
 }
@@ -222,7 +211,6 @@
 .icon-artifacts-new:before {
   content: "\79";
 }
-.icon-ruby-gems:before,
 .icon-gems:before {
   content: "\49";
 }
@@ -488,7 +476,6 @@
 .icon-vcs:before {
   content: "\e007";
 }
-.icon-pom:before,
 .icon-maven:before {
   content: "\e008";
 }
@@ -666,6 +653,9 @@
 .icon-claim-ownership:before {
   content: "\e977";
 }
+.icon-alpine:before {
+  content: "\e980";
+}
 .icon-xray-policies:before {
   content: "\e971";
 }
@@ -757,32 +747,4 @@
 }
 .icon-compress:before {
   content: "\e932";
-}
-
-
-////////////////////////////////////////////////////
-//      Custom modifications - DO NOT CHANGE     //
-//////////////////////////////////////////////////
-.context-menu-item {
-  &.icon-locked-unlock:before {
-    content: "\e902";
-    color: red !important;
-  }
-}
-
-.icon-angle-double-up:before {
-  content: "\21E7";
-  font-size: 22px;
-  line-height: 36px !important;
-}
-.icon-angle-double-down:before {
-  content: "\21E9";
-  font-size: 22px;
-  line-height: 36px !important;
-}
-
-.icon-datagrid-v {
-  &:before {
-    content: "\56";
-  }
 }
