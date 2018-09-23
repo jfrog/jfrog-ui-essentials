@@ -135,15 +135,20 @@
   &.multi .selectize-input,
   &.single .selectize-input {
     &:after {
-      border: 0;
-      height: auto;
-      position: absolute;
-      top: 8px;
       font-family: artifactory!important;
       font-style: normal;
-      margin-right: 7px;
-      content: "\e974";
       font-size: 18px;
+      content: "\e974";
+      border: 0;
+      position: absolute;
+      display: block;
+      width: auto;
+      height: auto;
+      margin-right: 17px;
+      margin-top: 6px;
+      right: 0;
+      top: 0;
+      cursor: pointer;
     }
     &.dropdown-active:after {
       display: none;
@@ -165,7 +170,7 @@
   background: transparent;
   padding: 0px 24px 0 8px !important;
   margin: 0 8px 0 0;
-  border: 1px solid @jfColorMediumGrey;
+  border: 1px solid @jfColorAlmostBlack;
   border-radius: 3px;
   color: @jfColorAlmostBlack;
   height: 26px;
@@ -180,7 +185,7 @@
     background: @white;
     font-weight: 400;
     font-size: 22px;
-    color: @jfColorMediumGrey;
+    color: @jfColorAlmostBlack;
     width: 22px;
     text-align: center;
     margin-right: 1px;
