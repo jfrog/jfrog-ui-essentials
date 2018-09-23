@@ -2,89 +2,132 @@
  * those files will be loaded and concat by gulp
  * @type {{JS: string[], CSS: string[]}}
  */
-module.exports = {
 
+const vendorsPathes = {
+	js: {
+		core: [
+			'node_modules/jquery/dist/jquery.js',
+			'node_modules/angular/angular.js',
+			'node_modules/angular-animate/angular-animate.min.js',
+			'node_modules/angular-mocks/angular-mocks.js',
+			'node_modules/angular-cookies/angular-cookies.js',
+			'node_modules/angular-sanitize/angular-sanitize.js',
+			'node_modules/angular-messages/angular-messages.js',
+			'node_modules/angular-ui-router/release/angular-ui-router.js',
+			'node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.js',
+			'node_modules/jf-angular-ui-grid/ui-grid.js',
+			'node_modules/angular-resource/angular-resource.js',
+			'node_modules/angularjs-toaster/toaster.js',
+			'node_modules/angular-file-upload/angular-file-upload.js',
+			'node_modules/jquery-contextmenu/dist/jquery.contextMenu.js',
+			'node_modules/components-jqueryui/jquery-ui.js',
+			'node_modules/lodash/index.js',
+			'node_modules/codemirror/lib/codemirror.js',
+			'node_modules/jf-angular-ui-codemirror/ui-codemirror.js',
+			'node_modules/ui-select/dist/select.js',
+			'node_modules/zeroclipboard/dist/ZeroClipboard.js',
+			'node_modules/ng-clip/dest/ng-clip.min.js',
+			'node_modules/jf-angular-ui-utils/ui-utils.js',
+			'vendor/jquery.highlight.js',
+			'node_modules/jf-tooltipster/js/jquery.tooltipster.min.js',
+			'node_modules/angular-capitalize-filter/capitalize.js',
+			'vendor/draggable-rows.js',
+			'node_modules/hamsterjs/hamster.js',
+			'node_modules/angular-mousewheel/mousewheel.js',
+			'node_modules/moment/min/moment.min.js',
+			'node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+			'node_modules/angular-eonasdan-datetimepicker/dist/angular-eonasdan-datetimepicker.js',
+			'node_modules/clipboard/dist/clipboard.min.js',
+		],
+		optional: {
+			codemirror: {
+				xml: 'node_modules/codemirror/mode/xml/xml.js',
+				js: 'node_modules/codemirror/mode/javascript/javascript.js',
+				clike: 'node_modules/codemirror/mode/clike/clike.js',
+				dialog: 'node_modules/codemirror/addon/dialog/dialog.js',
+				searchCursor: 'node_modules/codemirror/addon/search/searchcursor.js',
+				matchBrackets: 'node_modules/codemirror/addon/edit/matchbrackets.js',
+				overlay: 'node_modules/codemirror/addon/mode/overlay.js',
+			},
+			xml2js: 'node_modules/x2js/lib/xml2js',
+			later: 	'node_modules/later/later.js',
+			jsBeautify: 'node_modules/js-beautify/js/lib/beautify.js',
+			jsTree: 'node_modules/jf-jstree/dist/jstree.js',
+			momentDateFormatParser: 'node_modules/moment-jdateformatparser/moment-jdateformatparser.min.js',
+			jasmineMatchers: 'node_modules/jasmine-expect/dist/jasmine-matchers.js'
+		}
+	},
+	css: {
+		core: [
+			'node_modules/components-jqueryui/themes/smoothness/jquery-ui.css',
+			'node_modules/jquery-contextmenu/dist/jquery.contextMenu.css',
+			'node_modules/bootstrap/dist/css/bootstrap.css',
+			'node_modules/jf-angular-ui-grid/ui-grid.min.css',
+			'node_modules/jf-animate-css/animate.css',
+			'node_modules/codemirror/lib/codemirror.css',
+			'node_modules/ui-select/dist/select.css',
+			'node_modules/jf-tooltipster/css/tooltipster.css',
+			'node_modules/codemirror/addon/dialog/dialog.css',
+			'node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
+		],
+		optional: {
+			codemirror:{
+				dialog:'node_modules/codemirror/addon/dialog/dialog.css',
+			},
+			jsTree: 'node_modules/jf-jstree/dist/themes/default/style.css',
+		}
+	},
+	fonts: {
+		core: [
+			'node_modules/jf-angular-ui-grid/*.{svg,woff,ttf,eot}',
+		],
+		optional: {
+			jsTree: 'node_modules/jf-jstree/dist/themes/default/*.{png,gif}',
+		}
+	},
+	assets: {
+		core: [
+			'node_modules/zeroclipboard/dist/ZeroClipboard.swf'
+		]
+	}
+};
+
+module.exports = {
+	ESSENTIALS_VENDORS: vendorsPathes,
     JS: [
         'vendor/jquery.highlight.js',
         'vendor/draggable-rows.js'
     ],
     JS_FOR_KARMA: [
-	    'components/jquery/dist/jquery.js',
-	    'components/angular/angular.js',
-	    'components/angular-animate/angular-animate.min.js',
-	    'components/angular-mocks/angular-mocks.js',
-	    'components/angular-cookies/angular-cookies.js',
-	    'components/angular-sanitize/angular-sanitize.js',
-	    'components/angular-messages/angular-messages.js',
-	    'components/angular-ui-router/release/angular-ui-router.js',
-	    'components/angular-bootstrap/ui-bootstrap-tpls.js',
-	    'components/angular-ui-grid/ui-grid.js',
-	    'components/angular-resource/angular-resource.js',
-	    'components/angularjs-toaster/toaster.js',
-	    'components/angular-file-upload/angular-file-upload.js',
-	    'components/jQuery-contextMenu/dist/jquery.contextMenu.min.js',
-	    'components/jquery-ui/jquery-ui.js',
-	    'components/lodash/lodash.js',
-	    'components/codemirror/lib/codemirror.js',
-	    'components/codemirror/addon/mode/overlay.js',
-	    'components/codemirror/mode/xml/xml.js',
-	    'components/codemirror/mode/javascript/javascript.js',
-	    'components/codemirror/mode/clike/clike.js',
-	    'components/codemirror/addon/dialog/dialog.js',
-	    'components/codemirror/addon/search/searchcursor.js',
-	    'components/codemirror/addon/edit/matchbrackets.js',
-	    'components/angular-ui-codemirror/ui-codemirror.js',
-	    'components/x2js/xml2json.js',
-	    'components/angular-ui-select/dist/select.js',
-	    'components/zeroclipboard/dist/ZeroClipboard.js',
-	    'components/ng-clip/src/ngClip.js',
-	    'components/angular-ui-utils/ui-utils.js',
-	    'components/later/later.js',
-	    'vendor/jquery.highlight.js',
-	    'components/tooltipster/js/jquery.tooltipster.min.js',
-	    'components/angular-capitalize-filter/capitalize.js',
-	    'vendor/draggable-rows.js',
-	    'components/clipboard/dist/clipboard.min.js',
-	    'node_modules/js-beautify/js/lib/beautify.js',
-	    'node_modules/hamsterjs/hamster.js',
-	    'node_modules/angular-mousewheel/mousewheel.js',
-	    'components/jstree/dist/jstree.js',
-	    'components/moment/min/moment.min.js',
-	    'components/moment-jdateformatparser/moment-jdateformatparser.min.js',
-	    'components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
-	    'components/angular-eonasdan-datetimepicker/dist/angular-eonasdan-datetimepicker.js',
-	    'node_modules/jasmine-expect/dist/jasmine-matchers.js'
+	    ...vendorsPathes.js.core,
+	    vendorsPathes.js.optional.codemirror.xml,
+	    vendorsPathes.js.optional.codemirror.js,
+	    vendorsPathes.js.optional.codemirror.clike,
+	    vendorsPathes.js.optional.codemirror.dialog,
+	    vendorsPathes.js.optional.codemirror.searchCursor,
+	    vendorsPathes.js.optional.codemirror.matchBrackets,
+	    vendorsPathes.js.optional.codemirror.overlay,
+	    vendorsPathes.js.optional.xml2js,
+	    vendorsPathes.js.optional.later,
+	    vendorsPathes.js.optional.jsBeautify,
+	    vendorsPathes.js.optional.jsTree,
+	    vendorsPathes.js.optional.momentDateFormatParser,
+	    vendorsPathes.js.optional.jasmineMatchers,
     ],
 
     CSS: [
-        'components/jquery-ui/themes/smoothness/jquery-ui.css',
-        'components/jQuery-contextMenu/dist/jquery.contextMenu.min.css',
-        'components/bootstrap/dist/css/bootstrap.css',
-        'components/angular-ui-grid/ui-grid.min.css',
-//        'components/angularjs-color-picker/angularjs-color-picker.min.css',
-        'components/animate.css/animate.css',
-//        'components/angularjs-toaster/toaster.css',
-        'components/codemirror/lib/codemirror.css',
-//        'components/angular-hotkeys/build/hotkeys.css',
-        'components/angular-ui-select/dist/select.css',
-//        'components/lessfonts-open-sans/dist/css/open-sans.css',
-        //'components/selectize/dist/css/selectize.css',
-//        'components/selectize/dist/css/selectize.bootstrap3.css',
-//        'components/font-awesome/css/font-awesome.css',
-        'components/tooltipster/css/tooltipster.css',
-        'components/codemirror/addon/dialog/dialog.css',
-        'components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
-        'components/jstree/dist/themes/default/style.css',
+	    ...vendorsPathes.css.core,
+	    vendorsPathes.css.optional.codemirror.dialog,
+	    vendorsPathes.css.optional.jsTree,
     ],
 
     FONTS: [
-//        'components/lessfonts-open-sans/dist/fonts/**/*.{svg,woff,ttf,eot}',
-        'components/angular-ui-grid/*.{svg,woff,ttf,eot}',
-//        'components/font-awesome/fonts/*.{svg,woff,ttf,eot}'
-        'components/jstree/dist/themes/default/*.{png,gif}',
+	    ...vendorsPathes.fonts.core,
+	    vendorsPathes.fonts.optional.jsTree
     ],
 
     ASSETS: [
-        'components/zeroclipboard/dist/ZeroClipboard.swf'
+	    ...vendorsPathes.assets.core
     ]
 };
+

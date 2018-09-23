@@ -52,11 +52,10 @@ gulp.task('build:common',
                 'copyLessVariables',
                 'fonts',
                 'images',
-                'copyBowerJson'
+                'copyEssentialsVendorDependency'
             ],
             'concatAllJS',
             'preprocessJS',
-            'preprocessBowerJSON',
             'announceBuildCompletion',
             'writeBuildVersion',
             'copyWebworkers',
@@ -128,11 +127,6 @@ gulp.task('preprocessJS', function() {
         .pipe(preprocess())
         .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET));
 });
-gulp.task('preprocessBowerJSON', function() {
-    return gulp.src(CONFIG.DESTINATIONS.TARGET + '/bower.json')
-        .pipe(preprocess())
-        .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET));
-});
 gulp.task('concatAllCSS', function() {
     return gulp.src([CONFIG.DESTINATIONS.TARGET_TEMP + '/*.css', CONFIG.DESTINATIONS.TARGET + '/*.css'])
         .pipe(concat('jfrog-ui-essentials.css'))
@@ -154,18 +148,10 @@ function sequence() {
     }
 }
 
-// copy bower.json file to dest
-gulp.task('copyBowerJson', function () {
-    return gulp.src(CONFIG.SOURCES.BOWER_JSON)
+// copy vendor.js file to dist
+gulp.task('copyEssentialsVendorDependency', function () {
+    return gulp.src(CONFIG.SOURCES.VENDOR_JS)
         .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET))
-});
-
-
-
-// install bower dependedencies
-gulp.task('bower', function () {
-    return gulp.src(['./bower.json'])
-            .pipe(install());
 });
 
 // bundle application code
