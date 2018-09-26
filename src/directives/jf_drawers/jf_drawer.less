@@ -2,20 +2,14 @@
   position: relative;
   padding: 15px 0;
   border-bottom: 1px solid @grayBorderLighter;
-  //&:first-child {border-top: 1px solid @grayBorderLighter;}
 
   .drawer-header {
     cursor: pointer;
     display: flex;
     flex-direction: row;
     align-items: center;
-    white-space: nowrap;
 
     .icon-small-arrow-down {
-      //margin: 0 15px;
-      //color: #707070;
-      //transition: transform .2s ease-in-out;
-      //transform: rotate(90deg);
       transform: rotate(0deg) scale(1.2);
       margin: 0 10px;
 
@@ -24,33 +18,34 @@
         //top: -1px;
       }
     }
-
+    .drawer-header-title,
+    .drawer-header-description {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
     .drawer-header-title {
       font-size: 16px;
       font-weight: 700;
+      padding-right: 10px;
     }
     .drawer-header-description {
-      margin-left: 10px;
-      flex-grow: 1;
       font-size: 12px;
-      font-weight: 500;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-width: 0;
+      flex-shrink: 3;
     }
   }
 
   .drawer-content {
-    padding: 20px 0 20px 60px;
+    padding: 20px 0 20px 30px;
     overflow: hidden;
     transition: height .2s ease-in-out;
+    // drawer in drawer
+    .jf-drawer {
+      border: 0;
+      padding-bottom: 0;
+      .drawer-header i.icon-small-arrow-down {
+        display: none;
+      }
+    }
   }
-
-  //.jf-drawer {
-  //  border: none;
-  //}
-}
-
-jf-drawer:last-child .jf-drawer {
-  border-bottom: 1px solid #e9e9e9;
 }
