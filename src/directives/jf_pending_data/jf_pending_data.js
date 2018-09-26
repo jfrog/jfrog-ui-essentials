@@ -22,6 +22,7 @@ class jfTinySpinnerController {
     constructor($timeout) {
         this.$timeout = $timeout;
     }
+
     $onInit() {
         if (this.delaySpinner) {
             this.$timeout(() => {

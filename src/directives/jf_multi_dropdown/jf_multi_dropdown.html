@@ -1,22 +1,53 @@
 <div ng-class="{'disabled':jfMultiDropdown.disabled,'with-text-inputs':jfMultiDropdown.textInputs,'borderless':jfMultiDropdown.borderless}" class="jf-multi-dropdown">
+
     <label ng-if="jfMultiDropdown.label">{{jfMultiDropdown.label}} <span ng-if="jfMultiDropdown.showLabelCounter && jfMultiDropdown.selectedItems().length">({{jfMultiDropdown.selectedItems().length}})</span></label>
+
+
     <div class="main-box"
-         ng-class="{'selected-view' : jfMultiDropdown.selectedItems().length}"
+         ng-class="{'selected-view' : jfMultiDropdown.selectedItems().length,
+                    'no-items': !jfMultiDropdown.items.length && jfMultiDropdown.noItemsMessage,
+                    'no-label': !jfMultiDropdown.label}"
          ng-click="jfMultiDropdown.onClick()">
+
+
+        <!--Default-->
+        <span ng-if="jfMultiDropdown.showSelected && !jfMultiDropdown.selectedItems().length">{{jfMultiDropdown.title}}</span>
+
+        <!--SHOW SELECTED COUNTER-->
         <span ng-if="!jfMultiDropdown.showSelected" class="title-wrapper">
             {{jfMultiDropdown.title}}
             <span class="selected-counter">({{jfMultiDropdown.getSelectedCount()}})</span>
         </span>
-        <span ng-if="jfMultiDropdown.showSelected && jfMultiDropdown.selectedItems().length">{{jfMultiDropdown.getSelectedForTitle()}} <i class="icon icon-clear" ng-click="jfMultiDropdown.unSelectAll()"></i></span>
-        <span ng-if="jfMultiDropdown.showSelected && !jfMultiDropdown.selectedItems().length">{{jfMultiDropdown.title}}</span>
-        <i ng-class="{'icon icon-addons-arrow-right pull-left':jfMultiDropdown.borderless,'caret pull-right':!jfMultiDropdown.borderless}"></i>
+
+        <!--Something selected and shown-->
+        <span ng-if="jfMultiDropdown.showSelected && jfMultiDropdown.selectedItems().length">
+            {{jfMultiDropdown.getSelectedForTitle()}}
+        </span>
+
+
+
+        <!--ACTIONS-->
+        <span class="actions">
+            <i ng-if="jfMultiDropdown.showSelected && jfMultiDropdown.selectedItems().length" ng-click="jfMultiDropdown.unSelectAll()" class="clear-field">&#215;</i>
+            <i class="icon-small-arrow-down"></i>
+        </span>
+
     </div>
+
+
+
+
+
+
+
+
     <div ng-if="jfMultiDropdown.opened"
          class="drop-down-container">
         <div class="filter-container" ng-if="!jfMultiDropdown.noFilter">
             <form>
                 <jf-field autofocus="true">
                     <input type="text"
+                           autocomplete="off"
                            name="items-filter"
                            class="input-text"
                            ng-model="jfMultiDropdown.filterText"
@@ -55,13 +86,11 @@
         <div class="batch-action-buttons" ng-if="jfMultiDropdown.items.length">
             <button class="btn btn-default pull-right"
                     ng-click="jfMultiDropdown.clearSelection()">
-                <i class="icon icon-trashcan"></i>
                 {{ jfMultiDropdown.singleSelection ? 'Clear selection' : 'Clear All' }}
             </button>
             <button class="btn btn-default pull-right"
                     ng-if="!jfMultiDropdown.singleSelection"
                     ng-click="jfMultiDropdown.selectAll()">
-                <i class="icon icon-notif-success"></i>
                 Select All
             </button>
         </div>
