@@ -9,8 +9,9 @@
 			<li class="group-list-item" style="display: none">*</li>
 			<li class="group-list-item cursor-pointer"
 			    ng-repeat="item in jfListSelection.getPageItems() track by $index"
-			    ng-class="item.clickable ? '' : 'not-clickable'"
-			    ng-dblclick="jfListSelection.onSelect({item: item}); jfListSelection.paginationApi.update()"
+			    ng-class="{'not-clickable': !item.clickable, 'highlighted': item.highlighted && jfListSelection.highlightSelected}"
+			    ng-dblclick="jfListSelection.onItemClick(item)"
+			    ng-click="jfListSelection.allowSingleClick ? jfListSelection.onItemSelection(item) : null"
 			    jf-tooltip="{{item.icon_tooltip ? item.icon_tooltip : ''}}">
 				<i ng-if="item.icon_class"
 				   ng-class="item.icon_class"
@@ -18,7 +19,7 @@
 				   class="icon pull-left"></i>
 				{{item.name}}
 				<i class="icon icon-arrow pull-right cursor-pointer"
-				   ng-click="jfListSelection.onSelect({item: item}); jfListSelection.paginationApi.update()"></i>
+				   ng-click="jfListSelection.onItemSelection(item)"></i>
 			</li>
 		</ul>
 	</div>
