@@ -4,12 +4,13 @@ export default function jfWizardElement() {
         restrict: 'E',
         scope: {
             title: '@',
+	        isSelectedTab: '<?'
         },
         templateUrl: 'directives/jf_wizard/jf_wizard_element/jf.wizard.element.view.html',
         require: '^jfWizard',
         transclude: true,
         link: ($scope, element, attrs, jfWizardCtl) => {
-            jfWizardCtl.registerTab(attrs.title);
+            jfWizardCtl.registerTab(attrs.title, $scope.$ctrl.isSelectedTab);
             $scope.$ctrl.jfWizardCtl=jfWizardCtl;
             $scope.$ctrl.title=attrs.title;
             $scope.$ctrl.config = $scope.$ctrl.jfWizardCtl.config;
