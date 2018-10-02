@@ -34,8 +34,8 @@ class jfWizardController {
 		this.tabs = [];
 	}
 
-	registerTab(item) {
-		if (this.init) {
+	registerTab(item, isSelectedTab) {
+		if (this.init || isSelectedTab) {
 			this.active = item;
 			this.init = false;
 		}

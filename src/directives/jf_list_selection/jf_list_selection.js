@@ -1,14 +1,19 @@
 class jfListSelectionController {
-	constructor($timeout, $filter) {
+	constructor($timeout, $filter, $element) {
 		this.paginationApi = new PaginationApi(this);
 		this.currentPage = 1;
 
 		this.filter = $filter('filter');
 
 		this.$timeout = $timeout;
+		this.$element = $element;
+		this.setItemsPerPage();
+	}
+
+	setItemsPerPage() {
 		this.$timeout(() => {
-			let containerHeight = $('.group-list-wrapper').innerHeight();
-			let itemHeight = $('.group-list-item').outerHeight();
+			let containerHeight = this.$element.find('.group-list-wrapper').innerHeight();
+			let itemHeight = this.$element.find('.group-list-item').outerHeight();
 			this.itemsPerPage = Math.floor(containerHeight / itemHeight);
 		});
 	}
@@ -27,6 +32,24 @@ class jfListSelectionController {
 		this.paginationApi.setPage(1);
 		this.paginationApi.update();
 	}
+
+	onItemSelection(item) {
+		if(this.highlightSelected && !item.highlighted) {
+			let lastHiglighted = _.find(this.items,i => i.highlighted);
+			if(lastHiglighted) {
+				lastHiglighted.highlighted = false;
+			}
+			item.highlighted = true;
+		}
+		this.onItemClick(item);
+	}
+
+	onItemClick(item) {
+		if(this.onSelect && typeof this.onSelect === 'function') {
+			this.onSelect({item: item});
+			this.paginationApi.update();
+		}
+	}
 }
 
 export function jfListSelection() {
@@ -35,7 +58,9 @@ export function jfListSelection() {
 		scope: {
 			items: '=',
 			onSelect: '&',
-			usePagination: '=?'
+			usePagination: '=?',
+			highlightSelected: '<',
+			allowSingleClick: '<?'
 		},
 		controller: jfListSelectionController,
 		controllerAs: 'jfListSelection',
