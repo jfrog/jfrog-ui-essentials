@@ -58,7 +58,7 @@
         </div>
         <div class="empty-table-placeholder filter-no-results"
              ng-if="jfTableView.noFilterResults">
-            {{jfTableView.options.noFilterResultsText || 'Current filter has no results.'}} <a href class="jf-link" ng-click="jfTableView.clearFilter()">Clear filter</a>
+            {{jfTableView.options.noFilterResultsText || 'Current filter has no results.'}} <a href class="jf-link" ng-if="jfTableView.tableFilter" ng-click="jfTableView.clearFilter()">Clear filter</a>
         </div>
         <div ng-if="jfTableView.options.pendingInfiniteScroll"
              ng-style="{height: jfTableView.options.rowHeight}"
