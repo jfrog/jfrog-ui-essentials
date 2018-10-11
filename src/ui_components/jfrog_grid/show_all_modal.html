@@ -22,9 +22,10 @@
             </ul>
         </div>
 
-        <div class="alert alert-warning margin-top-10" ng-if="noResults()">
-            No results match the provided filter
+        <div class="empty-filter-placeholder filter-no-results" ng-if="noResults()">
+            Current filter has no results. <a href class="jf-link" ng-click="filter.text = ''">Clear filter</a>
         </div>
+
     </div>
     <div class="modal-footer">
         <button class="btn btn-default" ng-click="$dismiss()" id="popup-cancel">Close</button>
