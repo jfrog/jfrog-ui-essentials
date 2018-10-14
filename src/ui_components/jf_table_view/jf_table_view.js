@@ -257,11 +257,15 @@ class jfTableViewController {
 
     getTotalRecords() {
         if (!this.options) return;
-	    let records = _.filter(this.options.getFilteredData(),(record)=>{
-            return !record.$parentRow;
-        });
-        let count = records.length;
+	    let count = 0;
 
+	    if(this.options.paginationMode === this.options.EXTERNAL_PAGINATION) {
+		    count = this.options.getTotalLengthOfData();
+	    } else {
+	        count = _.filter(this.options.getFilteredData(), (record) => {
+			    return !record.$parentRow;
+		    }).length;
+	    }
         return count + ' ' + this.getObjectNameByCount(count);
     }
 
