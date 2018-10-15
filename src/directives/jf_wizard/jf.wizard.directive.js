@@ -34,20 +34,24 @@ class jfWizardController {
 		this.tabs = [];
 	}
 
-	registerTab(item, isSelectedTab) {
-		if (this.init || isSelectedTab) {
-			this.active = item;
+	registerTab(tab) {
+		if (this.init || tab.isSelectedTab) {
+			this.active = tab;
 			this.init = false;
 		}
-		this.tabs.push(item);
+		this.tabs.push(tab);
 	}
 
 	switch(tab) {
 		this.$element.find('.wizard-content').scrollTop(0);
 		this.active = tab;
 		if (this.onTabSwitch) {
-			this.onTabSwitch({tab: tab});
+			this.onTabSwitch({tab: tab.title});
 		}
         this.JFrogUIUtils.fireResizeEvent();
+	}
+
+	isVisible(tab) {
+		return !tab.isVisibleTab || (typeof tab.isVisibleTab === 'function' && tab.isVisibleTab());
 	}
 }

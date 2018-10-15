@@ -67,12 +67,13 @@
          ng-style="{height: jfTableRow.rowId === 'headers' ? jfTableRow.tableView.options.headerRowHeight : jfTableRow.tableView.options.rowHeight, width: col.width}"
          ng-repeat="col in jfTableRow.tableView.options.columns">
         <div class="row-expander"
-             ng-class="{placeholder: (!jfTableRow.data.$subRows && !jfTableRow.data.$parentRow), 'sub-row-expander': jfTableRow.data.$parentRow}"
+             jf-disable-ng-animate
+             ng-class="{placeholder: (!jfTableRow.data.$subRows && !jfTableRow.data.$parentRow) || (jfTableRow.data.$subRows && jfTableRow.data.$subRows.length === 0) || (jfTableRow.data.$parentRow)}"
              ng-if="$index === 0 && jfTableRow.tableView.options.subRowsEnabled"
              ng-style="{height: jfTableRow.tableView.options.rowHeight}"
              ng-click="jfTableRow.toggleExpansion($event)">
-            <i ng-if="jfTableRow.data.$subRows && !jfTableRow.data.$pendingSubRows"
-               class="action-icon icon icon-addons-arrow-right"
+            <i ng-if="jfTableRow.data.$subRows && jfTableRow.data.$subRows.length && !jfTableRow.data.$parentRow && !jfTableRow.data.$pendingSubRows"
+               class="action-icon icon icon-small-arrow-down"
                ng-class="{'expanded': jfTableRow.data.$expanded}"></i>
             <div class="spinner-msg-local" ng-if="jfTableRow.data.$pendingSubRows">
                 <div class="icon-hourglass-local"></div>
