@@ -44,9 +44,9 @@ class jfWizardController {
 
 	switch(tab) {
 		this.$element.find('.wizard-content').scrollTop(0);
-		this.active = tab;
+		this.active = (typeof tab === 'string') ? _.find(this.tabs, t => t.title === tab) : tab;
 		if (this.onTabSwitch) {
-			this.onTabSwitch({tab: tab.title});
+			this.onTabSwitch({tab: this.active.title});
 		}
         this.JFrogUIUtils.fireResizeEvent();
 	}
