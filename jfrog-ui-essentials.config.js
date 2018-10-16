@@ -4,7 +4,7 @@ module.exports = {
 
     SOURCES: {
         APPLICATION_JS: 'src/**/*.js',
-        BOWER_JSON: 'bower.json',
+	    PACKAGE_JSON: 'package.json',
         TEMPLATES: 'src/**/**/*.html',
         VENDOR_SCRIPTS : vendorPaths.JS,
         VENDOR_SCRIPTS_FOR_KARMA : vendorPaths.JS_FOR_KARMA,

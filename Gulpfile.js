@@ -52,10 +52,12 @@ gulp.task('build:common',
                 'copyLessVariables',
                 'fonts',
                 'images',
+                'copyPackageJson',
                 'copyEssentialsVendorDependency'
             ],
             'concatAllJS',
             'preprocessJS',
+            'preprocessPackageJSON',
             'announceBuildCompletion',
             'writeBuildVersion',
             'copyWebworkers',
@@ -127,6 +129,11 @@ gulp.task('preprocessJS', function() {
         .pipe(preprocess())
         .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET));
 });
+gulp.task('preprocessPackageJSON', function() {
+    return gulp.src(CONFIG.DESTINATIONS.TARGET + '/' + CONFIG.SOURCES.PACKAGE_JSON)
+        .pipe(preprocess())
+        .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET));
+});
 gulp.task('concatAllCSS', function() {
     return gulp.src([CONFIG.DESTINATIONS.TARGET_TEMP + '/*.css', CONFIG.DESTINATIONS.TARGET + '/*.css'])
         .pipe(concat('jfrog-ui-essentials.css'))
@@ -147,6 +154,12 @@ function sequence() {
         runSequence.apply(this, args);
     }
 }
+
+// copy bower.json file to dest
+gulp.task('copyPackageJson', function () {
+	return gulp.src(CONFIG.SOURCES.PACKAGE_JSON)
+	           .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET))
+});
 
 // copy vendor.js file to dist
 gulp.task('copyEssentialsVendorDependency', function () {
