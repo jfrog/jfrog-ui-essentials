@@ -9,6 +9,7 @@ const vendorsPathes = {
 			'node_modules/jquery/dist/jquery.js',
 			'node_modules/angular/angular.js',
 			'node_modules/angular-animate/angular-animate.min.js',
+			'node_modules/angular-hotkeys/build/hotkeys.js',
 			'node_modules/angular-mocks/angular-mocks.js',
 			'node_modules/angular-cookies/angular-cookies.js',
 			'node_modules/angular-sanitize/angular-sanitize.js',
@@ -16,6 +17,7 @@ const vendorsPathes = {
 			'node_modules/angular-ui-router/release/angular-ui-router.js',
 			'node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.js',
 			'node_modules/jf-angular-ui-grid/ui-grid.js',
+			'node_modules/jf-angular-ui-layout/ui-layout.js',
 			'node_modules/angular-resource/angular-resource.js',
 			'node_modules/angularjs-toaster/toaster.js',
 			'node_modules/angular-file-upload/angular-file-upload.js',
@@ -54,7 +56,8 @@ const vendorsPathes = {
 			jsBeautify: 'node_modules/js-beautify/js/lib/beautify.js',
 			jsTree: 'node_modules/jf-jstree/dist/jstree.js',
 			momentDateFormatParser: 'node_modules/moment-jdateformatparser/moment-jdateformatparser.min.js',
-			jasmineMatchers: 'node_modules/jasmine-expect/dist/jasmine-matchers.js'
+			jasmineMatchers: 'node_modules/jasmine-expect/dist/jasmine-matchers.js',
+			selectize: 'node_modules/selectize/dist/js/standalone/selectize.js'
 		}
 	},
 	css: {
@@ -69,12 +72,16 @@ const vendorsPathes = {
 			'node_modules/jf-tooltipster/css/tooltipster.css',
 			'node_modules/codemirror/addon/dialog/dialog.css',
 			'node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
+			'node_modules/jf-angular-ui-layout/ui-layout.css',
+			'node_modules/angular-hotkeys/build/hotkeys.css',
+			'node_modules/jf-lessfonts-open-sans/dist/css/open-sans.css',
 		],
 		optional: {
 			codemirror:{
 				dialog:'node_modules/codemirror/addon/dialog/dialog.css',
 			},
 			jsTree: 'node_modules/jf-jstree/dist/themes/default/style.css',
+			selectize: 'node_modules/selectize/dist/css/selectize.bootstrap3.css'
 		}
 	},
 	fonts: {
