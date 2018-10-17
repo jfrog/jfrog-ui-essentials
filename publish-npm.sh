@@ -66,7 +66,7 @@ echo Log in to npm using your credentials:
 npm login
 
 # If the second arg $2 is set to "beta" or $1 ends with "-beta" - assume a beta version is being published
-if [ -n $2 -a "$2" =~ ^.*beta$ ] || [[ $1 =~ ^.*-beta.*$ ]]; then
+if [ -n $2 -a "$2" =~ ^.*beta$ ] || [[ $1 =~ ^.*-.*$ ]]; then
     echo Publishing a beta version $1:
     npm publish --tag beta
 else
