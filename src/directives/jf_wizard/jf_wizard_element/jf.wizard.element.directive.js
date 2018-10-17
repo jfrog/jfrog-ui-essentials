@@ -13,7 +13,7 @@ export default function jfWizardElement() {
         link: ($scope, element, attrs, jfWizardCtl) => {
             jfWizardCtl.registerTab({
 	            title: attrs.title,
-                isSelected: $scope.$ctrl.isSelectedTab,
+	            isSelectedTab: $scope.$ctrl.isSelectedTab,
 	            isVisibleTab: $scope.$ctrl.isVisibleTab
             });
             $scope.$ctrl.jfWizardCtl = jfWizardCtl;
