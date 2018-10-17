@@ -16,7 +16,7 @@ const COMMON_ACTIONS = {
 
 let defaultAppOptions;
 
-export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFrogDownload, JFrogModal) {
+export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFrogDownload, JFrogModal, JFrogUIUtils) {
 	'ngInject';
 	createContextMenu();
 	class JFrogTableViewOptionsClass {
@@ -1359,7 +1359,8 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			modalScope.filter = {};
 			modalScope.filterItem = (item) => {
 				if (modalScope.filter.text) {
-					let regex = new RegExp('.*' + modalScope.filter.text.split('*').join('.*') + '.*', 'i');
+				    let escaped = JFrogUIUtils.escapeForRegex(modalScope.filter.text);
+                    let regex = new RegExp('.*' + escaped.split('\\*').join('.*') + '.*', 'i');
 					return regex.test(item);
 				}
 				else {

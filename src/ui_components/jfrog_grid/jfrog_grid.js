@@ -707,7 +707,8 @@ class JFrogGrid {
         modalScope.filter = {};
         modalScope.filterItem = (item) => {
             if (modalScope.filter.text) {
-                let regex = new RegExp('.*' + modalScope.filter.text.split('*').join('.*') + '.*', "i");
+                let escaped = globals.utils.escapeForRegex(modalScope.filter.text);
+                let regex = new RegExp('.*' + escaped.split('\\*').join('.*') + '.*', "i");
                 return regex.test(item);
             }
             else return true;
@@ -950,7 +951,7 @@ class JFrogGrid {
 
 export class JFrogGridFactory {
     /* @ngInject */
-    constructor(uiGridConstants, $timeout, $window, $state, $modal,$rootScope, JFrogDownload, JFrogEventBus) {
+    constructor(uiGridConstants, $timeout, $window, $state, $modal,$rootScope, JFrogDownload, JFrogEventBus, JFrogUIUtils) {
         globals.$timeout = $timeout;
         globals.$window = $window;
         globals.$state = $state;
@@ -958,6 +959,7 @@ export class JFrogGridFactory {
         globals.download = JFrogDownload;
         globals.$rootScope = $rootScope;
         globals.JFrogEventBus = JFrogEventBus;
+        globals.utils = JFrogUIUtils;
 
         this.uiGridConstants = uiGridConstants;
         this._createContextMenu();
