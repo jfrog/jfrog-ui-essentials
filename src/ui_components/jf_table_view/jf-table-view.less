@@ -170,14 +170,6 @@
             border-bottom: 1px solid @greenFontHeader;
           }
       }
-      &.group-header {
-        //background-color: white !important;
-        //color: @greenBGDark;
-        //cursor: pointer;
-        //&.expanded {
-        //  background-color: @greenBGSmallHover !important;
-        //}
-      }
       &:not(.headers) {
         border: none;
         &:last-child {
@@ -188,15 +180,14 @@
         }
         &.sub-row {
           border-top: none;
-          .row-expander {
-            display: none;
-          }
         }
         &:hover {
           background-color: @grayBGLight;
         }
       }
+      &:not(.headers),
       &.headers {
+        .row-expander + .jf-table-cell-content,
         .jf-table-cell-content.row-expander-content {
           padding-left: 0;
         }
@@ -220,14 +211,19 @@
           &:not(.placeholder) {
             background: transparent;
             cursor: pointer;
-            .icon-addons-arrow-right {
-              transform: rotate(0deg) translate(0, 15px) scale(1, 1);
-              margin: 4px 18px 0 7px;
+            .icon-small-arrow-down {
+              height: 50px;
+              line-height: 50px;
+              top: 3px;
+              left: 25%;
+              right: 0;
+              margin-right: 14px;
               display: inline-block;
               position: relative;
-              left: 25%;
+              transition: transform .2s ease-in-out,-webkit-transform .2s ease-in-out;
+              transform: rotate(-90deg);
               &.expanded {
-                transform: rotate(90deg) translate(15px, 0) scale(1, 1);
+                transform: rotate(0);
               }
             }
           }

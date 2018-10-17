@@ -1,8 +1,9 @@
 <div class="jf-wizard-container">
 	<div class="wizard-bar">
 		<ul>
-			<li ng-repeat="tab in $ctrl.tabs" ng-class="{'active': $ctrl.active===tab}">
-				<a href="" ng-click="$ctrl.switch(tab)">{{tab}}</a>
+			<li ng-repeat="tab in $ctrl.tabs" ng-class="{'active': $ctrl.active.title === tab.title}"
+			    ng-if="$ctrl.isVisible(tab)">
+				<a href="" ng-click="$ctrl.switch(tab)">{{tab.title}}</a>
 			</li>
 		</ul>
 	</div>
