@@ -4,7 +4,8 @@
 		       class="grid-page-box"
 		       ng-style="{'width': (7 + jfGridPagination.getTotalPages().toString().length * 7) + 'px'}"
 		       jf-tooltip="Jump to Page"
-		       ng-model="jfGridPagination.currentPage"
+		       ng-blur="jfGridPagination.onBlur()"
+		       ng-model="jfGridPagination.pageViewModel"
 		       ng-change="jfGridPagination.pageChanged()" />
 		out of {{ jfGridPagination.getTotalPages() }}
 		<a href
