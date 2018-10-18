@@ -4,7 +4,8 @@
 		       class="grid-page-box"
 		       ng-style="{'width': (7 + jfDragDropPagination.paginationApi.getTotalPages().toString().length * 7) + 'px'}"
 		       jf-tooltip="Jump to Page"
-		       ng-model="jfDragDropPagination.currentPage"
+		       ng-blur="jfDragDropPagination.onBlur()"
+		       ng-model="jfDragDropPagination.pageViewModel"
 		       ng-change="jfDragDropPagination.pageChanged()" />
 		out of {{ jfDragDropPagination.paginationApi.getTotalPages() }}
 		<a href
