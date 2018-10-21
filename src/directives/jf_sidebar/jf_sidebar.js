@@ -66,6 +66,8 @@ class jfSidebarController {
 		this.pinMenuStatus ? this.menu.width = '200px' : this.menu.width = '55px';
 		this.pinMenuStatus ? this.menu.transitionDelay = '.2s' : this.menu.transitionDelay = '.3s';
 
+		this.$timeout(() => this._trackResize());
+
 		$('body').on('keydown', (e) => {
 
 			if (this.driver.onKeyDown) {
