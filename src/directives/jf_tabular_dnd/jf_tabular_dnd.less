@@ -106,6 +106,16 @@
       }
     }
   }
+  .jf-table-view .jf-table-view-container .jf-table-row:not(.drag-mark):not(.headers) {
+    &:last-child {
+      background-color: @jfColorSoftGrey;
+      .jf-table-cell {
+        &, .selection-icon, .selection-button {
+          cursor: default;
+        }
+      }
+    }
+  }
 }
 
 

@@ -4,7 +4,7 @@ class jfGridPaginationController {
 
         this.$scope = $scope;
         this.$timeout = $timeout;
-        this.currentPage = 1;
+	    this.pageViewModel = this.currentPage = 1;
 
 
         JFrogEventBus.registerOnScope($scope, JFrogEventBus.getEventsDefinition().RESET_GRID_PAGINATION, () => this.resetPagination());
@@ -17,19 +17,25 @@ class jfGridPaginationController {
             if (this.gridApi.pagination) {
                 this.gridApi.pagination.on.paginationChanged(this.$scope, (pageNum)=> {
                     this.currentPage = pageNum;
+                    this.pageViewModel = this.currentPage;
                 });
             }
         });
     }
 
+    onBlur() {
+	    this.pageViewModel = parseInt(this.pageViewModel);
+	    if(!this.pageViewModel) this.pageViewModel = this.currentPage;
+    }
 
     pageChanged() {
+	    this.pageViewModel = parseInt(this.pageViewModel);
+	    if(this.pageViewModel!== 0 && !this.pageViewModel) return;
 
-        this.currentPage = parseInt(this.currentPage);
-
-        if (!this.currentPage) this.currentPage = 1;
+        this.currentPage = this.pageViewModel;
         if (this.currentPage < 1) this.currentPage = 1;
         if (this.currentPage > this.gridApi.pagination.getTotalPages()) this.currentPage = this.gridApi.pagination.getTotalPages();
+        this.pageViewModel =  this.currentPage;
         this.gridApi.pagination.seek(this.currentPage);
     }
 
