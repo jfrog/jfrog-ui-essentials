@@ -29,12 +29,20 @@
                 type="button"
                 ng-if="!jfMarkup.showControls && jfMarkup.editable"
                 ng-click="jfMarkup.activateEditor()">
-            <i class="icon icon-edit-pen"></i>
-            <span>Edit</span>
+            <span ng-if="jfMarkup.markup && jfMarkup.markup.length > 0">
+                <i class="icon icon-edit-pen"></i>
+                <span>Edit</span>
+            </span>
+            <span ng-if="!jfMarkup.markup || jfMarkup.markup.length === 0">
+                <i class="icon icon-new"></i>
+                <span>Add</span>
+            </span>
         </button>
     </div>
 
-    <div class="code-mirror-wrapper" ng-if="jfMarkup.isInEditMode()">
+    <div class="code-mirror-wrapper"
+         jf-disable-ng-animate
+         ng-if="jfMarkup.isInEditMode()">
         <jf-code-mirror
                 ng-if="jfMarkup.language === 'Markdown'"
                 mime-type="text/x-markdown"
@@ -72,11 +80,17 @@
         </button>
     </div>
 
-    <div class="preview-wrapper" ng-if="!jfMarkup.isInEditMode()">
-        <div class="preview" ng-bind-html="jfMarkup.preview"></div>
+    <div class="preview-wrapper"
+         jf-disable-ng-animate
+         ng-if="!jfMarkup.isInEditMode()">
+        <div class="preview" ng-class="{'empty-preview': !jfMarkup.preview || jfMarkup.preview.length === 0}"
+             ng-bind-html="jfMarkup.preview">
+        </div>
         <div class="no-markup" ng-if="!jfMarkup.preview">
-            <span>No markup available. </span>
-            <a class="jf-link" ng-if="!jfMarkup.showControls && jfMarkup.editable" ng-click="jfMarkup.activateEditor()"> Add markup.</a>
+            <span>No markup available.</span>&nbsp
+            <a class="jf-link" ng-if="!jfMarkup.showControls && jfMarkup.editable" ng-click="jfMarkup.activateEditor()">
+                Add markup.
+            </a>
         </div>
     </div>
 

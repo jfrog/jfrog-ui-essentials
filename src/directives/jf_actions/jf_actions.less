@@ -40,9 +40,13 @@
 jf-actions {
   display: inline-block;
   ul.list-inline {
+    font-size: 0; // DO NOT DELETE - fixes a spacing bug (li takes place as whitespace)
     li {
-      padding: 0 0 0 7px !important;
+      padding: 0 0 0 14px !important;
       margin: 0;
+      &.dynamic-action {
+        padding: 0 0 0 7px !important;
+      }
     }
   }
   .actions-dropdown {

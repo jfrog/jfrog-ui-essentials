@@ -482,10 +482,9 @@
         }
       }
       &:hover {
-        color: @greenFontHeader;
         background-color: @grayBGLight !important;
-        &[icon-name="icon icon-clear"] {
-          color: @redError;
+        &,&:before{
+          color: inherit;
         }
       }
     }

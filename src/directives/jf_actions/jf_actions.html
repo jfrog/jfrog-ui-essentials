@@ -14,7 +14,7 @@
         <span class="dropdown" dropdown is-open="jfActions.isDropdownOpen">
           <ul class="dropdown-menu dropdown-menu-right actions-dropdown text-left">
               <li ng-repeat="actionObj in jfActions.dynamicActions"
-                  class="action-item"
+                  class="action-item dynamic-action"
                   ng-class="{disabled: actionObj.disabled || (actionObj.disabledWhen && actionObj.disabledWhen()),
                     'menu-item-{{actionObj.icon}}': actionObj.icon,
                     'menu-item-no-icon': !actionObj.icon && jfActions.anyActionHasAnIcon,
