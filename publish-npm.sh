@@ -71,7 +71,7 @@ if [ -n $2 -a "$2" =~ ^.*beta$ ] || [[ $1 =~ ^.*-.*$ ]]; then
     npm publish --tag beta
 else
     echo Publishing version $1:
-    npm publish --tag
+    npm publish
 fi
 
 # TODO: check if ~/.npmrc exists, if so don't move this back
