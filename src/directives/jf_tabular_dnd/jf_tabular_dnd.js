@@ -154,6 +154,13 @@ class jfTabularDnDController {
         return {availableObjectName, selectedObjectName};
     }
 
+    areAllRowsDisabled(itemsList) {
+        if(!this.disableWholeRowSelection || !this.itemDraggableAttr || !itemsList) return false;
+	    let filtered = _.filter(itemsList, item => item.hasOwnProperty(`${this.itemDraggableAttr}`));
+	    console.log(itemsList,filtered.length);
+	    return filtered.length === itemsList.length;
+    }
+
     isIncludeListEmpty() {
         if (!this.selectedItemsTableOptions.dirCtrl) return true;
         return !this.selectedItemsTableOptions.getFilteredData().length;
