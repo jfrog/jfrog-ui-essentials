@@ -14,6 +14,8 @@
 
 ####### Colors #############
 RED='\033[0;31m'
+YELLOW='\033[0;33m'
+GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 ###########################
 
@@ -33,49 +35,66 @@ if ! [[ "$1" =~ $SEMVER_REGEX ]]; then
 fi
 
 # Update the version of jfrog-ui-essentials in the package.json file
-echo Updating jfrog-ui-essentials version: $1 in "package.json"
+echo -e "${YELLOW}Updating jfrog-ui-essentials version: ${GREEN}$1${YELLOW} in 'package.json'${NC}"
+
 jq '.version = $new_val' --arg new_val $1 ./package.json > tmp.$$.json && mv tmp.$$.json ./package.json && rm -f tmp.$$.json
 
 # Then we save the version number in BUILD_VERSION for when the version is build
 export BUILD_VERSION=$1
-echo Set BUILD_VERSION: $BUILD_VERSION
+echo -e "${YELLOW}Set BUILD_VERSION: ${GREEN}$BUILD_VERSION${YELLOW}${NC}"
 
 # Build jfrog-ui-essentials
-echo Building jfrog-ui-essentials:
+echo -e "${YELLOW}Building jfrog-ui-essentials:${NC}"
 gulp build
 
 # Auto committing & pushing build files
-echo Committing and pushing build files:
+echo -e "${YELLOW}Committing and pushing build files:${NC}"
 git add . -A
 commit_message="Version $1 - Pre-tag"
-echo Creating commit: "$commit_message"
+echo -e "${GREEN}$commit_message${NC}"
+
 git commit -m "$commit_message"
 git push
 
 # Auto tag & push
-echo Creating and pushing a new tag:
+echo -e "${YELLOW}Creating and pushing a new tag:${NC}"
+
 git tag $1
 git push --tags
 
 # Stash the .npmrc file
-echo Stashing your .npmrc file
+echo -e "${YELLOW}Stashing your .npmrc file${NC}"
 mv ~/.npmrc ~/.NPMTMP
 
 # Log into npm using your credentials
-echo Log in to npm using your credentials:
+echo -e "${YELLOW}Log in to npm using your credentials${NC}"
 npm login
 
 # If the second arg $2 is set to "beta" or $1 ends with "-beta" - assume a beta version is being published
 if [ -n $2 -a "$2" =~ ^.*beta$ ] || [[ $1 =~ ^.*-.*$ ]]; then
-    echo Publishing a beta version $1:
+    echo -e "${YELLOW}Publishing a beta version ${GREEN}$1${YELLOW}:${NC}"
     npm publish --tag beta
 else
-    echo Publishing version $1:
+    echo -e "${YELLOW}Publishing version ${GREEN}$1${YELLOW}:${NC}"
     npm publish
 fi
 
 # TODO: check if ~/.npmrc exists, if so don't move this back
 # TODO: unstash .npmrc on failure
 # Un-stash the .npmrc file
-echo Un-stashing your .npmrc file
+echo -e "${YELLOW}Un-stashing your .npmrc file${NC}"
 mv ~/.NPMTMP ~/.npmrc
+
+
+# Clear Artifctory cache
+echo -e "${YELLOW}Do you wish to clear ${GREEN}Artifactory npm cache ${YELLOW}as well?${NC}"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) echo -e "${YELLOW}Enter AUTH:${NC}"
+            read authKey
+            curl -H "X-JFrog-Art-Api:${authKey}" 'https://repo.jfrog.io/artifactory/ui/artifactactions/delete' --data-binary '{"repoKey":"npmjs-cache","path":"jfrog-ui-essentials/-"}' -H 'Content-Type:application/json'
+        break;;
+        No )
+        break;;
+    esac
+done
