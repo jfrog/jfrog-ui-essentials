@@ -4,7 +4,11 @@ class jfActionsController {
         this.$scope = $scope;
         this.$timeout = $timeout;
         this.isDropdownOpen = false;
-
+        this.$scope.$watch('hasSingleVisibleAction()', (newVal, oldVal) => {
+	        if(newVal !== oldVal) {
+	            this._divideActions();
+            }
+        });
     }
 
     $onInit() {
@@ -79,6 +83,13 @@ class jfActionsController {
     _divideActions() {
         this.fixedActions = [];
         this.dynamicActions = [];
+
+        if(this.hasSingleVisibleAction()) {
+		    this.fixedActions.push(this.actions.find(action => action.visibleWhen()));
+		    this.dynamicActions = [];
+		    return;
+	    }
+
         _.forEach(this.actions, (actionObj) => {
             if (_.contains(this.fixedActionsNames, actionObj.name)) {
                 this.fixedActions.push(actionObj);
@@ -93,6 +104,10 @@ class jfActionsController {
         if (this.fixedActions.length === 0 && this.dynamicActions.length === 1 && !this.showDropDownForOneItem) {
             this.fixedActions.push(this.dynamicActions.pop());
         }
+    }
+
+	hasSingleVisibleAction () {
+        return !this.showDropDownForOneItem && this.actions && this.actions.filter(action => action.visibleWhen()).length === 1;
     }
 }
 
