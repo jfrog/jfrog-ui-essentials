@@ -1,0 +1,3 @@
+export const GENERAL_CONSTANTS = {
+	PAGINATION_DIGIT_WIDTH_PX: 8
+};

@@ -2,7 +2,7 @@
 	<p>
 		<input type="text"
 		       class="grid-page-box"
-		       ng-style="{'width': (7 + jfGridPagination.getTotalPages().toString().length * 7) + 'px'}"
+		       ng-style="{'width': (jfGridPagination.CONSTANTS.PAGINATION_DIGIT_WIDTH_PX + jfGridPagination.getTotalPages().toString().length * jfGridPagination.CONSTANTS.PAGINATION_DIGIT_WIDTH_PX) + 'px'}"
 		       jf-tooltip="Jump to Page"
 		       ng-blur="jfGridPagination.onBlur()"
 		       ng-model="jfGridPagination.pageViewModel"

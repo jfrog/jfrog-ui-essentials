@@ -1,6 +1,9 @@
+import {GENERAL_CONSTANTS} from '../../constants/general.constants';
+
 class jfDragDropPaginationController {
 	/* @ngInject */
     constructor() {
+	    this.CONSTANTS = GENERAL_CONSTANTS;
     }
 
     $onInit() {

@@ -1,3 +1,5 @@
+import {GENERAL_CONSTANTS} from '../../constants/general.constants';
+
 class jfGridPaginationController {
 	/* @ngInject */
     constructor($scope, $timeout, JFrogEventBus) {
@@ -5,7 +7,7 @@ class jfGridPaginationController {
         this.$scope = $scope;
         this.$timeout = $timeout;
 	    this.pageViewModel = this.currentPage = 1;
-
+        this.CONSTANTS = GENERAL_CONSTANTS;
 
         JFrogEventBus.registerOnScope($scope, JFrogEventBus.getEventsDefinition().RESET_GRID_PAGINATION, () => this.resetPagination());
 
