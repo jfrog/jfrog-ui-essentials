@@ -8,17 +8,6 @@ if (!String.prototype.startsWith) {
         return this.substr(0, str.length)===str;
     }
 }
-if(!Object.entries){
-	Object.prototype.entries = function( obj ){
-		let ownProps = Object.keys( obj ),
-			i = ownProps.length,
-			resArray = new Array(i); // preallocate the Array
-		while (i--) {
-			resArray[i] = [ownProps[i], obj[ownProps[i]]];
-        }
-		return resArray;
-	};
-}
 window.Hamster = require('hamsterjs');
 require('angular-mousewheel');
 
