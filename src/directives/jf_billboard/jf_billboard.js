@@ -18,7 +18,6 @@ class jfBillboardController {
 
         this.$timeout(() => {
             // timeout ensures element is sized in DOM before initializing bb
-
             /* Polyfill for IE 11 which doesnt support Object.assign */
             if (typeof Object.assign != 'function') {
                 // Must be writable: true, enumerable: false, configurable: true
@@ -29,13 +28,13 @@ class jfBillboardController {
                             throw new TypeError('Cannot convert undefined or null to object');
                         }
 
-                        var to = Object(target);
+                        let to = Object(target);
 
-                        for (var index = 1; index < arguments.length; index++) {
-                            var nextSource = arguments[index];
+                        for (let index = 1; index < arguments.length; index++) {
+                            let nextSource = arguments[index];
 
                             if (nextSource != null) { // Skip over if undefined or null
-                                for (var nextKey in nextSource) {
+                                for (let nextKey in nextSource) {
                                     // Avoid bugs when hasOwnProperty is shadowed
                                     if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
                                         to[nextKey] = nextSource[nextKey];
