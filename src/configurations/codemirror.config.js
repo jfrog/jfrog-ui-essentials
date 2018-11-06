@@ -16,7 +16,6 @@ function defineCodeMirrorMimes() {
 function defineCodeMirrorAqlMode() {
 	CodeMirror.defineMode("aql", function () {
 		let urlRegex = /^https?:\/\/[a-zA-Z]+(\.)?(:[0-9]+)?.+?(?=\s|$|"|'|>|<)/;
-
 		let inApiKey = false;
 		return {
 			token: function (stream, state) {
