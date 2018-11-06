@@ -157,7 +157,6 @@ class jfTabularDnDController {
     areAllRowsDisabled(itemsList) {
         if(!this.disableWholeRowSelection || !this.itemDraggableAttr || !itemsList) return false;
 	    let filtered = _.filter(itemsList, item => item.hasOwnProperty(`${this.itemDraggableAttr}`));
-	    console.log(itemsList,filtered.length);
 	    return filtered.length === itemsList.length;
     }
 
