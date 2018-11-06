@@ -40,9 +40,14 @@
         </button>
     </div>
 
-    <div class="code-mirror-wrapper"
+    <div class="code-mirror-wrapper codemirror-wrapper"
          jf-disable-ng-animate
          ng-if="jfMarkup.isInEditMode()">
+        <jf-clip-copy ng-if="jfMarkup.markup && jfMarkup.markup.length"
+                      class="code-mirror-copy pull-right"
+                      text-to-copy="jfMarkup.markup"
+                      object-name="text">
+        </jf-clip-copy>
         <jf-code-mirror
                 ng-if="jfMarkup.language === 'Markdown'"
                 mime-type="text/x-markdown"
