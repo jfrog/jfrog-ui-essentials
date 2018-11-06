@@ -1,3 +1,6 @@
+import {initSelectizeConfig} from './configurations/selectize.config';
+import {initCodemirrorConfig} from './configurations/codemirror.config';
+
 if (!String.prototype.endsWith) {
     String.prototype.endsWith = function (str) {
         return this.substr(this.length - str.length,str.length)===str;
@@ -54,6 +57,8 @@ function main($httpBackend, $animate) {
     angular.uppercase = (str) => str.toUpperCase();
 
     tempFixForAnimateParamsReversal($animate);
+	initSelectizeConfig();
+	initCodemirrorConfig();
 }
 
 function tempFixForAnimateParamsReversal($animate) {
