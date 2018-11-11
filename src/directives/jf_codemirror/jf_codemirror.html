@@ -8,7 +8,7 @@
 	<jf-clip-copy ng-if="jfCodeMirror.enableCopyToClipboard && jfCodeMirror.clipboardCopyModel"
 	              text-to-copy="jfCodeMirror.clipboardCopyModel"
 	              class="code-mirror-copy pull-right"
-	              ng-class="{'scroll-margin':jfCodeMirror.codeMirrorIsWithScroll()}"
+	              ng-class="{'scrollbar-margin':jfCodeMirror.codeMirrorIsWithScroll()}"
 	              object-name="{{jfCodeMirror.clipboardCopyEntityName || 'text'}}">
 	</jf-clip-copy>
 	<textarea ui-codemirror="jfCodeMirror.editorOptions"

@@ -232,6 +232,6 @@ class jfCodeController {
 
 	codeMirrorIsWithScroll() {
 		let codemirrorScrollBar = this.$element.find('.CodeMirror .CodeMirror-vscrollbar');
-		return codemirrorScrollBar && codemirrorScrollBar.length && codemirrorScrollBar.height() > 0;
+		return codemirrorScrollBar && codemirrorScrollBar.length > 0 && codemirrorScrollBar.height() > 0;
 	}
 }
