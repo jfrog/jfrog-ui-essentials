@@ -1122,7 +1122,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 					for (let i in this.columns) {
 						let col = this.columns[i];
 						if ((this.defaultFilterByAll && col.filterable !== false) || (!this.defaultFilterByAll && col.filterable === true)) {
-							if (row.$sticky || this._isSubVisible(row, col) || row.$groupHeader || (_.get(row,
+							if ((row.$sticky && !row.$stickyFilterable) || this._isSubVisible(row, col) || row.$groupHeader || (_.get(row,
 									col.field) && _.contains(_.get(row, col.field).toString().toLowerCase(),
 									this.dirCtrl.tableFilter.toLowerCase()))) {
 								return true;
