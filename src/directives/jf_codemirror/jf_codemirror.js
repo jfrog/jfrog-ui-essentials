@@ -13,20 +13,22 @@ export function jfCodeMirror() {
             autofocus: '@',
 	        matchBrackets: '<',
 	        autoFormat: '<',
-            autoIndent: '<'
+            autoIndent: '<',
+	        enableCopyToClipboard: '<?',
+	        clipboardCopyModel: '<?',
+	        clipboardCopyEntityName: '@?'
         },
         controller: jfCodeController,
         controllerAs: 'jfCodeMirror',
         bindToController: true,
-        template: '<textarea ui-codemirror="jfCodeMirror.editorOptions" ' +
-        'ng-model="jfCodeMirror.formattedModel"></textarea>'
-
+	    templateUrl: 'directives/jf_codemirror/jf_codemirror.html'
     }
 }
 
 class jfCodeController {
 	/* @ngInject */
-    constructor($scope, $element, $timeout) {
+    constructor($scope, $element, $timeout,JFrogUIUtils) {
+        this.JFrogUIUtils = JFrogUIUtils;
         this.$element = $element;
         this.$scope = $scope;
         this.$timeout = $timeout;
@@ -34,8 +36,8 @@ class jfCodeController {
     }
 
     $onInit() {
-        this._formatModel();
-        this.autofocus = this.autofocus === 'true';
+	    this._formatModel();
+	    this.autofocus = this.autofocus === 'true';
 
         this.editorOptions = {
             lineNumbers: true,
@@ -152,7 +154,6 @@ class jfCodeController {
             this.expectChange();
             this.refreshUntilVisible();
         }
-
     }
 
     refreshUntilVisible() {
@@ -228,4 +229,9 @@ class jfCodeController {
 		    });
 	    });
     }
+
+	codeMirrorIsWithScroll() {
+		let codemirrorScrollBar = this.$element.find('.CodeMirror .CodeMirror-vscrollbar:not(:hidden)');
+		return codemirrorScrollBar && codemirrorScrollBar.length > 0;
+	}
 }
