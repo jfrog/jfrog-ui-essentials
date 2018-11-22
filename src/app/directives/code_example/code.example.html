@@ -1,0 +1,9 @@
+<div class="code-mirror-wrapper">
+	<jf-tabs tabs="$ctrl.tabs"
+	         dictionary="$ctrl.dict"
+	         tab-width="{{$ctrl.tabWidth}}"
+	         container-margin="30">
+		<jf-tab name="htmlTab"><jf-code-mirror mode="htmlmixed" model="$ctrl.html"></jf-code-mirror></jf-tab>
+		<jf-tab name="javascriptTab"><jf-code-mirror mode="javascript" model="$ctrl.javascript"></jf-code-mirror></jf-tab>
+	</jf-tabs>
+</div>
