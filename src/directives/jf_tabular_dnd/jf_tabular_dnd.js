@@ -101,7 +101,7 @@ class jfTabularDnDController {
 
         if (!this.disableWholeRowSelection) {
             let toggleSelection = (row) => {
-                if (this.disabled) return;
+	            if (this.disabled || (this.itemDraggableAttr && (!row.entity.hasOwnProperty(`${this.itemDraggableAttr}`)) || !row.entity[this.itemDraggableAttr])) return;
                 row.entity.$selected = !row.entity.$selected;
             }
             this.availableItemsTableOptions.on('row.clicked', toggleSelection);
@@ -139,34 +139,35 @@ class jfTabularDnDController {
             if (this.entityName.indexOf('/') !== -1) {
                 let [single, plural] = this.entityName.split('/');
                 availableObjectName = 'Available ' + single + '/' + 'Available ' + plural;
-                selectedObjectName = 'Selected ' + single + '/' + 'Selected ' + plural;
+                selectedObjectName = 'Included ' + single + '/' + 'Included ' + plural;
             }
             else {
                 availableObjectName = 'Available ' + this.entityName;
-                selectedObjectName = 'Selected ' + this.entityName;
+                selectedObjectName = 'Included ' + this.entityName;
             }
         }
         else {
             availableObjectName = 'Available Item';
-            selectedObjectName = 'Selected Item';
+            selectedObjectName = 'Included Item';
         }
 
         return {availableObjectName, selectedObjectName};
     }
 
-    areAllRowsDisabled(itemsList) {
-        if(!this.disableWholeRowSelection || !this.itemDraggableAttr || !itemsList) return false;
-	    let filtered = _.filter(itemsList, item => item.hasOwnProperty(`${this.itemDraggableAttr}`));
-	    return filtered.length === itemsList.length;
+	areAllRowsDisabled(allFilteredRows) {
+		if(!allFilteredRows || !allFilteredRows.length) return true;
+	    if(allFilteredRows.length && !this.itemDraggableAttr) return false;
+	    let allDraggableRows = _.filter(allFilteredRows, rowEntity => rowEntity.hasOwnProperty(`${this.itemDraggableAttr}`) ? rowEntity[this.itemDraggableAttr] : true) ;
+		return !allDraggableRows || allDraggableRows.length === 0;
     }
 
     isIncludeListEmpty() {
-        if (!this.selectedItemsTableOptions.dirCtrl) return true;
+	    if (!this.selectedItemsTableOptions.dirCtrl) return true;
         return !this.selectedItemsTableOptions.getFilteredData().length;
     }
 
     isExcludeListEmpty() {
-        if (!this.availableItemsTableOptions.dirCtrl) return true;
+	    if (!this.availableItemsTableOptions.dirCtrl) return true;
         return !this.availableItemsTableOptions.getFilteredData().length;
     }
 
@@ -186,8 +187,12 @@ class jfTabularDnDController {
         return !!selected.length;
     }
 
+    isExcludeAllActionDisabled () {
+	    return this.isIncludeListEmpty() || this.areAllRowsDisabled(this.selectedItemsTableOptions.getFilteredData()) || this.disabled;
+    }
+
     excludeAll() {
-        if (this.isIncludeListEmpty() || this.disabled) return;
+        if (this.isExcludeAllActionDisabled()) return;
 
         let selected = this.selectedItemsTableOptions.getSelected();
         selected.forEach(s => delete s.$selected);
@@ -200,8 +205,12 @@ class jfTabularDnDController {
         this._fireOnChange();
     }
 
+    isIncludeAllActionDisabled() {
+        return this.isExcludeListEmpty() || this.areAllRowsDisabled(this.availableItemsTableOptions.getFilteredData()) || this.disabled;
+    }
+
     includeAll() {
-        if (this.isExcludeListEmpty() || this.disabled) return;
+        if (this.isIncludeAllActionDisabled()) return;
 
         let selected = this.availableItemsTableOptions.getSelected();
         selected.forEach(s => delete s.$selected);
