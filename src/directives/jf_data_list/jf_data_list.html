@@ -3,15 +3,15 @@
 		<td class="data-list-item-label">{{item.label}}:</td>
 		<td class="data-list-item-value">
 			<div class="value">
-				<a ng-if="item.isUrl"
-				   ng-href="{{item.value}}"
+				<a ng-if="item.isUrl && item.value && item.value.length && ((!item.hasOwnProperty('url')) || (item.url && item.url.length))"
+				   ng-href="{{item.url || item.value}}"
 				   ng-bind-html="item.value"
 				   target="_blank"
 				   class="jf-link"
 				   jf-tooltip-on-overflow>
 				</a>
-				<div ng-if="!item.isUrl && !jfDataList.isArray(item.value)"
-				     ng-bind-html="item.value"
+				<div ng-if="!jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length))))"
+				     ng-bind-html="jfDataList.getItemValue(item.value)"
 				     jf-tooltip-on-overflow>
 				</div>
 				<div ng-if="jfDataList.isArray(item.value)" id="data-list-row-{{$parent.$index}}">
