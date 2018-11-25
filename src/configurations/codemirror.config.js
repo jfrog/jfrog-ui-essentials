@@ -1,4 +1,5 @@
 export function initCodemirrorConfig() {
+	if(!CodeMirror) return;
 	defineCodeMirrorMimes();
 	defineCodeMirrorLinkOverlay();
 	defineCodeMirrorAqlMode();
