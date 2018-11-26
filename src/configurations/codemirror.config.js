@@ -1,5 +1,5 @@
 export function initCodemirrorConfig() {
-	if(_.isUndefined(CodeMirror)) return;
+	if(typeof CodeMirror === 'undefined' || _.isUndefined(CodeMirror)) return;
 	defineCodeMirrorMimes();
 	defineCodeMirrorLinkOverlay();
 	defineCodeMirrorAqlMode();
