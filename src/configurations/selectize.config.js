@@ -1,5 +1,5 @@
 export function initSelectizeConfig() {
-	if(!Selectize) return;
+	if(_.isUndefined(Selectize)) return;
 	setSelectizePugins();
 }
 
