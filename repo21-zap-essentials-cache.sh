@@ -1,1 +1,0 @@
-curl -H 'X-JFrog-Art-Api:AKCp2WWi7zUn8hYAQenKb8cMVPprS468NdTZS94RhNevEmRgnXEB2SxfKEC2kGmvFzRuoECW3' 'https://repo.jfrog.io/artifactory/ui/artifactactions/delete' --data-binary '{"repoKey":"bower-registry-cache","path":"JFrogDev/jfrog-ui-essentials"}' -H 'Content-Type:application/json'
