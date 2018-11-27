@@ -20,7 +20,8 @@ export function jfListMaker() {
             hideAddNewFields: '@',
             validationRegex:'@',
             validationRegexMessage:'@',
-	        caseInsensitive: '<?'
+	        caseInsensitive: '<?',
+	        required: '=?ngRequired'
         },
         templateUrl: 'directives/jf_list_maker/jf_list_maker.html',
         controller: jfListMakerController,
@@ -34,11 +35,16 @@ export function jfListMaker() {
  */
 class jfListMakerController {
     /* @ngInject */
-    constructor($attrs) {
+    constructor($attrs, $scope) {
         this.$attrs = $attrs;
+        this.$scope = $scope;
     }
 
     $onInit() {
+        this.$scope.$watch('jfListMaker.values.length',() => {
+	        this.validateIsRequired(this.values);
+        });
+
         this.noSort = this.noSort || this.$attrs.hasOwnProperty('noSort');
         if (this.values && !this.noSort) this.values = _.sortBy(this.values);
         this.minLength = this.minLength || 0;
@@ -95,5 +101,28 @@ class jfListMakerController {
             });
         }
         return !this.values || this.values.indexOf(text) == -1;
+    }
+
+    isRequired(valuesArray) {
+        return this.required && (_.isUndefined(valuesArray) || _.isEmpty(valuesArray));
+    }
+
+    validateIsRequired(values) {
+	    if(this.isRequired(values)) {
+            if(this.listMakerForm && this.listMakerForm.newValueField) {
+	            this.listMakerForm.newValueField.$setValidity("mustAddValueTolist", false);
+            } else {
+	            this.errorMessage = "You must add a value to list";
+            }
+	    } else {
+		    if(this.listMakerForm && this.listMakerForm.newValueField) {
+			    this.listMakerForm.newValueField.$setValidity("mustAddValueTolist", true);
+            }
+		    this.errorMessage = null;
+	    }
+    }
+
+	onNewValueFieldChange() {
+        this.validateIsRequired(this.values)
     }
 }

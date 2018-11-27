@@ -20,6 +20,7 @@ const commonMessages = {
     "uniqueId": "Key is already used",
     "name": "Name cannot be blank or contain /\\:|?*\"<>",
     "xmlName": "Name cannot be blank or contain spaces & special characters",
-    "integerValue": "Value must be an integer number"
+    "integerValue": "Value must be an integer number",
+    "mustAddValueTolist": "You must add a value to list"
 };
 
