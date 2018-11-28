@@ -7,10 +7,14 @@
     "type": "git",
     "url": "https://github.com/jfrog/jfrog-ui-essentials.git"
   },
+  "scripts": {
+    "start": "npm i && gulp build",
+    "test": "gulp karma"
+  },
   "devDependencies": {
-    "jasmine-jquery": "2.1.0",
     "any-promise": "~1.1.0",
     "babel-core": "^4.7.12",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^4.1.0",
     "babelify": "^6.1.2",
     "bluebird": "~3.3.4",
@@ -43,8 +47,9 @@
     "gulp-webpack": "^1.3.0",
     "gulp-webpack-build": "0.13.1",
     "gulp-webserver": "^0.9.0",
-    "jasmine-expect": "^3.8.3",
     "jasmine-core": "2.9.1",
+    "jasmine-expect": "^3.8.3",
+    "jasmine-jquery": "2.1.0",
     "json-loader": "~0.5.4",
     "karma": "1.7.1",
     "karma-browserify": "^4.1.2",
@@ -100,9 +105,5 @@
     "selectize": "0.12.1",
     "ui-select": "0.18.1",
     "zeroclipboard": "2.2.0"
-  },
-  "scripts": {
-    "start": "npm i && gulp build",
-    "test": "gulp karma"
   }
 }
