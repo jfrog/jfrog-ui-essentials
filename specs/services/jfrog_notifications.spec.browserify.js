@@ -11,7 +11,7 @@ describe('Unit test: JFrogNotifications', () => {
     beforeEach(inject(($timeout, _JFrogNotifications_, toaster) => {
         toast = toaster;
         timeout = $timeout;
-        spyOn(toast, 'pop');
+        jest.spyOn(toast, 'pop').mockImplementation(() => {});
         JFrogNotifications = _JFrogNotifications_;
     }));
 
@@ -80,7 +80,7 @@ describe('Unit test: JFrogNotifications', () => {
     });
 
     it('should clear all toasts', ()=> {
-        spyOn(toast, 'clear');
+        jest.spyOn(toast, 'clear').mockImplementation(() => {});
         JFrogNotifications.clear();
         expect(toast.clear).toHaveBeenCalled();
     });
@@ -89,13 +89,13 @@ describe('Unit test: JFrogNotifications', () => {
         let message = {warn: 'my message warn'};
         JFrogNotifications.create(message);
         JFrogNotifications.create(message);
-        expect(toast.pop.calls.count()).toEqual(1);
+        expect(toast.pop.mock.calls.length).toEqual(1);
     });
     it('should show next toast when timeout finish ', ()=> {
         let message = {warn: 'my message warn'};
         JFrogNotifications.create(message);
         timeout.flush();
         JFrogNotifications.create(message);
-        expect(toast.pop.calls.count()).toEqual(2);
+        expect(toast.pop.mock.calls.length).toEqual(2);
     });
 });

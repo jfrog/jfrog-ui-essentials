@@ -70,7 +70,7 @@ describe('unit test:jf_sidebar directive', () => {
     beforeEach(inject(setup));
     beforeEach(() => compileDirective('jf-sidebar', attrs));
     beforeEach((() => {
-        spyOn($state, 'go');
+        jest.spyOn($state, 'go').mockImplementation(() => {});
     }));
     beforeEach((() => {
         localStorage.clear();

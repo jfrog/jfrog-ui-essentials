@@ -94,7 +94,7 @@ describe('unit test: jfrog_grid ui component', () => {
   describe('afterRegister', () => {
     let callback;
     beforeEach(() => {
-      callback = jasmine.createSpy();
+      callback = jest.fn();
       gridOptions.afterRegister(callback);
       gridOptions.onSelectionChangeBatch = angular.noop;
       gridOptions.onSelectionChange = angular.noop;
@@ -184,10 +184,10 @@ describe('unit test: jfrog_grid ui component', () => {
     let whenPagingComplete;
     let paginationCallback;
     beforeEach(() => {
-      spyOn(gridOptions, 'setGridData').and.callThrough();
-      spyOn(gridOptions, 'getPage').and.callThrough();
+      jest.spyOn(gridOptions, 'setGridData');
+      jest.spyOn(gridOptions, 'getPage');
       whenPagingComplete = q.when({total_count: 10, data: data});
-      paginationCallback = jasmine.createSpy().and.returnValue(whenPagingComplete);
+      paginationCallback = jest.fn().and.returnValue(whenPagingComplete);
       gridOptions.setColumns([{field: 'name'}]);
       result = gridOptions.setExternalPagination(paginationCallback);
       gridOptions.onRegisterApi(gridApi);

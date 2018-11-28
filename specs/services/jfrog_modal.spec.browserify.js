@@ -10,7 +10,7 @@ describe('unit test: JFrogModal', ()=> {
         jfrogModal = JFrogModal;
         modal = $modal;
         scope = $rootScope.$new();
-        spyOn(modal, 'open').and.returnValue(modalInstanceMock);
+        jest.spyOn(modal, 'open').mockReturnValue(modalInstanceMock);
     }));
     it('should open modal', ()=> {
         jfrogModal.launchModal('user_modal', scope);

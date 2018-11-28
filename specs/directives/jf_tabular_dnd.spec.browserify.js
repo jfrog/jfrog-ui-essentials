@@ -180,7 +180,7 @@ describe('unit test: jf-tabular-dnd directive', function () {
 
     it('should fire change event', () => {
 
-        spyOn(events, 'onChange');
+        jest.spyOn(events, 'onChange').mockImplementation(() => {});
 
         includeAllButton.click();
         flushAndApply();

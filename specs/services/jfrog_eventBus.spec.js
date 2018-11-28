@@ -19,7 +19,7 @@ describe('Unit: JFrog EventBus Service', function () {
         libConfig = $injector.get('JFrogUILibConfig');
         libConfig.setConfig({customEventsDefinition: EVENT_MOCKS})
         eventBus = $injector.get('JFrogEventBus');
-        spyOn(EVENT_MOCKS, 'CALLBACK_FN');
+        jest.spyOn(EVENT_MOCKS, 'CALLBACK_FN').mockImplementation(() => {});
 
     }));
 

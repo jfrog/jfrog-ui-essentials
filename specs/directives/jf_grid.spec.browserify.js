@@ -10,7 +10,7 @@ describe('jf_grid', () => {
     }
 
     function compileDirective() {
-        actionMock = jasmine.createSpy('actionMock');
+        actionMock = jest.fn();
         let data = [{name: 'user', role: 'admin'},{name: 'another user', role: 'worker'}];
         let columns = [
             {
