@@ -33,7 +33,7 @@ describe('unit test:jf_list_maker directive', function () {
     getElements();
   }
 
-  beforeEach(m('jfrog.ui.essentials'));
+  beforeEach(module('jfrog.ui.essentials'));
   beforeEach(inject(setup));
 //  beforeEach(compileDirective);
 

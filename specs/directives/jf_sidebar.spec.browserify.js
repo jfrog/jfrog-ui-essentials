@@ -66,7 +66,7 @@ describe('unit test:jf_sidebar directive', () => {
         },
     };
 
-    beforeEach(m('jfrog.ui.essentials'));
+    beforeEach(module('jfrog.ui.essentials'));
     beforeEach(inject(setup));
     beforeEach(() => compileDirective('jf-sidebar', attrs));
     beforeEach((() => {

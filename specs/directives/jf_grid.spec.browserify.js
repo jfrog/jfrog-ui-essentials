@@ -35,7 +35,7 @@ describe('jf_grid', () => {
         jfGridElement = new JFGridElement($('jf-grid'));
     }
 
-    beforeEach(m('jfrog.ui.essentials'));
+    beforeEach(module('jfrog.ui.essentials'));
     beforeEach(inject(setup));
 
     beforeEach(compileDirective);

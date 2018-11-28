@@ -41,7 +41,7 @@ describe('unit test:jf_password_strength directive', function () {
 		});
 	}
 
-	beforeEach(m('jfrog.ui.essentials'));
+	beforeEach(module('jfrog.ui.essentials'));
 	beforeEach(inject(setup));
 	//  beforeEach(compileDirective);
 

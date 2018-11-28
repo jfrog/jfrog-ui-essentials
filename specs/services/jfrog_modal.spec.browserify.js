@@ -5,7 +5,7 @@ let jfrogModal, modal, scope;
 let modalInstanceMock = {};
 describe('unit test: JFrogModal', ()=> {
 
-    beforeEach(m('jfrog.ui.essentials'));
+    beforeEach(module('jfrog.ui.essentials'));
     beforeEach(inject(($modal, $rootScope, JFrogModal) => {
         jfrogModal = JFrogModal;
         modal = $modal;

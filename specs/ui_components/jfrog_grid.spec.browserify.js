@@ -16,7 +16,7 @@ describe('unit test: jfrog_grid ui component', () => {
     rootScope = $rootScope;
   }
 
-  beforeEach(m('jfrog.ui.essentials'));
+  beforeEach(module('jfrog.ui.essentials'));
   beforeEach(inject(setup));
 
   describe('initial state', () => {

@@ -7,7 +7,7 @@ let timeout;
 describe('Unit test: JFrogNotifications', () => {
 
 
-    beforeEach(m('jfrog.ui.essentials'));
+    beforeEach(module('jfrog.ui.essentials'));
     beforeEach(inject(($timeout, _JFrogNotifications_, toaster) => {
         toast = toaster;
         timeout = $timeout;

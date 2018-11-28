@@ -22,7 +22,7 @@ describe('unit test:jf_field directive', function () {
     getErrorElement = () => $(document.body).find('[ng-message-exp]');
   }
 
-  beforeEach(m('jfrog.ui.essentials'));
+  beforeEach(module('jfrog.ui.essentials'));
   beforeEach(inject(setup));
   beforeEach(compileDirective);
 

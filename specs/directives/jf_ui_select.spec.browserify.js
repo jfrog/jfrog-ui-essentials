@@ -11,7 +11,7 @@ describe('unit test: jfUiSelect', ()=> {
 
     let jfUiSelectElement = new JfUiSelectElement();
 
-    beforeEach(m('jfrog.ui.essentials'));
+    beforeEach(module('jfrog.ui.essentials'));
     beforeEach(inject(setup));
 
     it('should filter matching data', ()=> {

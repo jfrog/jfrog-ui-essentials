@@ -11,7 +11,7 @@ describe('Unit: JFrog EventBus Service', function () {
     };
 
     // inject the main module
-    beforeEach(m('jfrog.ui.essentials'));
+    beforeEach(module('jfrog.ui.essentials'));
 
     // run this code before each case
     beforeEach(inject(function ($injector, $rootScope) {

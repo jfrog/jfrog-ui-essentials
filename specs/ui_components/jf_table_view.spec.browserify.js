@@ -119,7 +119,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         });
     });
 
-    beforeEach(m('jfrog.ui.essentials'));
+    beforeEach(module('jfrog.ui.essentials'));
     beforeEach(inject(setup));
 
     beforeEach(() => {
