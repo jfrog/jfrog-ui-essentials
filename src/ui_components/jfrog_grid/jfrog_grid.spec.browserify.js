@@ -1,5 +1,5 @@
 const TEMPLATES_FOLDER = "ui_components/jfrog_grid/templates/";
-import GridApiMock from '../../mocks/grid_api_mock.browserify'
+import GridApiMock from '../../../mocks/grid_api_mock.browserify'
 describe('unit test: jfrog_grid ui component', () => {
   let gridOptions;
   let gridApi;

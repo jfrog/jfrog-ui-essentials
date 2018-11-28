@@ -1,4 +1,4 @@
-import {JFGridElement} from '../page_objects/jf_grid_element.browserify';
+import {JFGridElement} from './jf_grid_element.browserify';
 
 let jfrogGrid, $scope, timeout, element, jfGridElement, actionMock;
 
