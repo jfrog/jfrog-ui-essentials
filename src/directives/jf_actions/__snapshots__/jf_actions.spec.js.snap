@@ -1,3 +1,256 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`unit test: jf_actions should compile 1`] = `undefined`;
+exports[`unit test: jf_actions should compile 1`] = `
+<jf-actions
+  class="ng-isolate-scope"
+  fixed-actions-names="data.fixedActionsNames"
+  init-method="initMethod"
+  parent-controller="data.parentController"
+>
+  <ul
+    class="list-inline"
+    ng-show="jfActions.getActiveActionsCount()"
+  >
+    
+    
+    <!-- ngRepeat: actionObj in jfActions.fixedActions -->
+    <!-- ngIf: !actionObj.visibleWhen || actionObj.visibleWhen() -->
+    <li
+      class="action-button ng-scope disabled"
+      ng-class="{disabled: actionObj.disabled || (actionObj.disabledWhen && actionObj.disabledWhen())}"
+      ng-click="jfActions.doAction(actionObj,$event)"
+      ng-if="!actionObj.visibleWhen || actionObj.visibleWhen()"
+      ng-repeat="actionObj in jfActions.fixedActions"
+      ng-show="jfActions.fixedActions.length"
+    >
+      
+
+        
+      <a
+        class="ng-binding"
+        download=""
+      >
+        
+            
+        <i
+          class="action-icon icon icon-download"
+          ng-class="actionObj.icon"
+        />
+         Action #2
+        
+      </a>
+      
+    
+    </li>
+    <!-- end ngIf: !actionObj.visibleWhen || actionObj.visibleWhen() -->
+    <!-- end ngRepeat: actionObj in jfActions.fixedActions -->
+    
+    
+    <li
+      class="action-button"
+      ng-show="jfActions.dynamicActions.length"
+    >
+      
+        
+      <span
+        class="dropdown"
+        dropdown=""
+        is-open="jfActions.isDropdownOpen"
+      >
+        
+          
+        <ul
+          class="dropdown-menu dropdown-menu-right actions-dropdown text-left"
+        >
+          
+              
+          <!-- ngRepeat: actionObj in jfActions.dynamicActions -->
+          <!-- ngIf: (!actionObj.visibleWhen || actionObj.visibleWhen()) && !actionObj.isHidden -->
+          <li
+            class="action-item dynamic-action ng-scope menu-item-icon-view"
+            ng-class="{disabled: actionObj.disabled || (actionObj.disabledWhen && actionObj.disabledWhen()),
+                    'menu-item-icon-view': actionObj.icon,
+                    'menu-item-no-icon': !actionObj.icon && jfActions.anyActionHasAnIcon,
+                    'menu-item-no-action-icons': !jfActions.anyActionHasAnIcon,
+                    '': actionObj.itemClass.length }"
+            ng-if="(!actionObj.visibleWhen || actionObj.visibleWhen()) && !actionObj.isHidden"
+            ng-repeat="actionObj in jfActions.dynamicActions"
+          >
+            
+                  
+            <a
+              class="action-container"
+              href=""
+              ng-click="jfActions.doAction(actionObj,$event)"
+            >
+              
+                      
+              <!-- ngIf: actionObj.icon -->
+              <span
+                class="action-icon icon ng-scope icon-view"
+                ng-class="actionObj.icon"
+                ng-if="actionObj.icon"
+              >
+                
+                      
+              </span>
+              <!-- end ngIf: actionObj.icon -->
+              
+                      
+              <!-- ngIf: actionObj.image && !actionObj.icon -->
+              
+                      
+              <span
+                class="action-name ng-binding"
+              >
+                Action #1
+              </span>
+              
+                  
+            </a>
+            
+              
+          </li>
+          <!-- end ngIf: (!actionObj.visibleWhen || actionObj.visibleWhen()) && !actionObj.isHidden -->
+          <!-- end ngRepeat: actionObj in jfActions.dynamicActions -->
+          <!-- ngIf: (!actionObj.visibleWhen || actionObj.visibleWhen()) && !actionObj.isHidden -->
+          <li
+            class="action-item dynamic-action ng-scope menu-item-icon-go"
+            ng-class="{disabled: actionObj.disabled || (actionObj.disabledWhen && actionObj.disabledWhen()),
+                    'menu-item-icon-go': actionObj.icon,
+                    'menu-item-no-icon': !actionObj.icon && jfActions.anyActionHasAnIcon,
+                    'menu-item-no-action-icons': !jfActions.anyActionHasAnIcon,
+                    '': actionObj.itemClass.length }"
+            ng-if="(!actionObj.visibleWhen || actionObj.visibleWhen()) && !actionObj.isHidden"
+            ng-repeat="actionObj in jfActions.dynamicActions"
+          >
+            
+                  
+            <a
+              class="action-container"
+              href=""
+              ng-click="jfActions.doAction(actionObj,$event)"
+            >
+              
+                      
+              <!-- ngIf: actionObj.icon -->
+              <span
+                class="action-icon icon ng-scope icon-go"
+                ng-class="actionObj.icon"
+                ng-if="actionObj.icon"
+              >
+                
+                      
+              </span>
+              <!-- end ngIf: actionObj.icon -->
+              
+                      
+              <!-- ngIf: actionObj.image && !actionObj.icon -->
+              
+                      
+              <span
+                class="action-name ng-binding"
+              >
+                Action #3
+              </span>
+              
+                  
+            </a>
+            
+              
+          </li>
+          <!-- end ngIf: (!actionObj.visibleWhen || actionObj.visibleWhen()) && !actionObj.isHidden -->
+          <!-- end ngRepeat: actionObj in jfActions.dynamicActions -->
+          <!-- ngIf: (!actionObj.visibleWhen || actionObj.visibleWhen()) && !actionObj.isHidden -->
+          <li
+            class="action-item dynamic-action ng-scope menu-item-icon-clear"
+            ng-class="{disabled: actionObj.disabled || (actionObj.disabledWhen && actionObj.disabledWhen()),
+                    'menu-item-icon-clear': actionObj.icon,
+                    'menu-item-no-icon': !actionObj.icon && jfActions.anyActionHasAnIcon,
+                    'menu-item-no-action-icons': !jfActions.anyActionHasAnIcon,
+                    '': actionObj.itemClass.length }"
+            ng-if="(!actionObj.visibleWhen || actionObj.visibleWhen()) && !actionObj.isHidden"
+            ng-repeat="actionObj in jfActions.dynamicActions"
+          >
+            
+                  
+            <a
+              class="action-container"
+              href=""
+              ng-click="jfActions.doAction(actionObj,$event)"
+            >
+              
+                      
+              <!-- ngIf: actionObj.icon -->
+              <span
+                class="action-icon icon ng-scope icon-clear"
+                ng-class="actionObj.icon"
+                ng-if="actionObj.icon"
+              >
+                
+                      
+              </span>
+              <!-- end ngIf: actionObj.icon -->
+              
+                      
+              <!-- ngIf: actionObj.image && !actionObj.icon -->
+              
+                      
+              <span
+                class="action-name ng-binding"
+              >
+                Action #4
+              </span>
+              
+                  
+            </a>
+            
+              
+          </li>
+          <!-- end ngIf: (!actionObj.visibleWhen || actionObj.visibleWhen()) && !actionObj.isHidden -->
+          <!-- end ngRepeat: actionObj in jfActions.dynamicActions -->
+          
+          
+        </ul>
+        
+          
+        <a
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="dropdown-toggle actions-more ng-binding"
+          dropdown-toggle=""
+          href=""
+        >
+          
+             Actions 
+          <i
+            class="action-icon icon icon-small-arrow-down"
+          />
+          
+          
+        </a>
+        
+        
+      </span>
+      
+
+    
+    </li>
+    
+
+  </ul>
+  
+
+
+  <!--&lt;li ng-repeat="action in jfActions.actions"&gt;-->
+  
+    
+  <!--&lt;a&gt;&lt;span class="glyphicon glyphicon-refresh"&gt;&lt;/span&gt;{{action.name}}&lt;/a&gt;&lt;/li&gt;-->
+  
+
+  <!--&lt;li&gt;&lt;a&gt;&lt;span class="glyphicon glyphicon-trash"&gt;&lt;/span&gt;Delete Content&lt;/a&gt;&lt;/li&gt;-->
+  
+
+  <!--&lt;li&gt;&lt;a&gt;&lt;span class="glyphicon glyphicon-cloud-upload"&gt;&lt;/span&gt;Upload to Bintray&lt;/a&gt;&lt;/li&gt;-->
+</jf-actions>
+`;

@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`unit test:jf_field directive should compile 1`] = `
+<jf-field
+  class="ng-isolate-scope"
+  validations="test"
+>
+  <div
+    ng-class="{'sticky-errors': dontPushDownErrors}"
+  >
+    
+    
+    <div
+      class="jf-field"
+      ng-class="{'input-label': animated}"
+    >
+      
+        
+      <ng-transclude>
+        <input
+          class="ng-pristine ng-untouched ng-scope ng-empty ng-invalid ng-invalid-required ng-valid-minlength"
+          minlength="0"
+          name="name"
+          ng-model="name"
+          required=""
+        />
+      </ng-transclude>
+      
+    
+    </div>
+    
+    
+    <!-- ngIf: (formField.showErrors || alwaysShowErrors || (formField.initialValue && !formField.$error.required)) && !formField.isAutoFocused -->
+    
+
+  </div>
+  
+
+</jf-field>
+`;
+
+exports[`unit test:jf_field directive should focus 1`] = `
+<jf-field
+  autofocus="true"
+  class="ng-isolate-scope"
+  validations="test"
+>
+  <div
+    ng-class="{'sticky-errors': dontPushDownErrors}"
+  >
+    
+    
+    <div
+      class="jf-field"
+      ng-class="{'input-label': animated}"
+    >
+      
+        
+      <ng-transclude>
+        <input
+          class="ng-pristine ng-untouched ng-scope ng-empty ng-invalid ng-invalid-required ng-valid-minlength"
+          minlength="0"
+          name="name"
+          ng-model="name"
+          required=""
+        />
+      </ng-transclude>
+      
+    
+    </div>
+    
+    
+    <!-- ngIf: (formField.showErrors || alwaysShowErrors || (formField.initialValue && !formField.$error.required)) && !formField.isAutoFocused -->
+    
+
+  </div>
+  
+
+</jf-field>
+`;
