@@ -1,4 +1,4 @@
-window.m = angular.mock.module;
+module = angular.mock.module;
 window.compileHtml = function(htmlStr, data, parentElement = null) {
     data = data || {};
     var $scope;
