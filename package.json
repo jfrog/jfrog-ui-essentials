@@ -8,8 +8,9 @@
     "url": "https://github.com/jfrog/jfrog-ui-essentials.git"
   },
   "scripts": {
-    "start": "npm i && gulp build",
-    "test": "gulp templates && jest"
+    "start": "npm i && gulp",
+    "test": "gulp templates && jest",
+    "test:watch": "gulp templates && jest --watch"
   },
   "devDependencies": {
     "any-promise": "~1.1.0",
