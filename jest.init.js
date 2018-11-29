@@ -23,6 +23,7 @@ require('angular-mousewheel');
 require('angular-eonasdan-datetimepicker');
 require('angular-file-upload/angular-file-upload');
 window._ = require('lodash');
+require('jquery-contextmenu/dist/jquery.contextMenu');
 
 require('./dist/tmp/templates');
 require('./src/directives/jfrog.directives.module');

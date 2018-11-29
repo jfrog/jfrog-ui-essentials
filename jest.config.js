@@ -1,5 +1,12 @@
 module.exports = {
-
+    collectCoverage: true,
+    coverageReporters: ['html'],
+    coverageDirectory: "<rootDir>/jest-coverage",
+    collectCoverageFrom: [
+        "<rootDir>/src/**/*.js",
+        "!**/node_modules/**",
+        "!**/vendor/**"
+    ],
     setupTestFrameworkScriptFile: "./jest.init.js",
     globals: {
         NODE_ENV: "test"
