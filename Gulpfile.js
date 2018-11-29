@@ -52,7 +52,7 @@ gulp.task('build:common',
                 'copyLessVariables',
                 'fonts',
                 'images',
-                'copyPackageJson',
+                // 'copyPackageJson',
                 'copyEssentialsVendorDependency'
             ],
             'concatAllJS',
@@ -341,7 +341,7 @@ gulp.task('karma', function (done) {
 
 gulp.task('copyWebworkers', function() {
     return gulp.src(['src/webworkers/**/*'])
-        .pipe(uglify({mangle:true}))
+        // .pipe(uglify({mangle:false}))
         .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET + '/workers'));
 })
 
