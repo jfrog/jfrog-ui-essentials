@@ -7,7 +7,7 @@ let timeout;
 describe('Unit test: JFrogNotifications', () => {
 
 
-    beforeEach(module('jfrog.ui.essentials'));
+    beforeEach(angular.mock.module('jfrog.ui.essentials'));
     beforeEach(inject(($timeout, _JFrogNotifications_, toaster) => {
         toast = toaster;
         timeout = $timeout;

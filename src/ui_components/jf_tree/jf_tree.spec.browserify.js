@@ -75,7 +75,7 @@ describe('unit test: jf_tree directive & JFTreeApi service', function () {
         });
     }
 
-    beforeEach(module('jfrog.ui.essentials'));
+    beforeEach(angular.mock.module('jfrog.ui.essentials'));
     beforeEach(inject(setup));
 
     beforeEach(() => {

@@ -48,7 +48,7 @@ describe('unit test:jf_validation directive text test', function () {
 	}
 
 
-	beforeEach(module('jfrog.ui.essentials'));
+	beforeEach(angular.mock.module('jfrog.ui.essentials'));
 	beforeEach(inject(setup));
 	//beforeEach(compileDirective);
 

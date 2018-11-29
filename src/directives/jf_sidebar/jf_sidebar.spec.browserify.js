@@ -66,7 +66,7 @@ describe('unit test:jf_sidebar directive', () => {
         },
     };
 
-    beforeEach(module('jfrog.ui.essentials'));
+    beforeEach(angular.mock.module('jfrog.ui.essentials'));
     beforeEach(inject(setup));
     beforeEach(() => compileDirective('jf-sidebar', attrs));
     beforeEach((() => {

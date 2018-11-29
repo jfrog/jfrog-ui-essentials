@@ -86,7 +86,7 @@ describe('Unit: JFrogSubRouter Service', function () {
     }
 
 
-    beforeEach(module('jfrog.ui.essentials'));
+    beforeEach(angular.mock.module('jfrog.ui.essentials'));
 
     beforeEach(inject((_JFrogSubRouter_, _$rootScope_, _$state_, _$timeout_, _$location_) => {
         $rootScope = _$rootScope_;

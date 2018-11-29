@@ -7,7 +7,7 @@ let scope;
 describe('unit test:jf_switch directive', function () {
 
     let jfSwitchElement = new JfSwitchElement();
-    beforeEach(module('jfrog.ui.essentials'));
+    beforeEach(angular.mock.module('jfrog.ui.essentials'));
 
     describe('with objects options', () => {
         beforeEach(() => {

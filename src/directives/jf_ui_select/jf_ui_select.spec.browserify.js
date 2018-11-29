@@ -11,7 +11,7 @@ describe('unit test: jfUiSelect', ()=> {
 
     let jfUiSelectElement = new JfUiSelectElement();
 
-    beforeEach(module('jfrog.ui.essentials'));
+    beforeEach(angular.mock.module('jfrog.ui.essentials'));
     beforeEach(inject(setup));
 
     it('should filter matching data', ()=> {

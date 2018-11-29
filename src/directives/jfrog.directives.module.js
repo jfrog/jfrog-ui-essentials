@@ -15,6 +15,7 @@ import {jfGrid} from './jf_grid/jf_grid';
 import {jfGridPagination} from './jf_grid_pagination/jf_grid_pagination';
 import {jfGridBatchActions}   from './jf_grid_batch_actions/jf_grid_batch_actions';
 import {jfField}   from './jf_field/jf_field';
+import 'codemirror';
 import {jfCodeMirror}   from './jf_codemirror/jf_codemirror';
 import {jfGridFilter}   from './jf_grid_filter/jf_grid_filter';
 import {jfTabs}   from './jf_tabs/jf_tabs';

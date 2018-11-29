@@ -1,7 +1,7 @@
 
 export default class JfDivider {
 	constructor() {
-		this.template = require('./jf.divider.view.html');
+		this.templateUrl = 'ui_components/jf_divider/jf.divider.view.html';
 		this.controller = JfDividerController;
 		this.bindings = {
 			text: '@'

@@ -5,7 +5,7 @@ describe('Unit: Web Workers', function () {
     var jfww;
 
     // inject the main module
-    beforeEach(module('jfrog.ui.essentials'));
+    beforeEach(angular.mock.module('jfrog.ui.essentials'));
     beforeEach(inject(function ($injector, $rootScope) {
         libConfig = $injector.get('JFrogUILibConfig');
         libConfig.setConfig({webworkersPath: 'base/src/webworkers'})

@@ -17,7 +17,7 @@ describe('unit test: jf_actions', function () {
 		$scope = window.compileDirective('jf-actions', attr);
 	}
 
-	beforeEach(module('jfrog.ui.essentials'));
+	beforeEach(angular.mock.module('jfrog.ui.essentials'));
 
 	beforeEach(() => {
 

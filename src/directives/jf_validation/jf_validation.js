@@ -8,14 +8,14 @@ export function jfValidation() {
             validationsParams: '=',
             dontPushDown: '='
         },
-        controller: jfValidation,
+        controller: jfValidationController,
         controllerAs: 'jfValidation',
         bindToController: true,
         templateUrl: 'directives/jf_validation/jf_validation.html'
     }
 }
 
-class jfValidation {
+class jfValidationController {
 	/* @ngInject */
     constructor(JFrogUILibConfig) {
         this.JFrogUILibConfig = JFrogUILibConfig;

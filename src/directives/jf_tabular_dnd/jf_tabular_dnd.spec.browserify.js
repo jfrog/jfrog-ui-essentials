@@ -70,7 +70,7 @@ describe('unit test: jf-tabular-dnd directive', function () {
         getElements();
     }
 
-    beforeEach(module('jfrog.ui.essentials'));
+    beforeEach(angular.mock.module('jfrog.ui.essentials'));
     beforeEach(inject(setup));
 
     beforeEach(() => {
