@@ -11,7 +11,6 @@
     "start": "npm i && gulp build",
     "test": "gulp templates && jest"
   },
-
   "devDependencies": {
     "any-promise": "~1.1.0",
     "babel-core": "^4.7.12",
