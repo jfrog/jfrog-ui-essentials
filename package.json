@@ -10,7 +10,8 @@
   "scripts": {
     "start": "npm i && gulp",
     "test": "gulp templates && jest",
-    "test:watch": "gulp templates && jest --watch"
+    "test-coverage": "gulp templates && jest ./ --coverage",
+    "test-watch": "gulp templates && jest ./ --watchAll"
   },
   "devDependencies": {
     "any-promise": "~1.1.0",

@@ -1,5 +1,4 @@
 module.exports = {
-    collectCoverage: true,
     coverageReporters: ['html'],
     coverageDirectory: "<rootDir>/jest-coverage",
     collectCoverageFrom: [
