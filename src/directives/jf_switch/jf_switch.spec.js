@@ -2,7 +2,7 @@
  * Created by idannaim on 8/12/15.
  */
 'use strict';
-import {JfSwitchElement} from './jf_switch_element.browserify'
+import {JfSwitchElement} from './jf_switch_element'
 let scope;
 describe('unit test:jf_switch directive', function () {
 

@@ -1,7 +1,7 @@
 /**
  * Created by idannaim on 8/3/15.
  */
-import {JfUiSelectElement} from './jf_ui_select_element.browserify';
+import {JfUiSelectElement} from './jf_ui_select_element';
 let scope, jfUiSelectElement, $timeout;
 
 describe('unit test: jfUiSelect', ()=> {

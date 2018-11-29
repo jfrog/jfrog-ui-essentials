@@ -1,10 +1,11 @@
 'use strict';
 describe('unit test: jf_actions', function () {
 
-	var $scope;
+	var $scope, elem;
 
 	function flushAndApply() {
-		try {
+		try
+		{
 			$timeout.flush();
 		}
 		catch (e) {
@@ -14,12 +15,14 @@ describe('unit test: jf_actions', function () {
 	}
 
 	function compileDirective(attr) {
-		$scope = window.compileDirective('jf-actions', attr);
+		$scope = window.compileDirective('jf-actions', attr, elem);
 	}
 
 	beforeEach(angular.mock.module('jfrog.ui.essentials'));
 
 	beforeEach(() => {
+
+		elem = $('div.jf-actions');
 
 		var ACTIONS = {
 			'act1': {title: 'Action #1', icon: 'icon-view'},
@@ -65,6 +68,10 @@ describe('unit test: jf_actions', function () {
 			},
 			'@initMethod': 'initMethod'
 		});
+	});
+
+	it('should compile', ()=>{
+		expect(elem[0]).toMatchSnapshot();
 	});
 
 	it('should render directive and display actions', () => {

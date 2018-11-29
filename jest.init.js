@@ -1,10 +1,9 @@
-// import angular from 'angular';
 require('angular');
 require('angular-mocks/ngMock');
-// module = window.angular.mock.module;
-// import * as CodeMirror from 'codemirror';
+window.jest = require('babel-jest');
+require('babel-plugin-dynamic-import-node');
+require('babel-plugin-transform-es2015-modules-commonjs');
 
-// require('jquery');
 window.CodeMirror = require('codemirror');
 require('angular-messages');
 require('angular-animate');
@@ -23,7 +22,12 @@ require('angular-mousewheel');
 require('angular-eonasdan-datetimepicker');
 require('angular-file-upload/angular-file-upload');
 window._ = require('lodash');
+window.jQuery = require('jquery/dist/jquery');
 require('jquery-contextmenu/dist/jquery.contextMenu');
+require('jf-tooltipster/js/jquery.tooltipster');
+require('components-jqueryui/jquery-ui');
+
+
 
 require('./dist/tmp/templates');
 require('./src/directives/jfrog.directives.module');
@@ -41,14 +45,3 @@ Object.defineProperty(window, "angular", { value: angular });
 
 require("./src/main");
 require('./specs/spec_helper');
-
-// require('../dist/vendorScripts');
-// require('../dist/tmp/karma/karmaVendorScripts');
-// require('../dist/jfrog-ui-essentials');
-
-
-// Object.defineProperty(window, 'jQuery', {value: jQuery});
-// Object.defineProperty(window, '$', {value: jQuery});
-// Object.defineProperty(window, 'angular', {value: angular});
-// import * as jQuery from 'jquery';
-
