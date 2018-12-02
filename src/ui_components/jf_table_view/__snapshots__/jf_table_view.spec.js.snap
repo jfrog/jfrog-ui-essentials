@@ -1,0 +1,146 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`unit test: jf_table_view directive & JFTableViewOptions service should compile 1`] = `
+"<div class=\\"jf-table-view\\" style=\\"clear: both\\">
+
+    <div class=\\"new-entity-wrapper\\">
+        <!-- ngIf: jfTableView.options.newEntityCallback -->
+    </div>
+
+    <jf-table-top table-view=\\"jfTableView\\" class=\\"ng-isolate-scope\\"><div class=\\"jf-table-top clearfix\\">
+
+	<div class=\\"counter-and-filter-wrapper\\">
+		<!-- ngIf: !jfTableTop.tableView.options.noCount --><div ng-if=\\"!jfTableTop.tableView.options.noCount\\" class=\\"table-counter ng-binding ng-scope\\">0 Items<!-- ngIf: jfTableTop.tableView.getSelectedRecords() --></div><!-- end ngIf: !jfTableTop.tableView.options.noCount -->
+		<div class=\\"jf-table-filter\\">
+			<!-- ngIf: jfTableTop.tableView.options.filterVisible --><input class=\\"input-text ng-pristine ng-untouched ng-valid ng-scope tooltipstered ng-empty\\" ng-if=\\"jfTableTop.tableView.options.filterVisible\\" ng-disabled=\\"jfTableTop.isFilterDisabled()\\" ng-model=\\"jfTableTop.tableView.tableFilter\\" ng-model-options=\\"{debounce: { 'default': 500 } }\\" ng-change=\\"jfTableTop.tableView.onUpdateFilter()\\" ng-class=\\"{'no-results': jfTableTop.tableView.noFilterResults}\\" placeholder=\\"Filter\\" ng-init=\\"jfTableTop.tableView.initFilter()\\" jf-tooltip=\\"Filter by User Name, Email\\" disabled=\\"disabled\\"><!-- end ngIf: jfTableTop.tableView.options.filterVisible -->
+		</div>
+	</div>
+
+	<div class=\\"batch-actions-wrapper\\">
+		<jf-table-view-batch-actions table-options=\\"jfTableTop.tableView.options\\" actions=\\"jfTableTop.tableView.options.batchActions\\" class=\\"ng-isolate-scope\\"><div class=\\"grid-batch-actions text-right\\" jf-disable-ng-animate=\\"\\">
+    <!-- ngRepeat: action in jfTableViewBatchActions.actions track by $index -->
+</div></jf-table-view-batch-actions>
+	</div>
+
+	<div class=\\"pagination-controls\\">
+		<!-- ngIf: jfTableTop.tableView.paginationApi && jfTableTop.tableView.options.paginationVisible --><jf-drag-drop-pagination pagination-api=\\"jfTableTop.tableView.paginationApi\\" ng-if=\\"jfTableTop.tableView.paginationApi &amp;&amp; jfTableTop.tableView.options.paginationVisible\\" class=\\"ng-scope ng-isolate-scope\\"><!-- ngIf: jfDragDropPagination.paginationApi.getTotalPages() --></jf-drag-drop-pagination><!-- end ngIf: jfTableTop.tableView.paginationApi && jfTableTop.tableView.options.paginationVisible -->
+	</div>
+
+</div>
+</jf-table-top>
+
+    <!-- ngIf: jfTableView.options.columnsCustomization -->
+
+    <!-- ngIf: jfTableView.options --><div class=\\"jf-table-view-container ng-scope\\" ng-if=\\"jfTableView.options\\">
+        <!-- ngIf: jfTableView.options.headersVisible --><div class=\\"jf-table-view-header ng-scope\\" ng-if=\\"jfTableView.options.headersVisible\\">
+            <div class=\\"jf-table-row ng-isolate-scope headers\\" ng-mousemove=\\"jfTableRow.rowId === 'headers' &amp;&amp; jfTableRow.tableView.options.resizableColumns &amp;&amp; jfTableRow.onMouseMove($event)\\" ng-mousedown=\\"jfTableRow.rowId === 'headers' &amp;&amp; jfTableRow.tableView.options.resizableColumns &amp;&amp; jfTableRow.onMouseDown($event)\\" ng-mouseup=\\"jfTableRow.rowId === 'headers' &amp;&amp; jfTableRow.tableView.options.resizableColumns &amp;&amp; jfTableRow.onMouseUp($event)\\" ng-mouseleave=\\"jfTableRow.rowId === 'headers' &amp;&amp; jfTableRow.tableView.options.resizableColumns &amp;&amp; jfTableRow.onMouseUp($event)\\" ng-click=\\"jfTableRow.onRowClick($event)\\" ng-class=\\"{headers: jfTableRow.rowId === 'headers', 'group-header': jfTableRow.data.$groupHeader, 'expanded': jfTableRow.data.$groupHeader.$expanded, 'sub-row': jfTableRow.data.$parentRow, sticky: jfTableRow.data.$sticky, selected: jfTableRow.data.$selected, 'drag-mark': jfTableRow.rowId !== 'headers' &amp;&amp; jfTableRow.tableView.options.draggableRows &amp;&amp; !(jfTableRow.tableView.options.registeredTabularDnd.dndCtrl.disabled) &amp;&amp; jfTableRow.isRowDraggable(), [jfTableRow.data[jfTableRow.tableView.options.rowClassAttr]]: jfTableRow.tableView.options.rowClassAttr &amp;&amp; jfTableRow.data[jfTableRow.tableView.options.rowClassAttr]}\\" ng-style=\\"{height: jfTableRow.rowId === 'headers' ? '' : jfTableRow.tableView.options.rowHeight, opacity: jfTableRow.tableView.options.ready ? 1 : 0}\\" table-view=\\"jfTableView\\" row-id=\\"'headers'\\" data=\\"jfTableView.options.headersRow\\" style=\\"opacity: 1;\\">
+
+    <!-- ngIf: jfTableRow.tableView.options.hasSelection() -->
+
+
+    <!-- GROUP HEADER -->
+    <!-- ngIf: jfTableRow.data.$groupHeader -->
+
+    <!-- ngRepeat: col in jfTableRow.tableView.options.columns --><!-- ngIf: !jfTableRow.data.$groupHeader --><div class=\\"jf-table-cell ng-scope header field-id-user-name\\" ng-if=\\"!jfTableRow.data.$groupHeader\\" ng-class=\\"{header: jfTableRow.rowId === 'headers' &amp;&amp; col.header, sortable: jfTableRow.rowId === 'headers' &amp;&amp; jfTableRow.tableView.options.sortable &amp;&amp; jfTableRow.tableView.options.getRawData().length &amp;&amp; col.sortable &amp;&amp; !jfTableRow.hoveringResize, 'column-resizer': jfTableRow.hoveringResize, ['drag-right']: col.$dragRightBorder, ['drag-left']: col.$dragLeftBorder, ['field-id-' + jfTableRow.kebab(col.field)]: true, ['row-expander-cell']: $index === 0 &amp;&amp; jfTableRow.tableView.options.subRowsEnabled}\\" ng-click=\\"jfTableRow.onClickCell(col,$event)\\" ng-style=\\"{height: jfTableRow.rowId === 'headers' ? jfTableRow.tableView.options.headerRowHeight : jfTableRow.tableView.options.rowHeight, width: col.width}\\" ng-repeat=\\"col in jfTableRow.tableView.options.columns\\" style=\\"height: 50px;\\">
+        <!-- ngIf: $index === 0 && jfTableRow.tableView.options.subRowsEnabled -->
+        <!-- ngIf: (!col.cellTemplate && jfTableRow.rowId !== 'headers') || (!col.headerCellTemplate && jfTableRow.rowId === 'headers') --><div class=\\"jf-table-cell-content ng-binding ng-scope ng-isolate-scope\\" ng-class=\\"{'row-expander-content': $index === 0 &amp;&amp; jfTableRow.tableView.options.subRowsEnabled,
+                        'YO' : !(jfTableRow.rowId === 'headers' &amp;&amp;
+                                    jfTableRow.tableView.options.sortable &amp;&amp;
+                                    (jfTableRow.tableView.options.sortByField === col.field || jfTableRow.tableView.options.showSortingArrowsAlways) &amp;&amp;
+                                    col.sortable &amp;&amp; jfTableRow.tableView.options.getRawData().length &amp;&amp;
+                                    (col.header || col.headerCellTemplate)) &amp;&amp;
+                                    col.textAlign === 'center'}\\" ng-style=\\"{'text-align': col.textAlign || 'auto'}\\" jf-tooltip-on-overflow=\\"\\" ng-if=\\"(!col.cellTemplate &amp;&amp; jfTableRow.rowId !== 'headers') || (!col.headerCellTemplate &amp;&amp; jfTableRow.rowId === 'headers')\\" style=\\"text-align: auto;\\">
+            User Name
+            <i class=\\"icon sorting-icon icon-small-arrow-down rotate180 active invisible\\" ng-class=\\"{'rotate180': !jfTableRow.tableView.options.revSort || (jfTableRow.tableView.options.sortByField !== col.field &amp;&amp; jfTableRow.tableView.options.showSortingArrowsAlways),
+                          active: jfTableRow.tableView.options.sortByField === col.field,
+                          'invisible' : !(jfTableRow.rowId === 'headers' &amp;&amp; jfTableRow.tableView.options.sortable &amp;&amp; (jfTableRow.tableView.options.sortByField === col.field || jfTableRow.tableView.options.showSortingArrowsAlways) &amp;&amp; col.sortable &amp;&amp; jfTableRow.tableView.options.getRawData().length &amp;&amp; (col.header || col.headerCellTemplate))}\\"></i>
+
+
+
+            <!-- ngIf: jfTableRow.rowId === 'headers' && col.allowGrouping -->
+        </div><!-- end ngIf: (!col.cellTemplate && jfTableRow.rowId !== 'headers') || (!col.headerCellTemplate && jfTableRow.rowId === 'headers') -->
+        <!-- ngIf: (col.cellTemplate && jfTableRow.rowId !== 'headers') || (col.headerCellTemplate && jfTableRow.rowId === 'headers') -->
+    </div><!-- end ngIf: !jfTableRow.data.$groupHeader --><!-- end ngRepeat: col in jfTableRow.tableView.options.columns --><!-- ngIf: !jfTableRow.data.$groupHeader --><div class=\\"jf-table-cell ng-scope header field-id-email\\" ng-if=\\"!jfTableRow.data.$groupHeader\\" ng-class=\\"{header: jfTableRow.rowId === 'headers' &amp;&amp; col.header, sortable: jfTableRow.rowId === 'headers' &amp;&amp; jfTableRow.tableView.options.sortable &amp;&amp; jfTableRow.tableView.options.getRawData().length &amp;&amp; col.sortable &amp;&amp; !jfTableRow.hoveringResize, 'column-resizer': jfTableRow.hoveringResize, ['drag-right']: col.$dragRightBorder, ['drag-left']: col.$dragLeftBorder, ['field-id-' + jfTableRow.kebab(col.field)]: true, ['row-expander-cell']: $index === 0 &amp;&amp; jfTableRow.tableView.options.subRowsEnabled}\\" ng-click=\\"jfTableRow.onClickCell(col,$event)\\" ng-style=\\"{height: jfTableRow.rowId === 'headers' ? jfTableRow.tableView.options.headerRowHeight : jfTableRow.tableView.options.rowHeight, width: col.width}\\" ng-repeat=\\"col in jfTableRow.tableView.options.columns\\" style=\\"height: 50px;\\">
+        <!-- ngIf: $index === 0 && jfTableRow.tableView.options.subRowsEnabled -->
+        <!-- ngIf: (!col.cellTemplate && jfTableRow.rowId !== 'headers') || (!col.headerCellTemplate && jfTableRow.rowId === 'headers') --><div class=\\"jf-table-cell-content ng-binding ng-scope ng-isolate-scope\\" ng-class=\\"{'row-expander-content': $index === 0 &amp;&amp; jfTableRow.tableView.options.subRowsEnabled,
+                        'YO' : !(jfTableRow.rowId === 'headers' &amp;&amp;
+                                    jfTableRow.tableView.options.sortable &amp;&amp;
+                                    (jfTableRow.tableView.options.sortByField === col.field || jfTableRow.tableView.options.showSortingArrowsAlways) &amp;&amp;
+                                    col.sortable &amp;&amp; jfTableRow.tableView.options.getRawData().length &amp;&amp;
+                                    (col.header || col.headerCellTemplate)) &amp;&amp;
+                                    col.textAlign === 'center'}\\" ng-style=\\"{'text-align': col.textAlign || 'auto'}\\" jf-tooltip-on-overflow=\\"\\" ng-if=\\"(!col.cellTemplate &amp;&amp; jfTableRow.rowId !== 'headers') || (!col.headerCellTemplate &amp;&amp; jfTableRow.rowId === 'headers')\\" style=\\"text-align: auto;\\">
+            Email
+            <i class=\\"icon sorting-icon icon-small-arrow-down rotate180 invisible\\" ng-class=\\"{'rotate180': !jfTableRow.tableView.options.revSort || (jfTableRow.tableView.options.sortByField !== col.field &amp;&amp; jfTableRow.tableView.options.showSortingArrowsAlways),
+                          active: jfTableRow.tableView.options.sortByField === col.field,
+                          'invisible' : !(jfTableRow.rowId === 'headers' &amp;&amp; jfTableRow.tableView.options.sortable &amp;&amp; (jfTableRow.tableView.options.sortByField === col.field || jfTableRow.tableView.options.showSortingArrowsAlways) &amp;&amp; col.sortable &amp;&amp; jfTableRow.tableView.options.getRawData().length &amp;&amp; (col.header || col.headerCellTemplate))}\\"></i>
+
+
+
+            <!-- ngIf: jfTableRow.rowId === 'headers' && col.allowGrouping -->
+        </div><!-- end ngIf: (!col.cellTemplate && jfTableRow.rowId !== 'headers') || (!col.headerCellTemplate && jfTableRow.rowId === 'headers') -->
+        <!-- ngIf: (col.cellTemplate && jfTableRow.rowId !== 'headers') || (col.headerCellTemplate && jfTableRow.rowId === 'headers') -->
+    </div><!-- end ngIf: !jfTableRow.data.$groupHeader --><!-- end ngRepeat: col in jfTableRow.tableView.options.columns --><!-- ngIf: !jfTableRow.data.$groupHeader --><div class=\\"jf-table-cell ng-scope header field-id-subscription\\" ng-if=\\"!jfTableRow.data.$groupHeader\\" ng-class=\\"{header: jfTableRow.rowId === 'headers' &amp;&amp; col.header, sortable: jfTableRow.rowId === 'headers' &amp;&amp; jfTableRow.tableView.options.sortable &amp;&amp; jfTableRow.tableView.options.getRawData().length &amp;&amp; col.sortable &amp;&amp; !jfTableRow.hoveringResize, 'column-resizer': jfTableRow.hoveringResize, ['drag-right']: col.$dragRightBorder, ['drag-left']: col.$dragLeftBorder, ['field-id-' + jfTableRow.kebab(col.field)]: true, ['row-expander-cell']: $index === 0 &amp;&amp; jfTableRow.tableView.options.subRowsEnabled}\\" ng-click=\\"jfTableRow.onClickCell(col,$event)\\" ng-style=\\"{height: jfTableRow.rowId === 'headers' ? jfTableRow.tableView.options.headerRowHeight : jfTableRow.tableView.options.rowHeight, width: col.width}\\" ng-repeat=\\"col in jfTableRow.tableView.options.columns\\" style=\\"height: 50px;\\">
+        <!-- ngIf: $index === 0 && jfTableRow.tableView.options.subRowsEnabled -->
+        <!-- ngIf: (!col.cellTemplate && jfTableRow.rowId !== 'headers') || (!col.headerCellTemplate && jfTableRow.rowId === 'headers') --><div class=\\"jf-table-cell-content ng-binding ng-scope ng-isolate-scope\\" ng-class=\\"{'row-expander-content': $index === 0 &amp;&amp; jfTableRow.tableView.options.subRowsEnabled,
+                        'YO' : !(jfTableRow.rowId === 'headers' &amp;&amp;
+                                    jfTableRow.tableView.options.sortable &amp;&amp;
+                                    (jfTableRow.tableView.options.sortByField === col.field || jfTableRow.tableView.options.showSortingArrowsAlways) &amp;&amp;
+                                    col.sortable &amp;&amp; jfTableRow.tableView.options.getRawData().length &amp;&amp;
+                                    (col.header || col.headerCellTemplate)) &amp;&amp;
+                                    col.textAlign === 'center'}\\" ng-style=\\"{'text-align': col.textAlign || 'auto'}\\" jf-tooltip-on-overflow=\\"\\" ng-if=\\"(!col.cellTemplate &amp;&amp; jfTableRow.rowId !== 'headers') || (!col.headerCellTemplate &amp;&amp; jfTableRow.rowId === 'headers')\\" style=\\"text-align: auto;\\">
+            Subscription
+            <i class=\\"icon sorting-icon icon-small-arrow-down rotate180 invisible\\" ng-class=\\"{'rotate180': !jfTableRow.tableView.options.revSort || (jfTableRow.tableView.options.sortByField !== col.field &amp;&amp; jfTableRow.tableView.options.showSortingArrowsAlways),
+                          active: jfTableRow.tableView.options.sortByField === col.field,
+                          'invisible' : !(jfTableRow.rowId === 'headers' &amp;&amp; jfTableRow.tableView.options.sortable &amp;&amp; (jfTableRow.tableView.options.sortByField === col.field || jfTableRow.tableView.options.showSortingArrowsAlways) &amp;&amp; col.sortable &amp;&amp; jfTableRow.tableView.options.getRawData().length &amp;&amp; (col.header || col.headerCellTemplate))}\\"></i>
+
+
+
+            <!-- ngIf: jfTableRow.rowId === 'headers' && col.allowGrouping -->
+        </div><!-- end ngIf: (!col.cellTemplate && jfTableRow.rowId !== 'headers') || (!col.headerCellTemplate && jfTableRow.rowId === 'headers') -->
+        <!-- ngIf: (col.cellTemplate && jfTableRow.rowId !== 'headers') || (col.headerCellTemplate && jfTableRow.rowId === 'headers') -->
+    </div><!-- end ngIf: !jfTableRow.data.$groupHeader --><!-- end ngRepeat: col in jfTableRow.tableView.options.columns --><!-- ngIf: !jfTableRow.data.$groupHeader --><div class=\\"jf-table-cell ng-scope header field-id-number\\" ng-if=\\"!jfTableRow.data.$groupHeader\\" ng-class=\\"{header: jfTableRow.rowId === 'headers' &amp;&amp; col.header, sortable: jfTableRow.rowId === 'headers' &amp;&amp; jfTableRow.tableView.options.sortable &amp;&amp; jfTableRow.tableView.options.getRawData().length &amp;&amp; col.sortable &amp;&amp; !jfTableRow.hoveringResize, 'column-resizer': jfTableRow.hoveringResize, ['drag-right']: col.$dragRightBorder, ['drag-left']: col.$dragLeftBorder, ['field-id-' + jfTableRow.kebab(col.field)]: true, ['row-expander-cell']: $index === 0 &amp;&amp; jfTableRow.tableView.options.subRowsEnabled}\\" ng-click=\\"jfTableRow.onClickCell(col,$event)\\" ng-style=\\"{height: jfTableRow.rowId === 'headers' ? jfTableRow.tableView.options.headerRowHeight : jfTableRow.tableView.options.rowHeight, width: col.width}\\" ng-repeat=\\"col in jfTableRow.tableView.options.columns\\" style=\\"height: 50px;\\">
+        <!-- ngIf: $index === 0 && jfTableRow.tableView.options.subRowsEnabled -->
+        <!-- ngIf: (!col.cellTemplate && jfTableRow.rowId !== 'headers') || (!col.headerCellTemplate && jfTableRow.rowId === 'headers') --><div class=\\"jf-table-cell-content ng-binding ng-scope ng-isolate-scope\\" ng-class=\\"{'row-expander-content': $index === 0 &amp;&amp; jfTableRow.tableView.options.subRowsEnabled,
+                        'YO' : !(jfTableRow.rowId === 'headers' &amp;&amp;
+                                    jfTableRow.tableView.options.sortable &amp;&amp;
+                                    (jfTableRow.tableView.options.sortByField === col.field || jfTableRow.tableView.options.showSortingArrowsAlways) &amp;&amp;
+                                    col.sortable &amp;&amp; jfTableRow.tableView.options.getRawData().length &amp;&amp;
+                                    (col.header || col.headerCellTemplate)) &amp;&amp;
+                                    col.textAlign === 'center'}\\" ng-style=\\"{'text-align': col.textAlign || 'auto'}\\" jf-tooltip-on-overflow=\\"\\" ng-if=\\"(!col.cellTemplate &amp;&amp; jfTableRow.rowId !== 'headers') || (!col.headerCellTemplate &amp;&amp; jfTableRow.rowId === 'headers')\\" style=\\"text-align: auto;\\">
+            Some Number
+            <i class=\\"icon sorting-icon icon-small-arrow-down rotate180 invisible\\" ng-class=\\"{'rotate180': !jfTableRow.tableView.options.revSort || (jfTableRow.tableView.options.sortByField !== col.field &amp;&amp; jfTableRow.tableView.options.showSortingArrowsAlways),
+                          active: jfTableRow.tableView.options.sortByField === col.field,
+                          'invisible' : !(jfTableRow.rowId === 'headers' &amp;&amp; jfTableRow.tableView.options.sortable &amp;&amp; (jfTableRow.tableView.options.sortByField === col.field || jfTableRow.tableView.options.showSortingArrowsAlways) &amp;&amp; col.sortable &amp;&amp; jfTableRow.tableView.options.getRawData().length &amp;&amp; (col.header || col.headerCellTemplate))}\\"></i>
+
+
+
+            <!-- ngIf: jfTableRow.rowId === 'headers' && col.allowGrouping -->
+        </div><!-- end ngIf: (!col.cellTemplate && jfTableRow.rowId !== 'headers') || (!col.headerCellTemplate && jfTableRow.rowId === 'headers') -->
+        <!-- ngIf: (col.cellTemplate && jfTableRow.rowId !== 'headers') || (col.headerCellTemplate && jfTableRow.rowId === 'headers') -->
+    </div><!-- end ngIf: !jfTableRow.data.$groupHeader --><!-- end ngRepeat: col in jfTableRow.tableView.options.columns -->
+
+    <!-- ngIf: jfTableRow.rowId !== 'headers' && jfTableRow.tableView.options.actions.length && !jfTableRow.data.$groupHeader -->
+
+    <!-- ngIf: jfTableRow.rowId === 'headers' && jfTableRow.tableView.options.columnsCustomization -->
+
+    <!-- ngIf: jfTableRow.actionsDropdownOpen -->
+
+</div>
+        </div><!-- end ngIf: jfTableView.options.headersVisible -->
+
+
+        <!-- ngIf: jfTableView.options.paginationMode === jfTableView.options.VIRTUAL_SCROLL -->
+
+        <!-- ngIf: jfTableView.options.paginationMode !== jfTableView.options.VIRTUAL_SCROLL --><div ng-if=\\"jfTableView.options.paginationMode !== jfTableView.options.VIRTUAL_SCROLL\\" class=\\"table-rows-container ng-scope\\">
+            <!-- ngRepeat: entity in jfTableView.options.getPageData() track by $index -->
+        </div><!-- end ngIf: jfTableView.options.paginationMode !== jfTableView.options.VIRTUAL_SCROLL -->
+
+        <!-- ngIf: jfTableView.options.dataWasSet && !jfTableView.options.getRawData().length && !jfTableView.options.pendingExternalPaging && (!jfTableView.options.externalTotalCount || jfTableView.options.externalTotalCount.total === 0) -->
+        <!-- ngIf: jfTableView.noFilterResults -->
+        <!-- ngIf: jfTableView.options.pendingInfiniteScroll -->
+
+    </div><!-- end ngIf: jfTableView.options -->
+
+
+</div>"
+`;

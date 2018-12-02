@@ -238,7 +238,8 @@ class jfTableViewController {
 
     createNewEntity() {
         this.options.newEntityCallback();
-        this.$timeout(()=>this.onUpdateFilter());
+        console.debug('createNewEntity');
+        // this.$timeout(()=>this.onUpdateFilter());
     }
 
     groupSelection(groupHeader) {

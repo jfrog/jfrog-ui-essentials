@@ -1,4 +1,5 @@
 {
+  "sourceMap": "inline",
   "env": {
     "test": {
       "plugins": [

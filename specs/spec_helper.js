@@ -1,8 +1,8 @@
 module = angular.mock.module;
-window.compileHtml = function(htmlStr, data, parentElement = null) {
+window.compileHtml = function (htmlStr, data, parentElement = null) {
     data = data || {};
     var $scope;
-    inject(function($compile, $rootScope) {
+    inject(function ($compile, $rootScope) {
         parentElement = parentElement || document.body;
         angular.element(parentElement).html(htmlStr);
         $scope = $rootScope.$new();
@@ -13,7 +13,21 @@ window.compileHtml = function(htmlStr, data, parentElement = null) {
     return $scope;
 }
 
-window.compileDirective = function(directive, attr, parentElement = null) {
+window.compileHtmlAndGetElement = function (htmlStr, data, parentElement = null) {
+    data = data || {};
+    let $scope, elem;
+    inject(function ($compile, $rootScope) {
+        // parentElement = parentElement || document.body;
+        elem = angular.element(htmlStr);
+        $scope = $rootScope.$new();
+        angular.extend($scope, data);
+        elem = $compile(elem)($scope);
+        $scope.$digest();
+    });
+    return {$scope, elem};
+}
+
+window.compileDirective = function (directive, attr, parentElement = null) {
     let attributes = '';
     for (let key in attr) {
         let kebab = _.kebabCase(key);
@@ -33,21 +47,41 @@ window.compileDirective = function(directive, attr, parentElement = null) {
     return scope;
 }
 
+window.compileDirectiveAndGetElement = function (directive, attr, parentElement = null) {
+    let attributes = '';
+    for (let key in attr) {
+        let kebab = _.kebabCase(key);
+        if (key.startsWith('@')) {
+            attributes += ` ${kebab}="{{ data['${key}'] }}"`;
+        }
+        else if (key.startsWith('&')) {
+            attributes += ` ${kebab}="data['${key}']()"`;
+        }
+        else {
+            attributes += ` ${kebab}="data.${key}"`;
+        }
+    }
+    let {$scope, elem} = compileHtmlAndGetElement(`<${directive} ${attributes}></${directive}>`, {data: attr}, parentElement);
+    $scope.$digest();
 
-function angularEquality(first, second) {
-  return angular.equals(first, second);
+    return {$scope, elem};
 }
 
-window.useAngularEquality = function() {
-    beforeEach(function() {
-      jasmine.addCustomEqualityTester(angularEquality);
+
+function angularEquality(first, second) {
+    return angular.equals(first, second);
+}
+
+window.useAngularEquality = function () {
+    beforeEach(function () {
+        jasmine.addCustomEqualityTester(angularEquality);
     });
 }
 
-window.waitForPromise = function() {
-    setInterval(()=>{
-        inject(function($rootScope) {
+window.waitForPromise = function () {
+    setInterval(() => {
+        inject(function ($rootScope) {
             $rootScope.$apply();
         });
-    },0)
+    }, 0)
 }
