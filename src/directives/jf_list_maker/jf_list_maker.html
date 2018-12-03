@@ -43,8 +43,7 @@
             <div class="list-maker-list-buttons">
                 <a href="" class="icon icon-close"
                    ng-click="jfListMaker.removeValue($index)"
-                   ng-if="jfListMaker.values.length > jfListMaker.minLength"
-                   ng-disabled="jfListMaker.ngDisabled"></a>
+                   ng-if="jfListMaker.values.length > jfListMaker.minLength && !jfListMaker.ngDisabled"></a>
             </div>
         </div>
     </div>
