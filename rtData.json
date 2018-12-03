@@ -1,0 +1,4890 @@
+{
+  "modules": [
+    {
+      "name": "ngCookies",
+      "data": {
+        "requires": [
+          "ng"
+        ]
+      }
+    },
+    {
+      "name": "ngTouch",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ngSanitize",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ngMessages",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ngAria",
+      "data": {
+        "requires": [
+          "ng"
+        ]
+      }
+    },
+    {
+      "name": "ngResource",
+      "data": {
+        "requires": [
+          "ng"
+        ]
+      }
+    },
+    {
+      "name": "ui.router.util",
+      "data": {
+        "requires": [
+          "ng"
+        ]
+      }
+    },
+    {
+      "name": "ui.router.router",
+      "data": {
+        "requires": [
+          "ui.router.util"
+        ]
+      }
+    },
+    {
+      "name": "ui.router.state",
+      "data": {
+        "requires": [
+          "ui.router.router",
+          "ui.router.util"
+        ]
+      }
+    },
+    {
+      "name": "ui.router",
+      "data": {
+        "requires": [
+          "ui.router.state"
+        ]
+      }
+    },
+    {
+      "name": "ui.router.compat",
+      "data": {
+        "requires": [
+          "ui.router"
+        ]
+      }
+    },
+    {
+      "name": "ngRoute",
+      "data": {
+        "requires": [
+          "ng"
+        ]
+      }
+    },
+    {
+      "name": "ui.bootstrap",
+      "data": {
+        "requires": [
+          "ui.bootstrap.tpls",
+          "ui.bootstrap.collapse",
+          "ui.bootstrap.accordion",
+          "ui.bootstrap.alert",
+          "ui.bootstrap.bindHtml",
+          "ui.bootstrap.buttons",
+          "ui.bootstrap.carousel",
+          "ui.bootstrap.dateparser",
+          "ui.bootstrap.position",
+          "ui.bootstrap.datepicker",
+          "ui.bootstrap.dropdown",
+          "ui.bootstrap.modal",
+          "ui.bootstrap.pagination",
+          "ui.bootstrap.tooltip",
+          "ui.bootstrap.popover",
+          "ui.bootstrap.progressbar",
+          "ui.bootstrap.rating",
+          "ui.bootstrap.tabs",
+          "ui.bootstrap.timepicker",
+          "ui.bootstrap.transition",
+          "ui.bootstrap.typeahead"
+        ]
+      }
+    },
+    {
+      "name": "ui.bootstrap.tpls",
+      "data": {
+        "requires": [
+          "template/accordion/accordion-group.html",
+          "template/accordion/accordion.html",
+          "template/alert/alert.html",
+          "template/carousel/carousel.html",
+          "template/carousel/slide.html",
+          "template/datepicker/datepicker.html",
+          "template/datepicker/day.html",
+          "template/datepicker/month.html",
+          "template/datepicker/popup.html",
+          "template/datepicker/year.html",
+          "template/modal/backdrop.html",
+          "template/modal/window.html",
+          "template/pagination/pager.html",
+          "template/pagination/pagination.html",
+          "template/tooltip/tooltip-html-popup.html",
+          "template/tooltip/tooltip-html-unsafe-popup.html",
+          "template/tooltip/tooltip-popup.html",
+          "template/tooltip/tooltip-template-popup.html",
+          "template/popover/popover-template.html",
+          "template/popover/popover.html",
+          "template/progressbar/bar.html",
+          "template/progressbar/progress.html",
+          "template/progressbar/progressbar.html",
+          "template/rating/rating.html",
+          "template/tabs/tab.html",
+          "template/tabs/tabset.html",
+          "template/timepicker/timepicker.html",
+          "template/typeahead/typeahead-match.html",
+          "template/typeahead/typeahead-popup.html"
+        ]
+      }
+    },
+    {
+      "name": "ui.bootstrap.collapse",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.bootstrap.accordion",
+      "data": {
+        "requires": [
+          "ui.bootstrap.collapse"
+        ]
+      }
+    },
+    {
+      "name": "ui.bootstrap.alert",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.bootstrap.bindHtml",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.bootstrap.buttons",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.bootstrap.carousel",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.bootstrap.dateparser",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.bootstrap.position",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.bootstrap.datepicker",
+      "data": {
+        "requires": [
+          "ui.bootstrap.dateparser",
+          "ui.bootstrap.position"
+        ]
+      }
+    },
+    {
+      "name": "ui.bootstrap.dropdown",
+      "data": {
+        "requires": [
+          "ui.bootstrap.position"
+        ]
+      }
+    },
+    {
+      "name": "ui.bootstrap.modal",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.bootstrap.pagination",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.bootstrap.tooltip",
+      "data": {
+        "requires": [
+          "ui.bootstrap.position",
+          "ui.bootstrap.bindHtml"
+        ]
+      }
+    },
+    {
+      "name": "ui.bootstrap.popover",
+      "data": {
+        "requires": [
+          "ui.bootstrap.tooltip"
+        ]
+      }
+    },
+    {
+      "name": "ui.bootstrap.progressbar",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.bootstrap.rating",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.bootstrap.tabs",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.bootstrap.timepicker",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.bootstrap.transition",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.bootstrap.typeahead",
+      "data": {
+        "requires": [
+          "ui.bootstrap.position",
+          "ui.bootstrap.bindHtml"
+        ]
+      }
+    },
+    {
+      "name": "template/accordion/accordion-group.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/accordion/accordion.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/alert/alert.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/carousel/carousel.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/carousel/slide.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/datepicker/datepicker.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/datepicker/day.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/datepicker/month.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/datepicker/popup.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/datepicker/year.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/modal/backdrop.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/modal/window.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/pagination/pager.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/pagination/pagination.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/tooltip/tooltip-html-popup.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/tooltip/tooltip-html-unsafe-popup.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/tooltip/tooltip-popup.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/tooltip/tooltip-template-popup.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/popover/popover-template.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/popover/popover.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/progressbar/bar.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/progressbar/progress.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/progressbar/progressbar.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/rating/rating.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/tabs/tab.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/tabs/tabset.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/timepicker/timepicker.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/typeahead/typeahead-match.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "template/typeahead/typeahead-popup.html",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.grid.i18n",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.grid",
+      "data": {
+        "requires": [
+          "ui.grid.i18n"
+        ]
+      }
+    },
+    {
+      "name": "ui.grid.autoResize",
+      "data": {
+        "requires": [
+          "ui.grid"
+        ]
+      }
+    },
+    {
+      "name": "ui.grid.cellNav",
+      "data": {
+        "requires": [
+          "ui.grid"
+        ]
+      }
+    },
+    {
+      "name": "ui.grid.edit",
+      "data": {
+        "requires": [
+          "ui.grid"
+        ]
+      }
+    },
+    {
+      "name": "ui.grid.expandable",
+      "data": {
+        "requires": [
+          "ui.grid"
+        ]
+      }
+    },
+    {
+      "name": "ui.grid.exporter",
+      "data": {
+        "requires": [
+          "ui.grid"
+        ]
+      }
+    },
+    {
+      "name": "ui.grid.grouping",
+      "data": {
+        "requires": [
+          "ui.grid"
+        ]
+      }
+    },
+    {
+      "name": "ui.grid.importer",
+      "data": {
+        "requires": [
+          "ui.grid"
+        ]
+      }
+    },
+    {
+      "name": "ui.grid.infiniteScroll",
+      "data": {
+        "requires": [
+          "ui.grid"
+        ]
+      }
+    },
+    {
+      "name": "ui.grid.moveColumns",
+      "data": {
+        "requires": [
+          "ui.grid"
+        ]
+      }
+    },
+    {
+      "name": "ui.grid.pagination",
+      "data": {
+        "requires": [
+          "ng",
+          "ui.grid"
+        ]
+      }
+    },
+    {
+      "name": "ui.grid.pinning",
+      "data": {
+        "requires": [
+          "ui.grid"
+        ]
+      }
+    },
+    {
+      "name": "ui.grid.resizeColumns",
+      "data": {
+        "requires": [
+          "ui.grid"
+        ]
+      }
+    },
+    {
+      "name": "ui.grid.rowEdit",
+      "data": {
+        "requires": [
+          "ui.grid",
+          "ui.grid.edit",
+          "ui.grid.cellNav"
+        ]
+      }
+    },
+    {
+      "name": "ui.grid.saveState",
+      "data": {
+        "requires": [
+          "ui.grid",
+          "ui.grid.selection",
+          "ui.grid.cellNav",
+          "ui.grid.grouping",
+          "ui.grid.pinning",
+          "ui.grid.treeView"
+        ]
+      }
+    },
+    {
+      "name": "ui.grid.selection",
+      "data": {
+        "requires": [
+          "ui.grid"
+        ]
+      }
+    },
+    {
+      "name": "ui.grid.treeView",
+      "data": {
+        "requires": [
+          "ui.grid"
+        ]
+      }
+    },
+    {
+      "name": "ngAnimateMock",
+      "data": {
+        "requires": [
+          "ng"
+        ]
+      }
+    },
+    {
+      "name": "ngMock",
+      "data": {
+        "requires": [
+          "ng"
+        ]
+      }
+    },
+    {
+      "name": "ngMockE2E",
+      "data": {
+        "requires": [
+          "ng"
+        ]
+      }
+    },
+    {
+      "name": "toaster",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "angularFileUpload",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.codemirror",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.select",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ngClipboard",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.alias",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.event",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.format",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.highlight",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.include",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.indeterminate",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.inflector",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.jq",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.keypress",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.mask",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.reset",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.route",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.scroll.jqlite",
+      "data": {
+        "requires": [
+          "ui.scroll"
+        ]
+      }
+    },
+    {
+      "name": "ui.scroll",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.scrollfix",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.showhide",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.unique",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.uploader",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.validate",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.utils",
+      "data": {
+        "requires": [
+          "ui.event",
+          "ui.format",
+          "ui.highlight",
+          "ui.include",
+          "ui.indeterminate",
+          "ui.inflector",
+          "ui.jq",
+          "ui.keypress",
+          "ui.mask",
+          "ui.reset",
+          "ui.route",
+          "ui.scrollfix",
+          "ui.scroll",
+          "ui.scroll.jqlite",
+          "ui.showhide",
+          "ui.unique",
+          "ui.validate"
+        ]
+      }
+    },
+    {
+      "name": "ae-datetimepicker",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "monospaced.mousewheel",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "jfrog.ui.essentials",
+      "data": {
+        "requires": [
+          "ngMessages",
+          "ngAnimate",
+          "ui.utils",
+          "ui.select",
+          "ui.codemirror",
+          "ui.router",
+          "ngCookies",
+          "toaster",
+          "ngSanitize",
+          "ui.bootstrap",
+          "ngClipboard",
+          "ui.grid.draggable-rows",
+          "monospaced.mousewheel",
+          "ae-datetimepicker",
+          "jfrog.ui.essentials.templates",
+          "jfrog.ui.essentials.directives",
+          "jfrog.ui.essentials.services",
+          "jfrog.ui.essentials.filters"
+        ]
+      }
+    },
+    {
+      "name": "jfrog.ui.essentials.directives",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "jfrog.ui.essentials.services",
+      "data": {
+        "requires": [
+          "ui.router",
+          "jfrog.ui_components",
+          "toaster"
+        ]
+      }
+    },
+    {
+      "name": "jfrog.ui.essentials.filters",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "jf.divider",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "jfrog_grid",
+      "data": {
+        "requires": [
+          "ui.grid",
+          "ui.grid.autoResize",
+          "ui.grid.edit",
+          "ui.grid.selection",
+          "ui.grid.pagination",
+          "ui.grid.grouping",
+          "ui.grid.resizeColumns"
+        ]
+      }
+    },
+    {
+      "name": "jfrog_modal",
+      "data": {
+        "requires": [
+          "ui.bootstrap"
+        ]
+      }
+    },
+    {
+      "name": "jfrog.uploader",
+      "data": {
+        "requires": [
+          "angularFileUpload"
+        ]
+      }
+    },
+    {
+      "name": "jfrog_table_view",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "jf_tree",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "summary.row",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "jfrog.ui_components",
+      "data": {
+        "requires": [
+          "jfrog_grid",
+          "jfrog_modal",
+          "jfrog.uploader",
+          "jfrog_table_view",
+          "jf_tree",
+          "summary.row",
+          "jf.divider"
+        ]
+      }
+    },
+    {
+      "name": "jfrog.ui.essentials.templates",
+      "data": {
+        "requires": []
+      }
+    },
+    {
+      "name": "ui.grid.draggable-rows",
+      "data": {
+        "requires": [
+          "ui.grid"
+        ]
+      }
+    },
+    {
+      "name": "uiLibClientTest",
+      "data": {
+        "requires": [
+          "jfrog.ui.essentials",
+          "ngAnimate",
+          "ngCookies",
+          "ngTouch",
+          "ngSanitize",
+          "ngMessages",
+          "ngAria",
+          "ngResource",
+          "ngRoute",
+          "ui.router",
+          "ui.bootstrap",
+          "ngMockE2E"
+        ]
+      }
+    }
+  ],
+  "configs": [],
+  "runs": [],
+  "directives": [
+    {
+      "name": "ngSwipeLeft",
+      "module": "ngTouch",
+      "data": {
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "ngSwipeRight",
+      "module": "ngTouch",
+      "data": {
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "ngMessagesInclude",
+      "module": "ngMessages",
+      "data": {
+        "restrict": "AE",
+        "require": "^^ngMessages",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "ngMessage",
+      "module": "ngMessages",
+      "data": {
+        "restrict": "AE",
+        "transclude": "element",
+        "priority": 1,
+        "terminal": true,
+        "require": "^^ngMessages",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "ngMessageExp",
+      "module": "ngMessages",
+      "data": {
+        "restrict": "AE",
+        "transclude": "element",
+        "priority": 1,
+        "terminal": true,
+        "require": "^^ngMessages",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "ngShow",
+      "module": "ngAria",
+      "data": {
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "ngHide",
+      "module": "ngAria",
+      "data": {
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "ngValue",
+      "module": "ngAria",
+      "data": {
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "ngChecked",
+      "module": "ngAria",
+      "data": {
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "ngReadonly",
+      "module": "ngAria",
+      "data": {
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "ngRequired",
+      "module": "ngAria",
+      "data": {
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "ngModel",
+      "module": "ngAria",
+      "data": {
+        "restrict": "A",
+        "require": "ngModel",
+        "priority": 200,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "ngDisabled",
+      "module": "ngAria",
+      "data": {
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "ngMessages",
+      "module": "ngAria",
+      "data": {
+        "restrict": "A",
+        "require": "?ngMessages",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "ngClick",
+      "module": "ngAria",
+      "data": {
+        "restrict": "A",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "ngDblclick",
+      "module": "ngAria",
+      "data": {
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiView",
+      "module": "ui.router.state",
+      "data": {
+        "restrict": "ECA",
+        "terminal": true,
+        "priority": 400,
+        "transclude": "element",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiSref",
+      "module": "ui.router.state",
+      "data": {
+        "restrict": "A",
+        "require": [
+          "?^uiSrefActive",
+          "?^uiSrefActiveEq"
+        ],
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "ngView",
+      "module": "ngRoute",
+      "data": {
+        "restrict": "ECA",
+        "terminal": true,
+        "priority": 400,
+        "transclude": "element",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "collapse",
+      "module": "ui.bootstrap.collapse",
+      "data": {
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "accordionGroup",
+      "module": "ui.bootstrap.accordion",
+      "data": {
+        "require": "^accordion",
+        "restrict": "EA",
+        "transclude": true,
+        "replace": true,
+        "templateUrl": "template/accordion/accordion-group.html",
+        "scope": {
+          "heading": "@",
+          "isOpen": "=?",
+          "isDisabled": "=?"
+        },
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "accordionHeading",
+      "module": "ui.bootstrap.accordion",
+      "data": {
+        "restrict": "EA",
+        "transclude": true,
+        "template": "",
+        "replace": true,
+        "require": "^accordionGroup",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "accordionTransclude",
+      "module": "ui.bootstrap.accordion",
+      "data": {
+        "require": "^accordionGroup",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "dismissOnTimeout",
+      "module": "ui.bootstrap.alert",
+      "data": {
+        "require": "alert",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "bindHtmlUnsafe",
+      "module": "ui.bootstrap.bindHtml",
+      "data": {
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "btnRadio",
+      "module": "ui.bootstrap.buttons",
+      "data": {
+        "require": [
+          "btnRadio",
+          "ngModel"
+        ],
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "btnCheckbox",
+      "module": "ui.bootstrap.buttons",
+      "data": {
+        "require": [
+          "btnCheckbox",
+          "ngModel"
+        ],
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "slide",
+      "module": "ui.bootstrap.carousel",
+      "data": {
+        "require": "^carousel",
+        "restrict": "EA",
+        "transclude": true,
+        "replace": true,
+        "templateUrl": "template/carousel/slide.html",
+        "scope": {
+          "active": "=?",
+          "index": "=?"
+        },
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "datepicker",
+      "module": "ui.bootstrap.datepicker",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "templateUrl": "template/datepicker/datepicker.html",
+        "scope": {
+          "datepickerMode": "=?",
+          "dateDisabled": "&",
+          "customClass": "&",
+          "shortcutPropagation": "&?"
+        },
+        "require": [
+          "datepicker",
+          "?^ngModel"
+        ],
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "daypicker",
+      "module": "ui.bootstrap.datepicker",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "templateUrl": "template/datepicker/day.html",
+        "require": "^datepicker",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "monthpicker",
+      "module": "ui.bootstrap.datepicker",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "templateUrl": "template/datepicker/month.html",
+        "require": "^datepicker",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "yearpicker",
+      "module": "ui.bootstrap.datepicker",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "templateUrl": "template/datepicker/year.html",
+        "require": "^datepicker",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "datepickerPopup",
+      "module": "ui.bootstrap.datepicker",
+      "data": {
+        "restrict": "EA",
+        "require": "ngModel",
+        "scope": {
+          "isOpen": "=?",
+          "currentText": "@",
+          "clearText": "@",
+          "closeText": "@",
+          "dateDisabled": "&",
+          "customClass": "&"
+        },
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "datepickerPopupWrap",
+      "module": "ui.bootstrap.datepicker",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "transclude": true,
+        "templateUrl": "template/datepicker/popup.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "dropdown",
+      "module": "ui.bootstrap.dropdown",
+      "data": {
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "dropdownMenu",
+      "module": "ui.bootstrap.dropdown",
+      "data": {
+        "restrict": "AC",
+        "require": "?^dropdown",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "keyboardNav",
+      "module": "ui.bootstrap.dropdown",
+      "data": {
+        "restrict": "A",
+        "require": "?^dropdown",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "dropdownToggle",
+      "module": "ui.bootstrap.dropdown",
+      "data": {
+        "require": "?^dropdown",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "modalBackdrop",
+      "module": "ui.bootstrap.modal",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "templateUrl": "template/modal/backdrop.html",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "modalWindow",
+      "module": "ui.bootstrap.modal",
+      "data": {
+        "restrict": "EA",
+        "scope": {
+          "index": "@"
+        },
+        "replace": true,
+        "transclude": true,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "modalAnimationClass",
+      "module": "ui.bootstrap.modal",
+      "data": {
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "modalTransclude",
+      "module": "ui.bootstrap.modal",
+      "data": {
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "pagination",
+      "module": "ui.bootstrap.pagination",
+      "data": {
+        "restrict": "EA",
+        "scope": {
+          "totalItems": "=",
+          "firstText": "@",
+          "previousText": "@",
+          "nextText": "@",
+          "lastText": "@",
+          "ngDisabled": "="
+        },
+        "require": [
+          "pagination",
+          "?ngModel"
+        ],
+        "templateUrl": "template/pagination/pagination.html",
+        "replace": true,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "pager",
+      "module": "ui.bootstrap.pagination",
+      "data": {
+        "restrict": "EA",
+        "scope": {
+          "totalItems": "=",
+          "previousText": "@",
+          "nextText": "@"
+        },
+        "require": [
+          "pager",
+          "?ngModel"
+        ],
+        "templateUrl": "template/pagination/pager.html",
+        "replace": true,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "tooltipTemplateTransclude",
+      "module": "ui.bootstrap.tooltip",
+      "data": {
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "tooltipClasses",
+      "module": "ui.bootstrap.tooltip",
+      "data": {
+        "restrict": "A",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "tooltipPopup",
+      "module": "ui.bootstrap.tooltip",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "scope": {
+          "content": "@",
+          "placement": "@",
+          "popupClass": "@",
+          "animation": "&",
+          "isOpen": "&"
+        },
+        "templateUrl": "template/tooltip/tooltip-popup.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "tooltip",
+      "module": "ui.bootstrap.tooltip",
+      "data": {
+        "restrict": "EA",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "tooltipTemplatePopup",
+      "module": "ui.bootstrap.tooltip",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "scope": {
+          "contentExp": "&",
+          "placement": "@",
+          "popupClass": "@",
+          "animation": "&",
+          "isOpen": "&",
+          "originScope": "&"
+        },
+        "templateUrl": "template/tooltip/tooltip-template-popup.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "tooltipTemplate",
+      "module": "ui.bootstrap.tooltip",
+      "data": {
+        "restrict": "EA",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "tooltipHtmlPopup",
+      "module": "ui.bootstrap.tooltip",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "scope": {
+          "contentExp": "&",
+          "placement": "@",
+          "popupClass": "@",
+          "animation": "&",
+          "isOpen": "&"
+        },
+        "templateUrl": "template/tooltip/tooltip-html-popup.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "tooltipHtml",
+      "module": "ui.bootstrap.tooltip",
+      "data": {
+        "restrict": "EA",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "tooltipHtmlUnsafePopup",
+      "module": "ui.bootstrap.tooltip",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "scope": {
+          "content": "@",
+          "placement": "@",
+          "popupClass": "@",
+          "animation": "&",
+          "isOpen": "&"
+        },
+        "templateUrl": "template/tooltip/tooltip-html-unsafe-popup.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "tooltipHtmlUnsafe",
+      "module": "ui.bootstrap.tooltip",
+      "data": {
+        "restrict": "EA",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "popoverTemplatePopup",
+      "module": "ui.bootstrap.popover",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "scope": {
+          "title": "@",
+          "contentExp": "&",
+          "placement": "@",
+          "popupClass": "@",
+          "animation": "&",
+          "isOpen": "&",
+          "originScope": "&"
+        },
+        "templateUrl": "template/popover/popover-template.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "popoverTemplate",
+      "module": "ui.bootstrap.popover",
+      "data": {
+        "restrict": "EA",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "popoverPopup",
+      "module": "ui.bootstrap.popover",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "scope": {
+          "title": "@",
+          "content": "@",
+          "placement": "@",
+          "popupClass": "@",
+          "animation": "&",
+          "isOpen": "&"
+        },
+        "templateUrl": "template/popover/popover.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "popover",
+      "module": "ui.bootstrap.popover",
+      "data": {
+        "restrict": "EA",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "bar",
+      "module": "ui.bootstrap.progressbar",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "transclude": true,
+        "require": "^progress",
+        "scope": {
+          "value": "=",
+          "type": "@"
+        },
+        "templateUrl": "template/progressbar/bar.html",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "progressbar",
+      "module": "ui.bootstrap.progressbar",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "transclude": true,
+        "scope": {
+          "value": "=",
+          "max": "=?",
+          "type": "@"
+        },
+        "templateUrl": "template/progressbar/progressbar.html",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "rating",
+      "module": "ui.bootstrap.rating",
+      "data": {
+        "restrict": "EA",
+        "require": [
+          "rating",
+          "ngModel"
+        ],
+        "scope": {
+          "readonly": "=?",
+          "onHover": "&",
+          "onLeave": "&"
+        },
+        "templateUrl": "template/rating/rating.html",
+        "replace": true,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "tabset",
+      "module": "ui.bootstrap.tabs",
+      "data": {
+        "restrict": "EA",
+        "transclude": true,
+        "replace": true,
+        "scope": {
+          "type": "@"
+        },
+        "templateUrl": "template/tabs/tabset.html",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "tab",
+      "module": "ui.bootstrap.tabs",
+      "data": {
+        "require": "^tabset",
+        "restrict": "EA",
+        "replace": true,
+        "templateUrl": "template/tabs/tab.html",
+        "transclude": true,
+        "scope": {
+          "active": "=?",
+          "heading": "@",
+          "onSelect": "&select",
+          "onDeselect": "&deselect"
+        },
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "tabHeadingTransclude",
+      "module": "ui.bootstrap.tabs",
+      "data": {
+        "restrict": "A",
+        "require": "^tab",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "tabContentTransclude",
+      "module": "ui.bootstrap.tabs",
+      "data": {
+        "restrict": "A",
+        "require": "^tabset",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "timepicker",
+      "module": "ui.bootstrap.timepicker",
+      "data": {
+        "restrict": "EA",
+        "require": [
+          "timepicker",
+          "?^ngModel"
+        ],
+        "replace": true,
+        "scope": {},
+        "templateUrl": "template/timepicker/timepicker.html",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "typeahead",
+      "module": "ui.bootstrap.typeahead",
+      "data": {
+        "require": "ngModel",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "typeaheadPopup",
+      "module": "ui.bootstrap.typeahead",
+      "data": {
+        "restrict": "EA",
+        "scope": {
+          "matches": "=",
+          "query": "=",
+          "active": "=",
+          "position": "&",
+          "moveInProgress": "=",
+          "select": "&"
+        },
+        "replace": true,
+        "templateUrl": "template/typeahead/typeahead-popup.html",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "typeaheadMatch",
+      "module": "ui.bootstrap.typeahead",
+      "data": {
+        "restrict": "EA",
+        "scope": {
+          "index": "=",
+          "match": "=",
+          "query": "="
+        },
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiI18n",
+      "module": "ui.grid.i18n",
+      "data": {
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiT",
+      "module": "ui.grid.i18n",
+      "data": {
+        "restrict": "EA",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiTranslate",
+      "module": "ui.grid.i18n",
+      "data": {
+        "restrict": "EA",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridCell",
+      "module": "ui.grid",
+      "data": {
+        "priority": 0,
+        "scope": false,
+        "require": "?^uiGrid",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridColumnMenu",
+      "module": "ui.grid",
+      "data": {
+        "priority": 0,
+        "scope": true,
+        "require": "?^uiGrid",
+        "templateUrl": "ui-grid/uiGridColumnMenu",
+        "replace": true,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridFilter",
+      "module": "ui.grid",
+      "data": {
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridFooterCell",
+      "module": "ui.grid",
+      "data": {
+        "priority": 0,
+        "scope": {
+          "col": "=",
+          "row": "=",
+          "renderIndex": "="
+        },
+        "replace": true,
+        "require": "^uiGrid",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridFooter",
+      "module": "ui.grid",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "require": [
+          "^uiGrid",
+          "^uiGridRenderContainer"
+        ],
+        "scope": true,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridGridFooter",
+      "module": "ui.grid",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "require": "^uiGrid",
+        "scope": true,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridGroupPanel",
+      "module": "ui.grid",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "require": "?^uiGrid",
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridHeaderCell",
+      "module": "ui.grid",
+      "data": {
+        "priority": 0,
+        "scope": {
+          "col": "=",
+          "row": "=",
+          "renderIndex": "="
+        },
+        "require": [
+          "?^uiGrid",
+          "^uiGridRenderContainer"
+        ],
+        "replace": true,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridHeader",
+      "module": "ui.grid",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "require": [
+          "^uiGrid",
+          "^uiGridRenderContainer"
+        ],
+        "scope": true,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridMenuButton",
+      "module": "ui.grid",
+      "data": {
+        "priority": 0,
+        "scope": true,
+        "require": [
+          "?^uiGrid"
+        ],
+        "templateUrl": "ui-grid/ui-grid-menu-button",
+        "replace": true,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridMenu",
+      "module": "ui.grid",
+      "data": {
+        "priority": 0,
+        "scope": {
+          "menuItems": "=",
+          "autoHide": "=?"
+        },
+        "require": "?^uiGrid",
+        "templateUrl": "ui-grid/uiGridMenu",
+        "replace": false,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridMenuItem",
+      "module": "ui.grid",
+      "data": {
+        "priority": 0,
+        "scope": {
+          "name": "=",
+          "active": "=",
+          "action": "=",
+          "icon": "=",
+          "shown": "=",
+          "context": "=",
+          "templateUrl": "=",
+          "leaveOpen": "="
+        },
+        "require": [
+          "?^uiGrid",
+          "^uiGridMenu"
+        ],
+        "templateUrl": "ui-grid/uiGridMenuItem",
+        "replace": true,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridRenderContainer",
+      "module": "ui.grid",
+      "data": {
+        "replace": true,
+        "transclude": true,
+        "templateUrl": "ui-grid/uiGridRenderContainer",
+        "require": [
+          "^uiGrid",
+          "uiGridRenderContainer"
+        ],
+        "scope": {
+          "containerId": "=",
+          "rowContainerName": "=",
+          "colContainerName": "=",
+          "bindScrollHorizontal": "=",
+          "bindScrollVertical": "=",
+          "enableVerticalScrollbar": "=",
+          "enableHorizontalScrollbar": "="
+        },
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridRow",
+      "module": "ui.grid",
+      "data": {
+        "replace": true,
+        "require": [
+          "^uiGrid",
+          "^uiGridRenderContainer"
+        ],
+        "scope": {
+          "row": "=uiGridRow",
+          "rowRenderIndex": "="
+        },
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridStyle",
+      "module": "ui.grid",
+      "data": {
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridViewport",
+      "module": "ui.grid",
+      "data": {
+        "replace": true,
+        "scope": {},
+        "controllerAs": "Viewport",
+        "templateUrl": "ui-grid/uiGridViewport",
+        "require": [
+          "^uiGrid",
+          "^uiGridRenderContainer"
+        ],
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridVisible",
+      "module": "ui.grid",
+      "data": {
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGrid",
+      "module": "ui.grid",
+      "data": {
+        "templateUrl": "ui-grid/ui-grid",
+        "scope": {
+          "uiGrid": "="
+        },
+        "replace": true,
+        "transclude": true,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridPinnedContainer",
+      "module": "ui.grid",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "template": "<div class=\"ui-grid-pinned-container\"><div ui-grid-render-container container-id=\"side\" row-container-name=\"'body'\" col-container-name=\"side\" bind-scroll-vertical=\"true\" class=\"{{ side }} ui-grid-render-container-{{ side }}\"></div></div>",
+        "scope": {
+          "side": "=uiGridPinnedContainer"
+        },
+        "require": "^uiGrid",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridAutoResize",
+      "module": "ui.grid.autoResize",
+      "data": {
+        "require": "uiGrid",
+        "scope": false,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridCellnav",
+      "module": "ui.grid.cellNav",
+      "data": {
+        "replace": true,
+        "priority": -150,
+        "require": "^uiGrid",
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridRenderContainer",
+      "module": "ui.grid.cellNav",
+      "data": {
+        "replace": true,
+        "priority": -99999,
+        "require": [
+          "^uiGrid",
+          "uiGridRenderContainer",
+          "?^uiGridCellnav"
+        ],
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridViewport",
+      "module": "ui.grid.cellNav",
+      "data": {
+        "replace": true,
+        "priority": -99999,
+        "require": [
+          "^uiGrid",
+          "^uiGridRenderContainer",
+          "?^uiGridCellnav"
+        ],
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridCell",
+      "module": "ui.grid.cellNav",
+      "data": {
+        "priority": -150,
+        "restrict": "A",
+        "require": "^uiGrid",
+        "scope": false,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridEdit",
+      "module": "ui.grid.edit",
+      "data": {
+        "replace": true,
+        "priority": 0,
+        "require": "^uiGrid",
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridViewport",
+      "module": "ui.grid.edit",
+      "data": {
+        "replace": true,
+        "priority": -99998,
+        "require": [
+          "^uiGrid",
+          "^uiGridRenderContainer"
+        ],
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridCell",
+      "module": "ui.grid.edit",
+      "data": {
+        "priority": -100,
+        "restrict": "A",
+        "scope": false,
+        "require": "?^uiGrid",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridEditor",
+      "module": "ui.grid.edit",
+      "data": {
+        "scope": true,
+        "require": [
+          "?^uiGrid",
+          "?^uiGridRenderContainer"
+        ],
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridEditDropdown",
+      "module": "ui.grid.edit",
+      "data": {
+        "scope": true,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridEditFileChooser",
+      "module": "ui.grid.edit",
+      "data": {
+        "scope": true,
+        "require": [
+          "?^uiGrid",
+          "?^uiGridRenderContainer"
+        ],
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridExpandable",
+      "module": "ui.grid.expandable",
+      "data": {
+        "replace": true,
+        "priority": 0,
+        "require": "^uiGrid",
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGrid",
+      "module": "ui.grid.expandable",
+      "data": {
+        "replace": true,
+        "priority": 599,
+        "require": "^uiGrid",
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridExpandableRow",
+      "module": "ui.grid.expandable",
+      "data": {
+        "replace": false,
+        "priority": 0,
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridRow",
+      "module": "ui.grid.expandable",
+      "data": {
+        "priority": -200,
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridViewport",
+      "module": "ui.grid.expandable",
+      "data": {
+        "priority": -200,
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridExporter",
+      "module": "ui.grid.exporter",
+      "data": {
+        "replace": true,
+        "priority": 0,
+        "require": "^uiGrid",
+        "scope": false,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridGrouping",
+      "module": "ui.grid.grouping",
+      "data": {
+        "replace": true,
+        "priority": 0,
+        "require": "^uiGrid",
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridGroupingRowHeaderButtons",
+      "module": "ui.grid.grouping",
+      "data": {
+        "replace": true,
+        "restrict": "E",
+        "template": "<div class=\"ui-grid-grouping-row-header-buttons\" ng-class=\"{'ui-grid-group-header': row.groupLevel > - 1}\" ng-click=\"groupButtonClick(row, $event)\"><i ng-class=\"{'ui-grid-icon-minus-squared': row.expandedState.state === 'expanded', 'ui-grid-icon-plus-squared': row.expandedState.state === 'collapsed'}\" ng-style=\"{'padding-left': grid.options.groupingIndent * row.groupLevel + 'px'}\"></i> &nbsp;</div>",
+        "scope": true,
+        "require": "^uiGrid",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridGroupingExpandAllButtons",
+      "module": "ui.grid.grouping",
+      "data": {
+        "replace": true,
+        "restrict": "E",
+        "template": "<div class=\"ui-grid-grouping-row-header-buttons\" ng-class=\"{'ui-grid-icon-minus-squared': grid.grouping.expandAll, 'ui-grid-icon-plus-squared': !grid.grouping.expandAll}\" ng-click=\"headerButtonClick($event)\"></div>",
+        "scope": false,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridViewport",
+      "module": "ui.grid.grouping",
+      "data": {
+        "priority": -200,
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridImporter",
+      "module": "ui.grid.importer",
+      "data": {
+        "replace": true,
+        "priority": 0,
+        "require": "^uiGrid",
+        "scope": false,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridImporterMenuItem",
+      "module": "ui.grid.importer",
+      "data": {
+        "replace": true,
+        "priority": 0,
+        "require": "^uiGrid",
+        "scope": false,
+        "templateUrl": "ui-grid/importerMenuItem",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridInfiniteScroll",
+      "module": "ui.grid.infiniteScroll",
+      "data": {
+        "priority": -200,
+        "scope": false,
+        "require": "^uiGrid",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridMoveColumns",
+      "module": "ui.grid.moveColumns",
+      "data": {
+        "replace": true,
+        "priority": 0,
+        "require": "^uiGrid",
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridHeaderCell",
+      "module": "ui.grid.moveColumns",
+      "data": {
+        "priority": -10,
+        "require": "^uiGrid",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridPagination",
+      "module": "ui.grid.pagination",
+      "data": {
+        "priority": -200,
+        "scope": false,
+        "require": "uiGrid",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridPager",
+      "module": "ui.grid.pagination",
+      "data": {
+        "priority": -200,
+        "scope": true,
+        "require": "^uiGrid",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridPinning",
+      "module": "ui.grid.pinning",
+      "data": {
+        "require": "uiGrid",
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridResizeColumns",
+      "module": "ui.grid.resizeColumns",
+      "data": {
+        "replace": true,
+        "priority": 0,
+        "require": "^uiGrid",
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridHeaderCell",
+      "module": "ui.grid.resizeColumns",
+      "data": {
+        "priority": -10,
+        "require": "^uiGrid",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridColumnResizer",
+      "module": "ui.grid.resizeColumns",
+      "data": {
+        "priority": 0,
+        "scope": {
+          "col": "=",
+          "position": "@",
+          "renderIndex": "="
+        },
+        "require": "?^uiGrid",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridRowEdit",
+      "module": "ui.grid.rowEdit",
+      "data": {
+        "replace": true,
+        "priority": 0,
+        "require": "^uiGrid",
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridViewport",
+      "module": "ui.grid.rowEdit",
+      "data": {
+        "priority": -200,
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridSaveState",
+      "module": "ui.grid.saveState",
+      "data": {
+        "replace": true,
+        "priority": 0,
+        "require": "^uiGrid",
+        "scope": false,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridSelection",
+      "module": "ui.grid.selection",
+      "data": {
+        "replace": true,
+        "priority": 0,
+        "require": "^uiGrid",
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridSelectionRowHeaderButtons",
+      "module": "ui.grid.selection",
+      "data": {
+        "replace": true,
+        "restrict": "E",
+        "template": "<div class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok\" ng-class=\"{'ui-grid-row-selected': row.isSelected}\" ng-click=\"selectButtonClick(row, $event)\">&nbsp;</div>",
+        "scope": true,
+        "require": "^uiGrid",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridSelectionSelectAllButtons",
+      "module": "ui.grid.selection",
+      "data": {
+        "replace": true,
+        "restrict": "E",
+        "template": "<div class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok\" ng-class=\"{'ui-grid-all-selected': grid.selection.selectAll}\" ng-click=\"headerButtonClick($event)\"></div>",
+        "scope": false,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridViewport",
+      "module": "ui.grid.selection",
+      "data": {
+        "priority": -200,
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridCell",
+      "module": "ui.grid.selection",
+      "data": {
+        "priority": -200,
+        "restrict": "A",
+        "require": "?^uiGrid",
+        "scope": false,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridGridFooter",
+      "module": "ui.grid.selection",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "priority": -1000,
+        "require": "^uiGrid",
+        "scope": true,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridTreeView",
+      "module": "ui.grid.treeView",
+      "data": {
+        "replace": true,
+        "priority": 0,
+        "require": "^uiGrid",
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridTreeViewRowHeaderButtons",
+      "module": "ui.grid.treeView",
+      "data": {
+        "replace": true,
+        "restrict": "E",
+        "template": "<div class=\"ui-grid-tree-view-row-header-buttons\" ng-class=\"{'ui-grid-tree-view-header': row.treeLevel > - 1}\" ng-click=\"treeViewButtonClick(row, $event)\"><i ng-class=\"{'ui-grid-icon-minus-squared': row.treeExpandedState.state === 'expanded', 'ui-grid-icon-plus-squared': row.treeExpandedState.state === 'collapsed'}\" ng-style=\"{'padding-left': grid.options.treeViewIndent * row.entity.$$treeLevel + 'px'}\"></i> &nbsp;</div>",
+        "scope": true,
+        "require": "^uiGrid",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridTreeViewExpandAllButtons",
+      "module": "ui.grid.treeView",
+      "data": {
+        "replace": true,
+        "restrict": "E",
+        "template": "<div class=\"ui-grid-tree-view-row-header-buttons\" ng-class=\"{'ui-grid-icon-minus-squared': grid.treeView.expandAll, 'ui-grid-icon-plus-squared': !grid.treeView.expandAll}\" ng-click=\"headerButtonClick($event)\"></div>",
+        "scope": false,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridViewport",
+      "module": "ui.grid.treeView",
+      "data": {
+        "priority": -200,
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "directiveTemplate",
+      "module": "toaster",
+      "data": {
+        "restrict": "A",
+        "scope": {
+          "directiveName": "@directiveName",
+          "directiveData": "@directiveData"
+        },
+        "replace": true,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "toasterContainer",
+      "module": "toaster",
+      "data": {
+        "replace": true,
+        "restrict": "EA",
+        "scope": true,
+        "link": true,
+        "templateUrl": "angularjs-toaster/toast.html",
+        "compile": false
+      }
+    },
+    {
+      "name": "nvFileSelect",
+      "module": "angularFileUpload",
+      "data": {
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "nvFileDrop",
+      "module": "angularFileUpload",
+      "data": {
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "nvFileOver",
+      "module": "angularFileUpload",
+      "data": {
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiCodemirror",
+      "module": "ui.codemirror",
+      "data": {
+        "restrict": "EA",
+        "require": "?ngModel",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uisTranscludeAppend",
+      "module": "ui.select",
+      "data": {
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiSelectChoices",
+      "module": "ui.select",
+      "data": {
+        "restrict": "EA",
+        "require": "^uiSelect",
+        "replace": true,
+        "transclude": true,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiSelect",
+      "module": "ui.select",
+      "data": {
+        "restrict": "EA",
+        "replace": true,
+        "transclude": true,
+        "require": [
+          "uiSelect",
+          "^ngModel"
+        ],
+        "scope": true,
+        "controllerAs": "$select",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiSelectMatch",
+      "module": "ui.select",
+      "data": {
+        "restrict": "EA",
+        "require": "^uiSelect",
+        "replace": true,
+        "transclude": true,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiSelectMultiple",
+      "module": "ui.select",
+      "data": {
+        "restrict": "EA",
+        "require": [
+          "^uiSelect",
+          "^ngModel"
+        ],
+        "controllerAs": "$selectMultiple",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiSelectNoChoice",
+      "module": "ui.select",
+      "data": {
+        "restrict": "EA",
+        "require": "^uiSelect",
+        "replace": true,
+        "transclude": true,
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiSelectSingle",
+      "module": "ui.select",
+      "data": {
+        "restrict": "EA",
+        "require": [
+          "^uiSelect",
+          "^ngModel"
+        ],
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiSelectSort",
+      "module": "ui.select",
+      "data": {
+        "require": [
+          "^^uiSelect",
+          "^ngModel"
+        ],
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "clipCopy",
+      "module": "ngClipboard",
+      "data": {
+        "scope": {
+          "clipCopy": "&",
+          "clipClick": "&",
+          "clipClickFallback": "&"
+        },
+        "restrict": "A",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiEvent",
+      "module": "ui.event",
+      "data": {
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiInclude",
+      "module": "ui.include",
+      "data": {
+        "restrict": "ECA",
+        "terminal": true,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiIndeterminate",
+      "module": "ui.indeterminate",
+      "data": {
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiJq",
+      "module": "ui.jq",
+      "data": {
+        "restrict": "A",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiKeydown",
+      "module": "ui.keypress",
+      "data": {
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiKeypress",
+      "module": "ui.keypress",
+      "data": {
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiKeyup",
+      "module": "ui.keypress",
+      "data": {
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiMask",
+      "module": "ui.mask",
+      "data": {
+        "priority": 100,
+        "require": "ngModel",
+        "restrict": "A",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiReset",
+      "module": "ui.reset",
+      "data": {
+        "require": "ngModel",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiRoute",
+      "module": "ui.route",
+      "data": {
+        "restrict": "AC",
+        "scope": true,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiScroll",
+      "module": "ui.scroll",
+      "data": {
+        "require": [
+          "?^uiScrollViewport"
+        ],
+        "transclude": "element",
+        "priority": 1000,
+        "terminal": true,
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiScrollfix",
+      "module": "ui.scrollfix",
+      "data": {
+        "require": "^?uiScrollfixTarget",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiShow",
+      "module": "ui.showhide",
+      "data": {
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiHide",
+      "module": "ui.showhide",
+      "data": {
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiToggle",
+      "module": "ui.showhide",
+      "data": {
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiValidate",
+      "module": "ui.validate",
+      "data": {
+        "restrict": "A",
+        "require": "ngModel",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "datetimepicker",
+      "module": "ae-datetimepicker",
+      "data": {
+        "restrict": "EA",
+        "require": "ngModel",
+        "scope": {
+          "options": "=?",
+          "onChange": "&?",
+          "onClick": "&?"
+        },
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "msdWheel",
+      "module": "monospaced.mousewheel",
+      "data": {
+        "restrict": "A, C",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfWizardElement",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_wizard/jf_wizard_element/jf.wizard.element.directive.js",
+        "restrict": "E",
+        "scope": {
+          "title": "@"
+        },
+        "templateUrl": "directives/jf_wizard/jf_wizard_element/jf.wizard.element.view.html",
+        "require": "^jfWizard",
+        "transclude": true,
+        "link": true,
+        "bindToController": true,
+        "controllerAs": "$ctrl",
+        "compile": false
+      }
+    },
+    {
+      "name": "jfWizard",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_wizard/jf.wizard.directive.js",
+        "restrict": "E",
+        "scope": {
+          "onTabSwitch": "&?",
+          "config": "<"
+        },
+        "templateUrl": "directives/jf_wizard/jf.wizard.view.html",
+        "controllerAs": "$ctrl",
+        "transclude": true,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfTabularDnd",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_tabular_dnd/jf_tabular_dnd.js",
+        "restrict": "E",
+        "scope": {
+          "availableItems": "=",
+          "selectedItems": "=",
+          "itemClassAttr": "@?",
+          "itemDraggableAttr": "@?",
+          "columns": "=",
+          "numberOfRows": "@?",
+          "availableItemsColumns": "=?",
+          "selectedItemsColumns": "=?",
+          "onChange": "&?",
+          "entityName": "@?",
+          "appScope": "=?",
+          "disableWholeRowSelection": "=?",
+          "disabled": "=ngDisabled"
+        },
+        "templateUrl": "directives/jf_tabular_dnd/jf_tabular_dnd.html",
+        "controllerAs": "jfTabularDnD",
+        "bindToController": true,
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfDragDrop",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_drag_drop/jf_drag_drop.js",
+        "restrict": "E",
+        "scope": {
+          "includeList": "=",
+          "excludeList": "=",
+          "includeDisplayField": "@",
+          "excludeDisplayField": "@",
+          "includeListId": "@",
+          "excludeListId": "@",
+          "objectsName": "@",
+          "headers": "=",
+          "onChange": "&",
+          "customTemplate": "=?",
+          "customTemplateScope": "=?",
+          "usePagination": "=?",
+          "commObject": "=",
+          "disabled": "=ngDisabled"
+        },
+        "templateUrl": "directives/jf_drag_drop/jf_drag_drop.html",
+        "controllerAs": "jfDragDrop",
+        "bindToController": true,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfDragDropPagination",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_drag_drop_pagination/jf_drag_drop_pagination.js",
+        "scope": {
+          "paginationApi": "="
+        },
+        "controllerAs": "jfDragDropPagination",
+        "bindToController": true,
+        "templateUrl": "directives/jf_drag_drop_pagination/jf_drag_drop_pagination.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfActions",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_actions/jf_actions.js",
+        "scope": {
+          "parentController": "=",
+          "label": "@",
+          "initMethod": "@",
+          "fixedActionsNames": "=",
+          "disableMouseOverEvents": "@?",
+          "showDropDownForOneItem": "="
+        },
+        "restrict": "EA",
+        "controllerAs": "jfActions",
+        "templateUrl": "directives/jf_actions/jf_actions.html",
+        "bindToController": true,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfTooltip",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_tooltip/jf_tooltip.js",
+        "restrict": "A",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfHelpTooltip",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_help_tooltip/jf_help_tooltip.js",
+        "scope": {
+          "placement": "@?",
+          "text": "@?",
+          "html": "=",
+          "maxWidth": "@"
+        },
+        "restrict": "E",
+        "templateUrl": "directives/jf_help_tooltip/jf_help_tooltip.html",
+        "transclude": true,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfListMaker",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_list_maker/jf_list_maker.js",
+        "restrict": "E",
+        "scope": {
+          "values": "=",
+          "label": "@",
+          "helpTooltip": "=",
+          "objectName": "@",
+          "ngDisabled": "=",
+          "noSort": "=?",
+          "minLength": "@",
+          "inputType": "@?",
+          "predefinedValues": "=?",
+          "placeholder": "@?",
+          "listId": "@",
+          "onAddValue": "&?",
+          "onAfterAddValue": "&?",
+          "onAfterDeleteValue": "&?",
+          "hideAddNewFields": "@",
+          "validationRegex": "@",
+          "validationRegexMessage": "@",
+          "caseInsensitive": "<?"
+        },
+        "templateUrl": "directives/jf_list_maker/jf_list_maker.html",
+        "controllerAs": "jfListMaker",
+        "bindToController": true,
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfCheckbox",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_checkbox/jf_checkbox.js",
+        "restrict": "E",
+        "transclude": true,
+        "scope": {
+          "text": "@?"
+        },
+        "templateUrl": "directives/jf_checkbox/jf_checkbox.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfSwitch",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_switch/jf_switch.js",
+        "restrict": "E",
+        "require": "ngModel",
+        "scope": {
+          "jfSwitchTitle": "@",
+          "options": "=",
+          "ngModel": "=",
+          "controller": "=?",
+          "disabled": "=ngDisabled",
+          "helpTooltip": "=",
+          "jfSwitchClass": "@"
+        },
+        "link": true,
+        "controllerAs": "jfSwitch",
+        "bindToController": true,
+        "templateUrl": "directives/jf_switch/jf_switch.html",
+        "compile": false
+      }
+    },
+    {
+      "name": "jfGrid",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_grid/jf_grid.js",
+        "scope": {
+          "gridOptions": "=",
+          "filterField": "@?",
+          "filterField2": "@?",
+          "filterOnChange": "@?",
+          "autoFocus": "@",
+          "objectName": "@"
+        },
+        "templateUrl": "directives/jf_grid/jf_grid.html",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfGridPagination",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_grid_pagination/jf_grid_pagination.js",
+        "scope": {
+          "gridApi": "="
+        },
+        "controllerAs": "jfGridPagination",
+        "bindToController": true,
+        "templateUrl": "directives/jf_grid_pagination/jf_grid_pagination.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfGridBatchActions",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_grid_batch_actions/jf_grid_batch_actions.js",
+        "scope": {
+          "actions": "=",
+          "gridApi": "=",
+          "gridOptions": "="
+        },
+        "templateUrl": "directives/jf_grid_batch_actions/jf_grid_batch_actions.html",
+        "controllerAs": "jfBatchActions",
+        "bindToController": true,
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfValidation",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_validation/jf_validation.js",
+        "scope": {
+          "field": "=",
+          "dictionary": "@",
+          "validationsParams": "=",
+          "dontPushDown": "="
+        },
+        "controllerAs": "jfValidation",
+        "bindToController": true,
+        "templateUrl": "directives/jf_validation/jf_validation.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfField",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_field/jf_field.js",
+        "restrict": "E",
+        "require": "^form",
+        "scope": {
+          "animated": "@",
+          "validations": "@",
+          "validationsParams": "=",
+          "autofocus": "=",
+          "invalidateOnSubmit": "@",
+          "alwaysShowErrors": "@",
+          "dontValidateDisabled": "@",
+          "delayedInit": "=",
+          "dontPushDownErrors": "="
+        },
+        "transclude": true,
+        "templateUrl": "directives/jf_field/jf_field.html",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfCodeMirror",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_codemirror/jf_codemirror.js",
+        "restrict": "E",
+        "scope": {
+          "mimeType": "@",
+          "mode": "@",
+          "model": "=",
+          "allowEdit": "=",
+          "height": "@?",
+          "apiAccess": "=",
+          "autofocus": "@",
+          "matchBrackets": "<"
+        },
+        "controllerAs": "jfCodeMirror",
+        "bindToController": true,
+        "template": "<textarea ui-codemirror=\"jfCodeMirror.editorOptions\" ng-model=\"jfCodeMirror.formattedModel\"></textarea>",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfGridFilter",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_grid_filter/jf_grid_filter.js",
+        "restrict": "E",
+        "scope": {
+          "disableButton": "=",
+          "filterField": "@",
+          "filterField2": "@",
+          "grid": "=filterGrid",
+          "filterOnChange": "@",
+          "autoFocus": "@"
+        },
+        "controllerAs": "jfGridFilter",
+        "templateUrl": "directives/jf_grid_filter/jf_grid_filter.html",
+        "bindToController": true,
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfTabs",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_tabs/jf_tabs.js",
+        "scope": {
+          "tabs": "=",
+          "dictionary": "=",
+          "onTabChange": "&",
+          "tabWidth": "@",
+          "containerMargin": "@"
+        },
+        "transclude": true,
+        "controllerAs": "jfTabs",
+        "templateUrl": "directives/jf_tabs/jf_tabs.html",
+        "bindToController": true,
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfTab",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_tabs/jf_tab.js",
+        "scope": {
+          "name": "@"
+        },
+        "require": "^jfTabs",
+        "templateUrl": "directives/jf_tabs/jf_tab.html",
+        "transclude": true,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfDrawer",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_drawers/jf_drawer.js",
+        "scope": {
+          "header": "@",
+          "description": "@",
+          "openFirst": "@?"
+        },
+        "require": "^jfDrawers",
+        "templateUrl": "directives/jf_drawers/jf_drawer.html",
+        "transclude": true,
+        "controllerAs": "jfDrawer",
+        "bindToController": true,
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfPanel",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_panel/jf_panel.js",
+        "scope": {
+          "jfPanelHeading": "@",
+          "jfPanelHelpTooltip": "@",
+          "jfPanelClasses": "@"
+        },
+        "templateUrl": "directives/jf_panel/jf_panel.html",
+        "transclude": true,
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfUiSelect",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_ui_select/jf_ui_select.js",
+        "controllerAs": "jfUiSelect",
+        "bindToController": true,
+        "scope": {
+          "jfSelectModel": "=",
+          "jfSelectOptions": "=",
+          "jfSelectDisabled": "=",
+          "jfSelectDisableMarquee": "=",
+          "jfSelectMultiple": "@?",
+          "jfSelectChange": "&?",
+          "jfSelectDisplayAttr": "@",
+          "jfSelectDisplayFunc": "&?",
+          "jfSelectFilterAttr": "@",
+          "jfSelectPlaceholder": "@",
+          "jfSelectLoadChunks": "@?",
+          "jfSelectLoadMoreLabel": "@?",
+          "jfSelectHelpTooltips": "&?"
+        },
+        "compile": true,
+        "templateUrl": "directives/jf_ui_select/jf_ui_select.html",
+        "link": false
+      }
+    },
+    {
+      "name": "jfRevealInput",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_reveal_input/jf_reveal_input.js",
+        "restrict": "A",
+        "template": "<i class=\"icon icon-view jf-reveal-input\"\n\t\t\t\t\t  jf-tooltip=\"{{jfRevealInput.tooltipText}}\"\n\t\t\t\t\t  ng-if=\"jfRevealInput.hasData()\"\n\t\t   \t\t\t  ng-click=\"jfRevealInput.updateInput()\"></i>",
+        "controllerAs": "jfRevealInput",
+        "bindToController": true,
+        "scope": {
+          "inputId": "@jfRevealInput",
+          "objectName": "@"
+        },
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfDisableNgAnimate",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_disable_ng_animate/jf_disable_ng_animate.js",
+        "restrict": "A",
+        "scope": false,
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfIncludeReplace",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_include_replace/jf_include_replace.js",
+        "require": "ngInclude",
+        "restrict": "A",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfEnterPress",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_enter_press/jf_enter_press.js",
+        "scope": {
+          "callback": "&jfEnterPress"
+        },
+        "controllerAs": "jfEnterPress",
+        "bindToController": true,
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfTooltipOnOverflow",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_tooltip_on_overflow/jf_tooltip_on_overflow.js",
+        "scope": {
+          "trustTooltipText": "<?"
+        },
+        "restrict": "A",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfClipCopy",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_clip_copy/jf_clip_copy.js",
+        "restrict": "E",
+        "scope": {
+          "textToCopy": "=",
+          "objectName": "@"
+        },
+        "controllerAs": "jfClipCopy",
+        "bindToController": true,
+        "templateUrl": "directives/jf_clip_copy/jf_clip_copy.html",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfSidebar",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_sidebar/jf_sidebar.js",
+        "scope": {
+          "driver": "=",
+          "footerTemplate": "@",
+          "openAdminSize": "@?",
+          "defaultSubMenuWidth": "@?",
+          "noSearchBox": "@?",
+          "defaultSubMenuId": "@"
+        },
+        "bindToController": true,
+        "controllerAs": "jfSidebar",
+        "templateUrl": "directives/jf_sidebar/jf_sidebar.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfMultiDropdown",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_multi_dropdown/jf_multi_dropdown.js",
+        "controllerAs": "jfMultiDropdown",
+        "bindToController": true,
+        "scope": {
+          "title": "@",
+          "label": "@",
+          "filterPlaceholder": "@",
+          "noItemsMessage": "@",
+          "items": "=",
+          "disabled": "=?",
+          "onChange": "&?",
+          "noSort": "=?",
+          "onOpenStateChange": "&?",
+          "dropdownOpened": "=",
+          "showSelected": "@",
+          "showLabelCounter": "@",
+          "noFilter": "=?",
+          "noSelectedFirst": "=?",
+          "singleSelection": "=?",
+          "textInputs": "<?",
+          "borderless": "<?"
+        },
+        "templateUrl": "directives/jf_multi_dropdown/jf_multi_dropdown.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfWidgetsLayout",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_widgets_layout/jf_widgets_layout.js",
+        "controllerAs": "jfWidgetsLayout",
+        "bindToController": true,
+        "scope": {
+          "widgets": "=",
+          "layout": "=",
+          "options": "=",
+          "parentCell": "=?",
+          "footerText": "="
+        },
+        "templateUrl": "directives/jf_widgets_layout/jf_widgets_layout.html",
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "jfMarquee",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_marquee/jf_marquee.js",
+        "restrict": "E",
+        "transclude": {
+          "innerHtml": "?innerHtml"
+        },
+        "scope": {
+          "disabled": "=?"
+        },
+        "controllerAs": "jfMarquee",
+        "bindToController": true,
+        "templateUrl": "directives/jf_marquee/jf_marquee.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfPasswordStrength",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_password_strength/jf_password_strength.js",
+        "restrict": "E",
+        "scope": {
+          "password": "=",
+          "rank": "="
+        },
+        "controllerAs": "jfPS",
+        "templateUrl": "directives/jf_password_strength/jf_password_strength.html",
+        "bindToController": true,
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfClearErrors",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_clear_errors/jf_clear_errors.js",
+        "restrict": "A",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfFakeReadonly",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_fake_read_only/jf_fake_readonly.js",
+        "restrict": "A",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfDatetimepicker",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_datetimepicker/jf_datetimepicker.js",
+        "restrict": "E",
+        "scope": {
+          "isDatepickerOpen": "=?",
+          "isRequired": "<",
+          "model": "=",
+          "options": "<?",
+          "attrId": "=",
+          "onChange": "&?",
+          "isEnabled": "="
+        },
+        "controllerAs": "jfDatetimepicker",
+        "bindToController": true,
+        "templateUrl": "directives/jf_datetimepicker/jf_datetimepicker.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfDynamicTemplate",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_dynamic_template/jf_dynamic_template.js",
+        "restrict": "A",
+        "replace": true,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfListSelection",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_list_selection/jf_list_selection.js",
+        "restrict": "E",
+        "scope": {
+          "items": "=",
+          "onSelect": "&",
+          "usePagination": "=?"
+        },
+        "controllerAs": "jfListSelection",
+        "bindToController": true,
+        "templateUrl": "directives/jf_list_selection/jf_list_selection.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfMarkupEditor",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_markup_editor/jf_markup_editor.js",
+        "restrict": "E",
+        "scope": {
+          "markup": "=?",
+          "previewRenderers": "=?",
+          "language": "=?",
+          "mode": "=?",
+          "onSave": "&?",
+          "onModeChange": "&?",
+          "editable": "=?",
+          "showControls": "=?",
+          "hideCancelButton": "<?",
+          "editorLabel": "@",
+          "preventAutoFocus": "=?"
+        },
+        "controllerAs": "jfMarkup",
+        "bindToController": true,
+        "templateUrl": "directives/jf_markup_editor/jf_markup_editor.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfJsTreeWrap",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_js_tree_wrap/jf_js_tree_wrap.js",
+        "restrict": "E",
+        "scope": {
+          "treeData": "=",
+          "treeHeader": "=",
+          "checkboxes": "=",
+          "getTextFunc": "&",
+          "getChildrenFunc": "&",
+          "getInitialStateFunc": "&?",
+          "onStateChange": "&?",
+          "onReady": "&?"
+        },
+        "controllerAs": "jfJsTreeWrap",
+        "templateUrl": "directives/jf_js_tree_wrap/jf_js_tree_wrap.html",
+        "bindToController": true,
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfAutoComplete",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_auto_complete/jf_auto_complete.js",
+        "restrict": "A",
+        "scope": {
+          "uiItems": "=",
+          "onSelect": "&"
+        },
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfRadioButton",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_radio_button/jf_radio_button.js",
+        "restrict": "E",
+        "transclude": {
+          "template": "?radioTemplate"
+        },
+        "scope": {
+          "text": "@?",
+          "helper": "@?"
+        },
+        "templateUrl": "directives/jf_radio_button/jf_radio_button.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfDragAndDropTxt",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_drag_and_drop_txt/jf_drag_and_drop_txt.js",
+        "restrict": "E",
+        "scope": {
+          "dndContent": "=",
+          "dndHeadingHtml": "=?",
+          "dndStyle": "=?",
+          "dndChange": "&?",
+          "dndRequired": "=?",
+          "dndOnError": "&?",
+          "dndCallToAction": "=?",
+          "dndAutoFocus": "=?"
+        },
+        "controllerAs": "jfDragAndDropTxt",
+        "templateUrl": "directives/jf_drag_and_drop_txt/jf_drag_and_drop_txt.html",
+        "bindToController": true,
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfContextMenu",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_context_menu/jf_context_menu.component.js",
+        "restrict": "E",
+        "scope": {},
+        "controllerAs": "contextMenu",
+        "bindToController": true,
+        "templateUrl": "directives/jf_context_menu/jf_context_menu.view.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfVscroll",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_vscroll/jf_vscroll.js",
+        "restrict": "E",
+        "scope": {
+          "itemVariableName": "@withEach",
+          "origArray": "&in",
+          "api": "="
+        },
+        "templateUrl": "directives/jf_vscroll/jf_vscroll.html",
+        "controllerAs": "jfVScroll",
+        "bindToController": true,
+        "transclude": true,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfVscrollElement",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_vscroll/jf_vscroll_element.js",
+        "restrict": "E",
+        "scope": {
+          "data": "=",
+          "template": "=",
+          "variable": "=",
+          "index": "=",
+          "vscroll": "="
+        },
+        "template": "<div class=\"compile-placeholder\"></div>",
+        "controllerAs": "jfVScrollElement",
+        "bindToController": true,
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfDataList",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_data_list/jf_data_list.js",
+        "restrict": "E",
+        "scope": {
+          "items": "="
+        },
+        "controllerAs": "jfDataList",
+        "bindToController": true,
+        "templateUrl": "directives/jf_data_list/jf_data_list.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfToggler",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_toggler/jf_toggler.js",
+        "restrict": "E",
+        "scope": {
+          "isToggledToLeft": "=",
+          "onToggle": "&?"
+        },
+        "controllerAs": "$ctrl",
+        "bindToController": true,
+        "templateUrl": "directives/jf_toggler/jf_toggler.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfSwitchToggler",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_switch_toggler/jf_switch_toggler.js",
+        "restrict": "E",
+        "scope": {
+          "selected": "=",
+          "options": "<"
+        },
+        "controllerAs": "$ctrl",
+        "bindToController": true,
+        "templateUrl": "directives/jf_switch_toggler/jf_switch_toggler.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfOnOffSwitch",
+      "module": "jfrog.ui.essentials.directives",
+      "data": {
+        "sourcePath": "directives/jf_on_off_switch/jf_on_off_switch.js",
+        "restrict": "E",
+        "scope": {
+          "selected": "=",
+          "options": "<"
+        },
+        "controllerAs": "$ctrl",
+        "bindToController": true,
+        "templateUrl": "directives/jf_on_off_switch/jf_on_off_switch.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfFileDrop",
+      "module": "jfrog.uploader",
+      "data": {
+        "sourcePath": "ui_components/jfrog_uploader/jf_file_drop.js",
+        "scope": {
+          "jfFileUploader": "=",
+          "jfFileDisabled": "=ngDisabled",
+          "addCallback": "&jfAddingFileCallback",
+          "showProgressBar": "=",
+          "multiple": "=?",
+          "onFileRemove": "&",
+          "checkboxesName": "=?"
+        },
+        "restrict": "E",
+        "templateUrl": "ui_components/jfrog_uploader/jf_file_drop.html",
+        "link": true,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfTableView",
+      "module": "jfrog_table_view",
+      "data": {
+        "sourcePath": "ui_components/jf_table_view/jf_table_view.js",
+        "controllerAs": "jfTableView",
+        "bindToController": true,
+        "scope": {
+          "options": "=",
+          "objectName": "@"
+        },
+        "templateUrl": "ui_components/jf_table_view/jf_table_view.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfTableRow",
+      "module": "jfrog_table_view",
+      "data": {
+        "sourcePath": "ui_components/jf_table_view/jf_table_row.js",
+        "controllerAs": "jfTableRow",
+        "bindToController": true,
+        "replace": true,
+        "scope": {
+          "data": "=",
+          "rowId": "=",
+          "tableView": "="
+        },
+        "templateUrl": "ui_components/jf_table_view/jf_table_row.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfTableViewBatchActions",
+      "module": "jfrog_table_view",
+      "data": {
+        "sourcePath": "ui_components/jf_table_view/jf_table_view_batch_actions.js",
+        "scope": {
+          "actions": "=",
+          "tableOptions": "="
+        },
+        "templateUrl": "ui_components/jf_table_view/jf_table_view_batch_actions.html",
+        "controllerAs": "jfTableViewBatchActions",
+        "bindToController": true,
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfTableCompiledCell",
+      "module": "jfrog_table_view",
+      "data": {
+        "sourcePath": "ui_components/jf_table_view/jf_table_compiled_cell.js",
+        "controllerAs": "compiledCell",
+        "bindToController": true,
+        "scope": {
+          "field": "=",
+          "rowId": "=",
+          "tableRow": "="
+        },
+        "template": "<div class=\"compile-this\"></div>",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfTableTop",
+      "module": "jfrog_table_view",
+      "data": {
+        "sourcePath": "ui_components/jf_table_view/jf_table_top.js",
+        "controllerAs": "jfTableTop",
+        "bindToController": true,
+        "scope": {
+          "tableView": "="
+        },
+        "templateUrl": "ui_components/jf_table_view/jf_table_top.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfTree",
+      "module": "jf_tree",
+      "data": {
+        "sourcePath": "ui_components/jf_tree/jf_tree.js",
+        "controllerAs": "jfTree",
+        "bindToController": true,
+        "scope": {
+          "api": "=",
+          "viewPaneName": "@?"
+        },
+        "templateUrl": "ui_components/jf_tree/jf_tree.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfTreeItem",
+      "module": "jf_tree",
+      "data": {
+        "sourcePath": "ui_components/jf_tree/jf_tree_item.js",
+        "controllerAs": "jfTreeItem",
+        "bindToController": true,
+        "replace": true,
+        "scope": {
+          "data": "=",
+          "itemId": "=",
+          "tree": "="
+        },
+        "templateUrl": "ui_components/jf_tree/jf_tree_item.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfTreeCompiledCell",
+      "module": "jf_tree",
+      "data": {
+        "sourcePath": "ui_components/jf_tree/jf_tree_compiled_cell.js",
+        "controllerAs": "compiledCell",
+        "bindToController": true,
+        "scope": {
+          "itemId": "=",
+          "treeItem": "="
+        },
+        "template": "<div class=\"compile-this\"></div>",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "jfTreeIndentation",
+      "module": "jf_tree",
+      "data": {
+        "sourcePath": "ui_components/jf_tree/jf_tree_indentation.js",
+        "controllerAs": "jfTreeIndentation",
+        "bindToController": true,
+        "scope": {
+          "indentation": "=",
+          "height": "=",
+          "visible": "=",
+          "linesBackgrounds": "="
+        },
+        "templateUrl": "ui_components/jf_tree/jf_tree_indentation.html",
+        "link": false,
+        "compile": false
+      }
+    },
+    {
+      "name": "uiGridDraggableRow",
+      "module": "ui.grid.draggable-rows",
+      "data": {
+        "restrict": "ACE",
+        "scope": {
+          "grid": "="
+        },
+        "compile": true,
+        "link": false
+      }
+    },
+    {
+      "name": "uiGridDraggableRows",
+      "module": "ui.grid.draggable-rows",
+      "data": {
+        "restrict": "A",
+        "replace": true,
+        "priority": 0,
+        "require": "uiGrid",
+        "scope": false,
+        "compile": true,
+        "link": false
+      }
+    }
+  ],
+  "components": [
+    {
+      "name": "jfDivider",
+      "module": "jf.divider",
+      "data": {
+        "template": "<div class=\"jf-divider-container\">\n\t<div class=\"jf-divider-header\">{{$ctrl.text}}</div>\n\t<div class=\"jf-divider-line\"></div>\n</div>\n",
+        "bindings": {
+          "text": "@"
+        },
+        "sourceFile": "ui_components/jf_divider/jf.divider.component.js"
+      }
+    },
+    {
+      "name": "jfSummaryRow",
+      "module": "summary.row",
+      "data": {
+        "templateUrl": "ui_components/jf_summary_row/summary.row.template.html",
+        "bindings": {
+          "columns": "<",
+          "parentScope": "<"
+        },
+        "sourceFile": "ui_components/jf_summary_row/summary.row.component.js"
+      }
+    },
+    {
+      "name": "jfSummaryRowItem",
+      "module": "summary.row",
+      "data": {
+        "template": "<div></div>",
+        "bindings": {
+          "colTemplate": "<",
+          "colScope": "<",
+          "noWrap": "<"
+        },
+        "sourceFile": "ui_components/jf_summary_row/summary.row.item.component.js"
+      }
+    }
+  ],
+  "providers": [
+    {
+      "name": "JFrogUILibConfig",
+      "module": "jfrog.ui.essentials.services",
+      "data": {
+        "sourcePath": "services/jfrog_ui_lib_config.js"
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "JFrogEventBus",
+      "module": "jfrog.ui.essentials.services",
+      "data": {
+        "sourcePath": "services/jfrog_eventBus.js"
+      }
+    },
+    {
+      "name": "JFrogNotifications",
+      "module": "jfrog.ui.essentials.services",
+      "data": {
+        "sourcePath": "services/jfrog_notifications.js"
+      }
+    },
+    {
+      "name": "JFrogUIUtils",
+      "module": "jfrog.ui.essentials.services",
+      "data": {
+        "sourcePath": "services/jfrog_ui_utils.js"
+      }
+    },
+    {
+      "name": "AdvancedStringMatch",
+      "module": "jfrog.ui.essentials.services",
+      "data": {
+        "sourcePath": "services/advanced_string_match.js"
+      }
+    },
+    {
+      "name": "ContextMenuService",
+      "module": "jfrog.ui.essentials.services",
+      "data": {
+        "sourcePath": "services/context_menu_service.js"
+      }
+    },
+    {
+      "name": "JfFullTextService",
+      "module": "jfrog.ui.essentials.services",
+      "data": {
+        "sourcePath": "services/full.text.service.js"
+      }
+    },
+    {
+      "name": "JFrogSubRouter",
+      "module": "jfrog.ui.essentials.services",
+      "data": {
+        "sourcePath": "services/jfrog_sub_router.js"
+      }
+    },
+    {
+      "name": "JFrogGridFactory",
+      "module": "jfrog_grid",
+      "data": {
+        "sourcePath": "ui_components/jfrog_grid/jfrog_grid.js"
+      }
+    },
+    {
+      "name": "JFrogModal",
+      "module": "jfrog_modal",
+      "data": {
+        "sourcePath": "ui_components/jfrog_modal/jfrog_modal.js"
+      }
+    },
+    {
+      "name": "JFrogUploaderFactory",
+      "module": "jfrog.uploader",
+      "data": {
+        "sourcePath": "ui_components/jfrog_uploader/jfrog_uploader.js"
+      }
+    }
+  ],
+  "factories": [
+    {
+      "name": "JFrogDownload",
+      "module": "jfrog.ui.essentials.services",
+      "data": {
+        "sourcePath": "services/jfrog_download.js"
+      }
+    },
+    {
+      "name": "JFrogIFrameDownload",
+      "module": "jfrog.ui.essentials.services",
+      "data": {
+        "sourcePath": "services/jfrog_iframe_download.js"
+      }
+    },
+    {
+      "name": "WebWorkersPool",
+      "module": "jfrog.ui.essentials.services",
+      "data": {
+        "sourcePath": "services/WebWorkersPool.js"
+      }
+    },
+    {
+      "name": "recursiveDirective",
+      "module": "jfrog.ui.essentials.services",
+      "data": {
+        "sourcePath": "services/recursive_directive.js"
+      }
+    },
+    {
+      "name": "JFrogUIWebWorker",
+      "module": "jfrog.ui.essentials.services",
+      "data": {
+        "sourcePath": "services/jfrog_ui_webworker.js"
+      }
+    },
+    {
+      "name": "JFrogTableViewOptions",
+      "module": "jfrog_table_view",
+      "data": {
+        "sourcePath": "ui_components/jf_table_view/jfrog_table_view_options.js"
+      }
+    },
+    {
+      "name": "JFTreeApi",
+      "module": "jf_tree",
+      "data": {
+        "sourcePath": "ui_components/jf_tree/jf_tree_api.js"
+      }
+    }
+  ],
+  "filters": [
+    {
+      "name": "linky",
+      "module": "ngSanitize",
+      "data": {}
+    },
+    {
+      "name": "isState",
+      "module": "ui.router.state",
+      "data": {}
+    },
+    {
+      "name": "includedByState",
+      "module": "ui.router.state",
+      "data": {}
+    },
+    {
+      "name": "typeaheadHighlight",
+      "module": "ui.bootstrap.typeahead",
+      "data": {}
+    },
+    {
+      "name": "t",
+      "module": "ui.grid.i18n",
+      "data": {}
+    },
+    {
+      "name": "uiTranslate",
+      "module": "ui.grid.i18n",
+      "data": {}
+    },
+    {
+      "name": "px",
+      "module": "ui.grid",
+      "data": {}
+    },
+    {
+      "name": "highlight",
+      "module": "ui.select",
+      "data": {}
+    },
+    {
+      "name": "format",
+      "module": "ui.format",
+      "data": {}
+    },
+    {
+      "name": "highlight",
+      "module": "ui.highlight",
+      "data": {}
+    },
+    {
+      "name": "inflector",
+      "module": "ui.inflector",
+      "data": {}
+    },
+    {
+      "name": "unique",
+      "module": "ui.unique",
+      "data": {}
+    },
+    {
+      "name": "filesize",
+      "module": "jfrog.ui.essentials.filters",
+      "data": {
+        "sourcePath": "filters/filesize.js"
+      }
+    },
+    {
+      "name": "formatedNumber",
+      "module": "jfrog.ui.essentials.filters",
+      "data": {
+        "sourcePath": "filters/formatedNumber.js"
+      }
+    },
+    {
+      "name": "splitWords",
+      "module": "jfrog.ui.essentials.filters",
+      "data": {
+        "sourcePath": "filters/split_words.js"
+      }
+    }
+  ],
+  "states": [],
+  "values": [
+    {
+      "name": "$stateParams",
+      "module": "ui.router.state",
+      "data": {}
+    },
+    {
+      "name": "$bindHtmlUnsafeSuppressDeprecated",
+      "module": "ui.bootstrap.bindHtml",
+      "data": false
+    },
+    {
+      "name": "tooltipHtmlUnsafeSuppressDeprecated",
+      "module": "ui.bootstrap.tooltip",
+      "data": false
+    },
+    {
+      "name": "$transitionSuppressDeprecated",
+      "module": "ui.bootstrap.transition",
+      "data": false
+    },
+    {
+      "name": "fileUploaderOptions",
+      "module": "angularFileUpload",
+      "data": {
+        "url": "/",
+        "alias": "file",
+        "headers": {},
+        "queue": [],
+        "progress": 0,
+        "autoUpload": false,
+        "removeAfterUpload": false,
+        "method": "POST",
+        "filters": [],
+        "formData": [],
+        "queueLimit": 1.7976931348623157e+308,
+        "withCredentials": false
+      }
+    },
+    {
+      "name": "uiJqConfig",
+      "module": "ui.jq",
+      "data": {}
+    },
+    {
+      "name": "uiMaskConfig",
+      "module": "ui.mask",
+      "data": {
+        "maskDefinitions": {
+          "9": {},
+          "A": {},
+          "*": {}
+        },
+        "clearOnBlur": true
+      }
+    },
+    {
+      "name": "uiResetConfig",
+      "module": "ui.reset",
+      "data": null
+    }
+  ],
+  "constants": [
+    {
+      "name": "accordionConfig",
+      "module": "ui.bootstrap.accordion",
+      "data": {
+        "closeOthers": true
+      }
+    },
+    {
+      "name": "buttonConfig",
+      "module": "ui.bootstrap.buttons",
+      "data": {
+        "activeClass": "active",
+        "toggleEvent": "click"
+      }
+    },
+    {
+      "name": "datepickerConfig",
+      "module": "ui.bootstrap.datepicker",
+      "data": {
+        "formatDay": "dd",
+        "formatMonth": "MMMM",
+        "formatYear": "yyyy",
+        "formatDayHeader": "EEE",
+        "formatDayTitle": "MMMM yyyy",
+        "formatMonthTitle": "yyyy",
+        "datepickerMode": "day",
+        "minMode": "day",
+        "maxMode": "year",
+        "showWeeks": true,
+        "startingDay": 0,
+        "yearRange": 20,
+        "minDate": null,
+        "maxDate": null,
+        "shortcutPropagation": false
+      }
+    },
+    {
+      "name": "datepickerPopupConfig",
+      "module": "ui.bootstrap.datepicker",
+      "data": {
+        "datepickerPopup": "yyyy-MM-dd",
+        "html5Types": {
+          "date": "yyyy-MM-dd",
+          "datetime-local": "yyyy-MM-ddTHH:mm:ss.sss",
+          "month": "yyyy-MM"
+        },
+        "currentText": "Today",
+        "clearText": "Clear",
+        "closeText": "Done",
+        "closeOnDateSelection": true,
+        "appendToBody": false,
+        "showButtonBar": true
+      }
+    },
+    {
+      "name": "dropdownConfig",
+      "module": "ui.bootstrap.dropdown",
+      "data": {
+        "openClass": "open"
+      }
+    },
+    {
+      "name": "paginationConfig",
+      "module": "ui.bootstrap.pagination",
+      "data": {
+        "itemsPerPage": 10,
+        "boundaryLinks": false,
+        "directionLinks": true,
+        "firstText": "First",
+        "previousText": "Previous",
+        "nextText": "Next",
+        "lastText": "Last",
+        "rotate": true
+      }
+    },
+    {
+      "name": "pagerConfig",
+      "module": "ui.bootstrap.pagination",
+      "data": {
+        "itemsPerPage": 10,
+        "previousText": "« Previous",
+        "nextText": "Next »",
+        "align": true
+      }
+    },
+    {
+      "name": "progressConfig",
+      "module": "ui.bootstrap.progressbar",
+      "data": {
+        "animate": true,
+        "max": 100
+      }
+    },
+    {
+      "name": "ratingConfig",
+      "module": "ui.bootstrap.rating",
+      "data": {
+        "max": 5,
+        "stateOn": null,
+        "stateOff": null
+      }
+    },
+    {
+      "name": "timepickerConfig",
+      "module": "ui.bootstrap.timepicker",
+      "data": {
+        "hourStep": 1,
+        "minuteStep": 1,
+        "showMeridian": true,
+        "meridians": null,
+        "readonlyInput": false,
+        "mousewheel": true,
+        "arrowkeys": true,
+        "showSpinners": true
+      }
+    },
+    {
+      "name": "i18nConstants",
+      "module": "ui.grid.i18n",
+      "data": {
+        "MISSING": "[MISSING]",
+        "UPDATE_EVENT": "$uiI18n",
+        "LOCALE_DIRECTIVE_ALIAS": "uiI18n",
+        "DEFAULT_LANG": "en"
+      }
+    },
+    {
+      "name": "uiGridConstants",
+      "module": "ui.grid",
+      "data": {
+        "LOG_DEBUG_MESSAGES": true,
+        "LOG_WARN_MESSAGES": true,
+        "LOG_ERROR_MESSAGES": true,
+        "CUSTOM_FILTERS": {},
+        "COL_FIELD": {},
+        "MODEL_COL_FIELD": {},
+        "TOOLTIP": {},
+        "DISPLAY_CELL_TEMPLATE": {},
+        "TEMPLATE_REGEXP": {},
+        "FUNC_REGEXP": {},
+        "DOT_REGEXP": {},
+        "APOS_REGEXP": {},
+        "BRACKET_REGEXP": {},
+        "COL_CLASS_PREFIX": "ui-grid-col",
+        "events": {
+          "GRID_SCROLL": "uiGridScroll",
+          "COLUMN_MENU_SHOWN": "uiGridColMenuShown",
+          "ITEM_DRAGGING": "uiGridItemDragStart",
+          "COLUMN_HEADER_CLICK": "uiGridColumnHeaderClick"
+        },
+        "keymap": {
+          "TAB": 9,
+          "STRG": 17,
+          "CTRL": 17,
+          "CTRLRIGHT": 18,
+          "CTRLR": 18,
+          "SHIFT": 16,
+          "RETURN": 13,
+          "ENTER": 13,
+          "BACKSPACE": 8,
+          "BCKSP": 8,
+          "ALT": 18,
+          "ALTR": 17,
+          "ALTRIGHT": 17,
+          "SPACE": 32,
+          "WIN": 91,
+          "MAC": 91,
+          "FN": null,
+          "PG_UP": 33,
+          "PG_DOWN": 34,
+          "UP": 38,
+          "DOWN": 40,
+          "LEFT": 37,
+          "RIGHT": 39,
+          "ESC": 27,
+          "DEL": 46,
+          "F1": 112,
+          "F2": 113,
+          "F3": 114,
+          "F4": 115,
+          "F5": 116,
+          "F6": 117,
+          "F7": 118,
+          "F8": 119,
+          "F9": 120,
+          "F10": 121,
+          "F11": 122,
+          "F12": 123
+        },
+        "ASC": "asc",
+        "DESC": "desc",
+        "filter": {
+          "STARTS_WITH": 2,
+          "ENDS_WITH": 4,
+          "EXACT": 8,
+          "CONTAINS": 16,
+          "GREATER_THAN": 32,
+          "GREATER_THAN_OR_EQUAL": 64,
+          "LESS_THAN": 128,
+          "LESS_THAN_OR_EQUAL": 256,
+          "NOT_EQUAL": 512,
+          "SELECT": "select",
+          "INPUT": "input"
+        },
+        "aggregationTypes": {
+          "sum": 2,
+          "count": 4,
+          "avg": 8,
+          "min": 16,
+          "max": 32
+        },
+        "CURRENCY_SYMBOLS": [
+          "ƒ",
+          "$",
+          "£",
+          "$",
+          "¤",
+          "¥",
+          "៛",
+          "₩",
+          "₱",
+          "฿",
+          "₫"
+        ],
+        "scrollDirection": {
+          "UP": "up",
+          "DOWN": "down",
+          "LEFT": "left",
+          "RIGHT": "right",
+          "NONE": "none"
+        },
+        "dataChange": {
+          "ALL": "all",
+          "EDIT": "edit",
+          "ROW": "row",
+          "COLUMN": "column",
+          "OPTIONS": "options"
+        },
+        "scrollbars": {
+          "NEVER": 0,
+          "ALWAYS": 1
+        }
+      }
+    },
+    {
+      "name": "uiGridCellNavConstants",
+      "module": "ui.grid.cellNav",
+      "data": {
+        "FEATURE_NAME": "gridCellNav",
+        "CELL_NAV_EVENT": "cellNav",
+        "direction": {
+          "LEFT": 0,
+          "RIGHT": 1,
+          "UP": 2,
+          "DOWN": 3,
+          "PG_UP": 4,
+          "PG_DOWN": 5
+        },
+        "EVENT_TYPE": {
+          "KEYDOWN": 0,
+          "CLICK": 1,
+          "CLEAR": 2
+        }
+      }
+    },
+    {
+      "name": "uiGridEditConstants",
+      "module": "ui.grid.edit",
+      "data": {
+        "EDITABLE_CELL_TEMPLATE": {},
+        "EDITABLE_CELL_DIRECTIVE": {},
+        "events": {
+          "BEGIN_CELL_EDIT": "uiGridEventBeginCellEdit",
+          "END_CELL_EDIT": "uiGridEventEndCellEdit",
+          "CANCEL_CELL_EDIT": "uiGridEventCancelCellEdit"
+        }
+      }
+    },
+    {
+      "name": "uiGridExporterConstants",
+      "module": "ui.grid.exporter",
+      "data": {
+        "featureName": "exporter",
+        "ALL": "all",
+        "VISIBLE": "visible",
+        "SELECTED": "selected",
+        "CSV_CONTENT": "CSV_CONTENT",
+        "BUTTON_LABEL": "BUTTON_LABEL",
+        "FILE_NAME": "FILE_NAME"
+      }
+    },
+    {
+      "name": "uiGridGroupingConstants",
+      "module": "ui.grid.grouping",
+      "data": {
+        "featureName": "grouping",
+        "groupingRowHeaderColName": "groupingRowHeaderCol",
+        "EXPANDED": "expanded",
+        "COLLAPSED": "collapsed",
+        "aggregation": {
+          "COUNT": "count",
+          "SUM": "sum",
+          "MAX": "max",
+          "MIN": "min",
+          "AVG": "avg",
+          "FIELD": "##@@aggregation_running_count@@##"
+        }
+      }
+    },
+    {
+      "name": "uiGridImporterConstants",
+      "module": "ui.grid.importer",
+      "data": {
+        "featureName": "importer"
+      }
+    },
+    {
+      "name": "uiGridPinningConstants",
+      "module": "ui.grid.pinning",
+      "data": {
+        "container": {
+          "LEFT": "left",
+          "RIGHT": "right",
+          "NONE": ""
+        }
+      }
+    },
+    {
+      "name": "uiGridRowEditConstants",
+      "module": "ui.grid.rowEdit",
+      "data": {}
+    },
+    {
+      "name": "uiGridSaveStateConstants",
+      "module": "ui.grid.saveState",
+      "data": {
+        "featureName": "saveState"
+      }
+    },
+    {
+      "name": "uiGridSelectionConstants",
+      "module": "ui.grid.selection",
+      "data": {
+        "featureName": "selection",
+        "selectionRowHeaderColName": "selectionRowHeaderCol"
+      }
+    },
+    {
+      "name": "uiGridTreeViewConstants",
+      "module": "ui.grid.treeView",
+      "data": {
+        "featureName": "treeView",
+        "treeViewRowHeaderColName": "treeViewRowHeaderCol",
+        "EXPANDED": "expanded",
+        "COLLAPSED": "collapsed"
+      }
+    },
+    {
+      "name": "toasterConfig",
+      "module": "toaster",
+      "data": {
+        "limit": 0,
+        "tap-to-dismiss": true,
+        "close-button": false,
+        "close-html": "<button class=\"toast-close-button\" type=\"button\">&times;</button>",
+        "newest-on-top": true,
+        "time-out": 5000,
+        "icon-classes": {
+          "error": "toast-error",
+          "info": "toast-info",
+          "wait": "toast-wait",
+          "success": "toast-success",
+          "warning": "toast-warning"
+        },
+        "body-output-type": "",
+        "body-template": "toasterBodyTmpl.html",
+        "icon-class": "toast-info",
+        "position-class": "toast-top-right",
+        "title-class": "toast-title",
+        "message-class": "toast-message",
+        "prevent-duplicates": false,
+        "mouseover-timer-stop": true
+      }
+    },
+    {
+      "name": "uiCodemirrorConfig",
+      "module": "ui.codemirror",
+      "data": {}
+    },
+    {
+      "name": "uiSelectConfig",
+      "module": "ui.select",
+      "data": {
+        "theme": "bootstrap",
+        "searchEnabled": true,
+        "sortable": false,
+        "placeholder": "",
+        "refreshDelay": 1000,
+        "closeOnSelect": true,
+        "skipFocusser": false,
+        "dropdownPosition": "auto",
+        "removeSelected": true,
+        "appendToBody": false
+      }
+    },
+    {
+      "name": "uiGridDraggableRowsConstants",
+      "module": "ui.grid.draggable-rows",
+      "data": {
+        "featureName": "draggableRows",
+        "ROW_OVER_CLASS": "ui-grid-draggable-row-over",
+        "ROW_OVER_ABOVE_CLASS": "ui-grid-draggable-row-over--above",
+        "ROW_OVER_BELOW_CLASS": "ui-grid-draggable-row-over--below",
+        "POSITION_ABOVE": "above",
+        "POSITION_BELOW": "below",
+        "publicEvents": {
+          "draggableRows": {}
+        }
+      }
+    },
+    {
+      "name": "EVENTS",
+      "module": "uiLibClientTest",
+      "data": {
+        "MESSAGE_TO_NAVBAR": "navbar:msg",
+        "CLEAR_NAVBAR_MESSAGE": "navbar:clearMessage"
+      }
+    }
+  ]
+}
