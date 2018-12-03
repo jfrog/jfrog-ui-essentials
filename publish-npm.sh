@@ -49,7 +49,7 @@ gulp build
 
 # Auto committing & pushing build files
 echo -e "${YELLOW}Committing and pushing build files:${NC}"
-git add . -A
+git add ./dist -A
 commit_message="Version $1 - Pre-tag"
 echo -e "${GREEN}$commit_message${NC}"
 
