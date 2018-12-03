@@ -132,14 +132,14 @@ export class AdvancedStringMatch {
 			let highlighted = '';
 			for (let i in segments) {
 				if (text.substr(segments[i].start, segments[i].length)) {
-					highlighted += text.substr(last,segments[i].start-last);
+                    highlighted += this.$sanitize(text.substr(last,segments[i].start-last));
 					highlighted += `<${hlElemType} class="${hlClass}">`;
 					highlighted += this.$sanitize(text.substr(segments[i].start, segments[i].length));
 					highlighted += `</${hlElemType}>`;
 					last = segments[i].start + segments[i].length;
 				}
 			}
-			highlighted += text.substr(last,text.length-last);
+			highlighted += this.$sanitize(text.substr(last,text.length-last));
 
 			return highlighted;
 		}
