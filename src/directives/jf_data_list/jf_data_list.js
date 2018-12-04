@@ -78,6 +78,10 @@ class jfDataListController {
 	isArray(o) {
 		return Array.isArray(o);
 	}
+
+	getItemValue(value) {
+		return value || '&nbsp';
+	}
 }
 
 

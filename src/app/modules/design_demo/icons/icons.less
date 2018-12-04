@@ -1,0 +1,90 @@
+.icons-wrapper {
+  ul {
+    margin: 0;
+    padding: 20px 0 0;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    &:after {
+      content: "";
+      flex: auto;
+    }
+  }
+
+  li {
+    width: 20%;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 12px;
+    & > div {
+      margin: 10px;
+      padding: 20px 10px 0;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: all .2s ease-in-out;
+
+      input {
+        text-align: center;
+        border: 0;
+        background-color: transparent;
+      }
+      
+      & > i {margin-bottom: 10px;}
+      & > i:before {
+        font-size: 40px;
+        color: #373737;
+      }
+    }
+
+
+    .bottom {
+      margin-top: 10px;
+      text-align-last: left;
+      padding: 4px 10px 10px;
+      visibility: hidden;
+
+      span {
+        cursor: pointer;
+        opacity: 1;
+        &:hover {
+          opacity: .8;
+        }
+      }
+
+      .code {
+        float: right;
+        i {
+          display: inline-block;
+          background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNTIyLjQ2OHB4IiBoZWlnaHQ9IjUyMi40NjlweCIgdmlld0JveD0iMCAwIDUyMi40NjggNTIyLjQ2OSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTIyLjQ2OCA1MjIuNDY5OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PGc+PGc+PHBhdGggZD0iTTMyNS43NjIsNzAuNTEzbC0xNy43MDYtNC44NTRjLTIuMjc5LTAuNzYtNC41MjQtMC41MjEtNi43MDcsMC43MTVjLTIuMTksMS4yMzctMy42NjksMy4wOTQtNC40MjksNS41NjhMMTkwLjQyNiw0NDAuNTNjLTAuNzYsMi40NzUtMC41MjIsNC44MDksMC43MTUsNi45OTVjMS4yMzcsMi4xOSwzLjA5LDMuNjY1LDUuNTY4LDQuNDI1bDE3LjcwMSw0Ljg1NmMyLjI4NCwwLjc2Niw0LjUyMSwwLjUyNiw2LjcxLTAuNzEyYzIuMTktMS4yNDMsMy42NjYtMy4wOTQsNC40MjUtNS41NjRMMzMyLjA0Miw4MS45MzZjMC43NTktMi40NzQsMC41MjMtNC44MDgtMC43MTYtNi45OTlDMzMwLjA4OCw3Mi43NDcsMzI4LjIzNyw3MS4yNzIsMzI1Ljc2Miw3MC41MTN6Ii8+PHBhdGggZD0iTTE2Ni4xNjcsMTQyLjQ2NWMwLTIuNDc0LTAuOTUzLTQuNjY1LTIuODU2LTYuNTY3bC0xNC4yNzctMTQuMjc2Yy0xLjkwMy0xLjkwMy00LjA5My0yLjg1Ny02LjU2Ny0yLjg1N3MtNC42NjUsMC45NTUtNi41NjcsMi44NTdMMi44NTYsMjU0LjY2NkMwLjk1LDI1Ni41NjksMCwyNTguNzU5LDAsMjYxLjIzM2MwLDIuNDc0LDAuOTUzLDQuNjY0LDIuODU2LDYuNTY2bDEzMy4wNDMsMTMzLjA0NGMxLjkwMiwxLjkwNiw0LjA4OSwyLjg1NCw2LjU2NywyLjg1NHM0LjY2NS0wLjk1MSw2LjU2Ny0yLjg1NGwxNC4yNzctMTQuMjY4YzEuOTAzLTEuOTAyLDIuODU2LTQuMDkzLDIuODU2LTYuNTdjMC0yLjQ3MS0wLjk1My00LjY2MS0yLjg1Ni02LjU2M0w1MS4xMDcsMjYxLjIzM2wxMTIuMjA0LTExMi4yMDFDMTY1LjIxNywxNDcuMTMsMTY2LjE2NywxNDQuOTM5LDE2Ni4xNjcsMTQyLjQ2NXoiLz48cGF0aCBkPSJNNTE5LjYxNCwyNTQuNjYzTDM4Ni41NjcsMTIxLjYxOWMtMS45MDItMS45MDItNC4wOTMtMi44NTctNi41NjMtMi44NTdjLTIuNDc4LDAtNC42NjEsMC45NTUtNi41NywyLjg1N2wtMTQuMjcxLDE0LjI3NWMtMS45MDIsMS45MDMtMi44NTEsNC4wOS0yLjg1MSw2LjU2N3MwLjk0OCw0LjY2NSwyLjg1MSw2LjU2N2wxMTIuMjA2LDExMi4yMDRMMzU5LjE2MywzNzMuNDQyYy0xLjkwMiwxLjkwMi0yLjg1MSw0LjA5My0yLjg1MSw2LjU2M2MwLDIuNDc4LDAuOTQ4LDQuNjY4LDIuODUxLDYuNTdsMTQuMjcxLDE0LjI2OGMxLjkwOSwxLjkwNiw0LjA5MywyLjg1NCw2LjU3LDIuODU0YzIuNDcxLDAsNC42NjEtMC45NTEsNi41NjMtMi44NTRMNTE5LjYxNCwyNjcuOGMxLjkwMy0xLjkwMiwyLjg1NC00LjA5NiwyLjg1NC02LjU3QzUyMi40NjgsMjU4Ljc1NSw1MjEuNTE3LDI1Ni41NjUsNTE5LjYxNCwyNTQuNjYzeiIvPjwvZz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PC9zdmc+);
+          width: 16px;
+          right: 16px;
+          background-size: cover;
+          filter: brightness(0) invert(1);
+        }
+      }
+    }
+
+    &:hover {
+      & > div {
+        background: #43a047;
+        box-shadow: 0 0 21px -5px rgba(50,50,50,.5);
+        color: #fff;
+        i:before {
+          color: #fff;
+        }
+      }
+      .bottom {
+        visibility: visible;
+      }
+    }
+    &:active {
+      & > div {
+        //transform: scale(1.05);
+      }
+    }
+  }
+}

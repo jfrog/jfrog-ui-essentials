@@ -2,9 +2,12 @@
     <div class="list-new-value"
          ng-class="{dropdown: jfListMaker.predefinedValues}"
          ng-if="!jfListMaker.hideAddNewFields">
-        <form>
-            <jf-field validations="common" dont-push-down-errors="true" delayed-init="true">
-                <label>{{jfListMaker.label}}</label>
+        <form name="jfListMaker.listMakerForm">
+            <jf-field validations="common"
+                      dont-push-down-errors="true"
+                      delayed-init="true"
+                      always-show-errors="{{jfListMaker.isRequired(jfListMaker.values)}}">
+                <label ng-class="{'mandatory':jfListMaker.required}">{{jfListMaker.label}}</label>
                 <jf-help-tooltip
                         ng-if="jfListMaker.helpTooltip"
                         html="jfListMaker.helpTooltip"></jf-help-tooltip>
@@ -16,7 +19,7 @@
                         id="newValueField-{{jfListMaker.listId}}"
                         name="newValueField"
                         jf-enter-press="jfListMaker.addValue()"
-                        ng-change="jfListMaker.errorMessage=null"
+                        ng-change="jfListMaker.onNewValueFieldChange()"
                         ng-disabled="jfListMaker.ngDisabled">
                 <jf-ui-select ng-if="jfListMaker.predefinedValues"
                               jf-select-model="jfListMaker.newValue"
@@ -40,8 +43,7 @@
             <div class="list-maker-list-buttons">
                 <a href="" class="icon icon-close"
                    ng-click="jfListMaker.removeValue($index)"
-                   ng-if="jfListMaker.values.length > jfListMaker.minLength"
-                   ng-disabled="jfListMaker.ngDisabled"></a>
+                   ng-if="jfListMaker.values.length > jfListMaker.minLength && !jfListMaker.ngDisabled"></a>
             </div>
         </div>
     </div>

@@ -8,7 +8,7 @@
             <li>
                 <span ng-click="jfTabularDnD.excludeAll()"
                       class="dnd-exclude-all"
-                      ng-disabled="jfTabularDnD.isIncludeListEmpty() || jfTabularDnD.areAllRowsDisabled(jfTabularDnD.selectedItemsTableOptions.getFilteredData()) || jfTabularDnD.disabled">&laquo;
+                      ng-disabled="jfTabularDnD.isExcludeAllActionDisabled()">&laquo;
                 </span>
             </li>
             <li>
@@ -26,7 +26,7 @@
             <li>
                 <span ng-click="jfTabularDnD.includeAll()"
                       class="dnd-include-all"
-                      ng-disabled="jfTabularDnD.isExcludeListEmpty() || jfTabularDnD.areAllRowsDisabled(jfTabularDnD.availableItemsTableOptions.getFilteredData()) || jfTabularDnD.disabled">&raquo;
+                      ng-disabled="jfTabularDnD.isIncludeAllActionDisabled()">&raquo;
                 </span>
             </li>
         </ul>
