@@ -85,7 +85,7 @@ class jfActionsController {
         this.dynamicActions = [];
 
         if(this.hasSingleVisibleAction()) {
-		    this.fixedActions.push(this.actions.find(action => action.visibleWhen()));
+		    this.fixedActions.push(this.actions.find(action => !action.visibleWhen || action.visibleWhen()));
 		    return;
 	    }
 
