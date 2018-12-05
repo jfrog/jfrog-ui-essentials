@@ -101,7 +101,7 @@ class jfTabularDnDController {
 
         if (!this.disableWholeRowSelection) {
             let toggleSelection = (row) => {
-	            if (this.disabled || (this.itemDraggableAttr && (!row.entity.hasOwnProperty(`${this.itemDraggableAttr}`)) || !row.entity[this.itemDraggableAttr])) return;
+	            if (this.disabled || (this.itemDraggableAttr && ((!row.entity.hasOwnProperty(`${this.itemDraggableAttr}`)) || !row.entity[this.itemDraggableAttr]))) return;
                 row.entity.$selected = !row.entity.$selected;
             }
             this.availableItemsTableOptions.on('row.clicked', toggleSelection);
