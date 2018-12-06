@@ -103,6 +103,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
     function compileDirective(attr) {
         // $scope = window.compileDirective('jf-table-view', attr);
         // elem = $('jf-table-view');
+        // $scope= $rootScope.$new(testAppScope)
         const compileResult = window.compileDirectiveAndGetElement('jf-table-view', attr);
         $scope = compileResult.$scope;
         elem = $(compileResult.elem);
@@ -130,7 +131,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
     beforeEach(() => {
         testAppScope = $rootScope.$new();
-        options = new JFrogTableViewOptions($scope);
+        options = new JFrogTableViewOptions(testAppScope);
         options.setColumns(columns);
 
         compileDirective({
@@ -350,7 +351,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
     });
 
-    xit('should call appScope methods', (done) => {
+    it('should call appScope methods', (done) => {
         var testData = createTestData(76);
         options.setRowsPerPage(10);
         options.setSortable(false); // we want to preserve original order
@@ -374,16 +375,16 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
                     expect(row.number).toEqual(100);
                     done();
                 }
-                $(compiledCellTemplate[0]).click();
+                angular.element(compiledCellTemplate[0]).triggerHandler('click');
             }, 0)
 
         }
 
-        $(compiledCellTemplate[0]).click();
+        angular.element(compiledCellTemplate[0]).triggerHandler('click');
 
     });
 
-    xit('should filter results', () => {
+    it('should filter results', () => {
 
         var testData = [
             {userName: 'Shlomo Azar', email: 'shlomo@lam.biz', subscription: 'Free', number: 4},
@@ -448,7 +449,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         return testData;
     }
 
-    xit('should display pagination status and paginate correctly', () => {
+    it('should display pagination status and paginate correctly', () => {
 
         var testData = createTestData(76);
 
@@ -501,7 +502,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
     });
 
-    xit('should work with external pagination', (done) => {
+    it('should work with external pagination', (done) => {
 
         var testData = createTestData(76);
 
@@ -644,7 +645,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
     });
 
-    xit('should allow single selection', () => {
+    it('should allow single selection', () => {
         var testData = createTestData(25);
 
         options.setSortable(false);
@@ -682,7 +683,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
     });
 
-    xit('should allow multi selection', () => {
+    it('should allow multi selection', () => {
         var testData = createTestData(25);
 
         options.setSortable(false);
@@ -738,7 +739,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
     });
 
-    xit('should support grouping and expanding group headers', () => {
+    it('should support grouping and expanding group headers', () => {
         var testData = createTestData(100);
         options.setRowsPerPage(101)
         options.setData(testData);
@@ -765,7 +766,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
     })
 
-    xit('should support sub rows', () => {
+    it('should support sub rows', () => {
         var testData = createTestData(15);
         var subRows1 = createTestData(5);
         var subRows2 = createTestData(3);
