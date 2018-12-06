@@ -20,7 +20,7 @@ window.compileHtmlAndGetElement = function (htmlStr, data, parentElement = null)
         // parentElement = parentElement || document.body;
         elem = angular.element(htmlStr);
         $scope = $rootScope.$new();
-        angular.extend($scope, data);
+        $scope= angular.extend($scope, data);
         elem = $compile(elem)($scope);
         $scope.$digest();
     });

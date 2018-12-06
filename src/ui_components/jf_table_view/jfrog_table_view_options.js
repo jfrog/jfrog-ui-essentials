@@ -316,6 +316,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
 		setNewEntityAction(newEntityCallback) {
 			this.newEntityCallback = newEntityCallback;
+			console.log('setNewEntityAction');
 			return this;
 		}
 

@@ -232,22 +232,22 @@ describe('Unit: JFrogSubRouter Service', function () {
             checkEventHandler('onChangeFromUrl', () => {
                 $location.path('/base/path/momo/yaya');
             }, (oldParams, newParams) => {
-                expect(_.isEqual(oldParams, {pathParam1: null, pathParam2: null, pathParam3: null, searchParam1: null, searchParam2: null})).toBeTrue();
-                expect(_.isEqual(newParams, {pathParam1: 'momo', pathParam2: 'yaya', pathParam3: null, searchParam1: null, searchParam2: null})).toBeTrue();
+                expect(_.isEqual(oldParams, {pathParam1: null, pathParam2: null, pathParam3: null, searchParam1: null, searchParam2: null})).toBeTruthy();
+                expect(_.isEqual(newParams, {pathParam1: 'momo', pathParam2: 'yaya', pathParam3: null, searchParam1: null, searchParam2: null})).toBeTruthy();
                 expect(subRouter.state).toEqual('state2');
             })
                 .then(() => checkEventHandler('onChangeFromUrl', () => {
                     $location.path('/base/path/momo/yaya/dudu');
                 }, (oldParams, newParams) => {
-                    expect(_.isEqual(oldParams, {pathParam1: 'momo', pathParam2: 'yaya', pathParam3: null, searchParam1: null, searchParam2: null})).toBeTrue();
-                    expect(_.isEqual(newParams, {pathParam1: 'momo', pathParam2: 'yaya', pathParam3: 'dudu', searchParam1: null, searchParam2: null})).toBeTrue();
+                    expect(_.isEqual(oldParams, {pathParam1: 'momo', pathParam2: 'yaya', pathParam3: null, searchParam1: null, searchParam2: null})).toBeTruthy();
+                    expect(_.isEqual(newParams, {pathParam1: 'momo', pathParam2: 'yaya', pathParam3: 'dudu', searchParam1: null, searchParam2: null})).toBeTruthy();
                     expect(subRouter.state).toEqual('state3');
                 }))
                 .then(() => checkEventHandler('onChangeFromUrl', () => {
                     $location.search({searchParam1: 'fifa', searchParam2: 'fiba'});
                 }, (oldParams, newParams) => {
-                    expect(_.isEqual(oldParams, {pathParam1: 'momo', pathParam2: 'yaya', pathParam3: 'dudu', searchParam1: null, searchParam2: null})).toBeTrue();
-                    expect(_.isEqual(newParams, {pathParam1: 'momo', pathParam2: 'yaya', pathParam3: 'dudu', searchParam1: 'fifa', searchParam2: 'fiba'})).toBeTrue();
+                    expect(_.isEqual(oldParams, {pathParam1: 'momo', pathParam2: 'yaya', pathParam3: 'dudu', searchParam1: null, searchParam2: null})).toBeTruthy();
+                    expect(_.isEqual(newParams, {pathParam1: 'momo', pathParam2: 'yaya', pathParam3: 'dudu', searchParam1: 'fifa', searchParam2: 'fiba'})).toBeTruthy();
                     expect(subRouter.state).toEqual('state3');
                 }))
                 .then(() => {
