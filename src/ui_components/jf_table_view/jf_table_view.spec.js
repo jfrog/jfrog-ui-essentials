@@ -210,6 +210,13 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         expect(headersCells.length).toEqual(4);
 
         expect(options.visibleFields).toEqual(["userName", "email", "subscription", "number"])
+    });
+    it('should update columns properties', function () {
+        delete localStorage.jfTableViewSettings;
+
+        options.setId('test-table');
+        options.allowColumnsCustomization();
+        options.showHeaders();
 
         let emailSelect = _.find(options.availableColumns, {id: 'email'});
         let subscriptionSelect = _.find(options.availableColumns, {id: 'subscription'});
@@ -218,11 +225,11 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         options.updateCustomizedColumns();
 
-        flushAndApply();
+        flushAndApply(elem);
         expect(headersCells.length).toEqual(2);
 
-        expect(options.visibleFields).toEqual(["number", "userName"])
-        expect(localStorage.jfTableViewSettings).toEqual('{"test-table":["number","userName"]}')
+        expect(options.visibleFields).toEqual(["userName", "number"])
+        expect(localStorage.jfTableViewSettings).toEqual('{"test-table":["userName","number"]}')
 
     });
 
@@ -234,7 +241,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         options.setSortable(false);
         options.setData(testData);
-        flushAndApply();
+        flushAndApply(elem);
         expect(selectionButtons.length).toEqual(0);
 
         expect(emptyTablePlaceholder.length).toEqual(0);
@@ -277,31 +284,31 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         options.setData(testData);
         options.showHeaders();
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expectSorted();
 
         options.setSortable(true); //sort by user name (defaults to first column)
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expectSorted(true); //reversed
 
         $(headersCells[2]).click(); //sort by subscription
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expectSorted();
 
         $(headersCells[3]).click(); //sort by number
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expectSorted(true)
 
         $(headersCells[3]).click(); //sort by number - desc
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expectSorted();
 
@@ -335,7 +342,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
             }
         ]);
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(actionButtons.length).toEqual(4);
 
@@ -349,7 +356,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         options.setSortable(false); // we want to preserve original order
         options.setData(testData);
 
-        flushAndApply();
+        flushAndApply(elem);
 
         testAppScope.testAppScopeMethod = (row) => {
             expect(row.userName).toEqual('Some User (#0)');
@@ -359,7 +366,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
             setTimeout(() => {
                 $(pagination.find('a')[1]).click(); //move to next page
-                // flushAndApply();
+                // flushAndApply(elem);
                 testAppScope.testAppScopeMethod = (row) => {
                     expect(row.userName).toEqual('Some User (#10)');
                     expect(row.email).toEqual('someuser10@lam.biz');
@@ -385,14 +392,14 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         options.setData(testData);
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(dataRows.length).toEqual(2);
 
         filterInput.val('Shlo');
         filterInput.triggerHandler('input');
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(dataRows.length).toEqual(1);
         expect(dataCells[0].textContent.trim()).toEqual('Shlomo Azar');
@@ -400,7 +407,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         filterInput.val('Reu');
         filterInput.triggerHandler('input');
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(dataRows.length).toEqual(1);
         expect(dataCells[0].textContent.trim()).toEqual('Reuven Azar');
@@ -408,21 +415,21 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         filterInput.val('Azar');
         filterInput.triggerHandler('input');
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(dataRows.length).toEqual(2);
 
         filterInput.val('lam.biz');
         filterInput.triggerHandler('input');
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(dataRows.length).toEqual(2);
 
         filterInput.val('blablabla');
         filterInput.triggerHandler('input');
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(dataRows.length).toEqual(0);
 
@@ -449,7 +456,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         options.setData(testData);
 
-        flushAndApply();
+        flushAndApply(elem);
 
         var expectPaginationState = (current, total) => {
             let textContent = pagination.text().replace(/[\ \n]/g, '');
@@ -473,21 +480,21 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         nextPage();
 
-        flushAndApply()
+        flushAndApply(elem)
 
         expect(dataRows.length).toEqual(10);
         expectPaginationState(2, 8);
 
         setPage(8);
 
-        flushAndApply()
+        flushAndApply(elem)
 
         expect(dataRows.length).toEqual(6);
         expectPaginationState(8, 8);
 
         prevPage();
 
-        flushAndApply()
+        flushAndApply(elem)
 
         expect(dataRows.length).toEqual(10);
         expectPaginationState(7, 8);
@@ -528,7 +535,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         ]
         var doNextTest = function () {
             setTimeout(function () {
-                flushAndApply();
+                flushAndApply(elem);
                 if (tests[currTest]) tests[currTest]();
                 currTest++;
                 if (currTest === tests.length) {
@@ -616,7 +623,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         });
 
-        flushAndApply();
+        flushAndApply(elem);
 
         var expectPaginationState = (current, total) => {
             let textContent = pagination.text().replace(/[\ \n]/g, '');
@@ -645,7 +652,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         options.setData(testData);
 
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(selectionButtons.length).toEqual(25);
         expect(unselectedSelectionButtons.length).toEqual(25);
@@ -654,7 +661,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         $(selectionButtons[5]).click();
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(selectionButtons.length).toEqual(25);
         expect(unselectedSelectionButtons.length).toEqual(24);
@@ -664,7 +671,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         $(selectionButtons[8]).click();
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(selectionButtons.length).toEqual(25);
         expect(unselectedSelectionButtons.length).toEqual(24);
@@ -683,7 +690,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         options.showHeaders();
         options.setData(testData);
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(selectionButtons.length).toEqual(26);
         expect(unselectedSelectionButtons.length).toEqual(26);
@@ -692,7 +699,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         $(selectionButtons[6]).click();
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(selectionButtons.length).toEqual(26);
         expect(unselectedSelectionButtons.length).toEqual(25);
@@ -702,7 +709,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         $(selectionButtons[9]).click();
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(selectionButtons.length).toEqual(26);
         expect(unselectedSelectionButtons.length).toEqual(24);
@@ -713,7 +720,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         $(selectionButtons[0]).click(); // header selection - should select all
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(selectionButtons.length).toEqual(26);
         expect(unselectedSelectionButtons.length).toEqual(0);
@@ -722,7 +729,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         $(selectionButtons[0]).click(); // second click on header selection - should deselect all
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(selectionButtons.length).toEqual(26);
         expect(unselectedSelectionButtons.length).toEqual(26);
@@ -737,21 +744,21 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         options.setData(testData);
         options.groupBy('number');
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(dataRows.length).toEqual(0);
         expect(groupHeaders.length).toEqual(1);
 
         $(groupHeaders[0]).click();
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(dataRows.length).toEqual(100);
         expect(groupHeaders.length).toEqual(1);
 
         $(groupHeaders[0]).click();
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(dataRows.length).toEqual(0);
         expect(groupHeaders.length).toEqual(1);
@@ -775,7 +782,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         options.setData(testData);
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(dataRows.length).toEqual(15);
         expect(subRows.length).toEqual(0);
@@ -786,7 +793,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         rowExpanders[0].click();
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(dataRows.length).toEqual(20);
         expect(subRows.length).toEqual(5);
@@ -797,7 +804,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         rowExpanders[1].click();
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(dataRows.length).toEqual(23);
         expect(subRows.length).toEqual(8);
@@ -808,7 +815,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
         rowExpanders[2].click();
 
-        flushAndApply();
+        flushAndApply(elem);
 
         expect(dataRows.length).toEqual(27);
         expect(subRows.length).toEqual(12);
@@ -818,11 +825,11 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         expect(closedExpanders.length).toEqual(0);
 
         rowExpanders[0].click();
-        flushAndApply();
+        flushAndApply(elem);
         rowExpanders[1].click();
-        flushAndApply();
+        flushAndApply(elem);
         rowExpanders[2].click();
-        flushAndApply();
+        flushAndApply(elem);
 
 
         expect(dataRows.length).toEqual(15);
