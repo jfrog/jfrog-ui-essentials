@@ -502,7 +502,83 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
     });
 
-    it('should work with external pagination', (done) => {
+    describe('external pagination', function () {
+
+        var testData = createTestData(76);
+
+        options.setRowsPerPage(10);
+
+        let expectedPagingData = [
+            ,
+            {
+                pageNum: 1,
+                numOfRows: 10,
+                direction: 'asc',
+                orderBy: 'userName',
+                filter: null,
+                filterBy: ['userName', 'email']
+            },
+            {
+                pageNum: 7,
+                numOfRows: 10,
+                direction: 'asc',
+                orderBy: 'userName',
+                filter: null,
+                filterBy: ['userName', 'email']
+            },
+            {
+                pageNum: 6,
+                numOfRows: 10,
+                direction: 'asc',
+                orderBy: 'userName',
+                filter: null,
+                filterBy: ['userName', 'email']
+            }
+        ];
+
+        it('should go to next page', function () {
+            options.setPaginationMode(options.EXTERNAL_PAGINATION, function (pagingData) {
+                return $q((res, rej) => {
+                    expect(pagingData).toEqual({
+                        pageNum: 0,
+                        numOfRows: 10,
+                        direction: 'asc',
+                        orderBy: 'userName',
+                        filter: null,
+                        filterBy: ['userName', 'email']
+                    });
+
+                    let sortedData = testData.sort((a, b) => {
+                        let field = pagingData.orderBy || _.find(columns, c => !!c.header).field;
+                        let valA = _.get(a, field);
+                        let valB = _.get(b, field);
+                        return (pagingData.direction === 'desc' ? -1 : 1) * (valA > valB ? 1 : (valA < valB ? -1 : 0));
+                    });
+
+                    let filteredData = _.filter(sortedData, row => {
+                        if (!pagingData.filter) return true;
+                        let columns = columns;
+                        for (let i in columns) {
+                            let col = columns[i];
+                            if (row.$groupHeader || (_.get(row, col.field) && _.contains(_.get(row, col.field).toString().toLowerCase(), pagingData.filter.toLowerCase()))) return true;
+                        }
+                        return false;
+                    })
+
+                    defer.resolve({
+                        data: filteredData.slice(pagingData.pageNum * pagingData.numOfRows, pagingData.pageNum * pagingData.numOfRows + pagingData.numOfRows),
+                        totalCount: testData.length,
+                        filteredCount: filteredData.length
+                    });
+                })
+
+            });
+            flushAndApply(elem);
+
+        });
+    });
+
+    xit('should work with external pagination', (done) => {
 
         var testData = createTestData(76);
 
@@ -633,10 +709,10 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         }
 
         var nextPage = () => {
-            $(pagination.find('a')[1]).click();
+            angular.element(pagination.find('a')[1]).triggerHandler('click');
         }
         var prevPage = () => {
-            $(pagination.find('a')[0]).click();
+            angular.element(pagination.find('a')[0]).triggerHandler('click');
         }
         var setPage = (page) => {
             pagination.find('.grid-page-box').val(page.toString());
