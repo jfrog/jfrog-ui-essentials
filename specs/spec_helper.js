@@ -15,16 +15,16 @@ window.compileHtml = function (htmlStr, data, parentElement = null) {
 
 window.compileHtmlAndGetElement = function (htmlStr, data, parentElement = null) {
     data = data || {};
-    let $scope, elem;
+    let $scope, $elem;
     inject(function ($compile, $rootScope) {
         // parentElement = parentElement || document.body;
-        elem = angular.element(htmlStr);
+        $elem = angular.element(htmlStr);
         $scope = $rootScope.$new();
         $scope= angular.extend($scope, data);
-        elem = $compile(elem)($scope);
+        $elem = $compile($elem)($scope);
         $scope.$digest();
     });
-    return {$scope, elem};
+    return {$scope, $elem};
 }
 
 window.compileDirective = function (directive, attr, parentElement = null) {
@@ -61,10 +61,10 @@ window.compileDirectiveAndGetElement = function (directive, attr, parentElement 
             attributes += ` ${kebab}="data.${key}"`;
         }
     }
-    let {$scope, elem} = compileHtmlAndGetElement(`<${directive} ${attributes}></${directive}>`, {data: attr}, parentElement);
+    let {$scope, $elem} = compileHtmlAndGetElement(`<${directive} ${attributes}></${directive}>`, {data: attr}, parentElement);
     $scope.$digest();
 
-    return {$scope, elem};
+    return {$scope, $elem};
 }
 
 

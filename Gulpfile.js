@@ -52,7 +52,7 @@ gulp.task('build:common',
                 'copyLessVariables',
                 'fonts',
                 'images',
-                // 'copyPackageJson',
+                'copyPackageJson',
                 'copyEssentialsVendorDependency'
             ],
             'concatAllJS',
