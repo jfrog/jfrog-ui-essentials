@@ -1,7 +1,5 @@
 const TEMPLATES_FOLDER = "ui_components/jfrog_grid/templates/",
         MIN_COLUMN_WIDTH = 50;
-let headerCellTemplate = require(`${TEMPLATES_FOLDER}headerCellDefaultTemplate.html`);
-let groupHeaderCellTemplate = require(`${TEMPLATES_FOLDER}headerCellTemplate.html`);
 let globals = {};
 
 const COMMON_ACTIONS = {
@@ -20,7 +18,8 @@ class JFrogGrid {
 	/* @ngInject */
     constructor(scope, uiGridConstants) {
         this.scope = scope;
-
+        this.headerCellTemplate = globals.$templateCache.get('ui_components/jfrog_grid/templates/headerCellTemplate.html');
+        this.groupHeaderCellTemplate = globals.$templateCache.get('ui_components/jfrog_grid/templates/GroupHeaderCellTemplate.html');
         if (scope) {
             this.appScopeProvider = scope;
         }
@@ -190,8 +189,8 @@ class JFrogGrid {
 
         this.columnDefs.forEach((item, index) => {
             if (!item.headerCellTemplate) {
-                if (item.allowGrouping) item.headerCellTemplate = groupHeaderCellTemplate;
-                else item.headerCellTemplate = headerCellTemplate;
+                if (item.allowGrouping) item.headerCellTemplate = this.groupHeaderCellTemplate;
+                else item.headerCellTemplate = this.headerCellTemplate;
             }
 
             if (this.subRowsEnabled) {
@@ -951,13 +950,14 @@ class JFrogGrid {
 
 export class JFrogGridFactory {
     /* @ngInject */
-    constructor(uiGridConstants, $timeout, $window, $state, $modal,$rootScope, JFrogDownload, JFrogEventBus, JFrogUIUtils) {
+    constructor(uiGridConstants, $timeout, $window, $state, $modal,$rootScope, $templateCache, JFrogDownload, JFrogEventBus, JFrogUIUtils) {
         globals.$timeout = $timeout;
         globals.$window = $window;
         globals.$state = $state;
         globals.$modal = $modal;
         globals.download = JFrogDownload;
         globals.$rootScope = $rootScope;
+        globals.$templateCache = $templateCache;
         globals.JFrogEventBus = JFrogEventBus;
         globals.utils = JFrogUIUtils;
 
@@ -971,7 +971,7 @@ export class JFrogGridFactory {
     }
 
     getDefaultCellTemplate() {
-        return headerCellTemplate;
+        return this.headerCellTemplate;
     }
 
     _createContextMenu() {
