@@ -1,98 +1,111 @@
 'use strict';
 describe('unit test: jf_actions', function () {
 
-	var $scope;
+    var $scope;
 
-	function flushAndApply() {
-		try
-		{
-			$timeout.flush();
-		}
-		catch (e) {
-		}
+    function flushAndApply() {
+        try {
+            $timeout.flush();
+        }
+        catch (e) {
+        }
 
-		$scope.$apply();
-	}
+        $scope.$apply();
+    }
 
-	function compileDirective(attr) {
-		$scope = window.compileDirective('jf-actions', attr);
-	}
+    function compileDirective(attr) {
+        $scope = window.compileDirective('jf-actions', attr);
+    }
 
-	beforeEach(angular.mock.module('jfrog.ui.essentials'));
+    beforeEach(angular.mock.module('jfrog.ui.essentials'));
 
-	beforeEach(() => {
+    beforeEach(() => {
 
-
-		var ACTIONS = {
-			'act1': {title: 'Action #1', icon: 'icon-view'},
-			'act2': {title: 'Action #2', icon: 'icon-download',disabled: true},
-			'act3': {title: 'Action #3', icon: 'icon-go'},
-			'act4': {title: 'Action #4', icon: 'icon-clear'}
-		};
+        var ACTIONS = {
+            'act1': {title: 'Action #1', icon: 'icon-view'},
+            'act2': {title: 'Action #2', icon: 'icon-download', disabled: true},
+            'act3': {title: 'Action #3', icon: 'icon-go'},
+            'act4': {title: 'Action #4', icon: 'icon-clear'}
+        };
 
 
-		var initActions = function (actionsController) {
-			actionsController.setActionsDictionary(ACTIONS);
-			actionsController.setActions([
-				{
-					name:'act1',
-					visibleWhen: function() {return true},
-					action: function() {
-						$('body').append($('body').append('<div id="xxx"></div>'));
-					}
-				},
-				{
-					name:'act2',
-					visibleWhen: function() {return true},
-					action: function() {$log.log('Executing Action 2')}
-				},
-				{
-					name:'act3',
-					visibleWhen: function() {return true},
-					action: function() {$log.log('Executing Action 3')}
-				},
-				{
-					name:'act4',
-					visibleWhen: function() {return true},
-					action: function() {$log.log('Executing Action 4')}
-				}
-			])
+        var initActions = function (actionsController) {
+            actionsController.setActionsDictionary(ACTIONS);
+            actionsController.setActions([
+                {
+                    name: 'act1',
+                    visibleWhen: function () {
+                        return true
+                    },
+                    action: function () {
+                        $('body').append($('body').append('<div id="xxx"></div>'));
+                    }
+                },
+                {
+                    name: 'act2',
+                    visibleWhen: function () {
+                        return true
+                    },
+                    action: function () {
+                        $log.log('Executing Action 2')
+                    }
+                },
+                {
+                    name: 'act3',
+                    visibleWhen: function () {
+                        return true
+                    },
+                    action: function () {
+                        $log.log('Executing Action 3')
+                    }
+                },
+                {
+                    name: 'act4',
+                    visibleWhen: function () {
+                        return true
+                    },
+                    action: function () {
+                        $log.log('Executing Action 4')
+                    }
+                }
+            ])
 
-		};
+        };
 
-		compileDirective({
-			fixedActionsNames: ['act2'],
-			parentController: {
-				initMethod: initActions,
-			},
-			'@initMethod': 'initMethod'
-		});
-	});
+        compileDirective({
+            fixedActionsNames: ['act2'],
+            parentController: {
+                initMethod: initActions,
+            },
+            '@initMethod': 'initMethod'
+        });
+    });
 
-	it('should compile', ()=>{
-		expect($('jf-actions')[0]).toMatchSnapshot();
-	});
+    it('should compile', () => {
+        expect($('jf-actions')[0]).toMatchSnapshot();
+    });
 
-	it('should render directive and display actions', () => {
+    it('should render directive and display actions', () => {
 
-		flushAndApply();
+        flushAndApply();
 
-		expect($('jf-actions').length).toEqual(1);
+        expect($('jf-actions').length).toEqual(1);
 
-		$('.dropdown').trigger("mouseenter");
+        $('.dropdown').trigger("mouseenter");
 
-		expect($('span.action-name')[0].outerHTML).toContain("Action #1");
-		expect($('span.action-name')[1].outerHTML).toContain("Action #3");
-		expect($('span.action-name')[2].outerHTML).toContain("Action #4");
-	});
+        expect($('span.action-name')[0].outerHTML).toContain("Action #1");
+        expect($('span.action-name')[1].outerHTML).toContain("Action #3");
+        expect($('span.action-name')[2].outerHTML).toContain("Action #4");
+    });
 
-	it('should trigger an action', () => {
+    it('should trigger an action', () => {
 
-			flushAndApply();
+        flushAndApply();
 
-			$('.dropdown').trigger("mouseenter");
-			$('li.action-item:first').find('a').click();
+        $('.dropdown').trigger("mouseenter");
+        const $actionBtn = $('li.action-item:first').find('a')[0];
+        angular.element($actionBtn).triggerHandler('click');
 
-			expect($('#xxx').length).toEqual(1);
-	});
+        expect($('#xxx').length).toEqual(1);
+    });
 });
