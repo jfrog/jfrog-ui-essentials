@@ -1,0 +1,33 @@
+<div class="value" ng-if="!$ctrl.item.template">
+	<a ng-if="$ctrl.item.isUrl && $ctrl.item.value && $ctrl.item.value.length && ((!$ctrl.item.hasOwnProperty('url')) || ($ctrl.item.url && $ctrl.item.url.length))"
+	   ng-href="{{$ctrl.item.url || $ctrl.item.value}}"
+	   ng-bind-html="$ctrl.item.value"
+	   target="_blank"
+	   class="jf-link"
+	   jf-tooltip-on-overflow>
+	</a>
+	<div ng-if="!$ctrl.isArray($ctrl.item.value) && (!$ctrl.item.isUrl || ($ctrl.item.isUrl && (($ctrl.item.hasOwnProperty('url') && !$ctrl.item.url.length) || (!$ctrl.item.value || !$ctrl.item.value.length))))"
+	     ng-bind-html="$ctrl.getItemValue($ctrl.item.value)"
+	     jf-tooltip-on-overflow>
+	</div>
+	<div ng-if="$ctrl.isArray($ctrl.item.value)" id="data-list-row-{{$ctrl.index}}">
+		<div class="tag" ng-repeat="tag in $ctrl.item.value">
+			<a class="gridcell-content-text jf-link"
+			   ng-if="tag.url" ng-href="{{tag.url}}"
+			   target="_blank"
+			   ng-bind-html="tag.label">
+			</a>
+			<span class="gridcell-content-text" ng-if="!tag.url" ng-bind-html="tag.label"></span>
+		</div>
+		<a class="jf-link gridcell-showall"
+		   ng-if="$ctrl.item.value.length >= 1 && $ctrl.htmlIsOverflowing('#data-list-row-' + $ctrl.index)"
+		   href
+		   ng-click="$ctrl.showAll($ctrl.item.value,$ctrl.item.label,$ctrl.item.objectName)"> (See {{$ctrl.item.value.length > 1 ? 'All' : 'List'}})</a>
+	</div>
+	<div class="copy" ng-if="$ctrl.item.copy && !$ctrl.isArray($ctrl.item.value)">
+		<jf-clip-copy text-to-copy="$ctrl.item.value"></jf-clip-copy>
+	</div>
+</div>
+<div class="value" ng-if="$ctrl.item.template">
+	<jf-data-list-compiled-item item="$ctrl.item"></jf-data-list-compiled-item>
+</div>

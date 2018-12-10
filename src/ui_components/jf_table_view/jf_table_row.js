@@ -60,7 +60,7 @@ class jfTableRowController {
 
     fireAction(action) {
         action.callback(this.data);
-        this.tableView.onUpdateFilter()
+        this.tableView.onUpdateFilter(false)
     }
 
     onMouseMove(e) {
