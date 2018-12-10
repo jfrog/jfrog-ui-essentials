@@ -1,5 +1,6 @@
 import {items} from './jf_data_list.mock';
-describe('unit test: jf_table_view directive & JFTableViewOptions service',  () => {
+
+describe('unit test: jf_table_view directive & JFTableViewOptions service', () => {
 
     var $scope;
     var $rootScope;
@@ -9,15 +10,15 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service',  () 
     var JFrogTableViewOptions;
     let $elem;
 
-    const setup= (_$timeout_, _$q_, _$rootScope_) =>{
+    const setup = (_$timeout_, _$q_, _$rootScope_) => {
         $timeout = _$timeout_;
         $rootScope = _$rootScope_;
         $q = _$q_;
     }
 
-    const compileDirective= (attr) =>{
+    const compileDirective = (attr) => {
         ({$scope, $elem} = window.compileDirectiveAndGetElement('jf-data-list', attr));
-         // = compileResult.$scope;
+        // = compileResult.$scope;
         // $elem = $(compileResult.elem);
         $scope.$apply();
     }
@@ -31,8 +32,9 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service',  () 
         });
     });
 
-    it('should compile', function () {
+    it('should compile', function (done) {
         expect($elem[0].outerHTML).toMatchSnapshot();
+        done();
     });
 
 
