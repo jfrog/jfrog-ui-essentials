@@ -1,5 +1,6 @@
 class jfSwitchController {
-    constructor() {
+    constructor($scope) {
+        this.$scope = $scope;
     }
 
     $onInit() {
@@ -15,6 +16,12 @@ class jfSwitchController {
 
         if (_.isEmpty(this.ngModel))
             this.ngModel = this.optionObjects[0].value;
+
+        if (this.watchOptions) {
+	        this.$scope.$watch('jfSwitch.options.length', () => {
+		        this.updateOptionObjects();
+	        });
+        }
     }
 
     updateOptionObjects() {
@@ -47,7 +54,8 @@ export function jfSwitch() {
             controller: '=?',
             disabled: '=ngDisabled',
             helpTooltip: '=',
-            jfSwitchClass: '@'
+            jfSwitchClass: '@',
+            watchOptions: '<?'
         },
         link: ($scope, attrs, $element, ngModelCtrl) => {
             $scope.jfSwitch.ngModelCtrl = ngModelCtrl;
