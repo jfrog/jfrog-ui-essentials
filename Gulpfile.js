@@ -341,7 +341,7 @@ gulp.task('karma', function (done) {
 
 gulp.task('copyWebworkers', function() {
     return gulp.src(['src/webworkers/**/*'])
-        // .pipe(uglify({mangle:false}))
+        // .pipe(uglify({mangle:true}))
         .pipe(gulp.dest(CONFIG.DESTINATIONS.TARGET + '/workers'));
 })
 

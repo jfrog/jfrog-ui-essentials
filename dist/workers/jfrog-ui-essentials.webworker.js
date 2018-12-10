@@ -1,5 +1,8 @@
-onmessage = function (e) {
-    switch (e.data.cmd) {
+
+
+
+onmessage = function(e) {
+    switch(e.data.cmd) {
         case 'testWorker': {
             postMessage('OK');
             break;
@@ -18,7 +21,7 @@ onmessage = function (e) {
             break;
         }
         case 'runFunction': {
-            var f = eval('(' + e.data.function + ')');
+            var f = eval('('+e.data.function+')');
             postMessage({response: f.apply(f, e.data.params || [])});
             break;
         }
@@ -30,14 +33,12 @@ function asciidoc2Html(asciidoc) {
     loadAsciidoctor();
     return asciidoctor.convert(asciidoc);
 }
-
 function markdown2Html(markdown) {
     loadKramed();
-    return kramed(markdown, {gfm: true, breaks: true, sanitize: true});
+    return kramed(markdown,{gfm: true, breaks: true, sanitize: true});
 }
 
 var asciidoctor, kramed;
-
 function loadAsciidoctor() {
     if (!asciidoctor) {
         importScripts('./dependencies/asciidoctor.js');
