@@ -25,7 +25,7 @@ angular.module('jfrog.ui.essentials', [
         'ngCookies',
         'toaster',
         'ngSanitize',
-        // 'ngClipboard',
+        'ngClipboard',
         'ui.bootstrap',
         'ui.grid.draggable-rows',
         'monospaced.mousewheel',
