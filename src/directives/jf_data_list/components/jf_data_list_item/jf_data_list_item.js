@@ -34,6 +34,7 @@ class jfDataListItemController {
 	 * **/
 	htmlIsOverflowing(rowId) {
 		let elem = this.$element.find(rowId);
+		if (!elem || !elem.length) return false;
 		let children = elem.children('.tag');
 		let maxWidth = elem.closest('.data-list-item-value').outerWidth() - 60;
 		let totalChildrenWidth = 0;
