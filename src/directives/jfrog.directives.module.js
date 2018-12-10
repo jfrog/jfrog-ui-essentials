@@ -1,3 +1,4 @@
+import {MODULE_DATA_LIST} from './jf_data_list/jf_data_list.module';
 import {jfListMaker}          from './jf_list_maker/jf_list_maker';
 import {jfActions}       from './jf_actions/jf_actions';
 import jfOnOffSwitch from './jf_on_off_switch/jf_on_off_switch';
@@ -44,7 +45,6 @@ import {jfDynamicTemplate} from "./jf_dynamic_template/jf_dynamic_template";
 import {jfListSelection} from "./jf_list_selection/jf_list_selection";
 import {jfDragAndDropTxt} from './jf_drag_and_drop_txt/jf_drag_and_drop_txt';
 import {jfContextMenu} from "./jf_context_menu/jf_context_menu.component";
-import {jfDataList} from "./jf_data_list/jf_data_list";
 import {jfVScroll} from "./jf_vscroll/jf_vscroll";
 import {jfVScrollElement} from "./jf_vscroll/jf_vscroll_element";
 import {jfPendingData} from "./jf_pending_data/jf_pending_data";
@@ -54,7 +54,7 @@ import jfWizard from './jf_wizard/jf.wizard.directive';
 import jfWizardElement from './jf_wizard/jf_wizard_element/jf.wizard.element.directive';
 import {jfBillboard} from './jf_billboard/jf_billboard';
 
-angular.module('jfrog.ui.essentials.directives', [])
+angular.module('jfrog.ui.essentials.directives', [MODULE_DATA_LIST])
     .directive({
         'jfWizardElement': jfWizardElement,
         'jfWizard': jfWizard,
@@ -103,7 +103,6 @@ angular.module('jfrog.ui.essentials.directives', [])
         'jfContextMenu': jfContextMenu,
         'jfVscroll': jfVScroll,
         'jfVscrollElement': jfVScrollElement,
-        'jfDataList': jfDataList,
         'jfToggler' :jfToggler,
         'jfSwitchToggler': jfSwitchToggler,
         'jfOnOffSwitch': jfOnOffSwitch,

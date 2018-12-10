@@ -2,36 +2,7 @@
 	<tr class="data-list-item" ng-repeat="item in jfDataList.formattedItems" ng-if="!item.isHidden">
 		<td class="data-list-item-label">{{item.label}}:</td>
 		<td class="data-list-item-value">
-			<div class="value">
-				<a ng-if="item.isUrl && item.value && item.value.length && ((!item.hasOwnProperty('url')) || (item.url && item.url.length))"
-				   ng-href="{{item.url || item.value}}"
-				   ng-bind-html="item.value"
-				   target="_blank"
-				   class="jf-link"
-				   jf-tooltip-on-overflow>
-				</a>
-				<div ng-if="!jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length))))"
-				     ng-bind-html="jfDataList.getItemValue(item.value)"
-				     jf-tooltip-on-overflow>
-				</div>
-				<div ng-if="jfDataList.isArray(item.value)" id="data-list-row-{{$parent.$index}}">
-					<div class="tag" ng-repeat="tag in item.value">
-						<a class="gridcell-content-text jf-link"
-						   ng-if="tag.url" ng-href="{{tag.url}}"
-						   target="_blank"
-						   ng-bind-html="tag.label">
-						</a>
-						<span class="gridcell-content-text" ng-if="!tag.url" ng-bind-html="tag.label"></span>
-					</div>
-					<a class="jf-link gridcell-showall"
-					   ng-if="item.value.length >= 1 && jfDataList.htmlIsOverflowing('#data-list-row-' + $parent.$index)"
-					   href
-					   ng-click="jfDataList.showAll(item.value,item.label,item.objectName)"> (See {{item.value.length > 1 ? 'All' : 'List'}})</a>
-				</div>
-				<div class="copy" ng-if="item.copy && !jfDataList.isArray(item.value)">
-					<jf-clip-copy text-to-copy="item.value"></jf-clip-copy>
-				</div>
-			</div>
+			<jf-data-list-item item="item" index="$index"></jf-data-list-item>
 		</td>
 	</tr>
 </table>

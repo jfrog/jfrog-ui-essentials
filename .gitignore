@@ -7,5 +7,5 @@ atlassian-ide-plugin.xml
 .idea
 .idea/*
 node_modules
-components
+./components
 

@@ -154,11 +154,13 @@ class jfTableViewController {
         }
     }
 
-    onUpdateFilter() {
+    onUpdateFilter(resetPagination = true) {
         this.options.refreshFilter();
         this.refresh();
-        this.paginationApi.setPage(1, true);
-        this.paginationApi.update();
+        if(resetPagination) {
+	        this.paginationApi.setPage(1, true);
+	        this.paginationApi.update();
+        }
     }
     refresh(updatePagination = true) {
         let unusedScopes = _.filter(this.cellScopes, scope => this.options.getPageData().indexOf(scope.row.entity) === -1);
