@@ -273,7 +273,7 @@ describe('Unit: JFrogSubRouter Service', function () {
                     subRouter.params.pathParam1 = null
                 }, (oldState, params) => {
                     expect(oldState).toEqual('state1');
-                    expect(_.isEqual(params, {pathParam1: null, pathParam2: null, pathParam3: null, searchParam1: null, searchParam2: null})).toBeTrue();
+                    expect(_.isEqual(params, {pathParam1: null, pathParam2: null, pathParam3: null, searchParam1: null, searchParam2: null})).toBeTruthy();
                 }))
                 .then(() => resetState1())
                 .then(() => checkEventHandler('onInvalidState', () =>{
@@ -281,14 +281,14 @@ describe('Unit: JFrogSubRouter Service', function () {
                     subRouter.params.pathParam2 = 'momo';
                 }, (oldState, params) => {
                     expect(oldState).toEqual('state1');
-                    expect(_.isEqual(params, {pathParam1: null, pathParam2: 'momo', pathParam3: null, searchParam1: null, searchParam2: null})).toBeTrue();
+                    expect(_.isEqual(params, {pathParam1: null, pathParam2: 'momo', pathParam3: null, searchParam1: null, searchParam2: null})).toBeTruthy();
                 }))
                 .then(() => resetState1())
                 .then(() => checkEventHandler('onInvalidState', () => {
                     $location.path('/base/path/');
                 }, (oldState, params) => {
                     expect(oldState).toEqual('state1');
-                    expect(_.isEqual(params, {pathParam1: null, pathParam2: null, pathParam3: null, searchParam1: null, searchParam2: null})).toBeTrue();
+                    expect(_.isEqual(params, {pathParam1: null, pathParam2: null, pathParam3: null, searchParam1: null, searchParam2: null})).toBeTruthy();
                 }))
                 .then(() => resetState1())
                 .then(() => checkEventHandler('onInvalidState', () =>{
@@ -299,7 +299,7 @@ describe('Unit: JFrogSubRouter Service', function () {
                     })
                 }, (oldState, params) => {
                     expect(oldState).toEqual('state2');
-                    expect(_.isEqual(params, {pathParam1: null, pathParam2: 'jojo', pathParam3: null, searchParam1: null, searchParam2: null})).toBeTrue();
+                    expect(_.isEqual(params, {pathParam1: null, pathParam2: 'jojo', pathParam3: null, searchParam1: null, searchParam2: null})).toBeTruthy();
                 }))
                 .then(() => {
                     done();
