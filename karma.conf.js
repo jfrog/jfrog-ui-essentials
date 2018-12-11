@@ -7,7 +7,7 @@ module.exports = function (config) {
             'dist/tmp/karma/karmaVendorScripts.js',
             'dist/jfrog-ui-essentials.js',
             'specs/spec_helper.js',
-            'components/jasmine-jquery/lib/jasmine-jquery.js',
+            'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
             'mocks/**/**.js',
             'specs/**/**.js',
             {pattern: 'src/webworkers/**/*', included: false},
