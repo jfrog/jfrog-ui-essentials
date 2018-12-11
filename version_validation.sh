@@ -1,4 +1,4 @@
-#!/bin/env bash -e
+#!/bin/bash -e
 
 # If no version is supplied - exit with error
 if [ -z $VERSION_NAME ]; then
