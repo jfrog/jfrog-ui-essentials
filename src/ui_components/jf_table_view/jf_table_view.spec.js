@@ -106,7 +106,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         // $scope= $rootScope.$new(testAppScope)
         const compileResult = window.compileDirectiveAndGetElement('jf-table-view', attr);
         $scope = compileResult.$scope;
-        elem = $(compileResult.elem);
+        elem = $(compileResult.$elem);
         $scope.$apply();
 
         flushAndApply(elem);
