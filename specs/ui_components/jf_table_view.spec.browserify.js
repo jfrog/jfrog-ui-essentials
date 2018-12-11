@@ -763,7 +763,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         expect(dataRows.length).toEqual(20);
         expect(subRows.length).toEqual(5);
         expect(rowExpanders.length).toEqual(3);
-        expect(rowExpanderPlaceholders.length).toEqual(13);
+        expect(rowExpanderPlaceholders.length).toEqual(18); // 20 data rows + 1 header row - 3 real expanders
         expect(openedExpanders.length).toEqual(1);
         expect(closedExpanders.length).toEqual(2);
 
@@ -774,7 +774,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         expect(dataRows.length).toEqual(23);
         expect(subRows.length).toEqual(8);
         expect(rowExpanders.length).toEqual(3);
-        expect(rowExpanderPlaceholders.length).toEqual(13);
+        expect(rowExpanderPlaceholders.length).toEqual(21); // 23 data rows + 1 header row - 3 real expanders
         expect(openedExpanders.length).toEqual(2);
         expect(closedExpanders.length).toEqual(1);
 
@@ -785,7 +785,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         expect(dataRows.length).toEqual(27);
         expect(subRows.length).toEqual(12);
         expect(rowExpanders.length).toEqual(3);
-        expect(rowExpanderPlaceholders.length).toEqual(13);
+        expect(rowExpanderPlaceholders.length).toEqual(25); // 27 data rows + 1 header row - 3 real expanders
         expect(openedExpanders.length).toEqual(3);
         expect(closedExpanders.length).toEqual(0);
 
