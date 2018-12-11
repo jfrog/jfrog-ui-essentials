@@ -4,13 +4,13 @@ module.exports = {
       base: 'BrowserStack',
       browser: 'chrome',
       os: 'OS X',
-      os_version: 'Mountain Lion'
+      os_version: 'High Sierra'
     },
     bs_safari_mac: {
       base: 'BrowserStack',
       browser: 'safari',
       os: 'OS X',
-      os_version: 'Mountain Lion'
+      os_version: 'High Sierra'
     },
     bs_firefox_win: {
       base: 'BrowserStack',
