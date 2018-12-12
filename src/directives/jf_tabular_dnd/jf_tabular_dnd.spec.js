@@ -155,10 +155,10 @@ describe('unit test: jf-tabular-dnd directive', function () {
 
     it('should move selected items to the selected table and back again', () => {
 
-        angular.element(availableSelectionButtons[2]).triggerHandler('click');
-        angular.element(availableSelectionButtons[4]).triggerHandler('click');
+        $(availableSelectionButtons[2]).find('.selection-icon').click();
+        $(availableSelectionButtons[4]).find('.selection-icon').click();
         flushAndApply();
-        angular.element(includeSelectedButton[0]).triggerHandler('click');
+        includeSelectedButton.click();
         flushAndApply();
         getElements();
         expect(availableRowElements.length).toEqual(2);
@@ -169,8 +169,8 @@ describe('unit test: jf-tabular-dnd directive', function () {
         expect($(selectedRowElements[0]).prop('ctrl').data).toEqual(availableItems[1]);
         expect($(selectedRowElements[1]).prop('ctrl').data).toEqual(availableItems[3]);
 
-        $(selectedSelectionButtons[1]).click();
-        $(selectedSelectionButtons[2]).click();
+        $(selectedSelectionButtons[1]).find('.selection-icon').click();
+        $(selectedSelectionButtons[2]).find('.selection-icon').click();
         excludeSelectedButton.click();
         flushAndApply();
         getElements();
