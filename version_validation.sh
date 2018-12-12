@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eo pipefail
+set -euxo pipefail
 
 # If no version is supplied - exit with error
 if [ -z $VERSION_NAME ]; then
