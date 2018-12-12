@@ -1,4 +1,19 @@
 module = angular.mock.module;
+
+const handleVirtualScroll = ()=>{
+    function mockedGetPage(){
+        return this.origArray();
+    }
+
+    const jfVscroll = $('jf-vscroll');
+    for (let jfVscrollElem of jfVscroll){
+        const ctrl = angular.element(jfVscrollElem).controller('jf-vscroll');
+        ctrl.getPage = mockedGetPage;
+    }
+
+    // flushAndApply();
+};
+
 window.compileHtml = function (htmlStr, data, parentElement = null) {
     data = data || {};
     var $scope;
@@ -44,6 +59,7 @@ window.compileDirective = function (directive, attr, parentElement = null) {
     let scope = compileHtml(`<${directive} ${attributes}></${directive}>`, {data: attr}, parentElement);
     scope.$digest();
 
+    handleVirtualScroll();
     return scope;
 }
 
@@ -64,6 +80,7 @@ window.compileDirectiveAndGetElement = function (directive, attr, parentElement 
     let {$scope, $elem} = compileHtmlAndGetElement(`<${directive} ${attributes}></${directive}>`, {data: attr}, parentElement);
     $scope.$digest();
 
+    handleVirtualScroll();
     return {$scope, $elem};
 }
 

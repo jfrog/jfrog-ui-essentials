@@ -140,20 +140,6 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         });
     });
 
-    beforeEach(()=>{
-        function mockedGetPage(){
-            return this.origArray();
-        }
-
-        const jfVscroll = $('jf-vscroll');
-        for (let jfVscrollElem of jfVscroll){
-            const ctrl = angular.element(jfVscrollElem).controller('jf-vscroll');
-            ctrl.getPage = mockedGetPage;
-        }
-
-        flushAndApply();
-    });
-
     it('should compile', function () {
         expect(elem.html()).toMatchSnapshot();
     });
@@ -862,7 +848,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         var subRows2 = createTestData(3);
         var subRows3 = createTestData(4);
 
-        testData[5].$subRows = subRows1;
+        testData[5].$subRows = subRojws1;
         testData[8].$subRows = subRows2;
         testData[12].$subRows = subRows3;
 

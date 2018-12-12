@@ -110,20 +110,6 @@ describe('unit test: jf-tabular-dnd directive', function () {
 
     })
 
-    beforeEach(()=>{
-        function mockedGetPage(){
-            return this.origArray();
-        }
-
-        const jfVscroll = $('jf-vscroll');
-        for (let jfVscrollElem of jfVscroll){
-            const ctrl = angular.element(jfVscrollElem).controller('jf-vscroll');
-            ctrl.getPage = mockedGetPage;
-        }
-
-        flushAndApply();
-    });
-
     it('should show the element in its initialized state', () => {
         expect(container.length).toEqual(1);
         expect(availableRowElements.length).toEqual(4);
