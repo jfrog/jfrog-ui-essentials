@@ -140,6 +140,20 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         });
     });
 
+    beforeEach(()=>{
+        function mockedGetPage(){
+            return this.origArray();
+        }
+
+        const jfVscroll = $('jf-vscroll');
+        for (let jfVscrollElem of jfVscroll){
+            const ctrl = angular.element(jfVscrollElem).controller('jf-vscroll');
+            ctrl.getPage = mockedGetPage;
+        }
+
+        flushAndApply();
+    });
+
     it('should compile', function () {
         expect(elem.html()).toMatchSnapshot();
     });

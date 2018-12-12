@@ -5,6 +5,7 @@ describe('unit test: jf-tabular-dnd directive', function () {
     var $rootScope;
     var $timeout;
     var $q;
+    let $controller;
 
     var availableItems;
     var selectedItems;
@@ -27,10 +28,11 @@ describe('unit test: jf-tabular-dnd directive', function () {
     var availableFilterInput;
     var selectedFilterInput;
 
-    function setup(_$timeout_, _$q_, _$rootScope_) {
+    function setup(_$timeout_, _$q_, _$rootScope_, _$controller_) {
         $rootScope = _$rootScope_;
         $timeout = _$timeout_;
         $q = _$q_;
+        $controller = _$controller_;
     }
 
     function getElements() {
@@ -108,6 +110,20 @@ describe('unit test: jf-tabular-dnd directive', function () {
 
     })
 
+    beforeEach(()=>{
+        function mockedGetPage(){
+            return this.origArray();
+        }
+
+        const jfVscroll = $('jf-vscroll');
+        for (let jfVscrollElem of jfVscroll){
+            const ctrl = angular.element(jfVscrollElem).controller('jf-vscroll');
+            ctrl.getPage = mockedGetPage;
+        }
+
+        flushAndApply();
+    });
+
     it('should show the element in its initialized state', () => {
         expect(container.length).toEqual(1);
         expect(availableRowElements.length).toEqual(4);
@@ -139,9 +155,10 @@ describe('unit test: jf-tabular-dnd directive', function () {
 
     it('should move selected items to the selected table and back again', () => {
 
-        $(availableSelectionButtons[2]).click();
-        $(availableSelectionButtons[4]).click();
-        includeSelectedButton.click();
+        angular.element(availableSelectionButtons[2]).triggerHandler('click');
+        angular.element(availableSelectionButtons[4]).triggerHandler('click');
+        flushAndApply();
+        angular.element(includeSelectedButton[0]).triggerHandler('click');
         flushAndApply();
         getElements();
         expect(availableRowElements.length).toEqual(2);
