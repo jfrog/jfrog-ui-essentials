@@ -2,7 +2,7 @@
 
 # If no version is supplied - exit with error
 if [ -z $VERSION_NAME ]; then
-    echo -e "${RED}ERROR:${NC}" You must supply a valid version!
+    echo -e "ERROR: You must supply a valid version!"
     return
 fi
 
