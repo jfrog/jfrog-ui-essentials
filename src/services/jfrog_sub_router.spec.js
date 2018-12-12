@@ -337,7 +337,7 @@ describe('Unit: JFrogSubRouter Service', function () {
         setupSubRouter();
         $scope.$apply();
 
-        expect(JFrogSubRouter.$config).toBeObject();
+        expect(typeof JFrogSubRouter.$config).toBe('object');
         $scope.$destroy();
         expect(JFrogSubRouter.$config).toBeNull();
     });
