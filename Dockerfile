@@ -3,7 +3,7 @@ RUN apt-get update && \
     npm install -g gulp && \
     npm install -g npm@6.2.0
 
-ADD ./
-WORKDIR ./
+ADD ./ ./
+WORKDIR /
 
 RUN npm install && gulp build
