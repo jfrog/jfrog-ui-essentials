@@ -38,11 +38,19 @@
         }
       }
       & > span{
-        float: left;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        width: 88%;
+        font-size: 12px;
+
+        &.full-width{
+          width: 88%;
+        }
+
+        &:not(.file-size-deploy-multi){
+          float: left;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          width: 72%;
+        }
       }
       .icon.icon-clear{
         color:grey;
