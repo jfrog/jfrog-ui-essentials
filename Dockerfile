@@ -6,4 +6,4 @@ RUN apt-get update && \
 ADD ./ ./
 WORKDIR /
 
-RUN npm install && gulp build
+RUN rm -r package-lock.json && npm install && gulp build
