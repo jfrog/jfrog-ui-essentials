@@ -187,7 +187,7 @@ describe('unit test: jfrog_grid ui component', () => {
       jest.spyOn(gridOptions, 'setGridData');
       jest.spyOn(gridOptions, 'getPage');
       whenPagingComplete = q.when({total_count: 10, data: data});
-      paginationCallback = jest.fn().and.returnValue(whenPagingComplete);
+      paginationCallback = jest.fn().mockReturnValue(whenPagingComplete);
       gridOptions.setColumns([{field: 'name'}]);
       result = gridOptions.setExternalPagination(paginationCallback);
       gridOptions.onRegisterApi(gridApi);
