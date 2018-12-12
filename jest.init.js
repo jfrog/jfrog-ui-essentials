@@ -1,6 +1,8 @@
+// window = global;
+// console.log(global);
 require('angular');
 require('angular-mocks/ngMock');
-window.jest = require('babel-jest');
+// window.jest = require('babel-jest');
 require('babel-plugin-dynamic-import-node');
 require('babel-plugin-transform-es2015-modules-commonjs');
 

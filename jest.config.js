@@ -20,5 +20,6 @@ module.exports = {
     moduleNameMapper: {
         "(.*)\\.html": "<rootDir>/src/$1.html",
         "^@/(.*)$": "<rootDir>/src/$1"
-    }
+    },
+    testEnvironment: 'jsdom'
 }
