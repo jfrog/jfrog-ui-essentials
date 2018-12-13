@@ -4,14 +4,14 @@ body {
 // Typography
 h1 {
   color: @black;
-  font-weight: 600;
+  font-weight: @jfFontWeightSemiBold;
   font-size: 26px;
   letter-spacing: -0.5px;
 }
 
 h2 {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: @jfFontWeightSemiBold;
 }
 
 .alert {
@@ -21,11 +21,11 @@ h2 {
   border: 0 none;
   padding: 14px 30px 14px 49px;
   color: black;
-  font-weight: 400;
+  font-weight: @jfFontWeightNormal;
 
   a {
     text-decoration: none;
-    font-weight: 600;
+    font-weight: @jfFontWeightSemiBold;
 
     &:hover{
       text-decoration: underline;
@@ -40,7 +40,7 @@ h2 {
   }
 
   b {
-    font-weight: 600;
+    font-weight: @jfFontWeightSemiBold;
   }
 
   &:before {
@@ -183,7 +183,7 @@ a, .alert a {
     top: -1px;
     content: "\e92e";
     font-style: normal !important;
-    font-weight: 400 !important;
+    font-weight: @jfFontWeightNormal !important;
     font-variant: normal !important;
     text-transform: none !important;
     speak: none;
