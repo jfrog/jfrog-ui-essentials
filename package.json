@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "npm i && gulp",
-    "test": "gulp templates && jest --no-cache",
+    "test": "gulp templates && jest",
     "test-coverage": "gulp templates && jest ./ --coverage",
     "test-watch": "gulp templates && jest ./ --watch"
   },

@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`unit test: jf_table_view directive & JFTableViewOptions service should match snapshot 1`] = `
+"<table class=\\"data-list\\">
+	<tbody><!-- ngRepeat: item in jfDataList.formattedItems --><!-- ngIf: !item.isHidden --><tr class=\\"data-list-item ng-scope\\" ng-repeat=\\"item in jfDataList.formattedItems\\" ng-if=\\"!item.isHidden\\">
+		<td class=\\"data-list-item-label ng-binding\\">Plain text:</td>
+		<td class=\\"data-list-item-value\\">
+			<div class=\\"value\\">
+				<!-- ngIf: item.isUrl && item.value && item.value.length && ((!item.hasOwnProperty('url')) || (item.url && item.url.length)) -->
+				<!-- ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) --><div ng-if=\\"!jfDataList.isArray(item.value) &amp;&amp; (!item.isUrl || (item.isUrl &amp;&amp; ((item.hasOwnProperty('url') &amp;&amp; !item.url.length) || (!item.value || !item.value.length))))\\" ng-bind-html=\\"jfDataList.getItemValue(item.value)\\" jf-tooltip-on-overflow=\\"\\" class=\\"ng-binding ng-scope ng-isolate-scope\\"></div><!-- end ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) -->
+				<!-- ngIf: jfDataList.isArray(item.value) -->
+				<!-- ngIf: item.copy && !jfDataList.isArray(item.value) -->
+			</div>
+		</td>
+	</tr><!-- end ngIf: !item.isHidden --><!-- end ngRepeat: item in jfDataList.formattedItems --><!-- ngIf: !item.isHidden --><tr class=\\"data-list-item ng-scope\\" ng-repeat=\\"item in jfDataList.formattedItems\\" ng-if=\\"!item.isHidden\\">
+		<td class=\\"data-list-item-label ng-binding\\">More plain text:</td>
+		<td class=\\"data-list-item-value\\">
+			<div class=\\"value\\">
+				<!-- ngIf: item.isUrl && item.value && item.value.length && ((!item.hasOwnProperty('url')) || (item.url && item.url.length)) -->
+				<!-- ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) --><div ng-if=\\"!jfDataList.isArray(item.value) &amp;&amp; (!item.isUrl || (item.isUrl &amp;&amp; ((item.hasOwnProperty('url') &amp;&amp; !item.url.length) || (!item.value || !item.value.length))))\\" ng-bind-html=\\"jfDataList.getItemValue(item.value)\\" jf-tooltip-on-overflow=\\"\\" class=\\"ng-binding ng-scope ng-isolate-scope\\"></div><!-- end ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) -->
+				<!-- ngIf: jfDataList.isArray(item.value) -->
+				<!-- ngIf: item.copy && !jfDataList.isArray(item.value) -->
+			</div>
+		</td>
+	</tr><!-- end ngIf: !item.isHidden --><!-- end ngRepeat: item in jfDataList.formattedItems --><!-- ngIf: !item.isHidden --><tr class=\\"data-list-item ng-scope\\" ng-repeat=\\"item in jfDataList.formattedItems\\" ng-if=\\"!item.isHidden\\">
+		<td class=\\"data-list-item-label ng-binding\\">Text with copy to clipboard:</td>
+		<td class=\\"data-list-item-value\\">
+			<div class=\\"value\\">
+				<!-- ngIf: item.isUrl && item.value && item.value.length && ((!item.hasOwnProperty('url')) || (item.url && item.url.length)) -->
+				<!-- ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) --><div ng-if=\\"!jfDataList.isArray(item.value) &amp;&amp; (!item.isUrl || (item.isUrl &amp;&amp; ((item.hasOwnProperty('url') &amp;&amp; !item.url.length) || (!item.value || !item.value.length))))\\" ng-bind-html=\\"jfDataList.getItemValue(item.value)\\" jf-tooltip-on-overflow=\\"\\" class=\\"ng-binding ng-scope ng-isolate-scope\\"></div><!-- end ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) -->
+				<!-- ngIf: jfDataList.isArray(item.value) -->
+				<!-- ngIf: item.copy && !jfDataList.isArray(item.value) --><div class=\\"copy ng-scope\\" ng-if=\\"item.copy &amp;&amp; !jfDataList.isArray(item.value)\\">
+					<jf-clip-copy text-to-copy=\\"item.value\\" class=\\"ng-isolate-scope\\"><span class=\\"clip-copy-button\\">
+    <a ng-show=\\"!jfClipCopy.isSafari &amp;&amp; !!jfClipCopy.textToCopy\\" class=\\"copy-to-clip icon icon-copy-to-clipboard-2\\" data-clipboard-text=\\"{{jfClipCopy.textToCopy}}\\" jf-tooltip=\\"{{jfClipCopy.tooltipText}}\\"></a>
+    <a ng-show=\\"jfClipCopy.isSafari &amp;&amp; !!jfClipCopy.textToCopy\\" class=\\"copy-to-clip icon icon-copy-to-clipboard\\" clip-copy=\\"jfClipCopy.textToCopy\\" clip-click=\\"jfClipCopy.onSuccessfulCopy()\\" jf-tooltip=\\"{{jfClipCopy.tooltipText}}\\"></a>
+</span>
+
+</jf-clip-copy>
+				</div><!-- end ngIf: item.copy && !jfDataList.isArray(item.value) -->
+			</div>
+		</td>
+	</tr><!-- end ngIf: !item.isHidden --><!-- end ngRepeat: item in jfDataList.formattedItems --><!-- ngIf: !item.isHidden --><tr class=\\"data-list-item ng-scope\\" ng-repeat=\\"item in jfDataList.formattedItems\\" ng-if=\\"!item.isHidden\\">
+		<td class=\\"data-list-item-label ng-binding\\">Overflowing text:</td>
+		<td class=\\"data-list-item-value\\">
+			<div class=\\"value\\">
+				<!-- ngIf: item.isUrl && item.value && item.value.length && ((!item.hasOwnProperty('url')) || (item.url && item.url.length)) -->
+				<!-- ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) --><div ng-if=\\"!jfDataList.isArray(item.value) &amp;&amp; (!item.isUrl || (item.isUrl &amp;&amp; ((item.hasOwnProperty('url') &amp;&amp; !item.url.length) || (!item.value || !item.value.length))))\\" ng-bind-html=\\"jfDataList.getItemValue(item.value)\\" jf-tooltip-on-overflow=\\"\\" class=\\"ng-binding ng-scope ng-isolate-scope\\"></div><!-- end ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) -->
+				<!-- ngIf: jfDataList.isArray(item.value) -->
+				<!-- ngIf: item.copy && !jfDataList.isArray(item.value) -->
+			</div>
+		</td>
+	</tr><!-- end ngIf: !item.isHidden --><!-- end ngRepeat: item in jfDataList.formattedItems --><!-- ngIf: !item.isHidden --><tr class=\\"data-list-item ng-scope\\" ng-repeat=\\"item in jfDataList.formattedItems\\" ng-if=\\"!item.isHidden\\">
+		<td class=\\"data-list-item-label ng-binding\\">Overflowing text with copy:</td>
+		<td class=\\"data-list-item-value\\">
+			<div class=\\"value\\">
+				<!-- ngIf: item.isUrl && item.value && item.value.length && ((!item.hasOwnProperty('url')) || (item.url && item.url.length)) -->
+				<!-- ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) --><div ng-if=\\"!jfDataList.isArray(item.value) &amp;&amp; (!item.isUrl || (item.isUrl &amp;&amp; ((item.hasOwnProperty('url') &amp;&amp; !item.url.length) || (!item.value || !item.value.length))))\\" ng-bind-html=\\"jfDataList.getItemValue(item.value)\\" jf-tooltip-on-overflow=\\"\\" class=\\"ng-binding ng-scope ng-isolate-scope\\"></div><!-- end ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) -->
+				<!-- ngIf: jfDataList.isArray(item.value) -->
+				<!-- ngIf: item.copy && !jfDataList.isArray(item.value) --><div class=\\"copy ng-scope\\" ng-if=\\"item.copy &amp;&amp; !jfDataList.isArray(item.value)\\">
+					<jf-clip-copy text-to-copy=\\"item.value\\"></jf-clip-copy>
+				</div><!-- end ngIf: item.copy && !jfDataList.isArray(item.value) -->
+			</div>
+		</td>
+	</tr><!-- end ngIf: !item.isHidden --><!-- end ngRepeat: item in jfDataList.formattedItems --><!-- ngIf: !item.isHidden --><tr class=\\"data-list-item ng-scope\\" ng-repeat=\\"item in jfDataList.formattedItems\\" ng-if=\\"!item.isHidden\\">
+		<td class=\\"data-list-item-label ng-binding\\">Empty text:</td>
+		<td class=\\"data-list-item-value\\">
+			<div class=\\"value\\">
+				<!-- ngIf: item.isUrl && item.value && item.value.length && ((!item.hasOwnProperty('url')) || (item.url && item.url.length)) -->
+				<!-- ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) --><div ng-if=\\"!jfDataList.isArray(item.value) &amp;&amp; (!item.isUrl || (item.isUrl &amp;&amp; ((item.hasOwnProperty('url') &amp;&amp; !item.url.length) || (!item.value || !item.value.length))))\\" ng-bind-html=\\"jfDataList.getItemValue(item.value)\\" jf-tooltip-on-overflow=\\"\\" class=\\"ng-binding ng-scope ng-isolate-scope\\"></div><!-- end ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) -->
+				<!-- ngIf: jfDataList.isArray(item.value) -->
+				<!-- ngIf: item.copy && !jfDataList.isArray(item.value) -->
+			</div>
+		</td>
+	</tr><!-- end ngIf: !item.isHidden --><!-- end ngRepeat: item in jfDataList.formattedItems --><!-- ngIf: !item.isHidden --><tr class=\\"data-list-item ng-scope\\" ng-repeat=\\"item in jfDataList.formattedItems\\" ng-if=\\"!item.isHidden\\">
+		<td class=\\"data-list-item-label ng-binding\\">List with some clickable items:</td>
+		<td class=\\"data-list-item-value\\">
+			<div class=\\"value\\">
+				<!-- ngIf: item.isUrl && item.value && item.value.length && ((!item.hasOwnProperty('url')) || (item.url && item.url.length)) -->
+				<!-- ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) --><div ng-if=\\"!jfDataList.isArray(item.value) &amp;&amp; (!item.isUrl || (item.isUrl &amp;&amp; ((item.hasOwnProperty('url') &amp;&amp; !item.url.length) || (!item.value || !item.value.length))))\\" ng-bind-html=\\"jfDataList.getItemValue(item.value)\\" jf-tooltip-on-overflow=\\"\\" class=\\"ng-binding ng-scope ng-isolate-scope\\"></div><!-- end ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) -->
+				<!-- ngIf: jfDataList.isArray(item.value) -->
+				<!-- ngIf: item.copy && !jfDataList.isArray(item.value) -->
+			</div>
+		</td>
+	</tr><!-- end ngIf: !item.isHidden --><!-- end ngRepeat: item in jfDataList.formattedItems --><!-- ngIf: !item.isHidden --><tr class=\\"data-list-item ng-scope\\" ng-repeat=\\"item in jfDataList.formattedItems\\" ng-if=\\"!item.isHidden\\">
+		<td class=\\"data-list-item-label ng-binding\\">List with overflowing items:</td>
+		<td class=\\"data-list-item-value\\">
+			<div class=\\"value\\">
+				<!-- ngIf: item.isUrl && item.value && item.value.length && ((!item.hasOwnProperty('url')) || (item.url && item.url.length)) -->
+				<!-- ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) --><div ng-if=\\"!jfDataList.isArray(item.value) &amp;&amp; (!item.isUrl || (item.isUrl &amp;&amp; ((item.hasOwnProperty('url') &amp;&amp; !item.url.length) || (!item.value || !item.value.length))))\\" ng-bind-html=\\"jfDataList.getItemValue(item.value)\\" jf-tooltip-on-overflow=\\"\\" class=\\"ng-binding ng-scope ng-isolate-scope\\"></div><!-- end ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) -->
+				<!-- ngIf: jfDataList.isArray(item.value) -->
+				<!-- ngIf: item.copy && !jfDataList.isArray(item.value) -->
+			</div>
+		</td>
+	</tr><!-- end ngIf: !item.isHidden --><!-- end ngRepeat: item in jfDataList.formattedItems --><!-- ngIf: !item.isHidden --><!-- end ngRepeat: item in jfDataList.formattedItems --><!-- ngIf: !item.isHidden --><tr class=\\"data-list-item ng-scope\\" ng-repeat=\\"item in jfDataList.formattedItems\\" ng-if=\\"!item.isHidden\\">
+		<td class=\\"data-list-item-label ng-binding\\">Value is url:</td>
+		<td class=\\"data-list-item-value\\">
+			<div class=\\"value\\">
+				<!-- ngIf: item.isUrl && item.value && item.value.length && ((!item.hasOwnProperty('url')) || (item.url && item.url.length)) --><a ng-if=\\"item.isUrl &amp;&amp; item.value &amp;&amp; item.value.length &amp;&amp; ((!item.hasOwnProperty('url')) || (item.url &amp;&amp; item.url.length))\\" ng-href=\\"http://www.lorem_ipsum_dolor_sit_amet_consectetur_adipisicing_elit.com\\" ng-bind-html=\\"item.value\\" target=\\"_blank\\" class=\\"jf-link ng-binding ng-scope ng-isolate-scope\\" jf-tooltip-on-overflow=\\"\\" href=\\"http://www.lorem_ipsum_dolor_sit_amet_consectetur_adipisicing_elit.com\\">http://www.lorem_ipsum_dolor_sit_amet_consectetur_adipisicing_elit.com</a><!-- end ngIf: item.isUrl && item.value && item.value.length && ((!item.hasOwnProperty('url')) || (item.url && item.url.length)) -->
+				<!-- ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) -->
+				<!-- ngIf: jfDataList.isArray(item.value) -->
+				<!-- ngIf: item.copy && !jfDataList.isArray(item.value) -->
+			</div>
+		</td>
+	</tr><!-- end ngIf: !item.isHidden --><!-- end ngRepeat: item in jfDataList.formattedItems --><!-- ngIf: !item.isHidden --><tr class=\\"data-list-item ng-scope\\" ng-repeat=\\"item in jfDataList.formattedItems\\" ng-if=\\"!item.isHidden\\">
+		<td class=\\"data-list-item-label ng-binding\\">Value with separate url:</td>
+		<td class=\\"data-list-item-value\\">
+			<div class=\\"value\\">
+				<!-- ngIf: item.isUrl && item.value && item.value.length && ((!item.hasOwnProperty('url')) || (item.url && item.url.length)) --><a ng-if=\\"item.isUrl &amp;&amp; item.value &amp;&amp; item.value.length &amp;&amp; ((!item.hasOwnProperty('url')) || (item.url &amp;&amp; item.url.length))\\" ng-href=\\"https://www.lipsum.com/\\" ng-bind-html=\\"item.value\\" target=\\"_blank\\" class=\\"jf-link ng-binding ng-scope ng-isolate-scope\\" jf-tooltip-on-overflow=\\"\\" href=\\"https://www.lipsum.com/\\">Link to lorem ipsum website</a><!-- end ngIf: item.isUrl && item.value && item.value.length && ((!item.hasOwnProperty('url')) || (item.url && item.url.length)) -->
+				<!-- ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) -->
+				<!-- ngIf: jfDataList.isArray(item.value) -->
+				<!-- ngIf: item.copy && !jfDataList.isArray(item.value) -->
+			</div>
+		</td>
+	</tr><!-- end ngIf: !item.isHidden --><!-- end ngRepeat: item in jfDataList.formattedItems --><!-- ngIf: !item.isHidden --><tr class=\\"data-list-item ng-scope\\" ng-repeat=\\"item in jfDataList.formattedItems\\" ng-if=\\"!item.isHidden\\">
+		<td class=\\"data-list-item-label ng-binding\\">Empty url:</td>
+		<td class=\\"data-list-item-value\\">
+			<div class=\\"value\\">
+				<!-- ngIf: item.isUrl && item.value && item.value.length && ((!item.hasOwnProperty('url')) || (item.url && item.url.length)) -->
+				<!-- ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) --><div ng-if=\\"!jfDataList.isArray(item.value) &amp;&amp; (!item.isUrl || (item.isUrl &amp;&amp; ((item.hasOwnProperty('url') &amp;&amp; !item.url.length) || (!item.value || !item.value.length))))\\" ng-bind-html=\\"jfDataList.getItemValue(item.value)\\" jf-tooltip-on-overflow=\\"\\" class=\\"ng-binding ng-scope ng-isolate-scope\\"></div><!-- end ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) -->
+				<!-- ngIf: jfDataList.isArray(item.value) -->
+				<!-- ngIf: item.copy && !jfDataList.isArray(item.value) -->
+			</div>
+		</td>
+	</tr><!-- end ngIf: !item.isHidden --><!-- end ngRepeat: item in jfDataList.formattedItems --><!-- ngIf: !item.isHidden --><tr class=\\"data-list-item ng-scope\\" ng-repeat=\\"item in jfDataList.formattedItems\\" ng-if=\\"!item.isHidden\\">
+		<td class=\\"data-list-item-label ng-binding\\">Empty url &amp; text:</td>
+		<td class=\\"data-list-item-value\\">
+			<div class=\\"value\\">
+				<!-- ngIf: item.isUrl && item.value && item.value.length && ((!item.hasOwnProperty('url')) || (item.url && item.url.length)) -->
+				<!-- ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) --><div ng-if=\\"!jfDataList.isArray(item.value) &amp;&amp; (!item.isUrl || (item.isUrl &amp;&amp; ((item.hasOwnProperty('url') &amp;&amp; !item.url.length) || (!item.value || !item.value.length))))\\" ng-bind-html=\\"jfDataList.getItemValue(item.value)\\" jf-tooltip-on-overflow=\\"\\" class=\\"ng-binding ng-scope ng-isolate-scope\\"></div><!-- end ngIf: !jfDataList.isArray(item.value) && (!item.isUrl || (item.isUrl && ((item.hasOwnProperty('url') && !item.url.length) || (!item.value || !item.value.length)))) -->
+				<!-- ngIf: jfDataList.isArray(item.value) -->
+				<!-- ngIf: item.copy && !jfDataList.isArray(item.value) -->
+			</div>
+		</td>
+	</tr><!-- end ngIf: !item.isHidden --><!-- end ngRepeat: item in jfDataList.formattedItems -->
+</tbody></table>"
+`;

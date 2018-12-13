@@ -31,4 +31,9 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', () =
         expect($elem.html().length).toBeGreaterThan(0);
     });
 
+    it('should match snapshot', function () {
+        expect($elem.html()).toMatchSnapshot();
+    });
+
+
 });
