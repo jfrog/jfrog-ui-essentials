@@ -81,7 +81,7 @@ window.compileDirectiveAndGetElement = function (directive, attr, parentElement 
         }
     }
     let {$scope, $elem} = compileHtmlAndGetElement(`<${directive} ${attributes}></${directive}>`, {data: attr}, parentElement);
-    $scope.$digest();
+    // $scope.$digest();
 
     handleVirtualScroll();
     return {$scope, $elem};
