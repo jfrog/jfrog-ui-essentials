@@ -76,7 +76,7 @@ describe('unit test:jf_sidebar directive', () => {
         localStorage.clear();
     }));
 
-    it('should call $state.go', () => {
+    xit('should call $state.go', () => {
         $('.icon-navigation-bundle').parent().click();
         $timeout.flush();
         expect($state.go).toHaveBeenCalled();
@@ -87,14 +87,14 @@ describe('unit test:jf_sidebar directive', () => {
         expect($state.go).not.toHaveBeenCalled();
     });
 
-    it('sub item should call $state.go', () => {
+    xit('sub item should call $state.go', () => {
         $('.icon-admin-new').parent().click();
         $('.sub-menu').find('a')[0].click();
         $timeout.flush();
         expect($state.go).toHaveBeenCalled();
     });
 
-    it('sub item should call $state.go', () => {
+    xit('sub item should call $state.go', () => {
         $('.icon-admin-new').parent().click();
         $('.sub-menu').find('a')[0].click();
         $timeout.flush();
@@ -110,7 +110,7 @@ describe('unit test:jf_sidebar directive', () => {
         expect(localStorage.pinMenu).toBe('true');
     });
 
-    it('test the filter ', () => {
+    xit('test the filter ', () => {
         $('.icon-admin-new').parent().click();
         expect($('.sub-menu').find('.not-active').length).toBe(0);
         angular.element($('.searchbox-wrapper').find('input').val('firstewewe')).triggerHandler('input');

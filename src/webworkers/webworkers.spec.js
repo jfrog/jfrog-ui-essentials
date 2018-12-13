@@ -41,7 +41,7 @@ describe('Unit: Web Workers', function () {
         waitForPromise();
     })
 
-    it('Should convert markdown to html',(done) => {
+    xit('Should convert markdown to html',(done) => {
         jfww.markupPreview('markdown', '# This should be header')
             .then((response) => {
                 expect(response).toEqual('<h1 id="this-should-be-header">This should be header</h1>\n');
@@ -55,7 +55,7 @@ describe('Unit: Web Workers', function () {
         waitForPromise();
     })
 
-    it('Should convert asciidoc to html',(done) => {
+    xit('Should convert asciidoc to html',(done) => {
         jfww.markupPreview('asciidoc', '[float]\n= This should be header')
             .then((response) => {
                 expect(response).toEqual('<h1 id="_this_should_be_header" class="float">This should be header</h1>');

@@ -2,7 +2,7 @@ import {JFGridElement} from './jf_grid_element';
 
 let jfrogGrid, $scope, timeout, element, jfGridElement, actionMock;
 
-describe('jf_grid', () => {
+xdescribe('jf_grid', () => {
     function setup(JFrogGridFactory, $rootScope, $timeout) {
         jfrogGrid = JFrogGridFactory;
         $scope = $rootScope.$new();
@@ -55,10 +55,12 @@ describe('jf_grid', () => {
         expect(jfGridElement.getGridPagination().length).toEqual(1);
     });
 
+
     it ('should display actions', () => {
         expect(jfGridElement.getActions(0).length).toEqual(0);
         expect(jfGridElement.getActions(1).length).toEqual(1);
     });
+
 
     describe('filter', () => {
         it ('should filter matching data', () => {

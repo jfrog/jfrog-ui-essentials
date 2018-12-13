@@ -30,8 +30,6 @@ require('jquery-contextmenu/dist/jquery.contextMenu');
 require('jf-tooltipster/js/jquery.tooltipster');
 require('components-jqueryui/jquery-ui');
 
-
-
 require('./dist/tmp/templates');
 require('./src/directives/jfrog.directives.module');
 require('./src/services/jfrog.services.module');

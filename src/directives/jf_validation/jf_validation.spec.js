@@ -55,7 +55,7 @@ describe('unit test:jf_validation directive text test', function () {
 	it('should indicate error in invalid mail input', () => {
 		compileDirective({}, "email")
 		expect(directiveCtrl).toBeDefined()
-		console.log(input)
+		// console.log(input)
 		let text = 'matanGotlieb';
 		ngModelController.$setViewValue(text);
 		expect(ngModelController.$error.email).toBe(true)
@@ -108,7 +108,7 @@ describe('unit test:jf_validation directive text test', function () {
 	});
 
 	it('should indicate min - max number input', () => {
-		console.log(errorMsg)
+		// console.log(errorMsg)
 		compileDirective({}, "number", "max='10' min='0'");
 		expect(directiveCtrl).toBeDefined();
 		ngModelController.$setViewValue("11");
@@ -124,7 +124,7 @@ describe('unit test:jf_validation directive text test', function () {
 	});
 
 	it('should indicate min - max length input', () => {
-		console.log(errorMsg)
+		// console.log(errorMsg)
 		compileDirective({}, "text", "maxLength='10' minLength='3'");
 
 		expect(directiveCtrl).toBeDefined();

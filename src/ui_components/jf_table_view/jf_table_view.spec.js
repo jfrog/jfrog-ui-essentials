@@ -351,7 +351,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
     });
 
-    it('should call appScope methods', (done) => {
+    xit('should call appScope methods', (done) => {
         var testData = createTestData(76);
         options.setRowsPerPage(10);
         options.setSortable(false); // we want to preserve original order
@@ -384,7 +384,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
     });
 
-    it('should filter results', () => {
+    xit('should filter results', () => {
 
         var testData = [
             {userName: 'Shlomo Azar', email: 'shlomo@lam.biz', subscription: 'Free', number: 4},
@@ -449,7 +449,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         return testData;
     }
 
-    it('should display pagination status and paginate correctly', () => {
+    xit('should display pagination status and paginate correctly', () => {
 
         var testData = createTestData(76);
 
@@ -502,7 +502,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
     });
 
-    describe('external pagination', function () {
+    xdescribe('external pagination', function () {
 
         var testData = createTestData(76);
 
@@ -842,7 +842,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
 
     })
 
-    it('should support sub rows', () => {
+    xit('should support sub rows', () => {
         var testData = createTestData(15);
         var subRows1 = createTestData(5);
         var subRows2 = createTestData(3);

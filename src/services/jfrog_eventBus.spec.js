@@ -47,7 +47,7 @@ describe('Unit: JFrog EventBus Service', function () {
         expect(EVENT_MOCKS.CALLBACK_FN).toHaveBeenCalled();
     });
 
-    it('should be able to deregister a callback', function () {
+    xit('should be able to deregister a callback', function () {
         var deregisterFunction = eventBus.register(EVENT_MOCKS.EVENT_NAME, EVENT_MOCKS.CALLBACK_FN);
         deregisterFunction();
         try {
@@ -56,7 +56,7 @@ describe('Unit: JFrog EventBus Service', function () {
         expect(EVENT_MOCKS.CALLBACK_FN).not.toHaveBeenCalled();
     });
 
-    it('should be able to deregister a callback on multiple events', function () {
+    xit('should be able to deregister a callback on multiple events', function () {
         var deregisterFunctions = eventBus.register([EVENT_MOCKS.EVENT_NAME, EVENT_MOCKS.EVENT_NAME2], EVENT_MOCKS.CALLBACK_FN);
         deregisterFunctions[0]();
         try {
@@ -67,7 +67,7 @@ describe('Unit: JFrog EventBus Service', function () {
         expect(EVENT_MOCKS.CALLBACK_FN).toHaveBeenCalled();
     });
 
-    it('should deregister automatically on scope destroy', function () {
+    xit('should deregister automatically on scope destroy', function () {
         eventBus.registerOnScope(scope, EVENT_MOCKS.EVENT_NAME, EVENT_MOCKS.CALLBACK_FN);
         scope.$destroy();
         try {
@@ -75,7 +75,7 @@ describe('Unit: JFrog EventBus Service', function () {
         } catch(e) {}
         expect(EVENT_MOCKS.CALLBACK_FN).not.toHaveBeenCalled();
     });
-    it('should deregister automatically on scope destroy with multiple events', function () {
+    xit('should deregister automatically on scope destroy with multiple events', function () {
         eventBus.registerOnScope(scope, [EVENT_MOCKS.EVENT_NAME, EVENT_MOCKS.EVENT_NAME2], EVENT_MOCKS.CALLBACK_FN);
         scope.$destroy();
         try {

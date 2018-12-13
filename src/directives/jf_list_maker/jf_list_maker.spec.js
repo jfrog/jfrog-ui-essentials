@@ -62,7 +62,7 @@ describe('unit test:jf_list_maker directive', function () {
       values: ['momo','albert']
     });
 
-    $(removeButtons[0]).click(); //should remove albert
+    angular.element(removeButtons[0]).triggerHandler('click'); //should remove albert
 
     getElements();
     expect(listRows.length).toBe(1);
