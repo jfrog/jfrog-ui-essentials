@@ -1,17 +1,20 @@
+
 module = angular.mock.module;
 
-const handleVirtualScroll = ()=>{
-    function mockedGetPage(){
+const handleVirtualScroll = () => {
+    if (!expect || !expect.extend) {
+        return;
+    }
+
+    function mockedGetPage() {
         return this.origArray();
     }
 
     const jfVscroll = $('jf-vscroll');
-    for (let jfVscrollElem of jfVscroll){
+    for (let jfVscrollElem of jfVscroll) {
         const ctrl = angular.element(jfVscrollElem).controller('jf-vscroll');
         ctrl.getPage = mockedGetPage;
     }
-
-    // flushAndApply();
 };
 
 window.compileHtml = function (htmlStr, data, parentElement = null) {
@@ -35,7 +38,7 @@ window.compileHtmlAndGetElement = function (htmlStr, data, parentElement = null)
         // parentElement = parentElement || document.body;
         $elem = angular.element(htmlStr);
         $scope = $rootScope.$new();
-        $scope= angular.extend($scope, data);
+        $scope = angular.extend($scope, data);
         $elem = $compile($elem)($scope);
         $scope.$digest();
     });
@@ -103,7 +106,7 @@ window.waitForPromise = function () {
     }, 0)
 }
 
-if(expect && expect.extend) {
+if (expect && expect.extend) {
     expect.extend({
         toBeWithinRange(received, floor, ceiling) {
             const pass = received >= floor && received <= ceiling;
@@ -122,4 +125,112 @@ if(expect && expect.extend) {
             }
         },
     });
+
+    mockCanvas(window);
+    mockWorker();
+
+    /*jest.mock('../src/ui_components/jf_tree/tree_view_pane.js', () => {
+        TreeViewPane
+        return jest.fn(() => 42);
+    });
+    jest.mock('../src/ui_components/jf_tree/tree_view_pane.js');
+    TreeViewPane._getPageData = jest.fn().andRe;*/
+
 }
+
+function mockCanvas(window) {
+    window.HTMLCanvasElement.prototype.getContext = function () {
+        return {
+            fillRect: function () {
+            },
+            clearRect: function () {
+            },
+            getImageData: function (x, y, w, h) {
+                return {
+                    data: new Array(w * h * 4)
+                };
+            },
+            putImageData: function () {
+            },
+            createImageData: function () {
+                return []
+            },
+            setTransform: function () {
+            },
+            drawImage: function () {
+            },
+            save: function () {
+            },
+            fillText: function () {
+            },
+            restore: function () {
+            },
+            beginPath: function () {
+            },
+            moveTo: function () {
+            },
+            lineTo: function () {
+            },
+            closePath: function () {
+            },
+            stroke: function () {
+            },
+            translate: function () {
+            },
+            scale: function () {
+            },
+            rotate: function () {
+            },
+            arc: function () {
+            },
+            fill: function () {
+            },
+            measureText: function () {
+                return {width: 0};
+            },
+            transform: function () {
+            },
+            rect: function () {
+            },
+            clip: function () {
+            },
+        };
+    }
+
+    window.HTMLCanvasElement.prototype.toDataURL = function () {
+        return "";
+    }
+}
+
+function mockWorker() {
+    class Worker {
+        constructor(stringUrl) {
+            this.url = stringUrl;
+            this.asciidoctor = null;
+            this.onmessage = function (e) {
+
+            };
+        }
+
+
+        postMessage(msg) {
+            switch (msg.cmd) {
+                case 'testWorker': {
+                    msg.data = 'OK';
+                    break;
+                }
+
+                case 'runFunction': {
+                    var f = eval('(' + msg.function + ')');
+                    msg.data = {response: f.apply(f, msg.params || [])}
+                    break;
+                }
+            }
+            this.onmessage(msg);
+        }
+
+    }
+
+    window.Worker = Worker;
+}
+
