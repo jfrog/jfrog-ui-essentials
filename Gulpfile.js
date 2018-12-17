@@ -62,7 +62,20 @@ gulp.task('build:common',
             'writeBuildVersion',
             'copyWebworkers',
             'cleanTemp',
-            callback
+	        // this callback is executed at the end, if any of the previous tasks errored,
+	        // the first param contains the error
+	        function (err) {
+		        //if any error happened in the previous tasks, exit with a code > 0
+		        if (err) {
+			        var exitCode = 2;
+			        console.log('[ERROR] gulp build task failed', err);
+			        console.log('[FAIL] gulp build task failed - exiting with code ' + exitCode);
+			        return process.exit(exitCode);
+		        }
+		        else {
+			        return callback();
+		        }
+	        }
         );
     }
 );

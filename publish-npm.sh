@@ -45,19 +45,19 @@ echo -e "${YELLOW}Set BUILD_VERSION: ${GREEN}$BUILD_VERSION${YELLOW}${NC}"
 
 # Build jfrog-ui-essentials
 echo -e "${YELLOW}Building jfrog-ui-essentials:${NC}"
-gulp build
+gulp build || return 1
 
 # Auto committing & pushing build files
 echo -e "${YELLOW}Committing and pushing build files:${NC}"
-git add ./dist -A
-git add ./package.json
-git add ./package-lock.json
+git add ./dist -A  || return 1
+git add ./package.json || return 1
+git add ./package-lock.json || return 1
 
 commit_message="Version $1 - Pre-tag"
 echo -e "${GREEN}$commit_message${NC}"
 
-git commit -m "$commit_message"
-git push
+git commit -m "$commit_message" || return 1
+git push || return 1
 
 # Auto tag & push
 echo -e "${YELLOW}Creating and pushing a new tag:${NC}"
@@ -65,29 +65,33 @@ echo -e "${YELLOW}Creating and pushing a new tag:${NC}"
 git tag $1
 git push --tags
 
+function un_stash_npmrc {
+    # Un-stash the .npmrc file
+    echo -e "${YELLOW}Un-stashing your .npmrc file${NC}"
+    mv ~/.NPMTMP ~/.npmrc
+    return 0
+}
+
 # Stash the .npmrc file
 echo -e "${YELLOW}Stashing your .npmrc file${NC}"
 mv ~/.npmrc ~/.NPMTMP
 
 # Log into npm using your credentials
 echo -e "${YELLOW}Log in to npm using your credentials${NC}"
-npm login
+npm login || un_stash_npmrc && return 1
 
 # If the second arg $2 is set to "beta" or $1 ends with "-beta" - assume a beta version is being published
 if [ -n $2 -a "$2" =~ ^.*beta$ ] || [[ $1 =~ ^.*-.*$ ]]; then
     echo -e "${YELLOW}Publishing a beta version ${GREEN}$1${YELLOW}:${NC}"
-    npm publish --tag beta
+    npm publish --tag beta || un_stash_npmrc && return 1
 else
     echo -e "${YELLOW}Publishing version ${GREEN}$1${YELLOW}:${NC}"
-    npm publish
+    npm publish || un_stash_npmrc && return 1
 fi
 
 # TODO: check if ~/.npmrc exists, if so don't move this back
 # TODO: unstash .npmrc on failure
-# Un-stash the .npmrc file
-echo -e "${YELLOW}Un-stashing your .npmrc file${NC}"
-mv ~/.NPMTMP ~/.npmrc
-
+ un_stash_npmrc
 
 # Clear Artifctory cache
 echo -e "${YELLOW}Do you wish to clear ${GREEN}Artifactory npm cache ${YELLOW}as well?${NC}"
