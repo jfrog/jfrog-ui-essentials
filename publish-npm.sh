@@ -65,6 +65,11 @@ echo -e "${YELLOW}Creating and pushing a new tag:${NC}"
 git tag $1
 git push --tags
 
+function stash_npmrc {
+    echo -e "${YELLOW}Stashing your .npmrc file${NC}"
+    mv ~/.npmrc ~/.NPMTMP
+}
+
 function un_stash_npmrc {
     # Un-stash the .npmrc file
     echo -e "${YELLOW}Un-stashing your .npmrc file${NC}"
@@ -73,25 +78,25 @@ function un_stash_npmrc {
 }
 
 # Stash the .npmrc file
-echo -e "${YELLOW}Stashing your .npmrc file${NC}"
-mv ~/.npmrc ~/.NPMTMP
+stash_npmrc
 
 # Log into npm using your credentials
 echo -e "${YELLOW}Log in to npm using your credentials${NC}"
-npm login || un_stash_npmrc && return 1
+npm login || { un_stash_npmrc ; return 1; }
 
 # If the second arg $2 is set to "beta" or $1 ends with "-beta" - assume a beta version is being published
 if [ -n $2 -a "$2" =~ ^.*beta$ ] || [[ $1 =~ ^.*-.*$ ]]; then
     echo -e "${YELLOW}Publishing a beta version ${GREEN}$1${YELLOW}:${NC}"
-    npm publish --tag beta || un_stash_npmrc && return 1
+    npm publish --tag beta || { un_stash_npmrc ; return 1; }
 else
     echo -e "${YELLOW}Publishing version ${GREEN}$1${YELLOW}:${NC}"
-    npm publish || un_stash_npmrc && return 1
+    npm publish || { un_stash_npmrc ; return 1; }
 fi
 
 # TODO: check if ~/.npmrc exists, if so don't move this back
 # TODO: unstash .npmrc on failure
- un_stash_npmrc
+# Un-stash the .npmrc file
+un_stash_npmrc
 
 # Clear Artifctory cache
 echo -e "${YELLOW}Do you wish to clear ${GREEN}Artifactory npm cache ${YELLOW}as well?${NC}"
