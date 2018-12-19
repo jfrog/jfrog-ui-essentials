@@ -40,14 +40,13 @@
                                       jf-select-options="jfWidgetsLayout.widgetKeys"></jf-ui-select>
                     </div>
                 </div>
-                <div ng-if="!jfWidgetsLayout.widgets[layoutObj.widget].blockExpand  && !layoutObj.subLayout && (jfWidgetsLayout._getRootDirective().transformedLayout.length > 1 || jfWidgetsLayout._getRootDirective().transformedLayout[0].length > 1) && jfWidgetsLayout.options.expandablePanes"
+                <div ng-if="!layoutObj.subLayout && (jfWidgetsLayout._getRootDirective().transformedLayout.length > 1 || jfWidgetsLayout._getRootDirective().transformedLayout[0].length > 1) && jfWidgetsLayout.options.expandablePanes"
                      ng-style="{top: jfWidgetsLayout.top, left: jfWidgetsLayout.left}"
                      class="expansion-corner-mask">
                     <div class="expansion-corner-fill" ng-click="jfWidgetsLayout.expandPane(layoutObj)">
                         <div class="icon icon-thin-arrow" ng-class="{expanded: layoutObj.expanded}"></div>
                     </div>
                 </div>
-
                 <div class="widget-container"
                      ng-mousemove="jfWidgetsLayout.onWidgetMouseMove($event)"
                      ng-if="!layoutObj.subLayout"
