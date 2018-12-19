@@ -922,9 +922,12 @@ class jfWidgetsLayoutController {
                         this.cssRules[cell.cssId].opacity = 1;
                     })
                 })
-
             }, this.ANIM_DURATION*1000);
         }
+
+        this.$timeout(() => {
+            $(document).trigger('resize')
+        }, this.ANIM_DURATION + 1 * 1000)
 
         if (this.options.parent && this.parentCell) {
             this.options.parent.expandPane(this.parentCell)
