@@ -32,7 +32,7 @@ class jfClipCopyController {
 
     $onInit() {
         if (this.objectName) {
-            this.origTooltip = this.tooltipText = "Copy " + this.objectName.toLowerCase() + " to clipboard";
+	        this.origTooltip = this.tooltipText = `Copy ${(this.keepTooltipLetterCase ? this.objectName : this.objectName.toLowerCase())} to clipboard`;
         }
         else {
             this.origTooltip = this.tooltipText = "Copy to clipboard";
@@ -49,7 +49,8 @@ class jfClipCopyController {
             this.timeoutPromise = null;
         }
 
-        this.tooltipText = this.objectName ? (this.objectName.charAt(0).toUpperCase() +  this.objectName.substr(1) + ' copied to clipboard') : 'Value copied to clipboard';
+        let objectNameText = this.keepTooltipLetterCase ? this.objectName : this.objectName.charAt(0).toUpperCase() + this.objectName.substr(1);
+        this.tooltipText = `${(this.objectName ? objectNameText : 'Value')} copied to clipboard`;
         this.timeoutPromise = this.$timeout(()=>{
             this.tooltipText = this.origTooltip;
         },this.FEEDBACK_DELAY);
@@ -63,7 +64,8 @@ export function jfClipCopy($compile) {
         restrict: 'E',
         scope: {
             textToCopy: '=',
-            objectName: '@'
+            objectName: '@',
+            keepTooltipLetterCase: '<?'
         },
         controller: jfClipCopyController,
         controllerAs: 'jfClipCopy',

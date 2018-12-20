@@ -16,7 +16,8 @@ export function jfCodeMirror() {
             autoIndent: '<',
 	        enableCopyToClipboard: '<?',
 	        clipboardCopyModel: '<?',
-	        clipboardCopyEntityName: '@?'
+	        clipboardCopyEntityName: '@?',
+	        clipboardKeepTooltipLetterCase: '<?'
         },
         controller: jfCodeController,
         controllerAs: 'jfCodeMirror',
