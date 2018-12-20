@@ -38,11 +38,19 @@
         }
       }
       & > span{
-        float: left;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        width: 88%;
+        font-size: 12px;
+
+        &:not(.file-size-deploy-multi){
+          float: left;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          width: 72%;
+
+          &.full-width{
+            width: 88%;
+          }
+        }
       }
       .icon.icon-clear{
         color:grey;
@@ -63,6 +71,7 @@
     white-space: nowrap;
     padding: 0 15px;
     display: inline;
+    font-size: 14px;
   }
 
   .upload-files-frame {

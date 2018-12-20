@@ -51,7 +51,8 @@
                                ng-change="item.onCheckboxChange(item)"
                                ng-model="item.isCheckboxChecked">
                     </jf-checkbox>
-                    <span class="file-name-deploy-multi" jf-tooltip="{{ item.file.name }}">{{ item.file.name }}</span>
+                    <span ng-class="{'file-name-deploy-multi': true, 'full-width':!showFileSize}" jf-tooltip="{{ item.file.name }}">{{ item.file.name }}</span>
+                    <span ng-if="showFileSize" class="file-size-deploy-multi">{{ item.file.size | filesize}}</span>
                     <a href=""
                        ng-click="item.remove(); multiUploadItemRemoved(); removeItemCallback(item)"
                        jf-tooltip="Remove"

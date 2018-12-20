@@ -5,6 +5,7 @@ export function jfFileDrop($timeout) {
             jfFileDisabled: '=ngDisabled',
             addCallback: '&jfAddingFileCallback',
             showProgressBar: '=',
+            showFileSize: '=?',
             multiple: '=?',
 	        onFileRemove: '&',
 	        checkboxesName: '=?'
