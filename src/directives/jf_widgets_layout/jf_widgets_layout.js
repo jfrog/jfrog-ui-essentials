@@ -1,5 +1,8 @@
+const MILLISECONDS_MULTI = 1000;
+const ANIMATION_DELAY = 1;
+
 export function jfWidgetsLayout(recursiveDirective) {
-	'ngInject';
+    'ngInject';
     return {
         controller: jfWidgetsLayoutController,
         controllerAs: 'jfWidgetsLayout',
@@ -19,7 +22,7 @@ export function jfWidgetsLayout(recursiveDirective) {
 }
 
 class jfWidgetsLayoutController {
-	/* @ngInject */
+    /* @ngInject */
     constructor($scope,$rootScope, $compile,$timeout,$q,$templateRequest,$sce, $injector,$element) {
         this.$q = $q;
         this.$sce = $sce;
@@ -166,6 +169,7 @@ class jfWidgetsLayoutController {
         this.normalizeSizes();
 
     }
+
     updateFlatCells() {
         this.flatCells = [];
         this.transformedLayout.forEach((rowOrColumn) => {
@@ -359,10 +363,12 @@ class jfWidgetsLayoutController {
             }
         }
     }
+
     _getWidgetById(id) {
         let widget = this.widgets[id];
         return widget;
     }
+
     _getLayoutByWidget(id) {
         let layout;
 
@@ -440,6 +446,7 @@ class jfWidgetsLayoutController {
         }
 
     }
+
     onMouseLeave(e) {
         if (!this.options.allowResize && !this.editMode) return;
         this.onMouseUp();
@@ -525,6 +532,7 @@ class jfWidgetsLayoutController {
         }
 
     }
+
     ensureCSSRulesSync(line,e) {
 
         // Very hacky solution TODO: Find a better solution!
@@ -573,6 +581,7 @@ class jfWidgetsLayoutController {
         if (e) this._setTransitions(true);
 
     }
+
     onWidgetMouseMove(e) {
         if (!this.options.allowResize && !this.editMode) return;
         if (this.draggingLines || this.isParentDragging()) return;
@@ -583,6 +592,7 @@ class jfWidgetsLayoutController {
         }
         e.stopPropagation();
     }
+
     addLinesFromRect(rect) {
         this.dragLines.push({x1: rect.x1, y1: rect.y1, x2: rect.x2, y2: rect.y1, cssRules: rect.cssRules, widget: rect.widget, cssRelevantRule: 'top'});
         this.dragLines.push({x1: rect.x2, y1: rect.y1, x2: rect.x2, y2: rect.y2, cssRules: rect.cssRules, widget: rect.widget, cssRelevantRule: 'right'});
@@ -596,7 +606,7 @@ class jfWidgetsLayoutController {
         this.dragLines.forEach((line)=>{
 
             let infinite = ((line.cssRelevantRule === 'bottom' || line.cssRelevantRule === 'top') && this.mainAxis === 'rows') ||
-                           ((line.cssRelevantRule === 'right' || line.cssRelevantRule === 'left') && this.mainAxis === 'columns')
+                ((line.cssRelevantRule === 'right' || line.cssRelevantRule === 'left') && this.mainAxis === 'columns')
             let dist = this.getPointDistToLine({x:x,y:y},line,infinite);
             if (dist<=1) closest.push(line);
         });
@@ -642,6 +652,7 @@ class jfWidgetsLayoutController {
             else return Math.abs(pt.y - line.y1);
         }
     }
+
     getPointDistToPoint(pt1,pt2) {
         return Math.sqrt(Math.pow(pt1.x-pt2.x,2) + Math.pow(pt1.y-pt2.y,2))
     }
@@ -653,6 +664,7 @@ class jfWidgetsLayoutController {
             parent = parent.options.parent;
         }
     }
+
     isParentDragging(recurse=false) {
         let parent = this.options.parent;
         if (parent) return parent.draggingLines || parent.isParentDragging(true);
@@ -720,6 +732,7 @@ class jfWidgetsLayoutController {
             });
         }
     }
+
     splitCell(layoutObj,orientation) {
         this._setTransitions(true);
         this.transformedLayout.forEach((rowOrColumn) => {
@@ -765,11 +778,13 @@ class jfWidgetsLayoutController {
         layoutObj.selectWidgetMode = !layoutObj.selectWidgetMode;
         this.updateCss();
     }
+
     onWidgetChange(layoutObj) {
         layoutObj.selectWidgetMode = false;
         this.templatesLoaded = false;
         this.megaRefresh();
     }
+
     getWidgetName(key) {
         return this.widgets[key] ? this.widgets[key].name || key : '';
     }
@@ -912,7 +927,7 @@ class jfWidgetsLayoutController {
         if (expanding) {
             this.$timeout(() => {
                 this.updateCss();
-            }, this.ANIM_DURATION*1000);
+            }, this.ANIM_DURATION * MILLISECONDS_MULTI);
         }
         else {
             this.updateCss();
@@ -922,9 +937,12 @@ class jfWidgetsLayoutController {
                         this.cssRules[cell.cssId].opacity = 1;
                     })
                 })
-
-            }, this.ANIM_DURATION*1000);
+            }, this.ANIM_DURATION * MILLISECONDS_MULTI);
         }
+
+        this.$timeout(() => {
+            $(document).trigger('resize')
+        }, this.ANIM_DURATION + ANIMATION_DELAY * MILLISECONDS_MULTI)
 
         if (this.options.parent && this.parentCell) {
             this.options.parent.expandPane(this.parentCell)
