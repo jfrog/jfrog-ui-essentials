@@ -17,7 +17,7 @@
                     </a>
 
 
-                    <div class="sub-menu" ng-show="openSub === item" v-if="item.children && !item.isDisabled" @mouseover="subMenuOver()" @click="$event.stopPropagation()">
+                    <div class="sub-menu" v-show="openSub === item" v-if="item.children && !item.isDisabled" @mouseover="subMenuOver()" @click="$event.stopPropagation()">
 
                         <div class="searchbox-wrapper" v-if="noSearchBox === undefined && !openSub.noSearchBox">
                             <input type="text" class="input-text" id="menuSearchQuery" placeholder="Filter Menu..." autocomplete="off" v-model="menuSearchQuery" @focus="openSubMenu()" @input="checkForSingleChoice()" @keydown="navigateInMenu($event)" jf-enter-press="chooseSingleChoice()">

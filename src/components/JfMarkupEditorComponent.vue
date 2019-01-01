@@ -12,7 +12,7 @@
                     </jf-ui-select>
                 </div>
                 <div class="switch-wrapper" v-if="showControls">
-                    <jf-switch :ng-model="mode" @input="onChangeModeInternal()" :options="modeOptions" controller="switchController" class="no-margin-top">
+                    <jf-switch v-model="mode" @input="onChangeModeInternal()" :options="modeOptions" controller="switchController" class="no-margin-top">
                     </jf-switch>
                 </div>
                 <button class="btn btn-default edit-button" type="button" v-if="!showControls && editable" @click="activateEditor()">
@@ -26,9 +26,9 @@
                     </span>
                 </button>
             </div>
-    
-            <div class="code-mirror-wrapper codemirror-wrapper" v-jf-disable-ng-animate="''" v-if="isInEditMode()">
-    
+
+            <div class="code-mirror-wrapper codemirror-wrapper"  v-if="isInEditMode()">
+
                 <jf-code-mirror v-if="language === 'Markdown'" mime-type="text/x-markdown" mode="gfm" :allow-edit="true" height="100%" :autofocus=" !preventAutoFocus " enable-copy-to-clipboard="markup && markup.length" clipboard-copy-entity-name="text" :model="markup">
                 </jf-code-mirror>
                 <jf-code-mirror v-if="language === 'Asciidoc'" mime-type="text/x-markdown" mode="asciidoc" :allow-edit="true" height="100%" :autofocus=" !preventAutoFocus " enable-copy-to-clipboard="markup && markup.length" clipboard-copy-entity-name="text" :model="markup">
@@ -42,8 +42,8 @@
                     Cancel
                 </button>
             </div>
-    
-            <div class="preview-wrapper" v-jf-disable-ng-animate="''" v-if="!isInEditMode()">
+
+            <div class="preview-wrapper"  v-if="!isInEditMode()">
                 <div class="preview" :class="{'empty-preview': !preview || preview.length === 0}" v-html="preview">
                 </div>
                 <div class="no-markup" v-if="!preview">
@@ -53,9 +53,9 @@
                     </a>
                 </div>
             </div>
-    
+
         </div>
-    
+
     </div>
     `;
     export default {
@@ -91,9 +91,9 @@
             this.EDIT_MODE = EDIT_MODE;
             this.PREVIEW_MODE = PREVIEW_MODE;
             this.instanceId = Math.floor(Math.random() * 10000000000);
-    
-            this.JFrogUIWebWorker = new this.JFrogUIWebWorker();   
-    
+
+            this.JFrogUIWebWorker = new this.JFrogUIWebWorker();
+
         },
         mounted() {
             this.checkPreviewers();
@@ -101,16 +101,16 @@
                 this.init();
             } else {
                 this.JFrogUIWebWorker.check().then(() => {
-    
+
                     this.JFrogUIWebWorker.open();
-    
+
                     this.webworkerOk = true;
                     this.init();
                 }).catch(() => {
                     console.error(`jf-code-mirror: Error: No preview render callback defined and WebWorker is not available.`);
                 });
             }
-    
+
             this.$scope.$on('$destroy', () => {
                 if (this.webworkerOk)
                     this.JFrogUIWebWorker.close();
@@ -130,9 +130,9 @@
                     EDIT_MODE,
                     PREVIEW_MODE
                 ];
-    
+
                 this.updatePreviewButton();
-    
+
                 this.$scope.$watch('jfMarkup.markup', () => {
                     if (this.canRenderPreview()) {
                         this.renderPreview();
@@ -149,7 +149,7 @@
                 return this.webworkerOk && !this.currentLanguageHasPreviewRenderer();
             },
             renderPreview() {
-    
+
                 if (this.language.toLowerCase() === 'plain text') {
                     this.setPreview(this.markup.replace(/\n/g, '<br>'));
                 } else if (this.currentLanguageHasPreviewRenderer()) {
@@ -178,7 +178,7 @@
                 this.$emit('on-mode-change', { mode: this.mode });
             },
             checkPreviewers() {
-    
+
                 if (!this.previewRenderers) {
                     this.previewRenderers = {};
                     this.previewersCount = 0;
@@ -202,7 +202,7 @@
             },
             onSaveClick() {
                 this.$timeout(() => {
-    
+
                     /* Todo: check the following condition. It may contain some undefined references: this.onSave */
                     if (typeof this.onSave === 'function') {
                         this.languageBackup = this.language;
@@ -226,6 +226,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

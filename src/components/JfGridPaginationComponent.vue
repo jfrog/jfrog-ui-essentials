@@ -3,7 +3,7 @@
     <div>
         <div class="grid-pagination text-right" v-if="gridApi.pagination.getTotalPages()">
             <p>
-                <input type="text" class="grid-page-box" :style="{'width': (CONSTANTS.PAGINATION_DIGIT_WIDTH_PX + getTotalPages().toString().length * CONSTANTS.PAGINATION_DIGIT_WIDTH_PX) + 'px'}" v-jf-tooltip="'Jump to Page'" ng-blur="onBlur()" v-model="pageViewModel" @input="pageChanged()">
+                <input type="text" class="grid-page-box" :style="{'width': (CONSTANTS.PAGINATION_DIGIT_WIDTH_PX + getTotalPages().toString().length * CONSTANTS.PAGINATION_DIGIT_WIDTH_PX) + 'px'}" v-jf-tooltip="'Jump to Page'" @blur="onBlur()" v-model="pageViewModel" @input="pageChanged()">
                 out of {{ getTotalPages() }}
                 <a href="" @click.prevent="prevPage()" :class="{disabled: currentPage === 1}">‹</a>
                 <a href="" @click.prevent="nextPage()" :class="{disabled: currentPage === gridApi.pagination.getTotalPages()}">›</a>
@@ -33,9 +33,9 @@
         },
         created() {
             this.CONSTANTS = GENERAL_CONSTANTS;
-    
-            this.JFrogEventBus.registerOnScope(this.$scope, this.JFrogEventBus.getEventsDefinition().RESET_GRID_PAGINATION, () => this.resetPagination());   
-    
+
+            this.JFrogEventBus.registerOnScope(this.$scope, this.JFrogEventBus.getEventsDefinition().RESET_GRID_PAGINATION, () => this.resetPagination());
+
         },
         mounted() {
             this.gridApi = this.$scope.gridApi;
@@ -59,7 +59,7 @@
                 this.pageViewModel = parseInt(this.pageViewModel);
                 if (this.pageViewModel !== 0 && !this.pageViewModel)
                     return;
-    
+
                 this.currentPage = this.pageViewModel;
                 if (this.currentPage < 1)
                     this.currentPage = 1;
@@ -93,6 +93,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

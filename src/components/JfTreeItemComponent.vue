@@ -1,7 +1,7 @@
 <template>
 
-    <div class="jf-tree-item" :class="getClasses().concat(getCustomClasses())" @click="onItemClick($event)" ng-dblclick="onItemDoubleClick()" :style="{height: tree.viewPane.itemHeight, 'line-height': tree.viewPane.itemHeight}">
-    
+    <div class="jf-tree-item" :class="getClasses().concat(getCustomClasses())" @click="onItemClick($event)" @dblclick="onItemDoubleClick()" :style="{height: tree.viewPane.itemHeight, 'line-height': tree.viewPane.itemHeight}">
+
         <div class="jf-tree-item-container" :style="{height: tree.viewPane.itemHeight, 'line-height': tree.viewPane.itemHeight}">
             <jf-tree-indentation :visible="tree.api.linesVisible" :height="tree.viewPane.itemHeight" :lines-backgrounds="tree.viewPane.linesBackgrounds" :indentation="getIndentation()"></jf-tree-indentation>
             <div class="no-children-line-extension" v-if="data.level >= 1 && tree.api.linesVisible && !shouldShowExpander() && !data.$pending" :style="{height: tree.viewPane.itemHeight, 'background-image': 'url(\'' + tree.viewPane.linesBackgrounds['horizontal-line'] + '\')'}">
@@ -46,14 +46,14 @@
         mounted() {
             this._watchSelection();
             this._watchExpansion();
-    
+
             this._registerEvents();
-    
+
             /* (NG2VUE) This was moved from created() to mounted() */
             /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
-    
-            $(this.$element).prop('ctrl', this);   
-    
+
+            $(this.$element).prop('ctrl', this);
+
         },
         ng1_legacy: { 'controllerAs': 'jfTreeItem' },
         methods: {
@@ -79,7 +79,7 @@
             },
             _watchExpansion() {
                 this.$scope.$watch('jfTreeItem.isExpanded()', expanded => this._syncExpansionClass(expanded));
-    
+
                 this.$scope.$watch('jfTreeItem.data', () => this._syncExpansionClass(this.isExpanded()));
             },
             _watchSelection() {
@@ -91,7 +91,7 @@
                         $(this.$element).removeClass(className);
                     }
                 };
-    
+
                 this.$scope.$watch('jfTreeItem.tree.api.$freezedSelected || jfTreeItem.tree.api.$selectedNode', selected => {
                     let iAmSelected = selected === this.data.data;
                     toggleClass(iAmSelected, 'selected');
@@ -182,7 +182,7 @@
                     this.$set(this.data, 'data.$indentation', _.map(new Array(this.data.level), i => ({})));
                     return;
                 }
-    
+
                 let flats = this.data.pane.$flatItems;
                 let isLastChild = item => {
                     if (item.$isLastChild === undefined) {
@@ -193,7 +193,7 @@
                     }
                     return item.$isLastChild;
                 };
-    
+
                 let indentation = [];
                 let relevantItem = this.data;
                 for (let i = this.data.level - 1; i >= 0; i--) {
@@ -214,6 +214,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

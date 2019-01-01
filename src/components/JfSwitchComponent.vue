@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <div class="jf-switch" :class="jfSwitchClass" v-jf-disable-ng-animate="''">
+        <div class="jf-switch" :class="jfSwitchClass" >
             <span v-if="jfSwitchTitle" class="jf-switch-title">{{jfSwitchTitle}}</span>
             <jf-help-tooltip v-if="helpTooltip" :html="helpTooltip"></jf-help-tooltip>
             <ul class="jf-switch-options">
@@ -37,11 +37,11 @@
             // array of strings
             // array of objects of type {'value': ..., 'text': ...}
             // The model is assigned the value, and the text is displayed
-    
+
             this.controller = this;
-    
+
             this.updateOptionObjects();
-    
+
             if (_.isEmpty(this.ngModel))
                 this.ngModel = this.optionObjects[0].value;
         },
@@ -79,6 +79,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

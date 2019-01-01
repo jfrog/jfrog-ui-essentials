@@ -2,7 +2,7 @@
 
     <div>
         <div class="input-group" :id=" attrId " datetimepicker="" options="dpOpitons" on-change="onUpdate()" v-model="model">
-            <input class="input-text" @focus="onFocus()" ng-blur="onBlur()" :required="isRequired" :disabled="isEnabled">
+            <input class="input-text" @focus="onFocus()" @blur="onBlur()" :required="isRequired" :disabled="isEnabled">
             <span class="input-group-addon calendar">
             <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -44,7 +44,7 @@
             },
             onUpdate() {
                 this.$timeout(() => {
-    
+
                     /* Todo: check the following condition. It may contain some undefined references: this.onChange */
                     if (typeof this.onChange === 'function') {
                         this.$emit('on-change');
@@ -65,6 +65,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

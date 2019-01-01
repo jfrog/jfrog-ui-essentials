@@ -1,5 +1,3 @@
-import { MenuItems } from './constants/MenuItems.js';
-import { ENDPOINTS } from './constants/ENDPOINTS.js';
 import { JFTreeApi } from './services/factories/JfTreeApiFactory.js';
 import { JFrogTableViewOptions } from './services/factories/JFrogTableViewOptionsFactory.js';
 import { JFrogUIModelSaverFactory } from './services/factories/JFrogUiModelSaverFactoryFactory.js';
@@ -54,8 +52,6 @@ export const servicesRegistration = {
         JFTreeApi
     }),
     registerConstants: () => JFrogUI.registerConstants({
-        ENDPOINTS,
-        MenuItems
     }),
     registerAll: (_JFrogUI) => {
         JFrogUI = _JFrogUI;

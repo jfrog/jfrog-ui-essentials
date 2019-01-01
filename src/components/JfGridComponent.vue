@@ -5,20 +5,20 @@
             <div class="columns-customization pull-right" v-if="gridOptions.columnsCustomization">
                 <jf-multi-dropdown title="Columns" filter-placeholder="Filter Columns" :items="gridOptions.availableColumns" on-change="gridOptions.updateCustomizedColumns()"></jf-multi-dropdown>
             </div>
-            <div class="wrapper-grid-actions" ng-show="!noPagination || !noCount || gridOptions.batchActions.length || filterField">
-    
+            <div class="wrapper-grid-actions" v-show="!noPagination || !noCount || gridOptions.batchActions.length || filterField">
+
                 <div class="counter-and-filter">
                     <div v-if="!noCount" class="grid-counter">{{ getTotalRecords() }}<span v-if="getSelectedRecords()"> ({{getSelectedRecords()}} Selected)</span></div>
-    
+
                     <div v-if="filterField" class="filter-group">
                         <jf-grid-filter :auto-focus="autoFocus" filter-grid="gridOptions" :filter-field=" filterField " :filter-field2=" filterField2 " :filter-on-change=" filterOnChange ">
                         </jf-grid-filter>
                     </div>
                 </div>
-    
-                <jf-grid-pagination ng-show="!noPagination" :grid-api="gridOptions.api" class="pull-right">
+
+                <jf-grid-pagination v-show="!noPagination" :grid-api="gridOptions.api" class="pull-right">
                 </jf-grid-pagination>
-    
+
                 <jf-grid-batch-actions :grid-options="gridOptions" :grid-api="gridOptions.api" :actions="gridOptions.batchActions">
                 </jf-grid-batch-actions>
             </div>
@@ -49,6 +49,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

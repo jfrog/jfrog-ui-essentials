@@ -1,14 +1,14 @@
 <template>
 
     <div>
-        <ul class="list-inline" ng-show="getActiveActionsCount()">
-            <li ng-show="fixedActions.length" v-for="actionObj in fixedActions" @click="doAction(actionObj,$event)" :class="{disabled: actionObj.disabled || (actionObj.disabledWhen && actionObj.disabledWhen())}" class="action-button" v-if="!actionObj.visibleWhen || actionObj.visibleWhen()">
+        <ul class="list-inline" v-show="getActiveActionsCount()">
+            <li v-show="fixedActions.length" v-for="actionObj in fixedActions" @click="doAction(actionObj,$event)" :class="{disabled: actionObj.disabled || (actionObj.disabledWhen && actionObj.disabledWhen())}" class="action-button" v-if="!actionObj.visibleWhen || actionObj.visibleWhen()">
 
                 <a :href=" actionObj.href " download="">
                     <i class="action-icon icon" :class="actionObj.icon"></i> {{actionObj.title}}
                 </a>
             </li>
-            <li ng-show="dynamicActions.length" class="action-button">
+            <li v-show="dynamicActions.length" class="action-button">
                 <span class="dropdown" dropdown="" is-open="isDropdownOpen">
               <ul class="dropdown-menu dropdown-menu-right actions-dropdown text-left">
                   <li v-for="actionObj in dynamicActions" class="action-item dynamic-action" v-if="(!actionObj.visibleWhen || actionObj.visibleWhen()) && !actionObj.isHidden">

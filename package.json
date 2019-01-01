@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "vue-cli-service build --target lib --name jfrog-vue-essentials src/index.js",
+    "watch": "vue-cli-service --watch build --target lib --name jfrog-vue-essentials src/index.js",
     "lint": "vue-cli-service lint"
   },
   "files": [
@@ -44,5 +45,5 @@
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0-0",
     "vue-template-compiler": "^2.5.17"
-  },
+  }
 }

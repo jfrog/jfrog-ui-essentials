@@ -42,7 +42,7 @@
         </div>
 
         <div class="jf-table-cell" v-if="!data.$groupHeader" :class="{header: rowId === 'headers' && col.header, sortable: rowId === 'headers' && tableView.options.sortable && tableView.options.getRawData().length && col.sortable && !hoveringResize, 'column-resizer': hoveringResize, ['drag-right']: col.$dragRightBorder, ['drag-left']: col.$dragLeftBorder, ['field-id-' + kebab(col.field)]: true, ['row-expander-cell']: $index === 0 && tableView.options.subRowsEnabled}" @click="onClickCell(col,$event)" :style="{height: rowId === 'headers' ? tableView.options.headerRowHeight : tableView.options.rowHeight, width: col.width}" v-for="col in tableView.options.columns">
-            <div class="row-expander" v-jf-disable-ng-animate="''" :class="{placeholder: (!data.$subRows && !data.$parentRow) || (data.$subRows && data.$subRows.length === 0) || (data.$parentRow)}" v-if="$index === 0 && tableView.options.subRowsEnabled" :style="{height: tableView.options.rowHeight}" @click="toggleExpansion($event)">
+            <div class="row-expander"  :class="{placeholder: (!data.$subRows && !data.$parentRow) || (data.$subRows && data.$subRows.length === 0) || (data.$parentRow)}" v-if="$index === 0 && tableView.options.subRowsEnabled" :style="{height: tableView.options.rowHeight}" @click="toggleExpansion($event)">
                 <i v-if="data.$subRows && data.$subRows.length && !data.$parentRow && !data.$pendingSubRows" class="action-icon icon icon-small-arrow-down" :class="{'expanded': data.$expanded}"></i>
                 <div class="spinner-msg-local" v-if="data.$pendingSubRows">
                     <div class="icon-hourglass-local"></div>
@@ -322,6 +322,7 @@
                 if (this.rowId === 'headers')
                     return;
 
+/*
                 $(this.$element).draggable({
                     helper: 'clone',
                     scroll: true,
@@ -331,6 +332,7 @@
                     stop: (event, ui) => this.$scope.$apply(() => this.dragStop(event, ui)),
                     drag: (event, ui) => this.$scope.$apply(() => this.dragMove(event, ui))
                 });
+*/
                 $(this.$element).addClass('drag-enabled');
             },
             dragStart(event, ui) {

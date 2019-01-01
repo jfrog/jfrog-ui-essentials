@@ -1,0 +1,4 @@
+./src
+./specs
+./mocks
+node_modules

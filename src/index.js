@@ -13,7 +13,7 @@ window.jQuery = $;
 import 'jquery-contextmenu';
 
 import('../node_modules/jf-tooltipster/css/tooltipster.css');
-require('jf-tooltipster');
+require('../node_modules/jf-tooltipster/js/jquery.tooltipster');
 
 export default {
     install(Vue, options) {

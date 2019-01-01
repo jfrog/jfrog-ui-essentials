@@ -9,14 +9,12 @@
                     </li>
                 </ul>
             </div>
-    
+
             <div class="wizard-content">
-                <div ng-transclude="">
-    
-                </div>
+                <slot></slot>
             </div>
         </div>
-    
+
     </div>
 
 </template>
@@ -75,6 +73,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

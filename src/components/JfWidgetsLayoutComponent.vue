@@ -2,17 +2,17 @@
 
     const TEMPLATE = `
     <div>
-        <div class="jf-widgets-layout-container" v-jf-disable-ng-animate="''" :style="containerCss" @mouseleave="onMouseLeave($event)" ng-mousemove="onMouseMove($event)" @mousedown="onMouseDown($event)" @mouseup="onMouseUp($event)">
+        <div class="jf-widgets-layout-container"  :style="containerCss" @mouseleave="onMouseLeave($event)" @mousemove="onMouseMove($event)" @mousedown="onMouseDown($event)" @mouseup="onMouseUp($event)">
             <div class="widgets-padder" :style="padderCss">
                 <div v-for="rowOrColumn in transformedLayout" class="widgets-row">
                     <div v-for="layoutObj in rowOrColumn" :style="cssRules[layoutObj.cssId]" class="widget-wrapper" :class="{['widget-wrapper-' + widgets[layoutObj.widget].id.toLowerCase()]: true, 'atom': !layoutObj.subLayout}">
-                        <div v-if="!layoutObj.subLayout && editMode" class="edit-mode-actions" ng-mousemove="onWidgetMouseMove($event)">
+                        <div v-if="!layoutObj.subLayout && editMode" class="edit-mode-actions" @mousemove="onWidgetMouseMove($event)">
                             <i class="glyphicon glyphicon-asterisk" v-jf-tooltip="'Change'" @click="changeWidget(layoutObj)"></i>
                             <i class="glyphicon glyphicon-remove-circle" v-jf-tooltip="'Remove'" v-if="getWidgetsCount() > 1" @click="removeWidget(layoutObj)"></i>
                             <i class="glyphicon glyphicon-resize-vertical" v-jf-tooltip="'Vertical Split'" @click="splitCell(layoutObj,'v')"></i>
                             <i class="glyphicon glyphicon-resize-horizontal" v-jf-tooltip="'Horizontal Split'" @click="splitCell(layoutObj,'h')"></i>
                         </div>
-                        <div v-if="!layoutObj.subLayout && editMode && layoutObj.selectWidgetMode" class="select-widget-mode" ng-mousemove="onWidgetMouseMove($event)">
+                        <div v-if="!layoutObj.subLayout && editMode && layoutObj.selectWidgetMode" class="select-widget-mode" @mousemove="onWidgetMouseMove($event)">
                             <div class="widget-selector">
                                 <jf-ui-select :jf-select-model="layoutObj.widget" jf-select-display-func="getWidgetName($item)" jf-select-placeholder="Select A Widget" jf-select-change="onWidgetChange(layoutObj)" :jf-select-options="widgetKeys"></jf-ui-select>
                             </div>
@@ -22,14 +22,14 @@
                                 <div class="icon icon-thin-arrow" :class="{expanded: layoutObj.expanded}"></div>
                             </div>
                         </div>
-                        <div class="widget-container" ng-mousemove="onWidgetMouseMove($event)" v-if="!layoutObj.subLayout" :style="{overflow: widgets[layoutObj.widget].scroll ? 'auto' : 'hidden'}">
+                        <div class="widget-container" @mousemove="onWidgetMouseMove($event)" v-if="!layoutObj.subLayout" :style="{overflow: widgets[layoutObj.widget].scroll ? 'auto' : 'hidden'}">
                             <div v-if="widgets[layoutObj.widget] && widgets[layoutObj.widget].showSpinner" class="widget-spinner">
                                 <div class="spinner-msg">
                                     <div class="icon-hourglass"></div>
                                 </div>
                             </div>
-                            <div v-if="widgets[layoutObj.widget] && widgets[layoutObj.widget].template" ng-show="widgets[layoutObj.widget].$compiled || (!widgets[layoutObj.widget].model && !widgets[layoutObj.widget].controller)">
-                                <div class="compile-children" ng-show="widgets[layoutObj.widget].$compiled" :id="layoutObj.widget" v-html="widgets[layoutObj.widget].template"></div>
+                            <div v-if="widgets[layoutObj.widget] && widgets[layoutObj.widget].template" v-show="widgets[layoutObj.widget].$compiled || (!widgets[layoutObj.widget].model && !widgets[layoutObj.widget].controller)">
+                                <div class="compile-children" v-show="widgets[layoutObj.widget].$compiled" :id="layoutObj.widget" v-html="widgets[layoutObj.widget].template"></div>
                             </div>
                         </div>
                         <div v-if="layoutObj.subLayout">
@@ -81,7 +81,7 @@
         },
         mounted() {
             this.setDefaultOptions();
-    
+
             let onChange = (newval, oldval) => {
                 if (!newval)
                     return;
@@ -108,12 +108,12 @@
             this.$scope.$watch('jfWidgetsLayout.options.editMode', editMode => {
                 this.editMode = editMode === undefined ? false : editMode;
                 this.$set(this.subOptions, 'editMode', this.editMode);
-    
+
                 if (!editMode) {
                     this.cleanLayout();
                     if (!this.options.isSub) {
                         this.updateLayoutJSON();
-    
+
                         if (this.wasEditing) {
                             if (this.options.onEditEnd && this.layoutJSON)
                                 this.options.onEditEnd(this.layoutJSON);
@@ -123,19 +123,19 @@
                 }
                 this.wasEditing = this.editMode;
             });
-    
+
             this.$scope.$watch('jfWidgetsLayout.layout', onChange);
-    
+
             this.$scope.$watch('jfWidgetsLayout.widgets', widgets => {
                 if (widgets) {
                     this.widgetKeys = Object.keys(widgets);
                 }
             });
-    
+
             if (this.options.parent && this.parentCell) {
                 this.$set(this.parentCell, '$childLayout', this);
             }
-    
+
             this.$scope.$on('$destroy', () => {
                 if (this.scopes)
                     this.scopes.forEach(s => s.$destroy());
@@ -163,14 +163,14 @@
                     this.$set(this.options, 'outerPadding', true);
                 if (this.options.editMode === undefined)
                     this.$set(this.options, 'editMode', false);
-    
+
                 this.subOptions = _.cloneDeep(this.options);
                 this.$set(this.subOptions, 'minHeight', 'initial');
                 this.$set(this.subOptions, 'isSub', true);
                 this.$set(this.subOptions, 'parent', this);
             },
             transformLayout() {
-    
+
                 let _getSizeFromCell = cell => {
                     let i1 = cell.indexOf('%');
                     let i2 = cell.indexOf('px');
@@ -189,11 +189,11 @@
                     if (i !== -1)
                         return cell.substr(i + 1);
                 };
-    
+
                 this.transformedLayout = [];
-    
+
                 let theLayout = this.layout.main || this.layout;
-    
+
                 if (theLayout.rows) {
                     this.mainAxis = 'rows';
                 } else if (theLayout.columns) {
@@ -202,7 +202,7 @@
                     console.log('Layout Format Error! Must have rows or columns.');
                     return;
                 }
-    
+
                 theLayout[this.mainAxis].forEach(rowOrColumn => {
                     let tRowOrColumn = [];
                     rowOrColumn.cells.forEach(cell => {
@@ -224,9 +224,9 @@
                     });
                     this.transformedLayout.push(tRowOrColumn);
                 });
-    
-                this.normalizeSizes();   
-    
+
+                this.normalizeSizes();
+
             },
             updateFlatCells() {
                 this.flatCells = [];
@@ -238,12 +238,12 @@
             },
             loadTemplates() {
                 let defer = this.$q.defer();
-    
+
                 if (this.templatesLoaded) {
                     defer.resolve();
                     return defer.promise;
                 }
-    
+
                 this.templatesLoadStarted = true;
                 let fired = 0, completed = 0;
                 this.transformedLayout.forEach(rowOrColumn => {
@@ -274,7 +274,7 @@
                         }
                     });
                 });
-    
+
                 if (!fired)
                     defer.resolve();
                 return defer.promise;
@@ -282,10 +282,10 @@
             updateCss() {
                 let oldRules = _.cloneDeep(this.cssRules);
                 this.cssRules = {};
-    
+
                 let currentX = 0, currentY = 0;
                 let cssRunningId = 0;
-    
+
                 this.transformedLayout.forEach(rowOrColumn => {
                     if (this.mainAxis === 'rows')
                         currentX = 0;
@@ -299,7 +299,7 @@
                             layoutDef.widget = '$widget' + cssRunningId;
                         }
                         cssRunningId++;
-    
+
                         this.cssRules[layoutDef.cssId] = {
                             top: currentY + '%',
                             left: currentX + '%',
@@ -308,7 +308,7 @@
                             padding: this.options.padding / 2 + 'px',
                             opacity: oldRules && oldRules[layoutDef.cssId] && oldRules[layoutDef.cssId].opacity !== undefined ? oldRules[layoutDef.cssId].opacity : 1
                         };
-    
+
                         if (this.mainAxis === 'rows') {
                             currentX += layoutDef.percentWidth;
                             if (layoutDef.percentHeight > topSize)
@@ -317,15 +317,15 @@
                             currentY += layoutDef.percentHeight;
                             if (layoutDef.percentWidth > topSize)
                                 topSize = layoutDef.percentWidth;
-                        }   
-    
+                        }
+
                     });
                     if (this.mainAxis === 'rows')
                         currentY += topSize;
                     else if (this.mainAxis === 'columns')
                         currentX += topSize;
                 });
-    
+
                 let pad = this.options.isSub ? 0 : this.options.outerPadding ? this.options.padding / 2 : -this.options.padding / 2;
                 this.padderCss = {
                     top: pad + 'px',
@@ -333,13 +333,13 @@
                     bottom: pad + 'px',
                     right: pad + 'px'
                 };
-    
+
                 this.containerCss = {
                     'min-height': this.options.minHeight + 'px',
                     'background-color': this.options.backColor,
                     'overflow': this.options.isSub && this.editMode ? 'visible' : 'hidden'
                 };
-    
+
                 if (this.options.parent)
                     this.options.parent.updateCss();
             },
@@ -362,8 +362,8 @@
                     });
                     cell.percentWidth = 100 - right - left;
                     cell.percentHeight = 100 - bottom - top;
-                }   
-    
+                }
+
             },
             compileElements() {
                 let elems = $('.compile-children');
@@ -376,11 +376,11 @@
                     if (this._isWidgetInUse(widgetId)) {
                         let widget = this._getWidgetById(widgetId);
                         let scope = this.$rootScope.$new();
-    
+
                         this.scopes.push(scope);
-    
+
                         let children = elem.children();
-    
+
                         if (widget.model) {
                             _.extend(scope, widget.model);
                         }
@@ -391,36 +391,36 @@
                             widget.controller = class Ctrl {
                             };
                         }
-    
+
                         widget.controller.prototype.$widgetLayoutManager = this;
-    
+
                         let controllerInstance = this.$injector.instantiate(widget.controller);
-    
+
                         controllerInstance.$element = children[0];
                         controllerInstance.$layoutObject = this._getLayoutByWidget(elem.prop('id'));
                         controllerInstance.$scope = scope;
                         controllerInstance.$widgetObject = widget;
-    
+
                         let controllerObject = {};
                         controllerObject[widget.controllerAs || 'ctrl'] = controllerInstance;
-    
+
                         _.extend(scope, controllerObject);
-    
-    
+
+
                         if (controllerInstance.$onInit)
                             controllerInstance.$onInit();
-    
+
                         //We compile only first child, templates should have only one root element!
                         let rootChild = $(children[0]);
                         if (!rootChild.prop('compiled')) {
                             this.$compile(rootChild)(scope);
                             rootChild.prop('compiled', true);
                         }
-    
+
                         this.$timeout(() => {
                             widget.$compiled = true;
-                        });   
-    
+                        });
+
                     }
                 }
             },
@@ -430,14 +430,14 @@
             },
             _getLayoutByWidget(id) {
                 let layout;
-    
+
                 for (let i in this.transformedLayout) {
                     let rowOrColumn = this.transformedLayout[i];
                     layout = _.find(rowOrColumn, { widget: id });
                     if (layout)
                         break;
                 }
-    
+
                 return layout;
             },
             _isWidgetInUse(widgetId) {
@@ -445,38 +445,38 @@
             },
             _getPrecPoint(e) {
                 let container = $(this.$element).find('.jf-widgets-layout-container');
-    
+
                 let containerWidth = container.innerWidth();
                 let containerHeight = container.innerHeight();
-    
+
                 let mouseX = e.pageX - container.offset().left;
                 let mouseY = e.pageY - container.offset().top;
-    
+
                 let xprec = Math.round(mouseX / containerWidth * 100);
                 let yprec = Math.round(mouseY / containerHeight * 100);
-    
+
                 return {
                     x: xprec,
                     y: yprec
                 };
             },
             onMouseMove(e) {
-    
+
                 if (!this.options.allowResize && !this.editMode)
                     return;
-    
+
                 if (this.draggingLines) {
                     this.onDrag(e);
                     e.preventDefault();
                 } else {
-    
+
                     let container = $(this.$element).find('.jf-widgets-layout-container');
-    
+
                     let prec = this._getPrecPoint(e);
                     this.closestLines = this.getClosestLines(prec.x, prec.y);
                     if (this.closestLines.length) {
                         let directions = _.map(this.closestLines, 'cssRelevantRule');
-    
+
                         let cursor;
                         if (_.includes(directions, 'right') && _.includes(directions, 'left') && _.includes(directions, 'top') && _.includes(directions, 'bottom')) {
                             cursor = 'all-scroll';
@@ -498,8 +498,8 @@
                             this.setSubIsOnEdge(false);
                         }
                     }
-                }   
-    
+                }
+
             },
             onMouseLeave(e) {
                 if (!this.options.allowResize && !this.editMode)
@@ -508,14 +508,14 @@
                 this.setSubIsOnEdge(false);
             },
             onDrag(e) {
-    
+
                 let perc = this._getPrecPoint(e);
-    
+
                 let xDiff = perc.x - this.dragStartPt.x;
                 let yDiff = perc.y - this.dragStartPt.y;
-    
+
                 let okToDrag = true;
-    
+
                 for (let i in this.closestLines) {
                     let line = this.closestLines[i];
                     let origLine = this.dragStartLines[i];
@@ -555,14 +555,14 @@
                         }
                     }
                 }
-    
+
                 if (okToDrag) {
                     for (let i in this.closestLines) {
                         let line = this.closestLines[i];
-    
+
                         if (!this.ensureCSSRulesSync(line, e))
                             break;
-    
+
                         let origLine = this.dragStartLines[i];
                         if (line.cssRelevantRule === 'top') {
                             let top = parseFloat(origLine.cssRules.top);
@@ -578,13 +578,13 @@
                             line.cssRules.right = right - xDiff + '%';
                         }
                     }
-                }   
-    
+                }
+
             },
             ensureCSSRulesSync(line, e) {
-    
+
                 // Very hacky solution TODO: Find a better solution!
-    
+
                 let found = false;
                 for (let key in this.cssRules) {
                     if (this.cssRules[key] === line.cssRules) {
@@ -592,7 +592,7 @@
                         break;
                     }
                 }
-    
+
                 if (!found) {
                     this.onMouseUp();
                     this.onMouseMove(e);
@@ -603,10 +603,10 @@
                 return true;
             },
             onMouseDown(e) {
-    
+
                 if (!this.options.allowResize && !this.editMode)
                     return;
-    
+
                 if (this.closestLines && this.closestLines.length) {
                     this.draggingLines = true;
                     this.dragStartPt = _.cloneDeep(this._getPrecPoint(e));
@@ -619,16 +619,16 @@
             onMouseUp(e) {
                 if (!this.options.allowResize && !this.editMode)
                     return;
-    
+
                 this.updateDragLines();
                 this.closestLines = null;
                 this.draggingLines = false;
                 this.dragStartPt = null;
                 this.dragStartLines = null;
-    
+
                 if (e)
-                    this._setTransitions(true);   
-    
+                    this._setTransitions(true);
+
             },
             onWidgetMouseMove(e) {
                 if (!this.options.allowResize && !this.editMode)
@@ -682,9 +682,9 @@
             },
             getClosestLines(x, y) {
                 let closest = [];
-    
+
                 this.dragLines.forEach(line => {
-    
+
                     let infinite = (line.cssRelevantRule === 'bottom' || line.cssRelevantRule === 'top') && this.mainAxis === 'rows' || (line.cssRelevantRule === 'right' || line.cssRelevantRule === 'left') && this.mainAxis === 'columns';
                     let dist = this.getPointDistToLine({
                         x: x,
@@ -693,20 +693,20 @@
                     if (dist <= 1)
                         closest.push(line);
                 });
-    
+
                 let filtered = [];
-    
+
                 let top = _.filter(closest, { cssRelevantRule: 'top' });
                 let bottom = _.filter(closest, { cssRelevantRule: 'bottom' });
                 let left = _.filter(closest, { cssRelevantRule: 'left' });
                 let right = _.filter(closest, { cssRelevantRule: 'right' });
-    
+
                 top.forEach(line => {
                     let matches = this.mainAxis === 'rows' ? _.filter(bottom, { y1: line.y1 }) : _.filter(bottom, {
                         x1: line.x1,
                         x2: line.x2
                     });
-    
+
                     if (matches.length) {
                         filtered.push(line);
                         matches.forEach(match => filtered.push(match));
@@ -717,13 +717,13 @@
                         y1: line.y1,
                         y2: line.y2
                     });
-    
+
                     if (matches.length) {
                         filtered.push(line);
                         matches.forEach(match => filtered.push(match));
                     }
                 });
-    
+
                 return filtered;
             },
             getPointDistToLine(pt, line, infiniteLine) {
@@ -778,7 +778,7 @@
             },
             removeWidget(layoutObj) {
                 this._setTransitions(true);
-    
+
                 let rowOrColumnToRemove = null;
                 this.transformedLayout.forEach(rowOrColumn => {
                     let index = _.indexOf(rowOrColumn, layoutObj);
@@ -858,7 +858,7 @@
                         }
                     }
                 });
-    
+
                 this.megaRefresh();
             },
             megaRefresh() {
@@ -885,12 +885,12 @@
             updateLayoutJSON() {
                 if (!this.transformedLayout)
                     return;
-    
+
                 this.layoutJSON = {};
                 this.layoutJSON.main = {};
                 this.layoutJSON.main[this.mainAxis] = [];
                 let subLayoutCounter = 0;
-    
+
                 this.transformedLayout.forEach(rowOrColumn => {
                     let rowOrColumnObject = {};
                     rowOrColumn.forEach(cell => {
@@ -898,28 +898,28 @@
                             rowOrColumnObject.size = cell[this.mainAxis === 'columns' ? 'percentWidth' : 'percentHeight'] + '%';
                         if (!rowOrColumnObject.cells)
                             rowOrColumnObject.cells = [];
-    
+
                         let cellString = '';
                         cellString += cell[this.mainAxis === 'columns' ? 'percentHeight' : 'percentWidth'] + '%';
                         if (cell.widget && !cell.widget.startsWith('$'))
                             cellString += ' @' + cell.widget;
-    
+
                         if (cell.$childLayout) {
                             cell.$childLayout.updateLayoutJSON();
-    
+
                             let subName = 'sub' + subLayoutCounter;
                             subLayoutCounter++;
-    
+
                             this.layoutJSON[subName] = cell.$childLayout.layoutJSON;
                             cellString += ' #' + subName;
                         }
-    
+
                         rowOrColumnObject.cells.push(cellString);
                     });
-    
+
                     this.layoutJSON.main[this.mainAxis].push(rowOrColumnObject);
-                });   
-    
+                });
+
             },
             getWidgetsCount() {
                 return $('.widget-container').length;
@@ -940,16 +940,16 @@
             cleanLayout() {
                 if (!this.transformedLayout)
                     return;
-    
+
                 // Remove empty layout directives from parent
                 if (!this.transformedLayout.length && this.options.parent) {
                     let parentLayoutObj = _.find(this.options.parent.flatCells, { subLayout: this.layout });
                     this.options.parent.removeWidget(parentLayoutObj);
-                }   
-    
+                }
+
                      // In case this directive is a sub and only has one widget in one cell, we move the widget to parent
                 else if (this.transformedLayout.length === 1 && this.transformedLayout[0].length === 1 && this.transformedLayout[0][0].percentHeight === 100 && this.transformedLayout[0][0].percentWidth === 100 && this.options.parent) {
-    
+
                     let parentLayoutObj = _.find(this.options.parent.flatCells, { subLayout: this.layout });
                     let axis = Object.keys(parentLayoutObj.subLayout)[0];
                     if (!parentLayoutObj.subLayout[axis][0] || parentLayoutObj.subLayout[axis][0] && !parentLayoutObj.subLayout[axis][0].new) {
@@ -962,20 +962,20 @@
                             delete parentLayoutObj.widget;
                         }
                     }
-                }   
-    
+                }
+
                      // In case this directive is the root and only has one sub in one cell, we move the sub data to this
                 else if (this.transformedLayout.length === 1 && this.transformedLayout[0].length === 1 && this.transformedLayout[0][0].percentHeight === 100 && this.transformedLayout[0][0].percentWidth === 100 && this.transformedLayout[0][0].subLayout && !this.options.parent) {
-    
+
                     console.log('pre', JSON.stringify(this.layout));
                     let theSub = this.transformedLayout[0][0].subLayout;
                     this.layout = theSub;
                     console.log('post', JSON.stringify(this.layout));
                     this.transformLayout();
-                    this.cleanLayout();   
-    
-                }   
-    
+                    this.cleanLayout();
+
+                }
+
             },
             expandPane(layoutObj) {
                 let expanding = this.$expanded = !this.$expanded ? layoutObj : null;
@@ -1006,7 +1006,7 @@
                         }
                     });
                 });
-    
+
                 if (expanding) {
                     this.$timeout(() => {
                         this.updateCss();
@@ -1018,19 +1018,19 @@
                             rowOrColumn.forEach(cell => {
                                 this.cssRules[cell.cssId].opacity = 1;
                             });
-                        })   
+                        })
     ;
                     }, this.ANIM_DURATION * 1000);
                 }
-    
+
                 if (this.options.parent && this.parentCell) {
                     this.options.parent.expandPane(this.parentCell);
                 }
-    
-                layoutObj.expanded = !layoutObj.expanded;   
-    
-            }   
-    
+
+                layoutObj.expanded = !layoutObj.expanded;
+
+            }
+
         }
     };
 
@@ -1038,6 +1038,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

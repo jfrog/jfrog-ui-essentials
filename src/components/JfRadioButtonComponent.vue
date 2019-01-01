@@ -7,7 +7,7 @@
         </label>
         <label v-if="!text" class="jf-radio-button">
             <span></span>
-            <span ng-transclude="template" @click="onClickTemplate()"></span>
+            <span slot="template" @click="onClickTemplate()"></span>
             <span class="helper" v-if="helper">{{helper}}</span>
         </label>
         </span>
@@ -33,7 +33,7 @@
             return {};
         },
         mounted() {
-    
+
             /* (NG2VUE) This was moved from created() to mounted() */
             /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
             this.$transclude(function (clone) {
@@ -41,10 +41,10 @@
                     this.$element.find('label').prepend(clone);
                 }, 0, false);
             });
-    
+
             /* (NG2VUE) This was moved from created() to mounted() */
             /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
-    
+
             this.$set(this.$scope, 'onClickTemplate', () => {
                 this.$timeout(() => {
                     $(this.$element).parent().find('input[type=radio]').prop('checked', false);
@@ -58,6 +58,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

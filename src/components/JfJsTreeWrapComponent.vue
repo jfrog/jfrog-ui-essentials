@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <div ng-show="hasData()" class="jf-js-tree-wrap-container">
+        <div v-show="hasData()" class="jf-js-tree-wrap-container">
             <div class="tree-browser-header" v-if="treeHeader">
                 <div class="tree-browser-header-tabs" v-html="treeHeader">
                 </div>
@@ -35,10 +35,10 @@
             return {};
         },
         mounted() {
-    
+
             /* (NG2VUE) This was moved from created() to mounted() */
             /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
-    
+
             this.$scope.$watch('jfJsTreeWrap.treeData', data => {
                 if (data && !this.built)
                     this.initTree();
@@ -81,7 +81,7 @@
             buildTree() {
                 this.transformedData = this.transformData(this.treeData);
                 let TreeConfig = this.treeConfig();
-    
+
                 TreeConfig.core.data = (obj, cb) => {
                     if (obj.id === '#')
                         cb(this.transformedData);
@@ -96,7 +96,7 @@
                 };
                 this.treeElement = $(this.$element).find('.tree-element');
                 $(this.treeElement).jstree(TreeConfig);
-    
+
                 let defer = this.$q.defer();
                 $(this.treeElement).on('ready.jstree', e => {
                     defer.resolve();
@@ -122,9 +122,9 @@
                         selected: false,
                         checked: false
                     };
-    
+
                     this.setItemMethods(origItem);
-    
+
                     return item;
                 });
             },
@@ -182,8 +182,8 @@
             },
             hasData() {
                 return this.treeData && this.treeData.length;
-            }   
-    
+            }
+
         }
     }
 
@@ -191,6 +191,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

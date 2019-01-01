@@ -12,7 +12,7 @@
                     <div v-if="!multiple && jfFileUploader.queue.length && (!jfFileUploader.queue[0].progress || !showProgressBar)" class="drop-zone-file-name">{{jfFileUploader.queue[0].file.name}}</div>
                     <div v-if="!multiple && showProgressBar">
                         <div v-for="item in jfFileUploader.queue">
-                            <div ng-show="jfFileUploader.isHTML5 && item.progress" class="file-upload-progress file-info">
+                            <div v-show="jfFileUploader.isHTML5 && item.progress" class="file-upload-progress file-info">
                                 <div class="progress-file-drop">
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" :style="{ 'width': item.progress + '%' }">
@@ -26,7 +26,7 @@
                 <div class="upload-files-frame" v-if="multiple">
                     <ul>
                         <li v-for="item in jfFileUploader.queue" class="upload-item">
-                            <jf-checkbox class="file-selection pull-left" ng-show="item.hasCheckbox" v-jf-tooltip.bind=" checkboxesName ">
+                            <jf-checkbox class="file-selection pull-left" v-show="item.hasCheckbox" v-jf-tooltip.bind=" checkboxesName ">
                                 <input type="checkbox" @input="item.onCheckboxChange(item)" v-model="item.isCheckboxChecked">
                             </jf-checkbox>
                             <span class="file-name-deploy-multi" v-jf-tooltip.bind=" item.file.name ">{{ item.file.name }}</span>
@@ -60,6 +60,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

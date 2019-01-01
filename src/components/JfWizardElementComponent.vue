@@ -1,11 +1,11 @@
 <template>
 
     <div>
-        <div class="wizard-element-container" v-if="config.enableNgShow" ng-show="title===jfWizardCtl.active.title">
-            <div ng-transclude=""></div>
+        <div class="wizard-element-container" v-if="config.enableNgShow" v-show="title===jfWizardCtl.active.title">
+            <slot></slot>
         </div>
         <div class="wizard-element-container" v-if="!config.enableNgShow && title===jfWizardCtl.active.title">
-            <div ng-transclude=""></div>
+            <slot></slot>
         </div>
     </div>
 
@@ -46,6 +46,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

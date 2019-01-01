@@ -2,13 +2,13 @@
 
     const TEMPLATE = `
     <div>
-        <ui-select v-jf-disable-ng-animate="''" v-model="jfSelectModel" on-select="onSelect($item,$model)" :disabled="jfSelectDisabled" remove-selected="false">
+        <ui-select  v-model="jfSelectModel" on-select="onSelect($item,$model)" :disabled="jfSelectDisabled" remove-selected="false">
             <ui-select-match id="select-header" :placeholder=" jfSelectPlaceholder " @click="onOpenList()">
                 <jf-marquee disabled="jfSelectDisableMarquee">
                     <inner-html v-html="displayLabel($item || $select.selected)"></inner-html>
                 </jf-marquee>
             </ui-select-match>
-            <ui-select-choices v-jf-disable-ng-animate="''" refresh-delay="100" ui-disable-choice="item.disabled" refresh="refresh($select.search)" repeat="item in jfUiSelect[jfSelectOptionsView ? 'jfSelectOptionsView' : 'jfSelectOptions'] | filter: (!jfSelectFilterAttr ? $select.search : { [jfSelectFilterAttr || 'dummyfield']: $select.search}) track by $index">
+            <ui-select-choices  refresh-delay="100" ui-disable-choice="item.disabled" refresh="refresh($select.search)" repeat="item in jfUiSelect[jfSelectOptionsView ? 'jfSelectOptionsView' : 'jfSelectOptions'] | filter: (!jfSelectFilterAttr ? $select.search : { [jfSelectFilterAttr || 'dummyfield']: $select.search}) track by $index">
                 <div v-if="!jfSelectHelpTooltips" class="jf-ui-select-item" name="select-item" :class="{'more-ph': isMorePlaceholder(item)}" @click="onClick(item,$event)">
                     <jf-marquee disabled="jfSelectDisableMarquee" :class="[item.customClass]">
                         <inner-html v-html="displayLabel(item) | highlight: $select.search"></inner-html>
@@ -55,7 +55,7 @@
                     return null;
                 return this.$emit('jf-select-display-func', { $item: item });
             };
-    
+
             if (this.jfSelectLoadChunks === undefined) {
             } else if (this.jfSelectLoadChunks === '') {
                 this.chunkSize = 10;
@@ -98,14 +98,14 @@
             refresh(search) {
                 if (!this.jfSelectOptionsView)
                     return;
-    
+
                 if (!search.trim()) {
                     this.onOpenList();
                     return;
                 }
-    
+
                 this.filter = search;
-    
+
                 this.filtered = _.filter(this.jfSelectOptions, option => {
                     if (!this.jfSelectFilterAttr) {
                         return this.displayLabel(option).toLowerCase().indexOf(search.toLowerCase()) !== -1;
@@ -113,7 +113,7 @@
                         return option[this.jfSelectFilterAttr].toLowerCase().indexOf(search.toLowerCase()) !== -1;
                     }
                 });
-    
+
                 this.loaded = this.chunkSize;
                 this.jfSelectOptionsView = this.filtered.slice(0, this.loaded);
                 if (this.filtered.length > this.jfSelectOptionsView.length) {
@@ -139,6 +139,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>
