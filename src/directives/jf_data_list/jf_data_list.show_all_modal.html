@@ -1,34 +1,27 @@
 <div id="show-all-modal">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="close" aria-label="Close" ng-click="$dismiss()"><span aria-hidden="true">&times;</span></button>
-		<h4 class="modal-title" id="popup-header">{{items.length}} {{colName}} For {{objectName}} '{{rowName}}'</h4>
-	</div>
-	<div class="modal-body clearfix">
-		<input type="text"
-		       name="filter"
-		       class="input-text"
-		       ng-model="filter.text"
-		       placeholder="Filter"/>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="close" aria-label="Close" @click="$dismiss()"><span aria-hidden="_true">×</span></button>
+        <h4 class="modal-title" id="popup-header">{{items.length}} {{colName}} For {{objectName}} '{{rowName}}'</h4>
+    </div>
+    <div class="modal-body clearfix">
+        <input type="text" name="filter" class="input-text" v-model="filter.text" placeholder="Filter">
 
 
-		<div class="group-list-wrapper" ng-if="!noResults()">
-			<ul class="group-list">
-				<li class="group-list-item"
-				    jf-tooltip-on-overflow
-				    ng-repeat="item in items track by $index"
-				    ng-if="filterItem(item)">
-					<div ng-if="!item.url" ng-bind-html="item.label"></div>
-					<a ng-if="item.url" class="jf-link" ng-href="{{item.url}}" ng-bind-html="item.label" target="_blank"></a>
-				</li>
-			</ul>
-		</div>
+        <div class="group-list-wrapper" v-if="!noResults()">
+            <ul class="group-list">
+                <li class="group-list-item" v-jf-tooltip-on-overflow="''" v-for="_(item, $index) in items" v-if="filterItem(item)">
+                    <div v-if="!item.url" v-html="item.label"></div>
+                    <a v-if="item.url" class="jf-link" :href="item.url" v-html="item.label" target="_blank"></a>
+                </li>
+            </ul>
+        </div>
 
-		<div class="empty-filter-placeholder filter-no-results" ng-if="noResults()">
-			Current filter has no results. <a href class="jf-link" ng-click="filter.text = ''">Clear filter</a>
-		</div>
+        <div class="empty-filter-placeholder filter-no-results" v-if="noResults()">
+            Current filter has no results. <a href="" class="jf-link" @click.prevent="filter.text = ''">Clear filter</a>
+        </div>
 
-	</div>
-	<div class="modal-footer">
-		<button class="btn btn-default" ng-click="$dismiss()" id="popup-cancel">Close</button>
-	</div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" @click="$dismiss()" id="popup-cancel">Close</button>
+    </div>
 </div>

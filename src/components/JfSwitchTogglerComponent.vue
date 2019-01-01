@@ -1,0 +1,73 @@
+<template>
+
+    <div>
+        <div class="jf-switch-toggler" :class="{'left-option-selected' : isLeftOptionOn,
+                    'right-option-selected' : !isLeftOptionOn}">
+            <span class="left-option-text jf-toggler-text" v-html="leftOption.text"></span>
+            <jf-toggler on-toggle="toggleSelection()" :is-toggled-to-left="isLeftOptionOn">
+            </jf-toggler>
+            <span class="right-option-text jf-toggler-text" v-html="rightOption.text"></span>
+        </div>
+    </div>
+
+</template>
+
+<script>
+
+    export default {
+        name: 'jf-switch-toggler',
+        props: [
+            'model',
+            'options'
+        ],
+        data() {
+            return {
+                isLeftOptionOn: null,
+                leftOption: { text: null },
+                rightOption: { text: null }
+            };
+        },
+        mounted() {
+            if (!this.options)
+                throw 'Must supply options';
+            // Supports 2 methods of options:
+            // array of strings
+            // array of objects of type {'value': ..., 'text': ...}
+            // The model is assigned the value, and the text is displayed
+    
+            this.setOptionObjects();
+            if (_.isEmpty(this.model)) {
+                this.model = this.leftOption.value;
+            }
+            this.isLeftOptionOn = this.model === this.leftOption.value;
+        },
+        ng1_legacy: { 'controllerAs': '$ctrl' },
+        methods: {
+            toggleSelection() {
+                this.model = this.model === this.leftOption.value ? this.rightOption.value : this.leftOption.value;
+            },
+            setOptionObjects() {
+                let optionObjects = this.options.map(option => {
+                    if (typeof option === 'string')
+                        return {
+                            value: option,
+                            text: option
+                        };
+                    else {
+                        return option;
+                    }
+                });
+    
+                this.leftOption = optionObjects[0];
+                this.rightOption = optionObjects[1];
+            }
+        }
+    }
+
+</script>
+
+<style scoped lang="less">
+
+    
+
+</style>

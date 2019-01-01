@@ -27,8 +27,10 @@ export class TreeViewPane {
             this.dirCtrl.refresh();
         }
 
-        if (this.autoHeight) this._setAutoItemsPerPage();
-        if (notifyTree) this.treeApi.onViewUpdate(this);
+        if (this.autoHeight)
+            this._setAutoItemsPerPage();
+        if (notifyTree)
+            this.treeApi.onViewUpdate(this);
     }
 
     _getCurrentScrollPos() {
@@ -56,35 +58,36 @@ export class TreeViewPane {
             $timeout.cancel(this.scrollTimeout);
             delete this.scrollTimeout;
         }
-        let quadraticEase = (k) => k * (2 - k);
+        let quadraticEase = k => k * (2 - k);
 
         let interval = 40;
         let currentScrollPos = this._getCurrentScrollPos();
 
-        let steps = Math.ceil(duration/interval);
+        let steps = Math.ceil(duration / interval);
         let currentStep = 1;
 
         let cycle = () => {
-            let progress = currentStep/steps;
-            this._scrollTo(currentScrollPos + quadraticEase(progress)*numOfRows);
+            let progress = currentStep / steps;
+            this._scrollTo(currentScrollPos + quadraticEase(progress) * numOfRows);
             currentStep++;
             if (currentStep <= steps) {
                 this.scrollTimeout = $timeout(() => cycle(), interval);
-            }
-            else delete this.scrollTimeout;
-        }
-        cycle();
+            } else
+                delete this.scrollTimeout;
+        };
+        cycle();   
 
     }
 
     _scroll(numOfRows) {
-        if (!numOfRows) return;
+        if (!numOfRows)
+            return;
 
         let abs = Math.abs(numOfRows);
-        let sign = numOfRows/abs;
+        let sign = numOfRows / abs;
         let full = Math.floor(abs);
-        this.dirCtrl.virtualScrollIndex += sign*full;
-        this.dirCtrl.virtScrollDisplacement += sign*(abs - full);
+        this.dirCtrl.virtualScrollIndex += sign * full;
+        this.dirCtrl.virtScrollDisplacement += sign * (abs - full);
         if (this.dirCtrl.virtScrollDisplacement >= 1) {
             this.dirCtrl.virtualScrollIndex += 1;
             this.dirCtrl.virtScrollDisplacement -= 1;
@@ -102,7 +105,8 @@ export class TreeViewPane {
             this.dirCtrl.virtScrollDisplacement = 0;
         }
 
-        if (this.dirCtrl.virtualScrollIndex < 0) this.dirCtrl.virtualScrollIndex = 0;
+        if (this.dirCtrl.virtualScrollIndex < 0)
+            this.dirCtrl.virtualScrollIndex = 0;
 
         this.dirCtrl.syncFakeScroller(false);
     }
@@ -114,7 +118,7 @@ export class TreeViewPane {
         if (this.itemsPerPage === 'auto') {
             this.autoHeight = true;
             this._setAutoItemsPerPage();
-        }
+        }   
 
     }
 
@@ -123,7 +127,7 @@ export class TreeViewPane {
             let containerHeight = $(this.dirCtrl.$element).parent().height();
             this.containerHeight = containerHeight;
             this.setItemsPerPage(Math.floor(containerHeight / parseFloat(this.itemHeight)));
-        })
+        });
     }
 
     _hasHorizontalScrollbar() {
@@ -167,30 +171,28 @@ export class TreeViewPane {
                     }
 
                     return item.data === this.treeApi.GO_UP_NODE || !parentIsFilteredOut && this.treeApi.filterCallback(item.data);
-                })
+                });
             }
             if (ignoreCache) {
                 return filterCache || [];
-            }
-            else if (filterCache) {
+            } else if (filterCache) {
                 this.filterCache = filterCache;
                 return this.filterCache;
-            }
-            else {
+            } else {
                 return this.filterCache;
             }
-        }
-        else {
+        } else {
             return sourceData;
         }
     }
 
     refreshFilter(full = false) {
-        if (full) this.$flatItems.forEach(fi => {
-            if (fi.data && fi.data.$$$filterResultCache !== undefined) {
-                delete fi.data.$$$filterResultCache;
-            }
-        });
+        if (full)
+            this.$flatItems.forEach(fi => {
+                if (fi.data && fi.data.$$$filterResultCache !== undefined) {
+                    delete fi.data.$$$filterResultCache;
+                }
+            });
         delete this.filterCache;
     }
 
@@ -199,31 +201,36 @@ export class TreeViewPane {
     }
 
     _freeze() {
-        if (this.treeApi.$masterFreeze) return;
+        if (this.treeApi.$masterFreeze)
+            return;
         this.$freezedItems = [].concat(this.$flatItems);
         this.$freezedOpened = [].concat(this.treeApi.$openedNodes);
         this.treeApi._freezeSelected();
-        if (this.dirCtrl) this.dirCtrl._freezeVScroll();
+        if (this.dirCtrl)
+            this.dirCtrl._freezeVScroll();
         this.$freezed = true;
     }
 
     _unFreeze() {
-        if (this.treeApi.$masterFreeze) return;
+        if (this.treeApi.$masterFreeze)
+            return;
 
         delete this.$freezedItems;
         delete this.$freezedOpened;
         this.treeApi._unFreezeSelected();
-        if (this.dirCtrl) this.dirCtrl._unFreezeVScroll();
+        if (this.dirCtrl)
+            this.dirCtrl._unFreezeVScroll();
         this.$freezed = false;
 
         this.refreshFilter();
-        if (this.dirCtrl) this.dirCtrl.syncFakeScroller();
+        if (this.dirCtrl)
+            this.dirCtrl.syncFakeScroller();
     }
 
     _addChildren(children, level = 0, parent = null) {
         let parentIndex = this.$flatItems.indexOf(parent);
         let added = [];
-        children.forEach((node) => {
+        children.forEach(node => {
             let flatItem = this._createFlatItem(node, level, parent);
             added.push(flatItem);
             if (this.treeApi.isNodeOpen(node, true)) {
@@ -231,9 +238,9 @@ export class TreeViewPane {
                     if (_children && _children.length) {
                         this._addChildren(_children, level + 1, flatItem);
                     }
-                })
+                });
             }
-        })
+        });
         let before = this.$flatItems.slice(0, parentIndex + 1);
         let after = this.$flatItems.slice(parentIndex + 1);
         this.$flatItems = before.concat(added).concat(after);
@@ -246,21 +253,22 @@ export class TreeViewPane {
             let remove = false;
             let _parent = flat.parent;
             while (_parent) {
-                if (_parent  === parent) {
+                if (_parent === parent) {
                     remove = true;
                     break;
                 }
                 _parent = _parent.parent;
             }
             return !remove;
-        })
-        this.update();
+        });
+        this.update();   
 
     }
 
     _normalizeScroll() {
         this.treeApi.$timeout(() => {
-            if (!this.dirCtrl) return;
+            if (!this.dirCtrl)
+                return;
             if (this.dirCtrl.virtualScrollIndex + this.itemsPerPage > this.$flatItems.length) {
                 this._scrollTo(this.$flatItems.length - this.itemsPerPage + 1.999);
             }
@@ -273,8 +281,8 @@ export class TreeViewPane {
     _deleteItem(item) {
         let index = this.$flatItems.indexOf(item);
         if (index > 0) {
-            delete this.$flatItems[index-1].$isLastChild;
-            delete this.$flatItems[index-1].data.$indentation;
+            delete this.$flatItems[index - 1].$isLastChild;
+            delete this.$flatItems[index - 1].data.$indentation;
         }
         _.remove(this.$flatItems, fi => fi === item);
         _.remove(item.parent.data.$childrenCache, node => node === item.data);
@@ -285,7 +293,7 @@ export class TreeViewPane {
         this.$flatItems = [];
         let paneRoot = _.filter(this.treeApi.$root, node => {
             return this.treeApi.paneSelector(node) === this.viewPaneName;
-        })
+        });
         this._addChildren(paneRoot);
     }
 
@@ -296,7 +304,7 @@ export class TreeViewPane {
             level,
             parent,
             hasChildren: undefined
-        }
+        };
 
         this._refreshFlatChildrenCheck(flat);
 
@@ -307,13 +315,12 @@ export class TreeViewPane {
         if (this.treeApi.childrenChecker) {
             let check = this.treeApi.childrenChecker(flat.data);
             if (check && check.then) {
-                check.then((_check) => {
+                check.then(_check => {
                     flat.hasChildren = _check;
-                })
-            }
-            else flat.hasChildren = check;
-        }
-        else {
+                });
+            } else
+                flat.hasChildren = check;
+        } else {
             this.treeApi.getChildren(flat.data).then(children => {
                 flat.hasChildren = !!(children && children.length);
             });
@@ -323,11 +330,12 @@ export class TreeViewPane {
     _recursiveOpenRestore(node, restoreIfClosed = true) {
         let defer = this.treeApi.$q.defer();
 
-        let openRestoreNode = (node) => {
+        let openRestoreNode = node => {
 
             this.treeApi.openNode(node, false, false, false).then(() => {
                 let children = node.$childrenCache;
-                if (!children || !children.length) defer.resolve();
+                if (!children || !children.length)
+                    defer.resolve();
                 else {
                     node.children = true;
                     let pendingPromises = children.length;
@@ -337,32 +345,29 @@ export class TreeViewPane {
                             if (pendingPromises === 0) {
                                 defer.resolve();
                             }
-                        })
-                    })
+                        });
+                    });
                 }
-            })
-        }
+            });
+        };
 
         let id = this.treeApi.uniqueIdGetter(node);
         let opened = _.find(this.treeApi.$openedNodes, n => this.treeApi.uniqueIdGetter(n) === id);
         if (opened) {
             _.remove(this.treeApi.$openedNodes, n => n === opened);
             openRestoreNode(node);
-        }
-        else {
+        } else {
             if (restoreIfClosed) {
                 let closedRoot = _.find(this.$flatItems, fi => fi.data && fi.data !== this.treeApi.GO_UP_NODE && !_.includes(this.treeApi.$openedNodes, fi.data) && this.treeApi.uniqueIdGetter(fi.data) === id);
                 if (closedRoot) {
                     defer.promise.then(() => {
                         this.treeApi.closeNode(closedRoot.data);
-                    })
+                    });
                     openRestoreNode(closedRoot.data);
-                }
-                else {
+                } else {
                     defer.resolve();
                 }
-            }
-            else {
+            } else {
                 defer.resolve();
             }
         }
@@ -388,12 +393,12 @@ export class TreeViewPane {
                     this._unFreeze();
                     defer.resolve();
                 });
-            }
+            };
             if (_.find(this.treeApi.$root, node => node === flat.data)) {
                 delete this.treeApi.$rootCache;
                 this.treeApi.getChildren().then(() => doRefresh());
-            }
-            else doRefresh();
+            } else
+                doRefresh();   
 
         }
         return defer.promise;
@@ -421,55 +426,56 @@ export class TreeViewPane {
                         if (resolveCount === itemsCount) {
                             let selectedId = this.treeApi.$selectedNode && this.treeApi.$selectedNode !== this.treeApi.GO_UP_NODE ? this.treeApi.uniqueIdGetter(this.treeApi.$selectedNode) : null;
                             let newSelected = selectedId !== null ? _.find(this.$flatItems, fi => fi.data !== this.treeApi.GO_UP_NODE && this.treeApi.uniqueIdGetter(fi.data) === selectedId) : null;
-                            if (this.treeApi.$selectedNode === this.treeApi.GO_UP_NODE) newSelected = _.find(this.$flatItems, fi => fi.data === this.treeApi.GO_UP_NODE);
+                            if (this.treeApi.$selectedNode === this.treeApi.GO_UP_NODE)
+                                newSelected = _.find(this.$flatItems, fi => fi.data === this.treeApi.GO_UP_NODE);
                             if (newSelected) {
                                 this.treeApi._setSelected(newSelected);
                                 this._unFreeze();
                                 mainDefer.resolve();
-                            }
-                            else if (selectedId) {
+                            } else if (selectedId) {
                                 this.treeApi.nodeByIdGetter(selectedId).then(node => {
                                     this._unFreeze();
                                     this.treeApi.openDeepNode(node).then(() => {
                                         mainDefer.resolve();
-                                    })
+                                    });
                                 }).catch(() => {
                                     this.selectFirst();
                                     this._unFreeze();
                                     mainDefer.resolve();
-                                })
-                            }
-                            else {
+                                });
+                            } else {
                                 this._unFreeze();
                                 mainDefer.resolve();
                             }
                         }
-                    })
-                })
-            }
-            else {
+                    });
+                });
+            } else {
                 this._unFreeze();
                 mainDefer.resolve();
             }
-        })
+        });
 
         return mainDefer.promise;
     }
 
     selectFirst() {
-        if (this._getPrePagedData().length) this.treeApi._setSelected(this._getPrePagedData()[0])
+        if (this._getPrePagedData().length)
+            this.treeApi._setSelected(this._getPrePagedData()[0]);
     }
 
     getQuickFindMatches() {
-        if (!this.treeApi.quickFindTerm) return [];
+        if (!this.treeApi.quickFindTerm)
+            return [];
         else {
             let matches = _.filter(this.$flatItems, (fi, ind) => {
                 let text = this.treeApi.textGetter(fi.data);
                 let matchObj = this.treeApi.AdvancedStringMatch.match(text, this.treeApi.quickFindTerm);
                 let matched = matchObj ? matchObj.matched : null;
-                if (matched) fi.$$index = ind;
+                if (matched)
+                    fi.$$index = ind;
                 return matched;
-            })
+            });
 
             if (this.treeApi.$selectedNode) {
                 let selectedIndex = _.findIndex(this.$flatItems, fi => fi.data === this.treeApi.$selectedNode);
@@ -487,20 +493,23 @@ export class TreeViewPane {
 
     centerOnNode(node) {
         let flat = this._flatFromNode(node);
-        if (flat) this.centerOnItem(flat);
+        if (flat)
+            this.centerOnItem(flat);
     }
 
     _flatFromNode(node) {
-        if (node === this.treeApi.GO_UP_NODE) return _.find(this.$flatItems, {$specialNode: "GO_UP"});
+        if (node === this.treeApi.GO_UP_NODE)
+            return _.find(this.$flatItems, { $specialNode: 'GO_UP' });
 
         let refMatch = _.find(this.$flatItems, flat => flat.data === node);
         if (!refMatch) {
             let nodeId = this.treeApi.uniqueIdGetter(node);
             let idMatch = _.find(this.$flatItems, flat => {
-                if (flat.data === this.treeApi.GO_UP_NODE) return false;
+                if (flat.data === this.treeApi.GO_UP_NODE)
+                    return false;
                 else {
                     let flatId = this.treeApi.uniqueIdGetter(flat.data);
-                    return  flatId === nodeId;
+                    return flatId === nodeId;
                 }
             });
             return idMatch;
@@ -514,11 +523,10 @@ export class TreeViewPane {
 
         if (index - 1 < this.dirCtrl.virtualScrollIndex) {
             this.scrollTo(index, jump ? 0 : undefined);
-        }
-        else if (index + 1 > this.dirCtrl.virtualScrollIndex + this.itemsPerPage) {
-            let fullItems = this.containerHeight ? Math.floor(this.containerHeight/parseFloat(this.itemHeight)) : this.itemsPerPage;
+        } else if (index + 1 > this.dirCtrl.virtualScrollIndex + this.itemsPerPage) {
+            let fullItems = this.containerHeight ? Math.floor(this.containerHeight / parseFloat(this.itemHeight)) : this.itemsPerPage;
             let scrollIndex = index - fullItems >= 0 ? index - fullItems : 0;
-            let displace = this.containerHeight ? 1-(this.containerHeight/parseFloat(this.itemHeight) - fullItems) : 1;
+            let displace = this.containerHeight ? 1 - (this.containerHeight / parseFloat(this.itemHeight) - fullItems) : 1;
             let hScrollFactor = 0;
             if (this._hasHorizontalScrollbar()) {
                 let pixelFactor = this._getHorizontalScrollbarHeight();
@@ -526,7 +534,7 @@ export class TreeViewPane {
             }
             this.scrollTo(scrollIndex + displace + hScrollFactor, jump ? 0 : undefined);
         }
-        this.dirCtrl.syncFakeScroller(false);
+        this.dirCtrl.syncFakeScroller(false);   
 
     }
 
@@ -536,11 +544,9 @@ export class TreeViewPane {
         let halfPage = Math.floor(this.itemsPerPage / 2);
         if (prePaged.length <= this.itemsPerPage || index - halfPage < 0) {
             this.dirCtrl.virtualScrollIndex = 0;
-        }
-        else if (index + (this.itemsPerPage - halfPage) > prePaged.length) {
+        } else if (index + (this.itemsPerPage - halfPage) > prePaged.length) {
             this.dirCtrl.virtualScrollIndex = prePaged.length - this.itemsPerPage;
-        }
-        else {
+        } else {
             this.dirCtrl.virtualScrollIndex = index - halfPage;
         }
 
@@ -549,25 +555,28 @@ export class TreeViewPane {
     }
 
     focus() {
-        if (this.dirCtrl) $(this.dirCtrl.$element).find('.jf-tree').focus();
+        if (this.dirCtrl)
+            $(this.dirCtrl.$element).find('.jf-tree').focus();
     }
 
     findNode(findFunction) {
         let item = _.find(this.$flatItems, fi => {
             return fi.data !== this.treeApi.GO_UP_NODE && findFunction(fi.data);
-        })
-        if (item) return item.data;
+        });
+        if (item)
+            return item.data;
     }
 
     findNodeByUniqueId(uniqueId) {
         let item = _.find(this.$flatItems, fi => {
             return fi.data !== this.treeApi.GO_UP_NODE && this.treeApi.uniqueIdGetter(fi.data) === uniqueId;
-        })
-        if (item) return item.data;
+        });
+        if (item)
+            return item.data;
     }
 
     isNodeOpen(node, ignoreFreeze = false) {
-        return (!ignoreFreeze && this.$freezedOpened && _.includes(this.$freezedOpened, node)) || (!this.$freezedOpened && _.includes(this.treeApi.$openedNodes, node));
+        return !ignoreFreeze && this.$freezedOpened && _.includes(this.$freezedOpened, node) || !this.$freezedOpened && _.includes(this.treeApi.$openedNodes, node);
     }
 
     getNodesCount() {
@@ -580,50 +589,52 @@ export class TreeViewPane {
 
     _refreshIndentations() {
         this.$flatItems.forEach(fi => {
-            if (fi.data.$indentation) delete fi.data.$indentation;
+            if (fi.data.$indentation)
+                delete fi.data.$indentation;
             if (fi.data.$childrenCache) {
                 fi.data.$childrenCache.forEach(node => {
-                    if (node.$indentation) delete node.$indentation;
-                })
+                    if (node.$indentation)
+                        delete node.$indentation;
+                });
             }
-        })
+        });
     }
 
     _renderLinesBackgrounds() {
         let height = parseFloat(this.itemHeight);
-        let canvas = $(`<canvas width="26" height="${height}"></canvas>`)[0];
+        let canvas = $(`<canvas width="26" height="${ height }"></canvas>`)[0];
         let ctx = canvas.getContext('2d');
         ctx.strokeStyle = '#aaaaaa';
 
         ctx.beginPath();
-        ctx.moveTo(13,0);
-        ctx.lineTo(13,height);
+        ctx.moveTo(13, 0);
+        ctx.lineTo(13, height);
         ctx.stroke();
-        let verticalLine = canvas.toDataURL('image/png', 1.0);
+        let verticalLine = canvas.toDataURL('image/png', 1);
 
-        ctx.clearRect(0,0,26,height);
+        ctx.clearRect(0, 0, 26, height);
         ctx.beginPath();
-        ctx.moveTo(0,height/2);
-        ctx.lineTo(26,height/2);
+        ctx.moveTo(0, height / 2);
+        ctx.lineTo(26, height / 2);
         ctx.stroke();
-        let horizontalLine = canvas.toDataURL('image/png', 1.0);
+        let horizontalLine = canvas.toDataURL('image/png', 1);
 
-        ctx.clearRect(0,0,26,height);
+        ctx.clearRect(0, 0, 26, height);
         ctx.beginPath();
-        ctx.moveTo(13,0);
-        ctx.lineTo(13,height);
-        ctx.moveTo(13,height/2);
-        ctx.lineTo(26,height/2);
+        ctx.moveTo(13, 0);
+        ctx.lineTo(13, height);
+        ctx.moveTo(13, height / 2);
+        ctx.lineTo(26, height / 2);
         ctx.stroke();
-        let connectionPoint = canvas.toDataURL('image/png', 1.0);
+        let connectionPoint = canvas.toDataURL('image/png', 1);
 
-        ctx.clearRect(0,0,26,height);
+        ctx.clearRect(0, 0, 26, height);
         ctx.beginPath();
-        ctx.moveTo(13,0);
-        ctx.lineTo(13,height/2);
-        ctx.lineTo(26,height/2);
+        ctx.moveTo(13, 0);
+        ctx.lineTo(13, height / 2);
+        ctx.lineTo(26, height / 2);
         ctx.stroke();
-        let lastConnectionPoint = canvas.toDataURL('image/png', 1.0);
+        let lastConnectionPoint = canvas.toDataURL('image/png', 1);
 
 
         this.linesBackgrounds = {
@@ -631,7 +642,7 @@ export class TreeViewPane {
             'horizontal-line': horizontalLine,
             'connection-point': connectionPoint,
             'last-connection-point': lastConnectionPoint
-        }
-    }
+        };
+    }   
 
 }
