@@ -1,0 +1,36 @@
+.tooltipster-default {
+  border-radius: 0;
+  background-color: #262626;
+  color: #c8c8c8;
+  border: 0 none;
+  text-align: left;
+  white-space: pre-wrap;
+  max-width:600px;
+  box-shadow: 0 0px 12px 0 rgba(0,0,0,0.1), 0 0px 10px 0 rgba(0,0,0,0.2);
+
+  a {
+    color: @greenFontHeader;
+  }
+
+  .tooltipster-content {
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+// TOOLTIPS ANIMATION
+@tooltipDist: 15px;
+
+.tooltipster-fade {
+  opacity: 0;
+  transition: margin .15s ease-out, opacity .1s ease-out !important;
+  margin: @tooltipDist 0 0 0;
+
+  &.bottom {
+    margin: -@tooltipDist 0 0 0;
+  }
+}
+.tooltipster-fade-show {
+  opacity: 1 !important;
+  margin: 0 !important;
+}

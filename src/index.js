@@ -13,6 +13,7 @@ window.$ = $;
 window.jQuery = $;
 import 'jquery-contextmenu';
 
+import('./assets/stylesheets/main.less');
 import('../node_modules/jf-tooltipster/css/tooltipster.css');
 require('../node_modules/jf-tooltipster/js/jquery.tooltipster');
 

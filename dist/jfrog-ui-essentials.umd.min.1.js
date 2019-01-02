@@ -1,2 +1,2 @@
-(("undefined"!==typeof self?self:this)["webpackJsonpjfrog_ui_essentials"]=("undefined"!==typeof self?self:this)["webpackJsonpjfrog_ui_essentials"]||[]).push([[1],{"2f8a":function(e,s,f){}}]);
+(("undefined"!==typeof self?self:this)["webpackJsonpjfrog_ui_essentials"]=("undefined"!==typeof self?self:this)["webpackJsonpjfrog_ui_essentials"]||[]).push([[1],{b79e:function(e,s,f){}}]);
 //# sourceMappingURL=jfrog-ui-essentials.umd.min.1.js.map

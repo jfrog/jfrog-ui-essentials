@@ -1,0 +1,153 @@
+.btn {
+  border-radius: 0;
+  border: 1px solid transparent;
+  color: @blackFontDark;
+  font-weight: 700;
+  padding: 0 12px;
+  height: 40px;
+  line-height: 38px;
+  min-width: 100px;
+  opacity: 1 !important;
+  outline: none;
+  transition: all .2s ease-in-out;
+  & + .btn {  // Add space between two suite buttons
+    margin-left: 10px;
+  }
+  &:focus, &:visited, &:hover, &:active {
+    outline: none;
+    border: none;
+    box-shadow: none;
+  }
+
+  &:active:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  &.btn-default {
+    border: 1px solid transparent;
+    background: transparent;
+    color: @grayFontGeneral;
+
+    &:hover {
+      color: @blackFontDark;
+    }
+    &[disabled] {
+      color: @jfColorGrey!important;
+    }
+  }
+
+  &.btn-icon-action {
+    transition: none;
+    font-weight: 700;
+    font-size: 14px;
+    color: @jfColorBlack;
+    border: 0;
+    &:hover, &:focus {
+      outline: unset;
+      border: 0;
+      box-shadow: none;
+    }
+    i {
+      font-size: 16px;
+      margin-right: 8px;
+    }
+    &[disabled] {
+      color: @jfColorGrey;
+      background-color: transparent;
+    }
+  }
+
+  &.btn-primary {
+    background: @greenBGPrimary;
+    color: @greenBGPrimaryText;
+    &:hover, &:focus {
+      background: @greenBGPrimaryHover;
+      border: 1px solid @greenBGPrimaryHoverBorder;
+    }
+  }
+
+  &.btn-primary-light {
+    background: @greenBGSmallHover;
+    color: @greenFontDarker;
+
+    &:hover {
+      color: @greenFontDarker;
+      background: @greenBGSmall;
+    }
+
+    &:active {
+      background: @greenBGSmallActive;
+      color: @white;
+    }
+  }
+
+
+  &.btn-secondary {
+    background: @greenBGSecondary;
+    border: 1px solid @greenBGSecondaryBorder;
+    color: @greenBGSecondaryText;
+    &:hover, &:focus {
+      background: @greenBGSecondaryHover;
+      border: 1px solid @greenBGSecondaryHoverBorder;
+    }
+    &[disabled] {
+      color: @jfColorGrey!important;
+    }
+  }
+
+  &.btn-small {
+    height: 36px; //temporary !
+    background: @greenBGSmall;
+    color: @greenFontDarker;
+    padding: 0;
+    //padding: 3px 12px;
+
+    &:hover {
+      color: @greenFontDarker;
+      background: @greenBGSmallHover;
+    }
+
+    &:active {
+      background: @greenBGSmallActive;
+      color: @white;
+    }
+
+    &[disabled] {
+      background: @grayBGDisabled;
+      color: @white;
+    }
+  }
+
+  &.btn-wide {
+    min-width: 155px;
+  }
+
+  // Disabled
+  &[disabled] {
+    background: @grayBGDisabled;
+    &.btn-default {
+      color: @grayFontLight;
+      background: inherit;
+    }
+    &.btn-primary {
+      background: @greenBGPrimaryDisabled;
+      border-color: @greenBGPrimaryDisabledBorder;
+    }
+    &.btn-secondary {
+      background: @greenBGSecondaryDisabled;
+      border-color: @greenBGSecondaryBorder;
+      color: @greenBGSecondaryTextDisabled;
+    }
+  }
+}
+
+.flat-icon {
+  &, & i:before {
+    color: @light-gray;
+    font-size: 16px;
+  }
+  &:hover,
+  &:hover i:before {
+    color: @green;
+  }
+}

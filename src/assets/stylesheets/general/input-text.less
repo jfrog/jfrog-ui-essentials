@@ -1,0 +1,51 @@
+::placeholder {
+  height: 40px;
+}
+
+.input-text {
+  border: 1px solid @grayBorderLighter;
+  border-radius: 0;
+  outline: none;
+  box-shadow: none;
+
+  width: 100%;
+  padding: 0 10px;
+  transition: border-color .5s ease;
+  
+  &:not(textarea) {
+    height: 40px;
+  }
+
+  textarea& {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    resize: none;
+  }
+  &[type="number"] {
+    padding-right: 0;
+  }
+
+  &:focus {
+    border-color: @grayBorderMiddleDark;
+    color: @grayFontLight;
+    box-shadow: none;
+  }
+
+  &.invalid.ng-invalid:not([disabled]) {
+    border-color: @redError;
+    box-shadow: none;
+  }
+  &:not(.not-disabled-style)[disabled] {
+    background: @grayBGLighter;
+  }
+  
+  &::-ms-clear,
+  &::-ms-reveal {
+    display: none;
+  }
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+  }
+
+  .placeholder-style();
+}
