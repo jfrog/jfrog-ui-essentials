@@ -20,7 +20,7 @@ import { JFrogUILibConfig } from './services/providers/JFrogUiLibConfigProvider.
 import { main } from './init/MainRunBlock.js';
 import { config } from './configs/ConfigConfig.js';
 import { jfrogUiEssentialsConfig } from './configs/JfrogUiEssentialsConfig.js';
-let JFrogUI;
+import JFrogUI from './plugins/JFrogUI';
 
 export const servicesRegistration = {
     registerConfigs: () => JFrogUI.registerConfigs({
@@ -53,8 +53,7 @@ export const servicesRegistration = {
     }),
     registerConstants: () => JFrogUI.registerConstants({
     }),
-    registerAll: (_JFrogUI) => {
-        JFrogUI = _JFrogUI;
+    registerAll: () => {
         servicesRegistration.registerConfigs();
         servicesRegistration.registerRunBlocks();
         servicesRegistration.registerProviders();
