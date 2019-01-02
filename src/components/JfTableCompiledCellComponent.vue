@@ -29,7 +29,6 @@
             /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
 
             this.$scope.$watch('compiledCell.tableRow.data', () => {
-                console.log('????');
                 this.compile();
             });
         },

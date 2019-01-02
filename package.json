@@ -2,14 +2,14 @@
   "name": "jfrog-ui-essentials",
   "description": "JFrog UI Essentials",
   "version": "3.0.0-vue-dev",
-  "main": "./dist/jfrog-vue-essentials.common.js",
+  "main": "./dist/jfrog-ui-essentials.common.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/jfrog/jfrog-ui-essentials.git"
   },
   "scripts": {
-    "build": "vue-cli-service build --target lib --name jfrog-vue-essentials src/index.js",
-    "watch": "vue-cli-service --watch build --target lib --name jfrog-vue-essentials src/index.js",
+    "build": "vue-cli-service build --target lib --name jfrog-ui-essentials src/index.js",
+    "watch": "vue-cli-service --watch build --target lib --name jfrog-ui-essentials src/index.js",
     "lint": "vue-cli-service lint"
   },
   "files": [
