@@ -134,7 +134,7 @@
                     return;
                 }
                 this._ensureTabVisible(tab);
-                this.state.go(this.state.current, { tab: tab.name }, { notify: false });
+//                this.state.go(this.state.current, { tab: tab.name }, { notify: false });
                 this.currentTab.name = tab.name;
 
                 this.state.current.tabChange = tabChange;
