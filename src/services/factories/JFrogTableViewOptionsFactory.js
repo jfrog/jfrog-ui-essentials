@@ -180,7 +180,8 @@ export function JFrogTableViewOptions() {
                         if (row.$expanded) {
                             rowsToExpand.push(row);
                         }
-                    } else if (_.isFunction(row.$subRows)) {
+                    }
+                    else if (_.isFunction(row.$subRows)) {
                         let origFunc = row.$subRows;
                         row.$subRows = () => {
                             let promise = origFunc();
@@ -212,7 +213,7 @@ export function JFrogTableViewOptions() {
                 row.$subRows().then(() => this.toggleExpansion(row));
             } else {
                 if (row.$expandable) {
-                    row.$expanded = !row.$expanded;
+                    Vue.set(row, '$expanded', !row.$expanded);
                     if (row.$expanded) {
                         this._addSubRows(row);
                     } else {
@@ -230,10 +231,7 @@ export function JFrogTableViewOptions() {
             let newSubRows = _.filter(row.$subRows, subRow => {
                 return addTo.indexOf(subRow) === -1;
             });
-            Array.prototype.splice.apply(addTo, [
-                index,
-                0
-            ].concat(newSubRows));
+            addTo.splice(index, 0, ...newSubRows)
             this.refreshFilter();
             this.update();
         }
@@ -335,7 +333,6 @@ export function JFrogTableViewOptions() {
         }
 
         setColumns(columns) {
-            console.log('WTF');
 
             this.defaultFilterByAll = !_.filter(columns, c => c.filterable === true).length;
 
@@ -405,7 +402,6 @@ export function JFrogTableViewOptions() {
         }
 
         showHeaders(show = true) {
-            console.log('????*********');
             this.headersVisible = show;
             this.headersRow = {};
             this.columns.forEach(column => {
@@ -835,10 +831,10 @@ export function JFrogTableViewOptions() {
                 this.pendingExternalPaging = true;
                 promise.then(pagedData => {
                     this.setData(pagedData.data, '$$internal$$');
-                    this.externalTotalCount = {
+                    Vue.set(this, 'externalTotalCount', {
                         total: pagedData.totalCount,
                         filtered: pagedData.filteredCount
-                    };
+                    })
                     this.pendingExternalPaging = false;
                     this.dirCtrl.noFilterResults = this.externalTotalCount.filtered === 0 && this.externalTotalCount.total > 0;
                 });

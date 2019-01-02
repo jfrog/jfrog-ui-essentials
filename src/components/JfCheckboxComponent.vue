@@ -1,8 +1,10 @@
 <template>
 
-    <div><label class="jf-checkbox">
+    <div>
+        <label class="jf-checkbox">
             <span></span> {{ text }}
-        </label></div>
+        </label>
+    </div>
 
 </template>
 
@@ -18,20 +20,51 @@
         data() {
             return {};
         },
+        mounted() {
+            this.$transclude(clone => {
+                this.$element.find('label').prepend(clone);
+            });
+        },
         ng1_legacy: { 'controllerAs': 'jfCheckbox' },
-        methods: {
-            $postLink() {
-                this.$transclude(clone => {
-                    this.$element.find('label').prepend(clone);
-                });
-            }
-        }
     }
 
 </script>
 
 <style scoped lang="less">
+    @import "../../src/assets/stylesheets/variables.less";
 
-    
+    .jf-checkbox {
+        font-weight: 400;
+        input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        input[type="checkbox"] + span {
+            display: inline-block;
+            background: #fff url(../assets/images/checkbox.png) left top no-repeat;
+            width: 17px;
+            height: 17px;
+            margin: -1px 5px 0 0;
+            position: relative;
+            vertical-align: middle;
+        }
+
+        input[type="checkbox"]:checked + span {
+            background-image: url(../assets/images/checkbox_checked.png);
+        }
+
+        input[type="checkbox"][disabled] + span {
+            background-color: @softGray;
+        }
+
+        input[type="checkbox"]:focus + span {
+            box-shadow: 0 0 5px rgba(0, 0, 0, .15);
+        }
+    }
+
+    jf-checkbox + jf-checkbox {
+        margin-left: 20px;
+    }
 
 </style>

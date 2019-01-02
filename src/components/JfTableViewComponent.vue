@@ -116,19 +116,7 @@
             });
         },
         mounted() {
-
-            let on_resize = () => {
-                this.options._normalizeWidths();
-                this._fireDebouncedRowsInView();
-            };
-
-            /* (NG2VUE) This was moved from created() to mounted() */
-            /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
             this.$containerElement = this.$element.find('.jf-table-view');
-
-            /* (NG2VUE) This was moved from created() to mounted() */
-            /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
-
             this._handleDocumentClick();
         },
         ng1_legacy: { 'controllerAs': 'jfTableView' },
@@ -189,7 +177,7 @@
                 this._autoAddEllipsisClass(templateElem);
                 this.$compile(templateElem.children()[0])(rowScope);
                 elem.empty();
-                elem.append(templateElem);
+                elem.append(templateElem.children()[0]);
             },
             _autoAddEllipsisClass(templateRoot) {
                 let allText = templateRoot.text();
@@ -446,7 +434,7 @@
 
     @import "../../src/assets/stylesheets/bootstrap-variables.less";
     @import "../../src/assets/stylesheets/variables.less";
-    .jf-table-view /deep/ {
+    /deep/ .jf-table-view {
         width: 100%;
         position: relative;
         .columns-customization-wrap {
@@ -884,7 +872,7 @@
                 display: block;
             }
             &:not(.jf-table-avatar){
-                padding-right: 40px;
+                padding-right: 0;
             }
         }
         .row-drag-helper {
@@ -941,6 +929,29 @@
                         color: inherit;
                     }
                 }
+            }
+        }
+
+        .grid-checkbox {
+            padding: 0;
+            text-align: center;
+
+            input[type="checkbox"] {
+                display: none;
+            }
+
+            input[type="checkbox"] + span {
+                display: none;
+                font-size: 17px;
+                color: @jfColorGreen;
+
+                &:before {
+                    line-height: 50px;
+                }
+            }
+
+            input[type="checkbox"]:checked + span {
+                display: inline-block;
             }
         }
 

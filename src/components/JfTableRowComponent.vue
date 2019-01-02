@@ -1,6 +1,14 @@
 <template>
 
-    <div class="jf-table-row" v-if="data" @mousemove="rowId === 'headers' && tableView.options.resizableColumns && onMouseMove($event)" @mousedown="rowId === 'headers' && tableView.options.resizableColumns && onMouseDown($event)" @mouseup="rowId === 'headers' && tableView.options.resizableColumns && onMouseUp($event)" @mouseleave="rowId === 'headers' && tableView.options.resizableColumns && onMouseUp($event)" @click="onRowClick($event)" :class="{headers: rowId === 'headers', 'group-header': data && data.$groupHeader, 'expanded': data && data.$groupHeader && data.$groupHeader.$expanded, 'sub-row': data && data.$parentRow, sticky: data && data.$sticky, selected: data && data.$selected, 'drag-mark': rowId !== 'headers' && tableView.options.draggableRows && !(tableView.options.registeredTabularDnd.dndCtrl.disabled) && isRowDraggable(), [data[tableView.options.rowClassAttr]]: tableView.options.rowClassAttr && data[tableView.options.rowClassAttr]}" :style="{height: rowId === 'headers' ? '' : tableView.options.rowHeight, opacity: tableView.options.ready ? 1 : 0}">
+    <div class="jf-table-row"
+         v-if="data"
+         @mousemove="rowId === 'headers' && tableView.options.resizableColumns && onMouseMove($event)"
+         @mousedown="rowId === 'headers' && tableView.options.resizableColumns && onMouseDown($event)"
+         @mouseup="rowId === 'headers' && tableView.options.resizableColumns && onMouseUp($event)"
+         @mouseleave="rowId === 'headers' && tableView.options.resizableColumns && onMouseUp($event)"
+         @click="onRowClick($event)"
+         :class="{headers: rowId === 'headers', 'group-header': data && data.$groupHeader, 'expanded': data && data.$groupHeader && data.$groupHeader.$expanded, 'sub-row': data && data.$parentRow, sticky: data && data.$sticky, selected: data && data.$selected, 'drag-mark': rowId !== 'headers' && tableView.options.draggableRows && !(tableView.options.registeredTabularDnd.dndCtrl.disabled) && isRowDraggable(), [data[tableView.options.rowClassAttr]]: tableView.options.rowClassAttr && data[tableView.options.rowClassAttr]}"
+         :style="{height: rowId === 'headers' ? '' : tableView.options.rowHeight, opacity: tableView.options.ready ? 1 : 0}">
 
         <div class="jf-table-cell selection" :class="{'single-selection' : tableView.options.selectionMode === tableView.options.SINGLE_SELECTION}" :style="{height: tableView.options.rowHeight, width: tableView.options.selectionColumnWidth + 'px'}" v-if="tableView.options.hasSelection()">
             <div class="jf-table-cell-content">
@@ -41,7 +49,12 @@
 
         </div>
 
-        <div class="jf-table-cell" v-if="!data.$groupHeader" :class="{header: rowId === 'headers' && col.header, sortable: rowId === 'headers' && tableView.options.sortable && tableView.options.getRawData().length && col.sortable && !hoveringResize, 'column-resizer': hoveringResize, ['drag-right']: col.$dragRightBorder, ['drag-left']: col.$dragLeftBorder, ['field-id-' + kebab(col.field)]: true, ['row-expander-cell']: $index === 0 && tableView.options.subRowsEnabled}" @click="onClickCell(col,$event)" :style="{height: rowId === 'headers' ? tableView.options.headerRowHeight : tableView.options.rowHeight, width: col.width}" v-for="col in tableView.options.columns">
+        <div class="jf-table-cell"
+             v-if="!data.$groupHeader"
+             :class="{header: rowId === 'headers' && col.header, sortable: rowId === 'headers' && tableView.options.sortable && tableView.options.getRawData().length && col.sortable && !hoveringResize, 'column-resizer': hoveringResize, ['drag-right']: col.$dragRightBorder, ['drag-left']: col.$dragLeftBorder, ['field-id-' + kebab(col.field)]: true, ['row-expander-cell']: $index === 0 && tableView.options.subRowsEnabled}"
+             @click="onClickCell(col,$event)"
+             :style="{height: rowId === 'headers' ? tableView.options.headerRowHeight : tableView.options.rowHeight, width: col.width}"
+             v-for="(col, $index) in tableView.options.columns">
             <div class="row-expander"  :class="{placeholder: (!data.$subRows && !data.$parentRow) || (data.$subRows && data.$subRows.length === 0) || (data.$parentRow)}" v-if="$index === 0 && tableView.options.subRowsEnabled" :style="{height: tableView.options.rowHeight}" @click="toggleExpansion($event)">
                 <i v-if="data.$subRows && data.$subRows.length && !data.$parentRow && !data.$pendingSubRows" class="action-icon icon icon-small-arrow-down" :class="{'expanded': data.$expanded}"></i>
                 <div class="spinner-msg-local" v-if="data.$pendingSubRows">

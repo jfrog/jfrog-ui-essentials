@@ -34,7 +34,7 @@ let cellTemplateGenerators = {
         return template;
     },
     iconColumn: function (cellText, cellIcon, iconClass) {
-        return '<div id="type"><i class="icon icon-{{' + cellIcon + '}}' + (iconClass ? ' ' + iconClass : '') + '"></i>{{' + cellText + '}}</div>';
+        return `<div id="type"><i :class="'icon icon-' + ${cellIcon} + '${iconClass ? ' ' + iconClass : ''}'"></i>{{${cellText}}}</div>`;
     },
     ajaxColumn: function () {
         return '<div class="ui-grid-cell-contents status-grid"><div class="icon-hourglass" v-if="!row.entity.status"></div>{{row.entity.status}}</div>';

@@ -23,10 +23,10 @@
             return {};
         },
         mounted() {
-    
+
             /* (NG2VUE) This was moved from created() to mounted() */
             /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
-    
+
             this.$scope.$watch('compiledCell.treeItem.data', () => {
                 this.compile();
             });
@@ -44,6 +44,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

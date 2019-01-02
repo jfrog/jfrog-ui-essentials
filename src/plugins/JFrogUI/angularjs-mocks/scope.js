@@ -27,8 +27,6 @@ export class AngularScopeServiceMock {
             vueComp.$destroy();
         };
 
-        this.$parent = () => new AngularScopeServiceMock(this.$comp.$parent);
-
         this.$new = (data = {}) => {
             let v = new Vue({data() { return _.extend({}, data, vueComp.$data); }});
             return new AngularScopeServiceMock(v);
@@ -36,7 +34,7 @@ export class AngularScopeServiceMock {
 
         Object.defineProperty(this, '$parent', {
             get() {
-                return new AngularScopeServiceMock(vueComp.$parent);
+                return vueComp.$parent ? new AngularScopeServiceMock(vueComp.$parent) : null
             }
         })
     }
