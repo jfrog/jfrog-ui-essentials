@@ -1,15 +1,21 @@
 class jfDrawerController {
 
-    constructor(JFrogUIUtils, $timeout) {
+    constructor(JFrogUIUtils, $timeout, $scope) {
         this.opened = false;
         this.utils = JFrogUIUtils;
-
+        this.$scope = $scope;
     }
 
     $onInit() {
         if (this.openFirst === '0') {
             this.opened = true;
         }
+	    this.$scope.$watch(angular.bind(this, () => this.bindOpen), (val) => {
+		    if (typeof val === 'boolean') {
+		        this.opened = val;
+		        if (this.opened) this.utils.fireResizeEvent();
+	        }
+	    });
     }
 
     onClickHeader() {
@@ -24,7 +30,8 @@ export function jfDrawer() {
         scope: {
             header: '@',
             description: '@',
-            openFirst: '@?'
+            openFirst: '@?',
+            bindOpen: '<'
         },
         require:'^jfDrawers',
         templateUrl: 'directives/jf_drawers/jf_drawer.html',
