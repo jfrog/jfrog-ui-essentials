@@ -21,7 +21,7 @@
                     'menu-item-no-action-icons': !jfActions.anyActionHasAnIcon,
                     '{{actionObj.itemClass}}': actionObj.itemClass.length }"
                   ng-if="(!actionObj.visibleWhen || actionObj.visibleWhen()) && !actionObj.isHidden">
-                  <a href="" class="action-container" ng-click="jfActions.doAction(actionObj,$event)">
+                  <div class="action-container" ng-click="jfActions.doAction(actionObj,$event)">
                       <span class="action-icon icon"
                             ng-if="actionObj.icon"
                             ng-class="actionObj.icon">
@@ -31,7 +31,7 @@
                           <img ng-src="{{actionObj.image}}"/>
                       </span>
                       <span class="action-name">{{actionObj.title}}</span>
-                  </a>
+                  </div>
               </li>
           </ul>
           <a href class="dropdown-toggle actions-more" dropdown-toggle>
