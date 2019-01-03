@@ -27,7 +27,7 @@ class jfTableRowController {
         return _.kebabCase(str);
     }
     toggleSelection(all) {
-        if (this.tableView.options.isRowSelectable && !this.tableView.options.isRowSelectable({entity: this.data})) return;
+        if (!all && this.tableView.options.isRowSelectable && !this.tableView.options.isRowSelectable({entity: this.data})) return;
 
         if (!all) {
             if (this.tableView.options.selectionMode === this.tableView.options.MULTI_SELECTION) {
