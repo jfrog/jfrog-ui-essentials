@@ -6,6 +6,7 @@ WORKDIR /data
 ENV HOME=/data
 RUN apt-get update && \
     npm install -g gulp && \
-    npm install -g npm@6.2.0
+    npm install -g npm@6.2.0 && \
+    npm install -g npm-cli-login
 
 CMD ["/bin/bash", "-c", "npm install --verbose && gulp build"]
