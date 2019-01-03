@@ -26,7 +26,11 @@
 
 
                 <div v-if="options.getPrePagedData().length > 1 && options && options.paginationMode === options.VIRTUAL_SCROLL" class="table-rows-container">
-                    <recycle-scroller :emit-update="true" @update="updateVScroll" :items="options.getPrePagedData()" :item-height="parseInt(options.rowHeight)" :style="{height: getActualPageHeight() + 'px'}" key-field="_id">
+                    <recycle-scroller :emit-update="true" @update="updateVScroll"
+                                      :items="options.getPrePagedData()"
+                                      :item-height="parseInt(options.rowHeight)"
+                                      :style="{height: getActualPageHeight() + 'px'}"
+                                      key-field="$$$id">
                         <jf-table-row slot-scope="{ item, index }" :table-view="jfTableView" :row-id="index" :data="item"></jf-table-row>
                     </recycle-scroller>
 
@@ -81,7 +85,9 @@
             return {
                 vsApi: { onInit: {} },
                 noFilterResults: null,
-                tableFilter: null
+                tableFilter: null,
+                vsStartIndex: null,
+                vsEndIndex: null,
             };
         },
         created() {
@@ -213,7 +219,8 @@
                 this.paginationApi.update();
             },
             refresh(updatePagination = true) {
-                let unusedScopes = _.filter(this.cellScopes, scope => this.options.getPageData().indexOf(scope.row.entity) === -1);
+                let pageData = this.options.getPageData();
+                let unusedScopes = _.filter(this.cellScopes, scope => pageData.indexOf(scope.row.entity) === -1);
                 unusedScopes.forEach(s => {
                     this.cellScopes.splice(this.cellScopes.indexOf(s), 1);
                     s.$destroy();

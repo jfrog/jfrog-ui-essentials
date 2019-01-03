@@ -119,6 +119,7 @@
 </template>
 
 <script>
+    import { IdState } from 'vue-virtual-scroller';
 
     export default {
         name: 'jf-table-row',

@@ -140,11 +140,20 @@ export function JFrogTableViewOptions() {
 
         setData(data, internalCall) {
 
+            if (this.paginationMode === this.VIRTUAL_SCROLL) {
+                data.forEach((item, i) => {
+                    item.$$$id = i+'';
+                })
+            }
+
+
             if (this.paginationMode === this.EXTERNAL_PAGINATION && internalCall !== '$$internal$$') {
                 console.error('When using external pagination, you should not call setData directly !');
-            } else if (this.paginationMode === this.INFINITE_SCROLL && internalCall !== '$$internal$$') {
+            }
+            else if (this.paginationMode === this.INFINITE_SCROLL && internalCall !== '$$internal$$') {
                 console.error('When using infinite scroll, you should not call setData directly !');
-            } else {
+            }
+            else {
                 this.origData = _.sortBy(data, '');
                 if (this.subRowsEnabled) {
                     this.data = this._transformDataForSubRowsSupport(data, true);
@@ -231,9 +240,14 @@ export function JFrogTableViewOptions() {
             let newSubRows = _.filter(row.$subRows, subRow => {
                 return addTo.indexOf(subRow) === -1;
             });
+            newSubRows.forEach((sr, i) => {
+                sr.$$$id = row.$$$id + '.' + i;
+            })
             addTo.splice(index, 0, ...newSubRows)
-            this.refreshFilter();
-            this.update();
+            if (addTo === this.data) {
+                this.refreshFilter();
+                this.update();
+            }
         }
 
         _removeSubRows(row) {
@@ -898,6 +912,8 @@ export function JFrogTableViewOptions() {
             stickies.forEach(sticky => {
                 data.splice(data.indexOf(sticky), 1);
             });
+
+            data.splice(0, 0, ...stickies);
             Array.prototype.splice.apply(data, [
                 0,
                 0
@@ -913,6 +929,7 @@ export function JFrogTableViewOptions() {
         }
 
         _reInsertSubRows(data) {
+
             if (!this.subRowsEnabled) {
                 return data;
             }
@@ -1093,7 +1110,7 @@ export function JFrogTableViewOptions() {
             }
 
             if (this.dirCtrl && !this.dirCtrl.tableFilter) {
-                this.dirCtrl.noFilterResults = false;
+                Vue.set(this.dirCtrl, 'noFilterResults', false);
                 return sourceData || [];
             }
             if (!this.filterCache) {
@@ -1109,7 +1126,9 @@ export function JFrogTableViewOptions() {
                     return false;
                 });
             }
-            if (this.dirCtrl) this.dirCtrl.noFilterResults = !!(!this.filterCache.length && sourceData.length);
+            if (this.dirCtrl) {
+                Vue.set(this.dirCtrl, 'noFilterResults', !!(!this.filterCache.length && sourceData.length));
+            }
             return this.filterCache;
         }
 

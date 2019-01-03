@@ -7,6 +7,7 @@
 </template>
 
 <script>
+    import { IdState } from 'vue-virtual-scroller';
 
     export default {
         name: 'jf-table-compiled-cell',
@@ -24,10 +25,6 @@
             return {};
         },
         mounted() {
-
-            /* (NG2VUE) This was moved from created() to mounted() */
-            /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
-
             this.$scope.$watch('compiledCell.tableRow.data', () => {
                 this.compile();
             });
