@@ -61,7 +61,9 @@
                     <div class="icon-hourglass-local"></div>
                 </div>
             </div>
-            <div class="jf-table-cell-content" :class="{'row-expander-content': $index === 0 && tableView.options.subRowsEnabled,
+            <div class="jf-table-cell-content"
+                 v-jf-tooltip-on-overflow
+                 :class="{'row-expander-content': $index === 0 && tableView.options.subRowsEnabled,
                             'YO' : !(rowId === 'headers' &&
                                         tableView.options.sortable &&
                                         (tableView.options.sortByField === col.field || tableView.options.showSortingArrowsAlways) &&

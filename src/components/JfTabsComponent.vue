@@ -4,7 +4,7 @@
         <ul class="nav nav-tabs">
             <li v-for="tab in tabsVisible" :class="{active:isActiveTab(tab), disabled:tab.isDisabled, [tab.class] : hasClass(tab)}" class="jf-tabs-tab-header" :style="{width: getTabWidthForStyle()}" :jf-disable-feature=" tab.feature ">
                 <a @click.prevent="onClickTab(tab, true)" style="z-index: 999999">
-                    <div class="jf-tab-header-container" v-jf-tooltip-on-overflow="''"><span>{{dictionary[tab.name]}}</span>
+                    <div class="jf-tab-header-container" v-jf-tooltip-on-overflow><span>{{dictionary[tab.name]}}</span>
                     </div>
                 </a>
             </li>
@@ -13,7 +13,7 @@
                 <a href="" class="dropdown-toggle nav-tabs-more" dropdown-toggle=""><i class="icon-arrow"></i></a>
                 <ul class="dropdown-menu dropdown-menu-right dropdown-container text-left">
                     <li class="dropdown-item" v-for="tab in tabsCollapsed" :class="{[tab.class] : hasClass(tab)}" :jf-disable-feature=" tab.feature ">
-                        <a @click.prevent="onClickTab(tab, true)" v-jf-tooltip-on-overflow="''"><span>{{dictionary[tab.name]}}</span></a>
+                        <a @click.prevent="onClickTab(tab, true)" v-jf-tooltip-on-overflow><span>{{dictionary[tab.name]}}</span></a>
             </li>
         </ul>
         </span>

@@ -9,7 +9,7 @@
 
         <div class="group-list-wrapper" v-if="!noResults()">
             <ul class="group-list">
-                <li class="group-list-item" v-jf-tooltip-on-overflow="''" v-for="_(item, $index) in items" v-if="filterItem(item)">
+                <li class="group-list-item" v-jf-tooltip-on-overflow v-for="_(item, $index) in items" v-if="filterItem(item)">
                     {{item}}
                 </li>
             </ul>

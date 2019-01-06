@@ -207,7 +207,7 @@
                 recursiveAdd(templateRoot);
                 if (elementToAddTo) {
                     if (!elementToAddTo.is('[disable-tooltip-on-overflow]')) {
-                        elementToAddTo.attr('jf-tooltip-on-overflow', true);
+                        elementToAddTo.attr('v-jf-tooltip-on-overflow', '');
                     }
                     elementToAddTo.addClass('overflow-ellipsis');
                 }

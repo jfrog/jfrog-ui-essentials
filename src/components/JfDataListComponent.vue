@@ -7,9 +7,9 @@
                     <td class="data-list-item-label">{{item.label}}:</td>
                     <td class="data-list-item-value">
                         <div class="value">
-                            <a v-if="item.isUrl" :href="item.value" v-html="item.value" target="_blank" class="jf-link" v-jf-tooltip-on-overflow="''">
+                            <a v-if="item.isUrl" :href="item.value" v-html="item.value" target="_blank" class="jf-link" v-jf-tooltip-on-overflow>
                             </a>
-                            <div v-if="!item.isUrl && !isArray(item.value)" v-html="item.value" v-jf-tooltip-on-overflow="''">
+                            <div v-if="!item.isUrl && !isArray(item.value)" v-html="item.value" v-jf-tooltip-on-overflow>
                             </div>
                             <div v-if="isArray(item.value)" :id="'data-list-row-' + $parent.$index">
                                 <div class="tag" v-for="tag in item.value">
@@ -47,7 +47,7 @@
             return { formattedItems: null };
         },
         created() {
-    
+
             this.$scope.$watch('jfDataList.items', items => {
                 if (items) {
                     this.formattedItems = _.filter(items, item => {
@@ -66,25 +66,25 @@
                 children.each((i, child) => {
                     let childElem = $(child);
                     totalChildrenWidth += childElem.outerWidth() + parseInt(childElem.css('margin-left')) + parseInt(childElem.css('margin-right'));
-    
+
                     if (totalChildrenWidth < maxWidth) {
                         childElem.removeClass('overflowing-child');
                     }
                     if (totalChildrenWidth > maxWidth && !childElem.is('.overflowing-child')) {
                         childElem.addClass('overflowing-child');
-                    }   
-    
+                    }
+
                 });
                 return elem.children('.tag.overflowing-child').length > 0;
             },
             showAll(model, rowName, objectName) {
                 //objectName = _.startCase(objectName.indexOf('/') >= 0 ? objectName.split('/')[0] : this.objectName);
-    
+
                 let modalScope = this.$rootScope.$new();
                 modalScope.items = model;
                 modalScope.rowName = rowName;
                 modalScope.objectName = objectName;
-    
+
                 modalScope.filter = {};
                 modalScope.filterItem = item => {
                     if (modalScope.filter.text) {
@@ -95,14 +95,14 @@
                         return true;
                     }
                 };
-    
+
                 modalScope.noResults = () => {
                     let filteredResults = _.filter(modalScope.items, item => {
                         return modalScope.filterItem(item);
                     });
                     return filteredResults.length === 0;
                 };
-    
+
                 this.JFrogModal.launchModalWithTemplateMarkup(require('@/directives/jf_data_list/jf_data_list.show_all_modal.html'), modalScope, 'sm', true);
             },
             isArray(o) {
@@ -115,6 +115,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

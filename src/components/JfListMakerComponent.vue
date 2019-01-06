@@ -21,7 +21,7 @@
 
             <div :id="listId" class="list-maker-list" v-if="values.length">
                 <div class="list-maker-list-row" v-for="(value, $index) in values">
-                    <div class="list-maker-row-value" v-jf-tooltip-on-overflow="''">{{value}}</div>
+                    <div class="list-maker-row-value" v-jf-tooltip-on-overflow>{{value}}</div>
                     <div class="list-maker-list-buttons">
                         <a href="" class="icon icon-close" @click.prevent="removeValue($index)" v-if="values.length > minLength" :disabled="ngDisabled"></a>
                     </div>
