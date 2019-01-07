@@ -253,6 +253,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
+/***/ "004b":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "01f9":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -357,7 +364,7 @@ module.exports = function (TO_STRING) {
 /***/ "0324":
 /***/ (function(module, exports) {
 
-module.exports = "<div id=show-all-modal> <div class=modal-header> <button type=button class=close data-dismiss=close aria-label=Close @click=$dismiss()><span aria-hidden=_true>×</span></button> <h4 class=modal-title id=popup-header>{{items.length}} {{colName}} For {{objectName}} '{{rowName}}'</h4> </div> <div class=\"modal-body clearfix\"> <input type=text name=filter class=input-text v-model=filter.text placeholder=Filter> <div class=group-list-wrapper v-if=!noResults()> <ul class=group-list> <li class=group-list-item v-jf-tooltip-on-overflow v-for=\"_(item, $index) in items\" v-if=filterItem(item)> <div v-if=!item.url v-html=item.label></div> <a v-if=item.url class=jf-link :href=item.url v-html=item.label target=_blank></a> </li> </ul> </div> <div class=\"empty-filter-placeholder filter-no-results\" v-if=noResults()> Current filter has no results. <a href=\"\" class=jf-link @click.prevent=\"filter.text = ''\">Clear filter</a> </div> </div> <div class=modal-footer> <button class=\"btn btn-default\" @click=$dismiss() id=popup-cancel>Close</button> </div> </div> ";
+module.exports = "<div id=show-all-modal> <div class=modal-header> <button type=button class=close data-dismiss=close aria-label=Close @click=$dismiss()><span aria-hidden=_true>×</span></button> <h4 class=modal-title id=popup-header>{{items.length}} {{colName}} For {{objectName}} '{{rowName}}'</h4> </div> <div class=\"modal-body clearfix\"> <input type=text name=filter class=input-text v-model=filter.text placeholder=Filter> <div class=group-list-wrapper v-if=!noResults()> <ul class=group-list> <li class=group-list-item v-jf-tooltip-on-overflow=\"''\" v-for=\"_(item, $index) in items\" v-if=filterItem(item)> <div v-if=!item.url v-html=item.label></div> <a v-if=item.url class=jf-link :href=item.url v-html=item.label target=_blank></a> </li> </ul> </div> <div class=\"empty-filter-placeholder filter-no-results\" v-if=noResults()> Current filter has no results. <a href=\"\" class=jf-link @click.prevent=\"filter.text = ''\">Clear filter</a> </div> </div> <div class=modal-footer> <button class=\"btn btn-default\" @click=$dismiss() id=popup-cancel>Close</button> </div> </div>";
 
 /***/ }),
 
@@ -438,1386 +445,32 @@ function isSlowBuffer (obj) {
 
 /***/ }),
 
-/***/ "0710":
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* AUTO-GENERATED. DO NOT MODIFY. */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-
-
- CSS Beautifier
----------------
-
-    Written by Harutyun Amirjanyan, (amirjanyan@gmail.com)
-
-    Based on code initially developed by: Einar Lielmanis, <einar@beautifier.io>
-        https://beautifier.io/
-
-    Usage:
-        css_beautify(source_text);
-        css_beautify(source_text, options);
-
-    The options are (default in brackets):
-        indent_size (4)                         — indentation size,
-        indent_char (space)                     — character to indent with,
-        selector_separator_newline (true)       - separate selectors with newline or
-                                                  not (e.g. "a,\nbr" or "a, br")
-        end_with_newline (false)                - end with a newline
-        newline_between_rules (true)            - add a new line after every css rule
-        space_around_selector_separator (false) - ensure space around selector separators:
-                                                  '>', '+', '~' (e.g. "a>b" -> "a > b")
-    e.g
-
-    css_beautify(css_source_text, {
-      'indent_size': 1,
-      'indent_char': '\t',
-      'selector_separator': ' ',
-      'end_with_newline': false,
-      'newline_between_rules': true,
-      'space_around_selector_separator': true
-    });
-*/
-
-// http://www.w3.org/TR/CSS21/syndata.html#tokenization
-// http://www.w3.org/TR/css3-syntax/
-
-(function() {
-
-/* GENERATED_BUILD_OUTPUT */
-var legacy_beautify_css =
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */,
-/* 1 */,
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "08cf":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/*jshint node:true */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-
-
-
-function OutputLine(parent) {
-  this.__parent = parent;
-  this.__character_count = 0;
-  // use indent_count as a marker for this.__lines that have preserved indentation
-  this.__indent_count = -1;
-  this.__alignment_count = 0;
-
-  this.__items = [];
-}
-
-OutputLine.prototype.item = function(index) {
-  if (index < 0) {
-    return this.__items[this.__items.length + index];
-  } else {
-    return this.__items[index];
-  }
-};
-
-OutputLine.prototype.has_match = function(pattern) {
-  for (var lastCheckedOutput = this.__items.length - 1; lastCheckedOutput >= 0; lastCheckedOutput--) {
-    if (this.__items[lastCheckedOutput].match(pattern)) {
-      return true;
-    }
-  }
-  return false;
-};
-
-OutputLine.prototype.set_indent = function(indent, alignment) {
-  this.__indent_count = indent || 0;
-  this.__alignment_count = alignment || 0;
-  this.__character_count = this.__parent.baseIndentLength + this.__alignment_count + this.__indent_count * this.__parent.indent_length;
-};
-
-OutputLine.prototype.get_character_count = function() {
-  return this.__character_count;
-};
-
-OutputLine.prototype.is_empty = function() {
-  return this.__items.length === 0;
-};
-
-OutputLine.prototype.last = function() {
-  if (!this.is_empty()) {
-    return this.__items[this.__items.length - 1];
-  } else {
-    return null;
-  }
-};
-
-OutputLine.prototype.push = function(item) {
-  this.__items.push(item);
-  this.__character_count += item.length;
-};
-
-OutputLine.prototype.push_raw = function(item) {
-  this.push(item);
-  var last_newline_index = item.lastIndexOf('\n');
-  if (last_newline_index !== -1) {
-    this.__character_count = item.length - last_newline_index;
-  }
-};
-
-OutputLine.prototype.pop = function() {
-  var item = null;
-  if (!this.is_empty()) {
-    item = this.__items.pop();
-    this.__character_count -= item.length;
-  }
-  return item;
-};
-
-OutputLine.prototype.remove_indent = function() {
-  if (this.__indent_count > 0) {
-    this.__indent_count -= 1;
-    this.__character_count -= this.__parent.indent_length;
-  }
-};
-
-OutputLine.prototype.trim = function() {
-  while (this.last() === ' ') {
-    this.__items.pop();
-    this.__character_count -= 1;
-  }
-};
-
-OutputLine.prototype.toString = function() {
-  var result = '';
-  if (!this.is_empty()) {
-    if (this.__indent_count >= 0) {
-      result = this.__parent.get_indent_string(this.__indent_count);
-    }
-    if (this.__alignment_count >= 0) {
-      result += this.__parent.get_alignment_string(this.__alignment_count);
-    }
-    result += this.__items.join('');
-  }
-  return result;
-};
-
-function IndentCache(base_string, level_string) {
-  this.__cache = [base_string];
-  this.__level_string = level_string;
-}
-
-IndentCache.prototype.__ensure_cache = function(level) {
-  while (level >= this.__cache.length) {
-    this.__cache.push(this.__cache[this.__cache.length - 1] + this.__level_string);
-  }
-};
-
-IndentCache.prototype.get_level_string = function(level) {
-  this.__ensure_cache(level);
-  return this.__cache[level];
-};
-
-
-function Output(options, baseIndentString) {
-  var indent_string = options.indent_char;
-  if (options.indent_size > 1) {
-    indent_string = new Array(options.indent_size + 1).join(options.indent_char);
-  }
-
-  // Set to null to continue support for auto detection of base indent level.
-  baseIndentString = baseIndentString || '';
-  if (options.indent_level > 0) {
-    baseIndentString = new Array(options.indent_level + 1).join(indent_string);
-  }
-
-  this.__indent_cache = new IndentCache(baseIndentString, indent_string);
-  this.__alignment_cache = new IndentCache('', ' ');
-  this.baseIndentLength = baseIndentString.length;
-  this.indent_length = indent_string.length;
-  this.raw = false;
-  this._end_with_newline = options.end_with_newline;
-
-  this.__lines = [];
-  this.previous_line = null;
-  this.current_line = null;
-  this.space_before_token = false;
-  // initialize
-  this.__add_outputline();
-}
-
-Output.prototype.__add_outputline = function() {
-  this.previous_line = this.current_line;
-  this.current_line = new OutputLine(this);
-  this.__lines.push(this.current_line);
-};
-
-Output.prototype.get_line_number = function() {
-  return this.__lines.length;
-};
-
-Output.prototype.get_indent_string = function(level) {
-  return this.__indent_cache.get_level_string(level);
-};
-
-Output.prototype.get_alignment_string = function(level) {
-  return this.__alignment_cache.get_level_string(level);
-};
-
-Output.prototype.is_empty = function() {
-  return !this.previous_line && this.current_line.is_empty();
-};
-
-Output.prototype.add_new_line = function(force_newline) {
-  // never newline at the start of file
-  // otherwise, newline only if we didn't just add one or we're forced
-  if (this.is_empty() ||
-    (!force_newline && this.just_added_newline())) {
-    return false;
-  }
-
-  // if raw output is enabled, don't print additional newlines,
-  // but still return True as though you had
-  if (!this.raw) {
-    this.__add_outputline();
-  }
-  return true;
-};
-
-Output.prototype.get_code = function(eol) {
-  var sweet_code = this.__lines.join('\n').replace(/[\r\n\t ]+$/, '');
-
-  if (this._end_with_newline) {
-    sweet_code += '\n';
-  }
-
-  if (eol !== '\n') {
-    sweet_code = sweet_code.replace(/[\n]/g, eol);
-  }
-
-  return sweet_code;
-};
-
-Output.prototype.set_indent = function(indent, alignment) {
-  indent = indent || 0;
-  alignment = alignment || 0;
-
-  // Never indent your first output indent at the start of the file
-  if (this.__lines.length > 1) {
-    this.current_line.set_indent(indent, alignment);
-    return true;
-  }
-  this.current_line.set_indent();
-  return false;
-};
-
-Output.prototype.add_raw_token = function(token) {
-  for (var x = 0; x < token.newlines; x++) {
-    this.__add_outputline();
-  }
-  this.current_line.push(token.whitespace_before);
-  this.current_line.push_raw(token.text);
-  this.space_before_token = false;
-};
-
-Output.prototype.add_token = function(printable_token) {
-  this.add_space_before_token();
-  this.current_line.push(printable_token);
-};
-
-Output.prototype.add_space_before_token = function() {
-  if (this.space_before_token && !this.just_added_newline()) {
-    this.current_line.push(' ');
-  }
-  this.space_before_token = false;
-};
-
-Output.prototype.remove_indent = function(index) {
-  var output_length = this.__lines.length;
-  while (index < output_length) {
-    this.__lines[index].remove_indent();
-    index++;
-  }
-};
-
-Output.prototype.trim = function(eat_newlines) {
-  eat_newlines = (eat_newlines === undefined) ? false : eat_newlines;
-
-  this.current_line.trim(this.indent_string, this.baseIndentString);
-
-  while (eat_newlines && this.__lines.length > 1 &&
-    this.current_line.is_empty()) {
-    this.__lines.pop();
-    this.current_line = this.__lines[this.__lines.length - 1];
-    this.current_line.trim();
-  }
-
-  this.previous_line = this.__lines.length > 1 ?
-    this.__lines[this.__lines.length - 2] : null;
-};
-
-Output.prototype.just_added_newline = function() {
-  return this.current_line.is_empty();
-};
-
-Output.prototype.just_added_blankline = function() {
-  return this.is_empty() ||
-    (this.current_line.is_empty() && this.previous_line.is_empty());
-};
-
-Output.prototype.ensure_empty_line_above = function(starts_with, ends_with) {
-  var index = this.__lines.length - 2;
-  while (index >= 0) {
-    var potentialEmptyLine = this.__lines[index];
-    if (potentialEmptyLine.is_empty()) {
-      break;
-    } else if (potentialEmptyLine.item(0).indexOf(starts_with) !== 0 &&
-      potentialEmptyLine.item(-1) !== ends_with) {
-      this.__lines.splice(index + 1, 0, new OutputLine(this));
-      this.previous_line = this.__lines[this.__lines.length - 2];
-      break;
-    }
-    index--;
-  }
-};
-
-module.exports.Output = Output;
-
+/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_index_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_Select_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("ec79");
+/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_index_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_Select_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_index_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_Select_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_index_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_Select_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */
+
+/***/ "08e7":
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/*jshint node:true */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-
-
-
-function Options(options, merge_child_field) {
-  this.raw_options = _mergeOpts(options, merge_child_field);
-
-  // Support passing the source text back with no change
-  this.disabled = this._get_boolean('disabled');
-
-  this.eol = this._get_characters('eol', 'auto');
-  this.end_with_newline = this._get_boolean('end_with_newline');
-  this.indent_size = this._get_number('indent_size', 4);
-  this.indent_char = this._get_characters('indent_char', ' ');
-  this.indent_level = this._get_number('indent_level');
-
-  this.preserve_newlines = this._get_boolean('preserve_newlines', true);
-  this.max_preserve_newlines = this._get_number('max_preserve_newlines', 32786);
-  if (!this.preserve_newlines) {
-    this.max_preserve_newlines = 0;
-  }
-
-  this.indent_with_tabs = this._get_boolean('indent_with_tabs');
-  if (this.indent_with_tabs) {
-    this.indent_char = '\t';
-    this.indent_size = 1;
-  }
-
-  // Backwards compat with 1.3.x
-  this.wrap_line_length = this._get_number('wrap_line_length', this._get_number('max_char'));
-
-}
-
-Options.prototype._get_array = function(name, default_value) {
-  var option_value = this.raw_options[name];
-  var result = default_value || [];
-  if (typeof option_value === 'object') {
-    if (option_value !== null && typeof option_value.concat === 'function') {
-      result = option_value.concat();
-    }
-  } else if (typeof option_value === 'string') {
-    result = option_value.split(/[^a-zA-Z0-9_\/\-]+/);
-  }
-  return result;
-};
-
-Options.prototype._get_boolean = function(name, default_value) {
-  var option_value = this.raw_options[name];
-  var result = option_value === undefined ? !!default_value : !!option_value;
-  return result;
-};
-
-Options.prototype._get_characters = function(name, default_value) {
-  var option_value = this.raw_options[name];
-  var result = default_value || '';
-  if (typeof option_value === 'string') {
-    result = option_value.replace(/\\r/, '\r').replace(/\\n/, '\n').replace(/\\t/, '\t');
-  }
-  return result;
-};
-
-Options.prototype._get_number = function(name, default_value) {
-  var option_value = this.raw_options[name];
-  default_value = parseInt(default_value, 10);
-  if (isNaN(default_value)) {
-    default_value = 0;
-  }
-  var result = parseInt(option_value, 10);
-  if (isNaN(result)) {
-    result = default_value;
-  }
-  return result;
-};
-
-Options.prototype._get_selection = function(name, selection_list, default_value) {
-  var result = this._get_selection_list(name, selection_list, default_value);
-  if (result.length !== 1) {
-    throw new Error(
-      "Invalid Option Value: The option '" + name + "' can only be one of the following values:\n" +
-      selection_list + "\nYou passed in: '" + this.raw_options[name] + "'");
-  }
-
-  return result[0];
-};
-
-
-Options.prototype._get_selection_list = function(name, selection_list, default_value) {
-  if (!selection_list || selection_list.length === 0) {
-    throw new Error("Selection list cannot be empty.");
-  }
-
-  default_value = default_value || [selection_list[0]];
-  if (!this._is_valid_selection(default_value, selection_list)) {
-    throw new Error("Invalid Default Value!");
-  }
-
-  var result = this._get_array(name, default_value);
-  if (!this._is_valid_selection(result, selection_list)) {
-    throw new Error(
-      "Invalid Option Value: The option '" + name + "' can contain only the following values:\n" +
-      selection_list + "\nYou passed in: '" + this.raw_options[name] + "'");
-  }
-
-  return result;
-};
-
-Options.prototype._is_valid_selection = function(result, selection_list) {
-  return result.length && selection_list.length &&
-    !result.some(function(item) { return selection_list.indexOf(item) === -1; });
-};
-
-
-// merges child options up with the parent options object
-// Example: obj = {a: 1, b: {a: 2}}
-//          mergeOpts(obj, 'b')
-//
-//          Returns: {a: 2}
-function _mergeOpts(allOptions, childFieldName) {
-  var finalOpts = {};
-  allOptions = _normalizeOpts(allOptions);
-  var name;
-
-  for (name in allOptions) {
-    if (name !== childFieldName) {
-      finalOpts[name] = allOptions[name];
-    }
-  }
-
-  //merge in the per type settings for the childFieldName
-  if (childFieldName && allOptions[childFieldName]) {
-    for (name in allOptions[childFieldName]) {
-      finalOpts[name] = allOptions[childFieldName][name];
-    }
-  }
-  return finalOpts;
-}
-
-function _normalizeOpts(options) {
-  var convertedOpts = {};
-  var key;
-
-  for (key in options) {
-    var newKey = key.replace(/-/g, "_");
-    convertedOpts[newKey] = options[key];
-  }
-  return convertedOpts;
-}
-
-module.exports.Options = Options;
-module.exports.normalizeOpts = _normalizeOpts;
-module.exports.mergeOpts = _mergeOpts;
-
+// extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 7 */,
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
+
+/***/ "091a":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/*jshint node:true */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-
-
-
-function InputScanner(input_string) {
-  this.__input = input_string || '';
-  this.__input_length = this.__input.length;
-  this.__position = 0;
-}
-
-InputScanner.prototype.restart = function() {
-  this.__position = 0;
-};
-
-InputScanner.prototype.back = function() {
-  if (this.__position > 0) {
-    this.__position -= 1;
-  }
-};
-
-InputScanner.prototype.hasNext = function() {
-  return this.__position < this.__input_length;
-};
-
-InputScanner.prototype.next = function() {
-  var val = null;
-  if (this.hasNext()) {
-    val = this.__input.charAt(this.__position);
-    this.__position += 1;
-  }
-  return val;
-};
-
-InputScanner.prototype.peek = function(index) {
-  var val = null;
-  index = index || 0;
-  index += this.__position;
-  if (index >= 0 && index < this.__input_length) {
-    val = this.__input.charAt(index);
-  }
-  return val;
-};
-
-InputScanner.prototype.test = function(pattern, index) {
-  index = index || 0;
-  index += this.__position;
-  pattern.lastIndex = index;
-
-  if (index >= 0 && index < this.__input_length) {
-    var pattern_match = pattern.exec(this.__input);
-    return pattern_match && pattern_match.index === index;
-  } else {
-    return false;
-  }
-};
-
-InputScanner.prototype.testChar = function(pattern, index) {
-  // test one character regex match
-  var val = this.peek(index);
-  return val !== null && pattern.test(val);
-};
-
-InputScanner.prototype.match = function(pattern) {
-  pattern.lastIndex = this.__position;
-  var pattern_match = pattern.exec(this.__input);
-  if (pattern_match && pattern_match.index === this.__position) {
-    this.__position += pattern_match[0].length;
-  } else {
-    pattern_match = null;
-  }
-  return pattern_match;
-};
-
-InputScanner.prototype.read = function(pattern) {
-  var val = '';
-  var match = this.match(pattern);
-  if (match) {
-    val = match[0];
-  }
-  return val;
-};
-
-InputScanner.prototype.readUntil = function(pattern, include_match) {
-  var val = '';
-  var match_index = this.__position;
-  pattern.lastIndex = this.__position;
-  var pattern_match = pattern.exec(this.__input);
-  if (pattern_match) {
-    if (include_match) {
-      match_index = pattern_match.index + pattern_match[0].length;
-    } else {
-      match_index = pattern_match.index;
-    }
-  } else {
-    match_index = this.__input_length;
-  }
-
-  val = this.__input.substring(this.__position, match_index);
-  this.__position = match_index;
-  return val;
-};
-
-InputScanner.prototype.readUntilAfter = function(pattern) {
-  return this.readUntil(pattern, true);
-};
-
-/* css beautifier legacy helpers */
-InputScanner.prototype.peekUntilAfter = function(pattern) {
-  var start = this.__position;
-  var val = this.readUntilAfter(pattern);
-  this.__position = start;
-  return val;
-};
-
-InputScanner.prototype.lookBack = function(testVal) {
-  var start = this.__position - 1;
-  return start >= testVal.length && this.__input.substring(start - testVal.length, start)
-    .toLowerCase() === testVal;
-};
-
-
-module.exports.InputScanner = InputScanner;
-
-
-/***/ }),
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*jshint node:true */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-
-
-
-var Beautifier = __webpack_require__(13).Beautifier;
-
-function css_beautify(source_text, options) {
-  var beautifier = new Beautifier(source_text, options);
-  return beautifier.beautify();
-}
-
-module.exports = css_beautify;
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*jshint node:true */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-
-
-
-var Options = __webpack_require__(14).Options;
-var Output = __webpack_require__(2).Output;
-var InputScanner = __webpack_require__(8).InputScanner;
-
-var lineBreak = /\r\n|[\r\n]/;
-var allLineBreaks = /\r\n|[\r\n]/g;
-
-// tokenizer
-var whitespaceChar = /\s/;
-var whitespacePattern = /(?:\s|\n)+/g;
-var block_comment_pattern = /\/\*(?:[\s\S]*?)((?:\*\/)|$)/g;
-var comment_pattern = /\/\/(?:[^\n\r\u2028\u2029]*)/g;
-
-function Beautifier(source_text, options) {
-  this._source_text = source_text || '';
-  // Allow the setting of language/file-type specific options
-  // with inheritance of overall settings
-  this._options = new Options(options);
-  this._ch = null;
-  this._input = null;
-
-  // https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule
-  this.NESTED_AT_RULE = {
-    "@page": true,
-    "@font-face": true,
-    "@keyframes": true,
-    // also in CONDITIONAL_GROUP_RULE below
-    "@media": true,
-    "@supports": true,
-    "@document": true
-  };
-  this.CONDITIONAL_GROUP_RULE = {
-    "@media": true,
-    "@supports": true,
-    "@document": true
-  };
-
-}
-
-Beautifier.prototype.eatString = function(endChars) {
-  var result = '';
-  this._ch = this._input.next();
-  while (this._ch) {
-    result += this._ch;
-    if (this._ch === "\\") {
-      result += this._input.next();
-    } else if (endChars.indexOf(this._ch) !== -1 || this._ch === "\n") {
-      break;
-    }
-    this._ch = this._input.next();
-  }
-  return result;
-};
-
-// Skips any white space in the source text from the current position.
-// When allowAtLeastOneNewLine is true, will output new lines for each
-// newline character found; if the user has preserve_newlines off, only
-// the first newline will be output
-Beautifier.prototype.eatWhitespace = function(allowAtLeastOneNewLine) {
-  var result = whitespaceChar.test(this._input.peek());
-  var isFirstNewLine = true;
-
-  while (whitespaceChar.test(this._input.peek())) {
-    this._ch = this._input.next();
-    if (allowAtLeastOneNewLine && this._ch === '\n') {
-      if (this._options.preserve_newlines || isFirstNewLine) {
-        isFirstNewLine = false;
-        this._output.add_new_line(true);
-      }
-    }
-  }
-  return result;
-};
-
-// Nested pseudo-class if we are insideRule
-// and the next special character found opens
-// a new block
-Beautifier.prototype.foundNestedPseudoClass = function() {
-  var openParen = 0;
-  var i = 1;
-  var ch = this._input.peek(i);
-  while (ch) {
-    if (ch === "{") {
-      return true;
-    } else if (ch === '(') {
-      // pseudoclasses can contain ()
-      openParen += 1;
-    } else if (ch === ')') {
-      if (openParen === 0) {
-        return false;
-      }
-      openParen -= 1;
-    } else if (ch === ";" || ch === "}") {
-      return false;
-    }
-    i++;
-    ch = this._input.peek(i);
-  }
-  return false;
-};
-
-Beautifier.prototype.print_string = function(output_string) {
-  if (this._output.just_added_newline()) {
-    this._output.set_indent(this._indentLevel);
-  }
-  this._output.add_token(output_string);
-};
-
-Beautifier.prototype.preserveSingleSpace = function(isAfterSpace) {
-  if (isAfterSpace) {
-    this._output.space_before_token = true;
-  }
-};
-
-Beautifier.prototype.indent = function() {
-  this._indentLevel++;
-};
-
-Beautifier.prototype.outdent = function() {
-  if (this._indentLevel > 0) {
-    this._indentLevel--;
-  }
-};
-
-/*_____________________--------------------_____________________*/
-
-Beautifier.prototype.beautify = function() {
-  if (this._options.disabled) {
-    return this._source_text;
-  }
-
-  var source_text = this._source_text;
-  var eol = this._options.eol;
-  if (eol === 'auto') {
-    eol = '\n';
-    if (source_text && lineBreak.test(source_text || '')) {
-      eol = source_text.match(lineBreak)[0];
-    }
-  }
-
-
-  // HACK: newline parsing inconsistent. This brute force normalizes the this._input.
-  source_text = source_text.replace(allLineBreaks, '\n');
-
-  // reset
-  var baseIndentString = source_text.match(/^[\t ]*/)[0];
-
-  this._output = new Output(this._options, baseIndentString);
-  this._input = new InputScanner(source_text);
-  this._indentLevel = 0;
-  this._nestedLevel = 0;
-
-  this._ch = null;
-  var parenLevel = 0;
-
-  var insideRule = false;
-  // This is the value side of a property value pair (blue in the following ex)
-  // label { content: blue }
-  var insidePropertyValue = false;
-  var enteringConditionalGroup = false;
-  var insideAtExtend = false;
-  var insideAtImport = false;
-  var topCharacter = this._ch;
-
-  while (true) {
-    var whitespace = this._input.read(whitespacePattern);
-    var isAfterSpace = whitespace !== '';
-    var previous_ch = topCharacter;
-    this._ch = this._input.next();
-    topCharacter = this._ch;
-
-    if (!this._ch) {
-      break;
-    } else if (this._ch === '/' && this._input.peek() === '*') {
-      // /* css comment */
-      // Always start block comments on a new line.
-      // This handles scenarios where a block comment immediately
-      // follows a property definition on the same line or where
-      // minified code is being beautified.
-      this._output.add_new_line();
-      this._input.back();
-      this.print_string(this._input.read(block_comment_pattern));
-
-      // Ensures any new lines following the comment are preserved
-      this.eatWhitespace(true);
-
-      // Block comments are followed by a new line so they don't
-      // share a line with other properties
-      this._output.add_new_line();
-    } else if (this._ch === '/' && this._input.peek() === '/') {
-      // // single line comment
-      // Preserves the space before a comment
-      // on the same line as a rule
-      this._output.space_before_token = true;
-      this._input.back();
-      this.print_string(this._input.read(comment_pattern));
-
-      // Ensures any new lines following the comment are preserved
-      this.eatWhitespace(true);
-    } else if (this._ch === '@') {
-      this.preserveSingleSpace(isAfterSpace);
-
-      // deal with less propery mixins @{...}
-      if (this._input.peek() === '{') {
-        this.print_string(this._ch + this.eatString('}'));
-      } else {
-        this.print_string(this._ch);
-
-        // strip trailing space, if present, for hash property checks
-        var variableOrRule = this._input.peekUntilAfter(/[: ,;{}()[\]\/='"]/g);
-
-        if (variableOrRule.match(/[ :]$/)) {
-          // we have a variable or pseudo-class, add it and insert one space before continuing
-          variableOrRule = this.eatString(": ").replace(/\s$/, '');
-          this.print_string(variableOrRule);
-          this._output.space_before_token = true;
-        }
-
-        variableOrRule = variableOrRule.replace(/\s$/, '');
-
-        if (variableOrRule === 'extend') {
-          insideAtExtend = true;
-        } else if (variableOrRule === 'import') {
-          insideAtImport = true;
-        }
-
-        // might be a nesting at-rule
-        if (variableOrRule in this.NESTED_AT_RULE) {
-          this._nestedLevel += 1;
-          if (variableOrRule in this.CONDITIONAL_GROUP_RULE) {
-            enteringConditionalGroup = true;
-          }
-          // might be less variable
-        } else if (!insideRule && parenLevel === 0 && variableOrRule.indexOf(':') !== -1) {
-          insidePropertyValue = true;
-          this.indent();
-        }
-      }
-    } else if (this._ch === '#' && this._input.peek() === '{') {
-      this.preserveSingleSpace(isAfterSpace);
-      this.print_string(this._ch + this.eatString('}'));
-    } else if (this._ch === '{') {
-      if (insidePropertyValue) {
-        insidePropertyValue = false;
-        this.outdent();
-      }
-      this.indent();
-      this._output.space_before_token = true;
-      this.print_string(this._ch);
-
-      // when entering conditional groups, only rulesets are allowed
-      if (enteringConditionalGroup) {
-        enteringConditionalGroup = false;
-        insideRule = (this._indentLevel > this._nestedLevel);
-      } else {
-        // otherwise, declarations are also allowed
-        insideRule = (this._indentLevel >= this._nestedLevel);
-      }
-      if (this._options.newline_between_rules && insideRule) {
-        if (this._output.previous_line && this._output.previous_line.item(-1) !== '{') {
-          this._output.ensure_empty_line_above('/', ',');
-        }
-      }
-      this.eatWhitespace(true);
-      this._output.add_new_line();
-    } else if (this._ch === '}') {
-      this.outdent();
-      this._output.add_new_line();
-      if (previous_ch === '{') {
-        this._output.trim(true);
-      }
-      insideAtImport = false;
-      insideAtExtend = false;
-      if (insidePropertyValue) {
-        this.outdent();
-        insidePropertyValue = false;
-      }
-      this.print_string(this._ch);
-      insideRule = false;
-      if (this._nestedLevel) {
-        this._nestedLevel--;
-      }
-
-      this.eatWhitespace(true);
-      this._output.add_new_line();
-
-      if (this._options.newline_between_rules && !this._output.just_added_blankline()) {
-        if (this._input.peek() !== '}') {
-          this._output.add_new_line(true);
-        }
-      }
-    } else if (this._ch === ":") {
-      if ((insideRule || enteringConditionalGroup) && !(this._input.lookBack("&") || this.foundNestedPseudoClass()) && !this._input.lookBack("(") && !insideAtExtend) {
-        // 'property: value' delimiter
-        // which could be in a conditional group query
-        this.print_string(':');
-        if (!insidePropertyValue) {
-          insidePropertyValue = true;
-          this._output.space_before_token = true;
-          this.eatWhitespace(true);
-          this.indent();
-        }
-      } else {
-        // sass/less parent reference don't use a space
-        // sass nested pseudo-class don't use a space
-
-        // preserve space before pseudoclasses/pseudoelements, as it means "in any child"
-        if (this._input.lookBack(" ")) {
-          this._output.space_before_token = true;
-        }
-        if (this._input.peek() === ":") {
-          // pseudo-element
-          this._ch = this._input.next();
-          this.print_string("::");
-        } else {
-          // pseudo-class
-          this.print_string(':');
-        }
-      }
-    } else if (this._ch === '"' || this._ch === '\'') {
-      this.preserveSingleSpace(isAfterSpace);
-      this.print_string(this._ch + this.eatString(this._ch));
-      this.eatWhitespace(true);
-    } else if (this._ch === ';') {
-      if (insidePropertyValue) {
-        this.outdent();
-        insidePropertyValue = false;
-      }
-      insideAtExtend = false;
-      insideAtImport = false;
-      this.print_string(this._ch);
-      this.eatWhitespace(true);
-
-      // This maintains single line comments on the same
-      // line. Block comments are also affected, but
-      // a new line is always output before one inside
-      // that section
-      if (this._input.peek() !== '/') {
-        this._output.add_new_line();
-      }
-    } else if (this._ch === '(') { // may be a url
-      if (this._input.lookBack("url")) {
-        this.print_string(this._ch);
-        this.eatWhitespace();
-        this._ch = this._input.next();
-        if (this._ch === ')' || this._ch === '"' || this._ch === '\'') {
-          this._input.back();
-          parenLevel++;
-        } else if (this._ch) {
-          this.print_string(this._ch + this.eatString(')'));
-        }
-      } else {
-        parenLevel++;
-        this.preserveSingleSpace(isAfterSpace);
-        this.print_string(this._ch);
-        this.eatWhitespace();
-      }
-    } else if (this._ch === ')') {
-      this.print_string(this._ch);
-      parenLevel--;
-    } else if (this._ch === ',') {
-      this.print_string(this._ch);
-      this.eatWhitespace(true);
-      if (this._options.selector_separator_newline && !insidePropertyValue && parenLevel < 1 && !insideAtImport) {
-        this._output.add_new_line();
-      } else {
-        this._output.space_before_token = true;
-      }
-    } else if ((this._ch === '>' || this._ch === '+' || this._ch === '~') && !insidePropertyValue && parenLevel < 1) {
-      //handle combinator spacing
-      if (this._options.space_around_combinator) {
-        this._output.space_before_token = true;
-        this.print_string(this._ch);
-        this._output.space_before_token = true;
-      } else {
-        this.print_string(this._ch);
-        this.eatWhitespace();
-        // squash extra whitespace
-        if (this._ch && whitespaceChar.test(this._ch)) {
-          this._ch = '';
-        }
-      }
-    } else if (this._ch === ']') {
-      this.print_string(this._ch);
-    } else if (this._ch === '[') {
-      this.preserveSingleSpace(isAfterSpace);
-      this.print_string(this._ch);
-    } else if (this._ch === '=') { // no whitespace before or after
-      this.eatWhitespace();
-      this.print_string('=');
-      if (whitespaceChar.test(this._ch)) {
-        this._ch = '';
-      }
-    } else if (this._ch === '!') { // !important
-      this.print_string(' ');
-      this.print_string(this._ch);
-    } else {
-      this.preserveSingleSpace(isAfterSpace);
-      this.print_string(this._ch);
-    }
-  }
-
-  var sweetCode = this._output.get_code(eol);
-
-  return sweetCode;
-};
-
-module.exports.Beautifier = Beautifier;
-
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*jshint node:true */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-
-
-
-var BaseOptions = __webpack_require__(6).Options;
-
-function Options(options) {
-  BaseOptions.call(this, options, 'css');
-
-  this.selector_separator_newline = this._get_boolean('selector_separator_newline', true);
-  this.newline_between_rules = this._get_boolean('newline_between_rules', true);
-  var space_around_selector_separator = this._get_boolean('space_around_selector_separator');
-  this.space_around_combinator = this._get_boolean('space_around_combinator') || space_around_selector_separator;
-
-}
-Options.prototype = new BaseOptions();
-
-
-
-module.exports.Options = Options;
-
-
-/***/ })
-/******/ ]);
-var css_beautify = legacy_beautify_css;
-/* Footer */
-if (true) {
-    // Add support for AMD ( https://github.com/amdjs/amdjs-api/wiki/AMD#defineamd-property- )
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function() {
-        return {
-            css_beautify: css_beautify
-        };
-    }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-} else {}
-
-}());
-
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfListMakerComponent_vue_vue_type_style_index_0_id_bc219e02_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("9f7a");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfListMakerComponent_vue_vue_type_style_index_0_id_bc219e02_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfListMakerComponent_vue_vue_type_style_index_0_id_bc219e02_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfListMakerComponent_vue_vue_type_style_index_0_id_bc219e02_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -1857,13 +510,6 @@ $export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
   );
 } });
 
-
-/***/ }),
-
-/***/ "0985":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -2086,6 +732,17 @@ module.exports = function spread(callback) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "102c":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableRowComponent_vue_vue_type_style_index_0_id_75c764f2_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("004b");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableRowComponent_vue_vue_type_style_index_0_id_75c764f2_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableRowComponent_vue_vue_type_style_index_0_id_75c764f2_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableRowComponent_vue_vue_type_style_index_0_id_75c764f2_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -12507,3402 +11164,90 @@ exports.f = __webpack_require__("9e1e") ? gOPD : function getOwnPropertyDescript
 
 /***/ }),
 
-/***/ "1373":
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* AUTO-GENERATED. DO NOT MODIFY. */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-
- JS Beautifier
----------------
-
-
-  Written by Einar Lielmanis, <einar@beautifier.io>
-      https://beautifier.io/
-
-  Originally converted to javascript by Vital, <vital76@gmail.com>
-  "End braces on own line" added by Chris J. Shull, <chrisjshull@gmail.com>
-  Parsing improvements for brace-less statements by Liam Newman <bitwiseman@beautifier.io>
-
-
-  Usage:
-    js_beautify(js_source_text);
-    js_beautify(js_source_text, options);
-
-  The options are:
-    indent_size (default 4)          - indentation size,
-    indent_char (default space)      - character to indent with,
-    preserve_newlines (default true) - whether existing line breaks should be preserved,
-    max_preserve_newlines (default unlimited) - maximum number of line breaks to be preserved in one chunk,
-
-    jslint_happy (default false) - if true, then jslint-stricter mode is enforced.
-
-            jslint_happy        !jslint_happy
-            ---------------------------------
-            function ()         function()
-
-            switch () {         switch() {
-            case 1:               case 1:
-              break;                break;
-            }                   }
-
-    space_after_anon_function (default false) - should the space before an anonymous function's parens be added, "function()" vs "function ()",
-          NOTE: This option is overriden by jslint_happy (i.e. if jslint_happy is true, space_after_anon_function is true by design)
-
-    brace_style (default "collapse") - "collapse" | "expand" | "end-expand" | "none" | any of the former + ",preserve-inline"
-            put braces on the same line as control statements (default), or put braces on own line (Allman / ANSI style), or just put end braces on own line, or attempt to keep them where they are.
-            preserve-inline will try to preserve inline blocks of curly braces
-
-    space_before_conditional (default true) - should the space before conditional statement be added, "if(true)" vs "if (true)",
-
-    unescape_strings (default false) - should printable characters in strings encoded in \xNN notation be unescaped, "example" vs "\x65\x78\x61\x6d\x70\x6c\x65"
-
-    wrap_line_length (default unlimited) - lines should wrap at next opportunity after this number of characters.
-          NOTE: This is not a hard limit. Lines will continue until a point where a newline would
-                be preserved if it were present.
-
-    end_with_newline (default false)  - end output with a newline
-
-
-    e.g
-
-    js_beautify(js_source_text, {
-      'indent_size': 1,
-      'indent_char': '\t'
-    });
-
-*/
-
-(function() {
-
-/* GENERATED_BUILD_OUTPUT */
-var legacy_beautify_js =
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*jshint node:true */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-
-
-
-var Beautifier = __webpack_require__(1).Beautifier;
-
-function js_beautify(js_source_text, options) {
-  var beautifier = new Beautifier(js_source_text, options);
-  return beautifier.beautify();
-}
-
-module.exports = js_beautify;
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*jshint node:true */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-
-
-
-var Output = __webpack_require__(2).Output;
-var Token = __webpack_require__(3).Token;
-var acorn = __webpack_require__(4);
-var Options = __webpack_require__(5).Options;
-var Tokenizer = __webpack_require__(7).Tokenizer;
-var line_starters = __webpack_require__(7).line_starters;
-var positionable_operators = __webpack_require__(7).positionable_operators;
-var TOKEN = __webpack_require__(7).TOKEN;
-
-function remove_redundant_indentation(output, frame) {
-  // This implementation is effective but has some issues:
-  //     - can cause line wrap to happen too soon due to indent removal
-  //           after wrap points are calculated
-  // These issues are minor compared to ugly indentation.
-
-  if (frame.multiline_frame ||
-    frame.mode === MODE.ForInitializer ||
-    frame.mode === MODE.Conditional) {
-    return;
-  }
-
-  // remove one indent from each line inside this section
-  output.remove_indent(frame.start_line_index);
-}
-
-function in_array(what, arr) {
-  return arr.indexOf(what) !== -1;
-}
-
-function ltrim(s) {
-  return s.replace(/^\s+/g, '');
-}
-
-function generateMapFromStrings(list) {
-  var result = {};
-  for (var x = 0; x < list.length; x++) {
-    // make the mapped names underscored instead of dash
-    result[list[x].replace(/-/g, '_')] = list[x];
-  }
-  return result;
-}
-
-function reserved_word(token, word) {
-  return token && token.type === TOKEN.RESERVED && token.text === word;
-}
-
-function reserved_array(token, words) {
-  return token && token.type === TOKEN.RESERVED && in_array(token.text, words);
-}
-// Unsure of what they mean, but they work. Worth cleaning up in future.
-var special_words = ['case', 'return', 'do', 'if', 'throw', 'else', 'await', 'break', 'continue', 'async'];
-
-var validPositionValues = ['before-newline', 'after-newline', 'preserve-newline'];
-
-// Generate map from array
-var OPERATOR_POSITION = generateMapFromStrings(validPositionValues);
-
-var OPERATOR_POSITION_BEFORE_OR_PRESERVE = [OPERATOR_POSITION.before_newline, OPERATOR_POSITION.preserve_newline];
-
-var MODE = {
-  BlockStatement: 'BlockStatement', // 'BLOCK'
-  Statement: 'Statement', // 'STATEMENT'
-  ObjectLiteral: 'ObjectLiteral', // 'OBJECT',
-  ArrayLiteral: 'ArrayLiteral', //'[EXPRESSION]',
-  ForInitializer: 'ForInitializer', //'(FOR-EXPRESSION)',
-  Conditional: 'Conditional', //'(COND-EXPRESSION)',
-  Expression: 'Expression' //'(EXPRESSION)'
-};
-
-// we could use just string.split, but
-// IE doesn't like returning empty strings
-function split_linebreaks(s) {
-  //return s.split(/\x0d\x0a|\x0a/);
-
-  s = s.replace(acorn.allLineBreaks, '\n');
-  var out = [],
-    idx = s.indexOf("\n");
-  while (idx !== -1) {
-    out.push(s.substring(0, idx));
-    s = s.substring(idx + 1);
-    idx = s.indexOf("\n");
-  }
-  if (s.length) {
-    out.push(s);
-  }
-  return out;
-}
-
-function is_array(mode) {
-  return mode === MODE.ArrayLiteral;
-}
-
-function is_expression(mode) {
-  return in_array(mode, [MODE.Expression, MODE.ForInitializer, MODE.Conditional]);
-}
-
-function all_lines_start_with(lines, c) {
-  for (var i = 0; i < lines.length; i++) {
-    var line = lines[i].trim();
-    if (line.charAt(0) !== c) {
-      return false;
+/***/ "13d5":
+/***/ (function(module, exports) {
+
+// flow
+
+module.exports = {
+  watch: {
+    typeAheadPointer() {
+      this.maybeAdjustScroll()
     }
-  }
-  return true;
-}
+  },
 
-function each_line_matches_indent(lines, indent) {
-  var i = 0,
-    len = lines.length,
-    line;
-  for (; i < len; i++) {
-    line = lines[i];
-    // allow empty lines to pass through
-    if (line && line.indexOf(indent) !== 0) {
-      return false;
-    }
-  }
-  return true;
-}
+  methods: {
+    /**
+     * Adjust the scroll position of the dropdown list
+     * if the current pointer is outside of the
+     * overflow bounds.
+     * @returns {*}
+     */
+    maybeAdjustScroll() {
+      let pixelsToPointerTop = this.pixelsToPointerTop()
+      let pixelsToPointerBottom = this.pixelsToPointerBottom()
 
+      if ( pixelsToPointerTop <= this.viewport().top) {
+        return this.scrollTo( pixelsToPointerTop )
+      } else if (pixelsToPointerBottom >= this.viewport().bottom) {
+        return this.scrollTo( this.viewport().top + this.pointerHeight() )
+      }
+    },
 
-function Beautifier(source_text, options) {
-  options = options || {};
-  this._source_text = source_text || '';
-
-  this._output = null;
-  this._tokens = null;
-  this._last_last_text = null;
-  this._flags = null;
-  this._previous_flags = null;
-
-  this._flag_store = null;
-  this._options = new Options(options);
-}
-
-Beautifier.prototype.create_flags = function(flags_base, mode) {
-  var next_indent_level = 0;
-  if (flags_base) {
-    next_indent_level = flags_base.indentation_level;
-    if (!this._output.just_added_newline() &&
-      flags_base.line_indent_level > next_indent_level) {
-      next_indent_level = flags_base.line_indent_level;
-    }
-  }
-
-  var next_flags = {
-    mode: mode,
-    parent: flags_base,
-    last_token: flags_base ? flags_base.last_token : new Token(TOKEN.START_BLOCK, ''), // last token text
-    last_word: flags_base ? flags_base.last_word : '', // last TOKEN.WORD passed
-    declaration_statement: false,
-    declaration_assignment: false,
-    multiline_frame: false,
-    inline_frame: false,
-    if_block: false,
-    else_block: false,
-    do_block: false,
-    do_while: false,
-    import_block: false,
-    in_case_statement: false, // switch(..){ INSIDE HERE }
-    in_case: false, // we're on the exact line with "case 0:"
-    case_body: false, // the indented case-action block
-    indentation_level: next_indent_level,
-    line_indent_level: flags_base ? flags_base.line_indent_level : next_indent_level,
-    start_line_index: this._output.get_line_number(),
-    ternary_depth: 0
-  };
-  return next_flags;
-};
-
-Beautifier.prototype._reset = function(source_text) {
-  var baseIndentString = source_text.match(/^[\t ]*/)[0];
-
-  this._last_last_text = ''; // pre-last token text
-  this._output = new Output(this._options, baseIndentString);
-
-  // If testing the ignore directive, start with output disable set to true
-  this._output.raw = this._options.test_output_raw;
-
-
-  // Stack of parsing/formatting states, including MODE.
-  // We tokenize, parse, and output in an almost purely a forward-only stream of token input
-  // and formatted output.  This makes the beautifier less accurate than full parsers
-  // but also far more tolerant of syntax errors.
-  //
-  // For example, the default mode is MODE.BlockStatement. If we see a '{' we push a new frame of type
-  // MODE.BlockStatement on the the stack, even though it could be object literal.  If we later
-  // encounter a ":", we'll switch to to MODE.ObjectLiteral.  If we then see a ";",
-  // most full parsers would die, but the beautifier gracefully falls back to
-  // MODE.BlockStatement and continues on.
-  this._flag_store = [];
-  this.set_mode(MODE.BlockStatement);
-  var tokenizer = new Tokenizer(source_text, this._options);
-  this._tokens = tokenizer.tokenize();
-  return source_text;
-};
-
-Beautifier.prototype.beautify = function() {
-  // if disabled, return the input unchanged.
-  if (this._options.disabled) {
-    return this._source_text;
-  }
-
-  var sweet_code;
-  var source_text = this._reset(this._source_text);
-
-  var eol = this._options.eol;
-  if (this._options.eol === 'auto') {
-    eol = '\n';
-    if (source_text && acorn.lineBreak.test(source_text || '')) {
-      eol = source_text.match(acorn.lineBreak)[0];
-    }
-  }
-
-  var current_token = this._tokens.next();
-  while (current_token) {
-    this.handle_token(current_token);
-
-    this._last_last_text = this._flags.last_token.text;
-    this._flags.last_token = current_token;
-
-    current_token = this._tokens.next();
-  }
-
-  sweet_code = this._output.get_code(eol);
-
-  return sweet_code;
-};
-
-Beautifier.prototype.handle_token = function(current_token, preserve_statement_flags) {
-  if (current_token.type === TOKEN.START_EXPR) {
-    this.handle_start_expr(current_token);
-  } else if (current_token.type === TOKEN.END_EXPR) {
-    this.handle_end_expr(current_token);
-  } else if (current_token.type === TOKEN.START_BLOCK) {
-    this.handle_start_block(current_token);
-  } else if (current_token.type === TOKEN.END_BLOCK) {
-    this.handle_end_block(current_token);
-  } else if (current_token.type === TOKEN.WORD) {
-    this.handle_word(current_token);
-  } else if (current_token.type === TOKEN.RESERVED) {
-    this.handle_word(current_token);
-  } else if (current_token.type === TOKEN.SEMICOLON) {
-    this.handle_semicolon(current_token);
-  } else if (current_token.type === TOKEN.STRING) {
-    this.handle_string(current_token);
-  } else if (current_token.type === TOKEN.EQUALS) {
-    this.handle_equals(current_token);
-  } else if (current_token.type === TOKEN.OPERATOR) {
-    this.handle_operator(current_token);
-  } else if (current_token.type === TOKEN.COMMA) {
-    this.handle_comma(current_token);
-  } else if (current_token.type === TOKEN.BLOCK_COMMENT) {
-    this.handle_block_comment(current_token, preserve_statement_flags);
-  } else if (current_token.type === TOKEN.COMMENT) {
-    this.handle_comment(current_token, preserve_statement_flags);
-  } else if (current_token.type === TOKEN.DOT) {
-    this.handle_dot(current_token);
-  } else if (current_token.type === TOKEN.EOF) {
-    this.handle_eof(current_token);
-  } else if (current_token.type === TOKEN.UNKNOWN) {
-    this.handle_unknown(current_token, preserve_statement_flags);
-  } else {
-    this.handle_unknown(current_token, preserve_statement_flags);
-  }
-};
-
-Beautifier.prototype.handle_whitespace_and_comments = function(current_token, preserve_statement_flags) {
-  var newlines = current_token.newlines;
-  var keep_whitespace = this._options.keep_array_indentation && is_array(this._flags.mode);
-
-  if (current_token.comments_before) {
-    var comment_token = current_token.comments_before.next();
-    while (comment_token) {
-      // The cleanest handling of inline comments is to treat them as though they aren't there.
-      // Just continue formatting and the behavior should be logical.
-      // Also ignore unknown tokens.  Again, this should result in better behavior.
-      this.handle_whitespace_and_comments(comment_token, preserve_statement_flags);
-      this.handle_token(comment_token, preserve_statement_flags);
-      comment_token = current_token.comments_before.next();
-    }
-  }
-
-  if (keep_whitespace) {
-    for (var i = 0; i < newlines; i += 1) {
-      this.print_newline(i > 0, preserve_statement_flags);
-    }
-  } else {
-    if (this._options.max_preserve_newlines && newlines > this._options.max_preserve_newlines) {
-      newlines = this._options.max_preserve_newlines;
-    }
-
-    if (this._options.preserve_newlines) {
-      if (newlines > 1) {
-        this.print_newline(false, preserve_statement_flags);
-        for (var j = 1; j < newlines; j += 1) {
-          this.print_newline(true, preserve_statement_flags);
+    /**
+     * The distance in pixels from the top of the dropdown
+     * list to the top of the current pointer element.
+     * @returns {number}
+     */
+    pixelsToPointerTop() {
+      let pixelsToPointerTop = 0
+      if( this.$refs.dropdownMenu ) {
+        for (let i = 0; i < this.typeAheadPointer; i++) {
+          pixelsToPointerTop += this.$refs.dropdownMenu.children[i].offsetHeight
         }
       }
-    }
-  }
+      return pixelsToPointerTop
+    },
 
-};
+    /**
+     * The distance in pixels from the top of the dropdown
+     * list to the bottom of the current pointer element.
+     * @returns {*}
+     */
+    pixelsToPointerBottom() {
+      return this.pixelsToPointerTop() + this.pointerHeight()
+    },
 
-var newline_restricted_tokens = ['async', 'break', 'continue', 'return', 'throw', 'yield'];
+    /**
+     * The offsetHeight of the current pointer element.
+     * @returns {number}
+     */
+    pointerHeight() {
+      let element = this.$refs.dropdownMenu ? this.$refs.dropdownMenu.children[this.typeAheadPointer] : false
+      return element ? element.offsetHeight : 0
+    },
 
-Beautifier.prototype.allow_wrap_or_preserved_newline = function(current_token, force_linewrap) {
-  force_linewrap = (force_linewrap === undefined) ? false : force_linewrap;
-
-  // Never wrap the first token on a line
-  if (this._output.just_added_newline()) {
-    return;
-  }
-
-  var shouldPreserveOrForce = (this._options.preserve_newlines && current_token.newlines) || force_linewrap;
-  var operatorLogicApplies = in_array(this._flags.last_token.text, positionable_operators) ||
-    in_array(current_token.text, positionable_operators);
-
-  if (operatorLogicApplies) {
-    var shouldPrintOperatorNewline = (
-        in_array(this._flags.last_token.text, positionable_operators) &&
-        in_array(this._options.operator_position, OPERATOR_POSITION_BEFORE_OR_PRESERVE)
-      ) ||
-      in_array(current_token.text, positionable_operators);
-    shouldPreserveOrForce = shouldPreserveOrForce && shouldPrintOperatorNewline;
-  }
-
-  if (shouldPreserveOrForce) {
-    this.print_newline(false, true);
-  } else if (this._options.wrap_line_length) {
-    if (reserved_array(this._flags.last_token, newline_restricted_tokens)) {
-      // These tokens should never have a newline inserted
-      // between them and the following expression.
-      return;
-    }
-    var proposed_line_length = this._output.current_line.get_character_count() + current_token.text.length +
-      (this._output.space_before_token ? 1 : 0);
-    if (proposed_line_length >= this._options.wrap_line_length) {
-      this.print_newline(false, true);
-    }
-  }
-};
-
-Beautifier.prototype.print_newline = function(force_newline, preserve_statement_flags) {
-  if (!preserve_statement_flags) {
-    if (this._flags.last_token.text !== ';' && this._flags.last_token.text !== ',' && this._flags.last_token.text !== '=' && (this._flags.last_token.type !== TOKEN.OPERATOR || this._flags.last_token.text === '--' || this._flags.last_token.text === '++')) {
-      var next_token = this._tokens.peek();
-      while (this._flags.mode === MODE.Statement &&
-        !(this._flags.if_block && reserved_word(next_token, 'else')) &&
-        !this._flags.do_block) {
-        this.restore_mode();
+    /**
+     * The currently viewable portion of the dropdownMenu.
+     * @returns {{top: (string|*|number), bottom: *}}
+     */
+    viewport() {
+      return {
+        top: this.$refs.dropdownMenu ? this.$refs.dropdownMenu.scrollTop: 0,
+        bottom: this.$refs.dropdownMenu ? this.$refs.dropdownMenu.offsetHeight + this.$refs.dropdownMenu.scrollTop : 0
       }
-    }
+    },
+
+    /**
+     * Scroll the dropdownMenu to a given position.
+     * @param position
+     * @returns {*}
+     */
+    scrollTo(position) {
+      return this.$refs.dropdownMenu ? this.$refs.dropdownMenu.scrollTop = position : null
+    },
   }
-
-  if (this._output.add_new_line(force_newline)) {
-    this._flags.multiline_frame = true;
-  }
-};
-
-Beautifier.prototype.print_token_line_indentation = function(current_token) {
-  if (this._output.just_added_newline()) {
-    if (this._options.keep_array_indentation && is_array(this._flags.mode) && current_token.newlines) {
-      this._output.current_line.push(current_token.whitespace_before);
-      this._output.space_before_token = false;
-    } else if (this._output.set_indent(this._flags.indentation_level)) {
-      this._flags.line_indent_level = this._flags.indentation_level;
-    }
-  }
-};
-
-Beautifier.prototype.print_token = function(current_token, printable_token) {
-  if (this._output.raw) {
-    this._output.add_raw_token(current_token);
-    return;
-  }
-
-  if (this._options.comma_first && current_token.previous && current_token.previous.type === TOKEN.COMMA &&
-    this._output.just_added_newline()) {
-    if (this._output.previous_line.last() === ',') {
-      var popped = this._output.previous_line.pop();
-      // if the comma was already at the start of the line,
-      // pull back onto that line and reprint the indentation
-      if (this._output.previous_line.is_empty()) {
-        this._output.previous_line.push(popped);
-        this._output.trim(true);
-        this._output.current_line.pop();
-        this._output.trim();
-      }
-
-      // add the comma in front of the next token
-      this.print_token_line_indentation(current_token);
-      this._output.add_token(',');
-      this._output.space_before_token = true;
-    }
-  }
-
-  printable_token = printable_token || current_token.text;
-  this.print_token_line_indentation(current_token);
-  this._output.add_token(printable_token);
-};
-
-Beautifier.prototype.indent = function() {
-  this._flags.indentation_level += 1;
-};
-
-Beautifier.prototype.deindent = function() {
-  if (this._flags.indentation_level > 0 &&
-    ((!this._flags.parent) || this._flags.indentation_level > this._flags.parent.indentation_level)) {
-    this._flags.indentation_level -= 1;
-
-  }
-};
-
-Beautifier.prototype.set_mode = function(mode) {
-  if (this._flags) {
-    this._flag_store.push(this._flags);
-    this._previous_flags = this._flags;
-  } else {
-    this._previous_flags = this.create_flags(null, mode);
-  }
-
-  this._flags = this.create_flags(this._previous_flags, mode);
-};
-
-
-Beautifier.prototype.restore_mode = function() {
-  if (this._flag_store.length > 0) {
-    this._previous_flags = this._flags;
-    this._flags = this._flag_store.pop();
-    if (this._previous_flags.mode === MODE.Statement) {
-      remove_redundant_indentation(this._output, this._previous_flags);
-    }
-  }
-};
-
-Beautifier.prototype.start_of_object_property = function() {
-  return this._flags.parent.mode === MODE.ObjectLiteral && this._flags.mode === MODE.Statement && (
-    (this._flags.last_token.text === ':' && this._flags.ternary_depth === 0) || (reserved_array(this._flags.last_token, ['get', 'set'])));
-};
-
-Beautifier.prototype.start_of_statement = function(current_token) {
-  var start = false;
-  start = start || reserved_array(this._flags.last_token, ['var', 'let', 'const']) && current_token.type === TOKEN.WORD;
-  start = start || reserved_word(this._flags.last_token, 'do');
-  start = start || (!(this._flags.parent.mode === MODE.ObjectLiteral && this._flags.mode === MODE.Statement)) && reserved_array(this._flags.last_token, newline_restricted_tokens) && !current_token.newlines;
-  start = start || reserved_word(this._flags.last_token, 'else') &&
-    !(reserved_word(current_token, 'if') && !current_token.comments_before);
-  start = start || (this._flags.last_token.type === TOKEN.END_EXPR && (this._previous_flags.mode === MODE.ForInitializer || this._previous_flags.mode === MODE.Conditional));
-  start = start || (this._flags.last_token.type === TOKEN.WORD && this._flags.mode === MODE.BlockStatement &&
-    !this._flags.in_case &&
-    !(current_token.text === '--' || current_token.text === '++') &&
-    this._last_last_text !== 'function' &&
-    current_token.type !== TOKEN.WORD && current_token.type !== TOKEN.RESERVED);
-  start = start || (this._flags.mode === MODE.ObjectLiteral && (
-    (this._flags.last_token.text === ':' && this._flags.ternary_depth === 0) || reserved_array(this._flags.last_token, ['get', 'set'])));
-
-  if (start) {
-    this.set_mode(MODE.Statement);
-    this.indent();
-
-    this.handle_whitespace_and_comments(current_token, true);
-
-    // Issue #276:
-    // If starting a new statement with [if, for, while, do], push to a new line.
-    // if (a) if (b) if(c) d(); else e(); else f();
-    if (!this.start_of_object_property()) {
-      this.allow_wrap_or_preserved_newline(current_token,
-        reserved_array(current_token, ['do', 'for', 'if', 'while']));
-    }
-    return true;
-  }
-  return false;
-};
-
-Beautifier.prototype.handle_start_expr = function(current_token) {
-  // The conditional starts the statement if appropriate.
-  if (!this.start_of_statement(current_token)) {
-    this.handle_whitespace_and_comments(current_token);
-  }
-
-  var next_mode = MODE.Expression;
-  if (current_token.text === '[') {
-
-    if (this._flags.last_token.type === TOKEN.WORD || this._flags.last_token.text === ')') {
-      // this is array index specifier, break immediately
-      // a[x], fn()[x]
-      if (reserved_array(this._flags.last_token, line_starters)) {
-        this._output.space_before_token = true;
-      }
-      this.set_mode(next_mode);
-      this.print_token(current_token);
-      this.indent();
-      if (this._options.space_in_paren) {
-        this._output.space_before_token = true;
-      }
-      return;
-    }
-
-    next_mode = MODE.ArrayLiteral;
-    if (is_array(this._flags.mode)) {
-      if (this._flags.last_token.text === '[' ||
-        (this._flags.last_token.text === ',' && (this._last_last_text === ']' || this._last_last_text === '}'))) {
-        // ], [ goes to new line
-        // }, [ goes to new line
-        if (!this._options.keep_array_indentation) {
-          this.print_newline();
-        }
-      }
-    }
-
-    if (!in_array(this._flags.last_token.type, [TOKEN.START_EXPR, TOKEN.END_EXPR, TOKEN.WORD, TOKEN.OPERATOR])) {
-      this._output.space_before_token = true;
-    }
-  } else {
-    if (this._flags.last_token.type === TOKEN.RESERVED) {
-      if (this._flags.last_token.text === 'for') {
-        this._output.space_before_token = this._options.space_before_conditional;
-        next_mode = MODE.ForInitializer;
-      } else if (in_array(this._flags.last_token.text, ['if', 'while'])) {
-        this._output.space_before_token = this._options.space_before_conditional;
-        next_mode = MODE.Conditional;
-      } else if (in_array(this._flags.last_word, ['await', 'async'])) {
-        // Should be a space between await and an IIFE, or async and an arrow function
-        this._output.space_before_token = true;
-      } else if (this._flags.last_token.text === 'import' && current_token.whitespace_before === '') {
-        this._output.space_before_token = false;
-      } else if (in_array(this._flags.last_token.text, line_starters) || this._flags.last_token.text === 'catch') {
-        this._output.space_before_token = true;
-      }
-    } else if (this._flags.last_token.type === TOKEN.EQUALS || this._flags.last_token.type === TOKEN.OPERATOR) {
-      // Support of this kind of newline preservation.
-      // a = (b &&
-      //     (c || d));
-      if (!this.start_of_object_property()) {
-        this.allow_wrap_or_preserved_newline(current_token);
-      }
-    } else if (this._flags.last_token.type === TOKEN.WORD) {
-      this._output.space_before_token = false;
-
-      // function name() vs function name ()
-      // function* name() vs function* name ()
-      // async name() vs async name ()
-      if (this._options.space_after_named_function) {
-        // peek starts at next character so -1 is current token
-        var peek_back_three = this._tokens.peek(-4);
-        var peek_back_two = this._tokens.peek(-3);
-        if (reserved_array(peek_back_two, ['async', 'function']) ||
-          (reserved_array(peek_back_three, ['async', 'function']) && peek_back_two.text === '*')) {
-          this._output.space_before_token = true;
-        }
-      }
-    } else {
-      // Support preserving wrapped arrow function expressions
-      // a.b('c',
-      //     () => d.e
-      // )
-      this.allow_wrap_or_preserved_newline(current_token);
-    }
-
-    // function() vs function ()
-    // yield*() vs yield* ()
-    // function*() vs function* ()
-    if ((this._flags.last_token.type === TOKEN.RESERVED && (this._flags.last_word === 'function' || this._flags.last_word === 'typeof')) ||
-      (this._flags.last_token.text === '*' &&
-        (in_array(this._last_last_text, ['function', 'yield']) ||
-          (this._flags.mode === MODE.ObjectLiteral && in_array(this._last_last_text, ['{', ',']))))) {
-
-      this._output.space_before_token = this._options.space_after_anon_function;
-    }
-
-  }
-
-  if (this._flags.last_token.text === ';' || this._flags.last_token.type === TOKEN.START_BLOCK) {
-    this.print_newline();
-  } else if (this._flags.last_token.type === TOKEN.END_EXPR || this._flags.last_token.type === TOKEN.START_EXPR || this._flags.last_token.type === TOKEN.END_BLOCK || this._flags.last_token.text === '.' || this._flags.last_token.type === TOKEN.COMMA) {
-    // do nothing on (( and )( and ][ and ]( and .(
-    // TODO: Consider whether forcing this is required.  Review failing tests when removed.
-    this.allow_wrap_or_preserved_newline(current_token, current_token.newlines);
-  }
-
-  this.set_mode(next_mode);
-  this.print_token(current_token);
-  if (this._options.space_in_paren) {
-    this._output.space_before_token = true;
-  }
-
-  // In all cases, if we newline while inside an expression it should be indented.
-  this.indent();
-};
-
-Beautifier.prototype.handle_end_expr = function(current_token) {
-  // statements inside expressions are not valid syntax, but...
-  // statements must all be closed when their container closes
-  while (this._flags.mode === MODE.Statement) {
-    this.restore_mode();
-  }
-
-  this.handle_whitespace_and_comments(current_token);
-
-  if (this._flags.multiline_frame) {
-    this.allow_wrap_or_preserved_newline(current_token,
-      current_token.text === ']' && is_array(this._flags.mode) && !this._options.keep_array_indentation);
-  }
-
-  if (this._options.space_in_paren) {
-    if (this._flags.last_token.type === TOKEN.START_EXPR && !this._options.space_in_empty_paren) {
-      // () [] no inner space in empty parens like these, ever, ref #320
-      this._output.trim();
-      this._output.space_before_token = false;
-    } else {
-      this._output.space_before_token = true;
-    }
-  }
-  if (current_token.text === ']' && this._options.keep_array_indentation) {
-    this.print_token(current_token);
-    this.restore_mode();
-  } else {
-    this.restore_mode();
-    this.print_token(current_token);
-  }
-  remove_redundant_indentation(this._output, this._previous_flags);
-
-  // do {} while () // no statement required after
-  if (this._flags.do_while && this._previous_flags.mode === MODE.Conditional) {
-    this._previous_flags.mode = MODE.Expression;
-    this._flags.do_block = false;
-    this._flags.do_while = false;
-
-  }
-};
-
-Beautifier.prototype.handle_start_block = function(current_token) {
-  this.handle_whitespace_and_comments(current_token);
-
-  // Check if this is should be treated as a ObjectLiteral
-  var next_token = this._tokens.peek();
-  var second_token = this._tokens.peek(1);
-  if (this._flags.last_word === 'switch' && this._flags.last_token.type === TOKEN.END_EXPR) {
-    this.set_mode(MODE.BlockStatement);
-    this._flags.in_case_statement = true;
-  } else if (second_token && (
-      (in_array(second_token.text, [':', ',']) && in_array(next_token.type, [TOKEN.STRING, TOKEN.WORD, TOKEN.RESERVED])) ||
-      (in_array(next_token.text, ['get', 'set', '...']) && in_array(second_token.type, [TOKEN.WORD, TOKEN.RESERVED]))
-    )) {
-    // We don't support TypeScript,but we didn't break it for a very long time.
-    // We'll try to keep not breaking it.
-    if (!in_array(this._last_last_text, ['class', 'interface'])) {
-      this.set_mode(MODE.ObjectLiteral);
-    } else {
-      this.set_mode(MODE.BlockStatement);
-    }
-  } else if (this._flags.last_token.type === TOKEN.OPERATOR && this._flags.last_token.text === '=>') {
-    // arrow function: (param1, paramN) => { statements }
-    this.set_mode(MODE.BlockStatement);
-  } else if (in_array(this._flags.last_token.type, [TOKEN.EQUALS, TOKEN.START_EXPR, TOKEN.COMMA, TOKEN.OPERATOR]) ||
-    reserved_array(this._flags.last_token, ['return', 'throw', 'import', 'default'])
-  ) {
-    // Detecting shorthand function syntax is difficult by scanning forward,
-    //     so check the surrounding context.
-    // If the block is being returned, imported, export default, passed as arg,
-    //     assigned with = or assigned in a nested object, treat as an ObjectLiteral.
-    this.set_mode(MODE.ObjectLiteral);
-  } else {
-    this.set_mode(MODE.BlockStatement);
-  }
-
-  var empty_braces = !next_token.comments_before && next_token.text === '}';
-  var empty_anonymous_function = empty_braces && this._flags.last_word === 'function' &&
-    this._flags.last_token.type === TOKEN.END_EXPR;
-
-  if (this._options.brace_preserve_inline) // check for inline, set inline_frame if so
-  {
-    // search forward for a newline wanted inside this block
-    var index = 0;
-    var check_token = null;
-    this._flags.inline_frame = true;
-    do {
-      index += 1;
-      check_token = this._tokens.peek(index - 1);
-      if (check_token.newlines) {
-        this._flags.inline_frame = false;
-        break;
-      }
-    } while (check_token.type !== TOKEN.EOF &&
-      !(check_token.type === TOKEN.END_BLOCK && check_token.opened === current_token));
-  }
-
-  if ((this._options.brace_style === "expand" ||
-      (this._options.brace_style === "none" && current_token.newlines)) &&
-    !this._flags.inline_frame) {
-    if (this._flags.last_token.type !== TOKEN.OPERATOR &&
-      (empty_anonymous_function ||
-        this._flags.last_token.type === TOKEN.EQUALS ||
-        (reserved_array(this._flags.last_token, special_words) && this._flags.last_token.text !== 'else'))) {
-      this._output.space_before_token = true;
-    } else {
-      this.print_newline(false, true);
-    }
-  } else { // collapse || inline_frame
-    if (is_array(this._previous_flags.mode) && (this._flags.last_token.type === TOKEN.START_EXPR || this._flags.last_token.type === TOKEN.COMMA)) {
-      if (this._flags.last_token.type === TOKEN.COMMA || this._options.space_in_paren) {
-        this._output.space_before_token = true;
-      }
-
-      if (this._flags.last_token.type === TOKEN.COMMA || (this._flags.last_token.type === TOKEN.START_EXPR && this._flags.inline_frame)) {
-        this.allow_wrap_or_preserved_newline(current_token);
-        this._previous_flags.multiline_frame = this._previous_flags.multiline_frame || this._flags.multiline_frame;
-        this._flags.multiline_frame = false;
-      }
-    }
-    if (this._flags.last_token.type !== TOKEN.OPERATOR && this._flags.last_token.type !== TOKEN.START_EXPR) {
-      if (this._flags.last_token.type === TOKEN.START_BLOCK && !this._flags.inline_frame) {
-        this.print_newline();
-      } else {
-        this._output.space_before_token = true;
-      }
-    }
-  }
-  this.print_token(current_token);
-  this.indent();
-};
-
-Beautifier.prototype.handle_end_block = function(current_token) {
-  // statements must all be closed when their container closes
-  this.handle_whitespace_and_comments(current_token);
-
-  while (this._flags.mode === MODE.Statement) {
-    this.restore_mode();
-  }
-
-  var empty_braces = this._flags.last_token.type === TOKEN.START_BLOCK;
-
-  if (this._flags.inline_frame && !empty_braces) { // try inline_frame (only set if this._options.braces-preserve-inline) first
-    this._output.space_before_token = true;
-  } else if (this._options.brace_style === "expand") {
-    if (!empty_braces) {
-      this.print_newline();
-    }
-  } else {
-    // skip {}
-    if (!empty_braces) {
-      if (is_array(this._flags.mode) && this._options.keep_array_indentation) {
-        // we REALLY need a newline here, but newliner would skip that
-        this._options.keep_array_indentation = false;
-        this.print_newline();
-        this._options.keep_array_indentation = true;
-
-      } else {
-        this.print_newline();
-      }
-    }
-  }
-  this.restore_mode();
-  this.print_token(current_token);
-};
-
-Beautifier.prototype.handle_word = function(current_token) {
-  if (current_token.type === TOKEN.RESERVED) {
-    if (in_array(current_token.text, ['set', 'get']) && this._flags.mode !== MODE.ObjectLiteral) {
-      current_token.type = TOKEN.WORD;
-    } else if (current_token.text === 'import' && this._tokens.peek().text === '(') {
-      current_token.type = TOKEN.WORD;
-    } else if (in_array(current_token.text, ['as', 'from']) && !this._flags.import_block) {
-      current_token.type = TOKEN.WORD;
-    } else if (this._flags.mode === MODE.ObjectLiteral) {
-      var next_token = this._tokens.peek();
-      if (next_token.text === ':') {
-        current_token.type = TOKEN.WORD;
-      }
-    }
-  }
-
-  if (this.start_of_statement(current_token)) {
-    // The conditional starts the statement if appropriate.
-    if (reserved_array(this._flags.last_token, ['var', 'let', 'const']) && current_token.type === TOKEN.WORD) {
-      this._flags.declaration_statement = true;
-    }
-  } else if (current_token.newlines && !is_expression(this._flags.mode) &&
-    (this._flags.last_token.type !== TOKEN.OPERATOR || (this._flags.last_token.text === '--' || this._flags.last_token.text === '++')) &&
-    this._flags.last_token.type !== TOKEN.EQUALS &&
-    (this._options.preserve_newlines || !reserved_array(this._flags.last_token, ['var', 'let', 'const', 'set', 'get']))) {
-    this.handle_whitespace_and_comments(current_token);
-    this.print_newline();
-  } else {
-    this.handle_whitespace_and_comments(current_token);
-  }
-
-  if (this._flags.do_block && !this._flags.do_while) {
-    if (reserved_word(current_token, 'while')) {
-      // do {} ## while ()
-      this._output.space_before_token = true;
-      this.print_token(current_token);
-      this._output.space_before_token = true;
-      this._flags.do_while = true;
-      return;
-    } else {
-      // do {} should always have while as the next word.
-      // if we don't see the expected while, recover
-      this.print_newline();
-      this._flags.do_block = false;
-    }
-  }
-
-  // if may be followed by else, or not
-  // Bare/inline ifs are tricky
-  // Need to unwind the modes correctly: if (a) if (b) c(); else d(); else e();
-  if (this._flags.if_block) {
-    if (!this._flags.else_block && reserved_word(current_token, 'else')) {
-      this._flags.else_block = true;
-    } else {
-      while (this._flags.mode === MODE.Statement) {
-        this.restore_mode();
-      }
-      this._flags.if_block = false;
-      this._flags.else_block = false;
-    }
-  }
-
-  if (this._flags.in_case_statement && reserved_array(current_token, ['case', 'default'])) {
-    this.print_newline();
-    if (this._flags.case_body || this._options.jslint_happy) {
-      // switch cases following one another
-      this.deindent();
-      this._flags.case_body = false;
-    }
-    this.print_token(current_token);
-    this._flags.in_case = true;
-    return;
-  }
-
-  if (this._flags.last_token.type === TOKEN.COMMA || this._flags.last_token.type === TOKEN.START_EXPR || this._flags.last_token.type === TOKEN.EQUALS || this._flags.last_token.type === TOKEN.OPERATOR) {
-    if (!this.start_of_object_property()) {
-      this.allow_wrap_or_preserved_newline(current_token);
-    }
-  }
-
-  if (reserved_word(current_token, 'function')) {
-    if (in_array(this._flags.last_token.text, ['}', ';']) ||
-      (this._output.just_added_newline() && !(in_array(this._flags.last_token.text, ['(', '[', '{', ':', '=', ',']) || this._flags.last_token.type === TOKEN.OPERATOR))) {
-      // make sure there is a nice clean space of at least one blank line
-      // before a new function definition
-      if (!this._output.just_added_blankline() && !current_token.comments_before) {
-        this.print_newline();
-        this.print_newline(true);
-      }
-    }
-    if (this._flags.last_token.type === TOKEN.RESERVED || this._flags.last_token.type === TOKEN.WORD) {
-      if (reserved_array(this._flags.last_token, ['get', 'set', 'new', 'export']) ||
-        reserved_array(this._flags.last_token, newline_restricted_tokens)) {
-        this._output.space_before_token = true;
-      } else if (reserved_word(this._flags.last_token, 'default') && this._last_last_text === 'export') {
-        this._output.space_before_token = true;
-      } else if (this._flags.last_token.text === 'declare') {
-        // accomodates Typescript declare function formatting
-        this._output.space_before_token = true;
-      } else {
-        this.print_newline();
-      }
-    } else if (this._flags.last_token.type === TOKEN.OPERATOR || this._flags.last_token.text === '=') {
-      // foo = function
-      this._output.space_before_token = true;
-    } else if (!this._flags.multiline_frame && (is_expression(this._flags.mode) || is_array(this._flags.mode))) {
-      // (function
-    } else {
-      this.print_newline();
-    }
-
-    this.print_token(current_token);
-    this._flags.last_word = current_token.text;
-    return;
-  }
-
-  var prefix = 'NONE';
-
-  if (this._flags.last_token.type === TOKEN.END_BLOCK) {
-
-    if (this._previous_flags.inline_frame) {
-      prefix = 'SPACE';
-    } else if (!reserved_array(current_token, ['else', 'catch', 'finally', 'from'])) {
-      prefix = 'NEWLINE';
-    } else {
-      if (this._options.brace_style === "expand" ||
-        this._options.brace_style === "end-expand" ||
-        (this._options.brace_style === "none" && current_token.newlines)) {
-        prefix = 'NEWLINE';
-      } else {
-        prefix = 'SPACE';
-        this._output.space_before_token = true;
-      }
-    }
-  } else if (this._flags.last_token.type === TOKEN.SEMICOLON && this._flags.mode === MODE.BlockStatement) {
-    // TODO: Should this be for STATEMENT as well?
-    prefix = 'NEWLINE';
-  } else if (this._flags.last_token.type === TOKEN.SEMICOLON && is_expression(this._flags.mode)) {
-    prefix = 'SPACE';
-  } else if (this._flags.last_token.type === TOKEN.STRING) {
-    prefix = 'NEWLINE';
-  } else if (this._flags.last_token.type === TOKEN.RESERVED || this._flags.last_token.type === TOKEN.WORD ||
-    (this._flags.last_token.text === '*' &&
-      (in_array(this._last_last_text, ['function', 'yield']) ||
-        (this._flags.mode === MODE.ObjectLiteral && in_array(this._last_last_text, ['{', ',']))))) {
-    prefix = 'SPACE';
-  } else if (this._flags.last_token.type === TOKEN.START_BLOCK) {
-    if (this._flags.inline_frame) {
-      prefix = 'SPACE';
-    } else {
-      prefix = 'NEWLINE';
-    }
-  } else if (this._flags.last_token.type === TOKEN.END_EXPR) {
-    this._output.space_before_token = true;
-    prefix = 'NEWLINE';
-  }
-
-  if (reserved_array(current_token, line_starters) && this._flags.last_token.text !== ')') {
-    if (this._flags.inline_frame || this._flags.last_token.text === 'else' || this._flags.last_token.text === 'export') {
-      prefix = 'SPACE';
-    } else {
-      prefix = 'NEWLINE';
-    }
-
-  }
-
-  if (reserved_array(current_token, ['else', 'catch', 'finally'])) {
-    if ((!(this._flags.last_token.type === TOKEN.END_BLOCK && this._previous_flags.mode === MODE.BlockStatement) ||
-        this._options.brace_style === "expand" ||
-        this._options.brace_style === "end-expand" ||
-        (this._options.brace_style === "none" && current_token.newlines)) &&
-      !this._flags.inline_frame) {
-      this.print_newline();
-    } else {
-      this._output.trim(true);
-      var line = this._output.current_line;
-      // If we trimmed and there's something other than a close block before us
-      // put a newline back in.  Handles '} // comment' scenario.
-      if (line.last() !== '}') {
-        this.print_newline();
-      }
-      this._output.space_before_token = true;
-    }
-  } else if (prefix === 'NEWLINE') {
-    if (reserved_array(this._flags.last_token, special_words)) {
-      // no newline between 'return nnn'
-      this._output.space_before_token = true;
-    } else if (this._flags.last_token.text === 'declare' && reserved_array(current_token, ['var', 'let', 'const'])) {
-      // accomodates Typescript declare formatting
-      this._output.space_before_token = true;
-    } else if (this._flags.last_token.type !== TOKEN.END_EXPR) {
-      if ((this._flags.last_token.type !== TOKEN.START_EXPR || !reserved_array(current_token, ['var', 'let', 'const'])) && this._flags.last_token.text !== ':') {
-        // no need to force newline on 'var': for (var x = 0...)
-        if (reserved_word(current_token, 'if') && reserved_word(current_token.previous, 'else')) {
-          // no newline for } else if {
-          this._output.space_before_token = true;
-        } else {
-          this.print_newline();
-        }
-      }
-    } else if (reserved_array(current_token, line_starters) && this._flags.last_token.text !== ')') {
-      this.print_newline();
-    }
-  } else if (this._flags.multiline_frame && is_array(this._flags.mode) && this._flags.last_token.text === ',' && this._last_last_text === '}') {
-    this.print_newline(); // }, in lists get a newline treatment
-  } else if (prefix === 'SPACE') {
-    this._output.space_before_token = true;
-  }
-  if (current_token.previous && (current_token.previous.type === TOKEN.WORD || current_token.previous.type === TOKEN.RESERVED)) {
-    this._output.space_before_token = true;
-  }
-  this.print_token(current_token);
-  this._flags.last_word = current_token.text;
-
-  if (current_token.type === TOKEN.RESERVED) {
-    if (current_token.text === 'do') {
-      this._flags.do_block = true;
-    } else if (current_token.text === 'if') {
-      this._flags.if_block = true;
-    } else if (current_token.text === 'import') {
-      this._flags.import_block = true;
-    } else if (this._flags.import_block && reserved_word(current_token, 'from')) {
-      this._flags.import_block = false;
-    }
-  }
-};
-
-Beautifier.prototype.handle_semicolon = function(current_token) {
-  if (this.start_of_statement(current_token)) {
-    // The conditional starts the statement if appropriate.
-    // Semicolon can be the start (and end) of a statement
-    this._output.space_before_token = false;
-  } else {
-    this.handle_whitespace_and_comments(current_token);
-  }
-
-  var next_token = this._tokens.peek();
-  while (this._flags.mode === MODE.Statement &&
-    !(this._flags.if_block && reserved_word(next_token, 'else')) &&
-    !this._flags.do_block) {
-    this.restore_mode();
-  }
-
-  // hacky but effective for the moment
-  if (this._flags.import_block) {
-    this._flags.import_block = false;
-  }
-  this.print_token(current_token);
-};
-
-Beautifier.prototype.handle_string = function(current_token) {
-  if (this.start_of_statement(current_token)) {
-    // The conditional starts the statement if appropriate.
-    // One difference - strings want at least a space before
-    this._output.space_before_token = true;
-  } else {
-    this.handle_whitespace_and_comments(current_token);
-    if (this._flags.last_token.type === TOKEN.RESERVED || this._flags.last_token.type === TOKEN.WORD || this._flags.inline_frame) {
-      this._output.space_before_token = true;
-    } else if (this._flags.last_token.type === TOKEN.COMMA || this._flags.last_token.type === TOKEN.START_EXPR || this._flags.last_token.type === TOKEN.EQUALS || this._flags.last_token.type === TOKEN.OPERATOR) {
-      if (!this.start_of_object_property()) {
-        this.allow_wrap_or_preserved_newline(current_token);
-      }
-    } else {
-      this.print_newline();
-    }
-  }
-  this.print_token(current_token);
-};
-
-Beautifier.prototype.handle_equals = function(current_token) {
-  if (this.start_of_statement(current_token)) {
-    // The conditional starts the statement if appropriate.
-  } else {
-    this.handle_whitespace_and_comments(current_token);
-  }
-
-  if (this._flags.declaration_statement) {
-    // just got an '=' in a var-line, different formatting/line-breaking, etc will now be done
-    this._flags.declaration_assignment = true;
-  }
-  this._output.space_before_token = true;
-  this.print_token(current_token);
-  this._output.space_before_token = true;
-};
-
-Beautifier.prototype.handle_comma = function(current_token) {
-  this.handle_whitespace_and_comments(current_token, true);
-
-  this.print_token(current_token);
-  this._output.space_before_token = true;
-  if (this._flags.declaration_statement) {
-    if (is_expression(this._flags.parent.mode)) {
-      // do not break on comma, for(var a = 1, b = 2)
-      this._flags.declaration_assignment = false;
-    }
-
-    if (this._flags.declaration_assignment) {
-      this._flags.declaration_assignment = false;
-      this.print_newline(false, true);
-    } else if (this._options.comma_first) {
-      // for comma-first, we want to allow a newline before the comma
-      // to turn into a newline after the comma, which we will fixup later
-      this.allow_wrap_or_preserved_newline(current_token);
-    }
-  } else if (this._flags.mode === MODE.ObjectLiteral ||
-    (this._flags.mode === MODE.Statement && this._flags.parent.mode === MODE.ObjectLiteral)) {
-    if (this._flags.mode === MODE.Statement) {
-      this.restore_mode();
-    }
-
-    if (!this._flags.inline_frame) {
-      this.print_newline();
-    }
-  } else if (this._options.comma_first) {
-    // EXPR or DO_BLOCK
-    // for comma-first, we want to allow a newline before the comma
-    // to turn into a newline after the comma, which we will fixup later
-    this.allow_wrap_or_preserved_newline(current_token);
-  }
-};
-
-Beautifier.prototype.handle_operator = function(current_token) {
-  var isGeneratorAsterisk = current_token.text === '*' &&
-    (reserved_array(this._flags.last_token, ['function', 'yield']) ||
-      (in_array(this._flags.last_token.type, [TOKEN.START_BLOCK, TOKEN.COMMA, TOKEN.END_BLOCK, TOKEN.SEMICOLON]))
-    );
-  var isUnary = in_array(current_token.text, ['-', '+']) && (
-    in_array(this._flags.last_token.type, [TOKEN.START_BLOCK, TOKEN.START_EXPR, TOKEN.EQUALS, TOKEN.OPERATOR]) ||
-    in_array(this._flags.last_token.text, line_starters) ||
-    this._flags.last_token.text === ','
-  );
-
-  if (this.start_of_statement(current_token)) {
-    // The conditional starts the statement if appropriate.
-  } else {
-    var preserve_statement_flags = !isGeneratorAsterisk;
-    this.handle_whitespace_and_comments(current_token, preserve_statement_flags);
-  }
-
-  if (reserved_array(this._flags.last_token, special_words)) {
-    // "return" had a special handling in TK_WORD. Now we need to return the favor
-    this._output.space_before_token = true;
-    this.print_token(current_token);
-    return;
-  }
-
-  // hack for actionscript's import .*;
-  if (current_token.text === '*' && this._flags.last_token.type === TOKEN.DOT) {
-    this.print_token(current_token);
-    return;
-  }
-
-  if (current_token.text === '::') {
-    // no spaces around exotic namespacing syntax operator
-    this.print_token(current_token);
-    return;
-  }
-
-  // Allow line wrapping between operators when operator_position is
-  //   set to before or preserve
-  if (this._flags.last_token.type === TOKEN.OPERATOR && in_array(this._options.operator_position, OPERATOR_POSITION_BEFORE_OR_PRESERVE)) {
-    this.allow_wrap_or_preserved_newline(current_token);
-  }
-
-  if (current_token.text === ':' && this._flags.in_case) {
-    this._flags.case_body = true;
-    this.indent();
-    this.print_token(current_token);
-    this.print_newline();
-    this._flags.in_case = false;
-    return;
-  }
-
-  var space_before = true;
-  var space_after = true;
-  var in_ternary = false;
-  if (current_token.text === ':') {
-    if (this._flags.ternary_depth === 0) {
-      // Colon is invalid javascript outside of ternary and object, but do our best to guess what was meant.
-      space_before = false;
-    } else {
-      this._flags.ternary_depth -= 1;
-      in_ternary = true;
-    }
-  } else if (current_token.text === '?') {
-    this._flags.ternary_depth += 1;
-  }
-
-  // let's handle the operator_position option prior to any conflicting logic
-  if (!isUnary && !isGeneratorAsterisk && this._options.preserve_newlines && in_array(current_token.text, positionable_operators)) {
-    var isColon = current_token.text === ':';
-    var isTernaryColon = (isColon && in_ternary);
-    var isOtherColon = (isColon && !in_ternary);
-
-    switch (this._options.operator_position) {
-      case OPERATOR_POSITION.before_newline:
-        // if the current token is : and it's not a ternary statement then we set space_before to false
-        this._output.space_before_token = !isOtherColon;
-
-        this.print_token(current_token);
-
-        if (!isColon || isTernaryColon) {
-          this.allow_wrap_or_preserved_newline(current_token);
-        }
-
-        this._output.space_before_token = true;
-        return;
-
-      case OPERATOR_POSITION.after_newline:
-        // if the current token is anything but colon, or (via deduction) it's a colon and in a ternary statement,
-        //   then print a newline.
-
-        this._output.space_before_token = true;
-
-        if (!isColon || isTernaryColon) {
-          if (this._tokens.peek().newlines) {
-            this.print_newline(false, true);
-          } else {
-            this.allow_wrap_or_preserved_newline(current_token);
-          }
-        } else {
-          this._output.space_before_token = false;
-        }
-
-        this.print_token(current_token);
-
-        this._output.space_before_token = true;
-        return;
-
-      case OPERATOR_POSITION.preserve_newline:
-        if (!isOtherColon) {
-          this.allow_wrap_or_preserved_newline(current_token);
-        }
-
-        // if we just added a newline, or the current token is : and it's not a ternary statement,
-        //   then we set space_before to false
-        space_before = !(this._output.just_added_newline() || isOtherColon);
-
-        this._output.space_before_token = space_before;
-        this.print_token(current_token);
-        this._output.space_before_token = true;
-        return;
-    }
-  }
-
-  if (isGeneratorAsterisk) {
-    this.allow_wrap_or_preserved_newline(current_token);
-    space_before = false;
-    var next_token = this._tokens.peek();
-    space_after = next_token && in_array(next_token.type, [TOKEN.WORD, TOKEN.RESERVED]);
-  } else if (current_token.text === '...') {
-    this.allow_wrap_or_preserved_newline(current_token);
-    space_before = this._flags.last_token.type === TOKEN.START_BLOCK;
-    space_after = false;
-  } else if (in_array(current_token.text, ['--', '++', '!', '~']) || isUnary) {
-    // unary operators (and binary +/- pretending to be unary) special cases
-    if (this._flags.last_token.type === TOKEN.COMMA || this._flags.last_token.type === TOKEN.START_EXPR) {
-      this.allow_wrap_or_preserved_newline(current_token);
-    }
-
-    space_before = false;
-    space_after = false;
-
-    // http://www.ecma-international.org/ecma-262/5.1/#sec-7.9.1
-    // if there is a newline between -- or ++ and anything else we should preserve it.
-    if (current_token.newlines && (current_token.text === '--' || current_token.text === '++')) {
-      this.print_newline(false, true);
-    }
-
-    if (this._flags.last_token.text === ';' && is_expression(this._flags.mode)) {
-      // for (;; ++i)
-      //        ^^^
-      space_before = true;
-    }
-
-    if (this._flags.last_token.type === TOKEN.RESERVED) {
-      space_before = true;
-    } else if (this._flags.last_token.type === TOKEN.END_EXPR) {
-      space_before = !(this._flags.last_token.text === ']' && (current_token.text === '--' || current_token.text === '++'));
-    } else if (this._flags.last_token.type === TOKEN.OPERATOR) {
-      // a++ + ++b;
-      // a - -b
-      space_before = in_array(current_token.text, ['--', '-', '++', '+']) && in_array(this._flags.last_token.text, ['--', '-', '++', '+']);
-      // + and - are not unary when preceeded by -- or ++ operator
-      // a-- + b
-      // a * +b
-      // a - -b
-      if (in_array(current_token.text, ['+', '-']) && in_array(this._flags.last_token.text, ['--', '++'])) {
-        space_after = true;
-      }
-    }
-
-
-    if (((this._flags.mode === MODE.BlockStatement && !this._flags.inline_frame) || this._flags.mode === MODE.Statement) &&
-      (this._flags.last_token.text === '{' || this._flags.last_token.text === ';')) {
-      // { foo; --i }
-      // foo(); --bar;
-      this.print_newline();
-    }
-  }
-
-  this._output.space_before_token = this._output.space_before_token || space_before;
-  this.print_token(current_token);
-  this._output.space_before_token = space_after;
-};
-
-Beautifier.prototype.handle_block_comment = function(current_token, preserve_statement_flags) {
-  if (this._output.raw) {
-    this._output.add_raw_token(current_token);
-    if (current_token.directives && current_token.directives.preserve === 'end') {
-      // If we're testing the raw output behavior, do not allow a directive to turn it off.
-      this._output.raw = this._options.test_output_raw;
-    }
-    return;
-  }
-
-  if (current_token.directives) {
-    this.print_newline(false, preserve_statement_flags);
-    this.print_token(current_token);
-    if (current_token.directives.preserve === 'start') {
-      this._output.raw = true;
-    }
-    this.print_newline(false, true);
-    return;
-  }
-
-  // inline block
-  if (!acorn.newline.test(current_token.text) && !current_token.newlines) {
-    this._output.space_before_token = true;
-    this.print_token(current_token);
-    this._output.space_before_token = true;
-    return;
-  }
-
-  var lines = split_linebreaks(current_token.text);
-  var j; // iterator for this case
-  var javadoc = false;
-  var starless = false;
-  var lastIndent = current_token.whitespace_before;
-  var lastIndentLength = lastIndent.length;
-
-  // block comment starts with a new line
-  this.print_newline(false, preserve_statement_flags);
-  if (lines.length > 1) {
-    javadoc = all_lines_start_with(lines.slice(1), '*');
-    starless = each_line_matches_indent(lines.slice(1), lastIndent);
-  }
-
-  // first line always indented
-  this.print_token(current_token, lines[0]);
-  for (j = 1; j < lines.length; j++) {
-    this.print_newline(false, true);
-    if (javadoc) {
-      // javadoc: reformat and re-indent
-      this.print_token(current_token, ' ' + ltrim(lines[j]));
-    } else if (starless && lines[j].length > lastIndentLength) {
-      // starless: re-indent non-empty content, avoiding trim
-      this.print_token(current_token, lines[j].substring(lastIndentLength));
-    } else {
-      // normal comments output raw
-      this._output.add_token(lines[j]);
-    }
-  }
-
-  // for comments of more than one line, make sure there's a new line after
-  this.print_newline(false, preserve_statement_flags);
-};
-
-Beautifier.prototype.handle_comment = function(current_token, preserve_statement_flags) {
-  if (current_token.newlines) {
-    this.print_newline(false, preserve_statement_flags);
-  } else {
-    this._output.trim(true);
-  }
-
-  this._output.space_before_token = true;
-  this.print_token(current_token);
-  this.print_newline(false, preserve_statement_flags);
-};
-
-Beautifier.prototype.handle_dot = function(current_token) {
-  if (this.start_of_statement(current_token)) {
-    // The conditional starts the statement if appropriate.
-  } else {
-    this.handle_whitespace_and_comments(current_token, true);
-  }
-
-  if (reserved_array(this._flags.last_token, special_words)) {
-    this._output.space_before_token = false;
-  } else {
-    // allow preserved newlines before dots in general
-    // force newlines on dots after close paren when break_chained - for bar().baz()
-    this.allow_wrap_or_preserved_newline(current_token,
-      this._flags.last_token.text === ')' && this._options.break_chained_methods);
-  }
-
-  // Only unindent chained method dot if this dot starts a new line.
-  // Otherwise the automatic extra indentation removal will handle the over indent
-  if (this._options.unindent_chained_methods && this._output.just_added_newline()) {
-    this.deindent();
-  }
-
-  this.print_token(current_token);
-};
-
-Beautifier.prototype.handle_unknown = function(current_token, preserve_statement_flags) {
-  this.print_token(current_token);
-
-  if (current_token.text[current_token.text.length - 1] === '\n') {
-    this.print_newline(false, preserve_statement_flags);
-  }
-};
-
-Beautifier.prototype.handle_eof = function(current_token) {
-  // Unwind any open statements
-  while (this._flags.mode === MODE.Statement) {
-    this.restore_mode();
-  }
-  this.handle_whitespace_and_comments(current_token);
-};
-
-module.exports.Beautifier = Beautifier;
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*jshint node:true */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-
-
-
-function OutputLine(parent) {
-  this.__parent = parent;
-  this.__character_count = 0;
-  // use indent_count as a marker for this.__lines that have preserved indentation
-  this.__indent_count = -1;
-  this.__alignment_count = 0;
-
-  this.__items = [];
 }
-
-OutputLine.prototype.item = function(index) {
-  if (index < 0) {
-    return this.__items[this.__items.length + index];
-  } else {
-    return this.__items[index];
-  }
-};
-
-OutputLine.prototype.has_match = function(pattern) {
-  for (var lastCheckedOutput = this.__items.length - 1; lastCheckedOutput >= 0; lastCheckedOutput--) {
-    if (this.__items[lastCheckedOutput].match(pattern)) {
-      return true;
-    }
-  }
-  return false;
-};
-
-OutputLine.prototype.set_indent = function(indent, alignment) {
-  this.__indent_count = indent || 0;
-  this.__alignment_count = alignment || 0;
-  this.__character_count = this.__parent.baseIndentLength + this.__alignment_count + this.__indent_count * this.__parent.indent_length;
-};
-
-OutputLine.prototype.get_character_count = function() {
-  return this.__character_count;
-};
-
-OutputLine.prototype.is_empty = function() {
-  return this.__items.length === 0;
-};
-
-OutputLine.prototype.last = function() {
-  if (!this.is_empty()) {
-    return this.__items[this.__items.length - 1];
-  } else {
-    return null;
-  }
-};
-
-OutputLine.prototype.push = function(item) {
-  this.__items.push(item);
-  this.__character_count += item.length;
-};
-
-OutputLine.prototype.push_raw = function(item) {
-  this.push(item);
-  var last_newline_index = item.lastIndexOf('\n');
-  if (last_newline_index !== -1) {
-    this.__character_count = item.length - last_newline_index;
-  }
-};
-
-OutputLine.prototype.pop = function() {
-  var item = null;
-  if (!this.is_empty()) {
-    item = this.__items.pop();
-    this.__character_count -= item.length;
-  }
-  return item;
-};
-
-OutputLine.prototype.remove_indent = function() {
-  if (this.__indent_count > 0) {
-    this.__indent_count -= 1;
-    this.__character_count -= this.__parent.indent_length;
-  }
-};
-
-OutputLine.prototype.trim = function() {
-  while (this.last() === ' ') {
-    this.__items.pop();
-    this.__character_count -= 1;
-  }
-};
-
-OutputLine.prototype.toString = function() {
-  var result = '';
-  if (!this.is_empty()) {
-    if (this.__indent_count >= 0) {
-      result = this.__parent.get_indent_string(this.__indent_count);
-    }
-    if (this.__alignment_count >= 0) {
-      result += this.__parent.get_alignment_string(this.__alignment_count);
-    }
-    result += this.__items.join('');
-  }
-  return result;
-};
-
-function IndentCache(base_string, level_string) {
-  this.__cache = [base_string];
-  this.__level_string = level_string;
-}
-
-IndentCache.prototype.__ensure_cache = function(level) {
-  while (level >= this.__cache.length) {
-    this.__cache.push(this.__cache[this.__cache.length - 1] + this.__level_string);
-  }
-};
-
-IndentCache.prototype.get_level_string = function(level) {
-  this.__ensure_cache(level);
-  return this.__cache[level];
-};
-
-
-function Output(options, baseIndentString) {
-  var indent_string = options.indent_char;
-  if (options.indent_size > 1) {
-    indent_string = new Array(options.indent_size + 1).join(options.indent_char);
-  }
-
-  // Set to null to continue support for auto detection of base indent level.
-  baseIndentString = baseIndentString || '';
-  if (options.indent_level > 0) {
-    baseIndentString = new Array(options.indent_level + 1).join(indent_string);
-  }
-
-  this.__indent_cache = new IndentCache(baseIndentString, indent_string);
-  this.__alignment_cache = new IndentCache('', ' ');
-  this.baseIndentLength = baseIndentString.length;
-  this.indent_length = indent_string.length;
-  this.raw = false;
-  this._end_with_newline = options.end_with_newline;
-
-  this.__lines = [];
-  this.previous_line = null;
-  this.current_line = null;
-  this.space_before_token = false;
-  // initialize
-  this.__add_outputline();
-}
-
-Output.prototype.__add_outputline = function() {
-  this.previous_line = this.current_line;
-  this.current_line = new OutputLine(this);
-  this.__lines.push(this.current_line);
-};
-
-Output.prototype.get_line_number = function() {
-  return this.__lines.length;
-};
-
-Output.prototype.get_indent_string = function(level) {
-  return this.__indent_cache.get_level_string(level);
-};
-
-Output.prototype.get_alignment_string = function(level) {
-  return this.__alignment_cache.get_level_string(level);
-};
-
-Output.prototype.is_empty = function() {
-  return !this.previous_line && this.current_line.is_empty();
-};
-
-Output.prototype.add_new_line = function(force_newline) {
-  // never newline at the start of file
-  // otherwise, newline only if we didn't just add one or we're forced
-  if (this.is_empty() ||
-    (!force_newline && this.just_added_newline())) {
-    return false;
-  }
-
-  // if raw output is enabled, don't print additional newlines,
-  // but still return True as though you had
-  if (!this.raw) {
-    this.__add_outputline();
-  }
-  return true;
-};
-
-Output.prototype.get_code = function(eol) {
-  var sweet_code = this.__lines.join('\n').replace(/[\r\n\t ]+$/, '');
-
-  if (this._end_with_newline) {
-    sweet_code += '\n';
-  }
-
-  if (eol !== '\n') {
-    sweet_code = sweet_code.replace(/[\n]/g, eol);
-  }
-
-  return sweet_code;
-};
-
-Output.prototype.set_indent = function(indent, alignment) {
-  indent = indent || 0;
-  alignment = alignment || 0;
-
-  // Never indent your first output indent at the start of the file
-  if (this.__lines.length > 1) {
-    this.current_line.set_indent(indent, alignment);
-    return true;
-  }
-  this.current_line.set_indent();
-  return false;
-};
-
-Output.prototype.add_raw_token = function(token) {
-  for (var x = 0; x < token.newlines; x++) {
-    this.__add_outputline();
-  }
-  this.current_line.push(token.whitespace_before);
-  this.current_line.push_raw(token.text);
-  this.space_before_token = false;
-};
-
-Output.prototype.add_token = function(printable_token) {
-  this.add_space_before_token();
-  this.current_line.push(printable_token);
-};
-
-Output.prototype.add_space_before_token = function() {
-  if (this.space_before_token && !this.just_added_newline()) {
-    this.current_line.push(' ');
-  }
-  this.space_before_token = false;
-};
-
-Output.prototype.remove_indent = function(index) {
-  var output_length = this.__lines.length;
-  while (index < output_length) {
-    this.__lines[index].remove_indent();
-    index++;
-  }
-};
-
-Output.prototype.trim = function(eat_newlines) {
-  eat_newlines = (eat_newlines === undefined) ? false : eat_newlines;
-
-  this.current_line.trim(this.indent_string, this.baseIndentString);
-
-  while (eat_newlines && this.__lines.length > 1 &&
-    this.current_line.is_empty()) {
-    this.__lines.pop();
-    this.current_line = this.__lines[this.__lines.length - 1];
-    this.current_line.trim();
-  }
-
-  this.previous_line = this.__lines.length > 1 ?
-    this.__lines[this.__lines.length - 2] : null;
-};
-
-Output.prototype.just_added_newline = function() {
-  return this.current_line.is_empty();
-};
-
-Output.prototype.just_added_blankline = function() {
-  return this.is_empty() ||
-    (this.current_line.is_empty() && this.previous_line.is_empty());
-};
-
-Output.prototype.ensure_empty_line_above = function(starts_with, ends_with) {
-  var index = this.__lines.length - 2;
-  while (index >= 0) {
-    var potentialEmptyLine = this.__lines[index];
-    if (potentialEmptyLine.is_empty()) {
-      break;
-    } else if (potentialEmptyLine.item(0).indexOf(starts_with) !== 0 &&
-      potentialEmptyLine.item(-1) !== ends_with) {
-      this.__lines.splice(index + 1, 0, new OutputLine(this));
-      this.previous_line = this.__lines[this.__lines.length - 2];
-      break;
-    }
-    index--;
-  }
-};
-
-module.exports.Output = Output;
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*jshint node:true */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-
-
-
-function Token(type, text, newlines, whitespace_before) {
-  this.type = type;
-  this.text = text;
-
-  // comments_before are
-  // comments that have a new line before them
-  // and may or may not have a newline after
-  // this is a set of comments before
-  this.comments_before = null; /* inline comment*/
-
-
-  // this.comments_after =  new TokenStream(); // no new line before and newline after
-  this.newlines = newlines || 0;
-  this.whitespace_before = whitespace_before || '';
-  this.parent = null;
-  this.next = null;
-  this.previous = null;
-  this.opened = null;
-  this.closed = null;
-  this.directives = null;
-}
-
-
-module.exports.Token = Token;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* jshint node: true, curly: false */
-// Parts of this section of code is taken from acorn.
-//
-// Acorn was written by Marijn Haverbeke and released under an MIT
-// license. The Unicode regexps (for identifiers and whitespace) were
-// taken from [Esprima](http://esprima.org) by Ariya Hidayat.
-//
-// Git repositories for Acorn are available at
-//
-//     http://marijnhaverbeke.nl/git/acorn
-//     https://github.com/marijnh/acorn.git
-
-// ## Character categories
-
-
-
-
-// acorn used char codes to squeeze the last bit of performance out
-// Beautifier is okay without that, so we're using regex
-// permit $ (36) and @ (64). @ is used in ES7 decorators.
-// 65 through 91 are uppercase letters.
-// permit _ (95).
-// 97 through 123 are lowercase letters.
-var baseASCIIidentifierStartChars = "\x24\x40\x41-\x5a\x5f\x61-\x7a";
-
-// inside an identifier @ is not allowed but 0-9 are.
-var baseASCIIidentifierChars = "\x24\x30-\x39\x41-\x5a\x5f\x61-\x7a";
-
-// Big ugly regular expressions that match characters in the
-// whitespace, identifier, and identifier-start categories. These
-// are only applied when a character is found to actually have a
-// code point above 128.
-var nonASCIIidentifierStartChars = "\xaa\xb5\xba\xc0-\xd6\xd8-\xf6\xf8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u08a0\u08a2-\u08ac\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097f\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c33\u0c35-\u0c39\u0c3d\u0c58\u0c59\u0c60\u0c61\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d60\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f4\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f0\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191c\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19c1-\u19c7\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2119-\u211d\u2124\u2126\u2128\u212a-\u212d\u212f-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u2e2f\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309d-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312d\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fcc\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua697\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua78e\ua790-\ua793\ua7a0-\ua7aa\ua7f8-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa80-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uabc0-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc";
-var nonASCIIidentifierChars = "\u0300-\u036f\u0483-\u0487\u0591-\u05bd\u05bf\u05c1\u05c2\u05c4\u05c5\u05c7\u0610-\u061a\u0620-\u0649\u0672-\u06d3\u06e7-\u06e8\u06fb-\u06fc\u0730-\u074a\u0800-\u0814\u081b-\u0823\u0825-\u0827\u0829-\u082d\u0840-\u0857\u08e4-\u08fe\u0900-\u0903\u093a-\u093c\u093e-\u094f\u0951-\u0957\u0962-\u0963\u0966-\u096f\u0981-\u0983\u09bc\u09be-\u09c4\u09c7\u09c8\u09d7\u09df-\u09e0\u0a01-\u0a03\u0a3c\u0a3e-\u0a42\u0a47\u0a48\u0a4b-\u0a4d\u0a51\u0a66-\u0a71\u0a75\u0a81-\u0a83\u0abc\u0abe-\u0ac5\u0ac7-\u0ac9\u0acb-\u0acd\u0ae2-\u0ae3\u0ae6-\u0aef\u0b01-\u0b03\u0b3c\u0b3e-\u0b44\u0b47\u0b48\u0b4b-\u0b4d\u0b56\u0b57\u0b5f-\u0b60\u0b66-\u0b6f\u0b82\u0bbe-\u0bc2\u0bc6-\u0bc8\u0bca-\u0bcd\u0bd7\u0be6-\u0bef\u0c01-\u0c03\u0c46-\u0c48\u0c4a-\u0c4d\u0c55\u0c56\u0c62-\u0c63\u0c66-\u0c6f\u0c82\u0c83\u0cbc\u0cbe-\u0cc4\u0cc6-\u0cc8\u0cca-\u0ccd\u0cd5\u0cd6\u0ce2-\u0ce3\u0ce6-\u0cef\u0d02\u0d03\u0d46-\u0d48\u0d57\u0d62-\u0d63\u0d66-\u0d6f\u0d82\u0d83\u0dca\u0dcf-\u0dd4\u0dd6\u0dd8-\u0ddf\u0df2\u0df3\u0e34-\u0e3a\u0e40-\u0e45\u0e50-\u0e59\u0eb4-\u0eb9\u0ec8-\u0ecd\u0ed0-\u0ed9\u0f18\u0f19\u0f20-\u0f29\u0f35\u0f37\u0f39\u0f41-\u0f47\u0f71-\u0f84\u0f86-\u0f87\u0f8d-\u0f97\u0f99-\u0fbc\u0fc6\u1000-\u1029\u1040-\u1049\u1067-\u106d\u1071-\u1074\u1082-\u108d\u108f-\u109d\u135d-\u135f\u170e-\u1710\u1720-\u1730\u1740-\u1750\u1772\u1773\u1780-\u17b2\u17dd\u17e0-\u17e9\u180b-\u180d\u1810-\u1819\u1920-\u192b\u1930-\u193b\u1951-\u196d\u19b0-\u19c0\u19c8-\u19c9\u19d0-\u19d9\u1a00-\u1a15\u1a20-\u1a53\u1a60-\u1a7c\u1a7f-\u1a89\u1a90-\u1a99\u1b46-\u1b4b\u1b50-\u1b59\u1b6b-\u1b73\u1bb0-\u1bb9\u1be6-\u1bf3\u1c00-\u1c22\u1c40-\u1c49\u1c5b-\u1c7d\u1cd0-\u1cd2\u1d00-\u1dbe\u1e01-\u1f15\u200c\u200d\u203f\u2040\u2054\u20d0-\u20dc\u20e1\u20e5-\u20f0\u2d81-\u2d96\u2de0-\u2dff\u3021-\u3028\u3099\u309a\ua640-\ua66d\ua674-\ua67d\ua69f\ua6f0-\ua6f1\ua7f8-\ua800\ua806\ua80b\ua823-\ua827\ua880-\ua881\ua8b4-\ua8c4\ua8d0-\ua8d9\ua8f3-\ua8f7\ua900-\ua909\ua926-\ua92d\ua930-\ua945\ua980-\ua983\ua9b3-\ua9c0\uaa00-\uaa27\uaa40-\uaa41\uaa4c-\uaa4d\uaa50-\uaa59\uaa7b\uaae0-\uaae9\uaaf2-\uaaf3\uabc0-\uabe1\uabec\uabed\uabf0-\uabf9\ufb20-\ufb28\ufe00-\ufe0f\ufe20-\ufe26\ufe33\ufe34\ufe4d-\ufe4f\uff10-\uff19\uff3f";
-//var nonASCIIidentifierStart = new RegExp("[" + nonASCIIidentifierStartChars + "]");
-//var nonASCIIidentifier = new RegExp("[" + nonASCIIidentifierStartChars + nonASCIIidentifierChars + "]");
-
-var identifierStart = "[" + baseASCIIidentifierStartChars + nonASCIIidentifierStartChars + "]";
-var identifierChars = "[" + baseASCIIidentifierChars + nonASCIIidentifierStartChars + nonASCIIidentifierChars + "]*";
-
-exports.identifier = new RegExp(identifierStart + identifierChars, 'g');
-
-
-var nonASCIIwhitespace = /[\u1680\u180e\u2000-\u200a\u202f\u205f\u3000\ufeff]/; // jshint ignore:line
-
-// Whether a single character denotes a newline.
-
-exports.newline = /[\n\r\u2028\u2029]/;
-
-// Matches a whole line break (where CRLF is considered a single
-// line break). Used to count lines.
-
-// in javascript, these two differ
-// in python they are the same, different methods are called on them
-exports.lineBreak = new RegExp('\r\n|' + exports.newline.source);
-exports.allLineBreaks = new RegExp(exports.lineBreak.source, 'g');
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*jshint node:true */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-
-
-
-var BaseOptions = __webpack_require__(6).Options;
-
-var validPositionValues = ['before-newline', 'after-newline', 'preserve-newline'];
-
-function Options(options) {
-  BaseOptions.call(this, options, 'js');
-
-  // compatibility, re
-  var raw_brace_style = this.raw_options.brace_style || null;
-  if (raw_brace_style === "expand-strict") { //graceful handling of deprecated option
-    this.raw_options.brace_style = "expand";
-  } else if (raw_brace_style === "collapse-preserve-inline") { //graceful handling of deprecated option
-    this.raw_options.brace_style = "collapse,preserve-inline";
-  } else if (this.raw_options.braces_on_own_line !== undefined) { //graceful handling of deprecated option
-    this.raw_options.brace_style = this.raw_options.braces_on_own_line ? "expand" : "collapse";
-    // } else if (!raw_brace_style) { //Nothing exists to set it
-    //   raw_brace_style = "collapse";
-  }
-
-  //preserve-inline in delimited string will trigger brace_preserve_inline, everything
-  //else is considered a brace_style and the last one only will have an effect
-
-  var brace_style_split = this._get_selection_list('brace_style', ['collapse', 'expand', 'end-expand', 'none', 'preserve-inline']);
-
-  this.brace_preserve_inline = false; //Defaults in case one or other was not specified in meta-option
-  this.brace_style = "collapse";
-
-  for (var bs = 0; bs < brace_style_split.length; bs++) {
-    if (brace_style_split[bs] === "preserve-inline") {
-      this.brace_preserve_inline = true;
-    } else {
-      this.brace_style = brace_style_split[bs];
-    }
-  }
-
-  this.unindent_chained_methods = this._get_boolean('unindent_chained_methods');
-  this.break_chained_methods = this._get_boolean('break_chained_methods');
-  this.space_in_paren = this._get_boolean('space_in_paren');
-  this.space_in_empty_paren = this._get_boolean('space_in_empty_paren');
-  this.jslint_happy = this._get_boolean('jslint_happy');
-  this.space_after_anon_function = this._get_boolean('space_after_anon_function');
-  this.space_after_named_function = this._get_boolean('space_after_named_function');
-  this.keep_array_indentation = this._get_boolean('keep_array_indentation');
-  this.space_before_conditional = this._get_boolean('space_before_conditional', true);
-  this.unescape_strings = this._get_boolean('unescape_strings');
-  this.e4x = this._get_boolean('e4x');
-  this.comma_first = this._get_boolean('comma_first');
-  this.operator_position = this._get_selection('operator_position', validPositionValues);
-
-  // For testing of beautify preserve:start directive
-  this.test_output_raw = this._get_boolean('test_output_raw');
-
-  // force this._options.space_after_anon_function to true if this._options.jslint_happy
-  if (this.jslint_happy) {
-    this.space_after_anon_function = true;
-  }
-
-}
-Options.prototype = new BaseOptions();
-
-
-
-module.exports.Options = Options;
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*jshint node:true */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-
-
-
-function Options(options, merge_child_field) {
-  this.raw_options = _mergeOpts(options, merge_child_field);
-
-  // Support passing the source text back with no change
-  this.disabled = this._get_boolean('disabled');
-
-  this.eol = this._get_characters('eol', 'auto');
-  this.end_with_newline = this._get_boolean('end_with_newline');
-  this.indent_size = this._get_number('indent_size', 4);
-  this.indent_char = this._get_characters('indent_char', ' ');
-  this.indent_level = this._get_number('indent_level');
-
-  this.preserve_newlines = this._get_boolean('preserve_newlines', true);
-  this.max_preserve_newlines = this._get_number('max_preserve_newlines', 32786);
-  if (!this.preserve_newlines) {
-    this.max_preserve_newlines = 0;
-  }
-
-  this.indent_with_tabs = this._get_boolean('indent_with_tabs');
-  if (this.indent_with_tabs) {
-    this.indent_char = '\t';
-    this.indent_size = 1;
-  }
-
-  // Backwards compat with 1.3.x
-  this.wrap_line_length = this._get_number('wrap_line_length', this._get_number('max_char'));
-
-}
-
-Options.prototype._get_array = function(name, default_value) {
-  var option_value = this.raw_options[name];
-  var result = default_value || [];
-  if (typeof option_value === 'object') {
-    if (option_value !== null && typeof option_value.concat === 'function') {
-      result = option_value.concat();
-    }
-  } else if (typeof option_value === 'string') {
-    result = option_value.split(/[^a-zA-Z0-9_\/\-]+/);
-  }
-  return result;
-};
-
-Options.prototype._get_boolean = function(name, default_value) {
-  var option_value = this.raw_options[name];
-  var result = option_value === undefined ? !!default_value : !!option_value;
-  return result;
-};
-
-Options.prototype._get_characters = function(name, default_value) {
-  var option_value = this.raw_options[name];
-  var result = default_value || '';
-  if (typeof option_value === 'string') {
-    result = option_value.replace(/\\r/, '\r').replace(/\\n/, '\n').replace(/\\t/, '\t');
-  }
-  return result;
-};
-
-Options.prototype._get_number = function(name, default_value) {
-  var option_value = this.raw_options[name];
-  default_value = parseInt(default_value, 10);
-  if (isNaN(default_value)) {
-    default_value = 0;
-  }
-  var result = parseInt(option_value, 10);
-  if (isNaN(result)) {
-    result = default_value;
-  }
-  return result;
-};
-
-Options.prototype._get_selection = function(name, selection_list, default_value) {
-  var result = this._get_selection_list(name, selection_list, default_value);
-  if (result.length !== 1) {
-    throw new Error(
-      "Invalid Option Value: The option '" + name + "' can only be one of the following values:\n" +
-      selection_list + "\nYou passed in: '" + this.raw_options[name] + "'");
-  }
-
-  return result[0];
-};
-
-
-Options.prototype._get_selection_list = function(name, selection_list, default_value) {
-  if (!selection_list || selection_list.length === 0) {
-    throw new Error("Selection list cannot be empty.");
-  }
-
-  default_value = default_value || [selection_list[0]];
-  if (!this._is_valid_selection(default_value, selection_list)) {
-    throw new Error("Invalid Default Value!");
-  }
-
-  var result = this._get_array(name, default_value);
-  if (!this._is_valid_selection(result, selection_list)) {
-    throw new Error(
-      "Invalid Option Value: The option '" + name + "' can contain only the following values:\n" +
-      selection_list + "\nYou passed in: '" + this.raw_options[name] + "'");
-  }
-
-  return result;
-};
-
-Options.prototype._is_valid_selection = function(result, selection_list) {
-  return result.length && selection_list.length &&
-    !result.some(function(item) { return selection_list.indexOf(item) === -1; });
-};
-
-
-// merges child options up with the parent options object
-// Example: obj = {a: 1, b: {a: 2}}
-//          mergeOpts(obj, 'b')
-//
-//          Returns: {a: 2}
-function _mergeOpts(allOptions, childFieldName) {
-  var finalOpts = {};
-  allOptions = _normalizeOpts(allOptions);
-  var name;
-
-  for (name in allOptions) {
-    if (name !== childFieldName) {
-      finalOpts[name] = allOptions[name];
-    }
-  }
-
-  //merge in the per type settings for the childFieldName
-  if (childFieldName && allOptions[childFieldName]) {
-    for (name in allOptions[childFieldName]) {
-      finalOpts[name] = allOptions[childFieldName][name];
-    }
-  }
-  return finalOpts;
-}
-
-function _normalizeOpts(options) {
-  var convertedOpts = {};
-  var key;
-
-  for (key in options) {
-    var newKey = key.replace(/-/g, "_");
-    convertedOpts[newKey] = options[key];
-  }
-  return convertedOpts;
-}
-
-module.exports.Options = Options;
-module.exports.normalizeOpts = _normalizeOpts;
-module.exports.mergeOpts = _mergeOpts;
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*jshint node:true */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-
-
-
-var InputScanner = __webpack_require__(8).InputScanner;
-var BaseTokenizer = __webpack_require__(9).Tokenizer;
-var BASETOKEN = __webpack_require__(9).TOKEN;
-var Directives = __webpack_require__(11).Directives;
-var acorn = __webpack_require__(4);
-
-function in_array(what, arr) {
-  return arr.indexOf(what) !== -1;
-}
-
-
-var TOKEN = {
-  START_EXPR: 'TK_START_EXPR',
-  END_EXPR: 'TK_END_EXPR',
-  START_BLOCK: 'TK_START_BLOCK',
-  END_BLOCK: 'TK_END_BLOCK',
-  WORD: 'TK_WORD',
-  RESERVED: 'TK_RESERVED',
-  SEMICOLON: 'TK_SEMICOLON',
-  STRING: 'TK_STRING',
-  EQUALS: 'TK_EQUALS',
-  OPERATOR: 'TK_OPERATOR',
-  COMMA: 'TK_COMMA',
-  BLOCK_COMMENT: 'TK_BLOCK_COMMENT',
-  COMMENT: 'TK_COMMENT',
-  DOT: 'TK_DOT',
-  UNKNOWN: 'TK_UNKNOWN',
-  START: BASETOKEN.START,
-  RAW: BASETOKEN.RAW,
-  EOF: BASETOKEN.EOF
-};
-
-
-var directives_core = new Directives(/\/\*/, /\*\//);
-
-var number_pattern = /0[xX][0123456789abcdefABCDEF]*|0[oO][01234567]*|0[bB][01]*|\d+n|(?:\.\d+|\d+\.?\d*)(?:[eE][+-]?\d+)?/g;
-
-var digit = /[0-9]/;
-
-// Dot "." must be distinguished from "..." and decimal
-var dot_pattern = /[^\d\.]/;
-
-var positionable_operators = (
-  ">>> === !== " +
-  "<< && >= ** != == <= >> || " +
-  "< / - + > : & % ? ^ | *").split(' ');
-
-// IMPORTANT: this must be sorted longest to shortest or tokenizing many not work.
-// Also, you must update possitionable operators separately from punct
-var punct =
-  ">>>= " +
-  "... >>= <<= === >>> !== **= " +
-  "=> ^= :: /= << <= == && -= >= >> != -- += ** || ++ %= &= *= |= " +
-  "= ! ? > < : / ^ - + * & % ~ |";
-
-punct = punct.replace(/[-[\]{}()*+?.,\\^$|#]/g, "\\$&");
-punct = punct.replace(/ /g, '|');
-
-var punct_pattern = new RegExp(punct, 'g');
-var shebang_pattern = /#![^\n\r\u2028\u2029]*(?:\r\n|[\n\r\u2028\u2029])?/g;
-var include_pattern = /#include[^\n\r\u2028\u2029]*(?:\r\n|[\n\r\u2028\u2029])?/g;
-
-// words which should always start on new line.
-var line_starters = 'continue,try,throw,return,var,let,const,if,switch,case,default,for,while,break,function,import,export'.split(',');
-var reserved_words = line_starters.concat(['do', 'in', 'of', 'else', 'get', 'set', 'new', 'catch', 'finally', 'typeof', 'yield', 'async', 'await', 'from', 'as']);
-var reserved_word_pattern = new RegExp('^(?:' + reserved_words.join('|') + ')$');
-
-//  /* ... */ comment ends with nearest */ or end of file
-var block_comment_pattern = /\/\*(?:[\s\S]*?)((?:\*\/)|$)/g;
-
-// comment ends just before nearest linefeed or end of file
-var comment_pattern = /\/\/(?:[^\n\r\u2028\u2029]*)/g;
-
-var template_pattern = /(?:(?:<\?php|<\?=)[\s\S]*?\?>)|(?:<%[\s\S]*?%>)/g;
-
-var in_html_comment;
-
-var Tokenizer = function(input_string, options) {
-  BaseTokenizer.call(this, input_string, options);
-
-  this._whitespace_pattern = /[\n\r\u2028\u2029\t\u000B\u00A0\u1680\u180e\u2000-\u200a\u202f\u205f\u3000\ufeff ]+/g;
-  this._newline_pattern = /([^\n\r\u2028\u2029]*)(\r\n|[\n\r\u2028\u2029])?/g;
-};
-Tokenizer.prototype = new BaseTokenizer();
-
-Tokenizer.prototype._is_comment = function(current_token) {
-  return current_token.type === TOKEN.COMMENT || current_token.type === TOKEN.BLOCK_COMMENT || current_token.type === TOKEN.UNKNOWN;
-};
-
-Tokenizer.prototype._is_opening = function(current_token) {
-  return current_token.type === TOKEN.START_BLOCK || current_token.type === TOKEN.START_EXPR;
-};
-
-Tokenizer.prototype._is_closing = function(current_token, open_token) {
-  return (current_token.type === TOKEN.END_BLOCK || current_token.type === TOKEN.END_EXPR) &&
-    (open_token && (
-      (current_token.text === ']' && open_token.text === '[') ||
-      (current_token.text === ')' && open_token.text === '(') ||
-      (current_token.text === '}' && open_token.text === '{')));
-};
-
-Tokenizer.prototype._reset = function() {
-  in_html_comment = false;
-};
-
-Tokenizer.prototype._get_next_token = function(previous_token, open_token) { // jshint unused:false
-  this._readWhitespace();
-  var token = null;
-  var c = this._input.peek();
-
-  token = token || this._read_singles(c);
-  token = token || this._read_word(previous_token);
-  token = token || this._read_comment(c);
-  token = token || this._read_string(c);
-  token = token || this._read_regexp(c, previous_token);
-  token = token || this._read_xml(c, previous_token);
-  token = token || this._read_non_javascript(c);
-  token = token || this._read_punctuation();
-  token = token || this._create_token(TOKEN.UNKNOWN, this._input.next());
-
-  return token;
-};
-
-Tokenizer.prototype._read_word = function(previous_token) {
-  var resulting_string;
-  resulting_string = this._input.read(acorn.identifier);
-  if (resulting_string !== '') {
-    if (!(previous_token.type === TOKEN.DOT ||
-        (previous_token.type === TOKEN.RESERVED && (previous_token.text === 'set' || previous_token.text === 'get'))) &&
-      reserved_word_pattern.test(resulting_string)) {
-      if (resulting_string === 'in' || resulting_string === 'of') { // hack for 'in' and 'of' operators
-        return this._create_token(TOKEN.OPERATOR, resulting_string);
-      }
-      return this._create_token(TOKEN.RESERVED, resulting_string);
-    }
-
-    return this._create_token(TOKEN.WORD, resulting_string);
-  }
-
-  resulting_string = this._input.read(number_pattern);
-  if (resulting_string !== '') {
-    return this._create_token(TOKEN.WORD, resulting_string);
-  }
-};
-
-Tokenizer.prototype._read_singles = function(c) {
-  var token = null;
-  if (c === null) {
-    token = this._create_token(TOKEN.EOF, '');
-  } else if (c === '(' || c === '[') {
-    token = this._create_token(TOKEN.START_EXPR, c);
-  } else if (c === ')' || c === ']') {
-    token = this._create_token(TOKEN.END_EXPR, c);
-  } else if (c === '{') {
-    token = this._create_token(TOKEN.START_BLOCK, c);
-  } else if (c === '}') {
-    token = this._create_token(TOKEN.END_BLOCK, c);
-  } else if (c === ';') {
-    token = this._create_token(TOKEN.SEMICOLON, c);
-  } else if (c === '.' && dot_pattern.test(this._input.peek(1))) {
-    token = this._create_token(TOKEN.DOT, c);
-  } else if (c === ',') {
-    token = this._create_token(TOKEN.COMMA, c);
-  }
-
-  if (token) {
-    this._input.next();
-  }
-  return token;
-};
-
-Tokenizer.prototype._read_punctuation = function() {
-  var resulting_string = this._input.read(punct_pattern);
-
-  if (resulting_string !== '') {
-    if (resulting_string === '=') {
-      return this._create_token(TOKEN.EQUALS, resulting_string);
-    } else {
-      return this._create_token(TOKEN.OPERATOR, resulting_string);
-    }
-  }
-};
-
-Tokenizer.prototype._read_non_javascript = function(c) {
-  var resulting_string = '';
-
-  if (c === '#') {
-    if (this._is_first_token()) {
-      resulting_string = this._input.read(shebang_pattern);
-
-      if (resulting_string) {
-        return this._create_token(TOKEN.UNKNOWN, resulting_string.trim() + '\n');
-      }
-    }
-
-    // handles extendscript #includes
-    resulting_string = this._input.read(include_pattern);
-
-    if (resulting_string) {
-      return this._create_token(TOKEN.UNKNOWN, resulting_string.trim() + '\n');
-    }
-
-    c = this._input.next();
-
-    // Spidermonkey-specific sharp variables for circular references. Considered obsolete.
-    var sharp = '#';
-    if (this._input.hasNext() && this._input.testChar(digit)) {
-      do {
-        c = this._input.next();
-        sharp += c;
-      } while (this._input.hasNext() && c !== '#' && c !== '=');
-      if (c === '#') {
-        //
-      } else if (this._input.peek() === '[' && this._input.peek(1) === ']') {
-        sharp += '[]';
-        this._input.next();
-        this._input.next();
-      } else if (this._input.peek() === '{' && this._input.peek(1) === '}') {
-        sharp += '{}';
-        this._input.next();
-        this._input.next();
-      }
-      return this._create_token(TOKEN.WORD, sharp);
-    }
-
-    this._input.back();
-
-  } else if (c === '<') {
-    if (this._input.peek(1) === '?' || this._input.peek(1) === '%') {
-      resulting_string = this._input.read(template_pattern);
-      if (resulting_string) {
-        resulting_string = resulting_string.replace(acorn.allLineBreaks, '\n');
-        return this._create_token(TOKEN.STRING, resulting_string);
-      }
-    } else if (this._input.match(/<\!--/g)) {
-      c = '<!--';
-      while (this._input.hasNext() && !this._input.testChar(acorn.newline)) {
-        c += this._input.next();
-      }
-      in_html_comment = true;
-      return this._create_token(TOKEN.COMMENT, c);
-    }
-  } else if (c === '-' && in_html_comment && this._input.match(/-->/g)) {
-    in_html_comment = false;
-    return this._create_token(TOKEN.COMMENT, '-->');
-  }
-
-  return null;
-};
-
-Tokenizer.prototype._read_comment = function(c) {
-  var token = null;
-  if (c === '/') {
-    var comment = '';
-    if (this._input.peek(1) === '*') {
-      // peek for comment /* ... */
-      comment = this._input.read(block_comment_pattern);
-      var directives = directives_core.get_directives(comment);
-      if (directives && directives.ignore === 'start') {
-        comment += directives_core.readIgnored(this._input);
-      }
-      comment = comment.replace(acorn.allLineBreaks, '\n');
-      token = this._create_token(TOKEN.BLOCK_COMMENT, comment);
-      token.directives = directives;
-    } else if (this._input.peek(1) === '/') {
-      // peek for comment // ...
-      comment = this._input.read(comment_pattern);
-      token = this._create_token(TOKEN.COMMENT, comment);
-    }
-  }
-  return token;
-};
-
-Tokenizer.prototype._read_string = function(c) {
-  if (c === '`' || c === "'" || c === '"') {
-    var resulting_string = this._input.next();
-    this.has_char_escapes = false;
-
-    if (c === '`') {
-      resulting_string += this._read_string_recursive('`', true, '${');
-    } else {
-      resulting_string += this._read_string_recursive(c);
-    }
-
-    if (this.has_char_escapes && this._options.unescape_strings) {
-      resulting_string = unescape_string(resulting_string);
-    }
-    if (this._input.peek() === c) {
-      resulting_string += this._input.next();
-    }
-
-    return this._create_token(TOKEN.STRING, resulting_string);
-  }
-
-  return null;
-};
-
-Tokenizer.prototype._allow_regexp_or_xml = function(previous_token) {
-  // regex and xml can only appear in specific locations during parsing
-  return (previous_token.type === TOKEN.RESERVED && in_array(previous_token.text, ['return', 'case', 'throw', 'else', 'do', 'typeof', 'yield'])) ||
-    (previous_token.type === TOKEN.END_EXPR && previous_token.text === ')' &&
-      previous_token.opened.previous.type === TOKEN.RESERVED && in_array(previous_token.opened.previous.text, ['if', 'while', 'for'])) ||
-    (in_array(previous_token.type, [TOKEN.COMMENT, TOKEN.START_EXPR, TOKEN.START_BLOCK, TOKEN.START,
-      TOKEN.END_BLOCK, TOKEN.OPERATOR, TOKEN.EQUALS, TOKEN.EOF, TOKEN.SEMICOLON, TOKEN.COMMA
-    ]));
-};
-
-Tokenizer.prototype._read_regexp = function(c, previous_token) {
-
-  if (c === '/' && this._allow_regexp_or_xml(previous_token)) {
-    // handle regexp
-    //
-    var resulting_string = this._input.next();
-    var esc = false;
-
-    var in_char_class = false;
-    while (this._input.hasNext() &&
-      ((esc || in_char_class || this._input.peek() !== c) &&
-        !this._input.testChar(acorn.newline))) {
-      resulting_string += this._input.peek();
-      if (!esc) {
-        esc = this._input.peek() === '\\';
-        if (this._input.peek() === '[') {
-          in_char_class = true;
-        } else if (this._input.peek() === ']') {
-          in_char_class = false;
-        }
-      } else {
-        esc = false;
-      }
-      this._input.next();
-    }
-
-    if (this._input.peek() === c) {
-      resulting_string += this._input.next();
-
-      // regexps may have modifiers /regexp/MOD , so fetch those, too
-      // Only [gim] are valid, but if the user puts in garbage, do what we can to take it.
-      resulting_string += this._input.read(acorn.identifier);
-    }
-    return this._create_token(TOKEN.STRING, resulting_string);
-  }
-  return null;
-};
-
-
-var startXmlRegExp = /<()([-a-zA-Z:0-9_.]+|{[\s\S]+?}|!\[CDATA\[[\s\S]*?\]\])(\s+{[\s\S]+?}|\s+[-a-zA-Z:0-9_.]+|\s+[-a-zA-Z:0-9_.]+\s*=\s*('[^']*'|"[^"]*"|{[\s\S]+?}))*\s*(\/?)\s*>/g;
-var xmlRegExp = /[\s\S]*?<(\/?)([-a-zA-Z:0-9_.]+|{[\s\S]+?}|!\[CDATA\[[\s\S]*?\]\])(\s+{[\s\S]+?}|\s+[-a-zA-Z:0-9_.]+|\s+[-a-zA-Z:0-9_.]+\s*=\s*('[^']*'|"[^"]*"|{[\s\S]+?}))*\s*(\/?)\s*>/g;
-
-Tokenizer.prototype._read_xml = function(c, previous_token) {
-
-  if (this._options.e4x && c === "<" && this._input.test(startXmlRegExp) && this._allow_regexp_or_xml(previous_token)) {
-    // handle e4x xml literals
-    //
-    var xmlStr = '';
-    var match = this._input.match(startXmlRegExp);
-    if (match) {
-      // Trim root tag to attempt to
-      var rootTag = match[2].replace(/^{\s+/, '{').replace(/\s+}$/, '}');
-      var isCurlyRoot = rootTag.indexOf('{') === 0;
-      var depth = 0;
-      while (match) {
-        var isEndTag = !!match[1];
-        var tagName = match[2];
-        var isSingletonTag = (!!match[match.length - 1]) || (tagName.slice(0, 8) === "![CDATA[");
-        if (!isSingletonTag &&
-          (tagName === rootTag || (isCurlyRoot && tagName.replace(/^{\s+/, '{').replace(/\s+}$/, '}')))) {
-          if (isEndTag) {
-            --depth;
-          } else {
-            ++depth;
-          }
-        }
-        xmlStr += match[0];
-        if (depth <= 0) {
-          break;
-        }
-        match = this._input.match(xmlRegExp);
-      }
-      // if we didn't close correctly, keep unformatted.
-      if (!match) {
-        xmlStr += this._input.match(/[\s\S]*/g)[0];
-      }
-      xmlStr = xmlStr.replace(acorn.allLineBreaks, '\n');
-      return this._create_token(TOKEN.STRING, xmlStr);
-    }
-  }
-
-  return null;
-};
-
-function unescape_string(s) {
-  // You think that a regex would work for this
-  // return s.replace(/\\x([0-9a-f]{2})/gi, function(match, val) {
-  //         return String.fromCharCode(parseInt(val, 16));
-  //     })
-  // However, dealing with '\xff', '\\xff', '\\\xff' makes this more fun.
-  var out = '',
-    escaped = 0;
-
-  var input_scan = new InputScanner(s);
-  var matched = null;
-
-  while (input_scan.hasNext()) {
-    // Keep any whitespace, non-slash characters
-    // also keep slash pairs.
-    matched = input_scan.match(/([\s]|[^\\]|\\\\)+/g);
-
-    if (matched) {
-      out += matched[0];
-    }
-
-    if (input_scan.peek() === '\\') {
-      input_scan.next();
-      if (input_scan.peek() === 'x') {
-        matched = input_scan.match(/x([0-9A-Fa-f]{2})/g);
-      } else if (input_scan.peek() === 'u') {
-        matched = input_scan.match(/u([0-9A-Fa-f]{4})/g);
-      } else {
-        out += '\\';
-        if (input_scan.hasNext()) {
-          out += input_scan.next();
-        }
-        continue;
-      }
-
-      // If there's some error decoding, return the original string
-      if (!matched) {
-        return s;
-      }
-
-      escaped = parseInt(matched[1], 16);
-
-      if (escaped > 0x7e && escaped <= 0xff && matched[0].indexOf('x') === 0) {
-        // we bail out on \x7f..\xff,
-        // leaving whole string escaped,
-        // as it's probably completely binary
-        return s;
-      } else if (escaped >= 0x00 && escaped < 0x20) {
-        // leave 0x00...0x1f escaped
-        out += '\\' + matched[0];
-        continue;
-      } else if (escaped === 0x22 || escaped === 0x27 || escaped === 0x5c) {
-        // single-quote, apostrophe, backslash - escape these
-        out += '\\' + String.fromCharCode(escaped);
-      } else {
-        out += String.fromCharCode(escaped);
-      }
-    }
-  }
-
-  return out;
-}
-
-// handle string
-//
-Tokenizer.prototype._read_string_recursive = function(delimiter, allow_unescaped_newlines, start_sub) {
-  // Template strings can travers lines without escape characters.
-  // Other strings cannot
-  var current_char;
-  var resulting_string = '';
-  var esc = false;
-  while (this._input.hasNext()) {
-    current_char = this._input.peek();
-    if (!(esc || (current_char !== delimiter &&
-        (allow_unescaped_newlines || !acorn.newline.test(current_char))))) {
-      break;
-    }
-
-    // Handle \r\n linebreaks after escapes or in template strings
-    if ((esc || allow_unescaped_newlines) && acorn.newline.test(current_char)) {
-      if (current_char === '\r' && this._input.peek(1) === '\n') {
-        this._input.next();
-        current_char = this._input.peek();
-      }
-      resulting_string += '\n';
-    } else {
-      resulting_string += current_char;
-    }
-
-    if (esc) {
-      if (current_char === 'x' || current_char === 'u') {
-        this.has_char_escapes = true;
-      }
-      esc = false;
-    } else {
-      esc = current_char === '\\';
-    }
-
-    this._input.next();
-
-    if (start_sub && resulting_string.indexOf(start_sub, resulting_string.length - start_sub.length) !== -1) {
-      if (delimiter === '`') {
-        resulting_string += this._read_string_recursive('}', allow_unescaped_newlines, '`');
-      } else {
-        resulting_string += this._read_string_recursive('`', allow_unescaped_newlines, '${');
-      }
-
-      if (this._input.hasNext()) {
-        resulting_string += this._input.next();
-      }
-    }
-  }
-
-  return resulting_string;
-};
-
-module.exports.Tokenizer = Tokenizer;
-module.exports.TOKEN = TOKEN;
-module.exports.positionable_operators = positionable_operators.slice();
-module.exports.line_starters = line_starters.slice();
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*jshint node:true */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-
-
-
-function InputScanner(input_string) {
-  this.__input = input_string || '';
-  this.__input_length = this.__input.length;
-  this.__position = 0;
-}
-
-InputScanner.prototype.restart = function() {
-  this.__position = 0;
-};
-
-InputScanner.prototype.back = function() {
-  if (this.__position > 0) {
-    this.__position -= 1;
-  }
-};
-
-InputScanner.prototype.hasNext = function() {
-  return this.__position < this.__input_length;
-};
-
-InputScanner.prototype.next = function() {
-  var val = null;
-  if (this.hasNext()) {
-    val = this.__input.charAt(this.__position);
-    this.__position += 1;
-  }
-  return val;
-};
-
-InputScanner.prototype.peek = function(index) {
-  var val = null;
-  index = index || 0;
-  index += this.__position;
-  if (index >= 0 && index < this.__input_length) {
-    val = this.__input.charAt(index);
-  }
-  return val;
-};
-
-InputScanner.prototype.test = function(pattern, index) {
-  index = index || 0;
-  index += this.__position;
-  pattern.lastIndex = index;
-
-  if (index >= 0 && index < this.__input_length) {
-    var pattern_match = pattern.exec(this.__input);
-    return pattern_match && pattern_match.index === index;
-  } else {
-    return false;
-  }
-};
-
-InputScanner.prototype.testChar = function(pattern, index) {
-  // test one character regex match
-  var val = this.peek(index);
-  return val !== null && pattern.test(val);
-};
-
-InputScanner.prototype.match = function(pattern) {
-  pattern.lastIndex = this.__position;
-  var pattern_match = pattern.exec(this.__input);
-  if (pattern_match && pattern_match.index === this.__position) {
-    this.__position += pattern_match[0].length;
-  } else {
-    pattern_match = null;
-  }
-  return pattern_match;
-};
-
-InputScanner.prototype.read = function(pattern) {
-  var val = '';
-  var match = this.match(pattern);
-  if (match) {
-    val = match[0];
-  }
-  return val;
-};
-
-InputScanner.prototype.readUntil = function(pattern, include_match) {
-  var val = '';
-  var match_index = this.__position;
-  pattern.lastIndex = this.__position;
-  var pattern_match = pattern.exec(this.__input);
-  if (pattern_match) {
-    if (include_match) {
-      match_index = pattern_match.index + pattern_match[0].length;
-    } else {
-      match_index = pattern_match.index;
-    }
-  } else {
-    match_index = this.__input_length;
-  }
-
-  val = this.__input.substring(this.__position, match_index);
-  this.__position = match_index;
-  return val;
-};
-
-InputScanner.prototype.readUntilAfter = function(pattern) {
-  return this.readUntil(pattern, true);
-};
-
-/* css beautifier legacy helpers */
-InputScanner.prototype.peekUntilAfter = function(pattern) {
-  var start = this.__position;
-  var val = this.readUntilAfter(pattern);
-  this.__position = start;
-  return val;
-};
-
-InputScanner.prototype.lookBack = function(testVal) {
-  var start = this.__position - 1;
-  return start >= testVal.length && this.__input.substring(start - testVal.length, start)
-    .toLowerCase() === testVal;
-};
-
-
-module.exports.InputScanner = InputScanner;
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*jshint node:true */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-
-
-
-var InputScanner = __webpack_require__(8).InputScanner;
-var Token = __webpack_require__(3).Token;
-var TokenStream = __webpack_require__(10).TokenStream;
-
-var TOKEN = {
-  START: 'TK_START',
-  RAW: 'TK_RAW',
-  EOF: 'TK_EOF'
-};
-
-var Tokenizer = function(input_string, options) {
-  this._input = new InputScanner(input_string);
-  this._options = options || {};
-  this.__tokens = null;
-  this.__newline_count = 0;
-  this.__whitespace_before_token = '';
-
-  this._whitespace_pattern = /[\n\r\t ]+/g;
-  this._newline_pattern = /([^\n\r]*)(\r\n|[\n\r])?/g;
-};
-
-Tokenizer.prototype.tokenize = function() {
-  this._input.restart();
-  this.__tokens = new TokenStream();
-
-  this._reset();
-
-  var current;
-  var previous = new Token(TOKEN.START, '');
-  var open_token = null;
-  var open_stack = [];
-  var comments = new TokenStream();
-
-  while (previous.type !== TOKEN.EOF) {
-    current = this._get_next_token(previous, open_token);
-    while (this._is_comment(current)) {
-      comments.add(current);
-      current = this._get_next_token(previous, open_token);
-    }
-
-    if (!comments.isEmpty()) {
-      current.comments_before = comments;
-      comments = new TokenStream();
-    }
-
-    current.parent = open_token;
-
-    if (this._is_opening(current)) {
-      open_stack.push(open_token);
-      open_token = current;
-    } else if (open_token && this._is_closing(current, open_token)) {
-      current.opened = open_token;
-      open_token.closed = current;
-      open_token = open_stack.pop();
-      current.parent = open_token;
-    }
-
-    current.previous = previous;
-    previous.next = current;
-
-    this.__tokens.add(current);
-    previous = current;
-  }
-
-  return this.__tokens;
-};
-
-
-Tokenizer.prototype._is_first_token = function() {
-  return this.__tokens.isEmpty();
-};
-
-Tokenizer.prototype._reset = function() {};
-
-Tokenizer.prototype._get_next_token = function(previous_token, open_token) { // jshint unused:false
-  this._readWhitespace();
-  var resulting_string = this._input.read(/.+/g);
-  if (resulting_string) {
-    return this._create_token(TOKEN.RAW, resulting_string);
-  } else {
-    return this._create_token(TOKEN.EOF, '');
-  }
-};
-
-Tokenizer.prototype._is_comment = function(current_token) { // jshint unused:false
-  return false;
-};
-
-Tokenizer.prototype._is_opening = function(current_token) { // jshint unused:false
-  return false;
-};
-
-Tokenizer.prototype._is_closing = function(current_token, open_token) { // jshint unused:false
-  return false;
-};
-
-Tokenizer.prototype._create_token = function(type, text) {
-  var token = new Token(type, text, this.__newline_count, this.__whitespace_before_token);
-  this.__newline_count = 0;
-  this.__whitespace_before_token = '';
-  return token;
-};
-
-Tokenizer.prototype._readWhitespace = function() {
-  var resulting_string = this._input.read(this._whitespace_pattern);
-  if (resulting_string === ' ') {
-    this.__whitespace_before_token = resulting_string;
-  } else if (resulting_string !== '') {
-    this._newline_pattern.lastIndex = 0;
-    var nextMatch = this._newline_pattern.exec(resulting_string);
-    while (nextMatch[2]) {
-      this.__newline_count += 1;
-      nextMatch = this._newline_pattern.exec(resulting_string);
-    }
-    this.__whitespace_before_token = nextMatch[1];
-  }
-};
-
-
-
-module.exports.Tokenizer = Tokenizer;
-module.exports.TOKEN = TOKEN;
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*jshint node:true */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-
-
-
-function TokenStream(parent_token) {
-  // private
-  this.__tokens = [];
-  this.__tokens_length = this.__tokens.length;
-  this.__position = 0;
-  this.__parent_token = parent_token;
-}
-
-TokenStream.prototype.restart = function() {
-  this.__position = 0;
-};
-
-TokenStream.prototype.isEmpty = function() {
-  return this.__tokens_length === 0;
-};
-
-TokenStream.prototype.hasNext = function() {
-  return this.__position < this.__tokens_length;
-};
-
-TokenStream.prototype.next = function() {
-  var val = null;
-  if (this.hasNext()) {
-    val = this.__tokens[this.__position];
-    this.__position += 1;
-  }
-  return val;
-};
-
-TokenStream.prototype.peek = function(index) {
-  var val = null;
-  index = index || 0;
-  index += this.__position;
-  if (index >= 0 && index < this.__tokens_length) {
-    val = this.__tokens[index];
-  }
-  return val;
-};
-
-TokenStream.prototype.add = function(token) {
-  if (this.__parent_token) {
-    token.parent = this.__parent_token;
-  }
-  this.__tokens.push(token);
-  this.__tokens_length += 1;
-};
-
-module.exports.TokenStream = TokenStream;
-
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*jshint node:true */
-/*
-
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-
-
-
-function Directives(start_block_pattern, end_block_pattern) {
-  start_block_pattern = typeof start_block_pattern === 'string' ? start_block_pattern : start_block_pattern.source;
-  end_block_pattern = typeof end_block_pattern === 'string' ? end_block_pattern : end_block_pattern.source;
-  this.__directives_block_pattern = new RegExp(start_block_pattern + / beautify( \w+[:]\w+)+ /.source + end_block_pattern, 'g');
-  this.__directive_pattern = / (\w+)[:](\w+)/g;
-
-  this.__directives_end_ignore_pattern = new RegExp('(?:[\\s\\S]*?)((?:' + start_block_pattern + /\sbeautify\signore:end\s/.source + end_block_pattern + ')|$)', 'g');
-}
-
-Directives.prototype.get_directives = function(text) {
-  if (!text.match(this.__directives_block_pattern)) {
-    return null;
-  }
-
-  var directives = {};
-  this.__directive_pattern.lastIndex = 0;
-  var directive_match = this.__directive_pattern.exec(text);
-
-  while (directive_match) {
-    directives[directive_match[1]] = directive_match[2];
-    directive_match = this.__directive_pattern.exec(text);
-  }
-
-  return directives;
-};
-
-Directives.prototype.readIgnored = function(input) {
-  return input.read(this.__directives_end_ignore_pattern);
-};
-
-
-module.exports.Directives = Directives;
-
-
-/***/ })
-/******/ ]);
-var js_beautify = legacy_beautify_js;
-/* Footer */
-if (true) {
-    // Add support for AMD ( https://github.com/amdjs/amdjs-api/wiki/AMD#defineamd-property- )
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function() {
-        return { js_beautify: js_beautify };
-    }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-} else {}
-
-}());
-
 
 
 /***/ }),
@@ -33856,14 +29201,14 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ "326b":
+/***/ "323d":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_c325ca18_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("c02a");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_c325ca18_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_c325ca18_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableCompiledCellComponent_vue_vue_type_style_index_0_id_68b28a35_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("aa4c");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableCompiledCellComponent_vue_vue_type_style_index_0_id_68b28a35_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableCompiledCellComponent_vue_vue_type_style_index_0_id_68b28a35_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_c325ca18_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableCompiledCellComponent_vue_vue_type_style_index_0_id_68b28a35_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -35439,13 +30784,6 @@ module.exports = (
 
 /***/ }),
 
-/***/ "39c9":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
 /***/ "3abd":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -35525,14 +30863,14 @@ __webpack_require__("7a56")('RegExp');
 
 /***/ }),
 
-/***/ "3f27":
+/***/ "3e1d":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTabsComponent_vue_vue_type_style_index_0_id_4f45dfb4_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("d23a");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTabsComponent_vue_vue_type_style_index_0_id_4f45dfb4_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTabsComponent_vue_vue_type_style_index_0_id_4f45dfb4_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_0afcca08_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("08e7");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_0afcca08_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_0afcca08_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTabsComponent_vue_vue_type_style_index_0_id_4f45dfb4_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_0afcca08_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -37842,10 +33180,1408 @@ module.exports = function (it) {
 
 /***/ }),
 
+/***/ "4d7c":
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* AUTO-GENERATED. DO NOT MODIFY. */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+
+
+ CSS Beautifier
+---------------
+
+    Written by Harutyun Amirjanyan, (amirjanyan@gmail.com)
+
+    Based on code initially developed by: Einar Lielmanis, <einar@beautifier.io>
+        https://beautifier.io/
+
+    Usage:
+        css_beautify(source_text);
+        css_beautify(source_text, options);
+
+    The options are (default in brackets):
+        indent_size (4)                         — indentation size,
+        indent_char (space)                     — character to indent with,
+        selector_separator_newline (true)       - separate selectors with newline or
+                                                  not (e.g. "a,\nbr" or "a, br")
+        end_with_newline (false)                - end with a newline
+        newline_between_rules (true)            - add a new line after every css rule
+        space_around_selector_separator (false) - ensure space around selector separators:
+                                                  '>', '+', '~' (e.g. "a>b" -> "a > b")
+    e.g
+
+    css_beautify(css_source_text, {
+      'indent_size': 1,
+      'indent_char': '\t',
+      'selector_separator': ' ',
+      'end_with_newline': false,
+      'newline_between_rules': true,
+      'space_around_selector_separator': true
+    });
+*/
+
+// http://www.w3.org/TR/CSS21/syndata.html#tokenization
+// http://www.w3.org/TR/css3-syntax/
+
+(function() {
+
+/* GENERATED_BUILD_OUTPUT */
+var legacy_beautify_css =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */,
+/* 1 */,
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*jshint node:true */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
+
+
+
+function OutputLine(parent) {
+  this.__parent = parent;
+  this.__character_count = 0;
+  // use indent_count as a marker for this.__lines that have preserved indentation
+  this.__indent_count = -1;
+  this.__alignment_count = 0;
+
+  this.__items = [];
+}
+
+OutputLine.prototype.item = function(index) {
+  if (index < 0) {
+    return this.__items[this.__items.length + index];
+  } else {
+    return this.__items[index];
+  }
+};
+
+OutputLine.prototype.has_match = function(pattern) {
+  for (var lastCheckedOutput = this.__items.length - 1; lastCheckedOutput >= 0; lastCheckedOutput--) {
+    if (this.__items[lastCheckedOutput].match(pattern)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+OutputLine.prototype.set_indent = function(indent, alignment) {
+  this.__indent_count = indent || 0;
+  this.__alignment_count = alignment || 0;
+  this.__character_count = this.__parent.baseIndentLength + this.__alignment_count + this.__indent_count * this.__parent.indent_length;
+};
+
+OutputLine.prototype.get_character_count = function() {
+  return this.__character_count;
+};
+
+OutputLine.prototype.is_empty = function() {
+  return this.__items.length === 0;
+};
+
+OutputLine.prototype.last = function() {
+  if (!this.is_empty()) {
+    return this.__items[this.__items.length - 1];
+  } else {
+    return null;
+  }
+};
+
+OutputLine.prototype.push = function(item) {
+  this.__items.push(item);
+  this.__character_count += item.length;
+};
+
+OutputLine.prototype.push_raw = function(item) {
+  this.push(item);
+  var last_newline_index = item.lastIndexOf('\n');
+  if (last_newline_index !== -1) {
+    this.__character_count = item.length - last_newline_index;
+  }
+};
+
+OutputLine.prototype.pop = function() {
+  var item = null;
+  if (!this.is_empty()) {
+    item = this.__items.pop();
+    this.__character_count -= item.length;
+  }
+  return item;
+};
+
+OutputLine.prototype.remove_indent = function() {
+  if (this.__indent_count > 0) {
+    this.__indent_count -= 1;
+    this.__character_count -= this.__parent.indent_length;
+  }
+};
+
+OutputLine.prototype.trim = function() {
+  while (this.last() === ' ') {
+    this.__items.pop();
+    this.__character_count -= 1;
+  }
+};
+
+OutputLine.prototype.toString = function() {
+  var result = '';
+  if (!this.is_empty()) {
+    if (this.__indent_count >= 0) {
+      result = this.__parent.get_indent_string(this.__indent_count);
+    }
+    if (this.__alignment_count >= 0) {
+      result += this.__parent.get_alignment_string(this.__alignment_count);
+    }
+    result += this.__items.join('');
+  }
+  return result;
+};
+
+function IndentCache(base_string, level_string) {
+  this.__cache = [base_string];
+  this.__level_string = level_string;
+}
+
+IndentCache.prototype.__ensure_cache = function(level) {
+  while (level >= this.__cache.length) {
+    this.__cache.push(this.__cache[this.__cache.length - 1] + this.__level_string);
+  }
+};
+
+IndentCache.prototype.get_level_string = function(level) {
+  this.__ensure_cache(level);
+  return this.__cache[level];
+};
+
+
+function Output(options, baseIndentString) {
+  var indent_string = options.indent_char;
+  if (options.indent_size > 1) {
+    indent_string = new Array(options.indent_size + 1).join(options.indent_char);
+  }
+
+  // Set to null to continue support for auto detection of base indent level.
+  baseIndentString = baseIndentString || '';
+  if (options.indent_level > 0) {
+    baseIndentString = new Array(options.indent_level + 1).join(indent_string);
+  }
+
+  this.__indent_cache = new IndentCache(baseIndentString, indent_string);
+  this.__alignment_cache = new IndentCache('', ' ');
+  this.baseIndentLength = baseIndentString.length;
+  this.indent_length = indent_string.length;
+  this.raw = false;
+  this._end_with_newline = options.end_with_newline;
+
+  this.__lines = [];
+  this.previous_line = null;
+  this.current_line = null;
+  this.space_before_token = false;
+  // initialize
+  this.__add_outputline();
+}
+
+Output.prototype.__add_outputline = function() {
+  this.previous_line = this.current_line;
+  this.current_line = new OutputLine(this);
+  this.__lines.push(this.current_line);
+};
+
+Output.prototype.get_line_number = function() {
+  return this.__lines.length;
+};
+
+Output.prototype.get_indent_string = function(level) {
+  return this.__indent_cache.get_level_string(level);
+};
+
+Output.prototype.get_alignment_string = function(level) {
+  return this.__alignment_cache.get_level_string(level);
+};
+
+Output.prototype.is_empty = function() {
+  return !this.previous_line && this.current_line.is_empty();
+};
+
+Output.prototype.add_new_line = function(force_newline) {
+  // never newline at the start of file
+  // otherwise, newline only if we didn't just add one or we're forced
+  if (this.is_empty() ||
+    (!force_newline && this.just_added_newline())) {
+    return false;
+  }
+
+  // if raw output is enabled, don't print additional newlines,
+  // but still return True as though you had
+  if (!this.raw) {
+    this.__add_outputline();
+  }
+  return true;
+};
+
+Output.prototype.get_code = function(eol) {
+  var sweet_code = this.__lines.join('\n').replace(/[\r\n\t ]+$/, '');
+
+  if (this._end_with_newline) {
+    sweet_code += '\n';
+  }
+
+  if (eol !== '\n') {
+    sweet_code = sweet_code.replace(/[\n]/g, eol);
+  }
+
+  return sweet_code;
+};
+
+Output.prototype.set_indent = function(indent, alignment) {
+  indent = indent || 0;
+  alignment = alignment || 0;
+
+  // Never indent your first output indent at the start of the file
+  if (this.__lines.length > 1) {
+    this.current_line.set_indent(indent, alignment);
+    return true;
+  }
+  this.current_line.set_indent();
+  return false;
+};
+
+Output.prototype.add_raw_token = function(token) {
+  for (var x = 0; x < token.newlines; x++) {
+    this.__add_outputline();
+  }
+  this.current_line.push(token.whitespace_before);
+  this.current_line.push_raw(token.text);
+  this.space_before_token = false;
+};
+
+Output.prototype.add_token = function(printable_token) {
+  this.add_space_before_token();
+  this.current_line.push(printable_token);
+};
+
+Output.prototype.add_space_before_token = function() {
+  if (this.space_before_token && !this.just_added_newline()) {
+    this.current_line.push(' ');
+  }
+  this.space_before_token = false;
+};
+
+Output.prototype.remove_indent = function(index) {
+  var output_length = this.__lines.length;
+  while (index < output_length) {
+    this.__lines[index].remove_indent();
+    index++;
+  }
+};
+
+Output.prototype.trim = function(eat_newlines) {
+  eat_newlines = (eat_newlines === undefined) ? false : eat_newlines;
+
+  this.current_line.trim(this.indent_string, this.baseIndentString);
+
+  while (eat_newlines && this.__lines.length > 1 &&
+    this.current_line.is_empty()) {
+    this.__lines.pop();
+    this.current_line = this.__lines[this.__lines.length - 1];
+    this.current_line.trim();
+  }
+
+  this.previous_line = this.__lines.length > 1 ?
+    this.__lines[this.__lines.length - 2] : null;
+};
+
+Output.prototype.just_added_newline = function() {
+  return this.current_line.is_empty();
+};
+
+Output.prototype.just_added_blankline = function() {
+  return this.is_empty() ||
+    (this.current_line.is_empty() && this.previous_line.is_empty());
+};
+
+Output.prototype.ensure_empty_line_above = function(starts_with, ends_with) {
+  var index = this.__lines.length - 2;
+  while (index >= 0) {
+    var potentialEmptyLine = this.__lines[index];
+    if (potentialEmptyLine.is_empty()) {
+      break;
+    } else if (potentialEmptyLine.item(0).indexOf(starts_with) !== 0 &&
+      potentialEmptyLine.item(-1) !== ends_with) {
+      this.__lines.splice(index + 1, 0, new OutputLine(this));
+      this.previous_line = this.__lines[this.__lines.length - 2];
+      break;
+    }
+    index--;
+  }
+};
+
+module.exports.Output = Output;
+
+
+/***/ }),
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*jshint node:true */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
+
+
+
+function Options(options, merge_child_field) {
+  this.raw_options = _mergeOpts(options, merge_child_field);
+
+  // Support passing the source text back with no change
+  this.disabled = this._get_boolean('disabled');
+
+  this.eol = this._get_characters('eol', 'auto');
+  this.end_with_newline = this._get_boolean('end_with_newline');
+  this.indent_size = this._get_number('indent_size', 4);
+  this.indent_char = this._get_characters('indent_char', ' ');
+  this.indent_level = this._get_number('indent_level');
+
+  this.preserve_newlines = this._get_boolean('preserve_newlines', true);
+  this.max_preserve_newlines = this._get_number('max_preserve_newlines', 32786);
+  if (!this.preserve_newlines) {
+    this.max_preserve_newlines = 0;
+  }
+
+  this.indent_with_tabs = this._get_boolean('indent_with_tabs');
+  if (this.indent_with_tabs) {
+    this.indent_char = '\t';
+    this.indent_size = 1;
+  }
+
+  // Backwards compat with 1.3.x
+  this.wrap_line_length = this._get_number('wrap_line_length', this._get_number('max_char'));
+
+}
+
+Options.prototype._get_array = function(name, default_value) {
+  var option_value = this.raw_options[name];
+  var result = default_value || [];
+  if (typeof option_value === 'object') {
+    if (option_value !== null && typeof option_value.concat === 'function') {
+      result = option_value.concat();
+    }
+  } else if (typeof option_value === 'string') {
+    result = option_value.split(/[^a-zA-Z0-9_\/\-]+/);
+  }
+  return result;
+};
+
+Options.prototype._get_boolean = function(name, default_value) {
+  var option_value = this.raw_options[name];
+  var result = option_value === undefined ? !!default_value : !!option_value;
+  return result;
+};
+
+Options.prototype._get_characters = function(name, default_value) {
+  var option_value = this.raw_options[name];
+  var result = default_value || '';
+  if (typeof option_value === 'string') {
+    result = option_value.replace(/\\r/, '\r').replace(/\\n/, '\n').replace(/\\t/, '\t');
+  }
+  return result;
+};
+
+Options.prototype._get_number = function(name, default_value) {
+  var option_value = this.raw_options[name];
+  default_value = parseInt(default_value, 10);
+  if (isNaN(default_value)) {
+    default_value = 0;
+  }
+  var result = parseInt(option_value, 10);
+  if (isNaN(result)) {
+    result = default_value;
+  }
+  return result;
+};
+
+Options.prototype._get_selection = function(name, selection_list, default_value) {
+  var result = this._get_selection_list(name, selection_list, default_value);
+  if (result.length !== 1) {
+    throw new Error(
+      "Invalid Option Value: The option '" + name + "' can only be one of the following values:\n" +
+      selection_list + "\nYou passed in: '" + this.raw_options[name] + "'");
+  }
+
+  return result[0];
+};
+
+
+Options.prototype._get_selection_list = function(name, selection_list, default_value) {
+  if (!selection_list || selection_list.length === 0) {
+    throw new Error("Selection list cannot be empty.");
+  }
+
+  default_value = default_value || [selection_list[0]];
+  if (!this._is_valid_selection(default_value, selection_list)) {
+    throw new Error("Invalid Default Value!");
+  }
+
+  var result = this._get_array(name, default_value);
+  if (!this._is_valid_selection(result, selection_list)) {
+    throw new Error(
+      "Invalid Option Value: The option '" + name + "' can contain only the following values:\n" +
+      selection_list + "\nYou passed in: '" + this.raw_options[name] + "'");
+  }
+
+  return result;
+};
+
+Options.prototype._is_valid_selection = function(result, selection_list) {
+  return result.length && selection_list.length &&
+    !result.some(function(item) { return selection_list.indexOf(item) === -1; });
+};
+
+
+// merges child options up with the parent options object
+// Example: obj = {a: 1, b: {a: 2}}
+//          mergeOpts(obj, 'b')
+//
+//          Returns: {a: 2}
+function _mergeOpts(allOptions, childFieldName) {
+  var finalOpts = {};
+  allOptions = _normalizeOpts(allOptions);
+  var name;
+
+  for (name in allOptions) {
+    if (name !== childFieldName) {
+      finalOpts[name] = allOptions[name];
+    }
+  }
+
+  //merge in the per type settings for the childFieldName
+  if (childFieldName && allOptions[childFieldName]) {
+    for (name in allOptions[childFieldName]) {
+      finalOpts[name] = allOptions[childFieldName][name];
+    }
+  }
+  return finalOpts;
+}
+
+function _normalizeOpts(options) {
+  var convertedOpts = {};
+  var key;
+
+  for (key in options) {
+    var newKey = key.replace(/-/g, "_");
+    convertedOpts[newKey] = options[key];
+  }
+  return convertedOpts;
+}
+
+module.exports.Options = Options;
+module.exports.normalizeOpts = _normalizeOpts;
+module.exports.mergeOpts = _mergeOpts;
+
+
+/***/ }),
+/* 7 */,
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*jshint node:true */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
+
+
+
+function InputScanner(input_string) {
+  this.__input = input_string || '';
+  this.__input_length = this.__input.length;
+  this.__position = 0;
+}
+
+InputScanner.prototype.restart = function() {
+  this.__position = 0;
+};
+
+InputScanner.prototype.back = function() {
+  if (this.__position > 0) {
+    this.__position -= 1;
+  }
+};
+
+InputScanner.prototype.hasNext = function() {
+  return this.__position < this.__input_length;
+};
+
+InputScanner.prototype.next = function() {
+  var val = null;
+  if (this.hasNext()) {
+    val = this.__input.charAt(this.__position);
+    this.__position += 1;
+  }
+  return val;
+};
+
+InputScanner.prototype.peek = function(index) {
+  var val = null;
+  index = index || 0;
+  index += this.__position;
+  if (index >= 0 && index < this.__input_length) {
+    val = this.__input.charAt(index);
+  }
+  return val;
+};
+
+InputScanner.prototype.test = function(pattern, index) {
+  index = index || 0;
+  index += this.__position;
+  pattern.lastIndex = index;
+
+  if (index >= 0 && index < this.__input_length) {
+    var pattern_match = pattern.exec(this.__input);
+    return pattern_match && pattern_match.index === index;
+  } else {
+    return false;
+  }
+};
+
+InputScanner.prototype.testChar = function(pattern, index) {
+  // test one character regex match
+  var val = this.peek(index);
+  return val !== null && pattern.test(val);
+};
+
+InputScanner.prototype.match = function(pattern) {
+  pattern.lastIndex = this.__position;
+  var pattern_match = pattern.exec(this.__input);
+  if (pattern_match && pattern_match.index === this.__position) {
+    this.__position += pattern_match[0].length;
+  } else {
+    pattern_match = null;
+  }
+  return pattern_match;
+};
+
+InputScanner.prototype.read = function(pattern) {
+  var val = '';
+  var match = this.match(pattern);
+  if (match) {
+    val = match[0];
+  }
+  return val;
+};
+
+InputScanner.prototype.readUntil = function(pattern, include_match) {
+  var val = '';
+  var match_index = this.__position;
+  pattern.lastIndex = this.__position;
+  var pattern_match = pattern.exec(this.__input);
+  if (pattern_match) {
+    if (include_match) {
+      match_index = pattern_match.index + pattern_match[0].length;
+    } else {
+      match_index = pattern_match.index;
+    }
+  } else {
+    match_index = this.__input_length;
+  }
+
+  val = this.__input.substring(this.__position, match_index);
+  this.__position = match_index;
+  return val;
+};
+
+InputScanner.prototype.readUntilAfter = function(pattern) {
+  return this.readUntil(pattern, true);
+};
+
+/* css beautifier legacy helpers */
+InputScanner.prototype.peekUntilAfter = function(pattern) {
+  var start = this.__position;
+  var val = this.readUntilAfter(pattern);
+  this.__position = start;
+  return val;
+};
+
+InputScanner.prototype.lookBack = function(testVal) {
+  var start = this.__position - 1;
+  return start >= testVal.length && this.__input.substring(start - testVal.length, start)
+    .toLowerCase() === testVal;
+};
+
+
+module.exports.InputScanner = InputScanner;
+
+
+/***/ }),
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*jshint node:true */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
+
+
+
+var Beautifier = __webpack_require__(13).Beautifier,
+  Options = __webpack_require__(14).Options;
+
+function css_beautify(source_text, options) {
+  var beautifier = new Beautifier(source_text, options);
+  return beautifier.beautify();
+}
+
+module.exports = css_beautify;
+module.exports.defaultOptions = function() {
+  return new Options();
+};
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*jshint node:true */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
+
+
+
+var Options = __webpack_require__(14).Options;
+var Output = __webpack_require__(2).Output;
+var InputScanner = __webpack_require__(8).InputScanner;
+
+var lineBreak = /\r\n|[\r\n]/;
+var allLineBreaks = /\r\n|[\r\n]/g;
+
+// tokenizer
+var whitespaceChar = /\s/;
+var whitespacePattern = /(?:\s|\n)+/g;
+var block_comment_pattern = /\/\*(?:[\s\S]*?)((?:\*\/)|$)/g;
+var comment_pattern = /\/\/(?:[^\n\r\u2028\u2029]*)/g;
+
+function Beautifier(source_text, options) {
+  this._source_text = source_text || '';
+  // Allow the setting of language/file-type specific options
+  // with inheritance of overall settings
+  this._options = new Options(options);
+  this._ch = null;
+  this._input = null;
+
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule
+  this.NESTED_AT_RULE = {
+    "@page": true,
+    "@font-face": true,
+    "@keyframes": true,
+    // also in CONDITIONAL_GROUP_RULE below
+    "@media": true,
+    "@supports": true,
+    "@document": true
+  };
+  this.CONDITIONAL_GROUP_RULE = {
+    "@media": true,
+    "@supports": true,
+    "@document": true
+  };
+
+}
+
+Beautifier.prototype.eatString = function(endChars) {
+  var result = '';
+  this._ch = this._input.next();
+  while (this._ch) {
+    result += this._ch;
+    if (this._ch === "\\") {
+      result += this._input.next();
+    } else if (endChars.indexOf(this._ch) !== -1 || this._ch === "\n") {
+      break;
+    }
+    this._ch = this._input.next();
+  }
+  return result;
+};
+
+// Skips any white space in the source text from the current position.
+// When allowAtLeastOneNewLine is true, will output new lines for each
+// newline character found; if the user has preserve_newlines off, only
+// the first newline will be output
+Beautifier.prototype.eatWhitespace = function(allowAtLeastOneNewLine) {
+  var result = whitespaceChar.test(this._input.peek());
+  var isFirstNewLine = true;
+
+  while (whitespaceChar.test(this._input.peek())) {
+    this._ch = this._input.next();
+    if (allowAtLeastOneNewLine && this._ch === '\n') {
+      if (this._options.preserve_newlines || isFirstNewLine) {
+        isFirstNewLine = false;
+        this._output.add_new_line(true);
+      }
+    }
+  }
+  return result;
+};
+
+// Nested pseudo-class if we are insideRule
+// and the next special character found opens
+// a new block
+Beautifier.prototype.foundNestedPseudoClass = function() {
+  var openParen = 0;
+  var i = 1;
+  var ch = this._input.peek(i);
+  while (ch) {
+    if (ch === "{") {
+      return true;
+    } else if (ch === '(') {
+      // pseudoclasses can contain ()
+      openParen += 1;
+    } else if (ch === ')') {
+      if (openParen === 0) {
+        return false;
+      }
+      openParen -= 1;
+    } else if (ch === ";" || ch === "}") {
+      return false;
+    }
+    i++;
+    ch = this._input.peek(i);
+  }
+  return false;
+};
+
+Beautifier.prototype.print_string = function(output_string) {
+  if (this._output.just_added_newline()) {
+    this._output.set_indent(this._indentLevel);
+  }
+  this._output.add_token(output_string);
+};
+
+Beautifier.prototype.preserveSingleSpace = function(isAfterSpace) {
+  if (isAfterSpace) {
+    this._output.space_before_token = true;
+  }
+};
+
+Beautifier.prototype.indent = function() {
+  this._indentLevel++;
+};
+
+Beautifier.prototype.outdent = function() {
+  if (this._indentLevel > 0) {
+    this._indentLevel--;
+  }
+};
+
+/*_____________________--------------------_____________________*/
+
+Beautifier.prototype.beautify = function() {
+  if (this._options.disabled) {
+    return this._source_text;
+  }
+
+  var source_text = this._source_text;
+  var eol = this._options.eol;
+  if (eol === 'auto') {
+    eol = '\n';
+    if (source_text && lineBreak.test(source_text || '')) {
+      eol = source_text.match(lineBreak)[0];
+    }
+  }
+
+
+  // HACK: newline parsing inconsistent. This brute force normalizes the this._input.
+  source_text = source_text.replace(allLineBreaks, '\n');
+
+  // reset
+  var baseIndentString = source_text.match(/^[\t ]*/)[0];
+
+  this._output = new Output(this._options, baseIndentString);
+  this._input = new InputScanner(source_text);
+  this._indentLevel = 0;
+  this._nestedLevel = 0;
+
+  this._ch = null;
+  var parenLevel = 0;
+
+  var insideRule = false;
+  // This is the value side of a property value pair (blue in the following ex)
+  // label { content: blue }
+  var insidePropertyValue = false;
+  var enteringConditionalGroup = false;
+  var insideAtExtend = false;
+  var insideAtImport = false;
+  var topCharacter = this._ch;
+
+  while (true) {
+    var whitespace = this._input.read(whitespacePattern);
+    var isAfterSpace = whitespace !== '';
+    var previous_ch = topCharacter;
+    this._ch = this._input.next();
+    topCharacter = this._ch;
+
+    if (!this._ch) {
+      break;
+    } else if (this._ch === '/' && this._input.peek() === '*') {
+      // /* css comment */
+      // Always start block comments on a new line.
+      // This handles scenarios where a block comment immediately
+      // follows a property definition on the same line or where
+      // minified code is being beautified.
+      this._output.add_new_line();
+      this._input.back();
+      this.print_string(this._input.read(block_comment_pattern));
+
+      // Ensures any new lines following the comment are preserved
+      this.eatWhitespace(true);
+
+      // Block comments are followed by a new line so they don't
+      // share a line with other properties
+      this._output.add_new_line();
+    } else if (this._ch === '/' && this._input.peek() === '/') {
+      // // single line comment
+      // Preserves the space before a comment
+      // on the same line as a rule
+      this._output.space_before_token = true;
+      this._input.back();
+      this.print_string(this._input.read(comment_pattern));
+
+      // Ensures any new lines following the comment are preserved
+      this.eatWhitespace(true);
+    } else if (this._ch === '@') {
+      this.preserveSingleSpace(isAfterSpace);
+
+      // deal with less propery mixins @{...}
+      if (this._input.peek() === '{') {
+        this.print_string(this._ch + this.eatString('}'));
+      } else {
+        this.print_string(this._ch);
+
+        // strip trailing space, if present, for hash property checks
+        var variableOrRule = this._input.peekUntilAfter(/[: ,;{}()[\]\/='"]/g);
+
+        if (variableOrRule.match(/[ :]$/)) {
+          // we have a variable or pseudo-class, add it and insert one space before continuing
+          variableOrRule = this.eatString(": ").replace(/\s$/, '');
+          this.print_string(variableOrRule);
+          this._output.space_before_token = true;
+        }
+
+        variableOrRule = variableOrRule.replace(/\s$/, '');
+
+        if (variableOrRule === 'extend') {
+          insideAtExtend = true;
+        } else if (variableOrRule === 'import') {
+          insideAtImport = true;
+        }
+
+        // might be a nesting at-rule
+        if (variableOrRule in this.NESTED_AT_RULE) {
+          this._nestedLevel += 1;
+          if (variableOrRule in this.CONDITIONAL_GROUP_RULE) {
+            enteringConditionalGroup = true;
+          }
+          // might be less variable
+        } else if (!insideRule && parenLevel === 0 && variableOrRule.indexOf(':') !== -1) {
+          insidePropertyValue = true;
+          this.indent();
+        }
+      }
+    } else if (this._ch === '#' && this._input.peek() === '{') {
+      this.preserveSingleSpace(isAfterSpace);
+      this.print_string(this._ch + this.eatString('}'));
+    } else if (this._ch === '{') {
+      if (insidePropertyValue) {
+        insidePropertyValue = false;
+        this.outdent();
+      }
+      this.indent();
+      this._output.space_before_token = true;
+      this.print_string(this._ch);
+
+      // when entering conditional groups, only rulesets are allowed
+      if (enteringConditionalGroup) {
+        enteringConditionalGroup = false;
+        insideRule = (this._indentLevel > this._nestedLevel);
+      } else {
+        // otherwise, declarations are also allowed
+        insideRule = (this._indentLevel >= this._nestedLevel);
+      }
+      if (this._options.newline_between_rules && insideRule) {
+        if (this._output.previous_line && this._output.previous_line.item(-1) !== '{') {
+          this._output.ensure_empty_line_above('/', ',');
+        }
+      }
+      this.eatWhitespace(true);
+      this._output.add_new_line();
+    } else if (this._ch === '}') {
+      this.outdent();
+      this._output.add_new_line();
+      if (previous_ch === '{') {
+        this._output.trim(true);
+      }
+      insideAtImport = false;
+      insideAtExtend = false;
+      if (insidePropertyValue) {
+        this.outdent();
+        insidePropertyValue = false;
+      }
+      this.print_string(this._ch);
+      insideRule = false;
+      if (this._nestedLevel) {
+        this._nestedLevel--;
+      }
+
+      this.eatWhitespace(true);
+      this._output.add_new_line();
+
+      if (this._options.newline_between_rules && !this._output.just_added_blankline()) {
+        if (this._input.peek() !== '}') {
+          this._output.add_new_line(true);
+        }
+      }
+    } else if (this._ch === ":") {
+      if ((insideRule || enteringConditionalGroup) && !(this._input.lookBack("&") || this.foundNestedPseudoClass()) && !this._input.lookBack("(") && !insideAtExtend) {
+        // 'property: value' delimiter
+        // which could be in a conditional group query
+        this.print_string(':');
+        if (!insidePropertyValue) {
+          insidePropertyValue = true;
+          this._output.space_before_token = true;
+          this.eatWhitespace(true);
+          this.indent();
+        }
+      } else {
+        // sass/less parent reference don't use a space
+        // sass nested pseudo-class don't use a space
+
+        // preserve space before pseudoclasses/pseudoelements, as it means "in any child"
+        if (this._input.lookBack(" ")) {
+          this._output.space_before_token = true;
+        }
+        if (this._input.peek() === ":") {
+          // pseudo-element
+          this._ch = this._input.next();
+          this.print_string("::");
+        } else {
+          // pseudo-class
+          this.print_string(':');
+        }
+      }
+    } else if (this._ch === '"' || this._ch === '\'') {
+      this.preserveSingleSpace(isAfterSpace);
+      this.print_string(this._ch + this.eatString(this._ch));
+      this.eatWhitespace(true);
+    } else if (this._ch === ';') {
+      if (insidePropertyValue) {
+        this.outdent();
+        insidePropertyValue = false;
+      }
+      insideAtExtend = false;
+      insideAtImport = false;
+      this.print_string(this._ch);
+      this.eatWhitespace(true);
+
+      // This maintains single line comments on the same
+      // line. Block comments are also affected, but
+      // a new line is always output before one inside
+      // that section
+      if (this._input.peek() !== '/') {
+        this._output.add_new_line();
+      }
+    } else if (this._ch === '(') { // may be a url
+      if (this._input.lookBack("url")) {
+        this.print_string(this._ch);
+        this.eatWhitespace();
+        this._ch = this._input.next();
+        if (this._ch === ')' || this._ch === '"' || this._ch === '\'') {
+          this._input.back();
+          parenLevel++;
+        } else if (this._ch) {
+          this.print_string(this._ch + this.eatString(')'));
+        }
+      } else {
+        parenLevel++;
+        this.preserveSingleSpace(isAfterSpace);
+        this.print_string(this._ch);
+        this.eatWhitespace();
+      }
+    } else if (this._ch === ')') {
+      this.print_string(this._ch);
+      parenLevel--;
+    } else if (this._ch === ',') {
+      this.print_string(this._ch);
+      this.eatWhitespace(true);
+      if (this._options.selector_separator_newline && !insidePropertyValue && parenLevel < 1 && !insideAtImport) {
+        this._output.add_new_line();
+      } else {
+        this._output.space_before_token = true;
+      }
+    } else if ((this._ch === '>' || this._ch === '+' || this._ch === '~') && !insidePropertyValue && parenLevel < 1) {
+      //handle combinator spacing
+      if (this._options.space_around_combinator) {
+        this._output.space_before_token = true;
+        this.print_string(this._ch);
+        this._output.space_before_token = true;
+      } else {
+        this.print_string(this._ch);
+        this.eatWhitespace();
+        // squash extra whitespace
+        if (this._ch && whitespaceChar.test(this._ch)) {
+          this._ch = '';
+        }
+      }
+    } else if (this._ch === ']') {
+      this.print_string(this._ch);
+    } else if (this._ch === '[') {
+      this.preserveSingleSpace(isAfterSpace);
+      this.print_string(this._ch);
+    } else if (this._ch === '=') { // no whitespace before or after
+      this.eatWhitespace();
+      this.print_string('=');
+      if (whitespaceChar.test(this._ch)) {
+        this._ch = '';
+      }
+    } else if (this._ch === '!') { // !important
+      this.print_string(' ');
+      this.print_string(this._ch);
+    } else {
+      this.preserveSingleSpace(isAfterSpace);
+      this.print_string(this._ch);
+    }
+  }
+
+  var sweetCode = this._output.get_code(eol);
+
+  return sweetCode;
+};
+
+module.exports.Beautifier = Beautifier;
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*jshint node:true */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
+
+
+
+var BaseOptions = __webpack_require__(6).Options;
+
+function Options(options) {
+  BaseOptions.call(this, options, 'css');
+
+  this.selector_separator_newline = this._get_boolean('selector_separator_newline', true);
+  this.newline_between_rules = this._get_boolean('newline_between_rules', true);
+  var space_around_selector_separator = this._get_boolean('space_around_selector_separator');
+  this.space_around_combinator = this._get_boolean('space_around_combinator') || space_around_selector_separator;
+
+}
+Options.prototype = new BaseOptions();
+
+
+
+module.exports.Options = Options;
+
+
+/***/ })
+/******/ ]);
+var css_beautify = legacy_beautify_css;
+/* Footer */
+if (true) {
+    // Add support for AMD ( https://github.com/amdjs/amdjs-api/wiki/AMD#defineamd-property- )
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function() {
+        return {
+            css_beautify: css_beautify
+        };
+    }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+} else {}
+
+}());
+
+
+/***/ }),
+
 /***/ "4e38":
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "4ef5":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableViewComponent_vue_vue_type_style_index_0_id_29dcf6b4_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("7428");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableViewComponent_vue_vue_type_style_index_0_id_29dcf6b4_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableViewComponent_vue_vue_type_style_index_0_id_29dcf6b4_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableViewComponent_vue_vue_type_style_index_0_id_29dcf6b4_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -47366,13 +44102,6 @@ module.exports = startCase;
 
 /***/ }),
 
-/***/ "5b37":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
 /***/ "5ca1":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -47536,7 +44265,7 @@ Vue.filter('filesize', function (bytes, precision) {
 /***/ "623d":
 /***/ (function(module, exports) {
 
-module.exports = "<div id=show-all-modal> <div class=modal-header> <button type=button class=close data-dismiss=close aria-label=Close @click=$dismiss()><span aria-hidden=_true>×</span></button> <h4 class=modal-title id=popup-header>{{items.length}} {{colName}} For {{objectName}} '{{rowName}}'</h4> </div> <div class=\"modal-body clearfix\"> <input type=text name=filter class=input-text v-model=filter.text placeholder=Filter> <div class=group-list-wrapper v-if=!noResults()> <ul class=group-list> <li class=group-list-item v-jf-tooltip-on-overflow v-for=\"_(item, $index) in items\" v-if=filterItem(item)> {{item}} </li> </ul> </div> <div class=\"empty-filter-placeholder filter-no-results\" v-if=noResults()> Current filter has no results. <a href=\"\" class=jf-link @click.prevent=\"filter.text = ''\">Clear filter</a> </div> </div> <div class=modal-footer> <button class=\"btn btn-default\" @click=$dismiss() id=popup-cancel>Close</button> </div> </div> ";
+module.exports = "<div id=show-all-modal> <div class=modal-header> <button type=button class=close data-dismiss=close aria-label=Close @click=$dismiss()><span aria-hidden=_true>×</span></button> <h4 class=modal-title id=popup-header>{{items.length}} {{colName}} For {{objectName}} '{{rowName}}'</h4> </div> <div class=\"modal-body clearfix\"> <input type=text name=filter class=input-text v-model=filter.text placeholder=Filter> <div class=group-list-wrapper v-if=!noResults()> <ul class=group-list> <li class=group-list-item v-jf-tooltip-on-overflow=\"''\" v-for=\"_(item, $index) in items\" v-if=filterItem(item)> {{item}} </li> </ul> </div> <div class=\"empty-filter-placeholder filter-no-results\" v-if=noResults()> Current filter has no results. <a href=\"\" class=jf-link @click.prevent=\"filter.text = ''\">Clear filter</a> </div> </div> <div class=modal-footer> <button class=\"btn btn-default\" @click=$dismiss() id=popup-cancel>Close</button> </div> </div>";
 
 /***/ }),
 
@@ -47802,6 +44531,13 @@ module.exports = !$assign || __webpack_require__("79e5")(function () {
 
 /***/ }),
 
+/***/ "7428":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "7514":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -47821,17 +44557,6 @@ $export($export.P + $export.F * forced, 'Array', {
 });
 __webpack_require__("9c6c")(KEY);
 
-
-/***/ }),
-
-/***/ "751b":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_0f485d21_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("c3ad");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_0f485d21_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_0f485d21_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_0f485d21_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -48061,6 +44786,17 @@ NAME in FProto || __webpack_require__("9e1e") && dP(FProto, NAME, {
 
 /***/ }),
 
+/***/ "8114":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_6dc34dbf_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("e478");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_6dc34dbf_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_6dc34dbf_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_6dc34dbf_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
 /***/ "8378":
 /***/ (function(module, exports) {
 
@@ -48253,17 +44989,6 @@ module.exports = CancelToken;
 
 /***/ }),
 
-/***/ "9040":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableRowComponent_vue_vue_type_style_index_0_id_ad8ba82a_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("dcbb");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableRowComponent_vue_vue_type_style_index_0_id_ad8ba82a_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableRowComponent_vue_vue_type_style_index_0_id_ad8ba82a_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableRowComponent_vue_vue_type_style_index_0_id_ad8ba82a_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
 /***/ "9093":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -48292,7 +45017,7 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 /***/ "9224":
 /***/ (function(module) {
 
-module.exports = {"name":"jfrog-ui-essentials","description":"JFrog UI Essentials","version":"3.0.0-vue-dev","main":"./dist/jfrog-ui-essentials.common.js","repository":{"type":"git","url":"https://github.com/jfrog/jfrog-ui-essentials.git"},"scripts":{"build":"vue-cli-service build --target lib --name jfrog-ui-essentials src/index.js","watch":"vue-cli-service build --mode development --target lib --name jfrog-ui-essentials src/index.js","lint":"vue-cli-service lint"},"files":["dist/*","src/*","public/*","*.json","*.js"],"dependencies":{"axios":"^0.18.0","bootstrap":"4.2.1","bootstrap-vue":"^2.0.0-rc.11","codemirror":"5.0.0","jf-tooltipster":"3.3.0","jquery":"^3.3.1","jquery-contextmenu":"1.8.1","lodash":"^4.17.11","tooltipster":"^4.2.6","vee-validate":"^2.1.0-beta.11","vue":"^2.5.17","vue-virtual-scroller":"^1.0.0-beta.4"},"devDependencies":{"@vue/cli-plugin-babel":"^3.2.0","@vue/cli-plugin-eslint":"^3.2.0","@vue/cli-service":"^3.2.0","@vue/eslint-config-standard":"^4.0.0","html-loader":"^0.5.5","less":"^3.8.1","less-loader":"^4.1.0","babel-eslint":"^10.0.1","eslint":"^5.8.0","eslint-plugin-vue":"^5.0.0-0","vue-template-compiler":"^2.5.17"}};
+module.exports = {"name":"jfrog-ui-essentials","description":"JFrog UI Essentials","version":"3.0.0-vue-dev","main":"./dist/jfrog-ui-essentials.common.js","repository":{"type":"git","url":"https://github.com/jfrog/jfrog-ui-essentials.git"},"scripts":{"build":"vue-cli-service build --target lib --name jfrog-ui-essentials src/index.js","watch":"vue-cli-service --watch build --target lib --name jfrog-ui-essentials src/index.js","lint":"vue-cli-service lint"},"files":["dist/*","src/*","public/*","*.json","*.js"],"dependencies":{"axios":"^0.18.0","bootstrap":"4.2.1","bootstrap-vue":"^2.0.0-rc.11","codemirror":"5.0.0","jf-tooltipster":"3.3.0","jquery":"^3.3.1","jquery-contextmenu":"1.8.1","js-beautify":"^1.8.9","lodash":"^4.17.11","tooltipster":"^4.2.6","vee-validate":"^2.1.0-beta.11","vue":"^2.5.17","vue-select":"^2.5.1","vue-virtual-scroller":"^1.0.0-beta.4"},"devDependencies":{"@vue/cli-plugin-babel":"^3.2.0","@vue/cli-plugin-eslint":"^3.2.0","@vue/cli-service":"^3.2.0","@vue/eslint-config-standard":"^4.0.0","html-loader":"^0.5.5","less":"^3.8.1","less-loader":"^4.1.0","babel-eslint":"^10.0.1","eslint":"^5.8.0","eslint-plugin-vue":"^5.0.0-0","vue-template-compiler":"^2.5.17"}};
 
 /***/ }),
 
@@ -48310,21 +45035,10 @@ module.exports = {"name":"jfrog-ui-essentials","description":"JFrog UI Essential
 
 /***/ }),
 
-/***/ "9608":
+/***/ "962b":
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ "9b28":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfListMakerComponent_vue_vue_type_style_index_0_id_4fae89cc_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("0985");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfListMakerComponent_vue_vue_type_style_index_0_id_4fae89cc_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfListMakerComponent_vue_vue_type_style_index_0_id_4fae89cc_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfListMakerComponent_vue_vue_type_style_index_0_id_4fae89cc_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -48352,90 +45066,6 @@ module.exports = function (fn, that, length) {
   };
 };
 
-
-/***/ }),
-
-/***/ "9b7f":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*jshint node:true */
-/* globals define */
-/*
-  The MIT License (MIT)
-
-  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
-
-  Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-
-*/
-
-
-
-/**
-The following batches are equivalent:
-
-var beautify_js = require('js-beautify');
-var beautify_js = require('js-beautify').js;
-var beautify_js = require('js-beautify').js_beautify;
-
-var beautify_css = require('js-beautify').css;
-var beautify_css = require('js-beautify').css_beautify;
-
-var beautify_html = require('js-beautify').html;
-var beautify_html = require('js-beautify').html_beautify;
-
-All methods returned accept two arguments, the source string and an options object.
-**/
-
-function get_beautify(js_beautify, css_beautify, html_beautify) {
-  // the default is js
-  var beautify = function(src, config) {
-    return js_beautify.js_beautify(src, config);
-  };
-
-  // short aliases
-  beautify.js = js_beautify.js_beautify;
-  beautify.css = css_beautify.css_beautify;
-  beautify.html = html_beautify.html_beautify;
-
-  // legacy aliases
-  beautify.js_beautify = js_beautify.js_beautify;
-  beautify.css_beautify = css_beautify.css_beautify;
-  beautify.html_beautify = html_beautify.html_beautify;
-
-  return beautify;
-}
-
-if (true) {
-  // Add support for AMD ( https://github.com/amdjs/amdjs-api/wiki/AMD#defineamd-property- )
-  !(__WEBPACK_AMD_DEFINE_ARRAY__ = [
-    __webpack_require__("1373"),
-    __webpack_require__("0710"),
-    __webpack_require__("aa9d")
-  ], __WEBPACK_AMD_DEFINE_RESULT__ = (function(js_beautify, css_beautify, html_beautify) {
-    return get_beautify(js_beautify, css_beautify, html_beautify);
-  }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-} else {}
 
 /***/ }),
 
@@ -48488,6 +45118,13 @@ module.exports = !__webpack_require__("79e5")(function () {
   return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
 });
 
+
+/***/ }),
+
+/***/ "9f7a":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -48748,32 +45385,7 @@ module.exports.f = function (C) {
 
 /***/ }),
 
-/***/ "a777":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ "a899":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ "a933":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableCompiledCellComponent_vue_vue_type_style_index_0_id_a121d58c_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("9608");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableCompiledCellComponent_vue_vue_type_style_index_0_id_a121d58c_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableCompiledCellComponent_vue_vue_type_style_index_0_id_a121d58c_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableCompiledCellComponent_vue_vue_type_style_index_0_id_a121d58c_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
-/***/ "aa9d":
+/***/ "a6c1":
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* AUTO-GENERATED. DO NOT MODIFY. */
@@ -50012,7 +46624,8 @@ module.exports.Directives = Directives;
 
 
 
-var Beautifier = __webpack_require__(16).Beautifier;
+var Beautifier = __webpack_require__(16).Beautifier,
+  Options = __webpack_require__(17).Options;
 
 function style_html(html_source, options, js_beautify, css_beautify) {
   var beautifier = new Beautifier(html_source, options, js_beautify, css_beautify);
@@ -50020,6 +46633,9 @@ function style_html(html_source, options, js_beautify, css_beautify) {
 }
 
 module.exports = style_html;
+module.exports.defaultOptions = function() {
+  return new Options();
+};
 
 
 /***/ }),
@@ -50340,7 +46956,10 @@ Beautifier.prototype.beautify = function() {
 };
 
 Beautifier.prototype._handle_tag_close = function(printer, raw_token, last_tag_token) {
-  var parser_token = { text: raw_token.text, type: raw_token.type };
+  var parser_token = {
+    text: raw_token.text,
+    type: raw_token.type
+  };
   printer.alignment_size = 0;
   last_tag_token.tag_complete = true;
 
@@ -50368,7 +46987,10 @@ Beautifier.prototype._handle_tag_close = function(printer, raw_token, last_tag_t
 };
 
 Beautifier.prototype._handle_inside_tag = function(printer, raw_token, last_tag_token, tokens) {
-  var parser_token = { text: raw_token.text, type: raw_token.type };
+  var parser_token = {
+    text: raw_token.text,
+    type: raw_token.type
+  };
   printer.set_space_before_token(raw_token.newlines || raw_token.whitespace_before !== '');
   if (last_tag_token.is_unformatted) {
     printer.add_raw_token(raw_token);
@@ -50432,7 +47054,10 @@ Beautifier.prototype._handle_inside_tag = function(printer, raw_token, last_tag_
 };
 
 Beautifier.prototype._handle_text = function(printer, raw_token, last_tag_token) {
-  var parser_token = { text: raw_token.text, type: 'TK_CONTENT' };
+  var parser_token = {
+    text: raw_token.text,
+    type: 'TK_CONTENT'
+  };
   if (last_tag_token.custom_beautifier) { //check if we need to format javascript
     this._print_custom_beatifier_text(printer, raw_token, last_tag_token);
   } else if (last_tag_token.is_unformatted || last_tag_token.is_content_unformatted) {
@@ -51168,9 +47793,9 @@ var style_html = legacy_beautify_html;
 /* Footer */
 if (true) {
     // Add support for AMD ( https://github.com/amdjs/amdjs-api/wiki/AMD#defineamd-property- )
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, __webpack_require__("1373"), __webpack_require__("0710")], __WEBPACK_AMD_DEFINE_RESULT__ = (function(requireamd) {
-        var js_beautify = __webpack_require__("1373");
-        var css_beautify = __webpack_require__("0710");
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, __webpack_require__("e943"), __webpack_require__("4d7c")], __WEBPACK_AMD_DEFINE_RESULT__ = (function(requireamd) {
+        var js_beautify = __webpack_require__("e943");
+        var css_beautify = __webpack_require__("4d7c");
 
         return {
             html_beautify: function(html_source, options) {
@@ -51182,6 +47807,75 @@ if (true) {
 } else { var css_beautify, js_beautify; }
 
 }());
+
+
+/***/ }),
+
+/***/ "a777":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "a899":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "aa4c":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "aa63":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTabsComponent_vue_vue_type_style_index_0_id_78cb6058_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("962b");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTabsComponent_vue_vue_type_style_index_0_id_78cb6058_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTabsComponent_vue_vue_type_style_index_0_id_78cb6058_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTabsComponent_vue_vue_type_style_index_0_id_78cb6058_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "aa77":
+/***/ (function(module, exports, __webpack_require__) {
+
+var $export = __webpack_require__("5ca1");
+var defined = __webpack_require__("be13");
+var fails = __webpack_require__("79e5");
+var spaces = __webpack_require__("fdef");
+var space = '[' + spaces + ']';
+var non = '\u200b\u0085';
+var ltrim = RegExp('^' + space + space + '*');
+var rtrim = RegExp(space + space + '*$');
+
+var exporter = function (KEY, exec, ALIAS) {
+  var exp = {};
+  var FORCE = fails(function () {
+    return !!spaces[KEY]() || non[KEY]() != non;
+  });
+  var fn = exp[KEY] = FORCE ? exec(trim) : spaces[KEY];
+  if (ALIAS) exp[ALIAS] = fn;
+  $export($export.P + $export.F * FORCE, 'String', exp);
+};
+
+// 1 -> String#trimLeft
+// 2 -> String#trimRight
+// 3 -> String#trim
+var trim = exporter.trim = function (string, TYPE) {
+  string = String(defined(string));
+  if (TYPE & 1) string = string.replace(ltrim, '');
+  if (TYPE & 2) string = string.replace(rtrim, '');
+  return string;
+};
+
+module.exports = exporter;
 
 
 /***/ }),
@@ -51277,6 +47971,85 @@ for (var collections = getKeys(DOMIterables), i = 0; i < collections.length; i++
 
 /***/ }),
 
+/***/ "ada1":
+/***/ (function(module, exports) {
+
+module.exports = {
+	props: {
+		/**
+		 * Toggles the adding of a 'loading' class to the main
+		 * .v-select wrapper. Useful to control UI state when
+		 * results are being processed through AJAX.
+		 */
+		loading: {
+			type: Boolean,
+			default: false
+		},
+
+		/**
+		 * Accept a callback function that will be
+		 * run when the search text changes.
+		 *
+		 * loading() accepts a boolean value, and can
+		 * be used to toggle a loading class from
+		 * the onSearch callback.
+		 *
+		 * @param {search}  String          Current search text
+		 * @param {loading} Function(bool)  Toggle loading class
+		 */
+		onSearch: {
+			type: Function,
+			default: function(search, loading){}
+		}
+	},
+
+	data() {
+		return {
+      mutableLoading: false
+    }
+	},
+
+	watch: {
+		/**
+		 * If a callback & search text has been provided,
+		 * invoke the onSearch callback.
+		 */
+		search() {
+			if (this.search.length > 0) {
+				this.onSearch(this.search, this.toggleLoading)
+        this.$emit('search', this.search, this.toggleLoading)
+      }
+		},
+    /**
+		 * Sync the loading prop with the internal
+		 * mutable loading value.
+     * @param val
+     */
+		loading(val) {
+			this.mutableLoading = val
+		}
+	},
+
+	methods: {
+		/**
+		 * Toggle this.loading. Optionally pass a boolean
+		 * value. If no value is provided, this.loading
+		 * will be set to the opposite of it's current value.
+		 * @param toggle Boolean
+		 * @returns {*}
+		 */
+		toggleLoading(toggle = null) {
+			if (toggle == null) {
+				return this.mutableLoading = !this.mutableLoading
+			}
+			return this.mutableLoading = toggle
+		}
+	}
+}
+
+
+/***/ }),
+
 /***/ "aef2":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -51320,6 +48093,13 @@ $export($export.P + $export.F * __webpack_require__("5147")(ENDS_WITH), 'String'
 /* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfRadioButtonComponent_vue_vue_type_style_index_0_id_4683bdc1_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfRadioButtonComponent_vue_vue_type_style_index_0_id_4683bdc1_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfRadioButtonComponent_vue_vue_type_style_index_0_id_4683bdc1_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "b075":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -51624,13 +48404,6 @@ module.exports = function (it) {
 
 /***/ }),
 
-/***/ "c02a":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
 /***/ "c0e2":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -51748,13 +48521,6 @@ module.exports = function (IS_INCLUDES) {
   };
 };
 
-
-/***/ }),
-
-/***/ "c3ad":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -52101,6 +48867,83 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "c5f6":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__("7726");
+var has = __webpack_require__("69a8");
+var cof = __webpack_require__("2d95");
+var inheritIfRequired = __webpack_require__("5dbc");
+var toPrimitive = __webpack_require__("6a99");
+var fails = __webpack_require__("79e5");
+var gOPN = __webpack_require__("9093").f;
+var gOPD = __webpack_require__("11e9").f;
+var dP = __webpack_require__("86cc").f;
+var $trim = __webpack_require__("aa77").trim;
+var NUMBER = 'Number';
+var $Number = global[NUMBER];
+var Base = $Number;
+var proto = $Number.prototype;
+// Opera ~12 has broken Object#toString
+var BROKEN_COF = cof(__webpack_require__("2aeb")(proto)) == NUMBER;
+var TRIM = 'trim' in String.prototype;
+
+// 7.1.3 ToNumber(argument)
+var toNumber = function (argument) {
+  var it = toPrimitive(argument, false);
+  if (typeof it == 'string' && it.length > 2) {
+    it = TRIM ? it.trim() : $trim(it, 3);
+    var first = it.charCodeAt(0);
+    var third, radix, maxCode;
+    if (first === 43 || first === 45) {
+      third = it.charCodeAt(2);
+      if (third === 88 || third === 120) return NaN; // Number('+0x1') should be NaN, old V8 fix
+    } else if (first === 48) {
+      switch (it.charCodeAt(1)) {
+        case 66: case 98: radix = 2; maxCode = 49; break; // fast equal /^0b[01]+$/i
+        case 79: case 111: radix = 8; maxCode = 55; break; // fast equal /^0o[0-7]+$/i
+        default: return +it;
+      }
+      for (var digits = it.slice(2), i = 0, l = digits.length, code; i < l; i++) {
+        code = digits.charCodeAt(i);
+        // parseInt parses a string to a first unavailable symbol
+        // but ToNumber should return NaN if a string contains unavailable symbols
+        if (code < 48 || code > maxCode) return NaN;
+      } return parseInt(digits, radix);
+    }
+  } return +it;
+};
+
+if (!$Number(' 0o1') || !$Number('0b1') || $Number('+0x1')) {
+  $Number = function Number(value) {
+    var it = arguments.length < 1 ? 0 : value;
+    var that = this;
+    return that instanceof $Number
+      // check on 1..constructor(foo) case
+      && (BROKEN_COF ? fails(function () { proto.valueOf.call(that); }) : cof(that) != NUMBER)
+        ? inheritIfRequired(new Base(toNumber(it)), that, $Number) : toNumber(it);
+  };
+  for (var keys = __webpack_require__("9e1e") ? gOPN(Base) : (
+    // ES3:
+    'MAX_VALUE,MIN_VALUE,NaN,NEGATIVE_INFINITY,POSITIVE_INFINITY,' +
+    // ES6 (in case, if modules with ES6 Number statics required before):
+    'EPSILON,isFinite,isInteger,isNaN,isSafeInteger,MAX_SAFE_INTEGER,' +
+    'MIN_SAFE_INTEGER,parseFloat,parseInt,isInteger'
+  ).split(','), j = 0, key; keys.length > j; j++) {
+    if (has(Base, key = keys[j]) && !has($Number, key)) {
+      dP($Number, key, gOPD(Base, key));
+    }
+  }
+  $Number.prototype = proto;
+  proto.constructor = $Number;
+  __webpack_require__("2aba")(global, NUMBER, $Number);
+}
+
 
 /***/ }),
 
@@ -53356,13 +50199,6 @@ module.exports.default = axios;
 
 /***/ }),
 
-/***/ "d23a":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
 /***/ "d2c8":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -53420,17 +50256,6 @@ module.exports = function (done, value) {
 
 /***/ }),
 
-/***/ "d64a":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableViewComponent_vue_vue_type_style_index_0_id_9577a130_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("39c9");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableViewComponent_vue_vue_type_style_index_0_id_9577a130_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableViewComponent_vue_vue_type_style_index_0_id_9577a130_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfTableViewComponent_vue_vue_type_style_index_0_id_9577a130_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
 /***/ "d8e8":
 /***/ (function(module, exports) {
 
@@ -53465,13 +50290,6 @@ module.exports = function isAbsoluteURL(url) {
 /***/ }),
 
 /***/ "d9f3":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ "dcbb":
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
@@ -53735,6 +50553,72 @@ var substr = 'ab'.substr(-1) === 'b'
 
 /***/ }),
 
+/***/ "e08f":
+/***/ (function(module, exports) {
+
+module.exports = {
+  data() {
+    return {
+      typeAheadPointer: -1
+    }
+  },
+
+  watch: {
+    filteredOptions() {
+      this.typeAheadPointer = 0
+    }
+  },
+
+  methods: {
+    /**
+     * Move the typeAheadPointer visually up the list by
+     * subtracting the current index by one.
+     * @return {void}
+     */
+    typeAheadUp() {
+      if (this.typeAheadPointer > 0) {
+        this.typeAheadPointer--
+        if( this.maybeAdjustScroll ) {
+          this.maybeAdjustScroll()
+        }
+      }
+    },
+
+    /**
+     * Move the typeAheadPointer visually down the list by
+     * adding the current index by one.
+     * @return {void}
+     */
+    typeAheadDown() {
+      if (this.typeAheadPointer < this.filteredOptions.length - 1) {
+        this.typeAheadPointer++
+        if( this.maybeAdjustScroll ) {
+          this.maybeAdjustScroll()
+        }
+      }
+    },
+
+    /**
+     * Select the option at the current typeAheadPointer position.
+     * Optionally clear the search input on selection.
+     * @return {void}
+     */
+    typeAheadSelect() {
+      if( this.filteredOptions[ this.typeAheadPointer ] ) {
+        this.select( this.filteredOptions[ this.typeAheadPointer ] );
+      } else if (this.taggable && this.search.length){
+        this.select(this.search)
+      }
+
+      if( this.clearSearchOnSelect ) {
+        this.search = "";
+      }
+    },
+  }
+}
+
+/***/ }),
+
 /***/ "e11e":
 /***/ (function(module, exports) {
 
@@ -53743,6 +50627,13 @@ module.exports = (
   'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
 ).split(',');
 
+
+/***/ }),
+
+/***/ "e478":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -55296,6 +52187,90 @@ if (GlobalVue) {
 /* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfPasswordStrengthComponent_vue_vue_type_style_index_0_id_e664d626_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfPasswordStrengthComponent_vue_vue_type_style_index_0_id_e664d626_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfPasswordStrengthComponent_vue_vue_type_style_index_0_id_e664d626_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "e552":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*jshint node:true */
+/* globals define */
+/*
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+
+*/
+
+
+
+/**
+The following batches are equivalent:
+
+var beautify_js = require('js-beautify');
+var beautify_js = require('js-beautify').js;
+var beautify_js = require('js-beautify').js_beautify;
+
+var beautify_css = require('js-beautify').css;
+var beautify_css = require('js-beautify').css_beautify;
+
+var beautify_html = require('js-beautify').html;
+var beautify_html = require('js-beautify').html_beautify;
+
+All methods returned accept two arguments, the source string and an options object.
+**/
+
+function get_beautify(js_beautify, css_beautify, html_beautify) {
+  // the default is js
+  var beautify = function(src, config) {
+    return js_beautify.js_beautify(src, config);
+  };
+
+  // short aliases
+  beautify.js = js_beautify.js_beautify;
+  beautify.css = css_beautify.css_beautify;
+  beautify.html = html_beautify.html_beautify;
+
+  // legacy aliases
+  beautify.js_beautify = js_beautify.js_beautify;
+  beautify.css_beautify = css_beautify.css_beautify;
+  beautify.html_beautify = html_beautify.html_beautify;
+
+  return beautify;
+}
+
+if (true) {
+  // Add support for AMD ( https://github.com/amdjs/amdjs-api/wiki/AMD#defineamd-property- )
+  !(__WEBPACK_AMD_DEFINE_ARRAY__ = [
+    __webpack_require__("e943"),
+    __webpack_require__("4d7c"),
+    __webpack_require__("a6c1")
+  ], __WEBPACK_AMD_DEFINE_RESULT__ = (function(js_beautify, css_beautify, html_beautify) {
+    return get_beautify(js_beautify, css_beautify, html_beautify);
+  }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+} else {}
 
 /***/ }),
 
@@ -57134,6 +54109,3424 @@ module.exports = function (original) {
 
 /***/ }),
 
+/***/ "e943":
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* AUTO-GENERATED. DO NOT MODIFY. */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+
+ JS Beautifier
+---------------
+
+
+  Written by Einar Lielmanis, <einar@beautifier.io>
+      https://beautifier.io/
+
+  Originally converted to javascript by Vital, <vital76@gmail.com>
+  "End braces on own line" added by Chris J. Shull, <chrisjshull@gmail.com>
+  Parsing improvements for brace-less statements by Liam Newman <bitwiseman@beautifier.io>
+
+
+  Usage:
+    js_beautify(js_source_text);
+    js_beautify(js_source_text, options);
+
+  The options are:
+    indent_size (default 4)          - indentation size,
+    indent_char (default space)      - character to indent with,
+    preserve_newlines (default true) - whether existing line breaks should be preserved,
+    max_preserve_newlines (default unlimited) - maximum number of line breaks to be preserved in one chunk,
+
+    jslint_happy (default false) - if true, then jslint-stricter mode is enforced.
+
+            jslint_happy        !jslint_happy
+            ---------------------------------
+            function ()         function()
+
+            switch () {         switch() {
+            case 1:               case 1:
+              break;                break;
+            }                   }
+
+    space_after_anon_function (default false) - should the space before an anonymous function's parens be added, "function()" vs "function ()",
+          NOTE: This option is overriden by jslint_happy (i.e. if jslint_happy is true, space_after_anon_function is true by design)
+
+    brace_style (default "collapse") - "collapse" | "expand" | "end-expand" | "none" | any of the former + ",preserve-inline"
+            put braces on the same line as control statements (default), or put braces on own line (Allman / ANSI style), or just put end braces on own line, or attempt to keep them where they are.
+            preserve-inline will try to preserve inline blocks of curly braces
+
+    space_before_conditional (default true) - should the space before conditional statement be added, "if(true)" vs "if (true)",
+
+    unescape_strings (default false) - should printable characters in strings encoded in \xNN notation be unescaped, "example" vs "\x65\x78\x61\x6d\x70\x6c\x65"
+
+    wrap_line_length (default unlimited) - lines should wrap at next opportunity after this number of characters.
+          NOTE: This is not a hard limit. Lines will continue until a point where a newline would
+                be preserved if it were present.
+
+    end_with_newline (default false)  - end output with a newline
+
+
+    e.g
+
+    js_beautify(js_source_text, {
+      'indent_size': 1,
+      'indent_char': '\t'
+    });
+
+*/
+
+(function() {
+
+/* GENERATED_BUILD_OUTPUT */
+var legacy_beautify_js =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*jshint node:true */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
+
+
+
+var Beautifier = __webpack_require__(1).Beautifier,
+  Options = __webpack_require__(5).Options;
+
+function js_beautify(js_source_text, options) {
+  var beautifier = new Beautifier(js_source_text, options);
+  return beautifier.beautify();
+}
+
+module.exports = js_beautify;
+module.exports.defaultOptions = function() {
+  return new Options();
+};
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*jshint node:true */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
+
+
+
+var Output = __webpack_require__(2).Output;
+var Token = __webpack_require__(3).Token;
+var acorn = __webpack_require__(4);
+var Options = __webpack_require__(5).Options;
+var Tokenizer = __webpack_require__(7).Tokenizer;
+var line_starters = __webpack_require__(7).line_starters;
+var positionable_operators = __webpack_require__(7).positionable_operators;
+var TOKEN = __webpack_require__(7).TOKEN;
+
+function remove_redundant_indentation(output, frame) {
+  // This implementation is effective but has some issues:
+  //     - can cause line wrap to happen too soon due to indent removal
+  //           after wrap points are calculated
+  // These issues are minor compared to ugly indentation.
+
+  if (frame.multiline_frame ||
+    frame.mode === MODE.ForInitializer ||
+    frame.mode === MODE.Conditional) {
+    return;
+  }
+
+  // remove one indent from each line inside this section
+  output.remove_indent(frame.start_line_index);
+}
+
+function in_array(what, arr) {
+  return arr.indexOf(what) !== -1;
+}
+
+function ltrim(s) {
+  return s.replace(/^\s+/g, '');
+}
+
+function generateMapFromStrings(list) {
+  var result = {};
+  for (var x = 0; x < list.length; x++) {
+    // make the mapped names underscored instead of dash
+    result[list[x].replace(/-/g, '_')] = list[x];
+  }
+  return result;
+}
+
+function reserved_word(token, word) {
+  return token && token.type === TOKEN.RESERVED && token.text === word;
+}
+
+function reserved_array(token, words) {
+  return token && token.type === TOKEN.RESERVED && in_array(token.text, words);
+}
+// Unsure of what they mean, but they work. Worth cleaning up in future.
+var special_words = ['case', 'return', 'do', 'if', 'throw', 'else', 'await', 'break', 'continue', 'async'];
+
+var validPositionValues = ['before-newline', 'after-newline', 'preserve-newline'];
+
+// Generate map from array
+var OPERATOR_POSITION = generateMapFromStrings(validPositionValues);
+
+var OPERATOR_POSITION_BEFORE_OR_PRESERVE = [OPERATOR_POSITION.before_newline, OPERATOR_POSITION.preserve_newline];
+
+var MODE = {
+  BlockStatement: 'BlockStatement', // 'BLOCK'
+  Statement: 'Statement', // 'STATEMENT'
+  ObjectLiteral: 'ObjectLiteral', // 'OBJECT',
+  ArrayLiteral: 'ArrayLiteral', //'[EXPRESSION]',
+  ForInitializer: 'ForInitializer', //'(FOR-EXPRESSION)',
+  Conditional: 'Conditional', //'(COND-EXPRESSION)',
+  Expression: 'Expression' //'(EXPRESSION)'
+};
+
+// we could use just string.split, but
+// IE doesn't like returning empty strings
+function split_linebreaks(s) {
+  //return s.split(/\x0d\x0a|\x0a/);
+
+  s = s.replace(acorn.allLineBreaks, '\n');
+  var out = [],
+    idx = s.indexOf("\n");
+  while (idx !== -1) {
+    out.push(s.substring(0, idx));
+    s = s.substring(idx + 1);
+    idx = s.indexOf("\n");
+  }
+  if (s.length) {
+    out.push(s);
+  }
+  return out;
+}
+
+function is_array(mode) {
+  return mode === MODE.ArrayLiteral;
+}
+
+function is_expression(mode) {
+  return in_array(mode, [MODE.Expression, MODE.ForInitializer, MODE.Conditional]);
+}
+
+function all_lines_start_with(lines, c) {
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i].trim();
+    if (line.charAt(0) !== c) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function each_line_matches_indent(lines, indent) {
+  var i = 0,
+    len = lines.length,
+    line;
+  for (; i < len; i++) {
+    line = lines[i];
+    // allow empty lines to pass through
+    if (line && line.indexOf(indent) !== 0) {
+      return false;
+    }
+  }
+  return true;
+}
+
+
+function Beautifier(source_text, options) {
+  options = options || {};
+  this._source_text = source_text || '';
+
+  this._output = null;
+  this._tokens = null;
+  this._last_last_text = null;
+  this._flags = null;
+  this._previous_flags = null;
+
+  this._flag_store = null;
+  this._options = new Options(options);
+}
+
+Beautifier.prototype.create_flags = function(flags_base, mode) {
+  var next_indent_level = 0;
+  if (flags_base) {
+    next_indent_level = flags_base.indentation_level;
+    if (!this._output.just_added_newline() &&
+      flags_base.line_indent_level > next_indent_level) {
+      next_indent_level = flags_base.line_indent_level;
+    }
+  }
+
+  var next_flags = {
+    mode: mode,
+    parent: flags_base,
+    last_token: flags_base ? flags_base.last_token : new Token(TOKEN.START_BLOCK, ''), // last token text
+    last_word: flags_base ? flags_base.last_word : '', // last TOKEN.WORD passed
+    declaration_statement: false,
+    declaration_assignment: false,
+    multiline_frame: false,
+    inline_frame: false,
+    if_block: false,
+    else_block: false,
+    do_block: false,
+    do_while: false,
+    import_block: false,
+    in_case_statement: false, // switch(..){ INSIDE HERE }
+    in_case: false, // we're on the exact line with "case 0:"
+    case_body: false, // the indented case-action block
+    indentation_level: next_indent_level,
+    line_indent_level: flags_base ? flags_base.line_indent_level : next_indent_level,
+    start_line_index: this._output.get_line_number(),
+    ternary_depth: 0
+  };
+  return next_flags;
+};
+
+Beautifier.prototype._reset = function(source_text) {
+  var baseIndentString = source_text.match(/^[\t ]*/)[0];
+
+  this._last_last_text = ''; // pre-last token text
+  this._output = new Output(this._options, baseIndentString);
+
+  // If testing the ignore directive, start with output disable set to true
+  this._output.raw = this._options.test_output_raw;
+
+
+  // Stack of parsing/formatting states, including MODE.
+  // We tokenize, parse, and output in an almost purely a forward-only stream of token input
+  // and formatted output.  This makes the beautifier less accurate than full parsers
+  // but also far more tolerant of syntax errors.
+  //
+  // For example, the default mode is MODE.BlockStatement. If we see a '{' we push a new frame of type
+  // MODE.BlockStatement on the the stack, even though it could be object literal.  If we later
+  // encounter a ":", we'll switch to to MODE.ObjectLiteral.  If we then see a ";",
+  // most full parsers would die, but the beautifier gracefully falls back to
+  // MODE.BlockStatement and continues on.
+  this._flag_store = [];
+  this.set_mode(MODE.BlockStatement);
+  var tokenizer = new Tokenizer(source_text, this._options);
+  this._tokens = tokenizer.tokenize();
+  return source_text;
+};
+
+Beautifier.prototype.beautify = function() {
+  // if disabled, return the input unchanged.
+  if (this._options.disabled) {
+    return this._source_text;
+  }
+
+  var sweet_code;
+  var source_text = this._reset(this._source_text);
+
+  var eol = this._options.eol;
+  if (this._options.eol === 'auto') {
+    eol = '\n';
+    if (source_text && acorn.lineBreak.test(source_text || '')) {
+      eol = source_text.match(acorn.lineBreak)[0];
+    }
+  }
+
+  var current_token = this._tokens.next();
+  while (current_token) {
+    this.handle_token(current_token);
+
+    this._last_last_text = this._flags.last_token.text;
+    this._flags.last_token = current_token;
+
+    current_token = this._tokens.next();
+  }
+
+  sweet_code = this._output.get_code(eol);
+
+  return sweet_code;
+};
+
+Beautifier.prototype.handle_token = function(current_token, preserve_statement_flags) {
+  if (current_token.type === TOKEN.START_EXPR) {
+    this.handle_start_expr(current_token);
+  } else if (current_token.type === TOKEN.END_EXPR) {
+    this.handle_end_expr(current_token);
+  } else if (current_token.type === TOKEN.START_BLOCK) {
+    this.handle_start_block(current_token);
+  } else if (current_token.type === TOKEN.END_BLOCK) {
+    this.handle_end_block(current_token);
+  } else if (current_token.type === TOKEN.WORD) {
+    this.handle_word(current_token);
+  } else if (current_token.type === TOKEN.RESERVED) {
+    this.handle_word(current_token);
+  } else if (current_token.type === TOKEN.SEMICOLON) {
+    this.handle_semicolon(current_token);
+  } else if (current_token.type === TOKEN.STRING) {
+    this.handle_string(current_token);
+  } else if (current_token.type === TOKEN.EQUALS) {
+    this.handle_equals(current_token);
+  } else if (current_token.type === TOKEN.OPERATOR) {
+    this.handle_operator(current_token);
+  } else if (current_token.type === TOKEN.COMMA) {
+    this.handle_comma(current_token);
+  } else if (current_token.type === TOKEN.BLOCK_COMMENT) {
+    this.handle_block_comment(current_token, preserve_statement_flags);
+  } else if (current_token.type === TOKEN.COMMENT) {
+    this.handle_comment(current_token, preserve_statement_flags);
+  } else if (current_token.type === TOKEN.DOT) {
+    this.handle_dot(current_token);
+  } else if (current_token.type === TOKEN.EOF) {
+    this.handle_eof(current_token);
+  } else if (current_token.type === TOKEN.UNKNOWN) {
+    this.handle_unknown(current_token, preserve_statement_flags);
+  } else {
+    this.handle_unknown(current_token, preserve_statement_flags);
+  }
+};
+
+Beautifier.prototype.handle_whitespace_and_comments = function(current_token, preserve_statement_flags) {
+  var newlines = current_token.newlines;
+  var keep_whitespace = this._options.keep_array_indentation && is_array(this._flags.mode);
+
+  if (current_token.comments_before) {
+    var comment_token = current_token.comments_before.next();
+    while (comment_token) {
+      // The cleanest handling of inline comments is to treat them as though they aren't there.
+      // Just continue formatting and the behavior should be logical.
+      // Also ignore unknown tokens.  Again, this should result in better behavior.
+      this.handle_whitespace_and_comments(comment_token, preserve_statement_flags);
+      this.handle_token(comment_token, preserve_statement_flags);
+      comment_token = current_token.comments_before.next();
+    }
+  }
+
+  if (keep_whitespace) {
+    for (var i = 0; i < newlines; i += 1) {
+      this.print_newline(i > 0, preserve_statement_flags);
+    }
+  } else {
+    if (this._options.max_preserve_newlines && newlines > this._options.max_preserve_newlines) {
+      newlines = this._options.max_preserve_newlines;
+    }
+
+    if (this._options.preserve_newlines) {
+      if (newlines > 1) {
+        this.print_newline(false, preserve_statement_flags);
+        for (var j = 1; j < newlines; j += 1) {
+          this.print_newline(true, preserve_statement_flags);
+        }
+      }
+    }
+  }
+
+};
+
+var newline_restricted_tokens = ['async', 'break', 'continue', 'return', 'throw', 'yield'];
+
+Beautifier.prototype.allow_wrap_or_preserved_newline = function(current_token, force_linewrap) {
+  force_linewrap = (force_linewrap === undefined) ? false : force_linewrap;
+
+  // Never wrap the first token on a line
+  if (this._output.just_added_newline()) {
+    return;
+  }
+
+  var shouldPreserveOrForce = (this._options.preserve_newlines && current_token.newlines) || force_linewrap;
+  var operatorLogicApplies = in_array(this._flags.last_token.text, positionable_operators) ||
+    in_array(current_token.text, positionable_operators);
+
+  if (operatorLogicApplies) {
+    var shouldPrintOperatorNewline = (
+        in_array(this._flags.last_token.text, positionable_operators) &&
+        in_array(this._options.operator_position, OPERATOR_POSITION_BEFORE_OR_PRESERVE)
+      ) ||
+      in_array(current_token.text, positionable_operators);
+    shouldPreserveOrForce = shouldPreserveOrForce && shouldPrintOperatorNewline;
+  }
+
+  if (shouldPreserveOrForce) {
+    this.print_newline(false, true);
+  } else if (this._options.wrap_line_length) {
+    if (reserved_array(this._flags.last_token, newline_restricted_tokens)) {
+      // These tokens should never have a newline inserted
+      // between them and the following expression.
+      return;
+    }
+    var proposed_line_length = this._output.current_line.get_character_count() + current_token.text.length +
+      (this._output.space_before_token ? 1 : 0);
+    if (proposed_line_length >= this._options.wrap_line_length) {
+      this.print_newline(false, true);
+    }
+  }
+};
+
+Beautifier.prototype.print_newline = function(force_newline, preserve_statement_flags) {
+  if (!preserve_statement_flags) {
+    if (this._flags.last_token.text !== ';' && this._flags.last_token.text !== ',' && this._flags.last_token.text !== '=' && (this._flags.last_token.type !== TOKEN.OPERATOR || this._flags.last_token.text === '--' || this._flags.last_token.text === '++')) {
+      var next_token = this._tokens.peek();
+      while (this._flags.mode === MODE.Statement &&
+        !(this._flags.if_block && reserved_word(next_token, 'else')) &&
+        !this._flags.do_block) {
+        this.restore_mode();
+      }
+    }
+  }
+
+  if (this._output.add_new_line(force_newline)) {
+    this._flags.multiline_frame = true;
+  }
+};
+
+Beautifier.prototype.print_token_line_indentation = function(current_token) {
+  if (this._output.just_added_newline()) {
+    if (this._options.keep_array_indentation && is_array(this._flags.mode) && current_token.newlines) {
+      this._output.current_line.push(current_token.whitespace_before);
+      this._output.space_before_token = false;
+    } else if (this._output.set_indent(this._flags.indentation_level)) {
+      this._flags.line_indent_level = this._flags.indentation_level;
+    }
+  }
+};
+
+Beautifier.prototype.print_token = function(current_token, printable_token) {
+  if (this._output.raw) {
+    this._output.add_raw_token(current_token);
+    return;
+  }
+
+  if (this._options.comma_first && current_token.previous && current_token.previous.type === TOKEN.COMMA &&
+    this._output.just_added_newline()) {
+    if (this._output.previous_line.last() === ',') {
+      var popped = this._output.previous_line.pop();
+      // if the comma was already at the start of the line,
+      // pull back onto that line and reprint the indentation
+      if (this._output.previous_line.is_empty()) {
+        this._output.previous_line.push(popped);
+        this._output.trim(true);
+        this._output.current_line.pop();
+        this._output.trim();
+      }
+
+      // add the comma in front of the next token
+      this.print_token_line_indentation(current_token);
+      this._output.add_token(',');
+      this._output.space_before_token = true;
+    }
+  }
+
+  printable_token = printable_token || current_token.text;
+  this.print_token_line_indentation(current_token);
+  this._output.add_token(printable_token);
+};
+
+Beautifier.prototype.indent = function() {
+  this._flags.indentation_level += 1;
+};
+
+Beautifier.prototype.deindent = function() {
+  if (this._flags.indentation_level > 0 &&
+    ((!this._flags.parent) || this._flags.indentation_level > this._flags.parent.indentation_level)) {
+    this._flags.indentation_level -= 1;
+
+  }
+};
+
+Beautifier.prototype.set_mode = function(mode) {
+  if (this._flags) {
+    this._flag_store.push(this._flags);
+    this._previous_flags = this._flags;
+  } else {
+    this._previous_flags = this.create_flags(null, mode);
+  }
+
+  this._flags = this.create_flags(this._previous_flags, mode);
+};
+
+
+Beautifier.prototype.restore_mode = function() {
+  if (this._flag_store.length > 0) {
+    this._previous_flags = this._flags;
+    this._flags = this._flag_store.pop();
+    if (this._previous_flags.mode === MODE.Statement) {
+      remove_redundant_indentation(this._output, this._previous_flags);
+    }
+  }
+};
+
+Beautifier.prototype.start_of_object_property = function() {
+  return this._flags.parent.mode === MODE.ObjectLiteral && this._flags.mode === MODE.Statement && (
+    (this._flags.last_token.text === ':' && this._flags.ternary_depth === 0) || (reserved_array(this._flags.last_token, ['get', 'set'])));
+};
+
+Beautifier.prototype.start_of_statement = function(current_token) {
+  var start = false;
+  start = start || reserved_array(this._flags.last_token, ['var', 'let', 'const']) && current_token.type === TOKEN.WORD;
+  start = start || reserved_word(this._flags.last_token, 'do');
+  start = start || (!(this._flags.parent.mode === MODE.ObjectLiteral && this._flags.mode === MODE.Statement)) && reserved_array(this._flags.last_token, newline_restricted_tokens) && !current_token.newlines;
+  start = start || reserved_word(this._flags.last_token, 'else') &&
+    !(reserved_word(current_token, 'if') && !current_token.comments_before);
+  start = start || (this._flags.last_token.type === TOKEN.END_EXPR && (this._previous_flags.mode === MODE.ForInitializer || this._previous_flags.mode === MODE.Conditional));
+  start = start || (this._flags.last_token.type === TOKEN.WORD && this._flags.mode === MODE.BlockStatement &&
+    !this._flags.in_case &&
+    !(current_token.text === '--' || current_token.text === '++') &&
+    this._last_last_text !== 'function' &&
+    current_token.type !== TOKEN.WORD && current_token.type !== TOKEN.RESERVED);
+  start = start || (this._flags.mode === MODE.ObjectLiteral && (
+    (this._flags.last_token.text === ':' && this._flags.ternary_depth === 0) || reserved_array(this._flags.last_token, ['get', 'set'])));
+
+  if (start) {
+    this.set_mode(MODE.Statement);
+    this.indent();
+
+    this.handle_whitespace_and_comments(current_token, true);
+
+    // Issue #276:
+    // If starting a new statement with [if, for, while, do], push to a new line.
+    // if (a) if (b) if(c) d(); else e(); else f();
+    if (!this.start_of_object_property()) {
+      this.allow_wrap_or_preserved_newline(current_token,
+        reserved_array(current_token, ['do', 'for', 'if', 'while']));
+    }
+    return true;
+  }
+  return false;
+};
+
+Beautifier.prototype.handle_start_expr = function(current_token) {
+  // The conditional starts the statement if appropriate.
+  if (!this.start_of_statement(current_token)) {
+    this.handle_whitespace_and_comments(current_token);
+  }
+
+  var next_mode = MODE.Expression;
+  if (current_token.text === '[') {
+
+    if (this._flags.last_token.type === TOKEN.WORD || this._flags.last_token.text === ')') {
+      // this is array index specifier, break immediately
+      // a[x], fn()[x]
+      if (reserved_array(this._flags.last_token, line_starters)) {
+        this._output.space_before_token = true;
+      }
+      this.set_mode(next_mode);
+      this.print_token(current_token);
+      this.indent();
+      if (this._options.space_in_paren) {
+        this._output.space_before_token = true;
+      }
+      return;
+    }
+
+    next_mode = MODE.ArrayLiteral;
+    if (is_array(this._flags.mode)) {
+      if (this._flags.last_token.text === '[' ||
+        (this._flags.last_token.text === ',' && (this._last_last_text === ']' || this._last_last_text === '}'))) {
+        // ], [ goes to new line
+        // }, [ goes to new line
+        if (!this._options.keep_array_indentation) {
+          this.print_newline();
+        }
+      }
+    }
+
+    if (!in_array(this._flags.last_token.type, [TOKEN.START_EXPR, TOKEN.END_EXPR, TOKEN.WORD, TOKEN.OPERATOR])) {
+      this._output.space_before_token = true;
+    }
+  } else {
+    if (this._flags.last_token.type === TOKEN.RESERVED) {
+      if (this._flags.last_token.text === 'for') {
+        this._output.space_before_token = this._options.space_before_conditional;
+        next_mode = MODE.ForInitializer;
+      } else if (in_array(this._flags.last_token.text, ['if', 'while'])) {
+        this._output.space_before_token = this._options.space_before_conditional;
+        next_mode = MODE.Conditional;
+      } else if (in_array(this._flags.last_word, ['await', 'async'])) {
+        // Should be a space between await and an IIFE, or async and an arrow function
+        this._output.space_before_token = true;
+      } else if (this._flags.last_token.text === 'import' && current_token.whitespace_before === '') {
+        this._output.space_before_token = false;
+      } else if (in_array(this._flags.last_token.text, line_starters) || this._flags.last_token.text === 'catch') {
+        this._output.space_before_token = true;
+      }
+    } else if (this._flags.last_token.type === TOKEN.EQUALS || this._flags.last_token.type === TOKEN.OPERATOR) {
+      // Support of this kind of newline preservation.
+      // a = (b &&
+      //     (c || d));
+      if (!this.start_of_object_property()) {
+        this.allow_wrap_or_preserved_newline(current_token);
+      }
+    } else if (this._flags.last_token.type === TOKEN.WORD) {
+      this._output.space_before_token = false;
+
+      // function name() vs function name ()
+      // function* name() vs function* name ()
+      // async name() vs async name ()
+      // In ES6, you can also define the method properties of an object
+      // var obj = {a: function() {}}
+      // It can be abbreviated
+      // var obj = {a() {}}
+      // var obj = { a() {}} vs var obj = { a () {}}
+      // var obj = { * a() {}} vs var obj = { * a () {}}
+      var peek_back_two = this._tokens.peek(-3);
+      if (this._options.space_after_named_function && peek_back_two) {
+        // peek starts at next character so -1 is current token
+        var peek_back_three = this._tokens.peek(-4);
+        if (reserved_array(peek_back_two, ['async', 'function']) ||
+          (peek_back_two.text === '*' && reserved_array(peek_back_three, ['async', 'function']))) {
+          this._output.space_before_token = true;
+        } else if (this._flags.mode === MODE.ObjectLiteral) {
+          if ((peek_back_two.text === '{' || peek_back_two.text === ',') ||
+            (peek_back_two.text === '*' && (peek_back_three.text === '{' || peek_back_three.text === ','))) {
+            this._output.space_before_token = true;
+          }
+        }
+      }
+    } else {
+      // Support preserving wrapped arrow function expressions
+      // a.b('c',
+      //     () => d.e
+      // )
+      this.allow_wrap_or_preserved_newline(current_token);
+    }
+
+    // function() vs function ()
+    // yield*() vs yield* ()
+    // function*() vs function* ()
+    if ((this._flags.last_token.type === TOKEN.RESERVED && (this._flags.last_word === 'function' || this._flags.last_word === 'typeof')) ||
+      (this._flags.last_token.text === '*' &&
+        (in_array(this._last_last_text, ['function', 'yield']) ||
+          (this._flags.mode === MODE.ObjectLiteral && in_array(this._last_last_text, ['{', ',']))))) {
+      this._output.space_before_token = this._options.space_after_anon_function;
+    }
+  }
+
+  if (this._flags.last_token.text === ';' || this._flags.last_token.type === TOKEN.START_BLOCK) {
+    this.print_newline();
+  } else if (this._flags.last_token.type === TOKEN.END_EXPR || this._flags.last_token.type === TOKEN.START_EXPR || this._flags.last_token.type === TOKEN.END_BLOCK || this._flags.last_token.text === '.' || this._flags.last_token.type === TOKEN.COMMA) {
+    // do nothing on (( and )( and ][ and ]( and .(
+    // TODO: Consider whether forcing this is required.  Review failing tests when removed.
+    this.allow_wrap_or_preserved_newline(current_token, current_token.newlines);
+  }
+
+  this.set_mode(next_mode);
+  this.print_token(current_token);
+  if (this._options.space_in_paren) {
+    this._output.space_before_token = true;
+  }
+
+  // In all cases, if we newline while inside an expression it should be indented.
+  this.indent();
+};
+
+Beautifier.prototype.handle_end_expr = function(current_token) {
+  // statements inside expressions are not valid syntax, but...
+  // statements must all be closed when their container closes
+  while (this._flags.mode === MODE.Statement) {
+    this.restore_mode();
+  }
+
+  this.handle_whitespace_and_comments(current_token);
+
+  if (this._flags.multiline_frame) {
+    this.allow_wrap_or_preserved_newline(current_token,
+      current_token.text === ']' && is_array(this._flags.mode) && !this._options.keep_array_indentation);
+  }
+
+  if (this._options.space_in_paren) {
+    if (this._flags.last_token.type === TOKEN.START_EXPR && !this._options.space_in_empty_paren) {
+      // () [] no inner space in empty parens like these, ever, ref #320
+      this._output.trim();
+      this._output.space_before_token = false;
+    } else {
+      this._output.space_before_token = true;
+    }
+  }
+  if (current_token.text === ']' && this._options.keep_array_indentation) {
+    this.print_token(current_token);
+    this.restore_mode();
+  } else {
+    this.restore_mode();
+    this.print_token(current_token);
+  }
+  remove_redundant_indentation(this._output, this._previous_flags);
+
+  // do {} while () // no statement required after
+  if (this._flags.do_while && this._previous_flags.mode === MODE.Conditional) {
+    this._previous_flags.mode = MODE.Expression;
+    this._flags.do_block = false;
+    this._flags.do_while = false;
+
+  }
+};
+
+Beautifier.prototype.handle_start_block = function(current_token) {
+  this.handle_whitespace_and_comments(current_token);
+
+  // Check if this is should be treated as a ObjectLiteral
+  var next_token = this._tokens.peek();
+  var second_token = this._tokens.peek(1);
+  if (this._flags.last_word === 'switch' && this._flags.last_token.type === TOKEN.END_EXPR) {
+    this.set_mode(MODE.BlockStatement);
+    this._flags.in_case_statement = true;
+  } else if (second_token && (
+      (in_array(second_token.text, [':', ',']) && in_array(next_token.type, [TOKEN.STRING, TOKEN.WORD, TOKEN.RESERVED])) ||
+      (in_array(next_token.text, ['get', 'set', '...']) && in_array(second_token.type, [TOKEN.WORD, TOKEN.RESERVED]))
+    )) {
+    // We don't support TypeScript,but we didn't break it for a very long time.
+    // We'll try to keep not breaking it.
+    if (!in_array(this._last_last_text, ['class', 'interface'])) {
+      this.set_mode(MODE.ObjectLiteral);
+    } else {
+      this.set_mode(MODE.BlockStatement);
+    }
+  } else if (this._flags.last_token.type === TOKEN.OPERATOR && this._flags.last_token.text === '=>') {
+    // arrow function: (param1, paramN) => { statements }
+    this.set_mode(MODE.BlockStatement);
+  } else if (in_array(this._flags.last_token.type, [TOKEN.EQUALS, TOKEN.START_EXPR, TOKEN.COMMA, TOKEN.OPERATOR]) ||
+    reserved_array(this._flags.last_token, ['return', 'throw', 'import', 'default'])
+  ) {
+    // Detecting shorthand function syntax is difficult by scanning forward,
+    //     so check the surrounding context.
+    // If the block is being returned, imported, export default, passed as arg,
+    //     assigned with = or assigned in a nested object, treat as an ObjectLiteral.
+    this.set_mode(MODE.ObjectLiteral);
+  } else {
+    this.set_mode(MODE.BlockStatement);
+  }
+
+  var empty_braces = !next_token.comments_before && next_token.text === '}';
+  var empty_anonymous_function = empty_braces && this._flags.last_word === 'function' &&
+    this._flags.last_token.type === TOKEN.END_EXPR;
+
+  if (this._options.brace_preserve_inline) // check for inline, set inline_frame if so
+  {
+    // search forward for a newline wanted inside this block
+    var index = 0;
+    var check_token = null;
+    this._flags.inline_frame = true;
+    do {
+      index += 1;
+      check_token = this._tokens.peek(index - 1);
+      if (check_token.newlines) {
+        this._flags.inline_frame = false;
+        break;
+      }
+    } while (check_token.type !== TOKEN.EOF &&
+      !(check_token.type === TOKEN.END_BLOCK && check_token.opened === current_token));
+  }
+
+  if ((this._options.brace_style === "expand" ||
+      (this._options.brace_style === "none" && current_token.newlines)) &&
+    !this._flags.inline_frame) {
+    if (this._flags.last_token.type !== TOKEN.OPERATOR &&
+      (empty_anonymous_function ||
+        this._flags.last_token.type === TOKEN.EQUALS ||
+        (reserved_array(this._flags.last_token, special_words) && this._flags.last_token.text !== 'else'))) {
+      this._output.space_before_token = true;
+    } else {
+      this.print_newline(false, true);
+    }
+  } else { // collapse || inline_frame
+    if (is_array(this._previous_flags.mode) && (this._flags.last_token.type === TOKEN.START_EXPR || this._flags.last_token.type === TOKEN.COMMA)) {
+      if (this._flags.last_token.type === TOKEN.COMMA || this._options.space_in_paren) {
+        this._output.space_before_token = true;
+      }
+
+      if (this._flags.last_token.type === TOKEN.COMMA || (this._flags.last_token.type === TOKEN.START_EXPR && this._flags.inline_frame)) {
+        this.allow_wrap_or_preserved_newline(current_token);
+        this._previous_flags.multiline_frame = this._previous_flags.multiline_frame || this._flags.multiline_frame;
+        this._flags.multiline_frame = false;
+      }
+    }
+    if (this._flags.last_token.type !== TOKEN.OPERATOR && this._flags.last_token.type !== TOKEN.START_EXPR) {
+      if (this._flags.last_token.type === TOKEN.START_BLOCK && !this._flags.inline_frame) {
+        this.print_newline();
+      } else {
+        this._output.space_before_token = true;
+      }
+    }
+  }
+  this.print_token(current_token);
+  this.indent();
+
+  // Except for specific cases, open braces are followed by a new line.
+  if (!empty_braces && !(this._options.brace_preserve_inline && this._flags.inline_frame)) {
+    this.print_newline();
+  }
+};
+
+Beautifier.prototype.handle_end_block = function(current_token) {
+  // statements must all be closed when their container closes
+  this.handle_whitespace_and_comments(current_token);
+
+  while (this._flags.mode === MODE.Statement) {
+    this.restore_mode();
+  }
+
+  var empty_braces = this._flags.last_token.type === TOKEN.START_BLOCK;
+
+  if (this._flags.inline_frame && !empty_braces) { // try inline_frame (only set if this._options.braces-preserve-inline) first
+    this._output.space_before_token = true;
+  } else if (this._options.brace_style === "expand") {
+    if (!empty_braces) {
+      this.print_newline();
+    }
+  } else {
+    // skip {}
+    if (!empty_braces) {
+      if (is_array(this._flags.mode) && this._options.keep_array_indentation) {
+        // we REALLY need a newline here, but newliner would skip that
+        this._options.keep_array_indentation = false;
+        this.print_newline();
+        this._options.keep_array_indentation = true;
+
+      } else {
+        this.print_newline();
+      }
+    }
+  }
+  this.restore_mode();
+  this.print_token(current_token);
+};
+
+Beautifier.prototype.handle_word = function(current_token) {
+  if (current_token.type === TOKEN.RESERVED) {
+    if (in_array(current_token.text, ['set', 'get']) && this._flags.mode !== MODE.ObjectLiteral) {
+      current_token.type = TOKEN.WORD;
+    } else if (current_token.text === 'import' && this._tokens.peek().text === '(') {
+      current_token.type = TOKEN.WORD;
+    } else if (in_array(current_token.text, ['as', 'from']) && !this._flags.import_block) {
+      current_token.type = TOKEN.WORD;
+    } else if (this._flags.mode === MODE.ObjectLiteral) {
+      var next_token = this._tokens.peek();
+      if (next_token.text === ':') {
+        current_token.type = TOKEN.WORD;
+      }
+    }
+  }
+
+  if (this.start_of_statement(current_token)) {
+    // The conditional starts the statement if appropriate.
+    if (reserved_array(this._flags.last_token, ['var', 'let', 'const']) && current_token.type === TOKEN.WORD) {
+      this._flags.declaration_statement = true;
+    }
+  } else if (current_token.newlines && !is_expression(this._flags.mode) &&
+    (this._flags.last_token.type !== TOKEN.OPERATOR || (this._flags.last_token.text === '--' || this._flags.last_token.text === '++')) &&
+    this._flags.last_token.type !== TOKEN.EQUALS &&
+    (this._options.preserve_newlines || !reserved_array(this._flags.last_token, ['var', 'let', 'const', 'set', 'get']))) {
+    this.handle_whitespace_and_comments(current_token);
+    this.print_newline();
+  } else {
+    this.handle_whitespace_and_comments(current_token);
+  }
+
+  if (this._flags.do_block && !this._flags.do_while) {
+    if (reserved_word(current_token, 'while')) {
+      // do {} ## while ()
+      this._output.space_before_token = true;
+      this.print_token(current_token);
+      this._output.space_before_token = true;
+      this._flags.do_while = true;
+      return;
+    } else {
+      // do {} should always have while as the next word.
+      // if we don't see the expected while, recover
+      this.print_newline();
+      this._flags.do_block = false;
+    }
+  }
+
+  // if may be followed by else, or not
+  // Bare/inline ifs are tricky
+  // Need to unwind the modes correctly: if (a) if (b) c(); else d(); else e();
+  if (this._flags.if_block) {
+    if (!this._flags.else_block && reserved_word(current_token, 'else')) {
+      this._flags.else_block = true;
+    } else {
+      while (this._flags.mode === MODE.Statement) {
+        this.restore_mode();
+      }
+      this._flags.if_block = false;
+      this._flags.else_block = false;
+    }
+  }
+
+  if (this._flags.in_case_statement && reserved_array(current_token, ['case', 'default'])) {
+    this.print_newline();
+    if (this._flags.case_body || this._options.jslint_happy) {
+      // switch cases following one another
+      this.deindent();
+      this._flags.case_body = false;
+    }
+    this.print_token(current_token);
+    this._flags.in_case = true;
+    return;
+  }
+
+  if (this._flags.last_token.type === TOKEN.COMMA || this._flags.last_token.type === TOKEN.START_EXPR || this._flags.last_token.type === TOKEN.EQUALS || this._flags.last_token.type === TOKEN.OPERATOR) {
+    if (!this.start_of_object_property()) {
+      this.allow_wrap_or_preserved_newline(current_token);
+    }
+  }
+
+  if (reserved_word(current_token, 'function')) {
+    if (in_array(this._flags.last_token.text, ['}', ';']) ||
+      (this._output.just_added_newline() && !(in_array(this._flags.last_token.text, ['(', '[', '{', ':', '=', ',']) || this._flags.last_token.type === TOKEN.OPERATOR))) {
+      // make sure there is a nice clean space of at least one blank line
+      // before a new function definition
+      if (!this._output.just_added_blankline() && !current_token.comments_before) {
+        this.print_newline();
+        this.print_newline(true);
+      }
+    }
+    if (this._flags.last_token.type === TOKEN.RESERVED || this._flags.last_token.type === TOKEN.WORD) {
+      if (reserved_array(this._flags.last_token, ['get', 'set', 'new', 'export']) ||
+        reserved_array(this._flags.last_token, newline_restricted_tokens)) {
+        this._output.space_before_token = true;
+      } else if (reserved_word(this._flags.last_token, 'default') && this._last_last_text === 'export') {
+        this._output.space_before_token = true;
+      } else if (this._flags.last_token.text === 'declare') {
+        // accomodates Typescript declare function formatting
+        this._output.space_before_token = true;
+      } else {
+        this.print_newline();
+      }
+    } else if (this._flags.last_token.type === TOKEN.OPERATOR || this._flags.last_token.text === '=') {
+      // foo = function
+      this._output.space_before_token = true;
+    } else if (!this._flags.multiline_frame && (is_expression(this._flags.mode) || is_array(this._flags.mode))) {
+      // (function
+    } else {
+      this.print_newline();
+    }
+
+    this.print_token(current_token);
+    this._flags.last_word = current_token.text;
+    return;
+  }
+
+  var prefix = 'NONE';
+
+  if (this._flags.last_token.type === TOKEN.END_BLOCK) {
+
+    if (this._previous_flags.inline_frame) {
+      prefix = 'SPACE';
+    } else if (!reserved_array(current_token, ['else', 'catch', 'finally', 'from'])) {
+      prefix = 'NEWLINE';
+    } else {
+      if (this._options.brace_style === "expand" ||
+        this._options.brace_style === "end-expand" ||
+        (this._options.brace_style === "none" && current_token.newlines)) {
+        prefix = 'NEWLINE';
+      } else {
+        prefix = 'SPACE';
+        this._output.space_before_token = true;
+      }
+    }
+  } else if (this._flags.last_token.type === TOKEN.SEMICOLON && this._flags.mode === MODE.BlockStatement) {
+    // TODO: Should this be for STATEMENT as well?
+    prefix = 'NEWLINE';
+  } else if (this._flags.last_token.type === TOKEN.SEMICOLON && is_expression(this._flags.mode)) {
+    prefix = 'SPACE';
+  } else if (this._flags.last_token.type === TOKEN.STRING) {
+    prefix = 'NEWLINE';
+  } else if (this._flags.last_token.type === TOKEN.RESERVED || this._flags.last_token.type === TOKEN.WORD ||
+    (this._flags.last_token.text === '*' &&
+      (in_array(this._last_last_text, ['function', 'yield']) ||
+        (this._flags.mode === MODE.ObjectLiteral && in_array(this._last_last_text, ['{', ',']))))) {
+    prefix = 'SPACE';
+  } else if (this._flags.last_token.type === TOKEN.START_BLOCK) {
+    if (this._flags.inline_frame) {
+      prefix = 'SPACE';
+    } else {
+      prefix = 'NEWLINE';
+    }
+  } else if (this._flags.last_token.type === TOKEN.END_EXPR) {
+    this._output.space_before_token = true;
+    prefix = 'NEWLINE';
+  }
+
+  if (reserved_array(current_token, line_starters) && this._flags.last_token.text !== ')') {
+    if (this._flags.inline_frame || this._flags.last_token.text === 'else' || this._flags.last_token.text === 'export') {
+      prefix = 'SPACE';
+    } else {
+      prefix = 'NEWLINE';
+    }
+
+  }
+
+  if (reserved_array(current_token, ['else', 'catch', 'finally'])) {
+    if ((!(this._flags.last_token.type === TOKEN.END_BLOCK && this._previous_flags.mode === MODE.BlockStatement) ||
+        this._options.brace_style === "expand" ||
+        this._options.brace_style === "end-expand" ||
+        (this._options.brace_style === "none" && current_token.newlines)) &&
+      !this._flags.inline_frame) {
+      this.print_newline();
+    } else {
+      this._output.trim(true);
+      var line = this._output.current_line;
+      // If we trimmed and there's something other than a close block before us
+      // put a newline back in.  Handles '} // comment' scenario.
+      if (line.last() !== '}') {
+        this.print_newline();
+      }
+      this._output.space_before_token = true;
+    }
+  } else if (prefix === 'NEWLINE') {
+    if (reserved_array(this._flags.last_token, special_words)) {
+      // no newline between 'return nnn'
+      this._output.space_before_token = true;
+    } else if (this._flags.last_token.text === 'declare' && reserved_array(current_token, ['var', 'let', 'const'])) {
+      // accomodates Typescript declare formatting
+      this._output.space_before_token = true;
+    } else if (this._flags.last_token.type !== TOKEN.END_EXPR) {
+      if ((this._flags.last_token.type !== TOKEN.START_EXPR || !reserved_array(current_token, ['var', 'let', 'const'])) && this._flags.last_token.text !== ':') {
+        // no need to force newline on 'var': for (var x = 0...)
+        if (reserved_word(current_token, 'if') && reserved_word(current_token.previous, 'else')) {
+          // no newline for } else if {
+          this._output.space_before_token = true;
+        } else {
+          this.print_newline();
+        }
+      }
+    } else if (reserved_array(current_token, line_starters) && this._flags.last_token.text !== ')') {
+      this.print_newline();
+    }
+  } else if (this._flags.multiline_frame && is_array(this._flags.mode) && this._flags.last_token.text === ',' && this._last_last_text === '}') {
+    this.print_newline(); // }, in lists get a newline treatment
+  } else if (prefix === 'SPACE') {
+    this._output.space_before_token = true;
+  }
+  if (current_token.previous && (current_token.previous.type === TOKEN.WORD || current_token.previous.type === TOKEN.RESERVED)) {
+    this._output.space_before_token = true;
+  }
+  this.print_token(current_token);
+  this._flags.last_word = current_token.text;
+
+  if (current_token.type === TOKEN.RESERVED) {
+    if (current_token.text === 'do') {
+      this._flags.do_block = true;
+    } else if (current_token.text === 'if') {
+      this._flags.if_block = true;
+    } else if (current_token.text === 'import') {
+      this._flags.import_block = true;
+    } else if (this._flags.import_block && reserved_word(current_token, 'from')) {
+      this._flags.import_block = false;
+    }
+  }
+};
+
+Beautifier.prototype.handle_semicolon = function(current_token) {
+  if (this.start_of_statement(current_token)) {
+    // The conditional starts the statement if appropriate.
+    // Semicolon can be the start (and end) of a statement
+    this._output.space_before_token = false;
+  } else {
+    this.handle_whitespace_and_comments(current_token);
+  }
+
+  var next_token = this._tokens.peek();
+  while (this._flags.mode === MODE.Statement &&
+    !(this._flags.if_block && reserved_word(next_token, 'else')) &&
+    !this._flags.do_block) {
+    this.restore_mode();
+  }
+
+  // hacky but effective for the moment
+  if (this._flags.import_block) {
+    this._flags.import_block = false;
+  }
+  this.print_token(current_token);
+};
+
+Beautifier.prototype.handle_string = function(current_token) {
+  if (this.start_of_statement(current_token)) {
+    // The conditional starts the statement if appropriate.
+    // One difference - strings want at least a space before
+    this._output.space_before_token = true;
+  } else {
+    this.handle_whitespace_and_comments(current_token);
+    if (this._flags.last_token.type === TOKEN.RESERVED || this._flags.last_token.type === TOKEN.WORD || this._flags.inline_frame) {
+      this._output.space_before_token = true;
+    } else if (this._flags.last_token.type === TOKEN.COMMA || this._flags.last_token.type === TOKEN.START_EXPR || this._flags.last_token.type === TOKEN.EQUALS || this._flags.last_token.type === TOKEN.OPERATOR) {
+      if (!this.start_of_object_property()) {
+        this.allow_wrap_or_preserved_newline(current_token);
+      }
+    } else {
+      this.print_newline();
+    }
+  }
+  this.print_token(current_token);
+};
+
+Beautifier.prototype.handle_equals = function(current_token) {
+  if (this.start_of_statement(current_token)) {
+    // The conditional starts the statement if appropriate.
+  } else {
+    this.handle_whitespace_and_comments(current_token);
+  }
+
+  if (this._flags.declaration_statement) {
+    // just got an '=' in a var-line, different formatting/line-breaking, etc will now be done
+    this._flags.declaration_assignment = true;
+  }
+  this._output.space_before_token = true;
+  this.print_token(current_token);
+  this._output.space_before_token = true;
+};
+
+Beautifier.prototype.handle_comma = function(current_token) {
+  this.handle_whitespace_and_comments(current_token, true);
+
+  this.print_token(current_token);
+  this._output.space_before_token = true;
+  if (this._flags.declaration_statement) {
+    if (is_expression(this._flags.parent.mode)) {
+      // do not break on comma, for(var a = 1, b = 2)
+      this._flags.declaration_assignment = false;
+    }
+
+    if (this._flags.declaration_assignment) {
+      this._flags.declaration_assignment = false;
+      this.print_newline(false, true);
+    } else if (this._options.comma_first) {
+      // for comma-first, we want to allow a newline before the comma
+      // to turn into a newline after the comma, which we will fixup later
+      this.allow_wrap_or_preserved_newline(current_token);
+    }
+  } else if (this._flags.mode === MODE.ObjectLiteral ||
+    (this._flags.mode === MODE.Statement && this._flags.parent.mode === MODE.ObjectLiteral)) {
+    if (this._flags.mode === MODE.Statement) {
+      this.restore_mode();
+    }
+
+    if (!this._flags.inline_frame) {
+      this.print_newline();
+    }
+  } else if (this._options.comma_first) {
+    // EXPR or DO_BLOCK
+    // for comma-first, we want to allow a newline before the comma
+    // to turn into a newline after the comma, which we will fixup later
+    this.allow_wrap_or_preserved_newline(current_token);
+  }
+};
+
+Beautifier.prototype.handle_operator = function(current_token) {
+  var isGeneratorAsterisk = current_token.text === '*' &&
+    (reserved_array(this._flags.last_token, ['function', 'yield']) ||
+      (in_array(this._flags.last_token.type, [TOKEN.START_BLOCK, TOKEN.COMMA, TOKEN.END_BLOCK, TOKEN.SEMICOLON]))
+    );
+  var isUnary = in_array(current_token.text, ['-', '+']) && (
+    in_array(this._flags.last_token.type, [TOKEN.START_BLOCK, TOKEN.START_EXPR, TOKEN.EQUALS, TOKEN.OPERATOR]) ||
+    in_array(this._flags.last_token.text, line_starters) ||
+    this._flags.last_token.text === ','
+  );
+
+  if (this.start_of_statement(current_token)) {
+    // The conditional starts the statement if appropriate.
+  } else {
+    var preserve_statement_flags = !isGeneratorAsterisk;
+    this.handle_whitespace_and_comments(current_token, preserve_statement_flags);
+  }
+
+  if (reserved_array(this._flags.last_token, special_words)) {
+    // "return" had a special handling in TK_WORD. Now we need to return the favor
+    this._output.space_before_token = true;
+    this.print_token(current_token);
+    return;
+  }
+
+  // hack for actionscript's import .*;
+  if (current_token.text === '*' && this._flags.last_token.type === TOKEN.DOT) {
+    this.print_token(current_token);
+    return;
+  }
+
+  if (current_token.text === '::') {
+    // no spaces around exotic namespacing syntax operator
+    this.print_token(current_token);
+    return;
+  }
+
+  // Allow line wrapping between operators when operator_position is
+  //   set to before or preserve
+  if (this._flags.last_token.type === TOKEN.OPERATOR && in_array(this._options.operator_position, OPERATOR_POSITION_BEFORE_OR_PRESERVE)) {
+    this.allow_wrap_or_preserved_newline(current_token);
+  }
+
+  if (current_token.text === ':' && this._flags.in_case) {
+    this._flags.case_body = true;
+    this.indent();
+    this.print_token(current_token);
+    this.print_newline();
+    this._flags.in_case = false;
+    return;
+  }
+
+  var space_before = true;
+  var space_after = true;
+  var in_ternary = false;
+  if (current_token.text === ':') {
+    if (this._flags.ternary_depth === 0) {
+      // Colon is invalid javascript outside of ternary and object, but do our best to guess what was meant.
+      space_before = false;
+    } else {
+      this._flags.ternary_depth -= 1;
+      in_ternary = true;
+    }
+  } else if (current_token.text === '?') {
+    this._flags.ternary_depth += 1;
+  }
+
+  // let's handle the operator_position option prior to any conflicting logic
+  if (!isUnary && !isGeneratorAsterisk && this._options.preserve_newlines && in_array(current_token.text, positionable_operators)) {
+    var isColon = current_token.text === ':';
+    var isTernaryColon = (isColon && in_ternary);
+    var isOtherColon = (isColon && !in_ternary);
+
+    switch (this._options.operator_position) {
+      case OPERATOR_POSITION.before_newline:
+        // if the current token is : and it's not a ternary statement then we set space_before to false
+        this._output.space_before_token = !isOtherColon;
+
+        this.print_token(current_token);
+
+        if (!isColon || isTernaryColon) {
+          this.allow_wrap_or_preserved_newline(current_token);
+        }
+
+        this._output.space_before_token = true;
+        return;
+
+      case OPERATOR_POSITION.after_newline:
+        // if the current token is anything but colon, or (via deduction) it's a colon and in a ternary statement,
+        //   then print a newline.
+
+        this._output.space_before_token = true;
+
+        if (!isColon || isTernaryColon) {
+          if (this._tokens.peek().newlines) {
+            this.print_newline(false, true);
+          } else {
+            this.allow_wrap_or_preserved_newline(current_token);
+          }
+        } else {
+          this._output.space_before_token = false;
+        }
+
+        this.print_token(current_token);
+
+        this._output.space_before_token = true;
+        return;
+
+      case OPERATOR_POSITION.preserve_newline:
+        if (!isOtherColon) {
+          this.allow_wrap_or_preserved_newline(current_token);
+        }
+
+        // if we just added a newline, or the current token is : and it's not a ternary statement,
+        //   then we set space_before to false
+        space_before = !(this._output.just_added_newline() || isOtherColon);
+
+        this._output.space_before_token = space_before;
+        this.print_token(current_token);
+        this._output.space_before_token = true;
+        return;
+    }
+  }
+
+  if (isGeneratorAsterisk) {
+    this.allow_wrap_or_preserved_newline(current_token);
+    space_before = false;
+    var next_token = this._tokens.peek();
+    space_after = next_token && in_array(next_token.type, [TOKEN.WORD, TOKEN.RESERVED]);
+  } else if (current_token.text === '...') {
+    this.allow_wrap_or_preserved_newline(current_token);
+    space_before = this._flags.last_token.type === TOKEN.START_BLOCK;
+    space_after = false;
+  } else if (in_array(current_token.text, ['--', '++', '!', '~']) || isUnary) {
+    // unary operators (and binary +/- pretending to be unary) special cases
+    if (this._flags.last_token.type === TOKEN.COMMA || this._flags.last_token.type === TOKEN.START_EXPR) {
+      this.allow_wrap_or_preserved_newline(current_token);
+    }
+
+    space_before = false;
+    space_after = false;
+
+    // http://www.ecma-international.org/ecma-262/5.1/#sec-7.9.1
+    // if there is a newline between -- or ++ and anything else we should preserve it.
+    if (current_token.newlines && (current_token.text === '--' || current_token.text === '++')) {
+      this.print_newline(false, true);
+    }
+
+    if (this._flags.last_token.text === ';' && is_expression(this._flags.mode)) {
+      // for (;; ++i)
+      //        ^^^
+      space_before = true;
+    }
+
+    if (this._flags.last_token.type === TOKEN.RESERVED) {
+      space_before = true;
+    } else if (this._flags.last_token.type === TOKEN.END_EXPR) {
+      space_before = !(this._flags.last_token.text === ']' && (current_token.text === '--' || current_token.text === '++'));
+    } else if (this._flags.last_token.type === TOKEN.OPERATOR) {
+      // a++ + ++b;
+      // a - -b
+      space_before = in_array(current_token.text, ['--', '-', '++', '+']) && in_array(this._flags.last_token.text, ['--', '-', '++', '+']);
+      // + and - are not unary when preceeded by -- or ++ operator
+      // a-- + b
+      // a * +b
+      // a - -b
+      if (in_array(current_token.text, ['+', '-']) && in_array(this._flags.last_token.text, ['--', '++'])) {
+        space_after = true;
+      }
+    }
+
+
+    if (((this._flags.mode === MODE.BlockStatement && !this._flags.inline_frame) || this._flags.mode === MODE.Statement) &&
+      (this._flags.last_token.text === '{' || this._flags.last_token.text === ';')) {
+      // { foo; --i }
+      // foo(); --bar;
+      this.print_newline();
+    }
+  }
+
+  this._output.space_before_token = this._output.space_before_token || space_before;
+  this.print_token(current_token);
+  this._output.space_before_token = space_after;
+};
+
+Beautifier.prototype.handle_block_comment = function(current_token, preserve_statement_flags) {
+  if (this._output.raw) {
+    this._output.add_raw_token(current_token);
+    if (current_token.directives && current_token.directives.preserve === 'end') {
+      // If we're testing the raw output behavior, do not allow a directive to turn it off.
+      this._output.raw = this._options.test_output_raw;
+    }
+    return;
+  }
+
+  if (current_token.directives) {
+    this.print_newline(false, preserve_statement_flags);
+    this.print_token(current_token);
+    if (current_token.directives.preserve === 'start') {
+      this._output.raw = true;
+    }
+    this.print_newline(false, true);
+    return;
+  }
+
+  // inline block
+  if (!acorn.newline.test(current_token.text) && !current_token.newlines) {
+    this._output.space_before_token = true;
+    this.print_token(current_token);
+    this._output.space_before_token = true;
+    return;
+  }
+
+  var lines = split_linebreaks(current_token.text);
+  var j; // iterator for this case
+  var javadoc = false;
+  var starless = false;
+  var lastIndent = current_token.whitespace_before;
+  var lastIndentLength = lastIndent.length;
+
+  // block comment starts with a new line
+  this.print_newline(false, preserve_statement_flags);
+  if (lines.length > 1) {
+    javadoc = all_lines_start_with(lines.slice(1), '*');
+    starless = each_line_matches_indent(lines.slice(1), lastIndent);
+  }
+
+  // first line always indented
+  this.print_token(current_token, lines[0]);
+  for (j = 1; j < lines.length; j++) {
+    this.print_newline(false, true);
+    if (javadoc) {
+      // javadoc: reformat and re-indent
+      this.print_token(current_token, ' ' + ltrim(lines[j]));
+    } else if (starless && lines[j].length > lastIndentLength) {
+      // starless: re-indent non-empty content, avoiding trim
+      this.print_token(current_token, lines[j].substring(lastIndentLength));
+    } else {
+      // normal comments output raw
+      this._output.add_token(lines[j]);
+    }
+  }
+
+  // for comments of more than one line, make sure there's a new line after
+  this.print_newline(false, preserve_statement_flags);
+};
+
+Beautifier.prototype.handle_comment = function(current_token, preserve_statement_flags) {
+  if (current_token.newlines) {
+    this.print_newline(false, preserve_statement_flags);
+  } else {
+    this._output.trim(true);
+  }
+
+  this._output.space_before_token = true;
+  this.print_token(current_token);
+  this.print_newline(false, preserve_statement_flags);
+};
+
+Beautifier.prototype.handle_dot = function(current_token) {
+  if (this.start_of_statement(current_token)) {
+    // The conditional starts the statement if appropriate.
+  } else {
+    this.handle_whitespace_and_comments(current_token, true);
+  }
+
+  if (reserved_array(this._flags.last_token, special_words)) {
+    this._output.space_before_token = false;
+  } else {
+    // allow preserved newlines before dots in general
+    // force newlines on dots after close paren when break_chained - for bar().baz()
+    this.allow_wrap_or_preserved_newline(current_token,
+      this._flags.last_token.text === ')' && this._options.break_chained_methods);
+  }
+
+  // Only unindent chained method dot if this dot starts a new line.
+  // Otherwise the automatic extra indentation removal will handle the over indent
+  if (this._options.unindent_chained_methods && this._output.just_added_newline()) {
+    this.deindent();
+  }
+
+  this.print_token(current_token);
+};
+
+Beautifier.prototype.handle_unknown = function(current_token, preserve_statement_flags) {
+  this.print_token(current_token);
+
+  if (current_token.text[current_token.text.length - 1] === '\n') {
+    this.print_newline(false, preserve_statement_flags);
+  }
+};
+
+Beautifier.prototype.handle_eof = function(current_token) {
+  // Unwind any open statements
+  while (this._flags.mode === MODE.Statement) {
+    this.restore_mode();
+  }
+  this.handle_whitespace_and_comments(current_token);
+};
+
+module.exports.Beautifier = Beautifier;
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*jshint node:true */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
+
+
+
+function OutputLine(parent) {
+  this.__parent = parent;
+  this.__character_count = 0;
+  // use indent_count as a marker for this.__lines that have preserved indentation
+  this.__indent_count = -1;
+  this.__alignment_count = 0;
+
+  this.__items = [];
+}
+
+OutputLine.prototype.item = function(index) {
+  if (index < 0) {
+    return this.__items[this.__items.length + index];
+  } else {
+    return this.__items[index];
+  }
+};
+
+OutputLine.prototype.has_match = function(pattern) {
+  for (var lastCheckedOutput = this.__items.length - 1; lastCheckedOutput >= 0; lastCheckedOutput--) {
+    if (this.__items[lastCheckedOutput].match(pattern)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+OutputLine.prototype.set_indent = function(indent, alignment) {
+  this.__indent_count = indent || 0;
+  this.__alignment_count = alignment || 0;
+  this.__character_count = this.__parent.baseIndentLength + this.__alignment_count + this.__indent_count * this.__parent.indent_length;
+};
+
+OutputLine.prototype.get_character_count = function() {
+  return this.__character_count;
+};
+
+OutputLine.prototype.is_empty = function() {
+  return this.__items.length === 0;
+};
+
+OutputLine.prototype.last = function() {
+  if (!this.is_empty()) {
+    return this.__items[this.__items.length - 1];
+  } else {
+    return null;
+  }
+};
+
+OutputLine.prototype.push = function(item) {
+  this.__items.push(item);
+  this.__character_count += item.length;
+};
+
+OutputLine.prototype.push_raw = function(item) {
+  this.push(item);
+  var last_newline_index = item.lastIndexOf('\n');
+  if (last_newline_index !== -1) {
+    this.__character_count = item.length - last_newline_index;
+  }
+};
+
+OutputLine.prototype.pop = function() {
+  var item = null;
+  if (!this.is_empty()) {
+    item = this.__items.pop();
+    this.__character_count -= item.length;
+  }
+  return item;
+};
+
+OutputLine.prototype.remove_indent = function() {
+  if (this.__indent_count > 0) {
+    this.__indent_count -= 1;
+    this.__character_count -= this.__parent.indent_length;
+  }
+};
+
+OutputLine.prototype.trim = function() {
+  while (this.last() === ' ') {
+    this.__items.pop();
+    this.__character_count -= 1;
+  }
+};
+
+OutputLine.prototype.toString = function() {
+  var result = '';
+  if (!this.is_empty()) {
+    if (this.__indent_count >= 0) {
+      result = this.__parent.get_indent_string(this.__indent_count);
+    }
+    if (this.__alignment_count >= 0) {
+      result += this.__parent.get_alignment_string(this.__alignment_count);
+    }
+    result += this.__items.join('');
+  }
+  return result;
+};
+
+function IndentCache(base_string, level_string) {
+  this.__cache = [base_string];
+  this.__level_string = level_string;
+}
+
+IndentCache.prototype.__ensure_cache = function(level) {
+  while (level >= this.__cache.length) {
+    this.__cache.push(this.__cache[this.__cache.length - 1] + this.__level_string);
+  }
+};
+
+IndentCache.prototype.get_level_string = function(level) {
+  this.__ensure_cache(level);
+  return this.__cache[level];
+};
+
+
+function Output(options, baseIndentString) {
+  var indent_string = options.indent_char;
+  if (options.indent_size > 1) {
+    indent_string = new Array(options.indent_size + 1).join(options.indent_char);
+  }
+
+  // Set to null to continue support for auto detection of base indent level.
+  baseIndentString = baseIndentString || '';
+  if (options.indent_level > 0) {
+    baseIndentString = new Array(options.indent_level + 1).join(indent_string);
+  }
+
+  this.__indent_cache = new IndentCache(baseIndentString, indent_string);
+  this.__alignment_cache = new IndentCache('', ' ');
+  this.baseIndentLength = baseIndentString.length;
+  this.indent_length = indent_string.length;
+  this.raw = false;
+  this._end_with_newline = options.end_with_newline;
+
+  this.__lines = [];
+  this.previous_line = null;
+  this.current_line = null;
+  this.space_before_token = false;
+  // initialize
+  this.__add_outputline();
+}
+
+Output.prototype.__add_outputline = function() {
+  this.previous_line = this.current_line;
+  this.current_line = new OutputLine(this);
+  this.__lines.push(this.current_line);
+};
+
+Output.prototype.get_line_number = function() {
+  return this.__lines.length;
+};
+
+Output.prototype.get_indent_string = function(level) {
+  return this.__indent_cache.get_level_string(level);
+};
+
+Output.prototype.get_alignment_string = function(level) {
+  return this.__alignment_cache.get_level_string(level);
+};
+
+Output.prototype.is_empty = function() {
+  return !this.previous_line && this.current_line.is_empty();
+};
+
+Output.prototype.add_new_line = function(force_newline) {
+  // never newline at the start of file
+  // otherwise, newline only if we didn't just add one or we're forced
+  if (this.is_empty() ||
+    (!force_newline && this.just_added_newline())) {
+    return false;
+  }
+
+  // if raw output is enabled, don't print additional newlines,
+  // but still return True as though you had
+  if (!this.raw) {
+    this.__add_outputline();
+  }
+  return true;
+};
+
+Output.prototype.get_code = function(eol) {
+  var sweet_code = this.__lines.join('\n').replace(/[\r\n\t ]+$/, '');
+
+  if (this._end_with_newline) {
+    sweet_code += '\n';
+  }
+
+  if (eol !== '\n') {
+    sweet_code = sweet_code.replace(/[\n]/g, eol);
+  }
+
+  return sweet_code;
+};
+
+Output.prototype.set_indent = function(indent, alignment) {
+  indent = indent || 0;
+  alignment = alignment || 0;
+
+  // Never indent your first output indent at the start of the file
+  if (this.__lines.length > 1) {
+    this.current_line.set_indent(indent, alignment);
+    return true;
+  }
+  this.current_line.set_indent();
+  return false;
+};
+
+Output.prototype.add_raw_token = function(token) {
+  for (var x = 0; x < token.newlines; x++) {
+    this.__add_outputline();
+  }
+  this.current_line.push(token.whitespace_before);
+  this.current_line.push_raw(token.text);
+  this.space_before_token = false;
+};
+
+Output.prototype.add_token = function(printable_token) {
+  this.add_space_before_token();
+  this.current_line.push(printable_token);
+};
+
+Output.prototype.add_space_before_token = function() {
+  if (this.space_before_token && !this.just_added_newline()) {
+    this.current_line.push(' ');
+  }
+  this.space_before_token = false;
+};
+
+Output.prototype.remove_indent = function(index) {
+  var output_length = this.__lines.length;
+  while (index < output_length) {
+    this.__lines[index].remove_indent();
+    index++;
+  }
+};
+
+Output.prototype.trim = function(eat_newlines) {
+  eat_newlines = (eat_newlines === undefined) ? false : eat_newlines;
+
+  this.current_line.trim(this.indent_string, this.baseIndentString);
+
+  while (eat_newlines && this.__lines.length > 1 &&
+    this.current_line.is_empty()) {
+    this.__lines.pop();
+    this.current_line = this.__lines[this.__lines.length - 1];
+    this.current_line.trim();
+  }
+
+  this.previous_line = this.__lines.length > 1 ?
+    this.__lines[this.__lines.length - 2] : null;
+};
+
+Output.prototype.just_added_newline = function() {
+  return this.current_line.is_empty();
+};
+
+Output.prototype.just_added_blankline = function() {
+  return this.is_empty() ||
+    (this.current_line.is_empty() && this.previous_line.is_empty());
+};
+
+Output.prototype.ensure_empty_line_above = function(starts_with, ends_with) {
+  var index = this.__lines.length - 2;
+  while (index >= 0) {
+    var potentialEmptyLine = this.__lines[index];
+    if (potentialEmptyLine.is_empty()) {
+      break;
+    } else if (potentialEmptyLine.item(0).indexOf(starts_with) !== 0 &&
+      potentialEmptyLine.item(-1) !== ends_with) {
+      this.__lines.splice(index + 1, 0, new OutputLine(this));
+      this.previous_line = this.__lines[this.__lines.length - 2];
+      break;
+    }
+    index--;
+  }
+};
+
+module.exports.Output = Output;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*jshint node:true */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
+
+
+
+function Token(type, text, newlines, whitespace_before) {
+  this.type = type;
+  this.text = text;
+
+  // comments_before are
+  // comments that have a new line before them
+  // and may or may not have a newline after
+  // this is a set of comments before
+  this.comments_before = null; /* inline comment*/
+
+
+  // this.comments_after =  new TokenStream(); // no new line before and newline after
+  this.newlines = newlines || 0;
+  this.whitespace_before = whitespace_before || '';
+  this.parent = null;
+  this.next = null;
+  this.previous = null;
+  this.opened = null;
+  this.closed = null;
+  this.directives = null;
+}
+
+
+module.exports.Token = Token;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* jshint node: true, curly: false */
+// Parts of this section of code is taken from acorn.
+//
+// Acorn was written by Marijn Haverbeke and released under an MIT
+// license. The Unicode regexps (for identifiers and whitespace) were
+// taken from [Esprima](http://esprima.org) by Ariya Hidayat.
+//
+// Git repositories for Acorn are available at
+//
+//     http://marijnhaverbeke.nl/git/acorn
+//     https://github.com/marijnh/acorn.git
+
+// ## Character categories
+
+
+
+
+// acorn used char codes to squeeze the last bit of performance out
+// Beautifier is okay without that, so we're using regex
+// permit $ (36) and @ (64). @ is used in ES7 decorators.
+// 65 through 91 are uppercase letters.
+// permit _ (95).
+// 97 through 123 are lowercase letters.
+var baseASCIIidentifierStartChars = "\x24\x40\x41-\x5a\x5f\x61-\x7a";
+
+// inside an identifier @ is not allowed but 0-9 are.
+var baseASCIIidentifierChars = "\x24\x30-\x39\x41-\x5a\x5f\x61-\x7a";
+
+// Big ugly regular expressions that match characters in the
+// whitespace, identifier, and identifier-start categories. These
+// are only applied when a character is found to actually have a
+// code point above 128.
+var nonASCIIidentifierStartChars = "\xaa\xb5\xba\xc0-\xd6\xd8-\xf6\xf8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u08a0\u08a2-\u08ac\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097f\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c33\u0c35-\u0c39\u0c3d\u0c58\u0c59\u0c60\u0c61\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d60\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f4\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f0\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191c\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19c1-\u19c7\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2119-\u211d\u2124\u2126\u2128\u212a-\u212d\u212f-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u2e2f\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309d-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312d\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fcc\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua697\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua78e\ua790-\ua793\ua7a0-\ua7aa\ua7f8-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa80-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uabc0-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc";
+var nonASCIIidentifierChars = "\u0300-\u036f\u0483-\u0487\u0591-\u05bd\u05bf\u05c1\u05c2\u05c4\u05c5\u05c7\u0610-\u061a\u0620-\u0649\u0672-\u06d3\u06e7-\u06e8\u06fb-\u06fc\u0730-\u074a\u0800-\u0814\u081b-\u0823\u0825-\u0827\u0829-\u082d\u0840-\u0857\u08e4-\u08fe\u0900-\u0903\u093a-\u093c\u093e-\u094f\u0951-\u0957\u0962-\u0963\u0966-\u096f\u0981-\u0983\u09bc\u09be-\u09c4\u09c7\u09c8\u09d7\u09df-\u09e0\u0a01-\u0a03\u0a3c\u0a3e-\u0a42\u0a47\u0a48\u0a4b-\u0a4d\u0a51\u0a66-\u0a71\u0a75\u0a81-\u0a83\u0abc\u0abe-\u0ac5\u0ac7-\u0ac9\u0acb-\u0acd\u0ae2-\u0ae3\u0ae6-\u0aef\u0b01-\u0b03\u0b3c\u0b3e-\u0b44\u0b47\u0b48\u0b4b-\u0b4d\u0b56\u0b57\u0b5f-\u0b60\u0b66-\u0b6f\u0b82\u0bbe-\u0bc2\u0bc6-\u0bc8\u0bca-\u0bcd\u0bd7\u0be6-\u0bef\u0c01-\u0c03\u0c46-\u0c48\u0c4a-\u0c4d\u0c55\u0c56\u0c62-\u0c63\u0c66-\u0c6f\u0c82\u0c83\u0cbc\u0cbe-\u0cc4\u0cc6-\u0cc8\u0cca-\u0ccd\u0cd5\u0cd6\u0ce2-\u0ce3\u0ce6-\u0cef\u0d02\u0d03\u0d46-\u0d48\u0d57\u0d62-\u0d63\u0d66-\u0d6f\u0d82\u0d83\u0dca\u0dcf-\u0dd4\u0dd6\u0dd8-\u0ddf\u0df2\u0df3\u0e34-\u0e3a\u0e40-\u0e45\u0e50-\u0e59\u0eb4-\u0eb9\u0ec8-\u0ecd\u0ed0-\u0ed9\u0f18\u0f19\u0f20-\u0f29\u0f35\u0f37\u0f39\u0f41-\u0f47\u0f71-\u0f84\u0f86-\u0f87\u0f8d-\u0f97\u0f99-\u0fbc\u0fc6\u1000-\u1029\u1040-\u1049\u1067-\u106d\u1071-\u1074\u1082-\u108d\u108f-\u109d\u135d-\u135f\u170e-\u1710\u1720-\u1730\u1740-\u1750\u1772\u1773\u1780-\u17b2\u17dd\u17e0-\u17e9\u180b-\u180d\u1810-\u1819\u1920-\u192b\u1930-\u193b\u1951-\u196d\u19b0-\u19c0\u19c8-\u19c9\u19d0-\u19d9\u1a00-\u1a15\u1a20-\u1a53\u1a60-\u1a7c\u1a7f-\u1a89\u1a90-\u1a99\u1b46-\u1b4b\u1b50-\u1b59\u1b6b-\u1b73\u1bb0-\u1bb9\u1be6-\u1bf3\u1c00-\u1c22\u1c40-\u1c49\u1c5b-\u1c7d\u1cd0-\u1cd2\u1d00-\u1dbe\u1e01-\u1f15\u200c\u200d\u203f\u2040\u2054\u20d0-\u20dc\u20e1\u20e5-\u20f0\u2d81-\u2d96\u2de0-\u2dff\u3021-\u3028\u3099\u309a\ua640-\ua66d\ua674-\ua67d\ua69f\ua6f0-\ua6f1\ua7f8-\ua800\ua806\ua80b\ua823-\ua827\ua880-\ua881\ua8b4-\ua8c4\ua8d0-\ua8d9\ua8f3-\ua8f7\ua900-\ua909\ua926-\ua92d\ua930-\ua945\ua980-\ua983\ua9b3-\ua9c0\uaa00-\uaa27\uaa40-\uaa41\uaa4c-\uaa4d\uaa50-\uaa59\uaa7b\uaae0-\uaae9\uaaf2-\uaaf3\uabc0-\uabe1\uabec\uabed\uabf0-\uabf9\ufb20-\ufb28\ufe00-\ufe0f\ufe20-\ufe26\ufe33\ufe34\ufe4d-\ufe4f\uff10-\uff19\uff3f";
+//var nonASCIIidentifierStart = new RegExp("[" + nonASCIIidentifierStartChars + "]");
+//var nonASCIIidentifier = new RegExp("[" + nonASCIIidentifierStartChars + nonASCIIidentifierChars + "]");
+
+var identifierStart = "[" + baseASCIIidentifierStartChars + nonASCIIidentifierStartChars + "]";
+var identifierChars = "[" + baseASCIIidentifierChars + nonASCIIidentifierStartChars + nonASCIIidentifierChars + "]*";
+
+exports.identifier = new RegExp(identifierStart + identifierChars, 'g');
+
+
+var nonASCIIwhitespace = /[\u1680\u180e\u2000-\u200a\u202f\u205f\u3000\ufeff]/; // jshint ignore:line
+
+// Whether a single character denotes a newline.
+
+exports.newline = /[\n\r\u2028\u2029]/;
+
+// Matches a whole line break (where CRLF is considered a single
+// line break). Used to count lines.
+
+// in javascript, these two differ
+// in python they are the same, different methods are called on them
+exports.lineBreak = new RegExp('\r\n|' + exports.newline.source);
+exports.allLineBreaks = new RegExp(exports.lineBreak.source, 'g');
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*jshint node:true */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
+
+
+
+var BaseOptions = __webpack_require__(6).Options;
+
+var validPositionValues = ['before-newline', 'after-newline', 'preserve-newline'];
+
+function Options(options) {
+  BaseOptions.call(this, options, 'js');
+
+  // compatibility, re
+  var raw_brace_style = this.raw_options.brace_style || null;
+  if (raw_brace_style === "expand-strict") { //graceful handling of deprecated option
+    this.raw_options.brace_style = "expand";
+  } else if (raw_brace_style === "collapse-preserve-inline") { //graceful handling of deprecated option
+    this.raw_options.brace_style = "collapse,preserve-inline";
+  } else if (this.raw_options.braces_on_own_line !== undefined) { //graceful handling of deprecated option
+    this.raw_options.brace_style = this.raw_options.braces_on_own_line ? "expand" : "collapse";
+    // } else if (!raw_brace_style) { //Nothing exists to set it
+    //   raw_brace_style = "collapse";
+  }
+
+  //preserve-inline in delimited string will trigger brace_preserve_inline, everything
+  //else is considered a brace_style and the last one only will have an effect
+
+  var brace_style_split = this._get_selection_list('brace_style', ['collapse', 'expand', 'end-expand', 'none', 'preserve-inline']);
+
+  this.brace_preserve_inline = false; //Defaults in case one or other was not specified in meta-option
+  this.brace_style = "collapse";
+
+  for (var bs = 0; bs < brace_style_split.length; bs++) {
+    if (brace_style_split[bs] === "preserve-inline") {
+      this.brace_preserve_inline = true;
+    } else {
+      this.brace_style = brace_style_split[bs];
+    }
+  }
+
+  this.unindent_chained_methods = this._get_boolean('unindent_chained_methods');
+  this.break_chained_methods = this._get_boolean('break_chained_methods');
+  this.space_in_paren = this._get_boolean('space_in_paren');
+  this.space_in_empty_paren = this._get_boolean('space_in_empty_paren');
+  this.jslint_happy = this._get_boolean('jslint_happy');
+  this.space_after_anon_function = this._get_boolean('space_after_anon_function');
+  this.space_after_named_function = this._get_boolean('space_after_named_function');
+  this.keep_array_indentation = this._get_boolean('keep_array_indentation');
+  this.space_before_conditional = this._get_boolean('space_before_conditional', true);
+  this.unescape_strings = this._get_boolean('unescape_strings');
+  this.e4x = this._get_boolean('e4x');
+  this.comma_first = this._get_boolean('comma_first');
+  this.operator_position = this._get_selection('operator_position', validPositionValues);
+
+  // For testing of beautify preserve:start directive
+  this.test_output_raw = this._get_boolean('test_output_raw');
+
+  // force this._options.space_after_anon_function to true if this._options.jslint_happy
+  if (this.jslint_happy) {
+    this.space_after_anon_function = true;
+  }
+
+}
+Options.prototype = new BaseOptions();
+
+
+
+module.exports.Options = Options;
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*jshint node:true */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
+
+
+
+function Options(options, merge_child_field) {
+  this.raw_options = _mergeOpts(options, merge_child_field);
+
+  // Support passing the source text back with no change
+  this.disabled = this._get_boolean('disabled');
+
+  this.eol = this._get_characters('eol', 'auto');
+  this.end_with_newline = this._get_boolean('end_with_newline');
+  this.indent_size = this._get_number('indent_size', 4);
+  this.indent_char = this._get_characters('indent_char', ' ');
+  this.indent_level = this._get_number('indent_level');
+
+  this.preserve_newlines = this._get_boolean('preserve_newlines', true);
+  this.max_preserve_newlines = this._get_number('max_preserve_newlines', 32786);
+  if (!this.preserve_newlines) {
+    this.max_preserve_newlines = 0;
+  }
+
+  this.indent_with_tabs = this._get_boolean('indent_with_tabs');
+  if (this.indent_with_tabs) {
+    this.indent_char = '\t';
+    this.indent_size = 1;
+  }
+
+  // Backwards compat with 1.3.x
+  this.wrap_line_length = this._get_number('wrap_line_length', this._get_number('max_char'));
+
+}
+
+Options.prototype._get_array = function(name, default_value) {
+  var option_value = this.raw_options[name];
+  var result = default_value || [];
+  if (typeof option_value === 'object') {
+    if (option_value !== null && typeof option_value.concat === 'function') {
+      result = option_value.concat();
+    }
+  } else if (typeof option_value === 'string') {
+    result = option_value.split(/[^a-zA-Z0-9_\/\-]+/);
+  }
+  return result;
+};
+
+Options.prototype._get_boolean = function(name, default_value) {
+  var option_value = this.raw_options[name];
+  var result = option_value === undefined ? !!default_value : !!option_value;
+  return result;
+};
+
+Options.prototype._get_characters = function(name, default_value) {
+  var option_value = this.raw_options[name];
+  var result = default_value || '';
+  if (typeof option_value === 'string') {
+    result = option_value.replace(/\\r/, '\r').replace(/\\n/, '\n').replace(/\\t/, '\t');
+  }
+  return result;
+};
+
+Options.prototype._get_number = function(name, default_value) {
+  var option_value = this.raw_options[name];
+  default_value = parseInt(default_value, 10);
+  if (isNaN(default_value)) {
+    default_value = 0;
+  }
+  var result = parseInt(option_value, 10);
+  if (isNaN(result)) {
+    result = default_value;
+  }
+  return result;
+};
+
+Options.prototype._get_selection = function(name, selection_list, default_value) {
+  var result = this._get_selection_list(name, selection_list, default_value);
+  if (result.length !== 1) {
+    throw new Error(
+      "Invalid Option Value: The option '" + name + "' can only be one of the following values:\n" +
+      selection_list + "\nYou passed in: '" + this.raw_options[name] + "'");
+  }
+
+  return result[0];
+};
+
+
+Options.prototype._get_selection_list = function(name, selection_list, default_value) {
+  if (!selection_list || selection_list.length === 0) {
+    throw new Error("Selection list cannot be empty.");
+  }
+
+  default_value = default_value || [selection_list[0]];
+  if (!this._is_valid_selection(default_value, selection_list)) {
+    throw new Error("Invalid Default Value!");
+  }
+
+  var result = this._get_array(name, default_value);
+  if (!this._is_valid_selection(result, selection_list)) {
+    throw new Error(
+      "Invalid Option Value: The option '" + name + "' can contain only the following values:\n" +
+      selection_list + "\nYou passed in: '" + this.raw_options[name] + "'");
+  }
+
+  return result;
+};
+
+Options.prototype._is_valid_selection = function(result, selection_list) {
+  return result.length && selection_list.length &&
+    !result.some(function(item) { return selection_list.indexOf(item) === -1; });
+};
+
+
+// merges child options up with the parent options object
+// Example: obj = {a: 1, b: {a: 2}}
+//          mergeOpts(obj, 'b')
+//
+//          Returns: {a: 2}
+function _mergeOpts(allOptions, childFieldName) {
+  var finalOpts = {};
+  allOptions = _normalizeOpts(allOptions);
+  var name;
+
+  for (name in allOptions) {
+    if (name !== childFieldName) {
+      finalOpts[name] = allOptions[name];
+    }
+  }
+
+  //merge in the per type settings for the childFieldName
+  if (childFieldName && allOptions[childFieldName]) {
+    for (name in allOptions[childFieldName]) {
+      finalOpts[name] = allOptions[childFieldName][name];
+    }
+  }
+  return finalOpts;
+}
+
+function _normalizeOpts(options) {
+  var convertedOpts = {};
+  var key;
+
+  for (key in options) {
+    var newKey = key.replace(/-/g, "_");
+    convertedOpts[newKey] = options[key];
+  }
+  return convertedOpts;
+}
+
+module.exports.Options = Options;
+module.exports.normalizeOpts = _normalizeOpts;
+module.exports.mergeOpts = _mergeOpts;
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*jshint node:true */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
+
+
+
+var InputScanner = __webpack_require__(8).InputScanner;
+var BaseTokenizer = __webpack_require__(9).Tokenizer;
+var BASETOKEN = __webpack_require__(9).TOKEN;
+var Directives = __webpack_require__(11).Directives;
+var acorn = __webpack_require__(4);
+
+function in_array(what, arr) {
+  return arr.indexOf(what) !== -1;
+}
+
+
+var TOKEN = {
+  START_EXPR: 'TK_START_EXPR',
+  END_EXPR: 'TK_END_EXPR',
+  START_BLOCK: 'TK_START_BLOCK',
+  END_BLOCK: 'TK_END_BLOCK',
+  WORD: 'TK_WORD',
+  RESERVED: 'TK_RESERVED',
+  SEMICOLON: 'TK_SEMICOLON',
+  STRING: 'TK_STRING',
+  EQUALS: 'TK_EQUALS',
+  OPERATOR: 'TK_OPERATOR',
+  COMMA: 'TK_COMMA',
+  BLOCK_COMMENT: 'TK_BLOCK_COMMENT',
+  COMMENT: 'TK_COMMENT',
+  DOT: 'TK_DOT',
+  UNKNOWN: 'TK_UNKNOWN',
+  START: BASETOKEN.START,
+  RAW: BASETOKEN.RAW,
+  EOF: BASETOKEN.EOF
+};
+
+
+var directives_core = new Directives(/\/\*/, /\*\//);
+
+var number_pattern = /0[xX][0123456789abcdefABCDEF]*|0[oO][01234567]*|0[bB][01]*|\d+n|(?:\.\d+|\d+\.?\d*)(?:[eE][+-]?\d+)?/g;
+
+var digit = /[0-9]/;
+
+// Dot "." must be distinguished from "..." and decimal
+var dot_pattern = /[^\d\.]/;
+
+var positionable_operators = (
+  ">>> === !== " +
+  "<< && >= ** != == <= >> || " +
+  "< / - + > : & % ? ^ | *").split(' ');
+
+// IMPORTANT: this must be sorted longest to shortest or tokenizing many not work.
+// Also, you must update possitionable operators separately from punct
+var punct =
+  ">>>= " +
+  "... >>= <<= === >>> !== **= " +
+  "=> ^= :: /= << <= == && -= >= >> != -- += ** || ++ %= &= *= |= " +
+  "= ! ? > < : / ^ - + * & % ~ |";
+
+punct = punct.replace(/[-[\]{}()*+?.,\\^$|#]/g, "\\$&");
+punct = punct.replace(/ /g, '|');
+
+var punct_pattern = new RegExp(punct, 'g');
+var shebang_pattern = /#![^\n\r\u2028\u2029]*(?:\r\n|[\n\r\u2028\u2029])?/g;
+var include_pattern = /#include[^\n\r\u2028\u2029]*(?:\r\n|[\n\r\u2028\u2029])?/g;
+
+// words which should always start on new line.
+var line_starters = 'continue,try,throw,return,var,let,const,if,switch,case,default,for,while,break,function,import,export'.split(',');
+var reserved_words = line_starters.concat(['do', 'in', 'of', 'else', 'get', 'set', 'new', 'catch', 'finally', 'typeof', 'yield', 'async', 'await', 'from', 'as']);
+var reserved_word_pattern = new RegExp('^(?:' + reserved_words.join('|') + ')$');
+
+//  /* ... */ comment ends with nearest */ or end of file
+var block_comment_pattern = /\/\*(?:[\s\S]*?)((?:\*\/)|$)/g;
+
+// comment ends just before nearest linefeed or end of file
+var comment_pattern = /\/\/(?:[^\n\r\u2028\u2029]*)/g;
+
+var template_pattern = /(?:(?:<\?php|<\?=)[\s\S]*?\?>)|(?:<%[\s\S]*?%>)/g;
+
+var in_html_comment;
+
+var Tokenizer = function(input_string, options) {
+  BaseTokenizer.call(this, input_string, options);
+
+  this._whitespace_pattern = /[\n\r\u2028\u2029\t\u000B\u00A0\u1680\u180e\u2000-\u200a\u202f\u205f\u3000\ufeff ]+/g;
+  this._newline_pattern = /([^\n\r\u2028\u2029]*)(\r\n|[\n\r\u2028\u2029])?/g;
+};
+Tokenizer.prototype = new BaseTokenizer();
+
+Tokenizer.prototype._is_comment = function(current_token) {
+  return current_token.type === TOKEN.COMMENT || current_token.type === TOKEN.BLOCK_COMMENT || current_token.type === TOKEN.UNKNOWN;
+};
+
+Tokenizer.prototype._is_opening = function(current_token) {
+  return current_token.type === TOKEN.START_BLOCK || current_token.type === TOKEN.START_EXPR;
+};
+
+Tokenizer.prototype._is_closing = function(current_token, open_token) {
+  return (current_token.type === TOKEN.END_BLOCK || current_token.type === TOKEN.END_EXPR) &&
+    (open_token && (
+      (current_token.text === ']' && open_token.text === '[') ||
+      (current_token.text === ')' && open_token.text === '(') ||
+      (current_token.text === '}' && open_token.text === '{')));
+};
+
+Tokenizer.prototype._reset = function() {
+  in_html_comment = false;
+};
+
+Tokenizer.prototype._get_next_token = function(previous_token, open_token) { // jshint unused:false
+  this._readWhitespace();
+  var token = null;
+  var c = this._input.peek();
+
+  token = token || this._read_singles(c);
+  token = token || this._read_word(previous_token);
+  token = token || this._read_comment(c);
+  token = token || this._read_string(c);
+  token = token || this._read_regexp(c, previous_token);
+  token = token || this._read_xml(c, previous_token);
+  token = token || this._read_non_javascript(c);
+  token = token || this._read_punctuation();
+  token = token || this._create_token(TOKEN.UNKNOWN, this._input.next());
+
+  return token;
+};
+
+Tokenizer.prototype._read_word = function(previous_token) {
+  var resulting_string;
+  resulting_string = this._input.read(acorn.identifier);
+  if (resulting_string !== '') {
+    if (!(previous_token.type === TOKEN.DOT ||
+        (previous_token.type === TOKEN.RESERVED && (previous_token.text === 'set' || previous_token.text === 'get'))) &&
+      reserved_word_pattern.test(resulting_string)) {
+      if (resulting_string === 'in' || resulting_string === 'of') { // hack for 'in' and 'of' operators
+        return this._create_token(TOKEN.OPERATOR, resulting_string);
+      }
+      return this._create_token(TOKEN.RESERVED, resulting_string);
+    }
+
+    return this._create_token(TOKEN.WORD, resulting_string);
+  }
+
+  resulting_string = this._input.read(number_pattern);
+  if (resulting_string !== '') {
+    return this._create_token(TOKEN.WORD, resulting_string);
+  }
+};
+
+Tokenizer.prototype._read_singles = function(c) {
+  var token = null;
+  if (c === null) {
+    token = this._create_token(TOKEN.EOF, '');
+  } else if (c === '(' || c === '[') {
+    token = this._create_token(TOKEN.START_EXPR, c);
+  } else if (c === ')' || c === ']') {
+    token = this._create_token(TOKEN.END_EXPR, c);
+  } else if (c === '{') {
+    token = this._create_token(TOKEN.START_BLOCK, c);
+  } else if (c === '}') {
+    token = this._create_token(TOKEN.END_BLOCK, c);
+  } else if (c === ';') {
+    token = this._create_token(TOKEN.SEMICOLON, c);
+  } else if (c === '.' && dot_pattern.test(this._input.peek(1))) {
+    token = this._create_token(TOKEN.DOT, c);
+  } else if (c === ',') {
+    token = this._create_token(TOKEN.COMMA, c);
+  }
+
+  if (token) {
+    this._input.next();
+  }
+  return token;
+};
+
+Tokenizer.prototype._read_punctuation = function() {
+  var resulting_string = this._input.read(punct_pattern);
+
+  if (resulting_string !== '') {
+    if (resulting_string === '=') {
+      return this._create_token(TOKEN.EQUALS, resulting_string);
+    } else {
+      return this._create_token(TOKEN.OPERATOR, resulting_string);
+    }
+  }
+};
+
+Tokenizer.prototype._read_non_javascript = function(c) {
+  var resulting_string = '';
+
+  if (c === '#') {
+    if (this._is_first_token()) {
+      resulting_string = this._input.read(shebang_pattern);
+
+      if (resulting_string) {
+        return this._create_token(TOKEN.UNKNOWN, resulting_string.trim() + '\n');
+      }
+    }
+
+    // handles extendscript #includes
+    resulting_string = this._input.read(include_pattern);
+
+    if (resulting_string) {
+      return this._create_token(TOKEN.UNKNOWN, resulting_string.trim() + '\n');
+    }
+
+    c = this._input.next();
+
+    // Spidermonkey-specific sharp variables for circular references. Considered obsolete.
+    var sharp = '#';
+    if (this._input.hasNext() && this._input.testChar(digit)) {
+      do {
+        c = this._input.next();
+        sharp += c;
+      } while (this._input.hasNext() && c !== '#' && c !== '=');
+      if (c === '#') {
+        //
+      } else if (this._input.peek() === '[' && this._input.peek(1) === ']') {
+        sharp += '[]';
+        this._input.next();
+        this._input.next();
+      } else if (this._input.peek() === '{' && this._input.peek(1) === '}') {
+        sharp += '{}';
+        this._input.next();
+        this._input.next();
+      }
+      return this._create_token(TOKEN.WORD, sharp);
+    }
+
+    this._input.back();
+
+  } else if (c === '<') {
+    if (this._input.peek(1) === '?' || this._input.peek(1) === '%') {
+      resulting_string = this._input.read(template_pattern);
+      if (resulting_string) {
+        resulting_string = resulting_string.replace(acorn.allLineBreaks, '\n');
+        return this._create_token(TOKEN.STRING, resulting_string);
+      }
+    } else if (this._input.match(/<\!--/g)) {
+      c = '<!--';
+      while (this._input.hasNext() && !this._input.testChar(acorn.newline)) {
+        c += this._input.next();
+      }
+      in_html_comment = true;
+      return this._create_token(TOKEN.COMMENT, c);
+    }
+  } else if (c === '-' && in_html_comment && this._input.match(/-->/g)) {
+    in_html_comment = false;
+    return this._create_token(TOKEN.COMMENT, '-->');
+  }
+
+  return null;
+};
+
+Tokenizer.prototype._read_comment = function(c) {
+  var token = null;
+  if (c === '/') {
+    var comment = '';
+    if (this._input.peek(1) === '*') {
+      // peek for comment /* ... */
+      comment = this._input.read(block_comment_pattern);
+      var directives = directives_core.get_directives(comment);
+      if (directives && directives.ignore === 'start') {
+        comment += directives_core.readIgnored(this._input);
+      }
+      comment = comment.replace(acorn.allLineBreaks, '\n');
+      token = this._create_token(TOKEN.BLOCK_COMMENT, comment);
+      token.directives = directives;
+    } else if (this._input.peek(1) === '/') {
+      // peek for comment // ...
+      comment = this._input.read(comment_pattern);
+      token = this._create_token(TOKEN.COMMENT, comment);
+    }
+  }
+  return token;
+};
+
+Tokenizer.prototype._read_string = function(c) {
+  if (c === '`' || c === "'" || c === '"') {
+    var resulting_string = this._input.next();
+    this.has_char_escapes = false;
+
+    if (c === '`') {
+      resulting_string += this._read_string_recursive('`', true, '${');
+    } else {
+      resulting_string += this._read_string_recursive(c);
+    }
+
+    if (this.has_char_escapes && this._options.unescape_strings) {
+      resulting_string = unescape_string(resulting_string);
+    }
+    if (this._input.peek() === c) {
+      resulting_string += this._input.next();
+    }
+
+    return this._create_token(TOKEN.STRING, resulting_string);
+  }
+
+  return null;
+};
+
+Tokenizer.prototype._allow_regexp_or_xml = function(previous_token) {
+  // regex and xml can only appear in specific locations during parsing
+  return (previous_token.type === TOKEN.RESERVED && in_array(previous_token.text, ['return', 'case', 'throw', 'else', 'do', 'typeof', 'yield'])) ||
+    (previous_token.type === TOKEN.END_EXPR && previous_token.text === ')' &&
+      previous_token.opened.previous.type === TOKEN.RESERVED && in_array(previous_token.opened.previous.text, ['if', 'while', 'for'])) ||
+    (in_array(previous_token.type, [TOKEN.COMMENT, TOKEN.START_EXPR, TOKEN.START_BLOCK, TOKEN.START,
+      TOKEN.END_BLOCK, TOKEN.OPERATOR, TOKEN.EQUALS, TOKEN.EOF, TOKEN.SEMICOLON, TOKEN.COMMA
+    ]));
+};
+
+Tokenizer.prototype._read_regexp = function(c, previous_token) {
+
+  if (c === '/' && this._allow_regexp_or_xml(previous_token)) {
+    // handle regexp
+    //
+    var resulting_string = this._input.next();
+    var esc = false;
+
+    var in_char_class = false;
+    while (this._input.hasNext() &&
+      ((esc || in_char_class || this._input.peek() !== c) &&
+        !this._input.testChar(acorn.newline))) {
+      resulting_string += this._input.peek();
+      if (!esc) {
+        esc = this._input.peek() === '\\';
+        if (this._input.peek() === '[') {
+          in_char_class = true;
+        } else if (this._input.peek() === ']') {
+          in_char_class = false;
+        }
+      } else {
+        esc = false;
+      }
+      this._input.next();
+    }
+
+    if (this._input.peek() === c) {
+      resulting_string += this._input.next();
+
+      // regexps may have modifiers /regexp/MOD , so fetch those, too
+      // Only [gim] are valid, but if the user puts in garbage, do what we can to take it.
+      resulting_string += this._input.read(acorn.identifier);
+    }
+    return this._create_token(TOKEN.STRING, resulting_string);
+  }
+  return null;
+};
+
+
+var startXmlRegExp = /<()([-a-zA-Z:0-9_.]+|{[\s\S]+?}|!\[CDATA\[[\s\S]*?\]\])(\s+{[\s\S]+?}|\s+[-a-zA-Z:0-9_.]+|\s+[-a-zA-Z:0-9_.]+\s*=\s*('[^']*'|"[^"]*"|{[\s\S]+?}))*\s*(\/?)\s*>/g;
+var xmlRegExp = /[\s\S]*?<(\/?)([-a-zA-Z:0-9_.]+|{[\s\S]+?}|!\[CDATA\[[\s\S]*?\]\])(\s+{[\s\S]+?}|\s+[-a-zA-Z:0-9_.]+|\s+[-a-zA-Z:0-9_.]+\s*=\s*('[^']*'|"[^"]*"|{[\s\S]+?}))*\s*(\/?)\s*>/g;
+
+Tokenizer.prototype._read_xml = function(c, previous_token) {
+
+  if (this._options.e4x && c === "<" && this._input.test(startXmlRegExp) && this._allow_regexp_or_xml(previous_token)) {
+    // handle e4x xml literals
+    //
+    var xmlStr = '';
+    var match = this._input.match(startXmlRegExp);
+    if (match) {
+      // Trim root tag to attempt to
+      var rootTag = match[2].replace(/^{\s+/, '{').replace(/\s+}$/, '}');
+      var isCurlyRoot = rootTag.indexOf('{') === 0;
+      var depth = 0;
+      while (match) {
+        var isEndTag = !!match[1];
+        var tagName = match[2];
+        var isSingletonTag = (!!match[match.length - 1]) || (tagName.slice(0, 8) === "![CDATA[");
+        if (!isSingletonTag &&
+          (tagName === rootTag || (isCurlyRoot && tagName.replace(/^{\s+/, '{').replace(/\s+}$/, '}')))) {
+          if (isEndTag) {
+            --depth;
+          } else {
+            ++depth;
+          }
+        }
+        xmlStr += match[0];
+        if (depth <= 0) {
+          break;
+        }
+        match = this._input.match(xmlRegExp);
+      }
+      // if we didn't close correctly, keep unformatted.
+      if (!match) {
+        xmlStr += this._input.match(/[\s\S]*/g)[0];
+      }
+      xmlStr = xmlStr.replace(acorn.allLineBreaks, '\n');
+      return this._create_token(TOKEN.STRING, xmlStr);
+    }
+  }
+
+  return null;
+};
+
+function unescape_string(s) {
+  // You think that a regex would work for this
+  // return s.replace(/\\x([0-9a-f]{2})/gi, function(match, val) {
+  //         return String.fromCharCode(parseInt(val, 16));
+  //     })
+  // However, dealing with '\xff', '\\xff', '\\\xff' makes this more fun.
+  var out = '',
+    escaped = 0;
+
+  var input_scan = new InputScanner(s);
+  var matched = null;
+
+  while (input_scan.hasNext()) {
+    // Keep any whitespace, non-slash characters
+    // also keep slash pairs.
+    matched = input_scan.match(/([\s]|[^\\]|\\\\)+/g);
+
+    if (matched) {
+      out += matched[0];
+    }
+
+    if (input_scan.peek() === '\\') {
+      input_scan.next();
+      if (input_scan.peek() === 'x') {
+        matched = input_scan.match(/x([0-9A-Fa-f]{2})/g);
+      } else if (input_scan.peek() === 'u') {
+        matched = input_scan.match(/u([0-9A-Fa-f]{4})/g);
+      } else {
+        out += '\\';
+        if (input_scan.hasNext()) {
+          out += input_scan.next();
+        }
+        continue;
+      }
+
+      // If there's some error decoding, return the original string
+      if (!matched) {
+        return s;
+      }
+
+      escaped = parseInt(matched[1], 16);
+
+      if (escaped > 0x7e && escaped <= 0xff && matched[0].indexOf('x') === 0) {
+        // we bail out on \x7f..\xff,
+        // leaving whole string escaped,
+        // as it's probably completely binary
+        return s;
+      } else if (escaped >= 0x00 && escaped < 0x20) {
+        // leave 0x00...0x1f escaped
+        out += '\\' + matched[0];
+        continue;
+      } else if (escaped === 0x22 || escaped === 0x27 || escaped === 0x5c) {
+        // single-quote, apostrophe, backslash - escape these
+        out += '\\' + String.fromCharCode(escaped);
+      } else {
+        out += String.fromCharCode(escaped);
+      }
+    }
+  }
+
+  return out;
+}
+
+// handle string
+//
+Tokenizer.prototype._read_string_recursive = function(delimiter, allow_unescaped_newlines, start_sub) {
+  // Template strings can travers lines without escape characters.
+  // Other strings cannot
+  var current_char;
+  var resulting_string = '';
+  var esc = false;
+  while (this._input.hasNext()) {
+    current_char = this._input.peek();
+    if (!(esc || (current_char !== delimiter &&
+        (allow_unescaped_newlines || !acorn.newline.test(current_char))))) {
+      break;
+    }
+
+    // Handle \r\n linebreaks after escapes or in template strings
+    if ((esc || allow_unescaped_newlines) && acorn.newline.test(current_char)) {
+      if (current_char === '\r' && this._input.peek(1) === '\n') {
+        this._input.next();
+        current_char = this._input.peek();
+      }
+      resulting_string += '\n';
+    } else {
+      resulting_string += current_char;
+    }
+
+    if (esc) {
+      if (current_char === 'x' || current_char === 'u') {
+        this.has_char_escapes = true;
+      }
+      esc = false;
+    } else {
+      esc = current_char === '\\';
+    }
+
+    this._input.next();
+
+    if (start_sub && resulting_string.indexOf(start_sub, resulting_string.length - start_sub.length) !== -1) {
+      if (delimiter === '`') {
+        resulting_string += this._read_string_recursive('}', allow_unescaped_newlines, '`');
+      } else {
+        resulting_string += this._read_string_recursive('`', allow_unescaped_newlines, '${');
+      }
+
+      if (this._input.hasNext()) {
+        resulting_string += this._input.next();
+      }
+    }
+  }
+
+  return resulting_string;
+};
+
+module.exports.Tokenizer = Tokenizer;
+module.exports.TOKEN = TOKEN;
+module.exports.positionable_operators = positionable_operators.slice();
+module.exports.line_starters = line_starters.slice();
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*jshint node:true */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
+
+
+
+function InputScanner(input_string) {
+  this.__input = input_string || '';
+  this.__input_length = this.__input.length;
+  this.__position = 0;
+}
+
+InputScanner.prototype.restart = function() {
+  this.__position = 0;
+};
+
+InputScanner.prototype.back = function() {
+  if (this.__position > 0) {
+    this.__position -= 1;
+  }
+};
+
+InputScanner.prototype.hasNext = function() {
+  return this.__position < this.__input_length;
+};
+
+InputScanner.prototype.next = function() {
+  var val = null;
+  if (this.hasNext()) {
+    val = this.__input.charAt(this.__position);
+    this.__position += 1;
+  }
+  return val;
+};
+
+InputScanner.prototype.peek = function(index) {
+  var val = null;
+  index = index || 0;
+  index += this.__position;
+  if (index >= 0 && index < this.__input_length) {
+    val = this.__input.charAt(index);
+  }
+  return val;
+};
+
+InputScanner.prototype.test = function(pattern, index) {
+  index = index || 0;
+  index += this.__position;
+  pattern.lastIndex = index;
+
+  if (index >= 0 && index < this.__input_length) {
+    var pattern_match = pattern.exec(this.__input);
+    return pattern_match && pattern_match.index === index;
+  } else {
+    return false;
+  }
+};
+
+InputScanner.prototype.testChar = function(pattern, index) {
+  // test one character regex match
+  var val = this.peek(index);
+  return val !== null && pattern.test(val);
+};
+
+InputScanner.prototype.match = function(pattern) {
+  pattern.lastIndex = this.__position;
+  var pattern_match = pattern.exec(this.__input);
+  if (pattern_match && pattern_match.index === this.__position) {
+    this.__position += pattern_match[0].length;
+  } else {
+    pattern_match = null;
+  }
+  return pattern_match;
+};
+
+InputScanner.prototype.read = function(pattern) {
+  var val = '';
+  var match = this.match(pattern);
+  if (match) {
+    val = match[0];
+  }
+  return val;
+};
+
+InputScanner.prototype.readUntil = function(pattern, include_match) {
+  var val = '';
+  var match_index = this.__position;
+  pattern.lastIndex = this.__position;
+  var pattern_match = pattern.exec(this.__input);
+  if (pattern_match) {
+    if (include_match) {
+      match_index = pattern_match.index + pattern_match[0].length;
+    } else {
+      match_index = pattern_match.index;
+    }
+  } else {
+    match_index = this.__input_length;
+  }
+
+  val = this.__input.substring(this.__position, match_index);
+  this.__position = match_index;
+  return val;
+};
+
+InputScanner.prototype.readUntilAfter = function(pattern) {
+  return this.readUntil(pattern, true);
+};
+
+/* css beautifier legacy helpers */
+InputScanner.prototype.peekUntilAfter = function(pattern) {
+  var start = this.__position;
+  var val = this.readUntilAfter(pattern);
+  this.__position = start;
+  return val;
+};
+
+InputScanner.prototype.lookBack = function(testVal) {
+  var start = this.__position - 1;
+  return start >= testVal.length && this.__input.substring(start - testVal.length, start)
+    .toLowerCase() === testVal;
+};
+
+
+module.exports.InputScanner = InputScanner;
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*jshint node:true */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
+
+
+
+var InputScanner = __webpack_require__(8).InputScanner;
+var Token = __webpack_require__(3).Token;
+var TokenStream = __webpack_require__(10).TokenStream;
+
+var TOKEN = {
+  START: 'TK_START',
+  RAW: 'TK_RAW',
+  EOF: 'TK_EOF'
+};
+
+var Tokenizer = function(input_string, options) {
+  this._input = new InputScanner(input_string);
+  this._options = options || {};
+  this.__tokens = null;
+  this.__newline_count = 0;
+  this.__whitespace_before_token = '';
+
+  this._whitespace_pattern = /[\n\r\t ]+/g;
+  this._newline_pattern = /([^\n\r]*)(\r\n|[\n\r])?/g;
+};
+
+Tokenizer.prototype.tokenize = function() {
+  this._input.restart();
+  this.__tokens = new TokenStream();
+
+  this._reset();
+
+  var current;
+  var previous = new Token(TOKEN.START, '');
+  var open_token = null;
+  var open_stack = [];
+  var comments = new TokenStream();
+
+  while (previous.type !== TOKEN.EOF) {
+    current = this._get_next_token(previous, open_token);
+    while (this._is_comment(current)) {
+      comments.add(current);
+      current = this._get_next_token(previous, open_token);
+    }
+
+    if (!comments.isEmpty()) {
+      current.comments_before = comments;
+      comments = new TokenStream();
+    }
+
+    current.parent = open_token;
+
+    if (this._is_opening(current)) {
+      open_stack.push(open_token);
+      open_token = current;
+    } else if (open_token && this._is_closing(current, open_token)) {
+      current.opened = open_token;
+      open_token.closed = current;
+      open_token = open_stack.pop();
+      current.parent = open_token;
+    }
+
+    current.previous = previous;
+    previous.next = current;
+
+    this.__tokens.add(current);
+    previous = current;
+  }
+
+  return this.__tokens;
+};
+
+
+Tokenizer.prototype._is_first_token = function() {
+  return this.__tokens.isEmpty();
+};
+
+Tokenizer.prototype._reset = function() {};
+
+Tokenizer.prototype._get_next_token = function(previous_token, open_token) { // jshint unused:false
+  this._readWhitespace();
+  var resulting_string = this._input.read(/.+/g);
+  if (resulting_string) {
+    return this._create_token(TOKEN.RAW, resulting_string);
+  } else {
+    return this._create_token(TOKEN.EOF, '');
+  }
+};
+
+Tokenizer.prototype._is_comment = function(current_token) { // jshint unused:false
+  return false;
+};
+
+Tokenizer.prototype._is_opening = function(current_token) { // jshint unused:false
+  return false;
+};
+
+Tokenizer.prototype._is_closing = function(current_token, open_token) { // jshint unused:false
+  return false;
+};
+
+Tokenizer.prototype._create_token = function(type, text) {
+  var token = new Token(type, text, this.__newline_count, this.__whitespace_before_token);
+  this.__newline_count = 0;
+  this.__whitespace_before_token = '';
+  return token;
+};
+
+Tokenizer.prototype._readWhitespace = function() {
+  var resulting_string = this._input.read(this._whitespace_pattern);
+  if (resulting_string === ' ') {
+    this.__whitespace_before_token = resulting_string;
+  } else if (resulting_string !== '') {
+    this._newline_pattern.lastIndex = 0;
+    var nextMatch = this._newline_pattern.exec(resulting_string);
+    while (nextMatch[2]) {
+      this.__newline_count += 1;
+      nextMatch = this._newline_pattern.exec(resulting_string);
+    }
+    this.__whitespace_before_token = nextMatch[1];
+  }
+};
+
+
+
+module.exports.Tokenizer = Tokenizer;
+module.exports.TOKEN = TOKEN;
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*jshint node:true */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
+
+
+
+function TokenStream(parent_token) {
+  // private
+  this.__tokens = [];
+  this.__tokens_length = this.__tokens.length;
+  this.__position = 0;
+  this.__parent_token = parent_token;
+}
+
+TokenStream.prototype.restart = function() {
+  this.__position = 0;
+};
+
+TokenStream.prototype.isEmpty = function() {
+  return this.__tokens_length === 0;
+};
+
+TokenStream.prototype.hasNext = function() {
+  return this.__position < this.__tokens_length;
+};
+
+TokenStream.prototype.next = function() {
+  var val = null;
+  if (this.hasNext()) {
+    val = this.__tokens[this.__position];
+    this.__position += 1;
+  }
+  return val;
+};
+
+TokenStream.prototype.peek = function(index) {
+  var val = null;
+  index = index || 0;
+  index += this.__position;
+  if (index >= 0 && index < this.__tokens_length) {
+    val = this.__tokens[index];
+  }
+  return val;
+};
+
+TokenStream.prototype.add = function(token) {
+  if (this.__parent_token) {
+    token.parent = this.__parent_token;
+  }
+  this.__tokens.push(token);
+  this.__tokens_length += 1;
+};
+
+module.exports.TokenStream = TokenStream;
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*jshint node:true */
+/*
+
+  The MIT License (MIT)
+
+  Copyright (c) 2007-2018 Einar Lielmanis, Liam Newman, and contributors.
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
+
+
+
+function Directives(start_block_pattern, end_block_pattern) {
+  start_block_pattern = typeof start_block_pattern === 'string' ? start_block_pattern : start_block_pattern.source;
+  end_block_pattern = typeof end_block_pattern === 'string' ? end_block_pattern : end_block_pattern.source;
+  this.__directives_block_pattern = new RegExp(start_block_pattern + / beautify( \w+[:]\w+)+ /.source + end_block_pattern, 'g');
+  this.__directive_pattern = / (\w+)[:](\w+)/g;
+
+  this.__directives_end_ignore_pattern = new RegExp('(?:[\\s\\S]*?)((?:' + start_block_pattern + /\sbeautify\signore:end\s/.source + end_block_pattern + ')|$)', 'g');
+}
+
+Directives.prototype.get_directives = function(text) {
+  if (!text.match(this.__directives_block_pattern)) {
+    return null;
+  }
+
+  var directives = {};
+  this.__directive_pattern.lastIndex = 0;
+  var directive_match = this.__directive_pattern.exec(text);
+
+  while (directive_match) {
+    directives[directive_match[1]] = directive_match[2];
+    directive_match = this.__directive_pattern.exec(text);
+  }
+
+  return directives;
+};
+
+Directives.prototype.readIgnored = function(input) {
+  return input.read(this.__directives_end_ignore_pattern);
+};
+
+
+module.exports.Directives = Directives;
+
+
+/***/ })
+/******/ ]);
+var js_beautify = legacy_beautify_js;
+/* Footer */
+if (true) {
+    // Add support for AMD ( https://github.com/amdjs/amdjs-api/wiki/AMD#defineamd-property- )
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function() {
+        return { js_beautify: js_beautify };
+    }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+} else {}
+
+}());
+
+
+
+/***/ }),
+
 /***/ "ebd6":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -57147,6 +57540,13 @@ module.exports = function (O, D) {
   return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
 };
 
+
+/***/ }),
+
+/***/ "ec79":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -59764,14 +60164,14 @@ Popper.Defaults = Defaults;
 
 /***/ }),
 
-/***/ "f545":
+/***/ "f4dd":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfDataListComponent_vue_vue_type_style_index_0_id_eb7c51cc_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("5b37");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfDataListComponent_vue_vue_type_style_index_0_id_eb7c51cc_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfDataListComponent_vue_vue_type_style_index_0_id_eb7c51cc_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfDataListComponent_vue_vue_type_style_index_0_id_6412b088_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("b075");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfDataListComponent_vue_vue_type_style_index_0_id_6412b088_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfDataListComponent_vue_vue_type_style_index_0_id_6412b088_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfDataListComponent_vue_vue_type_style_index_0_id_eb7c51cc_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfDataListComponent_vue_vue_type_style_index_0_id_6412b088_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -62143,12 +62543,6 @@ function JFrogTableViewOptions() {
     }, {
       key: "setData",
       value: function setData(data, internalCall) {
-        if (this.paginationMode === this.VIRTUAL_SCROLL) {
-          data.forEach(function (item, i) {
-            item.$$$id = i + '';
-          });
-        }
-
         if (this.paginationMode === this.EXTERNAL_PAGINATION && internalCall !== '$$internal$$') {
           console.error('When using external pagination, you should not call setData directly !');
         } else if (this.paginationMode === this.INFINITE_SCROLL && internalCall !== '$$internal$$') {
@@ -62261,16 +62655,10 @@ function JFrogTableViewOptions() {
           return addTo.indexOf(subRow) === -1;
         });
 
-        newSubRows.forEach(function (sr, i) {
-          sr.$$$id = row.$$$id + '.' + i;
-        });
-
         (_addTo = addTo).splice.apply(_addTo, [index, 0].concat(_toConsumableArray(newSubRows)));
 
-        if (addTo === this.data) {
-          this.refreshFilter();
-          this.update();
-        }
+        this.refreshFilter();
+        this.update();
       }
     }, {
       key: "_removeSubRows",
@@ -63103,7 +63491,6 @@ function JFrogTableViewOptions() {
         stickies.forEach(function (sticky) {
           data.splice(data.indexOf(sticky), 1);
         });
-        data.splice.apply(data, [0, 0].concat(_toConsumableArray(stickies)));
         Array.prototype.splice.apply(data, [0, 0].concat(stickies));
       }
     }, {
@@ -63347,7 +63734,7 @@ function JFrogTableViewOptions() {
         }
 
         if (this.dirCtrl && !this.dirCtrl.tableFilter) {
-          Vue.set(this.dirCtrl, 'noFilterResults', false);
+          this.dirCtrl.noFilterResults = false;
           return sourceData || [];
         }
 
@@ -63367,10 +63754,7 @@ function JFrogTableViewOptions() {
           });
         }
 
-        if (this.dirCtrl) {
-          Vue.set(this.dirCtrl, 'noFilterResults', !!(!this.filterCache.length && sourceData.length));
-        }
-
+        if (this.dirCtrl) this.dirCtrl.noFilterResults = !!(!this.filterCache.length && sourceData.length);
         return this.filterCache;
       }
     }, {
@@ -77717,67 +78101,7 @@ function JfTooltipDirective_ng1LinkFunction($scope, $element, $attrs) {
       });
   */
 }
-// CONCATENATED MODULE: ./src/directives/JfTooltipOnOverflowDirective.js
-var JfTooltipOnOverflowDirective_Vue = window.Vue;
-
-JfTooltipOnOverflowDirective_Vue.directive('jf-tooltip-on-overflow', {
-  bind: function bind(el, binding, vnode) {
-    var patchedLinkFn = Ng1AttributeDirectiveAdapter_Ng1AttributeDirectiveAdapter.patchLinkFunction(JfTooltipOnOverflowDirective_ng1LinkFunction, null);
-    patchedLinkFn(el, binding, vnode);
-  }
-});
-
-function JfTooltipOnOverflowDirective_ng1LinkFunction($scope, $element, $attrs) {
-  $($element).on('mouseenter', function (e) {
-    var targets = [$($element), $(e.target)];
-    var tooltipShown = false;
-
-    var isNoTooltip = function isNoTooltip(cell) {
-      return cell[0] && cell[0].classList && cell[0].classList.contains('no-tooltip');
-    };
-
-    for (var i = 0; !tooltipShown && i < targets.length; i++) {
-      var target = targets[i];
-      var targetContent = target.children(':not(:visible)').length ? target.children(':visible').text().trim() : target.text().trim();
-      targetContent = targetContent === '' ? null : targetContent
-      /*$sanitize(targetContent)*/
-      ;
-
-      if (!isNoTooltip(target) && target[0].scrollWidth > Math.round(target.innerWidth())) {
-        if (!!targetContent && !target.hasClass('tooltipstered')) {
-          var options = {
-            animation: 'fade',
-            contentAsHTML: 'true',
-            trigger: 'hover',
-            onlyOne: 'true',
-            interactive: 'true',
-            position: 'bottom',
-            theme: 'tooltipster-default bottom',
-            content: targetContent
-          };
-
-          if ($scope.trustTooltipText) {
-            options.contentAsHTML = 'true';
-          }
-
-          target.tooltipster(options);
-          target.tooltipster('show');
-        } else if (!!targetContent) {
-          target.tooltipster('enable');
-          if (target.tooltipster('content') != targetContent) target.tooltipster('content', targetContent);
-        }
-      } else if (target.hasClass('tooltipstered')) target.tooltipster('disable');
-    }
-  });
-  /*
-      $scope.$on('$destroy', () => {
-          $($element).off('mouseenter');
-          $($element).off('mouseleave');
-      });
-  */
-}
 // CONCATENATED MODULE: ./src/importDirectives.js
-
 
 
 
@@ -79047,15 +79371,12 @@ var JfTableTopComponent_component = normalizeComponent(
 
 JfTableTopComponent_component.options.__file = "JfTableTopComponent.vue"
 /* harmony default export */ var JfTableTopComponent = (JfTableTopComponent_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTableCompiledCellComponent.vue?vue&type=template&id=a121d58c&scoped=true&
-var JfTableCompiledCellComponentvue_type_template_id_a121d58c_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _vm._m(0)}
-var JfTableCompiledCellComponentvue_type_template_id_a121d58c_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"compile-this"})])}]
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTableCompiledCellComponent.vue?vue&type=template&id=68b28a35&scoped=true&
+var JfTableCompiledCellComponentvue_type_template_id_68b28a35_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _vm._m(0)}
+var JfTableCompiledCellComponentvue_type_template_id_68b28a35_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"compile-this"})])}]
 
 
-// CONCATENATED MODULE: ./src/components/JfTableCompiledCellComponent.vue?vue&type=template&id=a121d58c&scoped=true&
-
-// EXTERNAL MODULE: ./node_modules/vue-virtual-scroller/dist/vue-virtual-scroller.esm.js
-var vue_virtual_scroller_esm = __webpack_require__("e508");
+// CONCATENATED MODULE: ./src/components/JfTableCompiledCellComponent.vue?vue&type=template&id=68b28a35&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTableCompiledCellComponent.vue?vue&type=script&lang=js&
 
@@ -79067,7 +79388,6 @@ var vue_virtual_scroller_esm = __webpack_require__("e508");
 //
 //
 //
-
 /* harmony default export */ var JfTableCompiledCellComponentvue_type_script_lang_js_ = ({
   name: 'jf-table-compiled-cell',
   props: ['field', 'rowId', 'tableRow'],
@@ -79078,6 +79398,9 @@ var vue_virtual_scroller_esm = __webpack_require__("e508");
   mounted: function mounted() {
     var _this = this;
 
+    /* (NG2VUE) This was moved from created() to mounted() */
+
+    /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
     this.$scope.$watch('compiledCell.tableRow.data', function () {
       _this.compile();
     });
@@ -79094,8 +79417,8 @@ var vue_virtual_scroller_esm = __webpack_require__("e508");
 });
 // CONCATENATED MODULE: ./src/components/JfTableCompiledCellComponent.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_JfTableCompiledCellComponentvue_type_script_lang_js_ = (JfTableCompiledCellComponentvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/JfTableCompiledCellComponent.vue?vue&type=style&index=0&id=a121d58c&scoped=true&lang=less&
-var JfTableCompiledCellComponentvue_type_style_index_0_id_a121d58c_scoped_true_lang_less_ = __webpack_require__("a933");
+// EXTERNAL MODULE: ./src/components/JfTableCompiledCellComponent.vue?vue&type=style&index=0&id=68b28a35&scoped=true&lang=less&
+var JfTableCompiledCellComponentvue_type_style_index_0_id_68b28a35_scoped_true_lang_less_ = __webpack_require__("323d");
 
 // CONCATENATED MODULE: ./src/components/JfTableCompiledCellComponent.vue
 
@@ -79108,11 +79431,11 @@ var JfTableCompiledCellComponentvue_type_style_index_0_id_a121d58c_scoped_true_l
 
 var JfTableCompiledCellComponent_component = normalizeComponent(
   components_JfTableCompiledCellComponentvue_type_script_lang_js_,
-  JfTableCompiledCellComponentvue_type_template_id_a121d58c_scoped_true_render,
-  JfTableCompiledCellComponentvue_type_template_id_a121d58c_scoped_true_staticRenderFns,
+  JfTableCompiledCellComponentvue_type_template_id_68b28a35_scoped_true_render,
+  JfTableCompiledCellComponentvue_type_template_id_68b28a35_scoped_true_staticRenderFns,
   false,
   null,
-  "a121d58c",
+  "68b28a35",
   null
   
 )
@@ -79364,9 +79687,9 @@ var JfTableViewBatchActionsComponent_component = normalizeComponent(
 
 JfTableViewBatchActionsComponent_component.options.__file = "JfTableViewBatchActionsComponent.vue"
 /* harmony default export */ var JfTableViewBatchActionsComponent = (JfTableViewBatchActionsComponent_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTableRowComponent.vue?vue&type=template&id=ad8ba82a&scoped=true&
-var JfTableRowComponentvue_type_template_id_ad8ba82a_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.data)?_c('div',{staticClass:"jf-table-row",class:( _obj = {headers: _vm.rowId === 'headers', 'group-header': _vm.data && _vm.data.$groupHeader, 'expanded': _vm.data && _vm.data.$groupHeader && _vm.data.$groupHeader.$expanded, 'sub-row': _vm.data && _vm.data.$parentRow, sticky: _vm.data && _vm.data.$sticky, selected: _vm.data && _vm.data.$selected, 'drag-mark': _vm.rowId !== 'headers' && _vm.tableView.options.draggableRows && !(_vm.tableView.options.registeredTabularDnd.dndCtrl.disabled) && _vm.isRowDraggable()}, _obj[_vm.data[_vm.tableView.options.rowClassAttr]] = _vm.tableView.options.rowClassAttr && _vm.data[_vm.tableView.options.rowClassAttr], _obj ),style:({height: _vm.rowId === 'headers' ? '' : _vm.tableView.options.rowHeight, opacity: _vm.tableView.options.ready ? 1 : 0}),on:{"mousemove":function($event){_vm.rowId === 'headers' && _vm.tableView.options.resizableColumns && _vm.onMouseMove($event)},"mousedown":function($event){_vm.rowId === 'headers' && _vm.tableView.options.resizableColumns && _vm.onMouseDown($event)},"mouseup":function($event){_vm.rowId === 'headers' && _vm.tableView.options.resizableColumns && _vm.onMouseUp($event)},"mouseleave":function($event){_vm.rowId === 'headers' && _vm.tableView.options.resizableColumns && _vm.onMouseUp($event)},"click":function($event){_vm.onRowClick($event)}}},[(_vm.tableView.options.hasSelection())?_c('div',{staticClass:"jf-table-cell selection",class:{'single-selection' : _vm.tableView.options.selectionMode === _vm.tableView.options.SINGLE_SELECTION},style:({height: _vm.tableView.options.rowHeight, width: _vm.tableView.options.selectionColumnWidth + 'px'})},[_c('div',{staticClass:"jf-table-cell-content"},[((!_vm.data.$groupHeader && _vm.rowId !== 'headers') || (_vm.tableView.options.selectionMode === _vm.tableView.options.MULTI_SELECTION && _vm.tableView.options.getRawData().length))?_c('div',{staticClass:"selection-button",style:({height: _vm.tableView.options.rowHeight, width: _vm.tableView.options.selectionColumnWidth +'px'})},[_c('div',{staticClass:"selection-icon icon icon-datagrid-v",class:{selected: _vm.data.$selected || (_vm.rowId === 'headers' && _vm.tableView.allSelected)},on:{"click":function($event){_vm.toggleSelection(_vm.rowId === 'headers');$event.stopPropagation();}}})]):_vm._e()])]):_vm._e(),(_vm.data.$groupHeader)?_c('div',{staticClass:"jf-table-cell group-header",style:({height: _vm.rowId === 'headers' ? '' : _vm.tableView.options.rowHeight,
-                    lineHeight: _vm.rowId === 'headers' ? '' : _vm.tableView.options.rowHeight})},[_c('i',{staticClass:"icon icon-small-arrow-down",class:{'expanded': _vm.data.$groupHeader.$expanded}}),(!_vm.data.$groupHeader.col.cellTemplate)?_c('span',{staticClass:"jf-table-cell-content group-header"},[_vm._v("\n            "+_vm._s(_vm.data.$groupHeader.value)+"\n        ")]):_vm._e(),(_vm.data.$groupHeader.col.cellTemplate)?_c('div',{staticClass:"jf-table-cell-content group-header"},[_c('jf-table-compiled-cell',{attrs:{"field":_vm.data.$groupHeader.field,"row-id":_vm.rowId,"table-row":_vm.jfTableRow}})],1):_vm._e(),_c('div',{staticClass:"group-header-count"},[_vm._v("("+_vm._s(_vm.data.$groupHeader.count)+")")])]):_vm._e(),_vm._l((_vm.tableView.options.columns),function(col,$index){return (!_vm.data.$groupHeader)?_c('div',{staticClass:"jf-table-cell",class:( _obj = {header: _vm.rowId === 'headers' && col.header, sortable: _vm.rowId === 'headers' && _vm.tableView.options.sortable && _vm.tableView.options.getRawData().length && col.sortable && !_vm.hoveringResize, 'column-resizer': _vm.hoveringResize}, _obj['drag-right'] = col.$dragRightBorder, _obj['drag-left'] = col.$dragLeftBorder, _obj['field-id-' + _vm.kebab(col.field)] = true, _obj['row-expander-cell'] = $index === 0 && _vm.tableView.options.subRowsEnabled, _obj ),style:({height: _vm.rowId === 'headers' ? _vm.tableView.options.headerRowHeight : _vm.tableView.options.rowHeight, width: col.width}),on:{"click":function($event){_vm.onClickCell(col,$event)}}},[($index === 0 && _vm.tableView.options.subRowsEnabled)?_c('div',{staticClass:"row-expander",class:{placeholder: (!_vm.data.$subRows && !_vm.data.$parentRow) || (_vm.data.$subRows && _vm.data.$subRows.length === 0) || (_vm.data.$parentRow)},style:({height: _vm.tableView.options.rowHeight}),on:{"click":function($event){_vm.toggleExpansion($event)}}},[(_vm.data.$subRows && _vm.data.$subRows.length && !_vm.data.$parentRow && !_vm.data.$pendingSubRows)?_c('i',{staticClass:"action-icon icon icon-small-arrow-down",class:{'expanded': _vm.data.$expanded}}):_vm._e(),(_vm.data.$pendingSubRows)?_c('div',{staticClass:"spinner-msg-local"},[_c('div',{staticClass:"icon-hourglass-local"})]):_vm._e()]):_vm._e(),((!col.cellTemplate && _vm.rowId !== 'headers') || (!col.headerCellTemplate && _vm.rowId === 'headers'))?_c('div',{directives:[{name:"jf-tooltip-on-overflow",rawName:"v-jf-tooltip-on-overflow"}],staticClass:"jf-table-cell-content",class:{'row-expander-content': $index === 0 && _vm.tableView.options.subRowsEnabled,
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTableRowComponent.vue?vue&type=template&id=75c764f2&scoped=true&
+var JfTableRowComponentvue_type_template_id_75c764f2_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.data)?_c('div',{staticClass:"jf-table-row",class:( _obj = {headers: _vm.rowId === 'headers', 'group-header': _vm.data && _vm.data.$groupHeader, 'expanded': _vm.data && _vm.data.$groupHeader && _vm.data.$groupHeader.$expanded, 'sub-row': _vm.data && _vm.data.$parentRow, sticky: _vm.data && _vm.data.$sticky, selected: _vm.data && _vm.data.$selected, 'drag-mark': _vm.rowId !== 'headers' && _vm.tableView.options.draggableRows && !(_vm.tableView.options.registeredTabularDnd.dndCtrl.disabled) && _vm.isRowDraggable()}, _obj[_vm.data[_vm.tableView.options.rowClassAttr]] = _vm.tableView.options.rowClassAttr && _vm.data[_vm.tableView.options.rowClassAttr], _obj ),style:({height: _vm.rowId === 'headers' ? '' : _vm.tableView.options.rowHeight, opacity: _vm.tableView.options.ready ? 1 : 0}),on:{"mousemove":function($event){_vm.rowId === 'headers' && _vm.tableView.options.resizableColumns && _vm.onMouseMove($event)},"mousedown":function($event){_vm.rowId === 'headers' && _vm.tableView.options.resizableColumns && _vm.onMouseDown($event)},"mouseup":function($event){_vm.rowId === 'headers' && _vm.tableView.options.resizableColumns && _vm.onMouseUp($event)},"mouseleave":function($event){_vm.rowId === 'headers' && _vm.tableView.options.resizableColumns && _vm.onMouseUp($event)},"click":function($event){_vm.onRowClick($event)}}},[(_vm.tableView.options.hasSelection())?_c('div',{staticClass:"jf-table-cell selection",class:{'single-selection' : _vm.tableView.options.selectionMode === _vm.tableView.options.SINGLE_SELECTION},style:({height: _vm.tableView.options.rowHeight, width: _vm.tableView.options.selectionColumnWidth + 'px'})},[_c('div',{staticClass:"jf-table-cell-content"},[((!_vm.data.$groupHeader && _vm.rowId !== 'headers') || (_vm.tableView.options.selectionMode === _vm.tableView.options.MULTI_SELECTION && _vm.tableView.options.getRawData().length))?_c('div',{staticClass:"selection-button",style:({height: _vm.tableView.options.rowHeight, width: _vm.tableView.options.selectionColumnWidth +'px'})},[_c('div',{staticClass:"selection-icon icon icon-datagrid-v",class:{selected: _vm.data.$selected || (_vm.rowId === 'headers' && _vm.tableView.allSelected)},on:{"click":function($event){_vm.toggleSelection(_vm.rowId === 'headers');$event.stopPropagation();}}})]):_vm._e()])]):_vm._e(),(_vm.data.$groupHeader)?_c('div',{staticClass:"jf-table-cell group-header",style:({height: _vm.rowId === 'headers' ? '' : _vm.tableView.options.rowHeight,
+                    lineHeight: _vm.rowId === 'headers' ? '' : _vm.tableView.options.rowHeight})},[_c('i',{staticClass:"icon icon-small-arrow-down",class:{'expanded': _vm.data.$groupHeader.$expanded}}),(!_vm.data.$groupHeader.col.cellTemplate)?_c('span',{staticClass:"jf-table-cell-content group-header"},[_vm._v("\n            "+_vm._s(_vm.data.$groupHeader.value)+"\n        ")]):_vm._e(),(_vm.data.$groupHeader.col.cellTemplate)?_c('div',{staticClass:"jf-table-cell-content group-header"},[_c('jf-table-compiled-cell',{attrs:{"field":_vm.data.$groupHeader.field,"row-id":_vm.rowId,"table-row":_vm.jfTableRow}})],1):_vm._e(),_c('div',{staticClass:"group-header-count"},[_vm._v("("+_vm._s(_vm.data.$groupHeader.count)+")")])]):_vm._e(),_vm._l((_vm.tableView.options.columns),function(col,$index){return (!_vm.data.$groupHeader)?_c('div',{staticClass:"jf-table-cell",class:( _obj = {header: _vm.rowId === 'headers' && col.header, sortable: _vm.rowId === 'headers' && _vm.tableView.options.sortable && _vm.tableView.options.getRawData().length && col.sortable && !_vm.hoveringResize, 'column-resizer': _vm.hoveringResize}, _obj['drag-right'] = col.$dragRightBorder, _obj['drag-left'] = col.$dragLeftBorder, _obj['field-id-' + _vm.kebab(col.field)] = true, _obj['row-expander-cell'] = $index === 0 && _vm.tableView.options.subRowsEnabled, _obj ),style:({height: _vm.rowId === 'headers' ? _vm.tableView.options.headerRowHeight : _vm.tableView.options.rowHeight, width: col.width}),on:{"click":function($event){_vm.onClickCell(col,$event)}}},[($index === 0 && _vm.tableView.options.subRowsEnabled)?_c('div',{staticClass:"row-expander",class:{placeholder: (!_vm.data.$subRows && !_vm.data.$parentRow) || (_vm.data.$subRows && _vm.data.$subRows.length === 0) || (_vm.data.$parentRow)},style:({height: _vm.tableView.options.rowHeight}),on:{"click":function($event){_vm.toggleExpansion($event)}}},[(_vm.data.$subRows && _vm.data.$subRows.length && !_vm.data.$parentRow && !_vm.data.$pendingSubRows)?_c('i',{staticClass:"action-icon icon icon-small-arrow-down",class:{'expanded': _vm.data.$expanded}}):_vm._e(),(_vm.data.$pendingSubRows)?_c('div',{staticClass:"spinner-msg-local"},[_c('div',{staticClass:"icon-hourglass-local"})]):_vm._e()]):_vm._e(),((!col.cellTemplate && _vm.rowId !== 'headers') || (!col.headerCellTemplate && _vm.rowId === 'headers'))?_c('div',{staticClass:"jf-table-cell-content",class:{'row-expander-content': $index === 0 && _vm.tableView.options.subRowsEnabled,
                         'YO' : !(_vm.rowId === 'headers' &&
                                     _vm.tableView.options.sortable &&
                                     (_vm.tableView.options.sortByField === col.field || _vm.tableView.options.showSortingArrowsAlways) &&
@@ -79377,10 +79700,10 @@ var JfTableRowComponentvue_type_template_id_ad8ba82a_scoped_true_render = functi
                           'invisible' : !(_vm.rowId === 'headers' && _vm.tableView.options.sortable && (_vm.tableView.options.sortByField === col.field || _vm.tableView.options.showSortingArrowsAlways) && col.sortable && _vm.tableView.options.getRawData().length && (col.header || col.headerCellTemplate))}}),(_vm.rowId === 'headers' && col.allowGrouping)?_c('div',{staticClass:"group-button-wrapper"},[_c('div',{staticClass:"group-button icon-grouping-off",class:{'icon-grouping-on': _vm.tableView.options.groupedBy === col.field},on:{"click":function($event){_vm.tableView.options.groupBy(col.field); $event.stopPropagation();}}})]):_vm._e()]):_vm._e(),((col.cellTemplate && _vm.rowId !== 'headers') || (col.headerCellTemplate && _vm.rowId === 'headers'))?_c('div',{staticClass:"jf-table-cell-content",class:{'drag-mark': $index === 0 && _vm.rowId !== 'headers' && _vm.tableView.options.draggableRows},style:({'text-align': col.textAlign || 'auto'})},[_c('jf-table-compiled-cell',{attrs:{"field":col.field,"row-id":_vm.rowId,"table-row":_vm.jfTableRow}}),(_vm.rowId === 'headers' && _vm.tableView.options.sortable && (_vm.tableView.options.sortByField === col.field || _vm.tableView.options.showSortingArrowsAlways) && col.sortable && _vm.tableView.options.getRawData().length && (col.header || col.headerCellTemplate))?_c('i',{staticClass:"icon sorting-icon",class:{'icon-down-arrow': _vm.tableView.options.revSort && _vm.tableView.options.sortByField === col.field, 'icon-up-arrow': !_vm.tableView.options.revSort || (_vm.tableView.options.sortByField !== col.field && _vm.tableView.options.showSortingArrowsAlways), active: _vm.tableView.options.sortByField === col.field}}):_vm._e(),(_vm.rowId === 'headers' && col.allowGrouping)?_c('div',{staticClass:"group-button-wrapper"},[_c('div',{staticClass:"group-button icon-grouping-off",class:{'icon-grouping-on': _vm.tableView.options.groupedBy === col.field},on:{"click":function($event){_vm.tableView.options.groupBy(col.field); $event.stopPropagation();}}})]):_vm._e()],1):_vm._e()]):_vm._e()
                     var _obj;}),(_vm.rowId !== 'headers' && _vm.tableView.options.actions.length && !_vm.data.$groupHeader)?_c('div',{staticClass:"jf-table-cell actions",style:({height: _vm.rowId === 'headers' ? '' : _vm.tableView.options.rowHeight, width: _vm._getRowActionsWidth()})},[_c('div',{staticClass:"jf-table-cell-content"},[_vm._l((_vm.tableView.options.actions),function(action){return (_vm.tableView.options.actions.length <= 3 || _vm.tableView.options.isRowActionGroupingDisabled)?_c('div',{staticClass:"action-button",style:({height: _vm.tableView.options.rowHeight, width: _vm.tableView.options.actionButtonSize + 'px', visibility: !action.visibleWhen || action.visibleWhen(_vm.data) ? 'visible' : 'hidden'})},[(!action.href)?_c('div',{directives:[{name:"jf-tooltip",rawName:"v-jf-tooltip.bind",value:(action.tooltip),expression:"action.tooltip",modifiers:{"bind":true}}],staticClass:"action-icon",class:action.icon,on:{"click":function($event){_vm.fireAction(action);$event.stopPropagation();}}}):_vm._e(),(action.href)?_c('a',{directives:[{name:"jf-tooltip",rawName:"v-jf-tooltip.bind",value:(action.tooltip),expression:"action.tooltip",modifiers:{"bind":true}}],attrs:{"href":action.href(_vm.data)},on:{"click":function($event){$event.preventDefault();_vm.fireAction(action);$event.stopPropagation();}}},[_c('div',{staticClass:"action-icon",class:action.icon})]):_vm._e()]):_vm._e()}),(_vm.tableView.options && !_vm.tableView.options.isRowActionGroupingDisabled && _vm.tableView.options.actions.length > 3 )?_c('div',{staticClass:"action-button",style:({height: _vm.tableView.options.rowHeight, width: _vm.tableView.options.actionButtonSize + 'px', visibility: _vm.tableView.options.hasVisibleActionsFor(_vm.data) ? 'visible' : 'hidden'})},[_c('div',{directives:[{name:"jf-tooltip",rawName:"v-jf-tooltip.bind",value:(_vm.actionsDropdownOpen ? '' : 'Actions'),expression:"actionsDropdownOpen ? '' : 'Actions'",modifiers:{"bind":true}}],staticClass:"action-icon icon-more",on:{"click":function($event){_vm.toggleActionsDropdown($event)}}})]):_vm._e()],2)]):_vm._e(),(_vm.rowId === 'headers' && _vm.tableView.options.columnsCustomization)?_c('div',{staticClass:"columns-customization-icon",on:{"click":function($event){_vm.tableView.options.toggleColumnsCustomizationDropdown()}}},[_c('i',{staticClass:"icon-menu-arrow"})]):_vm._e(),(_vm.actionsDropdownOpen)?_c('div',{directives:[{name:"jf-reparent",rawName:"v-jf-reparent",value:('tableView.$containerElement'),expression:"'tableView.$containerElement'"}],staticClass:"jf-table-row-actions-dropdown"},_vm._l((_vm.tableView.options.actions),function(action){return (!action.visibleWhen || action.visibleWhen(_vm.data))?_c('div',{staticClass:"action-item",attrs:{"icon-name":action.icon || ''},on:{"click":function($event){_vm.fireAction(action);$event.stopPropagation();_vm.actionsDropdownOpen=false;}}},[(!action.href)?_c('i',{staticClass:"action-icon",class:action.icon}):_vm._e(),_c('span',[_vm._v(_vm._s(action.tooltip))])]):_vm._e()}),0):_vm._e()],2):_vm._e()
 var _obj;}
-var JfTableRowComponentvue_type_template_id_ad8ba82a_scoped_true_staticRenderFns = []
+var JfTableRowComponentvue_type_template_id_75c764f2_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/JfTableRowComponent.vue?vue&type=template&id=ad8ba82a&scoped=true&
+// CONCATENATED MODULE: ./src/components/JfTableRowComponent.vue?vue&type=template&id=75c764f2&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTableRowComponent.vue?vue&type=script&lang=js&
 
@@ -79505,9 +79828,6 @@ var JfTableRowComponentvue_type_template_id_ad8ba82a_scoped_true_staticRenderFns
 //
 //
 //
-//
-//
-
 /* harmony default export */ var JfTableRowComponentvue_type_script_lang_js_ = ({
   name: 'jf-table-row',
   props: ['data', 'rowId', 'tableView'],
@@ -79855,8 +80175,8 @@ var JfTableRowComponentvue_type_template_id_ad8ba82a_scoped_true_staticRenderFns
 });
 // CONCATENATED MODULE: ./src/components/JfTableRowComponent.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_JfTableRowComponentvue_type_script_lang_js_ = (JfTableRowComponentvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/JfTableRowComponent.vue?vue&type=style&index=0&id=ad8ba82a&scoped=true&lang=less&
-var JfTableRowComponentvue_type_style_index_0_id_ad8ba82a_scoped_true_lang_less_ = __webpack_require__("9040");
+// EXTERNAL MODULE: ./src/components/JfTableRowComponent.vue?vue&type=style&index=0&id=75c764f2&scoped=true&lang=less&
+var JfTableRowComponentvue_type_style_index_0_id_75c764f2_scoped_true_lang_less_ = __webpack_require__("102c");
 
 // CONCATENATED MODULE: ./src/components/JfTableRowComponent.vue
 
@@ -79869,26 +80189,26 @@ var JfTableRowComponentvue_type_style_index_0_id_ad8ba82a_scoped_true_lang_less_
 
 var JfTableRowComponent_component = normalizeComponent(
   components_JfTableRowComponentvue_type_script_lang_js_,
-  JfTableRowComponentvue_type_template_id_ad8ba82a_scoped_true_render,
-  JfTableRowComponentvue_type_template_id_ad8ba82a_scoped_true_staticRenderFns,
+  JfTableRowComponentvue_type_template_id_75c764f2_scoped_true_render,
+  JfTableRowComponentvue_type_template_id_75c764f2_scoped_true_staticRenderFns,
   false,
   null,
-  "ad8ba82a",
+  "75c764f2",
   null
   
 )
 
 JfTableRowComponent_component.options.__file = "JfTableRowComponent.vue"
 /* harmony default export */ var JfTableRowComponent = (JfTableRowComponent_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTableViewComponent.vue?vue&type=template&id=9577a130&scoped=true&
-var JfTableViewComponentvue_type_template_id_9577a130_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"jf-table-view",staticStyle:{"clear":"both"}},[_c('div',{staticClass:"new-entity-wrapper"},[(_vm.options && _vm.options.newEntityCallback)?_c('a',{staticClass:"new-entity",attrs:{"href":""},on:{"click":function($event){$event.preventDefault();_vm.createNewEntity()}}},[_c('i',{staticClass:"icon icon-new"}),(_vm.options && !_vm.options.newEntityCustomText)?_c('span',[_vm._v("Add "+_vm._s(_vm.options.useAnWithObjectName ? 'an' : 'a')+" "+_vm._s(_vm.objectName ? _vm.objectName.split('/')[0] : _vm.options.objectName ? _vm.options.objectName.split('/')[0] : 'Item'))]):_vm._e(),(_vm.options && _vm.options.newEntityCustomText)?_c('span',[_vm._v(_vm._s(_vm.options.newEntityCustomText))]):_vm._e()]):_vm._e()]),_c('jf-table-top',{attrs:{"table-view":_vm.jfTableView}}),(_vm.options && _vm.options.columnsCustomization)?_c('div',{staticClass:"columns-customization-wrap"},[_c('div',{staticClass:"columns-customization pull-right"},[_c('jf-multi-dropdown',{attrs:{"title":"Columns","no-filter":"true","filter-placeholder":"Filter Columns","items":_vm.options.availableColumns,"on-change":"options.updateCustomizedColumns()"}})],1)]):_vm._e(),(_vm.options)?_c('div',{staticClass:"jf-table-view-container"},[(_vm.options && _vm.options.headersVisible)?_c('div',{staticClass:"jf-table-view-header"},[_c('jf-table-row',{attrs:{"table-view":_vm.jfTableView,"row-id":'headers',"data":_vm.options.headersRow}})],1):_vm._e(),(_vm.options.getPrePagedData().length > 1 && _vm.options && _vm.options.paginationMode === _vm.options.VIRTUAL_SCROLL)?_c('div',{staticClass:"table-rows-container"},[_c('recycle-scroller',{style:({height: _vm.getActualPageHeight() + 'px'}),attrs:{"emit-update":true,"items":_vm.options.getPrePagedData(),"item-height":parseInt(_vm.options.rowHeight),"key-field":"$$$id"},on:{"update":_vm.updateVScroll},scopedSlots:_vm._u([{key:"default",fn:function(ref){
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTableViewComponent.vue?vue&type=template&id=29dcf6b4&scoped=true&
+var JfTableViewComponentvue_type_template_id_29dcf6b4_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"jf-table-view",staticStyle:{"clear":"both"}},[_c('div',{staticClass:"new-entity-wrapper"},[(_vm.options && _vm.options.newEntityCallback)?_c('a',{staticClass:"new-entity",attrs:{"href":""},on:{"click":function($event){$event.preventDefault();_vm.createNewEntity()}}},[_c('i',{staticClass:"icon icon-new"}),(_vm.options && !_vm.options.newEntityCustomText)?_c('span',[_vm._v("Add "+_vm._s(_vm.options.useAnWithObjectName ? 'an' : 'a')+" "+_vm._s(_vm.objectName ? _vm.objectName.split('/')[0] : _vm.options.objectName ? _vm.options.objectName.split('/')[0] : 'Item'))]):_vm._e(),(_vm.options && _vm.options.newEntityCustomText)?_c('span',[_vm._v(_vm._s(_vm.options.newEntityCustomText))]):_vm._e()]):_vm._e()]),_c('jf-table-top',{attrs:{"table-view":_vm.jfTableView}}),(_vm.options && _vm.options.columnsCustomization)?_c('div',{staticClass:"columns-customization-wrap"},[_c('div',{staticClass:"columns-customization pull-right"},[_c('jf-multi-dropdown',{attrs:{"title":"Columns","no-filter":"true","filter-placeholder":"Filter Columns","items":_vm.options.availableColumns,"on-change":"options.updateCustomizedColumns()"}})],1)]):_vm._e(),(_vm.options)?_c('div',{staticClass:"jf-table-view-container"},[(_vm.options && _vm.options.headersVisible)?_c('div',{staticClass:"jf-table-view-header"},[_c('jf-table-row',{attrs:{"table-view":_vm.jfTableView,"row-id":'headers',"data":_vm.options.headersRow}})],1):_vm._e(),(_vm.options.getPrePagedData().length > 1 && _vm.options && _vm.options.paginationMode === _vm.options.VIRTUAL_SCROLL)?_c('div',{staticClass:"table-rows-container"},[_c('recycle-scroller',{style:({height: _vm.getActualPageHeight() + 'px'}),attrs:{"emit-update":true,"items":_vm.options.getPrePagedData(),"item-height":parseInt(_vm.options.rowHeight),"key-field":"_id"},on:{"update":_vm.updateVScroll},scopedSlots:_vm._u([{key:"default",fn:function(ref){
 var item = ref.item;
 var index = ref.index;
 return _c('jf-table-row',{attrs:{"table-view":_vm.jfTableView,"row-id":index,"data":item}})}}])})],1):_vm._e(),(_vm.options && _vm.options.paginationMode !== _vm.options.VIRTUAL_SCROLL)?_c('div',{staticClass:"table-rows-container"},_vm._l((_vm.options.getPageData()),function(entity,$index){return _c('jf-table-row',{key:$index,attrs:{"table-view":_vm.jfTableView,"row-id":$index,"data":entity}})}),1):_vm._e(),(_vm.options && _vm.options.dataWasSet && !_vm.options.getRawData().length && !_vm.options.pendingExternalPaging && (!_vm.options.externalTotalCount || _vm.options.externalTotalCount.total === 0))?_c('div',{staticClass:"empty-table-placeholder",style:(_vm.options.registeredTabularDnd ? _vm.options.registeredTabularDnd.emptyTableStyle : {})},[_vm._v("\n                    "+_vm._s(_vm.options.emptyTableText || 'This table is empty !')+" "),(_vm.options.emptyTableAction && _vm.options.emptyTableCallActionText)?_c('a',{staticClass:"jf-link",attrs:{"href":""},on:{"click":function($event){$event.preventDefault();_vm.options.emptyTableAction()}}},[_vm._v(_vm._s(_vm.options.emptyTableCallActionText))]):_vm._e()]):_vm._e(),(_vm.options && _vm.noFilterResults)?_c('div',{staticClass:"empty-table-placeholder filter-no-results"},[_vm._v("\n                    "+_vm._s(_vm.options.noFilterResultsText || 'Current filter has no results.')+" "),(_vm.tableFilter)?_c('a',{staticClass:"jf-link",attrs:{"href":""},on:{"click":function($event){$event.preventDefault();_vm.clearFilter()}}},[_vm._v("Clear filter")]):_vm._e()]):_vm._e(),(_vm.options && _vm.options.pendingInfiniteScroll)?_c('div',{staticClass:"loading-more",style:({height: _vm.options.rowHeight})},[_vm._m(0)]):_vm._e()]):_vm._e()],1)])}
-var JfTableViewComponentvue_type_template_id_9577a130_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"spinner-msg-local"},[_c('div',{staticClass:"icon-hourglass-local"})])}]
+var JfTableViewComponentvue_type_template_id_29dcf6b4_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"spinner-msg-local"},[_c('div',{staticClass:"icon-hourglass-local"})])}]
 
 
-// CONCATENATED MODULE: ./src/components/JfTableViewComponent.vue?vue&type=template&id=9577a130&scoped=true&
+// CONCATENATED MODULE: ./src/components/JfTableViewComponent.vue?vue&type=template&id=29dcf6b4&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTableViewComponent.vue?vue&type=script&lang=js&
 
@@ -79896,10 +80216,6 @@ var JfTableViewComponentvue_type_template_id_9577a130_scoped_true_staticRenderFn
 
 
 
-//
-//
-//
-//
 //
 //
 //
@@ -79973,9 +80289,7 @@ var JfTableViewComponentvue_type_template_id_9577a130_scoped_true_staticRenderFn
         onInit: {}
       },
       noFilterResults: null,
-      tableFilter: null,
-      vsStartIndex: null,
-      vsEndIndex: null
+      tableFilter: null
     };
   },
   created: function created() {
@@ -80122,7 +80436,7 @@ var JfTableViewComponentvue_type_template_id_9577a130_scoped_true_staticRenderFn
 
       if (elementToAddTo) {
         if (!elementToAddTo.is('[disable-tooltip-on-overflow]')) {
-          elementToAddTo.attr('v-jf-tooltip-on-overflow', '');
+          elementToAddTo.attr('jf-tooltip-on-overflow', true);
         }
 
         elementToAddTo.addClass('overflow-ellipsis');
@@ -80138,10 +80452,9 @@ var JfTableViewComponentvue_type_template_id_9577a130_scoped_true_staticRenderFn
       var _this2 = this;
 
       var updatePagination = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-      var pageData = this.options.getPageData();
 
       var unusedScopes = _.filter(this.cellScopes, function (scope) {
-        return pageData.indexOf(scope.row.entity) === -1;
+        return _this2.options.getPageData().indexOf(scope.row.entity) === -1;
       });
 
       unusedScopes.forEach(function (s) {
@@ -80399,8 +80712,8 @@ function () {
 }();
 // CONCATENATED MODULE: ./src/components/JfTableViewComponent.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_JfTableViewComponentvue_type_script_lang_js_ = (JfTableViewComponentvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/JfTableViewComponent.vue?vue&type=style&index=0&id=9577a130&scoped=true&lang=less&
-var JfTableViewComponentvue_type_style_index_0_id_9577a130_scoped_true_lang_less_ = __webpack_require__("d64a");
+// EXTERNAL MODULE: ./src/components/JfTableViewComponent.vue?vue&type=style&index=0&id=29dcf6b4&scoped=true&lang=less&
+var JfTableViewComponentvue_type_style_index_0_id_29dcf6b4_scoped_true_lang_less_ = __webpack_require__("4ef5");
 
 // CONCATENATED MODULE: ./src/components/JfTableViewComponent.vue
 
@@ -80413,11 +80726,11 @@ var JfTableViewComponentvue_type_style_index_0_id_9577a130_scoped_true_lang_less
 
 var JfTableViewComponent_component = normalizeComponent(
   components_JfTableViewComponentvue_type_script_lang_js_,
-  JfTableViewComponentvue_type_template_id_9577a130_scoped_true_render,
-  JfTableViewComponentvue_type_template_id_9577a130_scoped_true_staticRenderFns,
+  JfTableViewComponentvue_type_template_id_29dcf6b4_scoped_true_render,
+  JfTableViewComponentvue_type_template_id_29dcf6b4_scoped_true_staticRenderFns,
   false,
   null,
-  "9577a130",
+  "29dcf6b4",
   null
   
 )
@@ -81014,12 +81327,12 @@ var JfTogglerComponent_component = normalizeComponent(
 
 JfTogglerComponent_component.options.__file = "JfTogglerComponent.vue"
 /* harmony default export */ var JfTogglerComponent = (JfTogglerComponent_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfDataListComponent.vue?vue&type=template&id=eb7c51cc&scoped=true&
-var JfDataListComponentvue_type_template_id_eb7c51cc_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('table',{staticClass:"data-list"},[_c('tbody',_vm._l((_vm.formattedItems),function(item){return (!item.isHidden)?_c('tr',{staticClass:"data-list-item"},[_c('td',{staticClass:"data-list-item-label"},[_vm._v(_vm._s(item.label)+":")]),_c('td',{staticClass:"data-list-item-value"},[_c('div',{staticClass:"value"},[(item.isUrl)?_c('a',{directives:[{name:"jf-tooltip-on-overflow",rawName:"v-jf-tooltip-on-overflow"}],staticClass:"jf-link",attrs:{"href":item.value,"target":"_blank"},domProps:{"innerHTML":_vm._s(item.value)}}):_vm._e(),(!item.isUrl && !_vm.isArray(item.value))?_c('div',{directives:[{name:"jf-tooltip-on-overflow",rawName:"v-jf-tooltip-on-overflow"}],domProps:{"innerHTML":_vm._s(item.value)}}):_vm._e(),(_vm.isArray(item.value))?_c('div',{attrs:{"id":'data-list-row-' + _vm.$parent.$index}},[_vm._l((item.value),function(tag){return _c('div',{staticClass:"tag"},[(tag.url)?_c('a',{staticClass:"gridcell-content-text jf-link",attrs:{"href":tag.url,"target":"_blank"},domProps:{"innerHTML":_vm._s(tag.label)}}):_vm._e(),(!tag.url)?_c('span',{staticClass:"gridcell-content-text",domProps:{"innerHTML":_vm._s(tag.label)}}):_vm._e()])}),(item.value.length >= 1 && _vm.htmlIsOverflowing('#data-list-row-' + _vm.$parent.$index))?_c('a',{staticClass:"jf-link gridcell-showall",attrs:{"href":""},on:{"click":function($event){$event.preventDefault();_vm.showAll(item.value,item.label,item.objectName)}}},[_vm._v(" (See "+_vm._s(item.value.length > 1 ? 'All' : 'List')+")")]):_vm._e()],2):_vm._e(),(item.copy && !_vm.isArray(item.value))?_c('div',{staticClass:"copy"},[_c('jf-clip-copy',{attrs:{"text-to-copy":item.value}})],1):_vm._e()])])]):_vm._e()}),0)])])}
-var JfDataListComponentvue_type_template_id_eb7c51cc_scoped_true_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfDataListComponent.vue?vue&type=template&id=6412b088&scoped=true&
+var JfDataListComponentvue_type_template_id_6412b088_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('table',{staticClass:"data-list"},[_c('tbody',_vm._l((_vm.formattedItems),function(item){return (!item.isHidden)?_c('tr',{staticClass:"data-list-item"},[_c('td',{staticClass:"data-list-item-label"},[_vm._v(_vm._s(item.label)+":")]),_c('td',{staticClass:"data-list-item-value"},[_c('div',{staticClass:"value"},[(item.isUrl)?_c('a',{directives:[{name:"jf-tooltip-on-overflow",rawName:"v-jf-tooltip-on-overflow",value:(''),expression:"''"}],staticClass:"jf-link",attrs:{"href":item.value,"target":"_blank"},domProps:{"innerHTML":_vm._s(item.value)}}):_vm._e(),(!item.isUrl && !_vm.isArray(item.value))?_c('div',{directives:[{name:"jf-tooltip-on-overflow",rawName:"v-jf-tooltip-on-overflow",value:(''),expression:"''"}],domProps:{"innerHTML":_vm._s(item.value)}}):_vm._e(),(_vm.isArray(item.value))?_c('div',{attrs:{"id":'data-list-row-' + _vm.$parent.$index}},[_vm._l((item.value),function(tag){return _c('div',{staticClass:"tag"},[(tag.url)?_c('a',{staticClass:"gridcell-content-text jf-link",attrs:{"href":tag.url,"target":"_blank"},domProps:{"innerHTML":_vm._s(tag.label)}}):_vm._e(),(!tag.url)?_c('span',{staticClass:"gridcell-content-text",domProps:{"innerHTML":_vm._s(tag.label)}}):_vm._e()])}),(item.value.length >= 1 && _vm.htmlIsOverflowing('#data-list-row-' + _vm.$parent.$index))?_c('a',{staticClass:"jf-link gridcell-showall",attrs:{"href":""},on:{"click":function($event){$event.preventDefault();_vm.showAll(item.value,item.label,item.objectName)}}},[_vm._v(" (See "+_vm._s(item.value.length > 1 ? 'All' : 'List')+")")]):_vm._e()],2):_vm._e(),(item.copy && !_vm.isArray(item.value))?_c('div',{staticClass:"copy"},[_c('jf-clip-copy',{attrs:{"text-to-copy":item.value}})],1):_vm._e()])])]):_vm._e()}),0)])])}
+var JfDataListComponentvue_type_template_id_6412b088_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/JfDataListComponent.vue?vue&type=template&id=eb7c51cc&scoped=true&
+// CONCATENATED MODULE: ./src/components/JfDataListComponent.vue?vue&type=template&id=6412b088&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfDataListComponent.vue?vue&type=script&lang=js&
 
@@ -81139,8 +81452,8 @@ var JfDataListComponentvue_type_template_id_eb7c51cc_scoped_true_staticRenderFns
 });
 // CONCATENATED MODULE: ./src/components/JfDataListComponent.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_JfDataListComponentvue_type_script_lang_js_ = (JfDataListComponentvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/JfDataListComponent.vue?vue&type=style&index=0&id=eb7c51cc&scoped=true&lang=less&
-var JfDataListComponentvue_type_style_index_0_id_eb7c51cc_scoped_true_lang_less_ = __webpack_require__("f545");
+// EXTERNAL MODULE: ./src/components/JfDataListComponent.vue?vue&type=style&index=0&id=6412b088&scoped=true&lang=less&
+var JfDataListComponentvue_type_style_index_0_id_6412b088_scoped_true_lang_less_ = __webpack_require__("f4dd");
 
 // CONCATENATED MODULE: ./src/components/JfDataListComponent.vue
 
@@ -81153,11 +81466,11 @@ var JfDataListComponentvue_type_style_index_0_id_eb7c51cc_scoped_true_lang_less_
 
 var JfDataListComponent_component = normalizeComponent(
   components_JfDataListComponentvue_type_script_lang_js_,
-  JfDataListComponentvue_type_template_id_eb7c51cc_scoped_true_render,
-  JfDataListComponentvue_type_template_id_eb7c51cc_scoped_true_staticRenderFns,
+  JfDataListComponentvue_type_template_id_6412b088_scoped_true_render,
+  JfDataListComponentvue_type_template_id_6412b088_scoped_true_staticRenderFns,
   false,
   null,
-  "eb7c51cc",
+  "6412b088",
   null
   
 )
@@ -85617,16 +85930,19 @@ var JfEnterPressComponent_component = normalizeComponent(
 JfEnterPressComponent_component.options.__file = "JfEnterPressComponent.vue"
 /* harmony default export */ var JfEnterPressComponent = (JfEnterPressComponent_component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfUiSelectComponent.vue?vue&type=script&lang=js&
-var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n<div>\n    <ui-select  v-model=\"jfSelectModel\" on-select=\"onSelect($item,$model)\" :disabled=\"jfSelectDisabled\" remove-selected=\"false\">\n        <ui-select-match id=\"select-header\" :placeholder=\" jfSelectPlaceholder \" @click=\"onOpenList()\">\n            <jf-marquee disabled=\"jfSelectDisableMarquee\">\n                <inner-html v-html=\"displayLabel($item || $select.selected)\"></inner-html>\n            </jf-marquee>\n        </ui-select-match>\n        <ui-select-choices  refresh-delay=\"100\" ui-disable-choice=\"item.disabled\" refresh=\"refresh($select.search)\" repeat=\"item in jfUiSelect[jfSelectOptionsView ? 'jfSelectOptionsView' : 'jfSelectOptions'] | filter: (!jfSelectFilterAttr ? $select.search : { [jfSelectFilterAttr || 'dummyfield']: $select.search}) track by $index\">\n            <div v-if=\"!jfSelectHelpTooltips\" class=\"jf-ui-select-item\" name=\"select-item\" :class=\"{'more-ph': isMorePlaceholder(item)}\" @click=\"onClick(item,$event)\">\n                <jf-marquee disabled=\"jfSelectDisableMarquee\" :class=\"[item.customClass]\">\n                    <inner-html v-html=\"displayLabel(item) | highlight: $select.search\"></inner-html>\n                </jf-marquee>\n            </div>\n            <div v-if=\"jfSelectHelpTooltips\">\n                <span class=\"jf-ui-select-item\" name=\"select-item\" :class=\"{'more-ph': isMorePlaceholder(item)}\" @click=\"onClick(item,$event)\" v-html=\"displayLabel(item) | highlight: $select.search\"></span>\n                <span v-if=\"jfSelectHelpTooltips({$item: item})\">\n                <jf-help-tooltip :text=\"jfSelectHelpTooltips({$item: item})\"></jf-help-tooltip>\n            </span>\n            </div>\n        </ui-select-choices>\n    </ui-select>\n</div>\n";
+var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n    <div>\n         <!-- <ui-select  v-model=\"jfSelectModel\" on-select=\"onSelect($item,$model)\" :disabled=\"jfSelectDisabled\" remove-selected=\"false\">\n            <ui-select-match id=\"select-header\" :placeholder=\" jfSelectPlaceholder \" @click=\"onOpenList()\">\n                <jf-marquee disabled=\"jfSelectDisableMarquee\">\n                    <inner-html v-html=\"displayLabel($item || $select.selected)\"></inner-html>\n                </jf-marquee>\n            </ui-select-match>\n            <ui-select-choices  refresh-delay=\"100\" ui-disable-choice=\"item.disabled\" refresh=\"refresh($select.search)\" repeat=\"item in jfUiSelect[jfSelectOptionsView ? 'jfSelectOptionsView' : 'jfSelectOptions'] | filter: (!jfSelectFilterAttr ? $select.search : { [jfSelectFilterAttr || 'dummyfield']: $select.search}) track by $index\">\n                <div v-if=\"!jfSelectHelpTooltips\" class=\"jf-ui-select-item\" name=\"select-item\" :class=\"{'more-ph': isMorePlaceholder(item)}\" @click=\"onClick(item,$event)\">\n                    <jf-marquee disabled=\"jfSelectDisableMarquee\" :class=\"[item.customClass]\">\n                        <inner-html v-html=\"displayLabel(item) | highlight: $select.search\"></inner-html>\n                    </jf-marquee>\n                </div>\n                <div v-if=\"jfSelectHelpTooltips\">\n                    <span class=\"jf-ui-select-item\" name=\"select-item\" :class=\"{'more-ph': isMorePlaceholder(item)}\" @click=\"onClick(item,$event)\" v-html=\"displayLabel(item) | highlight: $select.search\"></span>\n                    <span v-if=\"jfSelectHelpTooltips({$item: item})\">\n                    <jf-help-tooltip :text=\"jfSelectHelpTooltips({$item: item})\"></jf-help-tooltip>\n                </span>\n                </div>\n            </ui-select-choices>\n        </ui-select> -->\nV Select goes here:\n           <v-select :get-option-label=\"jfSelectDisplayFunc\" :multiple=\"jfSelectMultiple\" :placeholder=\"jfSelectPlaceholder\" :disabled=\"jfSelectDisabled\" @input=\"onInputChange\" :value=\"value\"  id=\"mySelect\" :options=\"jfSelectOptions\" :label=\"displayAttr\">\n        <template slot=\"option\" slot-scope=\"option\">\n        <i v-if=\"option.icon\" class=\"icon\" :class=\"option.icon\"></i>\n        <span v-if=\"!jfSelectDisplayFunc\">{{ option[displayAttr]}}</span>\n        <span v-else=\"!jfSelectDisplayFunc\">{{ jfSelectDisplayFunc(option)}}</span>\n\n        </template>\n        </v-select>\n    </div>\n    ";
 /* harmony default export */ var JfUiSelectComponentvue_type_script_lang_js_ = ({
   template: JfUiSelectComponentvue_type_script_lang_js_TEMPLATE,
   name: 'jf-ui-select',
-  props: ['jfSelectModel', 'jfSelectOptions', 'jfSelectDisabled', 'jfSelectDisableMarquee', 'jfSelectMultiple', 'jfSelectDisplayAttr', 'jfSelectFilterAttr', 'jfSelectPlaceholder', 'jfSelectLoadChunks', 'jfSelectLoadMoreLabel'],
+  props: ['jfSelectOptions', 'jfSelectDisplayFunc', 'jfSelectDisabled', 'jfSelectDisableMarquee', 'jfSelectMultiple', 'jfSelectDisplayAttr', 'jfSelectFilterAttr', 'jfSelectPlaceholder', 'jfSelectLoadChunks', 'jfSelectLoadMoreLabel', 'value'],
   data: function data() {
     return {
       jfSelectOptionsView: null,
       jfSelectHelpTooltips: null
     };
+  },
+  beforeMount: function beforeMount() {
+    this.displayAttr = this.jfSelectDisplayAttr || 'title';
   },
   mounted: function mounted() {
     var _this = this;
@@ -85652,6 +85968,9 @@ var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n<div>\n    <ui-sele
     'controllerAs': 'jfUiSelect'
   },
   methods: {
+    onInputChange: function onInputChange(val) {
+      this.$emit('input', val);
+    },
     onSelect: function onSelect($item, $model) {
       this.$emit('jf-select-change');
       if (this.jfSelectOptionsView) this.jfSelectOptionsView = [];
@@ -85726,8 +86045,8 @@ var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n<div>\n    <ui-sele
 });
 // CONCATENATED MODULE: ./src/components/JfUiSelectComponent.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_JfUiSelectComponentvue_type_script_lang_js_ = (JfUiSelectComponentvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/JfUiSelectComponent.vue?vue&type=style&index=0&id=0f485d21&scoped=true&lang=less&
-var JfUiSelectComponentvue_type_style_index_0_id_0f485d21_scoped_true_lang_less_ = __webpack_require__("751b");
+// EXTERNAL MODULE: ./src/components/JfUiSelectComponent.vue?vue&type=style&index=0&id=6dc34dbf&scoped=true&lang=less&
+var JfUiSelectComponentvue_type_style_index_0_id_6dc34dbf_scoped_true_lang_less_ = __webpack_require__("8114");
 
 // CONCATENATED MODULE: ./src/components/JfUiSelectComponent.vue
 var JfUiSelectComponent_render, JfUiSelectComponent_staticRenderFns
@@ -85744,7 +86063,7 @@ var JfUiSelectComponent_component = normalizeComponent(
   JfUiSelectComponent_staticRenderFns,
   false,
   null,
-  "0f485d21",
+  "6dc34dbf",
   null
   
 )
@@ -85962,14 +86281,14 @@ var JfTabComponent_component = normalizeComponent(
 
 JfTabComponent_component.options.__file = "JfTabComponent.vue"
 /* harmony default export */ var JfTabComponent = (JfTabComponent_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTabsComponent.vue?vue&type=template&id=4f45dfb4&scoped=true&
-var JfTabsComponentvue_type_template_id_4f45dfb4_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('ul',{staticClass:"nav nav-tabs"},[_vm._l((_vm.tabsVisible),function(tab){return _c('li',{staticClass:"jf-tabs-tab-header",class:( _obj = {active:_vm.isActiveTab(tab), disabled:tab.isDisabled}, _obj[tab.class] = _vm.hasClass(tab), _obj ),style:({width: _vm.getTabWidthForStyle()}),attrs:{"jf-disable-feature":tab.feature}},[_c('a',{staticStyle:{"z-index":"999999"},on:{"click":function($event){$event.preventDefault();_vm.onClickTab(tab, true)}}},[_c('div',{directives:[{name:"jf-tooltip-on-overflow",rawName:"v-jf-tooltip-on-overflow"}],staticClass:"jf-tab-header-container"},[_c('span',[_vm._v(_vm._s(_vm.dictionary[tab.name]))])])])])
-var _obj;}),_c('li',{directives:[{name:"show",rawName:"v-show",value:(_vm.tabsCollapsed.length),expression:"tabsCollapsed.length"}],staticClass:"action-expand"},[_c('span',{staticClass:"dropdown",attrs:{"dropdown":"","is-open":"isDropdownOpen"}},[_vm._m(0),_c('ul',{staticClass:"dropdown-menu dropdown-menu-right dropdown-container text-left"},_vm._l((_vm.tabsCollapsed),function(tab){return _c('li',{staticClass:"dropdown-item",class:( _obj = {}, _obj[tab.class] = _vm.hasClass(tab), _obj ),attrs:{"jf-disable-feature":tab.feature}},[_c('a',{directives:[{name:"jf-tooltip-on-overflow",rawName:"v-jf-tooltip-on-overflow"}],on:{"click":function($event){$event.preventDefault();_vm.onClickTab(tab, true)}}},[_c('span',[_vm._v(_vm._s(_vm.dictionary[tab.name]))])])])
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTabsComponent.vue?vue&type=template&id=78cb6058&scoped=true&
+var JfTabsComponentvue_type_template_id_78cb6058_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('ul',{staticClass:"nav nav-tabs"},[_vm._l((_vm.tabsVisible),function(tab){return _c('li',{staticClass:"jf-tabs-tab-header",class:( _obj = {active:_vm.isActiveTab(tab), disabled:tab.isDisabled}, _obj[tab.class] = _vm.hasClass(tab), _obj ),style:({width: _vm.getTabWidthForStyle()}),attrs:{"jf-disable-feature":tab.feature}},[_c('a',{staticStyle:{"z-index":"999999"},on:{"click":function($event){$event.preventDefault();_vm.onClickTab(tab, true)}}},[_c('div',{directives:[{name:"jf-tooltip-on-overflow",rawName:"v-jf-tooltip-on-overflow",value:(''),expression:"''"}],staticClass:"jf-tab-header-container"},[_c('span',[_vm._v(_vm._s(_vm.dictionary[tab.name]))])])])])
+var _obj;}),_c('li',{directives:[{name:"show",rawName:"v-show",value:(_vm.tabsCollapsed.length),expression:"tabsCollapsed.length"}],staticClass:"action-expand"},[_c('span',{staticClass:"dropdown",attrs:{"dropdown":"","is-open":"isDropdownOpen"}},[_vm._m(0),_c('ul',{staticClass:"dropdown-menu dropdown-menu-right dropdown-container text-left"},_vm._l((_vm.tabsCollapsed),function(tab){return _c('li',{staticClass:"dropdown-item",class:( _obj = {}, _obj[tab.class] = _vm.hasClass(tab), _obj ),attrs:{"jf-disable-feature":tab.feature}},[_c('a',{directives:[{name:"jf-tooltip-on-overflow",rawName:"v-jf-tooltip-on-overflow",value:(''),expression:"''"}],on:{"click":function($event){$event.preventDefault();_vm.onClickTab(tab, true)}}},[_c('span',[_vm._v(_vm._s(_vm.dictionary[tab.name]))])])])
 var _obj;}),0)])])],2),_vm._t("default")],2)}
-var JfTabsComponentvue_type_template_id_4f45dfb4_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('a',{staticClass:"dropdown-toggle nav-tabs-more",attrs:{"href":"","dropdown-toggle":""}},[_c('i',{staticClass:"icon-arrow"})])}]
+var JfTabsComponentvue_type_template_id_78cb6058_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('a',{staticClass:"dropdown-toggle nav-tabs-more",attrs:{"href":"","dropdown-toggle":""}},[_c('i',{staticClass:"icon-arrow"})])}]
 
 
-// CONCATENATED MODULE: ./src/components/JfTabsComponent.vue?vue&type=template&id=4f45dfb4&scoped=true&
+// CONCATENATED MODULE: ./src/components/JfTabsComponent.vue?vue&type=template&id=78cb6058&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTabsComponent.vue?vue&type=script&lang=js&
 
@@ -86148,8 +86467,8 @@ var JfTabsComponentvue_type_template_id_4f45dfb4_scoped_true_staticRenderFns = [
 });
 // CONCATENATED MODULE: ./src/components/JfTabsComponent.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_JfTabsComponentvue_type_script_lang_js_ = (JfTabsComponentvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/JfTabsComponent.vue?vue&type=style&index=0&id=4f45dfb4&scoped=true&lang=less&
-var JfTabsComponentvue_type_style_index_0_id_4f45dfb4_scoped_true_lang_less_ = __webpack_require__("3f27");
+// EXTERNAL MODULE: ./src/components/JfTabsComponent.vue?vue&type=style&index=0&id=78cb6058&scoped=true&lang=less&
+var JfTabsComponentvue_type_style_index_0_id_78cb6058_scoped_true_lang_less_ = __webpack_require__("aa63");
 
 // CONCATENATED MODULE: ./src/components/JfTabsComponent.vue
 
@@ -86162,11 +86481,11 @@ var JfTabsComponentvue_type_style_index_0_id_4f45dfb4_scoped_true_lang_less_ = _
 
 var JfTabsComponent_component = normalizeComponent(
   components_JfTabsComponentvue_type_script_lang_js_,
-  JfTabsComponentvue_type_template_id_4f45dfb4_scoped_true_render,
-  JfTabsComponentvue_type_template_id_4f45dfb4_scoped_true_staticRenderFns,
+  JfTabsComponentvue_type_template_id_78cb6058_scoped_true_render,
+  JfTabsComponentvue_type_template_id_78cb6058_scoped_true_staticRenderFns,
   false,
   null,
-  "4f45dfb4",
+  "78cb6058",
   null
   
 )
@@ -86648,7 +86967,7 @@ function search() {} //export nothing, prevent ide from marking import as error 
         }
 
         if (_this2._isJSON(content)) {
-          _this2.formattedModel = __webpack_require__("9b7f").js_beautify(content);
+          _this2.formattedModel = __webpack_require__("e552").js_beautify(content);
         } else {
           _this2.formattedModel = content;
         }
@@ -87540,7 +87859,7 @@ JfCheckboxComponent_component.options.__file = "JfCheckboxComponent.vue"
 
 
 
-var JfListMakerComponentvue_type_script_lang_js_TEMPLATE = "\n<div>\n    <div class=\"jf-list-maker\" >\n        <div class=\"list-new-value\" :class=\"{dropdown: predefinedValues}\" v-if=\"!hideAddNewFields\">\n            <form>\n                <jf-field validations=\"common\" :dont-push-down-errors=\"true\" :delayed-init=\"true\">\n                    <label>{{label}}</label>\n                    <jf-help-tooltip v-if=\"helpTooltip\" :html=\"helpTooltip\"></jf-help-tooltip>\n                    <input v-if=\"!predefinedValues\" :type=\"inputType || 'text'\" class=\"input-text\" v-model=\"newValue\" :placeholder=\"placeholder || 'New ' + (objectName || 'Value')\" :id=\"'newValueField-' + listId\" name=\"newValueField\" jf-enter-press=\"addValue()\" @input=\"errorMessage=null\" :disabled=\"ngDisabled\">\n                    <jf-ui-select v-if=\"predefinedValues\" :jf-select-model=\"newValue\" :jf-select-placeholder=\"placeholder || 'New ' + (objectName || 'Value')\" :jf-select-disabled=\"ngDisabled\" :jf-select-options=\"predefinedValues\"></jf-ui-select>\n\n                </jf-field>\n            </form>\n            <div class=\"list-new-value-button\">\n                <i class=\"icon icon-new\" @click=\"!(ngDisabled || !newValue.length) && addValue()\" :disabled=\"ngDisabled || !newValue.length\"></i>\n            </div>\n        </div>\n        <div class=\"jf-validation\">{{errorMessage}}</div>\n\n        <div :id=\"listId\" class=\"list-maker-list\" v-if=\"values.length\">\n            <div class=\"list-maker-list-row\" v-for=\"(value, $index) in values\">\n                <div class=\"list-maker-row-value\" v-jf-tooltip-on-overflow>{{value}}</div>\n                <div class=\"list-maker-list-buttons\">\n                    <a href=\"\" class=\"icon icon-close\" @click.prevent=\"removeValue($index)\" v-if=\"values.length > minLength\" :disabled=\"ngDisabled\"></a>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n";
+var JfListMakerComponentvue_type_script_lang_js_TEMPLATE = "\n<div>\n    <div class=\"jf-list-maker\" >\n        <div class=\"list-new-value\" :class=\"{dropdown: predefinedValues}\" v-if=\"!hideAddNewFields\">\n            <form>\n                <jf-field validations=\"common\" :dont-push-down-errors=\"true\" :delayed-init=\"true\">\n                    <label>{{label}}</label>\n                    <jf-help-tooltip v-if=\"helpTooltip\" :html=\"helpTooltip\"></jf-help-tooltip>\n                    <input v-if=\"!predefinedValues\" :type=\"inputType || 'text'\" class=\"input-text\" v-model=\"newValue\" :placeholder=\"placeholder || 'New ' + (objectName || 'Value')\" :id=\"'newValueField-' + listId\" name=\"newValueField\" jf-enter-press=\"addValue()\" @input=\"errorMessage=null\" :disabled=\"ngDisabled\">\n                    <jf-ui-select v-if=\"predefinedValues\" :jf-select-model=\"newValue\" :jf-select-placeholder=\"placeholder || 'New ' + (objectName || 'Value')\" :jf-select-disabled=\"ngDisabled\" :jf-select-options=\"predefinedValues\"></jf-ui-select>\n\n                </jf-field>\n            </form>\n            <div class=\"list-new-value-button\">\n                <i class=\"icon icon-new\" @click=\"!(ngDisabled || !newValue.length) && addValue()\" :disabled=\"ngDisabled || !newValue.length\"></i>\n            </div>\n        </div>\n        <div class=\"jf-validation\">{{errorMessage}}</div>\n\n        <div :id=\"listId\" class=\"list-maker-list\" v-if=\"values.length\">\n            <div class=\"list-maker-list-row\" v-for=\"(value, $index) in values\">\n                <div class=\"list-maker-row-value\" v-jf-tooltip-on-overflow=\"''\">{{value}}</div>\n                <div class=\"list-maker-list-buttons\">\n                    <a href=\"\" class=\"icon icon-close\" @click.prevent=\"removeValue($index)\" v-if=\"values.length > minLength\" :disabled=\"ngDisabled\"></a>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n";
 /* harmony default export */ var JfListMakerComponentvue_type_script_lang_js_ = ({
   template: JfListMakerComponentvue_type_script_lang_js_TEMPLATE,
   name: 'jf-list-maker',
@@ -87609,8 +87928,8 @@ var JfListMakerComponentvue_type_script_lang_js_TEMPLATE = "\n<div>\n    <div cl
 });
 // CONCATENATED MODULE: ./src/components/JfListMakerComponent.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_JfListMakerComponentvue_type_script_lang_js_ = (JfListMakerComponentvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/JfListMakerComponent.vue?vue&type=style&index=0&id=4fae89cc&scoped=true&lang=less&
-var JfListMakerComponentvue_type_style_index_0_id_4fae89cc_scoped_true_lang_less_ = __webpack_require__("9b28");
+// EXTERNAL MODULE: ./src/components/JfListMakerComponent.vue?vue&type=style&index=0&id=bc219e02&scoped=true&lang=less&
+var JfListMakerComponentvue_type_style_index_0_id_bc219e02_scoped_true_lang_less_ = __webpack_require__("091a");
 
 // CONCATENATED MODULE: ./src/components/JfListMakerComponent.vue
 var JfListMakerComponent_render, JfListMakerComponent_staticRenderFns
@@ -87627,23 +87946,21 @@ var JfListMakerComponent_component = normalizeComponent(
   JfListMakerComponent_staticRenderFns,
   false,
   null,
-  "4fae89cc",
+  "bc219e02",
   null
   
 )
 
 JfListMakerComponent_component.options.__file = "JfListMakerComponent.vue"
 /* harmony default export */ var JfListMakerComponent = (JfListMakerComponent_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfHelpTooltipComponent.vue?vue&type=template&id=c325ca18&scoped=true&
-var JfHelpTooltipComponentvue_type_template_id_c325ca18_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"jf-help-tooltip"},[_c('div',[_c('span',{staticClass:"tooltip-icon jf-tooltipster"},[_c('span',[_vm._t("default")],2)])])])}
-var JfHelpTooltipComponentvue_type_template_id_c325ca18_scoped_true_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfHelpTooltipComponent.vue?vue&type=template&id=0afcca08&scoped=true&
+var JfHelpTooltipComponentvue_type_template_id_0afcca08_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',[_c('span',{staticClass:"tooltip-icon jf-tooltipster"},[_c('span',[_vm._t("default")],2)])])])}
+var JfHelpTooltipComponentvue_type_template_id_0afcca08_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/JfHelpTooltipComponent.vue?vue&type=template&id=c325ca18&scoped=true&
+// CONCATENATED MODULE: ./src/components/JfHelpTooltipComponent.vue?vue&type=template&id=0afcca08&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfHelpTooltipComponent.vue?vue&type=script&lang=js&
-
-
 //
 //
 //
@@ -87659,41 +87976,14 @@ var JfHelpTooltipComponentvue_type_template_id_c325ca18_scoped_true_staticRender
 /* harmony default export */ var JfHelpTooltipComponentvue_type_script_lang_js_ = ({
   name: 'jf-help-tooltip',
   props: ['placement', 'text', 'html', 'maxWidth'],
-  'jf@inject': ['$transclude'],
   data: function data() {
     return {};
-  },
-  ng1_legacy: {
-    ng1postLinkFn: function ng1postLinkFn($scope, element, attrs, ctrl) {
-      var content = ctrl.text || ctrl.html || ctrl.$transclude().html();
-      if (!content) return;
-      console.log(content, '!!!!');
-      content = content.replace(/\n/g, '<br>');
-      $(element).find('.jf-tooltipster').tooltipster({
-        animation: 'fade',
-        contentAsHTML: 'true',
-        trigger: 'hover',
-        onlyOne: 'true',
-        interactive: 'true',
-        interactiveTolerance: 500,
-        maxWidth: ctrl.maxWidth || 600,
-        position: ctrl.placement,
-        theme: "tooltipster-default " + ctrl.placement,
-        content: content,
-        functionReady: function functionReady() {
-          $(element).find('.jf-tooltipster').addClass('active');
-        },
-        functionAfter: function functionAfter() {
-          $(element).find('.jf-tooltipster').removeClass('active');
-        }
-      });
-    }
   }
 });
 // CONCATENATED MODULE: ./src/components/JfHelpTooltipComponent.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_JfHelpTooltipComponentvue_type_script_lang_js_ = (JfHelpTooltipComponentvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/JfHelpTooltipComponent.vue?vue&type=style&index=0&id=c325ca18&scoped=true&lang=less&
-var JfHelpTooltipComponentvue_type_style_index_0_id_c325ca18_scoped_true_lang_less_ = __webpack_require__("326b");
+// EXTERNAL MODULE: ./src/components/JfHelpTooltipComponent.vue?vue&type=style&index=0&id=0afcca08&scoped=true&lang=less&
+var JfHelpTooltipComponentvue_type_style_index_0_id_0afcca08_scoped_true_lang_less_ = __webpack_require__("3e1d");
 
 // CONCATENATED MODULE: ./src/components/JfHelpTooltipComponent.vue
 
@@ -87706,11 +87996,11 @@ var JfHelpTooltipComponentvue_type_style_index_0_id_c325ca18_scoped_true_lang_le
 
 var JfHelpTooltipComponent_component = normalizeComponent(
   components_JfHelpTooltipComponentvue_type_script_lang_js_,
-  JfHelpTooltipComponentvue_type_template_id_c325ca18_scoped_true_render,
-  JfHelpTooltipComponentvue_type_template_id_c325ca18_scoped_true_staticRenderFns,
+  JfHelpTooltipComponentvue_type_template_id_0afcca08_scoped_true_render,
+  JfHelpTooltipComponentvue_type_template_id_0afcca08_scoped_true_staticRenderFns,
   false,
   null,
-  "c325ca18",
+  "0afcca08",
   null
   
 )
@@ -89803,7 +90093,1237 @@ var NgMessagesComponent_component = normalizeComponent(
 
 NgMessagesComponent_component.options.__file = "NgMessagesComponent.vue"
 /* harmony default export */ var NgMessagesComponent = (NgMessagesComponent_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-select/src/components/Select.vue?vue&type=template&id=265ebb9f&
+var Selectvue_type_template_id_265ebb9f_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"dropdown v-select",class:_vm.dropdownClasses,attrs:{"dir":_vm.dir}},[_c('div',{ref:"toggle",staticClass:"dropdown-toggle",on:{"mousedown":function($event){$event.preventDefault();return _vm.toggleDropdown($event)}}},[_c('div',{ref:"selectedOptions",staticClass:"vs__selected-options"},[_vm._l((_vm.valueAsArray),function(option){return _vm._t("selected-option-container",[_c('span',{key:option.index,staticClass:"selected-tag"},[_vm._t("selected-option",[_vm._v("\n            "+_vm._s(_vm.getOptionLabel(option))+"\n          ")],null,(typeof option === 'object')?option:( _obj = {}, _obj[_vm.label] = option, _obj )),(_vm.multiple)?_c('button',{staticClass:"close",attrs:{"disabled":_vm.disabled,"type":"button","aria-label":"Remove option"},on:{"click":function($event){_vm.deselect(option)}}},[_c('span',{attrs:{"aria-hidden":"true"}},[_vm._v("×")])]):_vm._e()],2)],{option:(typeof option === 'object')?option:( _obj$1 = {}, _obj$1[_vm.label] = option, _obj$1 ),deselect:_vm.deselect,multiple:_vm.multiple,disabled:_vm.disabled})
+var _obj;
+var _obj$1;}),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.search),expression:"search"}],ref:"search",staticClass:"form-control",attrs:{"type":"search","autocomplete":"off","disabled":_vm.disabled,"placeholder":_vm.searchPlaceholder,"tabindex":_vm.tabindex,"readonly":!_vm.searchable,"id":_vm.inputId,"role":"combobox","aria-expanded":_vm.dropdownOpen,"aria-label":"Search for option"},domProps:{"value":(_vm.search)},on:{"keydown":[function($event){if(!('button' in $event)&&_vm._k($event.keyCode,"delete",[8,46],$event.key,["Backspace","Delete","Del"])){ return null; }return _vm.maybeDeleteValue($event)},function($event){if(!('button' in $event)&&_vm._k($event.keyCode,"up",38,$event.key,["Up","ArrowUp"])){ return null; }$event.preventDefault();return _vm.typeAheadUp($event)},function($event){if(!('button' in $event)&&_vm._k($event.keyCode,"down",40,$event.key,["Down","ArrowDown"])){ return null; }$event.preventDefault();return _vm.typeAheadDown($event)},function($event){if(!('button' in $event)&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }$event.preventDefault();return _vm.typeAheadSelect($event)},function($event){if(!('button' in $event)&&_vm._k($event.keyCode,"tab",9,$event.key,"Tab")){ return null; }return _vm.onTab($event)}],"keyup":function($event){if(!('button' in $event)&&_vm._k($event.keyCode,"esc",27,$event.key,["Esc","Escape"])){ return null; }return _vm.onEscape($event)},"blur":_vm.onSearchBlur,"focus":_vm.onSearchFocus,"input":function($event){if($event.target.composing){ return; }_vm.search=$event.target.value}}})],2),_c('div',{staticClass:"vs__actions"},[_c('button',{directives:[{name:"show",rawName:"v-show",value:(_vm.showClearButton),expression:"showClearButton"}],staticClass:"clear",attrs:{"disabled":_vm.disabled,"type":"button","title":"Clear selection"},on:{"click":_vm.clearSelection}},[_c('span',{attrs:{"aria-hidden":"true"}},[_vm._v("×")])]),(!_vm.noDrop)?_c('i',{ref:"openIndicator",staticClass:"open-indicator",attrs:{"role":"presentation"}}):_vm._e(),_vm._t("spinner",[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.mutableLoading),expression:"mutableLoading"}],staticClass:"spinner"},[_vm._v("Loading...")])])],2)]),_c('transition',{attrs:{"name":_vm.transition}},[(_vm.dropdownOpen)?_c('ul',{ref:"dropdownMenu",staticClass:"dropdown-menu",style:({ 'max-height': _vm.maxHeight }),attrs:{"role":"listbox"},on:{"mousedown":_vm.onMousedown}},[_vm._l((_vm.filteredOptions),function(option,index){return _c('li',{key:index,class:{ active: _vm.isOptionSelected(option), highlight: index === _vm.typeAheadPointer },attrs:{"role":"option"},on:{"mouseover":function($event){_vm.typeAheadPointer = index}}},[_c('a',{on:{"mousedown":function($event){$event.preventDefault();$event.stopPropagation();_vm.select(option)}}},[_vm._t("option",[_vm._v("\n          "+_vm._s(_vm.getOptionLabel(option))+"\n        ")],null,(typeof option === 'object')?option:( _obj = {}, _obj[_vm.label] = option, _obj ))],2)])
+var _obj;}),(!_vm.filteredOptions.length)?_c('li',{staticClass:"no-options"},[_vm._t("no-options",[_vm._v("Sorry, no matching options.")])],2):_vm._e()],2):_vm._e()])],1)}
+var Selectvue_type_template_id_265ebb9f_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./node_modules/vue-select/src/components/Select.vue?vue&type=template&id=265ebb9f&
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.number.constructor.js
+var es6_number_constructor = __webpack_require__("c5f6");
+
+// EXTERNAL MODULE: ./node_modules/vue-select/src/mixins/pointerScroll.js
+var pointerScroll = __webpack_require__("13d5");
+var pointerScroll_default = /*#__PURE__*/__webpack_require__.n(pointerScroll);
+
+// EXTERNAL MODULE: ./node_modules/vue-select/src/mixins/typeAheadPointer.js
+var typeAheadPointer = __webpack_require__("e08f");
+var typeAheadPointer_default = /*#__PURE__*/__webpack_require__.n(typeAheadPointer);
+
+// EXTERNAL MODULE: ./node_modules/vue-select/src/mixins/ajax.js
+var ajax = __webpack_require__("ada1");
+var ajax_default = /*#__PURE__*/__webpack_require__.n(ajax);
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-select/src/components/Select.vue?vue&type=script&lang=js&
+
+
+
+
+
+
+
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ var Selectvue_type_script_lang_js_ = ({
+  mixins: [pointerScroll_default.a, typeAheadPointer_default.a, ajax_default.a],
+  props: {
+    /**
+     * Contains the currently selected value. Very similar to a
+     * `value` attribute on an <input>. You can listen for changes
+     * using 'change' event using v-on
+     * @type {Object||String||null}
+     */
+    value: {
+      default: null
+    },
+
+    /**
+     * An array of strings or objects to be used as dropdown choices.
+     * If you are using an array of objects, vue-select will look for
+     * a `label` key (ex. [{label: 'This is Foo', value: 'foo'}]). A
+     * custom label key can be set with the `label` prop.
+     * @type {Array}
+     */
+    options: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
+
+    /**
+     * Disable the entire component.
+     * @type {Boolean}
+     */
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+
+    /**
+     * Can the user clear the selected property?
+     * @type {Boolean}
+     */
+    clearable: {
+      type: Boolean,
+      default: true
+    },
+
+    /**
+     * Sets the max-height property on the dropdown list.
+     * @deprecated
+     * @type {String}
+     */
+    maxHeight: {
+      type: String,
+      default: '400px'
+    },
+
+    /**
+     * Enable/disable filtering the options.
+     * @type {Boolean}
+     */
+    searchable: {
+      type: Boolean,
+      default: true
+    },
+
+    /**
+     * Equivalent to the `multiple` attribute on a `<select>` input.
+     * @type {Boolean}
+     */
+    multiple: {
+      type: Boolean,
+      default: false
+    },
+
+    /**
+     * Equivalent to the `placeholder` attribute on an `<input>`.
+     * @type {String}
+     */
+    placeholder: {
+      type: String,
+      default: ''
+    },
+
+    /**
+     * Sets a Vue transition property on the `.dropdown-menu`. vue-select
+     * does not include CSS for transitions, you'll need to add them yourself.
+     * @type {String}
+     */
+    transition: {
+      type: String,
+      default: 'fade'
+    },
+
+    /**
+     * Enables/disables clearing the search text when an option is selected.
+     * @type {Boolean}
+     */
+    clearSearchOnSelect: {
+      type: Boolean,
+      default: true
+    },
+
+    /**
+     * Close a dropdown when an option is chosen. Set to false to keep the dropdown
+     * open (useful when combined with multi-select, for example)
+     * @type {Boolean}
+     */
+    closeOnSelect: {
+      type: Boolean,
+      default: true
+    },
+
+    /**
+     * Tells vue-select what key to use when generating option
+     * labels when each `option` is an object.
+     * @type {String}
+     */
+    label: {
+      type: String,
+      default: 'label'
+    },
+
+    /**
+     * Tells vue-select what key to use when generating option
+     * values when each `option` is an object.
+     * @type {String}
+     */
+    index: {
+      type: String,
+      default: null
+    },
+
+    /**
+     * Callback to generate the label text. If {option}
+     * is an object, returns option[this.label] by default.
+     *
+     * Label text is used for filtering comparison and
+     * displaying. If you only need to adjust the
+     * display, you should use the `option` and
+     * `selected-option` slots.
+     *
+     * @type {Function}
+     * @param  {Object || String} option
+     * @return {String}
+     */
+    getOptionLabel: {
+      type: Function,
+      default: function _default(option) {
+        if (this.index) {
+          option = this.findOptionByIndexValue(option);
+        }
+
+        if (_typeof(option) === 'object') {
+          if (!option.hasOwnProperty(this.label)) {
+            return console.warn("[vue-select warn]: Label key \"option.".concat(this.label, "\" does not") + " exist in options object ".concat(JSON.stringify(option), ".\n") + 'http://sagalbot.github.io/vue-select/#ex-labels');
+          }
+
+          return option[this.label];
+        }
+
+        return option;
+      }
+    },
+
+    /**
+     * An optional callback function that is called each time the selected
+     * value(s) change. When integrating with Vuex, use this callback to trigger
+     * an action, rather than using :value.sync to retreive the selected value.
+     * @type {Function}
+     * @param {Object || String} val
+     */
+    onChange: {
+      type: Function,
+      default: function _default(val) {
+        this.$emit('input', val);
+      }
+    },
+
+    /**
+     * Select the current value if selectOnTab is enabled
+     */
+    onTab: {
+      type: Function,
+      default: function _default() {
+        if (this.selectOnTab) {
+          this.typeAheadSelect();
+        }
+      }
+    },
+
+    /**
+     * Enable/disable creating options from searchInput.
+     * @type {Boolean}
+     */
+    taggable: {
+      type: Boolean,
+      default: false
+    },
+
+    /**
+     * Set the tabindex for the input field.
+     * @type {Number}
+     */
+    tabindex: {
+      type: Number,
+      default: null
+    },
+
+    /**
+     * When true, newly created tags will be added to
+     * the options list.
+     * @type {Boolean}
+     */
+    pushTags: {
+      type: Boolean,
+      default: false
+    },
+
+    /**
+     * When true, existing options will be filtered
+     * by the search text. Should not be used in conjunction
+     * with taggable.
+     * @type {Boolean}
+     */
+    filterable: {
+      type: Boolean,
+      default: true
+    },
+
+    /**
+     * Callback to determine if the provided option should
+     * match the current search text. Used to determine
+     * if the option should be displayed.
+     * @type   {Function}
+     * @param  {Object || String} option
+     * @param  {String} label
+     * @param  {String} search
+     * @return {Boolean}
+     */
+    filterBy: {
+      type: Function,
+      default: function _default(option, label, search) {
+        return (label || '').toLowerCase().indexOf(search.toLowerCase()) > -1;
+      }
+    },
+
+    /**
+     * Callback to filter results when search text
+     * is provided. Default implementation loops
+     * each option, and returns the result of
+     * this.filterBy.
+     * @type   {Function}
+     * @param  {Array} list of options
+     * @param  {String} search text
+     * @param  {Object} vSelect instance
+     * @return {Boolean}
+     */
+    filter: {
+      "type": Function,
+      default: function _default(options, search) {
+        var _this = this;
+
+        return options.filter(function (option) {
+          var label = _this.getOptionLabel(option);
+
+          if (typeof label === 'number') {
+            label = label.toString();
+          }
+
+          return _this.filterBy(option, label, search);
+        });
+      }
+    },
+
+    /**
+     * User defined function for adding Options
+     * @type {Function}
+     */
+    createOption: {
+      type: Function,
+      default: function _default(newOption) {
+        if (_typeof(this.mutableOptions[0]) === 'object') {
+          newOption = _defineProperty({}, this.label, newOption);
+        }
+
+        this.$emit('option:created', newOption);
+        return newOption;
+      }
+    },
+
+    /**
+     * When false, updating the options will not reset the select value
+     * @type {Boolean}
+     */
+    resetOnOptionsChange: {
+      type: Boolean,
+      default: false
+    },
+
+    /**
+     * Disable the dropdown entirely.
+     * @type {Boolean}
+     */
+    noDrop: {
+      type: Boolean,
+      default: false
+    },
+
+    /**
+     * Sets the id of the input element.
+     * @type {String}
+     * @default {null}
+     */
+    inputId: {
+      type: String
+    },
+
+    /**
+     * Sets RTL support. Accepts 'ltr', 'rtl', 'auto'.
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/dir
+     * @type {String}
+     * @default 'auto'
+     */
+    dir: {
+      type: String,
+      default: 'auto'
+    },
+
+    /**
+     * When true, hitting the 'tab' key will select the current select value
+     * @type {Boolean}
+     */
+    selectOnTab: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data: function data() {
+    return {
+      search: '',
+      open: false,
+      mutableValue: null,
+      mutableOptions: []
+    };
+  },
+  watch: {
+    /**
+     * When the value prop changes, update
+     * the internal mutableValue.
+     * @param  {mixed} val
+     * @return {void}
+     */
+    value: function value(val) {
+      this.mutableValue = val;
+    },
+
+    /**
+     * Maybe run the onChange callback.
+     * @param  {string|object} val
+     * @param  {string|object} old
+     * @return {void}
+     */
+    mutableValue: function mutableValue(val, old) {
+      if (this.multiple) {
+        this.onChange ? this.onChange(val) : null;
+      } else {
+        this.onChange && val !== old ? this.onChange(val) : null;
+      }
+    },
+
+    /**
+     * When options change, update
+     * the internal mutableOptions.
+     * @param  {array} val
+     * @return {void}
+     */
+    options: function options(val) {
+      this.mutableOptions = val;
+    },
+
+    /**
+     * Maybe reset the mutableValue
+     * when mutableOptions change.
+     * @return {[type]} [description]
+     */
+    mutableOptions: function mutableOptions() {
+      if (!this.taggable && this.resetOnOptionsChange) {
+        this.mutableValue = this.multiple ? [] : null;
+      }
+    },
+
+    /**
+     * Always reset the mutableValue when
+     * the multiple prop changes.
+     * @param  {Boolean} val
+     * @return {void}
+     */
+    multiple: function multiple(val) {
+      this.mutableValue = val ? [] : null;
+    }
+  },
+
+  /**
+   * Clone props into mutable values,
+   * attach any event listeners.
+   */
+  created: function created() {
+    this.mutableValue = this.value;
+    this.mutableOptions = this.options.slice(0);
+    this.mutableLoading = this.loading;
+    this.$on('option:created', this.maybePushTag);
+  },
+  methods: {
+    /**
+     * Select a given option.
+     * @param  {Object|String} option
+     * @return {void}
+     */
+    select: function select(option) {
+      if (!this.isOptionSelected(option)) {
+        if (this.taggable && !this.optionExists(option)) {
+          option = this.createOption(option);
+        }
+
+        if (this.index) {
+          if (!option.hasOwnProperty(this.index)) {
+            return console.warn("[vue-select warn]: Index key \"option.".concat(this.index, "\" does not") + " exist in options object ".concat(JSON.stringify(option), "."));
+          }
+
+          option = option[this.index];
+        }
+
+        if (this.multiple && !this.mutableValue) {
+          this.mutableValue = [option];
+        } else if (this.multiple) {
+          this.mutableValue.push(option);
+        } else {
+          this.mutableValue = option;
+        }
+      }
+
+      this.onAfterSelect(option);
+    },
+
+    /**
+     * De-select a given option.
+     * @param  {Object|String} option
+     * @return {void}
+     */
+    deselect: function deselect(option) {
+      var _this2 = this;
+
+      if (this.multiple) {
+        var ref = -1;
+        this.mutableValue.forEach(function (val) {
+          if (val === option || _this2.index && val === option[_this2.index] || _typeof(val) === 'object' && val[_this2.label] === option[_this2.label]) {
+            ref = val;
+          }
+        });
+        var index = this.mutableValue.indexOf(ref);
+        this.mutableValue.splice(index, 1);
+      } else {
+        this.mutableValue = null;
+      }
+    },
+
+    /**
+     * Clears the currently selected value(s)
+     * @return {void}
+     */
+    clearSelection: function clearSelection() {
+      this.mutableValue = this.multiple ? [] : null;
+    },
+
+    /**
+     * Called from this.select after each selection.
+     * @param  {Object|String} option
+     * @return {void}
+     */
+    onAfterSelect: function onAfterSelect(option) {
+      if (this.closeOnSelect) {
+        this.open = !this.open;
+        this.$refs.search.blur();
+      }
+
+      if (this.clearSearchOnSelect) {
+        this.search = '';
+      }
+    },
+
+    /**
+     * Toggle the visibility of the dropdown menu.
+     * @param  {Event} e
+     * @return {void}
+     */
+    toggleDropdown: function toggleDropdown(e) {
+      if (e.target === this.$refs.openIndicator || e.target === this.$refs.search || e.target === this.$refs.toggle || e.target.classList.contains('selected-tag') || e.target === this.$el) {
+        if (this.open) {
+          this.$refs.search.blur(); // dropdown will close on blur
+        } else {
+          if (!this.disabled) {
+            this.open = true;
+            this.$refs.search.focus();
+          }
+        }
+      }
+    },
+
+    /**
+     * Check if the given option is currently selected.
+     * @param  {Object|String}  option
+     * @return {Boolean}        True when selected | False otherwise
+     */
+    isOptionSelected: function isOptionSelected(option) {
+      var _this3 = this;
+
+      var selected = false;
+      this.valueAsArray.forEach(function (value) {
+        if (_typeof(value) === 'object') {
+          selected = _this3.optionObjectComparator(value, option);
+        } else if (value === option || value === option[_this3.index]) {
+          selected = true;
+        }
+      });
+      return selected;
+    },
+
+    /**
+     * Determine if two option objects are matching.
+     *
+     * @param value {Object}
+     * @param option {Object}
+     * @returns {boolean}
+     */
+    optionObjectComparator: function optionObjectComparator(value, option) {
+      if (this.index && value === option[this.index]) {
+        return true;
+      } else if (value[this.label] === option[this.label] || value[this.label] === option) {
+        return true;
+      } else if (this.index && value[this.index] === option[this.index]) {
+        return true;
+      }
+
+      return false;
+    },
+
+    /**
+     * Finds an option from this.options
+     * where option[this.index] matches
+     * the passed in value.
+     *
+     * @param value {Object}
+     * @returns {*}
+     */
+    findOptionByIndexValue: function findOptionByIndexValue(value) {
+      var _this4 = this;
+
+      this.options.forEach(function (_option) {
+        if (JSON.stringify(_option[_this4.index]) === JSON.stringify(value)) {
+          value = _option;
+        }
+      });
+      return value;
+    },
+
+    /**
+     * If there is any text in the search input, remove it.
+     * Otherwise, blur the search input to close the dropdown.
+     * @return {void}
+     */
+    onEscape: function onEscape() {
+      if (!this.search.length) {
+        this.$refs.search.blur();
+      } else {
+        this.search = '';
+      }
+    },
+
+    /**
+     * Close the dropdown on blur.
+     * @emits  {search:blur}
+     * @return {void}
+     */
+    onSearchBlur: function onSearchBlur() {
+      if (this.mousedown && !this.searching) {
+        this.mousedown = false;
+      } else {
+        if (this.clearSearchOnBlur) {
+          this.search = '';
+        }
+
+        this.open = false;
+        this.$emit('search:blur');
+      }
+    },
+
+    /**
+     * Open the dropdown on focus.
+     * @emits  {search:focus}
+     * @return {void}
+     */
+    onSearchFocus: function onSearchFocus() {
+      this.open = true;
+      this.$emit('search:focus');
+    },
+
+    /**
+     * Delete the value on Delete keypress when there is no
+     * text in the search input, & there's tags to delete
+     * @return {this.value}
+     */
+    maybeDeleteValue: function maybeDeleteValue() {
+      if (!this.$refs.search.value.length && this.mutableValue) {
+        return this.multiple ? this.mutableValue.pop() : this.mutableValue = null;
+      }
+    },
+
+    /**
+     * Determine if an option exists
+     * within this.mutableOptions array.
+     *
+     * @param  {Object || String} option
+     * @return {boolean}
+     */
+    optionExists: function optionExists(option) {
+      var _this5 = this;
+
+      var exists = false;
+      this.mutableOptions.forEach(function (opt) {
+        if (_typeof(opt) === 'object' && opt[_this5.label] === option) {
+          exists = true;
+        } else if (opt === option) {
+          exists = true;
+        }
+      });
+      return exists;
+    },
+
+    /**
+     * If push-tags is true, push the
+     * given option to mutableOptions.
+     *
+     * @param  {Object || String} option
+     * @return {void}
+     */
+    maybePushTag: function maybePushTag(option) {
+      if (this.pushTags) {
+        this.mutableOptions.push(option);
+      }
+    },
+
+    /**
+     * Event-Handler to help workaround IE11 (probably fixes 10 as well)
+     * firing a `blur` event when clicking
+     * the dropdown's scrollbar, causing it
+     * to collapse abruptly.
+     * @return {void}
+     */
+    onMousedown: function onMousedown() {
+      this.mousedown = true;
+    }
+  },
+  computed: {
+    /**
+     * Classes to be output on .dropdown
+     * @return {Object}
+     */
+    dropdownClasses: function dropdownClasses() {
+      return {
+        open: this.dropdownOpen,
+        single: !this.multiple,
+        searching: this.searching,
+        searchable: this.searchable,
+        unsearchable: !this.searchable,
+        loading: this.mutableLoading,
+        rtl: this.dir === 'rtl',
+        // This can be removed - styling is handled by `dir="rtl"` attribute
+        disabled: this.disabled
+      };
+    },
+
+    /**
+     * If search text should clear on blur
+     * @return {Boolean} True when single and clearSearchOnSelect
+     */
+    clearSearchOnBlur: function clearSearchOnBlur() {
+      return this.clearSearchOnSelect && !this.multiple;
+    },
+
+    /**
+     * Return the current state of the
+     * search input
+     * @return {Boolean} True if non empty value
+     */
+    searching: function searching() {
+      return !!this.search;
+    },
+
+    /**
+     * Return the current state of the
+     * dropdown menu.
+     * @return {Boolean} True if open
+     */
+    dropdownOpen: function dropdownOpen() {
+      return this.noDrop ? false : this.open && !this.mutableLoading;
+    },
+
+    /**
+     * Return the placeholder string if it's set
+     * & there is no value selected.
+     * @return {String} Placeholder text
+     */
+    searchPlaceholder: function searchPlaceholder() {
+      if (this.isValueEmpty && this.placeholder) {
+        return this.placeholder;
+      }
+    },
+
+    /**
+     * The currently displayed options, filtered
+     * by the search elements value. If tagging
+     * true, the search text will be prepended
+     * if it doesn't already exist.
+     *
+     * @return {array}
+     */
+    filteredOptions: function filteredOptions() {
+      if (!this.filterable && !this.taggable) {
+        return this.mutableOptions.slice();
+      }
+
+      var options = this.search.length ? this.filter(this.mutableOptions, this.search, this) : this.mutableOptions;
+
+      if (this.taggable && this.search.length && !this.optionExists(this.search)) {
+        options.unshift(this.search);
+      }
+
+      return options;
+    },
+
+    /**
+     * Check if there aren't any options selected.
+     * @return {Boolean}
+     */
+    isValueEmpty: function isValueEmpty() {
+      if (this.mutableValue) {
+        if (_typeof(this.mutableValue) === 'object') {
+          return !Object.keys(this.mutableValue).length;
+        }
+
+        return !this.valueAsArray.length;
+      }
+
+      return true;
+    },
+
+    /**
+     * Return the current value in array format.
+     * @return {Array}
+     */
+    valueAsArray: function valueAsArray() {
+      if (this.multiple && this.mutableValue) {
+        return this.mutableValue;
+      } else if (this.mutableValue) {
+        return [].concat(this.mutableValue);
+      }
+
+      return [];
+    },
+
+    /**
+     * Determines if the clear button should be displayed.
+     * @return {Boolean}
+     */
+    showClearButton: function showClearButton() {
+      return !this.multiple && this.clearable && !this.open && this.mutableValue != null;
+    }
+  }
+});
+// CONCATENATED MODULE: ./node_modules/vue-select/src/components/Select.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_Selectvue_type_script_lang_js_ = (Selectvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-select/src/components/Select.vue?vue&type=style&index=0&lang=css&
+var Selectvue_type_style_index_0_lang_css_ = __webpack_require__("08cf");
+
+// CONCATENATED MODULE: ./node_modules/vue-select/src/components/Select.vue
+
+
+
+
+
+
+/* normalize component */
+
+var Select_component = normalizeComponent(
+  components_Selectvue_type_script_lang_js_,
+  Selectvue_type_template_id_265ebb9f_render,
+  Selectvue_type_template_id_265ebb9f_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+Select_component.options.__file = "Select.vue"
+/* harmony default export */ var Select = (Select_component.exports);
 // CONCATENATED MODULE: ./src/registerGlobalComponents.js
+
 
 
 
@@ -89873,6 +91393,7 @@ var components = [NgMessagesComponent, UiSelectChoicesComponent, UiSelectCompone
 components.forEach(function (comp) {
   registerGlobalComponents_Vue.component(comp.name, comp);
 });
+registerGlobalComponents_Vue.component('v-select', Select);
 // CONCATENATED MODULE: ./node_modules/vue-functional-data-merge/dist/lib.esm.js
 var __assign=function(){return(__assign=Object.assign||function(e){for(var a,s=1,t=arguments.length;s<t;s++)for(var r in a=arguments[s])Object.prototype.hasOwnProperty.call(a,r)&&(e[r]=a[r]);return e}).apply(this,arguments)};function mergeData(){for(var e,a,s={},t=arguments.length;t--;)for(var r=0,c=Object.keys(arguments[t]);r<c.length;r++)switch(e=c[r]){case"class":case"style":case"directives":Array.isArray(s[e])||(s[e]=[]),s[e]=s[e].concat(arguments[t][e]);break;case"staticClass":if(!arguments[t][e])break;void 0===s[e]&&(s[e]=""),s[e]&&(s[e]+=" "),s[e]+=arguments[t][e].trim();break;case"on":case"nativeOn":s[e]||(s[e]={});for(var n=0,o=Object.keys(arguments[t][e]||{});n<o.length;n++)a=o[n],s[e][a]?s[e][a]=[].concat(s[e][a],arguments[t][e][a]):s[e][a]=arguments[t][e][a];break;case"attrs":case"props":case"domProps":case"scopedSlots":case"staticStyle":case"hook":case"transition":s[e]||(s[e]={}),s[e]=__assign({},arguments[t][e],s[e]);break;case"slot":case"key":case"ref":case"tag":case"show":case"keepAlive":default:s[e]||(s[e]=arguments[t][e])}return s}
 //# sourceMappingURL=lib.esm.js.map
@@ -103298,6 +104819,9 @@ vueUse(es_VuePlugin);
 // EXTERNAL MODULE: ./node_modules/bootstrap/dist/css/bootstrap.css
 var bootstrap = __webpack_require__("f9e3");
 
+// EXTERNAL MODULE: ./node_modules/vue-virtual-scroller/dist/vue-virtual-scroller.esm.js
+var vue_virtual_scroller_esm = __webpack_require__("e508");
+
 // EXTERNAL MODULE: ./node_modules/vue-virtual-scroller/dist/vue-virtual-scroller.css
 var vue_virtual_scroller = __webpack_require__("a899");
 
@@ -103341,6 +104865,15 @@ __webpack_require__("38ad");
 
 /* harmony default export */ var entry_lib = __webpack_exports__["default"] = (src_0);
 
+
+
+/***/ }),
+
+/***/ "fdef":
+/***/ (function(module, exports) {
+
+module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
+  '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
 
 
 /***/ }),

@@ -60,6 +60,7 @@ import uiSelectMatch from './sourceless/components/UiSelectMatchComponent.vue';
 import uiSelect from './sourceless/components/UiSelectComponent.vue';
 import uiSelectChoices from './sourceless/components/UiSelectChoicesComponent.vue';
 import ngMessages from './sourceless/components/NgMessagesComponent.vue';
+import vSelect from './../node_modules/vue-select/src/components/Select.vue'
 const Vue = window.Vue;
 let components = [
     ngMessages,
@@ -128,3 +129,5 @@ let components = [
 components.forEach(comp => {
     Vue.component(comp.name, comp);
 });
+
+Vue.component('v-select', vSelect)

@@ -1,8 +1,7 @@
 <script>
-
     const TEMPLATE = `
     <div>
-        <ui-select  v-model="jfSelectModel" on-select="onSelect($item,$model)" :disabled="jfSelectDisabled" remove-selected="false">
+         <!-- <ui-select  v-model="jfSelectModel" on-select="onSelect($item,$model)" :disabled="jfSelectDisabled" remove-selected="false">
             <ui-select-match id="select-header" :placeholder=" jfSelectPlaceholder " @click="onOpenList()">
                 <jf-marquee disabled="jfSelectDisableMarquee">
                     <inner-html v-html="displayLabel($item || $select.selected)"></inner-html>
@@ -21,15 +20,24 @@
                 </span>
                 </div>
             </ui-select-choices>
-        </ui-select>
+        </ui-select> -->
+V Select goes here:
+           <v-select :get-option-label="jfSelectDisplayFunc" :multiple="jfSelectMultiple" :placeholder="jfSelectPlaceholder" :disabled="jfSelectDisabled" @input="onInputChange" :value="value"  id="mySelect" :options="jfSelectOptions" :label="displayAttr">
+        <template slot="option" slot-scope="option">
+        <i v-if="option.icon" class="icon" :class="option.icon"></i>
+        <span v-if="!jfSelectDisplayFunc">{{ option[displayAttr]}}</span>
+        <span v-else="!jfSelectDisplayFunc">{{ jfSelectDisplayFunc(option)}}</span>
+
+        </template>
+        </v-select>
     </div>
     `;
     export default {
         template: TEMPLATE,
         name: 'jf-ui-select',
         props: [
-            'jfSelectModel',
             'jfSelectOptions',
+            'jfSelectDisplayFunc',
             'jfSelectDisabled',
             'jfSelectDisableMarquee',
             'jfSelectMultiple',
@@ -37,13 +45,17 @@
             'jfSelectFilterAttr',
             'jfSelectPlaceholder',
             'jfSelectLoadChunks',
-            'jfSelectLoadMoreLabel'
+            'jfSelectLoadMoreLabel',
+            'value'
         ],
         data() {
             return {
                 jfSelectOptionsView: null,
                 jfSelectHelpTooltips: null
             };
+        },
+        beforeMount() {
+            this.displayAttr = this.jfSelectDisplayAttr || 'title'
         },
         mounted() {
             this.displayLabel = item => {
@@ -53,7 +65,7 @@
                     return this.jfSelectLoadMoreLabel || 'More Options...';
                 if (item[this.jfSelectDisabled])
                     return null;
-                return this.$emit('jf-select-display-func', { $item: item });
+                return this.$emit('jf-select-display-func', {$item: item});
             };
 
             if (this.jfSelectLoadChunks === undefined) {
@@ -65,8 +77,11 @@
                 this.jfSelectOptionsView = [];
             }
         },
-        ng1_legacy: { 'controllerAs': 'jfUiSelect' },
+        ng1_legacy: {'controllerAs': 'jfUiSelect'},
         methods: {
+            onInputChange(val){
+              this.$emit('input',val)
+            },
             onSelect($item, $model) {
                 this.$emit('jf-select-change');
                 if (this.jfSelectOptionsView)
@@ -139,6 +154,52 @@
 
 <style scoped lang="less">
 
+    .dropdown li {
+        border-bottom: 1px solid rgba(112, 128, 144, 0.1)
+    }
 
+    .dropdown li:last-child {
+        border-bottom: none;
+    }
+
+    .dropdown li a {
+        padding: 10px 20px;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        font-size: 1.25em;
+    }
+
+    /deep/ .dropdown-menu li.selected {
+        background: green
+    }
+  /deep/ .dropdown-menu li a {
+      height: 40px;
+      line-height: 40px;
+    }
+
+    /deep/ #mySelect.v-select .dropdown-menu .active > a {
+        color: #000;
+        background: #f7f7f7 !important;
+        font-size: 14px;
+    }
+
+    /deep/ #mySelect.v-select .dropdown-menu > .highlight > a {
+        background: #f7f7f7 !important;
+        color: #000;
+    }
+
+   /deep/  button.clear {
+        display: none;
+    }
+    /deep/ .dropdown-toggle:after{
+        display: none;
+    }
+
+   /deep/ .v-select .open-indicator:before {
+        border-width: 1px 1px 0 0;
+        height: 7px;
+        width: 7px;
+    }
 
 </style>
