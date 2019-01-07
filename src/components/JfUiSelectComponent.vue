@@ -1,35 +1,18 @@
 <script>
     const TEMPLATE = `
     <div>
-         <!-- <ui-select  v-model="jfSelectModel" on-select="onSelect($item,$model)" :disabled="jfSelectDisabled" remove-selected="false">
-            <ui-select-match id="select-header" :placeholder=" jfSelectPlaceholder " @click="onOpenList()">
-                <jf-marquee disabled="jfSelectDisableMarquee">
-                    <inner-html v-html="displayLabel($item || $select.selected)"></inner-html>
-                </jf-marquee>
-            </ui-select-match>
-            <ui-select-choices  refresh-delay="100" ui-disable-choice="item.disabled" refresh="refresh($select.search)" repeat="item in jfUiSelect[jfSelectOptionsView ? 'jfSelectOptionsView' : 'jfSelectOptions'] | filter: (!jfSelectFilterAttr ? $select.search : { [jfSelectFilterAttr || 'dummyfield']: $select.search}) track by $index">
-                <div v-if="!jfSelectHelpTooltips" class="jf-ui-select-item" name="select-item" :class="{'more-ph': isMorePlaceholder(item)}" @click="onClick(item,$event)">
-                    <jf-marquee disabled="jfSelectDisableMarquee" :class="[item.customClass]">
-                        <inner-html v-html="displayLabel(item) | highlight: $select.search"></inner-html>
-                    </jf-marquee>
-                </div>
-                <div v-if="jfSelectHelpTooltips">
-                    <span class="jf-ui-select-item" name="select-item" :class="{'more-ph': isMorePlaceholder(item)}" @click="onClick(item,$event)" v-html="displayLabel(item) | highlight: $select.search"></span>
-                    <span v-if="jfSelectHelpTooltips({$item: item})">
-                    <jf-help-tooltip :text="jfSelectHelpTooltips({$item: item})"></jf-help-tooltip>
-                </span>
-                </div>
-            </ui-select-choices>
-        </ui-select> -->
-V Select goes here:
-           <v-select :get-option-label="jfSelectDisplayFunc" :multiple="jfSelectMultiple" :placeholder="jfSelectPlaceholder" :disabled="jfSelectDisabled" @input="onInputChange" :value="value"  id="mySelect" :options="jfSelectOptions" :label="displayAttr">
-        <template slot="option" slot-scope="option">
-        <i v-if="option.icon" class="icon" :class="option.icon"></i>
-        <span v-if="!jfSelectDisplayFunc">{{ option[displayAttr]}}</span>
-        <span v-else="!jfSelectDisplayFunc">{{ jfSelectDisplayFunc(option)}}</span>
+        <multi-select :allow-empty="false" :disabled="jfSelectDisabled" :close-on-select="!jfSelectMultiple" :multiple="jfSelectMultiple" @input="onInputChange" :value="value" :options="jfSelectOptions" :searchable="true" :show-labels="false" :placeholder="jfSelectPlaceholder" :track-by="displayAttr" :label="displayAttr">
 
-        </template>
-        </v-select>
+       <template slot="singleLabel" slot-scope="props"><i  v-if="props.option.icon" class="icon option__icon" :class="props.option.icon"></i>
+      <div class="option__desc"><span class="option__title">{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option) }}</span></div>
+    </template>
+
+      <template slot="option" slot-scope="props"><i  v-if="props.option.icon" class="icon option__icon" :class="props.option.icon"></i>
+      <div class="option__desc"><span class="option__title">{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option)  }}</span></div>
+    </template>
+
+     </multi-select>
+
     </div>
     `;
     export default {
@@ -51,11 +34,16 @@ V Select goes here:
         data() {
             return {
                 jfSelectOptionsView: null,
-                jfSelectHelpTooltips: null
+                jfSelectHelpTooltips: null,
+
             };
         },
         beforeMount() {
-            this.displayAttr = this.jfSelectDisplayAttr || 'title'
+            this.displayAttr = this.jfSelectDisplayAttr || null
+
+            if (!this.value) {
+                this.value = [];
+            }
         },
         mounted() {
             this.displayLabel = item => {
@@ -79,8 +67,16 @@ V Select goes here:
         },
         ng1_legacy: {'controllerAs': 'jfUiSelect'},
         methods: {
-            onInputChange(val){
-              this.$emit('input',val)
+            setSelectText(text){
+                if(this.jfSelectDisplayFunc){
+                    return this.jfSelectDisplayFunc(text)
+                }else{
+                    return text;
+                }
+
+            },
+            onInputChange(val) {
+                this.$emit('input', val)
             },
             onSelect($item, $model) {
                 this.$emit('jf-select-change');
@@ -154,52 +150,38 @@ V Select goes here:
 
 <style scoped lang="less">
 
-    .dropdown li {
-        border-bottom: 1px solid rgba(112, 128, 144, 0.1)
-    }
-
-    .dropdown li:last-child {
-        border-bottom: none;
-    }
-
-    .dropdown li a {
-        padding: 10px 20px;
-        display: flex;
-        width: 100%;
-        align-items: center;
-        font-size: 1.25em;
-    }
-
-    /deep/ .dropdown-menu li.selected {
-        background: green
-    }
-  /deep/ .dropdown-menu li a {
-      height: 40px;
-      line-height: 40px;
-    }
-
-    /deep/ #mySelect.v-select .dropdown-menu .active > a {
-        color: #000;
-        background: #f7f7f7 !important;
-        font-size: 14px;
-    }
-
-    /deep/ #mySelect.v-select .dropdown-menu > .highlight > a {
-        background: #f7f7f7 !important;
-        color: #000;
-    }
-
-   /deep/  button.clear {
-        display: none;
-    }
-    /deep/ .dropdown-toggle:after{
+    /deep/ button.clear {
         display: none;
     }
 
-   /deep/ .v-select .open-indicator:before {
+    /deep/ .dropdown-toggle:after {
+        display: none;
+    }
+
+    /deep/ .v-select .open-indicator:before {
         border-width: 1px 1px 0 0;
         height: 7px;
         width: 7px;
+    }
+
+      /deep/ .multiselect__option--highlight{
+          background: #f7f7f7;
+          color: #707070;
+        }
+
+    /deep/ .multiselect__option--selected.multiselect__option--highlight{
+        background: #f7f7f7;
+        color: #707070;
+    }
+    /deep/.multiselect__option--selected{
+        color: #707070;
+        background: #f7f7f7;
+        font-weight: 400;
+    }
+
+    .option__icon{
+        float: left;
+        margin-right: 10px;
     }
 
 </style>

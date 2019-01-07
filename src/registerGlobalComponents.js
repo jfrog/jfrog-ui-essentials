@@ -61,6 +61,9 @@ import uiSelect from './sourceless/components/UiSelectComponent.vue';
 import uiSelectChoices from './sourceless/components/UiSelectChoicesComponent.vue';
 import ngMessages from './sourceless/components/NgMessagesComponent.vue';
 import vSelect from './../node_modules/vue-select/src/components/Select.vue'
+import Multiselect from './../node_modules/vue-multiselect/src/index.js'
+
+
 const Vue = window.Vue;
 let components = [
     ngMessages,
@@ -131,3 +134,4 @@ components.forEach(comp => {
 });
 
 Vue.component('v-select', vSelect)
+Vue.component('multiSelect', Multiselect)
