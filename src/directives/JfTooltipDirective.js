@@ -9,7 +9,6 @@ Vue.directive('jf-tooltip', {
 })
 
 function ng1LinkFunction($scope, $element, $attrs) {
-    let content = $attrs.jfTooltip === '' ? null : $attrs.jfTooltip;
     $($element).tooltipster({
         animation: 'fade',
         contentAsHTML: 'true',
@@ -18,7 +17,7 @@ function ng1LinkFunction($scope, $element, $attrs) {
         interactive: 'true',
         position: 'bottom',
         theme: 'tooltipster-default bottom',
-        content: content
+        content: () => $attrs.jfTooltip === '' ? null : $attrs.jfTooltip
     });
 
 /*
