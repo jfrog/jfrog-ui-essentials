@@ -3,7 +3,7 @@
     <div>
         <table class="data-list">
             <tbody>
-                <tr class="data-list-item" v-for="item in formattedItems" v-if="!item.isHidden">
+                <tr class="data-list-item" v-for="(item,index) in formattedItems" v-if="!item.isHidden">
                     <td class="data-list-item-label">{{item.label}}:</td>
                     <td class="data-list-item-value">
                         <div class="value">
@@ -11,13 +11,13 @@
                             </a>
                             <div v-if="!item.isUrl && !isArray(item.value)" v-html="item.value" v-jf-tooltip-on-overflow>
                             </div>
-                            <div v-if="isArray(item.value)" :id="'data-list-row-' + $parent.$index">
+                            <div v-if="isArray(item.value)"  :id="'data-list-row-' + index">
                                 <div class="tag" v-for="tag in item.value">
                                     <a class="gridcell-content-text jf-link" v-if="tag.url" :href="tag.url" target="_blank" v-html="tag.label">
                                     </a>
                                     <span class="gridcell-content-text" v-if="!tag.url" v-html="tag.label"></span>
                                 </div>
-                                <a class="jf-link gridcell-showall" v-if="item.value.length >= 1 && htmlIsOverflowing('#data-list-row-' + $parent.$index)" href="" @click.prevent="showAll(item.value,item.label,item.objectName)"> (See {{item.value.length &gt; 1 ? 'All' : 'List'}})</a>
+                                <a class="jf-link gridcell-showall" v-if="item.value.length >= 1 && htmlIsOverflowing('#data-list-row-' + index)" href="" @click.prevent="showAll(item.value,item.label,item.objectName)"> (See {{item.value.length &gt; 1 ? 'All' : 'List'}})</a>
                             </div>
                             <div class="copy" v-if="item.copy && !isArray(item.value)">
                                 <jf-clip-copy :text-to-copy="item.value"></jf-clip-copy>
@@ -44,22 +44,34 @@
             'JFrogUIUtils'
         ],
         data() {
-            return { formattedItems: null };
+            return { formattedItems: null,isMounted: false };
         },
         created() {
+            console.log("****** ITEMS ARE",this.items)
 
             this.$scope.$watch('jfDataList.items', items => {
                 if (items) {
+                    console.log("FORMATED")
                     this.formattedItems = _.filter(items, item => {
                         return item.label != '';
                     });
                 }
             });
+
+        },
+        mounted() {
+            this.$forceUpdate();
+            console.log("*** MOUNTED")
+            this.isMounted = true;
         },
         ng1_legacy: { 'controllerAs': 'jfDataList' },
         methods: {
             htmlIsOverflowing(rowId) {
-                let elem = this.$element.find(rowId);
+                if (!this.$el) return false;
+
+                console.log("rowId IS ",rowId)
+                let elem = this.$element.find(rowId)
+                console.log("ELEMENT IS ",elem)
                 let children = elem.children('.tag');
                 let maxWidth = elem.closest('.data-list-item-value').outerWidth() - 60;
                 let totalChildrenWidth = 0;
