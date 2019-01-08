@@ -1,20 +1,28 @@
 <script>
     const TEMPLATE = `
     <div>
-        <multi-select :allow-empty="false" :disabled="jfSelectDisabled" :close-on-select="!jfSelectMultiple" :multiple="jfSelectMultiple" @input="onInputChange" :value="value" :options="jfSelectOptions" :searchable="true" :show-labels="false" :placeholder="jfSelectPlaceholder" :track-by="displayAttr" :label="displayAttr">
 
-       <template slot="singleLabel" slot-scope="props"><i  v-if="props.option.icon" class="icon option__icon" :class="props.option.icon"></i>
-      <div class="option__desc"><span class="option__title">{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option) }}</span></div>
+        <multi-select @open="opened" :options-limit="loadChunks" :internal-search="false" @search-change="onSearch" :allow-empty="false" :disabled="jfSelectDisabled" :close-on-select="!jfSelectMultiple" :multiple="jfSelectMultiple" @input="onInputChange" :value="value" :options="jfSelectOptions" :searchable="true" :show-labels="false" :placeholder="jfSelectPlaceholder" :track-by="displayAttr" :label="displayAttr">
+
+       <template slot="singleLabel" slot-scope="props">
+
+     <jf-marquee>
+      <div class="option__desc"><span class="option__title">  <i  v-if="props.option.icon" class="icon option__icon" :class="props.option.icon"></i>{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option) }}</span></div>
+
+    </jf-marquee>
     </template>
 
-      <template slot="option" slot-scope="props"><i  v-if="props.option.icon" class="icon option__icon" :class="props.option.icon"></i>
-      <div class="option__desc"><span class="option__title">{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option)  }}</span></div>
+      <template slot="option" slot-scope="props">
+      <div class="option__desc"><span class="option__title"><i  v-if="props.option.icon" class="icon option__icon" :class="props.option.icon"></i>{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option)  }}</span></div>
+    </template>
+
+     <template v-if="jfSelectLoadChunks && jfSelectLoadChunks < jfSelectOptions.length" slot="afterList" slot-scope="props">
+ <div class="option__desc"><span @click="increaseLimit" :class="{'disabled':exccededLimit}" class="option__title load-more">  {{jfSelectLoadMoreLabel || 'Load More'}} <div class="multiselect__spinner" style="display:none;"></div> </span> </div>
     </template>
 
      </multi-select>
 
-    </div>
-    `;
+    </div>`;
     export default {
         template: TEMPLATE,
         name: 'jf-ui-select',
@@ -35,10 +43,13 @@
             return {
                 jfSelectOptionsView: null,
                 jfSelectHelpTooltips: null,
+                exccededLimit: null,
+                loadChunks: this.jfSelectLoadChunks
 
             };
         },
         beforeMount() {
+            parseInt(this.jfSelectLoadChunks)
             this.displayAttr = this.jfSelectDisplayAttr || null
 
             if (!this.value) {
@@ -46,6 +57,12 @@
             }
         },
         mounted() {
+
+            this.originalOptionsList = _.cloneDeep(this.jfSelectOptions)
+            if (this.jfSelectLoadChunks) {
+                this.originalLoadChunks = this.jfSelectLoadChunks
+            }
+
             this.displayLabel = item => {
                 if (item === null || item === undefined)
                     return null;
@@ -67,10 +84,39 @@
         },
         ng1_legacy: {'controllerAs': 'jfUiSelect'},
         methods: {
-            setSelectText(text){
-                if(this.jfSelectDisplayFunc){
+            opened() {
+                console.log("checking if excceded limit")
+                if (this.jfSelectLoadChunks && this.loadChunks < this.jfSelectOptions.length) {
+                    this.exccededLimit = false
+                }
+            },
+            increaseLimit() {
+                if (!this.exccededLimit) {
+                    this.loadChunks += this.originalLoadChunks;
+                    if (this.loadChunks >= this.jfSelectOptions.length) {
+                        this.exccededLimit = true
+                    }
+                }
+            },
+            onSearch(searchQ, id) {
+
+                this.jfSelectOptions.splice(0, this.jfSelectOptions.length)
+                this.jfSelectOptions.push(..._.filter(this.originalOptionsList, (o) => {
+
+
+                    if (_.isObject(o)) {
+                        return o[this.displayAttr].toLowerCase().indexOf(searchQ.toLowerCase()) > -1
+                    } else {
+                        return o.toLowerCase().indexOf(searchQ.toLowerCase()) > -1
+                    }
+                }))
+
+
+            },
+            setSelectText(text) {
+                if (this.jfSelectDisplayFunc) {
                     return this.jfSelectDisplayFunc(text)
-                }else{
+                } else {
                     return text;
                 }
 
@@ -164,24 +210,38 @@
         width: 7px;
     }
 
-      /deep/ .multiselect__option--highlight{
-          background: #f7f7f7;
-          color: #707070;
-        }
-
-    /deep/ .multiselect__option--selected.multiselect__option--highlight{
+    /deep/ .multiselect__option--highlight {
         background: #f7f7f7;
         color: #707070;
     }
-    /deep/.multiselect__option--selected{
+
+    /deep/ .multiselect__option--selected.multiselect__option--highlight {
+        background: #f7f7f7;
+        color: #707070;
+    }
+
+    /deep/ .multiselect__option--selected {
         color: #707070;
         background: #f7f7f7;
         font-weight: 400;
     }
 
-    .option__icon{
-        float: left;
+    .option__icon {
         margin-right: 10px;
     }
 
+    span.option__title.load-more {
+        height: 25px;
+        background: #61a63a;
+        width: 100%;
+        display: inline-block;
+        line-height: 27px;
+        color: #fff;
+        text-align: center;
+        cursor: pointer;
+        &.disabled {
+            cursor: default;
+            background: #dadada;
+        }
+    }
 </style>

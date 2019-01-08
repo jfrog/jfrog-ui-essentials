@@ -31018,6 +31018,17 @@ module.exports = function settle(resolve, reject, response) {
 
 /***/ }),
 
+/***/ "476f":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_425d53b1_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("541c");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_425d53b1_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_425d53b1_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_425d53b1_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
 /***/ "4917":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34745,6 +34756,13 @@ exports.f = {}.propertyIsEnumerable;
 /***/ }),
 
 /***/ "52dd":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "541c":
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
@@ -48314,17 +48332,6 @@ module.exports = function xhrAdapter(config) {
 
 /***/ }),
 
-/***/ "b698":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_2647ddb5_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("dad0");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_2647ddb5_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_2647ddb5_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_2647ddb5_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
 /***/ "b7a5":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -50292,13 +50299,6 @@ module.exports = function isAbsoluteURL(url) {
 /***/ }),
 
 /***/ "d9f3":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ "dad0":
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
@@ -86026,7 +86026,8 @@ var JfEnterPressComponent_component = normalizeComponent(
 JfEnterPressComponent_component.options.__file = "JfEnterPressComponent.vue"
 /* harmony default export */ var JfEnterPressComponent = (JfEnterPressComponent_component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfUiSelectComponent.vue?vue&type=script&lang=js&
-var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n<div>\n    <multi-select :allow-empty=\"false\" :disabled=\"jfSelectDisabled\" :close-on-select=\"!jfSelectMultiple\" :multiple=\"jfSelectMultiple\" @input=\"onInputChange\" :value=\"value\" :options=\"jfSelectOptions\" :searchable=\"true\" :show-labels=\"false\" :placeholder=\"jfSelectPlaceholder\" :track-by=\"displayAttr\" :label=\"displayAttr\">\n\n   <template slot=\"singleLabel\" slot-scope=\"props\"><i  v-if=\"props.option.icon\" class=\"icon option__icon\" :class=\"props.option.icon\"></i>\n  <div class=\"option__desc\"><span class=\"option__title\">{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option) }}</span></div>\n</template>\n\n  <template slot=\"option\" slot-scope=\"props\"><i  v-if=\"props.option.icon\" class=\"icon option__icon\" :class=\"props.option.icon\"></i>\n  <div class=\"option__desc\"><span class=\"option__title\">{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option)  }}</span></div>\n</template>\n\n </multi-select>\n\n</div>\n";
+
+var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n   <div>\n\n       <multi-select @open=\"opened\" :options-limit=\"loadChunks\" :internal-search=\"false\" @search-change=\"onSearch\" :allow-empty=\"false\" :disabled=\"jfSelectDisabled\" :close-on-select=\"!jfSelectMultiple\" :multiple=\"jfSelectMultiple\" @input=\"onInputChange\" :value=\"value\" :options=\"jfSelectOptions\" :searchable=\"true\" :show-labels=\"false\" :placeholder=\"jfSelectPlaceholder\" :track-by=\"displayAttr\" :label=\"displayAttr\">\n\n      <template slot=\"singleLabel\" slot-scope=\"props\">\n\n    <jf-marquee>\n     <div class=\"option__desc\"><span class=\"option__title\">  <i  v-if=\"props.option.icon\" class=\"icon option__icon\" :class=\"props.option.icon\"></i>{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option) }}</span></div>\n\n   </jf-marquee>\n   </template>\n\n     <template slot=\"option\" slot-scope=\"props\">\n     <div class=\"option__desc\"><span class=\"option__title\"><i  v-if=\"props.option.icon\" class=\"icon option__icon\" :class=\"props.option.icon\"></i>{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option)  }}</span></div>\n   </template>\n\n    <template v-if=\"jfSelectLoadChunks && jfSelectLoadChunks < jfSelectOptions.length\" slot=\"afterList\" slot-scope=\"props\">\n<div class=\"option__desc\"><span @click=\"increaseLimit\" :class=\"{'disabled':exccededLimit}\" class=\"option__title load-more\">  {{jfSelectLoadMoreLabel || 'Load More'}} <div class=\"multiselect__spinner\" style=\"display:none;\"></div> </span> </div>\n   </template>\n\n    </multi-select>\n\n   </div>";
 /* harmony default export */ var JfUiSelectComponentvue_type_script_lang_js_ = ({
   template: JfUiSelectComponentvue_type_script_lang_js_TEMPLATE,
   name: 'jf-ui-select',
@@ -86034,10 +86035,13 @@ var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n<div>\n    <multi-s
   data: function data() {
     return {
       jfSelectOptionsView: null,
-      jfSelectHelpTooltips: null
+      jfSelectHelpTooltips: null,
+      exccededLimit: null,
+      loadChunks: this.jfSelectLoadChunks
     };
   },
   beforeMount: function beforeMount() {
+    parseInt(this.jfSelectLoadChunks);
     this.displayAttr = this.jfSelectDisplayAttr || null;
 
     if (!this.value) {
@@ -86046,6 +86050,12 @@ var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n<div>\n    <multi-s
   },
   mounted: function mounted() {
     var _this = this;
+
+    this.originalOptionsList = _.cloneDeep(this.jfSelectOptions);
+
+    if (this.jfSelectLoadChunks) {
+      this.originalLoadChunks = this.jfSelectLoadChunks;
+    }
 
     this.displayLabel = function (item) {
       if (item === null || item === undefined) return null;
@@ -86068,6 +86078,36 @@ var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n<div>\n    <multi-s
     'controllerAs': 'jfUiSelect'
   },
   methods: {
+    opened: function opened() {
+      console.log("checking if excceded limit");
+
+      if (this.jfSelectLoadChunks && this.loadChunks < this.jfSelectOptions.length) {
+        this.exccededLimit = false;
+      }
+    },
+    increaseLimit: function increaseLimit() {
+      if (!this.exccededLimit) {
+        this.loadChunks += this.originalLoadChunks;
+
+        if (this.loadChunks >= this.jfSelectOptions.length) {
+          this.exccededLimit = true;
+        }
+      }
+    },
+    onSearch: function onSearch(searchQ, id) {
+      var _this$jfSelectOptions,
+          _this2 = this;
+
+      this.jfSelectOptions.splice(0, this.jfSelectOptions.length);
+
+      (_this$jfSelectOptions = this.jfSelectOptions).push.apply(_this$jfSelectOptions, _toConsumableArray(_.filter(this.originalOptionsList, function (o) {
+        if (_.isObject(o)) {
+          return o[_this2.displayAttr].toLowerCase().indexOf(searchQ.toLowerCase()) > -1;
+        } else {
+          return o.toLowerCase().indexOf(searchQ.toLowerCase()) > -1;
+        }
+      })));
+    },
     setSelectText: function setSelectText(text) {
       if (this.jfSelectDisplayFunc) {
         return this.jfSelectDisplayFunc(text);
@@ -86109,7 +86149,7 @@ var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n<div>\n    <multi-s
       }
     },
     refresh: function refresh(search) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (!this.jfSelectOptionsView) return;
 
@@ -86120,10 +86160,10 @@ var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n<div>\n    <multi-s
 
       this.filter = search;
       this.filtered = _.filter(this.jfSelectOptions, function (option) {
-        if (!_this2.jfSelectFilterAttr) {
-          return _this2.displayLabel(option).toLowerCase().indexOf(search.toLowerCase()) !== -1;
+        if (!_this3.jfSelectFilterAttr) {
+          return _this3.displayLabel(option).toLowerCase().indexOf(search.toLowerCase()) !== -1;
         } else {
-          return option[_this2.jfSelectFilterAttr].toLowerCase().indexOf(search.toLowerCase()) !== -1;
+          return option[_this3.jfSelectFilterAttr].toLowerCase().indexOf(search.toLowerCase()) !== -1;
         }
       });
       this.loaded = this.chunkSize;
@@ -86134,12 +86174,12 @@ var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n<div>\n    <multi-s
       }
     },
     createMorePlaceholder: function createMorePlaceholder() {
-      var _this3 = this;
+      var _this4 = this;
 
       var ph = {
         $specialItem: 'more',
         toString: function toString(s) {
-          return _this3.filter;
+          return _this4.filter;
         }
       };
       if (this.jfSelectFilterAttr) ph[this.jfSelectFilterAttr] = this.filter;
@@ -86152,8 +86192,8 @@ var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n<div>\n    <multi-s
 });
 // CONCATENATED MODULE: ./src/components/JfUiSelectComponent.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_JfUiSelectComponentvue_type_script_lang_js_ = (JfUiSelectComponentvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/JfUiSelectComponent.vue?vue&type=style&index=0&id=2647ddb5&scoped=true&lang=less&
-var JfUiSelectComponentvue_type_style_index_0_id_2647ddb5_scoped_true_lang_less_ = __webpack_require__("b698");
+// EXTERNAL MODULE: ./src/components/JfUiSelectComponent.vue?vue&type=style&index=0&id=425d53b1&scoped=true&lang=less&
+var JfUiSelectComponentvue_type_style_index_0_id_425d53b1_scoped_true_lang_less_ = __webpack_require__("476f");
 
 // CONCATENATED MODULE: ./src/components/JfUiSelectComponent.vue
 var JfUiSelectComponent_render, JfUiSelectComponent_staticRenderFns
@@ -86170,7 +86210,7 @@ var JfUiSelectComponent_component = normalizeComponent(
   JfUiSelectComponent_staticRenderFns,
   false,
   null,
-  "2647ddb5",
+  "425d53b1",
   null
   
 )
