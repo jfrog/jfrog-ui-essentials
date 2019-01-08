@@ -9,8 +9,7 @@
   },
   "scripts": {
     "build": "vue-cli-service build --target lib --name jfrog-ui-essentials src/index.js",
-    "dev": "vue-cli-service build --target lib --name jfrog-ui-essentials --formats commonjs src/index.js",
-    "dev-watch": "nodemon -w src/ -e js,html,css,less,vue -x vue-cli-service  -- build --target lib --name jfrog-ui-essentials --formats commonjs src/index.js",
+    "dev": "nodemon -w src/ -e js,html,css,less,vue -x vue-cli-service  -- build --target lib --name jfrog-ui-essentials --formats commonjs src/index.js",
     "watch": "vue-cli-service build --mode development --target lib --name jfrog-ui-essentials src/index.js",
     "lint": "vue-cli-service lint"
   },
