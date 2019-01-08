@@ -140,54 +140,6 @@
                     $event.preventDefault();
                     $event.stopPropagation();
                 }
-            },
-            onOpenList() {
-                if (this.jfSelectOptionsView) {
-                    this.filter = '';
-                    this.filtered = null;
-                    this.loaded = this.chunkSize;
-                    this.jfSelectOptionsView = this.jfSelectOptions.slice(0, this.loaded);
-                    if (this.jfSelectOptions.length > this.jfSelectOptionsView.length) {
-                        this.jfSelectOptionsView.push(this.createMorePlaceholder());
-                    }
-                }
-            },
-            refresh(search) {
-                if (!this.jfSelectOptionsView)
-                    return;
-
-                if (!search.trim()) {
-                    this.onOpenList();
-                    return;
-                }
-
-                this.filter = search;
-
-                this.filtered = _.filter(this.jfSelectOptions, option => {
-                    if (!this.jfSelectFilterAttr) {
-                        return this.displayLabel(option).toLowerCase().indexOf(search.toLowerCase()) !== -1;
-                    } else {
-                        return option[this.jfSelectFilterAttr].toLowerCase().indexOf(search.toLowerCase()) !== -1;
-                    }
-                });
-
-                this.loaded = this.chunkSize;
-                this.jfSelectOptionsView = this.filtered.slice(0, this.loaded);
-                if (this.filtered.length > this.jfSelectOptionsView.length) {
-                    this.jfSelectOptionsView.push(this.createMorePlaceholder());
-                }
-            },
-            createMorePlaceholder() {
-                let ph = {
-                    $specialItem: 'more',
-                    toString: s => this.filter
-                };
-                if (this.jfSelectFilterAttr)
-                    ph[this.jfSelectFilterAttr] = this.filter;
-                return ph;
-            },
-            isMorePlaceholder(item) {
-                return _.isObject(item) && item.$specialItem === 'more';
             }
         }
     };
@@ -243,5 +195,14 @@
             cursor: default;
             background: #dadada;
         }
+    }
+    .multiselect__tags {
+        min-height: 40px;
+        display: block;
+        padding: 8px 40px 0 8px;
+        border-radius: 0;
+        border: 1px solid #e8e8e8;
+        background: #fff;
+        font-size: 14px;
     }
 </style>
