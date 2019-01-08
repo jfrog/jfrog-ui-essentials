@@ -68,6 +68,17 @@ export class Ng1AttributeDirectiveAdapter {
                 })
             });
 
+            attrs.$observe = (path, cb) => {
+                if (path === _.camelCase(binding.name)) {
+                    vnode.context.$watch(binding.expression, () => {
+                        cb(_.get(vnode.context, _.trim(binding.expression, '\'')))
+                    })
+                }
+                else {
+                    console.error('!!!!!!!!')
+                }
+            }
+
             bindedFn(scope, $(el), attrs);
 
         }

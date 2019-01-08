@@ -20,10 +20,8 @@ function ng1LinkFunction($scope, $element, $attrs) {
         content: () => $attrs.jfTooltip === '' ? null : $attrs.jfTooltip
     });
 
-/*
     $attrs.$observe('jfTooltip', val => {
-        val = val === '' ? null : this.$sanitize(val);
+        val = val === '' ? null : val /*this.$sanitize(val)*/;
         $($element).tooltipster('content', val);
     });
-*/
 }
