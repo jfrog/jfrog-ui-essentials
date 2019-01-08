@@ -12,6 +12,7 @@ import JFrogUI from './plugins/JFrogUI';
 window.$ = $;
 window.jQuery = $;
 import 'jquery-contextmenu';
+import VueClipboard from 'vue-clipboard2'
 
 import('./assets/stylesheets/main.less');
 import('../node_modules/jf-tooltipster/css/tooltipster.css');
@@ -21,7 +22,8 @@ export default {
     install(Vue, options) {
         servicesRegistration.registerAll();
         Vue.use(BootstrapVue);
-        Vue.use(VueVirtualScroller)
+        Vue.use(VueVirtualScroller);
+        Vue.use(VueClipboard);
     }
 }
 
