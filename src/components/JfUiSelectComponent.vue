@@ -13,7 +13,7 @@
     </template>
 
       <template slot="option" slot-scope="props">
-      <div class="option__desc"><span class="option__title"><i  v-if="props.option.icon" class="icon option__icon" :class="props.option.icon"></i>{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option)  }}</span></div>
+      <div class="option__desc"><span class="option__title"><i  v-if="props.option.icon" class="icon option__icon" :class="props.option.icon"></i>{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option)  }} <jf-help-tooltip :html="jfSelectHelpTooltips(props.option)" v-if="jfSelectHelpTooltips"></jf-help-tooltip></span></div>
     </template>
 
      <template v-if="jfSelectLoadChunks && jfSelectLoadChunks < jfSelectOptions.length" slot="afterList" slot-scope="props">
@@ -37,12 +37,12 @@
             'jfSelectPlaceholder',
             'jfSelectLoadChunks',
             'jfSelectLoadMoreLabel',
+            'jfSelectHelpTooltips',
             'value'
         ],
         data() {
             return {
                 jfSelectOptionsView: null,
-                jfSelectHelpTooltips: null,
                 exccededLimit: null,
                 loadChunks: this.jfSelectLoadChunks
 
@@ -204,5 +204,8 @@
         border: 1px solid #e8e8e8;
         background: #fff;
         font-size: 14px;
+    }
+    .jf-help-tooltip {
+        display: inline;
     }
 </style>

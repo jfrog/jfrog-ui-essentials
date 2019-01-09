@@ -1,6 +1,6 @@
 <template>
 
-    <div class="jf-help-tooltip">
+    <div :v-jf-tooltip="html" class="jf-help-tooltip">
         <div>
             <span class="tooltip-icon jf-tooltipster">
             <span><slot></slot></span>

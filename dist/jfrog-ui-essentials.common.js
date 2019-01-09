@@ -418,17 +418,6 @@ function isSlowBuffer (obj) {
 
 /***/ }),
 
-/***/ "0772":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_83e42848_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("f4f8");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_83e42848_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_83e42848_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_83e42848_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
 /***/ "08cf":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -33138,6 +33127,17 @@ module.exports = function (it) {
 
 /***/ }),
 
+/***/ "4d35":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_40e31d3d_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("533a");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_40e31d3d_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_40e31d3d_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_40e31d3d_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
 /***/ "4d7c":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34825,6 +34825,13 @@ exports.f = {}.propertyIsEnumerable;
 /***/ }),
 
 /***/ "52dd":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "533a":
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
@@ -45057,7 +45064,7 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 /***/ "9224":
 /***/ (function(module) {
 
-module.exports = {"name":"jfrog-ui-essentials","description":"JFrog UI Essentials","version":"3.0.0-vue-dev","main":"./dist/jfrog-ui-essentials.common.js","repository":{"type":"git","url":"https://github.com/jfrog/jfrog-ui-essentials.git"},"scripts":{"build":"vue-cli-service build --target lib --name jfrog-ui-essentials src/index.js","dev":"vue-cli-service build --target lib --name jfrog-ui-essentials --formats commonjs src/index.js","dev-watch":"nodemon -w src/ -e js,html,css,less,vue -x vue-cli-service  -- build --target lib --name jfrog-ui-essentials --formats commonjs src/index.js","watch":"vue-cli-service build --mode development --target lib --name jfrog-ui-essentials src/index.js","lint":"vue-cli-service lint"},"files":["dist/*","src/*","public/*","*.json","*.js"],"dependencies":{"axios":"^0.18.0","bootstrap":"4.2.1","bootstrap-vue":"^2.0.0-rc.11","codemirror":"5.0.0","jf-tooltipster":"3.3.0","jquery":"^3.3.1","jquery-contextmenu":"1.8.1","js-beautify":"^1.8.9","lodash":"^4.17.11","tooltipster":"^4.2.6","vee-validate":"^2.1.0-beta.11","vue":"^2.5.17","vue-multiselect":"^2.1.3","vue-select":"^2.5.1","vue-clipboard2":"^0.2.1","vue-virtual-scroller":"^1.0.0-beta.4"},"devDependencies":{"@vue/cli-plugin-babel":"^3.2.0","@vue/cli-plugin-eslint":"^3.2.0","@vue/cli-service":"^3.2.0","@vue/eslint-config-standard":"^4.0.0","babel-eslint":"^10.0.1","eslint":"^5.8.0","eslint-plugin-vue":"^5.0.0-0","html-loader":"^0.5.5","less":"^3.8.1","less-loader":"^4.1.0","nodemon":"^1.18.9","vue-template-compiler":"^2.5.17"}};
+module.exports = {"name":"jfrog-ui-essentials","description":"JFrog UI Essentials","version":"3.0.0-vue-dev","main":"./dist/jfrog-ui-essentials.common.js","repository":{"type":"git","url":"https://github.com/jfrog/jfrog-ui-essentials.git"},"scripts":{"build":"vue-cli-service build --target lib --name jfrog-ui-essentials src/index.js","dev":"nodemon -w src/ -e js,html,css,less,vue -x vue-cli-service  -- build --target lib --name jfrog-ui-essentials --formats commonjs src/index.js","watch":"vue-cli-service build --mode development --target lib --name jfrog-ui-essentials src/index.js","lint":"vue-cli-service lint"},"files":["dist/*","src/*","public/*","*.json","*.js"],"dependencies":{"axios":"^0.18.0","bootstrap":"4.2.1","bootstrap-vue":"^2.0.0-rc.11","codemirror":"5.0.0","jf-tooltipster":"3.3.0","jquery":"^3.3.1","jquery-contextmenu":"1.8.1","js-beautify":"^1.8.9","lodash":"^4.17.11","tooltipster":"^4.2.6","vee-validate":"^2.1.0-beta.11","vue":"^2.5.17","vue-multiselect":"^2.1.3","vue-select":"^2.5.1","vue-clipboard2":"^0.2.1","vue-virtual-scroller":"^1.0.0-beta.4"},"devDependencies":{"@vue/cli-plugin-babel":"^3.2.0","@vue/cli-plugin-eslint":"^3.2.0","@vue/cli-service":"^3.2.0","@vue/eslint-config-standard":"^4.0.0","babel-eslint":"^10.0.1","eslint":"^5.8.0","eslint-plugin-vue":"^5.0.0-0","html-loader":"^0.5.5","less":"^3.8.1","less-loader":"^4.1.0","nodemon":"^1.18.9","vue-template-compiler":"^2.5.17"}};
 
 /***/ }),
 
@@ -45213,17 +45220,6 @@ function btoa(input) {
 
 module.exports = btoa;
 
-
-/***/ }),
-
-/***/ "a1f5":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_acc92224_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("c879");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_acc92224_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_acc92224_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_acc92224_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -48219,6 +48215,13 @@ __webpack_require__("5ca1")({
 
 /***/ }),
 
+/***/ "b465":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "b50d":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -49995,13 +49998,6 @@ module.exports = get;
 
 /***/ }),
 
-/***/ "c879":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
 /***/ "c8af":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -50736,6 +50732,17 @@ module.exports = (
   'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
 ).split(',');
 
+
+/***/ }),
+
+/***/ "e212":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_2855b843_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("b465");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_2855b843_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_2855b843_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_2855b843_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -60274,13 +60281,6 @@ Popper.Defaults = Defaults;
 /* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfVscrollElementComponent_vue_vue_type_style_index_0_id_0bd9d3c4_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfVscrollElementComponent_vue_vue_type_style_index_0_id_0bd9d3c4_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfVscrollElementComponent_vue_vue_type_style_index_0_id_0bd9d3c4_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
-/***/ "f4f8":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -86177,15 +86177,14 @@ JfEnterPressComponent_component.options.__file = "JfEnterPressComponent.vue"
 /* harmony default export */ var JfEnterPressComponent = (JfEnterPressComponent_component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfUiSelectComponent.vue?vue&type=script&lang=js&
 
-var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n   <div>\n\n       <multi-select @open=\"opened\" :options-limit=\"loadChunks\" :internal-search=\"false\" @search-change=\"onSearch\" :allow-empty=\"false\" :disabled=\"jfSelectDisabled\" :close-on-select=\"!jfSelectMultiple\" :multiple=\"jfSelectMultiple\" @input=\"onInputChange\" :value=\"value\" :options=\"jfSelectOptions\" :searchable=\"true\" :show-labels=\"false\" :placeholder=\"jfSelectPlaceholder\" :track-by=\"displayAttr\" :label=\"displayAttr\">\n\n      <template slot=\"singleLabel\" slot-scope=\"props\">\n\n    <jf-marquee>\n     <div class=\"option__desc\"><span class=\"option__title\">  <i  v-if=\"props.option.icon\" class=\"icon option__icon\" :class=\"props.option.icon\"></i>{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option) }}</span></div>\n\n   </jf-marquee>\n   </template>\n\n     <template slot=\"option\" slot-scope=\"props\">\n     <div class=\"option__desc\"><span class=\"option__title\"><i  v-if=\"props.option.icon\" class=\"icon option__icon\" :class=\"props.option.icon\"></i>{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option)  }}</span></div>\n   </template>\n\n    <template v-if=\"jfSelectLoadChunks && jfSelectLoadChunks < jfSelectOptions.length\" slot=\"afterList\" slot-scope=\"props\">\n<div class=\"option__desc\"><span @click=\"increaseLimit\" :class=\"{'disabled':exccededLimit}\" class=\"option__title load-more\">  {{jfSelectLoadMoreLabel || 'Load More'}} <div class=\"multiselect__spinner\" style=\"display:none;\"></div> </span> </div>\n   </template>\n\n    </multi-select>\n\n   </div>";
+var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n   <div>\n\n       <multi-select @open=\"opened\" :options-limit=\"loadChunks\" :internal-search=\"false\" @search-change=\"onSearch\" :allow-empty=\"false\" :disabled=\"jfSelectDisabled\" :close-on-select=\"!jfSelectMultiple\" :multiple=\"jfSelectMultiple\" @input=\"onInputChange\" :value=\"value\" :options=\"jfSelectOptions\" :searchable=\"true\" :show-labels=\"false\" :placeholder=\"jfSelectPlaceholder\" :track-by=\"displayAttr\" :label=\"displayAttr\">\n\n      <template slot=\"singleLabel\" slot-scope=\"props\">\n\n    <jf-marquee>\n     <div class=\"option__desc\"><span class=\"option__title\">  <i  v-if=\"props.option.icon\" class=\"icon option__icon\" :class=\"props.option.icon\"></i>{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option) }}</span></div>\n\n   </jf-marquee>\n   </template>\n\n     <template slot=\"option\" slot-scope=\"props\">\n     <div class=\"option__desc\"><span class=\"option__title\"><i  v-if=\"props.option.icon\" class=\"icon option__icon\" :class=\"props.option.icon\"></i>{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option)  }} <jf-help-tooltip :html=\"jfSelectHelpTooltips(props.option)\" v-if=\"jfSelectHelpTooltips\"></jf-help-tooltip></span></div>\n   </template>\n\n    <template v-if=\"jfSelectLoadChunks && jfSelectLoadChunks < jfSelectOptions.length\" slot=\"afterList\" slot-scope=\"props\">\n<div class=\"option__desc\"><span @click=\"increaseLimit\" :class=\"{'disabled':exccededLimit}\" class=\"option__title load-more\">  {{jfSelectLoadMoreLabel || 'Load More'}} <div class=\"multiselect__spinner\" style=\"display:none;\"></div> </span> </div>\n   </template>\n\n    </multi-select>\n\n   </div>";
 /* harmony default export */ var JfUiSelectComponentvue_type_script_lang_js_ = ({
   template: JfUiSelectComponentvue_type_script_lang_js_TEMPLATE,
   name: 'jf-ui-select',
-  props: ['jfSelectOptions', 'jfSelectDisplayFunc', 'jfSelectDisabled', 'jfSelectDisableMarquee', 'jfSelectMultiple', 'jfSelectDisplayAttr', 'jfSelectFilterAttr', 'jfSelectPlaceholder', 'jfSelectLoadChunks', 'jfSelectLoadMoreLabel', 'value'],
+  props: ['jfSelectOptions', 'jfSelectDisplayFunc', 'jfSelectDisabled', 'jfSelectDisableMarquee', 'jfSelectMultiple', 'jfSelectDisplayAttr', 'jfSelectFilterAttr', 'jfSelectPlaceholder', 'jfSelectLoadChunks', 'jfSelectLoadMoreLabel', 'jfSelectHelpTooltips', 'value'],
   data: function data() {
     return {
       jfSelectOptionsView: null,
-      jfSelectHelpTooltips: null,
       exccededLimit: null,
       loadChunks: this.jfSelectLoadChunks
     };
@@ -86290,8 +86289,8 @@ var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n   <div>\n\n       
 });
 // CONCATENATED MODULE: ./src/components/JfUiSelectComponent.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_JfUiSelectComponentvue_type_script_lang_js_ = (JfUiSelectComponentvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/JfUiSelectComponent.vue?vue&type=style&index=0&id=83e42848&scoped=true&lang=less&
-var JfUiSelectComponentvue_type_style_index_0_id_83e42848_scoped_true_lang_less_ = __webpack_require__("0772");
+// EXTERNAL MODULE: ./src/components/JfUiSelectComponent.vue?vue&type=style&index=0&id=2855b843&scoped=true&lang=less&
+var JfUiSelectComponentvue_type_style_index_0_id_2855b843_scoped_true_lang_less_ = __webpack_require__("e212");
 
 // CONCATENATED MODULE: ./src/components/JfUiSelectComponent.vue
 var JfUiSelectComponent_render, JfUiSelectComponent_staticRenderFns
@@ -86308,7 +86307,7 @@ var JfUiSelectComponent_component = normalizeComponent(
   JfUiSelectComponent_staticRenderFns,
   false,
   null,
-  "83e42848",
+  "2855b843",
   null
   
 )
@@ -88298,12 +88297,12 @@ var JfListMakerComponent_component = normalizeComponent(
 
 JfListMakerComponent_component.options.__file = "JfListMakerComponent.vue"
 /* harmony default export */ var JfListMakerComponent = (JfListMakerComponent_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfHelpTooltipComponent.vue?vue&type=template&id=acc92224&scoped=true&
-var JfHelpTooltipComponentvue_type_template_id_acc92224_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"jf-help-tooltip"},[_c('div',[_c('span',{staticClass:"tooltip-icon jf-tooltipster"},[_c('span',[_vm._t("default")],2)])])])}
-var JfHelpTooltipComponentvue_type_template_id_acc92224_scoped_true_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfHelpTooltipComponent.vue?vue&type=template&id=40e31d3d&scoped=true&
+var JfHelpTooltipComponentvue_type_template_id_40e31d3d_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"jf-help-tooltip",attrs:{"v-jf-tooltip":_vm.html}},[_c('div',[_c('span',{staticClass:"tooltip-icon jf-tooltipster"},[_c('span',[_vm._t("default")],2)])])])}
+var JfHelpTooltipComponentvue_type_template_id_40e31d3d_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/JfHelpTooltipComponent.vue?vue&type=template&id=acc92224&scoped=true&
+// CONCATENATED MODULE: ./src/components/JfHelpTooltipComponent.vue?vue&type=template&id=40e31d3d&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfHelpTooltipComponent.vue?vue&type=script&lang=js&
 
@@ -88355,8 +88354,8 @@ var JfHelpTooltipComponentvue_type_template_id_acc92224_scoped_true_staticRender
 });
 // CONCATENATED MODULE: ./src/components/JfHelpTooltipComponent.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_JfHelpTooltipComponentvue_type_script_lang_js_ = (JfHelpTooltipComponentvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/JfHelpTooltipComponent.vue?vue&type=style&index=0&id=acc92224&scoped=true&lang=less&
-var JfHelpTooltipComponentvue_type_style_index_0_id_acc92224_scoped_true_lang_less_ = __webpack_require__("a1f5");
+// EXTERNAL MODULE: ./src/components/JfHelpTooltipComponent.vue?vue&type=style&index=0&id=40e31d3d&scoped=true&lang=less&
+var JfHelpTooltipComponentvue_type_style_index_0_id_40e31d3d_scoped_true_lang_less_ = __webpack_require__("4d35");
 
 // CONCATENATED MODULE: ./src/components/JfHelpTooltipComponent.vue
 
@@ -88369,11 +88368,11 @@ var JfHelpTooltipComponentvue_type_style_index_0_id_acc92224_scoped_true_lang_le
 
 var JfHelpTooltipComponent_component = normalizeComponent(
   components_JfHelpTooltipComponentvue_type_script_lang_js_,
-  JfHelpTooltipComponentvue_type_template_id_acc92224_scoped_true_render,
-  JfHelpTooltipComponentvue_type_template_id_acc92224_scoped_true_staticRenderFns,
+  JfHelpTooltipComponentvue_type_template_id_40e31d3d_scoped_true_render,
+  JfHelpTooltipComponentvue_type_template_id_40e31d3d_scoped_true_staticRenderFns,
   false,
   null,
-  "acc92224",
+  "40e31d3d",
   null
   
 )
