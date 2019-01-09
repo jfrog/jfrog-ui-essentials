@@ -1,0 +1,21 @@
+{
+    "name": "lessfonts-open-sans",
+    "version": "1.0.2",
+    "authors": [
+        "Seth Lilly <seth.lilly@gmail.com>"
+    ],
+    "description": "An Open Sans font-face kit built with Less",
+    "main": "dist/css/open-sans.css",
+    "keywords": [
+        "font-face",
+        "less",
+        "open-sans",
+        "webfont"
+    ],
+    "license": "MIT",
+    "homepage": "http://github.com/sethlilly/lessfonts-open-sans",
+    "ignore": [
+        "bower_components",
+        "node_modules"
+    ]
+}

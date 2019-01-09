@@ -1,0 +1,26 @@
+{
+  "name": "angular-ui-grid",
+  "version": "3.0.0-rc.21-patch4",
+  "main": [
+    "./ui-grid.css",
+    "./ui-grid.eot",
+    "./ui-grid.js",
+    "./ui-grid.svg",
+    "./ui-grid.ttf",
+    "./ui-grid.woff"
+  ],
+  "ignore": [],
+  "dependencies": {
+    "angular": "~1.2.16"
+  },
+  "homepage": "http://ui-grid.info",
+  "_release": "3.0.0-rc.21-patch4",
+  "_resolution": {
+    "type": "version",
+    "tag": "v3.0.0-rc.21-patch4",
+    "commit": "b7097f281c71218f551fe038075d541142f805b1"
+  },
+  "_source": "https://github.com/500tech/bower-ui-grid.git",
+  "_target": "v3.0.0-rc.21-patch4",
+  "_originalSource": "500tech/bower-ui-grid"
+}

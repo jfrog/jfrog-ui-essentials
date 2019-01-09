@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>angular-eonasdan-datetimepicker</title>
+
+    <!-- libs -->
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
+    <!-- end libs -->
+</head>
+
+<body ng-app="plunker">
+
+<div ng-controller="controller as vm">
+
+    <div class="well">
+        <h3>Angular-eonasdan-datetimepicker</h3>
+        <p style="margin: -10px 0 0 0;">
+            https://github.com/atais/angular-eonasdan-datetimepicker</p>
+        <br>
+
+        <form name="dates_form">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group" ng-class="{ 'has-error': dates_form.dateFrom.$invalid }">
+                        <label for="dateFrom">From</label>
+                        <div class="input-group">
+                            <input name="dateFrom" id="dateFrom" class="form-control"
+                                   datetimepicker ng-model="vm.dateFrom" options="vm.options"
+                                   validate-before="dates_form.dateTo">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group" ng-class="{ 'has-error': dates_form.dateTo.$invalid }">
+                        <label for="dateTo">To</label>
+                        <div class="input-group">
+                            <input name="dateTo" id="dateTo" class="form-control"
+                                   datetimepicker ng-model="vm.dateTo" options="vm.options"
+                                   validate-after="dates_form.dateFrom">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<!-- libs -->
+<script src="/node_modules/moment/moment.js"></script>
+<script src="/node_modules/jquery/dist/jquery.js"></script>
+<script src="/node_modules/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
+<script src="/node_modules/angular/angular.js"></script>
+<!-- end libs -->
+<script src="../dist/angular-eonasdan-datetimepicker.js"></script>
+<script src="double-validation.js"></script>
+</body>
+</html>

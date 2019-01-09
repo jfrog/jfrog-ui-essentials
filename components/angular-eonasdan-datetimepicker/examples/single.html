@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>angular-eonasdan-datetimepicker</title>
+
+    <!-- libs -->
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
+    <!-- end libs -->
+</head>
+
+<body ng-app="plunker">
+
+<div ng-controller="controller as vm">
+
+    <div class="well">
+        <h3>Angular-eonasdan-datetimepicker</h3>
+        <a href="https://github.com/atais/angular-eonasdan-datetimepicker"><p style="margin: -10px 0 0 0;">
+            https://github.com/atais/angular-eonasdan-datetimepicker</p></a>
+        <br>
+
+        <div class="row">
+            <div class="col-md-3">
+                <label>Input element:</label>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control" datetimepicker ng-model="vm.date" options="vm.options"/>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label>Input-group div element:</label>
+                <div class="form-group">
+                    <div class="input-group" datetimepicker ng-model="vm.date" options="vm.options">
+                        <input class="form-control"/>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <p><b>Input date:</b> {{vm.date.format() | date: 'yyyy/MM/dd HH:mm'}}</p>
+        <button class="btn btn-default" ng-click="vm.getTime()">What's the time?</button>
+        <button class="btn btn-default" ng-click="vm.addTime(1, 'h')">Add +1h</button>
+        <button class="btn btn-default" ng-click="vm.addTime(1, 'd')">Add +1d</button>
+        <button class="btn btn-default" ng-click="vm.addTime(1, 'w')">Add +1w</button>
+        <button class="btn btn-default" ng-click="vm.clearTime()">Clear the time</button>
+    </div>
+</div>
+
+<!-- libs -->
+<script src="/node_modules/moment/moment.js"></script>
+<script src="/node_modules/jquery/dist/jquery.js"></script>
+<script src="/node_modules/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
+<script src="/node_modules/angular/angular.js"></script>
+<!-- end libs -->
+<script src="../dist/angular-eonasdan-datetimepicker.js"></script>
+<script src="single.js"></script>
+</body>
+</html>
