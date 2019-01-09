@@ -36,8 +36,8 @@
 
             /* (NG2VUE) This was moved from created() to mounted() */
             /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
-            this.$transclude(function (clone) {
-                this.$timeout(function () {
+            this.$transclude((clone) => {
+                this.$timeout(() => {
                     this.$element.find('label').prepend(clone);
                 }, 0, false);
             });

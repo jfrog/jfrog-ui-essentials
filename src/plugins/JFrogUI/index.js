@@ -24,7 +24,7 @@ const JFrogUI = {
         this.dim = dim;
         this.dim.setRouter(options.router);
 
-        Vue.use(VeeValidate);
+        Vue.use(VeeValidate, { validity: true });
 
         Vue.prototype.$jfrog = window.$jfrog = $jfrog = {
             apiRoot: plugin.$apiRoot,
