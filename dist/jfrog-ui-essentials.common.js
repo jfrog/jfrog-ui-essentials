@@ -418,17 +418,6 @@ function isSlowBuffer (obj) {
 
 /***/ }),
 
-/***/ "0772":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_83e42848_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("f4f8");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_83e42848_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_83e42848_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_83e42848_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
 /***/ "08cf":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -11928,13 +11917,6 @@ module.exports = function isCancel(value) {
   return !!(value && value.__CANCEL__);
 };
 
-
-/***/ }),
-
-/***/ "2ea4":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -33145,6 +33127,17 @@ module.exports = function (it) {
 
 /***/ }),
 
+/***/ "4d35":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_40e31d3d_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("533a");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_40e31d3d_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_40e31d3d_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_40e31d3d_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
 /***/ "4d7c":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34832,6 +34825,13 @@ exports.f = {}.propertyIsEnumerable;
 /***/ }),
 
 /***/ "52dd":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "533a":
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
@@ -44872,6 +44872,17 @@ module.exports = Object.is || function is(x, y) {
 
 /***/ }),
 
+/***/ "849e":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfFieldComponent_vue_vue_type_style_index_0_id_5ae09984_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("d92b");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfFieldComponent_vue_vue_type_style_index_0_id_5ae09984_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfFieldComponent_vue_vue_type_style_index_0_id_5ae09984_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfFieldComponent_vue_vue_type_style_index_0_id_5ae09984_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
 /***/ "84f2":
 /***/ (function(module, exports) {
 
@@ -45213,17 +45224,6 @@ function btoa(input) {
 
 module.exports = btoa;
 
-
-/***/ }),
-
-/***/ "a1f5":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_acc92224_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("c879");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_acc92224_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_acc92224_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfHelpTooltipComponent_vue_vue_type_style_index_0_id_acc92224_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -47866,17 +47866,6 @@ if (true) {
 
 /***/ }),
 
-/***/ "a6c5":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfFieldComponent_vue_vue_type_style_index_0_id_2c397bbb_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("2ea4");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfFieldComponent_vue_vue_type_style_index_0_id_2c397bbb_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfFieldComponent_vue_vue_type_style_index_0_id_2c397bbb_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfFieldComponent_vue_vue_type_style_index_0_id_2c397bbb_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
 /***/ "a777":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -48216,6 +48205,13 @@ __webpack_require__("5ca1")({
 /* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfMarkupEditorComponent_vue_vue_type_style_index_0_id_8c7a558e_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfMarkupEditorComponent_vue_vue_type_style_index_0_id_8c7a558e_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfMarkupEditorComponent_vue_vue_type_style_index_0_id_8c7a558e_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "b465":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -49995,13 +49991,6 @@ module.exports = get;
 
 /***/ }),
 
-/***/ "c879":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
 /***/ "c8af":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -50391,6 +50380,13 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
+/***/ "d92b":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "d9f3":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -50747,6 +50743,17 @@ module.exports = (
 /* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfRadioButtonComponent_vue_vue_type_style_index_0_id_02cc7dc9_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfRadioButtonComponent_vue_vue_type_style_index_0_id_02cc7dc9_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfRadioButtonComponent_vue_vue_type_style_index_0_id_02cc7dc9_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "e212":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_2855b843_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("b465");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_2855b843_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_2855b843_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JfUiSelectComponent_vue_vue_type_style_index_0_id_2855b843_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -60277,13 +60284,6 @@ Popper.Defaults = Defaults;
 
 /***/ }),
 
-/***/ "f4f8":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
 /***/ "f559":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -67539,8 +67539,6 @@ function () {
     key: "setConfig",
     value: function setConfig(config) {
       _.extend(this.config, config);
-
-      console.log(this.config);
     }
   }, {
     key: "getConfig",
@@ -67582,545 +67580,53 @@ function ConfigConfig_config() {
     }
   });
 }
-// CONCATENATED MODULE: ./src/configs/JfrogUiEssentialsConfig.js
-var jfrogUiEssentialsConfig = function jfrogUiEssentialsConfig() {
-  var injections = $jfrog.get(['$qProvider']);
-  injections.$qProvider.errorOnUnhandledRejections(false);
-};
-// CONCATENATED MODULE: ./src/plugins/JFrogUI/angularjs-mocks/filter.js
-var filter_Vue = window.Vue;
-function AngularFilterServiceMock(filterName) {
-  return filter_Vue.filter(filterName);
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread.js
+
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+    var ownKeys = Object.keys(source);
+
+    if (typeof Object.getOwnPropertySymbols === 'function') {
+      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+      }));
+    }
+
+    ownKeys.forEach(function (key) {
+      _defineProperty(target, key, source[key]);
+    });
+  }
+
+  return target;
 }
-// EXTERNAL MODULE: ./node_modules/lodash/lodash.js
-var lodash = __webpack_require__("2ef0");
-var lodash_default = /*#__PURE__*/__webpack_require__.n(lodash);
-
-// EXTERNAL MODULE: ./node_modules/axios/index.js
-var node_modules_axios = __webpack_require__("bc3a");
-var axios_default = /*#__PURE__*/__webpack_require__.n(node_modules_axios);
-
-// CONCATENATED MODULE: ./src/plugins/JFrogUI/angularjs-mocks/http.js
-
-
-
-
-var http_AngularHttpProviderMock =
-/*#__PURE__*/
-function () {
-  function AngularHttpProviderMock() {
-    _classCallCheck(this, AngularHttpProviderMock);
-
-    this.interceptors = [];
-  }
-
-  _createClass(AngularHttpProviderMock, [{
-    key: "$get",
-    value: function $get() {
-      return this;
-    }
-  }]);
-
-  return AngularHttpProviderMock;
-}();
-// CONCATENATED MODULE: ./src/plugins/JFrogUI/angularjs-mocks/injector.js
-
-var injector_AngularInjectorServiceMock = function AngularInjectorServiceMock() {
-  _classCallCheck(this, AngularInjectorServiceMock);
-
-  this.get = function () {
-    var _$jfrog;
-
-    return (_$jfrog = $jfrog).get.apply(_$jfrog, arguments);
-  };
-};
-// CONCATENATED MODULE: ./src/plugins/JFrogUI/angularjs-mocks/location.js
-
-
-
-
-
-
-
-var location_AngularLocationProviderMock =
-/*#__PURE__*/
-function () {
-  function AngularLocationProviderMock() {
-    var _this = this;
-
-    _classCallCheck(this, AngularLocationProviderMock);
-
-    this.location = window.location;
-    this.updateRouter = true;
-    this.$router.beforeEach(function (to, from, next) {
-      if (_this.updateRouter) next();
-    });
-  }
-
-  _createClass(AngularLocationProviderMock, [{
-    key: "$get",
-    value: function $get() {
-      return this;
-    }
-  }, {
-    key: "hashPrefix",
-    value: function hashPrefix(_hashPrefix) {
-      console.error('Setting custom hash prefix is not yet supported');
-    }
-  }, {
-    key: "url",
-    value: function url(newUrl) {
-      var _this2 = this;
-
-      if (!newUrl) {
-        return _.trimStart(this.location.hash, '#');
-      } else {
-        this._update(function () {
-          _this2.location.hash = '#' + newUrl;
-        });
-      }
-    }
-  }, {
-    key: "absUrl",
-    value: function absUrl() {
-      return this.location.href;
-    }
-  }, {
-    key: "protocol",
-    value: function protocol() {
-      return _.trimEnd(this.location.protocol, ':');
-    }
-  }, {
-    key: "host",
-    value: function host() {
-      return this.location.host.split(':')[0];
-    }
-  }, {
-    key: "port",
-    value: function port() {
-      return parseInt(this.location.host.split(':')[1]);
-    }
-  }, {
-    key: "path",
-    value: function path(newPath) {
-      var _this3 = this;
-
-      if (!newPath) {
-        return this.url().split('#')[0].split('?')[0];
-      } else {
-        this._update(function () {
-          var url = _this3.url();
-
-          var hash = url.split('#')[1] || '';
-          var search = url.split('#')[0].split('?')[1] || '';
-          _this3.location.hash = '#' + newPath + (search ? '?' + search : '') + (hash ? '#' + hash : '');
-        });
-      }
-    }
-  }, {
-    key: "search",
-    value: function search() {
-      var _this4 = this;
-
-      for (var _len = arguments.length, newSearch = new Array(_len), _key = 0; _key < _len; _key++) {
-        newSearch[_key] = arguments[_key];
-      }
-
-      if (!newSearch.length) {
-        var searchObj = {};
-        var searchString = this.url().split('#')[0].split('?')[1];
-
-        if (searchString) {
-          var searchParts = searchString.split('&');
-          searchParts.forEach(function (part) {
-            var split = part.split('=');
-            searchObj[split[0]] = split[1];
-          });
-        }
-
-        return searchObj;
-      } else {
-        var update = function update(obj) {
-          var searchParts = [];
-          Object.keys(obj).forEach(function (key) {
-            searchParts.push("".concat(key, "=").concat(obj[key]));
-          });
-          var searchStr = searchParts.join('&');
-
-          var hash = _this4.hash();
-
-          var path = _this4.path();
-
-          _this4._update(function () {
-            _this4.location.hash = '#' + path + (searchStr ? '?' + searchStr : '') + (hash ? '#' + hash : '');
-          });
-        };
-
-        if (_.isObject(newSearch[0])) {
-          update(newSearch[0]);
-        } else if (_.isString(newSearch[0]) && (_.isString(newSearch[1]) || _.isNumber(newSearch[1]))) {
-          var _searchObj = this.search();
-
-          _searchObj[newSearch[0]] = newSearch[1];
-          update(_searchObj);
-        }
-      }
-    }
-  }, {
-    key: "hash",
-    value: function hash(newHash) {
-      var _this5 = this;
-
-      if (newHash === undefined) {
-        return this.url().split('#')[1] || '';
-      } else {
-        this._update(function () {
-          _this5.location.hash = '#' + _this5.url().split('#')[0] + (newHash ? '#' + newHash : '');
-        });
-      }
-    }
-  }, {
-    key: "replace",
-    value: function replace() {
-      console.error('$location.replace is not currently supported !');
-    }
-  }, {
-    key: "state",
-    value: function state() {
-      console.error('$location.state is not currently supported !');
-      return null;
-    }
-  }, {
-    key: "_update",
-    value: function _update(f) {
-      this.updateRouter = false;
-      f();
-      this.$set(this, 'dummy', (this.dummy || 0) + 1);
-      this.updateRouter = true;
-    }
-  }]);
-
-  return AngularLocationProviderMock;
-}();
-// CONCATENATED MODULE: ./src/plugins/JFrogUI/angularjs-mocks/resource.js
-
-
-
-
-
-
-
-
-
-
-
-
-var resource_$jfrog;
-var resource_$q;
-var $http;
-function AngularResourceServiceMock(url, paramDefaults, actions, options) {
-  resource_$q = this.$jfrog.get('$q');
-  $http = this.$jfrog.get('$http');
-  resource_$jfrog = this.$jfrog;
-  return createResourceClass({
-    url: url,
-    paramDefaults: paramDefaults,
-    actions: actions,
-    options: options
-  });
+// CONCATENATED MODULE: ./src/constants/validation.constants.js
+/*
+export default function (name, JFrogUILibConfig) {
+    let customMessages = JFrogUILibConfig.getConfig().customValidationMessages;
+    if (customMessages) return _.extend(_.cloneDeep(commonMessages), customMessages[name]);
+    else return commonMessages;
 }
-
-function setupInterceptors() {
-  var interceptorsArray = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-  var axios = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-
-  var interceptorAdapter = function interceptorAdapter(ng1Interceptor) {
-    if (!ng1Interceptor) {
-      return function () {};
-    } else {
-      return function (config) {
-        if (config.config && config.config.method) config.config.method = config.config.method.toUpperCase();
-        if (config.config) config.config.data = config.config.data ? JSON.parse(config.config.data) : null;
-        var ret = ng1Interceptor(config);
-        if (config.config) ret.config.data = ret.config.data ? JSON.stringify(config.config.data) : null;
-        return ret;
-      };
-    }
-  };
-
-  interceptorsArray.forEach(function (interceptor) {
-    if (interceptor.request || interceptor.requestError) {
-      axios.interceptors.request.use(interceptorAdapter(interceptor.request), interceptorAdapter(interceptor.requestError));
-    }
-
-    if (interceptor.response || interceptor.responseError) {
-      axios.interceptors.response.use(interceptorAdapter(interceptor.response), interceptorAdapter(interceptor.responseError));
-    }
-  });
-}
-
-function createResourceClass(resourceParams) {
-  var defaultActions = {
-    'get': {
-      method: 'GET'
-    },
-    'save': {
-      method: 'POST'
-    },
-    'query': {
-      method: 'GET',
-      isArray: true
-    },
-    'remove': {
-      method: 'DELETE'
-    },
-    'delete': {
-      method: 'DELETE'
-    }
-  };
-
-  var actions = lodash_default.a.extend({}, defaultActions, resourceParams.actions);
-
-  var Resource = function Resource() {
-    var _this = this;
-
-    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-    _classCallCheck(this, Resource);
-
-    lodash_default.a.extend(this, data);
-
-    Object.keys(actions).forEach(function (actionKey) {
-      var action = actions[actionKey];
-
-      _this.constructor.prototype['$' + actionKey] = function () {
-        for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {
-          params[_key] = arguments[_key];
-        }
-
-        return doAction.bind(_this)(action, params);
-      };
-    });
-  };
-
-  function doAction(action, callParams) {
-    var _this2 = this;
-
-    var axios;
-
-    if (this && this.axios) {
-      axios = this.axios;
-    } else {
-      axios = axios_default.a.create();
-      if (this) this.axios = axios;
-      setupInterceptors($http.interceptors.map(function (i) {
-        return resource_$jfrog.get(i);
-      }), axios);
-      if (action.interceptor) setupInterceptors([action.interceptor], axios);
-    }
-
-    var compilation = compilePath(action.url || resourceParams.url, lodash_default.a.extend({}, resourceParams.paramDefaults, action.params), lodash_default.a.extend({}, action.params, (action.method === 'GET' ? callParams[0] : {}) || {}));
-    var compiledPath = compilation.compiledPath;
-    var requestHasPayload = !lodash_default.a.includes(['GET'], action.method);
-    var ownPayload = this && requestHasPayload ? lodash_default.a.pick(this, lodash_default.a.filter(Object.keys(this), function (k) {
-      return !k.startsWith('$');
-    })) : {};
-    var payload = requestHasPayload ? lodash_default.a.merge({}, ownPayload, callParams.length === 2 ? callParams[1] : callParams[0]) : undefined;
-    var axiosPromise = axios({
-      method: action.method,
-      url: compiledPath,
-      params: action.method === 'GET' ? compilation.unusedReplacers : {},
-      data: payload
-    });
-    var ret = action.isArray ? [] : {};
-    var defer = resource_$q.defer();
-    axiosPromise.then(function (response) {
-      var data = !action.interceptor ? response.data : response;
-
-      if (action.isArray && !lodash_default.a.isArray(data)) {
-        defer.reject('Expected response to be array. Url = ', compiledPath);
-      } else if (action.isArray) {
-        var _ret;
-
-        data = lodash_default.a.map(data, function (d) {
-          var i = new Resource();
-
-          lodash_default.a.extend(i, d);
-
-          return i;
-        });
-        defer.resolve(data);
-
-        (_ret = ret).splice.apply(_ret, [0, 0].concat(_toConsumableArray(data)));
-      } else {
-        var i = new Resource();
-
-        lodash_default.a.extend(i, data);
-
-        if (action.interceptor) i.resource = response.data;
-        defer.resolve(i);
-
-        lodash_default.a.extend(ret, data);
-
-        if (_this2) lodash_default.a.extend(_this2, data);
-      }
-    });
-
-    if (!this) {
-      ret.$promise = defer.promise;
-    } else {
-      ret = defer.promise;
-    }
-
-    return ret;
-  }
-
-  Resource.prototype.resourceParams = resourceParams;
-  Object.keys(actions).forEach(function (actionKey) {
-    var action = actions[actionKey];
-
-    Resource[actionKey] = function () {
-      for (var _len2 = arguments.length, params = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        params[_key2] = arguments[_key2];
-      }
-
-      return doAction(action, params);
-    };
-  });
-  return Resource;
-}
-
-function compilePath(pathLayout, pathParams) {
-  var paramReplacers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  var compiled = pathLayout;
-  var replacersUsed = [];
-
-  for (var key in pathParams) {
-    var replacer = pathParams[key] || '';
-
-    if (lodash_default.a.isString(replacer) && replacer.startsWith('@')) {
-      replacer = paramReplacers[replacer.substr(1)] || '';
-      replacersUsed.push(replacer.substr(1));
-    }
-
-    compiled = compiled.split(":".concat(key)).join(replacer);
-  }
-
-  var emptyParams = compiled.match(/:([0-9|a-z|A-Z]*)/g);
-
-  if (emptyParams) {
-    emptyParams.forEach(function (param) {
-      if (param.substr(1)) {
-        compiled = compiled.split("/".concat(param)).join('');
-      }
-    });
-  }
-
-  return {
-    compiledPath: lodash_default.a.trimEnd(compiled, '/'),
-    unusedReplacers: lodash_default.a.pick.apply(lodash_default.a, [paramReplacers].concat(_toConsumableArray(lodash_default.a.filter(Object.keys(paramReplacers), function (k) {
-      return !lodash_default.a.includes(replacersUsed, k);
-    }))))
-  };
-}
-// CONCATENATED MODULE: ./src/plugins/JFrogUI/angularjs-mocks/scope.js
-
-
-
-var scope_AngularScopeServiceMock = function AngularScopeServiceMock(vueComp) {
-  _classCallCheck(this, AngularScopeServiceMock);
-
-  if (vueComp.$options.ng1_legacy && vueComp.$options.ng1_legacy['controllerAs']) {
-    lodash_default.a.extend(this, _defineProperty({}, vueComp.$options.ng1_legacy['controllerAs'], vueComp));
-  } else {
-    lodash_default.a.extend(this, vueComp.$data);
-  }
-
-  this.$comp = vueComp;
-
-  this.$on = function (msg, callback) {
-    switch (msg) {
-      case '$destroy':
-        {
-          vueComp.$$onDestroy = callback;
-          break;
-        }
-    }
-  };
-
-  this.$watch = function (expr, callback) {
-    vueComp.$watch(expr, callback);
-    callback(lodash_default.a.get(vueComp, expr));
-  };
-
-  this.$destroy = function () {
-    vueComp.$destroy();
-  };
-
-  this.$new = function () {
-    var _data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-    var v = new Vue({
-      data: function data() {
-        return lodash_default.a.extend({}, _data, vueComp.$data);
-      }
-    });
-    return new AngularScopeServiceMock(v);
-  };
-
-  Object.defineProperty(this, '$parent', {
-    get: function get() {
-      return vueComp.$parent ? new AngularScopeServiceMock(vueComp.$parent) : null;
-    }
-  });
-};
-// CONCATENATED MODULE: ./src/plugins/JFrogUI/angularjs-mocks/rootScope.js
-
-
-
-var rootScope_AngularRootScopeServiceMock =
-/*#__PURE__*/
-function () {
-  function AngularRootScopeServiceMock() {
-    _classCallCheck(this, AngularRootScopeServiceMock);
-  }
-
-  _createClass(AngularRootScopeServiceMock, [{
-    key: "$on",
-    value: function $on(event, callback) {
-      if (event === '$stateChangeStart') {
-        this.$router.beforeEach(function (to, from, next) {
-          var _preventDefault = false;
-          var event = {
-            preventDefault: function preventDefault() {
-              return _preventDefault = true;
-            }
-          };
-          var toState = to;
-          var fromState = to;
-          var toParams = to.params;
-          var fromParams = from.params;
-          callback(event, toState, toParams, fromState, fromParams);
-          if (!_preventDefault) next();
-        });
-      }
-    }
-  }, {
-    key: "$new",
-    value: function $new() {
-      var _data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-      var v = new Vue({
-        data: function data() {
-          return _data;
-        }
-      });
-      return new scope_AngularScopeServiceMock(v);
-    }
-  }]);
-
-  return AngularRootScopeServiceMock;
-}();
+*/
+/* harmony default export */ var validation_constants = ({
+  "required": "You must fill in this field",
+  "unique": "This value must be unique",
+  "validator": "This value is invalid",
+  "email": "Please enter a valid email",
+  "url": "Please enter a valid url",
+  "number": "Please enter an Integer",
+  "min": "Value too low",
+  "max": "Value too high",
+  "minlength": "Value too short",
+  "maxlength": "Value too long",
+  "invalidCron": "The cron expression is invalid",
+  "pastCron": "The next run time is in the past",
+  "uniqueId": "Key is already used",
+  "name": "Name cannot be blank or contain /\\:|?*\"<>",
+  "xmlName": "Name cannot be blank or contain spaces & special characters",
+  "integerValue": "Value must be an integer number",
+  "mustAddValueTolist": "You must add a value to list"
+});
 // CONCATENATED MODULE: ./node_modules/vee-validate/dist/vee-validate.esm.js
 /**
   * vee-validate v2.1.5
@@ -76889,6 +76395,560 @@ var vee_validate_esm_install = VeeValidate$1.install;
 /* harmony default export */ var vee_validate_esm = (VeeValidate$1);
 
 
+// CONCATENATED MODULE: ./src/configs/JfrogUiEssentialsConfig.js
+
+
+
+var JfrogUiEssentialsConfig_jfrogUiEssentialsConfig = function jfrogUiEssentialsConfig() {
+  var injections = $jfrog.get(['$qProvider', 'JFrogUILibConfigProvider']);
+  injections.$qProvider.errorOnUnhandledRejections(false);
+  var customMessages = injections.JFrogUILibConfigProvider.getConfig().customValidationMessages;
+  console.log('essentials config !!!');
+  console.log('??????', customMessages);
+  var dict = {
+    messages: _objectSpread({}, validation_constants),
+    custom: _objectSpread({}, customMessages)
+  };
+  Validator.localize('en', dict);
+  /*
+      this.validationErrors = VALIDATION_ERRORS(this.validationDomain, this.JFrogUILibConfig);
+      if (this.validationDomain) _.extend(this.validationErrors, VALIDATION_ERRORS[this.validationDomain]);
+  */
+};
+// CONCATENATED MODULE: ./src/plugins/JFrogUI/angularjs-mocks/filter.js
+var filter_Vue = window.Vue;
+function AngularFilterServiceMock(filterName) {
+  return filter_Vue.filter(filterName);
+}
+// EXTERNAL MODULE: ./node_modules/lodash/lodash.js
+var lodash = __webpack_require__("2ef0");
+var lodash_default = /*#__PURE__*/__webpack_require__.n(lodash);
+
+// EXTERNAL MODULE: ./node_modules/axios/index.js
+var node_modules_axios = __webpack_require__("bc3a");
+var axios_default = /*#__PURE__*/__webpack_require__.n(node_modules_axios);
+
+// CONCATENATED MODULE: ./src/plugins/JFrogUI/angularjs-mocks/http.js
+
+
+
+
+var http_AngularHttpProviderMock =
+/*#__PURE__*/
+function () {
+  function AngularHttpProviderMock() {
+    _classCallCheck(this, AngularHttpProviderMock);
+
+    this.interceptors = [];
+  }
+
+  _createClass(AngularHttpProviderMock, [{
+    key: "$get",
+    value: function $get() {
+      return this;
+    }
+  }]);
+
+  return AngularHttpProviderMock;
+}();
+// CONCATENATED MODULE: ./src/plugins/JFrogUI/angularjs-mocks/injector.js
+
+var injector_AngularInjectorServiceMock = function AngularInjectorServiceMock() {
+  _classCallCheck(this, AngularInjectorServiceMock);
+
+  this.get = function () {
+    var _$jfrog;
+
+    return (_$jfrog = $jfrog).get.apply(_$jfrog, arguments);
+  };
+};
+// CONCATENATED MODULE: ./src/plugins/JFrogUI/angularjs-mocks/location.js
+
+
+
+
+
+
+
+var location_AngularLocationProviderMock =
+/*#__PURE__*/
+function () {
+  function AngularLocationProviderMock() {
+    var _this = this;
+
+    _classCallCheck(this, AngularLocationProviderMock);
+
+    this.location = window.location;
+    this.updateRouter = true;
+    this.$router.beforeEach(function (to, from, next) {
+      if (_this.updateRouter) next();
+    });
+  }
+
+  _createClass(AngularLocationProviderMock, [{
+    key: "$get",
+    value: function $get() {
+      return this;
+    }
+  }, {
+    key: "hashPrefix",
+    value: function hashPrefix(_hashPrefix) {
+      console.error('Setting custom hash prefix is not yet supported');
+    }
+  }, {
+    key: "url",
+    value: function url(newUrl) {
+      var _this2 = this;
+
+      if (!newUrl) {
+        return _.trimStart(this.location.hash, '#');
+      } else {
+        this._update(function () {
+          _this2.location.hash = '#' + newUrl;
+        });
+      }
+    }
+  }, {
+    key: "absUrl",
+    value: function absUrl() {
+      return this.location.href;
+    }
+  }, {
+    key: "protocol",
+    value: function protocol() {
+      return _.trimEnd(this.location.protocol, ':');
+    }
+  }, {
+    key: "host",
+    value: function host() {
+      return this.location.host.split(':')[0];
+    }
+  }, {
+    key: "port",
+    value: function port() {
+      return parseInt(this.location.host.split(':')[1]);
+    }
+  }, {
+    key: "path",
+    value: function path(newPath) {
+      var _this3 = this;
+
+      if (!newPath) {
+        return this.url().split('#')[0].split('?')[0];
+      } else {
+        this._update(function () {
+          var url = _this3.url();
+
+          var hash = url.split('#')[1] || '';
+          var search = url.split('#')[0].split('?')[1] || '';
+          _this3.location.hash = '#' + newPath + (search ? '?' + search : '') + (hash ? '#' + hash : '');
+        });
+      }
+    }
+  }, {
+    key: "search",
+    value: function search() {
+      var _this4 = this;
+
+      for (var _len = arguments.length, newSearch = new Array(_len), _key = 0; _key < _len; _key++) {
+        newSearch[_key] = arguments[_key];
+      }
+
+      if (!newSearch.length) {
+        var searchObj = {};
+        var searchString = this.url().split('#')[0].split('?')[1];
+
+        if (searchString) {
+          var searchParts = searchString.split('&');
+          searchParts.forEach(function (part) {
+            var split = part.split('=');
+            searchObj[split[0]] = split[1];
+          });
+        }
+
+        return searchObj;
+      } else {
+        var update = function update(obj) {
+          var searchParts = [];
+          Object.keys(obj).forEach(function (key) {
+            searchParts.push("".concat(key, "=").concat(obj[key]));
+          });
+          var searchStr = searchParts.join('&');
+
+          var hash = _this4.hash();
+
+          var path = _this4.path();
+
+          _this4._update(function () {
+            _this4.location.hash = '#' + path + (searchStr ? '?' + searchStr : '') + (hash ? '#' + hash : '');
+          });
+        };
+
+        if (_.isObject(newSearch[0])) {
+          update(newSearch[0]);
+        } else if (_.isString(newSearch[0]) && (_.isString(newSearch[1]) || _.isNumber(newSearch[1]))) {
+          var _searchObj = this.search();
+
+          _searchObj[newSearch[0]] = newSearch[1];
+          update(_searchObj);
+        }
+      }
+    }
+  }, {
+    key: "hash",
+    value: function hash(newHash) {
+      var _this5 = this;
+
+      if (newHash === undefined) {
+        return this.url().split('#')[1] || '';
+      } else {
+        this._update(function () {
+          _this5.location.hash = '#' + _this5.url().split('#')[0] + (newHash ? '#' + newHash : '');
+        });
+      }
+    }
+  }, {
+    key: "replace",
+    value: function replace() {
+      console.error('$location.replace is not currently supported !');
+    }
+  }, {
+    key: "state",
+    value: function state() {
+      console.error('$location.state is not currently supported !');
+      return null;
+    }
+  }, {
+    key: "_update",
+    value: function _update(f) {
+      this.updateRouter = false;
+      f();
+      this.$set(this, 'dummy', (this.dummy || 0) + 1);
+      this.updateRouter = true;
+    }
+  }]);
+
+  return AngularLocationProviderMock;
+}();
+// CONCATENATED MODULE: ./src/plugins/JFrogUI/angularjs-mocks/resource.js
+
+
+
+
+
+
+
+
+
+
+
+
+var resource_$jfrog;
+var resource_$q;
+var $http;
+function AngularResourceServiceMock(url, paramDefaults, actions, options) {
+  resource_$q = this.$jfrog.get('$q');
+  $http = this.$jfrog.get('$http');
+  resource_$jfrog = this.$jfrog;
+  return createResourceClass({
+    url: url,
+    paramDefaults: paramDefaults,
+    actions: actions,
+    options: options
+  });
+}
+
+function setupInterceptors() {
+  var interceptorsArray = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var axios = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+  var interceptorAdapter = function interceptorAdapter(ng1Interceptor) {
+    if (!ng1Interceptor) {
+      return function () {};
+    } else {
+      return function (config) {
+        if (config.config && config.config.method) config.config.method = config.config.method.toUpperCase();
+        if (config.config) config.config.data = config.config.data ? JSON.parse(config.config.data) : null;
+        var ret = ng1Interceptor(config);
+        if (config.config) ret.config.data = ret.config.data ? JSON.stringify(config.config.data) : null;
+        return ret;
+      };
+    }
+  };
+
+  interceptorsArray.forEach(function (interceptor) {
+    if (interceptor.request || interceptor.requestError) {
+      axios.interceptors.request.use(interceptorAdapter(interceptor.request), interceptorAdapter(interceptor.requestError));
+    }
+
+    if (interceptor.response || interceptor.responseError) {
+      axios.interceptors.response.use(interceptorAdapter(interceptor.response), interceptorAdapter(interceptor.responseError));
+    }
+  });
+}
+
+function createResourceClass(resourceParams) {
+  var defaultActions = {
+    'get': {
+      method: 'GET'
+    },
+    'save': {
+      method: 'POST'
+    },
+    'query': {
+      method: 'GET',
+      isArray: true
+    },
+    'remove': {
+      method: 'DELETE'
+    },
+    'delete': {
+      method: 'DELETE'
+    }
+  };
+
+  var actions = lodash_default.a.extend({}, defaultActions, resourceParams.actions);
+
+  var Resource = function Resource() {
+    var _this = this;
+
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    _classCallCheck(this, Resource);
+
+    lodash_default.a.extend(this, data);
+
+    Object.keys(actions).forEach(function (actionKey) {
+      var action = actions[actionKey];
+
+      _this.constructor.prototype['$' + actionKey] = function () {
+        for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {
+          params[_key] = arguments[_key];
+        }
+
+        return doAction.bind(_this)(action, params);
+      };
+    });
+  };
+
+  function doAction(action, callParams) {
+    var _this2 = this;
+
+    var axios;
+
+    if (this && this.axios) {
+      axios = this.axios;
+    } else {
+      axios = axios_default.a.create();
+      if (this) this.axios = axios;
+      setupInterceptors($http.interceptors.map(function (i) {
+        return resource_$jfrog.get(i);
+      }), axios);
+      if (action.interceptor) setupInterceptors([action.interceptor], axios);
+    }
+
+    var compilation = compilePath(action.url || resourceParams.url, lodash_default.a.extend({}, resourceParams.paramDefaults, action.params), lodash_default.a.extend({}, action.params, (action.method === 'GET' ? callParams[0] : {}) || {}));
+    var compiledPath = compilation.compiledPath;
+    var requestHasPayload = !lodash_default.a.includes(['GET'], action.method);
+    var ownPayload = this && requestHasPayload ? lodash_default.a.pick(this, lodash_default.a.filter(Object.keys(this), function (k) {
+      return !k.startsWith('$');
+    })) : {};
+    var payload = requestHasPayload ? lodash_default.a.merge({}, ownPayload, callParams.length === 2 ? callParams[1] : callParams[0]) : undefined;
+    var axiosPromise = axios({
+      method: action.method,
+      url: compiledPath,
+      params: action.method === 'GET' ? compilation.unusedReplacers : {},
+      data: payload
+    });
+    var ret = action.isArray ? [] : {};
+    var defer = resource_$q.defer();
+    axiosPromise.then(function (response) {
+      var data = !action.interceptor ? response.data : response;
+
+      if (action.isArray && !lodash_default.a.isArray(data)) {
+        defer.reject('Expected response to be array. Url = ', compiledPath);
+      } else if (action.isArray) {
+        var _ret;
+
+        data = lodash_default.a.map(data, function (d) {
+          var i = new Resource();
+
+          lodash_default.a.extend(i, d);
+
+          return i;
+        });
+        defer.resolve(data);
+
+        (_ret = ret).splice.apply(_ret, [0, 0].concat(_toConsumableArray(data)));
+      } else {
+        var i = new Resource();
+
+        lodash_default.a.extend(i, data);
+
+        if (action.interceptor) i.resource = response.data;
+        defer.resolve(i);
+
+        lodash_default.a.extend(ret, data);
+
+        if (_this2) lodash_default.a.extend(_this2, data);
+      }
+    });
+
+    if (!this) {
+      ret.$promise = defer.promise;
+    } else {
+      ret = defer.promise;
+    }
+
+    return ret;
+  }
+
+  Resource.prototype.resourceParams = resourceParams;
+  Object.keys(actions).forEach(function (actionKey) {
+    var action = actions[actionKey];
+
+    Resource[actionKey] = function () {
+      for (var _len2 = arguments.length, params = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        params[_key2] = arguments[_key2];
+      }
+
+      return doAction(action, params);
+    };
+  });
+  return Resource;
+}
+
+function compilePath(pathLayout, pathParams) {
+  var paramReplacers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var compiled = pathLayout;
+  var replacersUsed = [];
+
+  for (var key in pathParams) {
+    var replacer = pathParams[key] || '';
+
+    if (lodash_default.a.isString(replacer) && replacer.startsWith('@')) {
+      replacer = paramReplacers[replacer.substr(1)] || '';
+      replacersUsed.push(replacer.substr(1));
+    }
+
+    compiled = compiled.split(":".concat(key)).join(replacer);
+  }
+
+  var emptyParams = compiled.match(/:([0-9|a-z|A-Z]*)/g);
+
+  if (emptyParams) {
+    emptyParams.forEach(function (param) {
+      if (param.substr(1)) {
+        compiled = compiled.split("/".concat(param)).join('');
+      }
+    });
+  }
+
+  return {
+    compiledPath: lodash_default.a.trimEnd(compiled, '/'),
+    unusedReplacers: lodash_default.a.pick.apply(lodash_default.a, [paramReplacers].concat(_toConsumableArray(lodash_default.a.filter(Object.keys(paramReplacers), function (k) {
+      return !lodash_default.a.includes(replacersUsed, k);
+    }))))
+  };
+}
+// CONCATENATED MODULE: ./src/plugins/JFrogUI/angularjs-mocks/scope.js
+
+
+
+var scope_AngularScopeServiceMock = function AngularScopeServiceMock(vueComp) {
+  _classCallCheck(this, AngularScopeServiceMock);
+
+  if (vueComp.$options.ng1_legacy && vueComp.$options.ng1_legacy['controllerAs']) {
+    lodash_default.a.extend(this, _defineProperty({}, vueComp.$options.ng1_legacy['controllerAs'], vueComp));
+  } else {
+    lodash_default.a.extend(this, vueComp.$data);
+  }
+
+  this.$comp = vueComp;
+
+  this.$on = function (msg, callback) {
+    switch (msg) {
+      case '$destroy':
+        {
+          vueComp.$$onDestroy = callback;
+          break;
+        }
+    }
+  };
+
+  this.$watch = function (expr, callback) {
+    vueComp.$watch(expr, callback);
+    callback(lodash_default.a.get(vueComp, expr));
+  };
+
+  this.$destroy = function () {
+    vueComp.$destroy();
+  };
+
+  this.$new = function () {
+    var _data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    var v = new Vue({
+      data: function data() {
+        return lodash_default.a.extend({}, _data, vueComp.$data);
+      }
+    });
+    return new AngularScopeServiceMock(v);
+  };
+
+  Object.defineProperty(this, '$parent', {
+    get: function get() {
+      return vueComp.$parent ? new AngularScopeServiceMock(vueComp.$parent) : null;
+    }
+  });
+};
+// CONCATENATED MODULE: ./src/plugins/JFrogUI/angularjs-mocks/rootScope.js
+
+
+
+var rootScope_AngularRootScopeServiceMock =
+/*#__PURE__*/
+function () {
+  function AngularRootScopeServiceMock() {
+    _classCallCheck(this, AngularRootScopeServiceMock);
+  }
+
+  _createClass(AngularRootScopeServiceMock, [{
+    key: "$on",
+    value: function $on(event, callback) {
+      if (event === '$stateChangeStart') {
+        this.$router.beforeEach(function (to, from, next) {
+          var _preventDefault = false;
+          var event = {
+            preventDefault: function preventDefault() {
+              return _preventDefault = true;
+            }
+          };
+          var toState = to;
+          var fromState = to;
+          var toParams = to.params;
+          var fromParams = from.params;
+          callback(event, toState, toParams, fromState, fromParams);
+          if (!_preventDefault) next();
+        });
+      }
+    }
+  }, {
+    key: "$new",
+    value: function $new() {
+      var _data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+      var v = new Vue({
+        data: function data() {
+          return _data;
+        }
+      });
+      return new scope_AngularScopeServiceMock(v);
+    }
+  }]);
+
+  return AngularRootScopeServiceMock;
+}();
 // EXTERNAL MODULE: ./node_modules/q/q.js
 var q = __webpack_require__("4be7");
 var q_default = /*#__PURE__*/__webpack_require__.n(q);
@@ -77402,7 +77462,7 @@ function () {
         var injection = null;
 
         if (this.injectables[injectable]) {
-          if (this.injectables[injectable].$provider) {
+          if (this.injectables[injectable].$provider && this.injectables[injectable].$provider.prototype) {
             this._injectDefaultInjections(this.injectables[injectable].$provider.prototype);
 
             var inst = new this.injectables[injectable].$provider();
@@ -78084,7 +78144,7 @@ var JFrogUI = {
 var servicesRegistration = {
   registerConfigs: function registerConfigs() {
     return plugins_JFrogUI.registerConfigs({
-      jfrogUiEssentialsConfig: jfrogUiEssentialsConfig,
+      jfrogUiEssentialsConfig: JfrogUiEssentialsConfig_jfrogUiEssentialsConfig,
       config: ConfigConfig_config
     });
   },
@@ -86238,15 +86298,14 @@ JfEnterPressComponent_component.options.__file = "JfEnterPressComponent.vue"
 /* harmony default export */ var JfEnterPressComponent = (JfEnterPressComponent_component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfUiSelectComponent.vue?vue&type=script&lang=js&
 
-var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n   <div>\n\n       <multi-select @open=\"opened\" :options-limit=\"loadChunks\" :internal-search=\"false\" @search-change=\"onSearch\" :allow-empty=\"false\" :disabled=\"jfSelectDisabled\" :close-on-select=\"!jfSelectMultiple\" :multiple=\"jfSelectMultiple\" @input=\"onInputChange\" :value=\"value\" :options=\"jfSelectOptions\" :searchable=\"true\" :show-labels=\"false\" :placeholder=\"jfSelectPlaceholder\" :track-by=\"displayAttr\" :label=\"displayAttr\">\n\n      <template slot=\"singleLabel\" slot-scope=\"props\">\n\n    <jf-marquee>\n     <div class=\"option__desc\"><span class=\"option__title\">  <i  v-if=\"props.option.icon\" class=\"icon option__icon\" :class=\"props.option.icon\"></i>{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option) }}</span></div>\n\n   </jf-marquee>\n   </template>\n\n     <template slot=\"option\" slot-scope=\"props\">\n     <div class=\"option__desc\"><span class=\"option__title\"><i  v-if=\"props.option.icon\" class=\"icon option__icon\" :class=\"props.option.icon\"></i>{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option)  }}</span></div>\n   </template>\n\n    <template v-if=\"jfSelectLoadChunks && jfSelectLoadChunks < jfSelectOptions.length\" slot=\"afterList\" slot-scope=\"props\">\n<div class=\"option__desc\"><span @click=\"increaseLimit\" :class=\"{'disabled':exccededLimit}\" class=\"option__title load-more\">  {{jfSelectLoadMoreLabel || 'Load More'}} <div class=\"multiselect__spinner\" style=\"display:none;\"></div> </span> </div>\n   </template>\n\n    </multi-select>\n\n   </div>";
+var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n   <div>\n\n       <multi-select @open=\"opened\" :options-limit=\"loadChunks\" :internal-search=\"false\" @search-change=\"onSearch\" :allow-empty=\"false\" :disabled=\"jfSelectDisabled\" :close-on-select=\"!jfSelectMultiple\" :multiple=\"jfSelectMultiple\" @input=\"onInputChange\" :value=\"value\" :options=\"jfSelectOptions\" :searchable=\"true\" :show-labels=\"false\" :placeholder=\"jfSelectPlaceholder\" :track-by=\"displayAttr\" :label=\"displayAttr\">\n\n      <template slot=\"singleLabel\" slot-scope=\"props\">\n\n    <jf-marquee>\n     <div class=\"option__desc\"><span class=\"option__title\">  <i  v-if=\"props.option.icon\" class=\"icon option__icon\" :class=\"props.option.icon\"></i>{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option) }}</span></div>\n\n   </jf-marquee>\n   </template>\n\n     <template slot=\"option\" slot-scope=\"props\">\n     <div class=\"option__desc\"><span class=\"option__title\"><i  v-if=\"props.option.icon\" class=\"icon option__icon\" :class=\"props.option.icon\"></i>{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option)  }} <jf-help-tooltip :html=\"jfSelectHelpTooltips(props.option)\" v-if=\"jfSelectHelpTooltips\"></jf-help-tooltip></span></div>\n   </template>\n\n    <template v-if=\"jfSelectLoadChunks && jfSelectLoadChunks < jfSelectOptions.length\" slot=\"afterList\" slot-scope=\"props\">\n<div class=\"option__desc\"><span @click=\"increaseLimit\" :class=\"{'disabled':exccededLimit}\" class=\"option__title load-more\">  {{jfSelectLoadMoreLabel || 'Load More'}} <div class=\"multiselect__spinner\" style=\"display:none;\"></div> </span> </div>\n   </template>\n\n    </multi-select>\n\n   </div>";
 /* harmony default export */ var JfUiSelectComponentvue_type_script_lang_js_ = ({
   template: JfUiSelectComponentvue_type_script_lang_js_TEMPLATE,
   name: 'jf-ui-select',
-  props: ['jfSelectOptions', 'jfSelectDisplayFunc', 'jfSelectDisabled', 'jfSelectDisableMarquee', 'jfSelectMultiple', 'jfSelectDisplayAttr', 'jfSelectFilterAttr', 'jfSelectPlaceholder', 'jfSelectLoadChunks', 'jfSelectLoadMoreLabel', 'value'],
+  props: ['jfSelectOptions', 'jfSelectDisplayFunc', 'jfSelectDisabled', 'jfSelectDisableMarquee', 'jfSelectMultiple', 'jfSelectDisplayAttr', 'jfSelectFilterAttr', 'jfSelectPlaceholder', 'jfSelectLoadChunks', 'jfSelectLoadMoreLabel', 'jfSelectHelpTooltips', 'value'],
   data: function data() {
     return {
       jfSelectOptionsView: null,
-      jfSelectHelpTooltips: null,
       exccededLimit: null,
       loadChunks: this.jfSelectLoadChunks
     };
@@ -86351,8 +86410,8 @@ var JfUiSelectComponentvue_type_script_lang_js_TEMPLATE = "\n   <div>\n\n       
 });
 // CONCATENATED MODULE: ./src/components/JfUiSelectComponent.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_JfUiSelectComponentvue_type_script_lang_js_ = (JfUiSelectComponentvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/JfUiSelectComponent.vue?vue&type=style&index=0&id=83e42848&scoped=true&lang=less&
-var JfUiSelectComponentvue_type_style_index_0_id_83e42848_scoped_true_lang_less_ = __webpack_require__("0772");
+// EXTERNAL MODULE: ./src/components/JfUiSelectComponent.vue?vue&type=style&index=0&id=2855b843&scoped=true&lang=less&
+var JfUiSelectComponentvue_type_style_index_0_id_2855b843_scoped_true_lang_less_ = __webpack_require__("e212");
 
 // CONCATENATED MODULE: ./src/components/JfUiSelectComponent.vue
 var JfUiSelectComponent_render, JfUiSelectComponent_staticRenderFns
@@ -86369,7 +86428,7 @@ var JfUiSelectComponent_component = normalizeComponent(
   JfUiSelectComponent_staticRenderFns,
   false,
   null,
-  "83e42848",
+  "2855b843",
   null
   
 )
@@ -87423,40 +87482,15 @@ var JfCodeMirrorComponent_component = normalizeComponent(
 
 JfCodeMirrorComponent_component.options.__file = "JfCodeMirrorComponent.vue"
 /* harmony default export */ var JfCodeMirrorComponent = (JfCodeMirrorComponent_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfFieldComponent.vue?vue&type=template&id=2c397bbb&scoped=true&
-var JfFieldComponentvue_type_template_id_2c397bbb_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{class:{'sticky-errors': _vm.dontPushDownErrors}},[_c('div',{staticClass:"jf-field",class:{'input-label': _vm.animated}},[_c('validation-provider',{attrs:{"rules":_vm.inferredRules,"events":['input', 'focus'],"name":_vm.inputName},scopedSlots:_vm._u([{key:"default",fn:function(ref){
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfFieldComponent.vue?vue&type=template&id=5ae09984&scoped=true&
+var JfFieldComponentvue_type_template_id_5ae09984_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"jf-field",class:{'sticky-errors': _vm.dontPushDownErrors}},[_c('div',{class:{'input-label': _vm.animated}},[_c('validation-provider',{attrs:{"rules":_vm.inferredRules,"events":['input', 'focus'],"name":_vm.validationDomain},scopedSlots:_vm._u([{key:"default",fn:function(ref){
 var errors = ref.errors;
 return _c('div',{},[_c('div',{class:{invalid: errors.length}},[_vm._t("default")],2),(errors.length && !_vm.focused)?_c('div',{staticClass:"field-validation-error"},_vm._l((errors),function(error){return _c('div',{staticClass:"jf-validation"},[_vm._v("\n                            "+_vm._s(error)+"\n                        ")])}),0):_vm._e()])}}])})],1)])])}
-var JfFieldComponentvue_type_template_id_2c397bbb_scoped_true_staticRenderFns = []
+var JfFieldComponentvue_type_template_id_5ae09984_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/JfFieldComponent.vue?vue&type=template&id=2c397bbb&scoped=true&
+// CONCATENATED MODULE: ./src/components/JfFieldComponent.vue?vue&type=template&id=5ae09984&scoped=true&
 
-// CONCATENATED MODULE: ./src/constants/validation.constants.js
-
-/* harmony default export */ var validation_constants = (function (name, JFrogUILibConfig) {
-  var customMessages = JFrogUILibConfig.getConfig().customValidationMessages;
-  if (customMessages) return angular.extend(angular.copy(commonMessages), customMessages[name]);else return commonMessages;
-});
-var commonMessages = {
-  "required": "You must fill in this field",
-  "unique": "This value must be unique",
-  "validator": "This value is invalid",
-  "email": "Please enter a valid email",
-  "url": "Please enter a valid url",
-  "number": "Please enter an Integer",
-  "min": "Value too low",
-  "max": "Value too high",
-  "minlength": "Value too short",
-  "maxlength": "Value too long",
-  "invalidCron": "The cron expression is invalid",
-  "pastCron": "The next run time is in the past",
-  "uniqueId": "Key is already used",
-  "name": "Name cannot be blank or contain /\\:|?*\"<>",
-  "xmlName": "Name cannot be blank or contain spaces & special characters",
-  "integerValue": "Value must be an integer number",
-  "mustAddValueTolist": "You must add a value to list"
-};
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfFieldComponent.vue?vue&type=script&lang=js&
 
 
@@ -87490,18 +87524,17 @@ var commonMessages = {
 //
 //
 
-
 /* harmony default export */ var JfFieldComponentvue_type_script_lang_js_ = ({
   name: 'jf-field',
   components: {
     ValidationProvider: ValidationProvider
   },
-  'jf@inject': ['JFrogEventBus', '$timeout', '$rootScope', '$scope'],
+  'jf@inject': ['JFrogEventBus', 'JFrogUILibConfig', '$timeout', '$rootScope', '$scope'],
   props: ['animated', 'validations', 'validationsParams', 'autofocus', 'invalidateOnSubmit', 'alwaysShowErrors', 'dontValidateDisabled', 'delayedInit', 'dontPushDownErrors'],
   data: function data() {
     return {
-      inferredRules: '',
       focused: false,
+      inferredRules: '',
       formField: null,
       inputElement: null,
       inputName: '',
@@ -87509,8 +87542,6 @@ var commonMessages = {
     };
   },
   mounted: function mounted() {
-    this.validationErrors = _.cloneDeep(validation_constants.common);
-    if (this.validationDomain) _.extend(this.validationErrors, validation_constants[this.validationDomain]);
     this.inputElement = this.$element.find('input');
 
     if (!this.inputElement.length) {
@@ -87627,10 +87658,8 @@ var commonMessages = {
     },
     _onFormSubmitted: function _onFormSubmitted(formName) {
       if (!formName || this.form.$name === formName && !this.formField.$valid) {
-        this.inputElement.addClass('invalid');
         if (this.formField) this.formField.showErrors = true;
       } else {
-        this.inputElement.removeClass('invalid');
         if (this.formField) this.formField.showErrors = false;
       }
     },
@@ -87646,17 +87675,10 @@ var commonMessages = {
         }
       });
 
-      if (force || this.formField && this.formField.$valid || this.formField && this.formField.preventShowErrors) {
-        this.inputElement.removeClass('invalid');
-      } else {
-        if (this.formField && !this.formField.isAutoFocused) this.inputElement.addClass('invalid');
-      }
-
       if (this.formField && this.formField.isAutoFocused) {
         if (!this.formField.isAutoFocusedFlag) {
           this.formField.isAutoFocused = false;
           this.formField.showErrors = true;
-          if (!this.formField.isAutoFocused) this.inputElement.addClass('invalid');
         } else {
           this.formField.isAutoFocusedFlag = false;
         }
@@ -87668,7 +87690,6 @@ var commonMessages = {
         if (this.formField) {
           this.formField.showErrors = false;
           this.formField.preventShowErrors = false;
-          this.inputElement.removeClass('invalid');
         }
       });
     },
@@ -87705,8 +87726,8 @@ var commonMessages = {
 });
 // CONCATENATED MODULE: ./src/components/JfFieldComponent.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_JfFieldComponentvue_type_script_lang_js_ = (JfFieldComponentvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/JfFieldComponent.vue?vue&type=style&index=0&id=2c397bbb&scoped=true&lang=less&
-var JfFieldComponentvue_type_style_index_0_id_2c397bbb_scoped_true_lang_less_ = __webpack_require__("a6c5");
+// EXTERNAL MODULE: ./src/components/JfFieldComponent.vue?vue&type=style&index=0&id=5ae09984&scoped=true&lang=less&
+var JfFieldComponentvue_type_style_index_0_id_5ae09984_scoped_true_lang_less_ = __webpack_require__("849e");
 
 // CONCATENATED MODULE: ./src/components/JfFieldComponent.vue
 
@@ -87719,11 +87740,11 @@ var JfFieldComponentvue_type_style_index_0_id_2c397bbb_scoped_true_lang_less_ = 
 
 var JfFieldComponent_component = normalizeComponent(
   components_JfFieldComponentvue_type_script_lang_js_,
-  JfFieldComponentvue_type_template_id_2c397bbb_scoped_true_render,
-  JfFieldComponentvue_type_template_id_2c397bbb_scoped_true_staticRenderFns,
+  JfFieldComponentvue_type_template_id_5ae09984_scoped_true_render,
+  JfFieldComponentvue_type_template_id_5ae09984_scoped_true_staticRenderFns,
   false,
   null,
-  "2c397bbb",
+  "5ae09984",
   null
   
 )
@@ -88507,12 +88528,12 @@ var JfListMakerComponent_component = normalizeComponent(
 
 JfListMakerComponent_component.options.__file = "JfListMakerComponent.vue"
 /* harmony default export */ var JfListMakerComponent = (JfListMakerComponent_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfHelpTooltipComponent.vue?vue&type=template&id=acc92224&scoped=true&
-var JfHelpTooltipComponentvue_type_template_id_acc92224_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"jf-help-tooltip"},[_c('div',[_c('span',{staticClass:"tooltip-icon jf-tooltipster"},[_c('span',[_vm._t("default")],2)])])])}
-var JfHelpTooltipComponentvue_type_template_id_acc92224_scoped_true_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"df7b711e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfHelpTooltipComponent.vue?vue&type=template&id=40e31d3d&scoped=true&
+var JfHelpTooltipComponentvue_type_template_id_40e31d3d_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"jf-help-tooltip",attrs:{"v-jf-tooltip":_vm.html}},[_c('div',[_c('span',{staticClass:"tooltip-icon jf-tooltipster"},[_c('span',[_vm._t("default")],2)])])])}
+var JfHelpTooltipComponentvue_type_template_id_40e31d3d_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/JfHelpTooltipComponent.vue?vue&type=template&id=acc92224&scoped=true&
+// CONCATENATED MODULE: ./src/components/JfHelpTooltipComponent.vue?vue&type=template&id=40e31d3d&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfHelpTooltipComponent.vue?vue&type=script&lang=js&
 
@@ -88564,8 +88585,8 @@ var JfHelpTooltipComponentvue_type_template_id_acc92224_scoped_true_staticRender
 });
 // CONCATENATED MODULE: ./src/components/JfHelpTooltipComponent.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_JfHelpTooltipComponentvue_type_script_lang_js_ = (JfHelpTooltipComponentvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/JfHelpTooltipComponent.vue?vue&type=style&index=0&id=acc92224&scoped=true&lang=less&
-var JfHelpTooltipComponentvue_type_style_index_0_id_acc92224_scoped_true_lang_less_ = __webpack_require__("a1f5");
+// EXTERNAL MODULE: ./src/components/JfHelpTooltipComponent.vue?vue&type=style&index=0&id=40e31d3d&scoped=true&lang=less&
+var JfHelpTooltipComponentvue_type_style_index_0_id_40e31d3d_scoped_true_lang_less_ = __webpack_require__("4d35");
 
 // CONCATENATED MODULE: ./src/components/JfHelpTooltipComponent.vue
 
@@ -88578,11 +88599,11 @@ var JfHelpTooltipComponentvue_type_style_index_0_id_acc92224_scoped_true_lang_le
 
 var JfHelpTooltipComponent_component = normalizeComponent(
   components_JfHelpTooltipComponentvue_type_script_lang_js_,
-  JfHelpTooltipComponentvue_type_template_id_acc92224_scoped_true_render,
-  JfHelpTooltipComponentvue_type_template_id_acc92224_scoped_true_staticRenderFns,
+  JfHelpTooltipComponentvue_type_template_id_40e31d3d_scoped_true_render,
+  JfHelpTooltipComponentvue_type_template_id_40e31d3d_scoped_true_staticRenderFns,
   false,
   null,
-  "acc92224",
+  "40e31d3d",
   null
   
 )

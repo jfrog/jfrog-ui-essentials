@@ -180,7 +180,7 @@ export class DependencyInjectionManager {
             injectable = injectable.substr(0, injectable.length - 'Provider'.length);
             let injection = null;
             if (this.injectables[injectable]) {
-                if (this.injectables[injectable].$provider) {
+                if (this.injectables[injectable].$provider && this.injectables[injectable].$provider.prototype) {
                     this._injectDefaultInjections(this.injectables[injectable].$provider.prototype);
                     let inst = new this.injectables[injectable].$provider();
                     this._makeInjectableReactive(inst, injectable);

@@ -1,9 +1,9 @@
 <template>
 
     <div>
-        <div :class="{'sticky-errors': dontPushDownErrors}">
-            <div :class="{'input-label': animated}" class="jf-field">
-                <validation-provider :rules="inferredRules" :events="['input', 'focus']" :name="inputName">
+        <div :class="{'sticky-errors': dontPushDownErrors}" class="jf-field">
+            <div :class="{'input-label': animated}">
+                <validation-provider :rules="inferredRules" :events="['input', 'focus']" :name="validationDomain">
                     <div slot-scope="{ errors }">
                         <div :class="{invalid: errors.length}">
                             <slot></slot>
@@ -29,8 +29,6 @@
 
 <script>
 
-    import VALIDATION_ERRORS from '../constants/validation.constants';
-
     import { ValidationProvider } from 'vee-validate';
 
     export default {
@@ -40,6 +38,7 @@
         },
         'jf@inject': [
             'JFrogEventBus',
+            'JFrogUILibConfig',
             '$timeout',
             '$rootScope',
             '$scope'
@@ -57,8 +56,8 @@
         ],
         data() {
             return {
-                inferredRules: '',
                 focused: false,
+                inferredRules: '',
                 formField: null,
                 inputElement: null,
                 inputName: '',
@@ -66,8 +65,6 @@
             };
         },
         mounted() {
-            this.validationErrors = _.cloneDeep(VALIDATION_ERRORS.common);
-            if (this.validationDomain) _.extend(this.validationErrors, VALIDATION_ERRORS[this.validationDomain]);
 
             this.inputElement = this.$element.find('input');
             if (!this.inputElement.length) {
@@ -155,10 +152,8 @@
             },
             _onFormSubmitted(formName) {
                 if (!formName || (this.form.$name === formName && !this.formField.$valid)) {
-                    this.inputElement.addClass('invalid');
                     if (this.formField) this.formField.showErrors = true;
                 } else {
-                    this.inputElement.removeClass('invalid');
                     if (this.formField) this.formField.showErrors = false;
                 }
             },
@@ -174,18 +169,10 @@
                     }
                 });
 
-                if (force || (this.formField && this.formField.$valid) || (this.formField && this.formField.preventShowErrors)) {
-                    this.inputElement.removeClass('invalid');
-                } else {
-                    if (this.formField && !this.formField.isAutoFocused) this.inputElement.addClass('invalid');
-                }
-
-
                 if (this.formField && this.formField.isAutoFocused) {
                     if (!this.formField.isAutoFocusedFlag) {
                         this.formField.isAutoFocused = false;
                         this.formField.showErrors = true;
-                        if (!this.formField.isAutoFocused) this.inputElement.addClass('invalid');
                     } else {
                         this.formField.isAutoFocusedFlag = false;
                     }
@@ -197,7 +184,6 @@
                     if (this.formField) {
                         this.formField.showErrors = false;
                         this.formField.preventShowErrors = false;
-                        this.inputElement.removeClass('invalid');
                     }
                 });
             },
@@ -249,6 +235,9 @@
             font-weight: 400;
             margin-bottom: 3px;
         }
+        &.sticky-errors {
+            position: relative;
+        }
     }
 
     label.mandatory {
@@ -258,9 +247,6 @@
         }
     }
 
-    .sticky-errors {
-        position: relative;
-    }
 
     .jf-validation {
         color: @redError;
