@@ -46,6 +46,7 @@
         props: [
             'animated',
             'validations',
+            'customValidations',
             'validationsParams',
             'autofocus',
             'invalidateOnSubmit',
@@ -203,23 +204,30 @@
             },
 
             inferRules() {
-                let rules = [];
+                let rules = {};
                 let attrs = this.inputElement[0].attributes;
-                if (attrs.required) rules.push('required')
+                if (attrs.required) rules.required = true;
                 if (attrs.type) {
-                    if (attrs.type.value === 'email') rules.push('email')
-                    else if (attrs.type.value === 'url') rules.push('url')
-                    else if (attrs.type.value === 'number') rules.push('decimal')
-                    else if (attrs.type.value === 'date') rules.push('date_format:YYYY-MM-DD')
-                    else if (attrs.type.value === 'datetime-local') rules.push('date_format: YYYY-MM-DDThh:mm')
-                    else if (attrs.type.value === 'time') rules.push('date_format:YYYY-Www')
-                    else if (attrs.type.value === 'week') rules.push('date_format:hh:mm')
-                    else if (attrs.type.value === 'month') rules.push('date_format:YYYY-MM')
-                    if (attrs.min) rules.push('min_value:' + attrs.min.value)
-                    if (attrs.max) rules.push('max_value:' + attrs.max.value)
-                    if (attrs.pattern) rules.push('regex:' + attrs.pattern.value)
+                    if (attrs.type.value === 'email') rules.email = true;
+                    else if (attrs.type.value === 'url') rules.url = true;
+                    else if (attrs.type.value === 'number') rules.decimal = true;
+                    else if (attrs.type.value === 'date') rules.date_format= 'YYYY-MM-DD';
+                    else if (attrs.type.value === 'datetime-local') rules.date_format = 'YYYY-MM-DDThh:mm';
+                    else if (attrs.type.value === 'time') rules.date_format = 'YYYY-Www';
+                    else if (attrs.type.value === 'week') rules.date_format = 'hh:mm';
+                    else if (attrs.type.value === 'month') rules.date_format = 'YYYY-MM';
                 }
-                this.inferredRules = rules.join('|');
+                if (attrs.min) rules.min_value = attrs.min.value;
+                if (attrs.max) rules.max_value = attrs.max.value;
+                if (attrs.pattern) rules.regex = attrs.pattern.value;
+
+                if (this.customValidations) {
+                    rules.customValidations = this.customValidations;
+                    Object.keys(this.customValidations).forEach(key => {
+                        rules[key] = true;
+                    })
+                }
+                this.inferredRules = rules;
             }
         }
     }

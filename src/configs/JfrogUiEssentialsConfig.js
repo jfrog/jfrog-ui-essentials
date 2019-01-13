@@ -6,8 +6,6 @@ export const jfrogUiEssentialsConfig = () => {
 
     let customMessages = injections.JFrogUILibConfigProvider.getConfig().customValidationMessages;
 
-    console.log('essentials config !!!');
-    console.log('??????', customMessages);
     const dict = {
         messages: {
             ...VALIDATION_ERRORS
@@ -16,6 +14,16 @@ export const jfrogUiEssentialsConfig = () => {
             ...customMessages
         }
     };
+
+    Validator.extend('customValidations', (value, args) => {
+        let obj = args;
+        Object.entries(obj).forEach(([errorCode, func]) => {
+            Validator.extend(errorCode, (value, args) => {
+                return func(value);
+            })
+        });
+        return true;
+    });
 
     Validator.localize('en', dict);
 /*
