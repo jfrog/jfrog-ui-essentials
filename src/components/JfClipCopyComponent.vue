@@ -17,12 +17,7 @@
         'jf@inject': [
             '$timeout'
         ],
-        props: {
-            textToCopy: String,
-            objectName: String,
-            keepTooltipLetterCase: Boolean
-
-        },
+        props: ['textToCopy', 'objectName', 'keepTooltipLetterCase'],
         data() {
             return {
                 origTooltip: '',
