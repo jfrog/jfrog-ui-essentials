@@ -9,6 +9,8 @@ import './assets/stylesheets/main.less';
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
 import '../node_modules/jf-tooltipster/css/tooltipster.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import VueCodemirror from 'vue-codemirror';
+import 'codemirror/lib/codemirror.css'
 import $ from 'jquery';
 import JFrogUI from './plugins/JFrogUI';
 import 'jquery-contextmenu';
@@ -24,6 +26,7 @@ export default {
         Vue.use(BootstrapVue);
         Vue.use(VueVirtualScroller);
         Vue.use(VueClipboard);
+        Vue.use(VueCodemirror);
     }
 }
 
