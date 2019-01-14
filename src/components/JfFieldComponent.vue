@@ -46,6 +46,7 @@
         props: [
             'animated',
             'validations',
+            'validationRules',
             'customValidations',
             'validationsParams',
             'autofocus',
@@ -227,6 +228,24 @@
                         rules[key] = true;
                     })
                 }
+
+                if (this.validationRules) {
+                    if (_.isObject(this.validationRules)) {
+                        _.extend(rules,this.validationRules)
+                    }
+                    else {
+                        if (_.isString(this.validationRules)) {
+                            let strParts = this.validationRules.split('|').map(p => _.trim(p));
+                            strParts.forEach(part => {
+                                let key = part.split(':')[0];
+                                let val = part.substr(key.length);
+                                rules[key] = val;
+                            })
+                        }
+                    }
+                }
+
+
                 this.inferredRules = rules;
             }
         }

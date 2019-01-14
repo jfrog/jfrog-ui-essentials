@@ -1,11 +1,3 @@
-/*
-export default function (name, JFrogUILibConfig) {
-    let customMessages = JFrogUILibConfig.getConfig().customValidationMessages;
-    if (customMessages) return _.extend(_.cloneDeep(commonMessages), customMessages[name]);
-    else return commonMessages;
-}
-*/
-
 export default {
     "required": "You must fill in this field",
     "unique": "This value must be unique",

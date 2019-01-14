@@ -4,7 +4,8 @@ export const jfrogUiEssentialsConfig = () => {
     let injections = $jfrog.get(['$qProvider', 'JFrogUILibConfigProvider']);
     injections.$qProvider.errorOnUnhandledRejections(false);
 
-    let customMessages = injections.JFrogUILibConfigProvider.getConfig().customValidationMessages;
+    let customMessages = injections.JFrogUILibConfigProvider.getConfig().customValidationMessages || {};
+    let customValidationRules = injections.JFrogUILibConfigProvider.getConfig().customValidationRules || {};
 
     const dict = {
         messages: {
@@ -14,6 +15,10 @@ export const jfrogUiEssentialsConfig = () => {
             ...customMessages
         }
     };
+
+    Object.keys(customValidationRules).forEach(validationRuleKey => {
+        Validator.extend(validationRuleKey, customValidationRules[validationRuleKey])
+    })
 
     Validator.extend('customValidations', (value, args) => {
         let obj = args;
@@ -26,10 +31,5 @@ export const jfrogUiEssentialsConfig = () => {
     });
 
     Validator.localize('en', dict);
-/*
-    this.validationErrors = VALIDATION_ERRORS(this.validationDomain, this.JFrogUILibConfig);
-    if (this.validationDomain) _.extend(this.validationErrors, VALIDATION_ERRORS[this.validationDomain]);
-*/
-
 
 }
