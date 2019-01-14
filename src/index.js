@@ -7,6 +7,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import VueVirtualScroller from 'vue-virtual-scroller';
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import VueCodemirror from 'vue-codemirror';
+import 'codemirror/lib/codemirror.css'
 import $ from 'jquery';
 import JFrogUI from './plugins/JFrogUI';
 window.$ = $;
@@ -24,6 +26,7 @@ export default {
         Vue.use(BootstrapVue);
         Vue.use(VueVirtualScroller);
         Vue.use(VueClipboard);
+        Vue.use(VueCodemirror);
     }
 }
 

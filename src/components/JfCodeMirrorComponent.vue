@@ -6,7 +6,7 @@
             </jf-clip-copy>
             <jf-clip-copy v-if="enableCopyToClipboard && clipboardCopyModel" :text-to-copy="clipboardCopyModel" class="code-mirror-copy pull-right" :class="{'scrollbar-margin':codeMirrorIsWithScroll()}" :object-name="clipboardCopyEntityName || 'text'">
             </jf-clip-copy>
-            <textarea ui-codemirror="editorOptions" v-model="formattedModel">	</textarea>
+            <codemirror v-model="formattedModel" :options="editorOptions"></codemirror>
         </div>
     </div>
 
@@ -14,7 +14,14 @@
 
 <script>
 
-    import { search } from '@/directives/jf_codemirror/search/search.js'   
+    import CodeMirror from 'codemirror';
+    import 'codemirror/addon/runmode/colorize';
+    import 'codemirror/addon/runmode/colorize';
+    import 'codemirror/addon/mode/overlay';
+    import 'codemirror/addon/dialog/dialog';
+    import 'codemirror/addon/dialog/dialog.css';
+    import 'codemirror/mode/javascript/javascript';
+    import { search } from '@/directives/jf_codemirror/search/search.js'
     ;
     export default {
         name: 'jf-code-mirror',
@@ -50,8 +57,7 @@
         },
         mounted() {
             this._formatModel();
-            this.autofocus = this.autofocus === 'true';
-    
+
             this.editorOptions = {
                 lineNumbers: true,
                 readOnly: !this.allowEdit,
@@ -59,7 +65,7 @@
                 lineWrapping: true,
                 mode: this.mode || 'links',
                 viewportMargin: 65,
-                autofocus: this.autofocus,
+                autofocus: this.autofocus === 'true',
                 mimeType: this.mimeType,
                 matchBrackets: this.matchBrackets,
                 onLoad: this._codeMirrorLoaded.bind(this)
@@ -142,7 +148,7 @@
                     this.expectChange();
                     this.refreshUntilVisible();
                 };
-    
+
                 if (!this.allowEdit) {
                     format(this.model);
                     this.$scope.$watch('jfCodeMirror.model', v => {
@@ -194,14 +200,14 @@
                     let outer = cm.getMode(), text = cm.getRange(from, to).split('\n');
                     let state = CodeMirror.copyState(outer, cm.getTokenAt(from).state);
                     let tabSize = cm.getOption('tabSize');
-    
+
                     let out = '', lines = 0, atSol = from.ch == 0;
                     let newline = () => {
                         out += '\n';
                         atSol = true;
                         ++lines;
                     };
-    
+
                     for (let i = 0; i < text.length; ++i) {
                         let stream = new CodeMirror.StringStream(text[i], tabSize);
                         while (!stream.eol()) {
@@ -220,14 +226,14 @@
                         if (!atSol)
                             newline();
                     }
-    
+
                     cm.operation(() => {
                         cm.replaceRange(out, from, to);
                         for (let cur = from.line + 1, end = from.line + lines; cur <= end; ++cur)
                             cm.indentLine(cur, 'smart');
                     });
                 });
-    
+
                 // Applies automatic mode-aware indentation to the specified range
                 CodeMirror.defineExtension('autoIndentRange', (from, to) => {
                     let cmInstance = this.cmApi;
@@ -239,6 +245,7 @@
                 });
             },
             codeMirrorIsWithScroll() {
+                if (!this.$element) return false;
                 let codemirrorScrollBar = this.$element.find('.CodeMirror .CodeMirror-vscrollbar:not(:hidden)');
                 return codemirrorScrollBar && codemirrorScrollBar.length > 0;
             }
@@ -249,6 +256,39 @@
 
 <style scoped lang="less">
 
-    
+    @import "../../src/assets/stylesheets/variables.less";
+
+    .CodeMirror {
+        height: auto;
+        border: 1px solid #eee;
+        padding: 15px;
+
+        .CodeMirror-code {
+            div:nth-child(even) {
+                &, .CodeMirror-gutter-wrapper {
+                    background-color: @grayGridRow;
+                }
+            }
+        }
+
+        .CodeMirror-gutters {
+            border-right: 0 none;
+            background-color: transparent;
+        }
+
+        pre, .CodeMirror-linenumber {
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+        .CodeMirror-linenumber {
+            text-align: left;
+        }
+    }
+
+    .codemirror-with-clip-copy,
+    .codemirror-wrapper {
+        position:relative;
+    }
 
 </style>
