@@ -1,3 +1,4 @@
+/*
 import CodeMirror from 'codemirror';
 'use strict';
 function searchOverlay(query, caseInsensitive) {
@@ -231,3 +232,4 @@ CodeMirror.commands.replaceAll = function (cm) {
 
 export function search() {
 }    //export nothing, prevent ide from marking import as error //export nothing, prevent ide from marking import as error
+*/
