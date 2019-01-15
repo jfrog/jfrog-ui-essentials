@@ -2,7 +2,6 @@
 
     <div>
         <div id="jf-main-nav" :style="menu" @mouseleave="mouseLeaveMenu($event)" @mouseover="mouseOverMenu()">
-
             <span class="pin-menu" @click="pinMenu()"><i class="icon-menu-arrow" :class="{'menu-arrow-close' : pinMenuStatus}"></i></span>
             <ul class="sidebar-wrapper-inner" @click="closeSubMenu(0,true,true)">
                 <li v-for="item in menuItems" :jf-disable-feature=" item.feature " v-if="!item.isHidden" @click="$event.stopPropagation(); itemClick(item)" :class="{disabled: item.isDisabled, active: (item.stateParent | includedByState) || isCurrentItem(item) || highLightOnState(item.stateRelated), 'icon-arrow-left':item.children }">
@@ -55,13 +54,12 @@
 </template>
 
 <script>
-
     export default {
         name: 'jf-sidebar',
         props: [
             'driver',
             'footerTemplate',
-            'footerTemplateHtml',
+            'menuItems',
             'openAdminSize',
             'defaultSubMenuWidth',
             'noSearchBox',
@@ -79,17 +77,15 @@
         data() {
             return {
                 menu: { 'transition-duration': '.3s' },
-                pinMenuStatus: null,
-                menuItems: null,
+                pinMenuStatus: true,
                 openSub: { noSearchBox: null },
-                menuSearchQuery: { length: null },
-                subMenuItems: null
+                menuSearchQuery: '',
+                subMenuItems: null,
+                footerTemplateHtml:'<div class="img-wrapper"><img  src="/images/jfrog.svg" alt=""></div>'
             };
         },
         created() {
-
-            this.$set(this.$rootScope, 'jfSidebar', this);
-
+console.log("CREATED!±!#@@!#@!#@!#@!#!@WQ");
             this.trim = _.trim;
 
             this.currentTab = 'Home';
@@ -109,6 +105,7 @@
     ;
         },
         mounted() {
+            console.log("MOUNTED!±!#@@!#@!#@!#@!#!@WQ");
             this.subMenuWidth = this.defaultSubMenuWidth || this.openAdminSize || '900px';
             this.defaultSubWidth = this.subMenuWidth;
 
@@ -132,13 +129,13 @@
                 this.driver.getFooterData().then(footerData => this.footerData = footerData);
             }
 
-            this._init();
-
+            this.initSideBar();
+            this.$forceUpdate()
 
         },
         ng1_legacy: { 'controllerAs': 'jfSidebar' },
         methods: {
-            _init() {
+            initSideBar() {
                 this.pinMenuStatus ? this.$set(this.menu, 'width', '200px') : this.$set(this.menu, 'width', '55px');
                 this.pinMenuStatus ? this.$set(this.menu, 'transitionDelay', '.2s') : this.$set(this.menu, 'transitionDelay', '.3s');
 
@@ -185,7 +182,7 @@
                 this.mouseIsOver = true;
 
                 if (this.menu.width === this.subMenuWidth && $('.menu-item:hover').length && $('a.menu-item.extended-item:hover').length < 1) {
-                    if (!angular.isDefined(this.closeSubMenuDelay) && !$('.sub-menu:hover').length) {
+                    if (_.isUndefined(this.closeSubMenuDelay) && !$('.sub-menu:hover').length) {
                         this.closeSubMenuDelay = this.$timeout(() => {
                             this.closeSubMenu();
                             delete this.closeSubMenuDelay;
@@ -194,10 +191,10 @@
 
                 } else if (this.menu.width != '200px' && !$('.pin-menu:hover').length && $('.sub-menu:hover').length < 1) {
                     // if menu isn't open
-                    if (!angular.isDefined(this.openMenu)) {
+                    if (_.isUndefined(this.openMenu)) {
                         this.openMenu = this.$timeout(() => {
                             let widthToOpen = $('.sub-menu').length > 0 && $('a.menu-item.extended-item:hover').length ? this.subMenuWidth : '200px';
-                            if (($('.sub-menu:hover').length || $('.menu-item.extended-item:hover').length) && angular.isDefined(this.openMenu)) {
+                            if (($('.sub-menu:hover').length || $('.menu-item.extended-item:hover').length) && !_.isUndefined(this.openMenu)) {
                                 this.$timeout.cancel(this.openMenu);
                                 delete this.openMenu;
                                 return;
@@ -225,12 +222,12 @@
                 this._subMenuDelayStop();
             },
             subMenuOver() {
-                if (angular.isDefined(this.subMenuItemDelayTimer)) {
+                if (!_.isUndefined(this.subMenuItemDelayTimer)) {
                     this.$timeout.cancel(this.subMenuItemDelayTimer);
                     delete this.subMenuItemDelayTimer;
                 }
 
-                if (angular.isDefined(this.closeSubMenuDelay)) {
+                if (!_.isUndefined(this.closeSubMenuDelay)) {
                     this.$timeout.cancel(this.closeSubMenuDelay);
                     delete this.closeSubMenuDelay;
                 }
@@ -250,7 +247,7 @@
                 this.currentTab === tab.label ? this.currentTab = '' : this.currentTab = tab.label;
             },
             refreshMenu() {
-                this.menuItems = this._getMenuItems();
+                console.log("******* PUSGIN ITEMS!!!!",this._getMenuItems())
                 this.legacyAdminMenuItems = this.driver.getAdminMenuItems ? this.driver.getAdminMenuItems() : [];
             },
             goToState(item) {
@@ -267,9 +264,11 @@
                 return this.pinMenuStatus ? '200px' : '55px';
             },
             pinMenu() {
+
                 this.pinMenuStatus = !this.pinMenuStatus;
+                console.log('Pinning!',this.pinMenuStatus)
                 localStorage.pinMenu = this.pinMenuStatus;
-                if (angular.isDefined(this.openMenu)) {
+                if (!_.isUndefined(this.openMenu)) {
                     this._openMenuStop();
                 }
                 this.$set(this.menu, 'transitionDelay', '0s');
@@ -372,7 +371,7 @@
                         this.currentFocus = $(':focus');
                     }
 
-                    if (delay && !angular.isDefined(this.subMenuDelay)) {
+                    if (delay && _.isUndefined(this.subMenuDelay)) {
                         this.subMenuDelay = this.$timeout(() => {
                             this.openSubMenu();
                             this._setSubMenuFocus();
@@ -381,9 +380,9 @@
                         }, 2000);
                     } else {
                         if (!this.skip && this.menu.width !== this.subMenuWidth) {
-                            this._updateMenuObject(this.subMenuWidth, '0.3s', '0s');
+                            this._updateMenuObject('50px', '0.3s', '0s');
                             this.$timeout(() => this._setSubMenuFocus());
-                            if (angular.isDefined(this.subMenuDelay)) {
+                            if (!_.isUndefined(this.subMenuDelay)) {
                                 this._subMenuDelayStop();
                             }
                         }
@@ -630,7 +629,10 @@
                 let result = _.includes(this.$state.current.name, subItem.state);
                 if (result && subItem.stateParams) {
                     let relevantParams = _.pick(this.$state.params, Object.keys(subItem.stateParams));
-                    result = angular.equals(relevantParams, subItem.stateParams);
+
+                        result = _.isEqual(relevantParams, subItem.stateParams);
+
+
                 }
                 return result;
             },
@@ -651,6 +653,21 @@
 
 <style scoped lang="less">
 
+    a:not([href]):not([tabindex]):hover {
+        color: #fff;
+        text-decoration: none;
+    }
 
+   /deep/ .img-wrapper{
+       height: 86px;
+       display: flex;
+       width: 100%;
+       position: relative;
 
+        img {
+            height: 80px;
+            width: 80%;
+            margin: 0 auto;
+        }
+    }
 </style>
