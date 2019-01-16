@@ -6,7 +6,9 @@
             </jf-clip-copy>
             <jf-clip-copy v-if="enableCopyToClipboard && clipboardCopyModel" :text-to-copy="clipboardCopyModel" class="code-mirror-copy pull-right" :class="{'scrollbar-margin':codeMirrorIsWithScroll()}" :object-name="clipboardCopyEntityName || 'text'">
             </jf-clip-copy>
-            <codemirror v-model="formattedModel" :options="editorOptions"></codemirror>
+            <codemirror v-model="formattedModel"
+                        :options="editorOptions"
+                        @ready="codeMirrorLoaded"></codemirror>
         </div>
     </div>
 
@@ -23,7 +25,7 @@
         props: [
             'mimeType',
             'mode',
-            'model',
+            'value',
             'allowEdit',
             'height',
             'apiAccess',
@@ -63,7 +65,7 @@
                 autofocus: this.autofocus === 'true',
                 mimeType: this.mimeType,
                 matchBrackets: this.matchBrackets,
-                onLoad: this._codeMirrorLoaded.bind(this)
+//                onLoad: this.codeMirrorLoaded.bind(this)
             };
             // Hide cursor in readonly mode
             if (!this.allowEdit) {
@@ -72,36 +74,38 @@
         },
         ng1_legacy: { 'controllerAs': 'jfCodeMirror' },
         methods: {
-            _codeMirrorLoaded(_editor) {
-                this.cmApi = _editor;
-                if (this.height) {
-                    let codeMirrorElement = $(this.$element).find('.CodeMirror');
-                    if (this.height === 'flexible') {
-                        codeMirrorElement.css('top', 0);
-                        codeMirrorElement.css('bottom', 0);
-                        codeMirrorElement.css('left', 0);
-                        codeMirrorElement.css('right', 0);
-                        codeMirrorElement.css('position', 'absolute');
-                    } else {
-                        codeMirrorElement.css('height', this.height);
+            codeMirrorLoaded(_editor) {
+                Vue.nextTick(() => {
+                    this.cmApi = _editor;
+                    if (this.height) {
+                        let codeMirrorElement = $(this.$element).find('.CodeMirror');
+                        if (this.height === 'flexible') {
+                            codeMirrorElement.css('top', 0);
+                            codeMirrorElement.css('bottom', 0);
+                            codeMirrorElement.css('left', 0);
+                            codeMirrorElement.css('right', 0);
+                            codeMirrorElement.css('position', 'absolute');
+                        } else {
+                            codeMirrorElement.css('height', this.height);
+                        }
                     }
-                }
-                $(_editor.display.wrapper).on('click', '.cm-link', e => {
-                    let url = $(this).text();
-                    if (url) {
-                        window.open(url, '_blank');
+                    $(_editor.display.wrapper).on('click', '.cm-link', e => {
+                        let url = $(this).text();
+                        if (url) {
+                            window.open(url, '_blank');
+                        }
+                    });
+                    this.$scope.$on('$destroy', () => {
+                        this.$destroyed = true;
+                        $(_editor.display.wrapper).off('click');
+                    });
+                    if (this.apiAccess) {
+                        this.$set(this.apiAccess, 'api', this.cmApi);
+                        if (this.apiAccess.onLoad) {
+                            this.apiAccess.onLoad();
+                        }
                     }
-                });
-                this.$scope.$on('$destroy', () => {
-                    this.$destroyed = true;
-                    $(_editor.display.wrapper).off('click');
-                });
-                if (this.apiAccess) {
-                    this.$set(this.apiAccess, 'api', this.cmApi);
-                    if (this.apiAccess.onLoad) {
-                        this.apiAccess.onLoad();
-                    }
-                }
+                })
             },
             autoFormatText(indent) {
                 let last = this.cmApi.lineCount();
@@ -145,21 +149,21 @@
                 };
 
                 if (!this.allowEdit) {
-                    format(this.model);
-                    this.$scope.$watch('jfCodeMirror.model', v => {
+                    format(this.value);
+                    this.$scope.$watch('jfCodeMirror.value', v => {
                         format(v);
                     });
                 } else {
-                    this.formattedModel = this.model;
-                    this.$scope.$watch('jfCodeMirror.model', v => {
-                        if (this.formattedModel !== this.model) {
-                            this.formattedModel = this.model;
+                    this.formattedModel = this.value;
+                    this.$scope.$watch('jfCodeMirror.value', v => {
+                        if (this.formattedModel !== this.value) {
+                            this.formattedModel = this.value;
                             this.expectChange();
                             this.refreshUntilVisible();
                         }
                     });
                     this.$scope.$watch('jfCodeMirror.formattedModel', v => {
-                        this.model = v;
+                        this.$emit('input', v);
                     });
                     this.expectChange();
                     this.refreshUntilVisible();
