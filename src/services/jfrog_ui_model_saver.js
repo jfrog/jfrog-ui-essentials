@@ -16,6 +16,8 @@ class JFrogUIModelSaver {
 				this.save();
 			}
 		});
+
+		console.log(this.controller);
 	}
 
 	save(objectName) {
@@ -124,14 +126,13 @@ export function JFrogUIModelSaverFactory($timeout, JFrogModal, $q) {
 			excludePaths = excludePaths || [];
 			return new JFrogUIModelSaver(controller, modelObjects, excludePaths, $timeout, JFrogModal, $q);
 		},
-		checkDiscardConfirmation: ($q, e) => {
+		checkDiscardConfirmation: ($q, e, ctrl) => {
 			let defer = $q.defer();
 			let forms = $('form');
 			let changeDiscovered = false;
 			for (let i = 0; i< forms.length; i++) {
 				let form = forms[i];
-				let controller = angular.element(form).controller() || angular.element(form).scope().$ctrl;
-
+				let controller = angular.element(form).controller(ctrl) || angular.element(form).controller() || angular.element(form).scope().$ctrl;
 				if (controller && controller._$modelSaver$_ && controller._$modelSaver$_.confirmOnLeave && !controller._$modelSaver$_.isModelSaved()) {
 					changeDiscovered = true;
 
