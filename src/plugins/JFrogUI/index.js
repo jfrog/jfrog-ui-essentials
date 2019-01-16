@@ -58,8 +58,8 @@ const JFrogUI = {
 
         Vue.mixin({
             beforeCreate() {
-                this.$options.appMountedMethods = this.$options.mounted.slice(1);
-                this.$options.mounted = [this.$options.mounted[0]];
+//                this.$options.appMountedMethods = this.$options.mounted.slice(1);
+//                this.$options.mounted = [this.$options.mounted[0]];
                 if (plugin.angularjsMockMode) {
                     if (this.$options.ng1_legacy && this.$options.ng1_legacy['ng1compileFn']) {
                         handleCompileFunction.bind(this)();

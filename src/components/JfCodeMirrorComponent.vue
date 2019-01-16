@@ -15,13 +15,8 @@
 <script>
 
     import CodeMirror from 'codemirror';
-    import 'codemirror/addon/runmode/colorize';
-    import 'codemirror/addon/runmode/colorize';
-    import 'codemirror/addon/mode/overlay';
-    import 'codemirror/addon/dialog/dialog';
-    import 'codemirror/addon/dialog/dialog.css';
-    import 'codemirror/mode/javascript/javascript';
-    import { search } from '@/directives/jf_codemirror/search/search.js'
+//    const CodeMirror = window.CodeMirror;
+//    import { search } from '@/directives/jf_codemirror/search/search.js'
     ;
     export default {
         name: 'jf-code-mirror',

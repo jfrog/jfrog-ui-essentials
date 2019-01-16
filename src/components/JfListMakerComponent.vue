@@ -1,6 +1,4 @@
-<script>
-
-    const TEMPLATE = `
+<template>
     <div>
         <div class="jf-list-maker" >
             <div class="list-new-value" :class="{dropdown: predefinedValues}" v-if="!hideAddNewFields">
@@ -8,8 +6,8 @@
                     <jf-field validations="common" :dont-push-down-errors="true" :delayed-init="true">
                         <label>{{label}}</label>
                         <jf-help-tooltip v-if="helpTooltip" :html="helpTooltip"></jf-help-tooltip>
-                        <input v-if="!predefinedValues" :type="inputType || 'text'" class="input-text" v-model="newValue" :placeholder="placeholder || 'New ' + (objectName || 'Value')" :id="'newValueField-' + listId" name="newValueField" jf-enter-press="addValue()" @input="errorMessage=null" :disabled="ngDisabled">
-                        <jf-ui-select v-if="predefinedValues" :jf-select-model="newValue" :jf-select-placeholder="placeholder || 'New ' + (objectName || 'Value')" :jf-select-disabled="ngDisabled" :jf-select-options="predefinedValues"></jf-ui-select>
+                        <input v-if="!predefinedValues" :type="inputType || 'text'" class="input-text" :placeholder="derivedPlaceHolder" v-model="newValue" :id="'newValueField-' + int_listId" name="newValueField" jf-enter-press="addValue()" @input="errorMessage=null" :disabled="ngDisabled">
+                        <jf-ui-select v-if="predefinedValues" :jf-select-model="newValue" :jf-select-placeholder="derivedPlaceHolder" :jf-select-disabled="ngDisabled" :jf-select-options="predefinedValues"></jf-ui-select>
 
                     </jf-field>
                 </form>
@@ -17,21 +15,22 @@
                     <i class="icon icon-new" @click="!(ngDisabled || !newValue.length) && addValue()" :disabled="ngDisabled || !newValue.length"></i>
                 </div>
             </div>
-            <div class="jf-validation">{{errorMessage}}</div>
+            <div class="jf-validation" v-if="errorMessage">{{errorMessage}}</div>
 
-            <div :id="listId" class="list-maker-list" v-if="values.length">
-                <div class="list-maker-list-row" v-for="(value, $index) in values">
+            <div :id="int_listId" class="list-maker-list" v-if="int_values.length">
+                <div class="list-maker-list-row" v-for="(value, index) in int_values" :key="index">
                     <div class="list-maker-row-value" v-jf-tooltip-on-overflow>{{value}}</div>
                     <div class="list-maker-list-buttons">
-                        <a href="" class="icon icon-close" @click.prevent="removeValue($index)" v-if="values.length > minLength" :disabled="ngDisabled"></a>
+                        <a href="" class="icon icon-close" @click.prevent="removeValue(index)" v-if="int_values.length > minLength" :disabled="ngDisabled"></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    `;
+</template>
+<script>
+
     export default {
-        template: TEMPLATE,
         name: 'jf-list-maker',
         props: [
             'values',
@@ -53,64 +52,74 @@
         'jf@inject': ['$attrs'],
         data() {
             return {
-                newValue: { length: null },
-                errorMessage: null
+                newValue: "",
+                errorMessage: null,
+                derivedPlaceHolder: this.placeholder || `New ${this.objectName || "Value"}`,
+                // The three variables below are being added to avoid mutating the prop
+                int_values: this.values || [],
+                int_listId: this.listId,
+                int_noSort: this.noSort
             };
         },
+        watch: {
+            value(changedValue) {
+                this.int_values = changedValue;
+            },
+            listId(changedValue) {
+                this.int_listId = changedValue;
+            },
+            noSort(changedValue) {
+                this.int_noSort = changedValue;
+            }
+        },
         mounted() {
-            this.noSort = this.noSort || this.$attrs.hasOwnProperty('noSort');
-            if (this.values && !this.noSort)
-                this.values = _.sortBy(this.values);
+            this.int_noSort = this.noSort || this.$attrs.hasOwnProperty('noSort');
+            if (this.int_values && !this.int_noSort) {
+                this.int_values = _.sortBy(this.int_values);
+            }
             this.minLength = this.minLength || 0;
 
-            let randomId = Math.floor(1000000000 * Math.random());
-            if (!this.listId)
-                this.listId = 'list-id-' + randomId;
+            if (!this.int_listId) {
+                let randomId = Math.floor(1000000000 * Math.random());
+                this.int_listId = 'list-id-' + randomId;
+            }
         },
         ng1_legacy: { 'controllerAs': 'jfListMaker' },
         methods: {
             addValue() {
-
-                if (!this.values)
-                    this.values = [];
-
                 this.errorMessage = null;
 
-
-
-                if (_.isEmpty(this.newValue)) {
+                if (_.isEmpty(this.newValue.trim())) {
                     this.errorMessage = 'Must input value';
                 } else if (!this._isValueUnique(this.newValue)) {
                     this.errorMessage = 'Value already exists';
                 } else if (!_.isEmpty(this.validationRegex) && !new RegExp(this.validationRegex).test(this.newValue)) {
                     this.errorMessage = _.isEmpty(this.validationRegexMessage) ? 'Value not valid' : this.validationRegexMessage;
                 }
-     else {
-                    this.newValue = this.$emit('on-add-value', { newValue: this.newValue });
-                    this.values.push(this.newValue);
-                    this.newValue = null;
+                else {
+                    this.$emit('on-add-value', { newValue: this.newValue });
+                    this.int_values.push(this.newValue);
+                    this.newValue = "";
                     this.$emit('on-after-add-value');
                 }
-                if (!this.noSort) {
-                    this.values = _.sortBy(this.values);
+                if (!this.int_noSort) {
+                    this.int_values = _.sortBy(this.int_values);
                 }
             },
             removeValue(index) {
-                this.values.splice(index, 1);
+                this.int_values.splice(index, 1);
 
-                /* Todo: check the following condition. It may contain some undefined references: this.onAfterDeleteValue */
+                /* NOTE: The parent will need to use the sync modifier to read the changed value */
+                /* https://vuejs.org/v2/guide/components-custom-events.html#sync-Modifier */
+                this.$emit('update:values', this.int_values);
 
-                if (typeof this.onAfterDeleteValue === 'function') {
-                    this.$emit('on-after-delete-value');
-                }
+                this.$emit('on-after-delete-value');
             },
             _isValueUnique(text) {
                 if (this.caseInsensitive) {
-                    return !this.values || !_.find(this.values, val => {
-                        return val.toLowerCase() === text.toLowerCase();
-                    });
+                    return !this.int_values || !_.find(this.int_values, val => val.toLowerCase() === text.toLowerCase());
                 }
-                return !this.values || this.values.indexOf(text) == -1;
+                return !this.int_values || this.int_values.indexOf(text) == -1;
             }
         }
     };

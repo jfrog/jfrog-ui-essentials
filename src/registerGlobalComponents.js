@@ -129,6 +129,7 @@ let components = [
     jfSummaryRow,
     jfSummaryRowItem
 ];
+
 components.forEach(comp => {
     Vue.component(comp.name, comp);
 });
