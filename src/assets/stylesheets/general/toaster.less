@@ -3,63 +3,77 @@
   right: 0;
   width: 100%;
 }
+
 .toast-bottom-full-width {
   bottom: 0;
   right: 0;
   width: 100%;
   margin: auto;
 }
+
 .toast-top-left {
   top: 12px;
   left: 12px;
 }
+
 .toast-top-center {
-  top: 70px;
+  top: 70px !important;
 }
+
 .toast-top-right {
   top: 12px;
   right: 12px;
 }
+
 .toast-bottom-right {
   right: 12px;
   bottom: 12px;
 }
+
 .toast-bottom-center {
   bottom: 12px;
 }
+
 .toast-bottom-left {
   bottom: 12px;
   left: 12px;
 }
+
 .toast-center {
   top: 45%;
 }
-#toast-container {
+
+.toasted-container {
   position: fixed;
   z-index: 999999;
   pointer-events: auto;
+  padding: 0;
+  font-weight: 400;
   /*overrides*/
 
 }
-#toast-container.toast-center,
-#toast-container.toast-top-center,
-#toast-container.toast-bottom-center{
+
+.toasted-container.toast-center,
+.toasted-container.toast-top-center,
+.toasted-container.toast-bottom-center {
   width: 100%;
   pointer-events: none;
 }
-#toast-container.toast-center > div,
-#toast-container.toast-top-center > div,
-#toast-container.toast-bottom-center > div{
+
+.toasted-container.toast-center > div,
+.toasted-container.toast-top-center > div,
+.toasted-container.toast-bottom-center > div {
   margin: auto;
   pointer-events: auto;
 }
-#toast-container.toast-center > button,
-#toast-container.toast-top-center > button,
-#toast-container.toast-bottom-center > button{
+
+.toasted-container.toast-center > button,
+.toasted-container.toast-top-center > button,
+.toasted-container.toast-bottom-center > button {
   pointer-events: auto;
 }
 
-#toast-container * {
+.toasted-container * {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -67,8 +81,9 @@
 
 //========================================================================//
 
-#toast-container {
-  .toast {
+
+.toasted-container {
+  .toasted {
     background: #fff;
     clear: both;
     color: @grayFontGeneral;
@@ -81,7 +96,12 @@
     box-shadow: 0 0 12px #999999;
     bottom: 0;
     opacity: 1;
-    margin-top: 0;
+    //margin-top: 0;
+    padding: 0;
+    line-height: normal;
+    font-weight: 400;
+    margin-bottom: 15px!important;
+
 
     &:before {
       content: '';
@@ -93,30 +113,40 @@
       z-index: 2;
     }
 
-    //// TODO: Change to 3 notification max
-    //// multiple toasters design
-    &:nth-child(2),
-    &:nth-child(3) {
-      pointer-events: none;
-      transition: opacity .5s,
-                  transform .3s;
-      .toast-message > div {
-        max-height: 82px;
-        overflow: hidden;
-      }
-    }
-    &:nth-child(2) {z-index: -1; bottom: 70px; transform: scale(0.99);}  // 60-10
-    &:nth-child(3) {z-index: -2; bottom: 140px; transform: scale(0.98);} // 120-20
-
-    &:nth-child(n+4) {
-      z-index: -5;
-      margin-top: -82px;
-      bottom: 140px;
-      transform: scale(0.94);
-    }
-    &:nth-child(n+5) {display: none;}
-
-
+    ////// TODO: Change to 3 notification max
+    ////// multiple toasters design
+    //&:nth-child(2),
+    //&:nth-child(3) {
+    //  pointer-events: none;
+    //  transition: opacity .5s,
+    //  transform .3s;
+    //  .toast-message > div {
+    //    max-height: 82px;
+    //    overflow: hidden;
+    //  }
+    //}
+    //&:nth-child(2) {
+    //  z-index: -1;
+    //  bottom: 70px;
+    //  transform: scale(0.99);
+    //}
+    //// 60-10
+    //&:nth-child(3) {
+    //  z-index: -2;
+    //  bottom: 140px;
+    //  transform: scale(0.98);
+    //}
+    //// 120-20
+    //
+    //&:nth-child(n+4) {
+    //  z-index: -5;
+    //  margin-top: -82px;
+    //  bottom: 140px;
+    //  transform: scale(0.94);
+    //}
+    //&:nth-child(n+5) {
+    //  display: none;
+    //}
 
     .toast-title {
       display: table-cell;
@@ -137,40 +167,60 @@
     }
     ::-webkit-scrollbar-thumb {
       border-radius: 4px;
-      background-color: rgba(0,0,0,.5);
-      -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+      background-color: rgba(0, 0, 0, .5);
+      -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
     }
 
-    &.toast-success {
-      &:before {background: @greenFontHeader;}
-      &, & a {color: @greenFontHeader;}
+    &.toasted-primary {
+      &:before {
+        background: @greenFontHeader;
+      }
+      &, & a {
+        color: @greenFontHeader;
+      }
       .toast-title:before {
         content: '\e97f';
       }
     }
-    &.toast-error {
-      &:before {background: @redError;}
-      &, & a {color: @redError;}
+    &.toasted-error {
+      &:before {
+        background: @redError;
+      }
+      &, & a {
+        color: @redError;
+      }
       .toast-title:before {
         content: '\e97a';
       }
     }
-    &.toast-warning {
-      &:before {background: @yellowWarning;}
-      &, & a {color: @yellowWarning;}
+    &.toasted-warning {
+      &:before {
+        background: @yellowWarning;
+      }
+      &, & a {
+        color: @yellowWarning;
+      }
       .toast-title:before {
         content: '\e97e';
       }
     }
-    &.toast-info {
-      &:before {background: @blueMain;}
-      &, & a {color: @blueMain;}
-      .toast-title:before {content: "\e002";}
+    &.toasted-info {
+      &:before {
+        background: @blueMain;
+      }
+      &, & a {
+        color: @blueMain;
+      }
+      .toast-title:before {
+        content: "\e002";
+      }
     }
 
     a {
       text-decoration: underline;
-      &:hover {text-decoration: none;}
+      &:hover {
+        text-decoration: none;
+      }
     }
 
   }
@@ -195,18 +245,18 @@
     &:before {
       top: 0;
       /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&1+0,1+34,0.6+100 */
-      background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(255,255,255,1) 34%, rgba(255,255,255,0.6) 100%); /* FF3.6-15 */
-      background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 34%,rgba(255,255,255,0.6) 100%); /* Chrome10-25,Safari5.1-6 */
-      background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 34%,rgba(255,255,255,0.6) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#99ffffff',GradientType=0 ); /* IE6-9 */
+      background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 34%, rgba(255, 255, 255, 0.6) 100%); /* FF3.6-15 */
+      background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 34%, rgba(255, 255, 255, 0.6) 100%); /* Chrome10-25,Safari5.1-6 */
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 34%, rgba(255, 255, 255, 0.6) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#99ffffff', GradientType=0); /* IE6-9 */
     }
     &:after {
       bottom: 0;
       /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0.6+0,1+66,1+100 */
-      background: -moz-linear-gradient(top,  rgba(255,255,255,0.6) 0%, rgba(255,255,255,1) 66%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
-      background: -webkit-linear-gradient(top,  rgba(255,255,255,0.6) 0%,rgba(255,255,255,1) 66%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
-      background: linear-gradient(to bottom,  rgba(255,255,255,0.6) 0%,rgba(255,255,255,1) 66%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#99ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+      background: -moz-linear-gradient(top, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 1) 66%, rgba(255, 255, 255, 1) 100%); /* FF3.6-15 */
+      background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 1) 66%, rgba(255, 255, 255, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 1) 66%, rgba(255, 255, 255, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#99ffffff', endColorstr='#ffffff', GradientType=0); /* IE6-9 */
     }
     & > div {
       padding: 20px 25px 20px 0;
@@ -216,14 +266,10 @@
     }
   }
 
-
-
-
-
   .toast-close-button {
     text-shadow: 0 1px 0 #ffffff;
     opacity: 0.8;
-    color: #ccc;  // TODO: Add to variables
+    color: #ccc; // TODO: Add to variables
     position: absolute;
     right: 0;
     top: 0;
@@ -241,19 +287,20 @@
       color: inherit;
       opacity: 1;
     }
-    &:focus {outline: none;}
+    &:focus {
+      outline: none;
+    }
   }
 }
 
 /*      ANIMATIONS      */
-#toast-container > div.toast {
+.toasted-container > div.toasted {
   &.ng-enter {
     animation: newToasterIn .6s;
     & + div {
       animation: secondToasterIn .6s;
     }
   }
-
 
   &.ng-leave {
     animation: topToasterOut .4s; //.2
@@ -275,8 +322,6 @@
     animation: hideBehindError .6s;
   }
 }
-
-
 
 @keyframes newToasterIn {
   from {
@@ -313,7 +358,7 @@
   }
   to {
     margin-top: -10px;
-    transform: scale(1,1);
+    transform: scale(1, 1);
   }
 }
 
@@ -325,6 +370,7 @@
     margin-top: -82px;
   }
 }
+
 @keyframes showLastToaster {
   from {
     margin-top: -82px;
