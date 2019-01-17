@@ -7,20 +7,20 @@
                 <div class="editor-label" v-if="editorLabel" :class="{'editor-label-position':isInEditMode()}">
                     {{editorLabel}}
                 </div>
-                <div class="lang-select-wrapper" v-if="showControls && editable">
-                    <jf-ui-select class="form-group-cell" :jf-select-disabled="!isInEditMode()" :jf-select-model="language" jf-select-change="onLanguageChange()" :jf-select-options="['Markdown','Asciidoc','Plain Text']">
+                <div class="lang-select-wrapper" v-if="showControls && isEditable">
+                    <jf-ui-select class="form-group-cell" :jf-select-disabled="!isInEditMode()" v-model="currentLanguage" jf-select-change="onLanguageChange()" :jf-select-options="['Markdown','Asciidoc','Plain Text']">
                     </jf-ui-select>
                 </div>
                 <div class="switch-wrapper" v-if="showControls">
-                    <jf-switch v-model="mode" @input="onChangeModeInternal()" :options="modeOptions" controller="switchController" class="no-margin-top">
+                    <jf-switch v-model="currentMode" @input="onChangeModeInternal()" :options="modeOptions" controller="switchController" class="no-margin-top">
                     </jf-switch>
                 </div>
-                <button class="btn btn-default edit-button" type="button" v-if="!showControls && editable" @click="activateEditor()">
-                    <span v-if="markup && markup.length > 0">
+                <button class="btn btn-default edit-button" type="button" v-if="!showControls && isEditable" @click="activateEditor()">
+                    <span v-if="value && value.length > 0">
                     <i class="icon icon-edit-pen"></i>
                     <span>Edit</span>
                     </span>
-                    <span v-if="!markup || markup.length === 0">
+                    <span v-if="!value || value.length === 0">
                     <i class="icon icon-new"></i>
                     <span>Add</span>
                     </span>
@@ -29,11 +29,33 @@
 
             <div class="code-mirror-wrapper codemirror-wrapper"  v-if="isInEditMode()">
 
-                <jf-code-mirror v-if="language === 'Markdown'" mime-type="text/x-markdown" mode="gfm" :allow-edit="true" height="100%" :autofocus=" !preventAutoFocus " enable-copy-to-clipboard="markup && markup.length" clipboard-copy-entity-name="text" :model="markup">
+                <jf-code-mirror v-if="currentLanguage === 'Markdown'"
+                                mime-type="text/x-markdown"
+                                mode="gfm"
+                                :allow-edit="true"
+                                height="100%"
+                                :autofocus="!preventAutoFocus"
+                                enable-copy-to-clipboard="value && value.length"
+                                clipboard-copy-entity-name="text"
+                                :value="value" @input="$emit('input', arguments[0])">
                 </jf-code-mirror>
-                <jf-code-mirror v-if="language === 'Asciidoc'" mime-type="text/x-markdown" mode="asciidoc" :allow-edit="true" height="100%" :autofocus=" !preventAutoFocus " enable-copy-to-clipboard="markup && markup.length" clipboard-copy-entity-name="text" :model="markup">
+                <jf-code-mirror v-if="currentLanguage === 'Asciidoc'"
+                                mime-type="text/x-markdown"
+                                mode="asciidoc"
+                                :allow-edit="true"
+                                height="100%"
+                                :autofocus="!preventAutoFocus"
+                                enable-copy-to-clipboard="value && value.length"
+                                clipboard-copy-entity-name="text"
+                                :value="value" @input="$emit('input', arguments[0])">
                 </jf-code-mirror>
-                <jf-code-mirror v-if="language === 'Plain Text'" :allow-edit="true" height="100%" :autofocus=" !preventAutoFocus " enable-copy-to-clipboard="markup && markup.length" clipboard-copy-entity-name="text" :model="markup">
+                <jf-code-mirror v-if="currentLanguage === 'Plain Text'"
+                                :allow-edit="true"
+                                height="100%"
+                                :autofocus="!preventAutoFocus"
+                                enable-copy-to-clipboard="value && value.length"
+                                clipboard-copy-entity-name="text"
+                                :value="value" @input="$emit('input', arguments[0])">
                 </jf-code-mirror>
                 <button v-if="onSave" @click="onSaveClick()" class="btn btn-primary save-button pull-right">
                     Save
@@ -48,7 +70,7 @@
                 </div>
                 <div class="no-markup" v-if="!preview">
                     <span>No markup available.</span>&nbsp;
-                    <a class="jf-link" v-if="!showControls && editable" @click.prevent="activateEditor()">
+                    <a class="jf-link" v-if="!showControls && isEditable" @click.prevent="activateEditor()">
                         Add markup.
                     </a>
                 </div>
@@ -66,7 +88,7 @@
         template: TEMPLATE,
         name: 'jf-markup-editor',
         props: [
-            'markup',
+            'value',
             'previewRenderers',
             'language',
             'mode',
@@ -88,7 +110,11 @@
                 modeOptions: null,
                 switchController: null,
                 onSave: null,
-                preview: { length: null }
+                preview: { length: null },
+                currentLanguage: this.language || 'Markdown',
+                currentMode: this.mode || EDIT_MODE,
+                isEditable: this.editable,
+                renderers: this.previewRenderers
             };
         },
         created() {
@@ -123,13 +149,11 @@
         ng1_legacy: { 'controllerAs': 'jfMarkup' },
         methods: {
             init() {
-                this.mode = this.mode || EDIT_MODE;
-                this.markup = this.markup || '';
-                this.markupBackup = this.markup;
-                this.language = this.language || 'Markdown';
-                this.languageBackup = this.language;
-                if (this.editable === undefined)
-                    this.editable = true;
+                if (!this.value) this.$emit('input', '');
+                this.markupBackup = this.value;
+                this.languageBackup = this.currentLanguage;
+                if (this.isEditable === undefined) this.isEditable = true;
+
                 this.modeOptions = [
                     EDIT_MODE,
                     PREVIEW_MODE
@@ -137,7 +161,7 @@
 
                 this.updatePreviewButton();
 
-                this.$scope.$watch('jfMarkup.markup', () => {
+                this.$scope.$watch('jfMarkup.value', () => {
                     if (this.canRenderPreview()) {
                         this.renderPreview();
                     }
@@ -147,19 +171,19 @@
                 this.preview = preview;
             },
             currentLanguageHasPreviewRenderer() {
-                return this.previewRenderers && this.previewRenderers[this.language.toLowerCase()];
+                return this.renderers && this.renderers[this.currentLanguage.toLowerCase()];
             },
             canRenderPreview() {
                 return this.webworkerOk && !this.currentLanguageHasPreviewRenderer();
             },
             renderPreview() {
 
-                if (this.language.toLowerCase() === 'plain text') {
-                    this.setPreview(this.markup.replace(/\n/g, '<br>'));
+                if (this.currentLanguage.toLowerCase() === 'plain text') {
+                    this.setPreview(this.value.replace(/\n/g, '<br>'));
                 } else if (this.currentLanguageHasPreviewRenderer()) {
-                    this.previewRenderers[this.language.toLowerCase()](this.markup, preview => this.setPreview(preview));
-                } else if (this.webworkerOk, this.language, this.language.toLowerCase(), this.instanceId) {
-                    this.JFrogUIWebWorker.markupPreview(this.language.toLowerCase(), this.markup, this.instanceId).then(html => this.setPreview(html));
+                    this.renderers[this.currentLanguage.toLowerCase()](this.value, preview => this.setPreview(preview));
+                } else if (this.webworkerOk, this.currentLanguage, this.currentLanguage.toLowerCase(), this.instanceId) {
+                    this.JFrogUIWebWorker.markupPreview(this.currentLanguage.toLowerCase(), this.value, this.instanceId).then(html => this.setPreview(html));
                 }
             },
             updatePreviewButton() {
@@ -177,30 +201,30 @@
                 this.$timeout(() => this.switchController.updateOptionObjects());
             },
             onChangeModeInternal() {
-                if (this.mode === PREVIEW_MODE)
+                if (this.currentMode === PREVIEW_MODE)
                     this.renderPreview();
-                this.$emit('on-mode-change', { mode: this.mode });
+                this.$emit('on-mode-change', { mode: this.currentMode });
             },
             checkPreviewers() {
 
-                if (!this.previewRenderers) {
-                    this.previewRenderers = {};
+                if (!this.renderers) {
+                    this.renderers = {};
                     this.previewersCount = 0;
                 } else {
-                    if (this.previewRenderers.markdown && this.previewRenderers.asciidoc) {
+                    if (this.renderers.markdown && this.renderers.asciidoc) {
                         this.previewersCount = 2;
-                    } else if (this.previewRenderers.markdown || this.previewRenderers.asciidoc) {
+                    } else if (this.renderers.markdown || this.renderers.asciidoc) {
                         this.previewersCount = 1;
                     }
                 }
             },
             onCancel() {
                 this.$timeout(() => {
-                    this.language = this.languageBackup;
-                    this.markup = this.markupBackup;
+                    this.currentLanguage = this.languageBackup;
+                    this.$emit('input', this.markupBackup)
                     this.preview = '';
                     this.renderPreview();
-                    this.mode = PREVIEW_MODE;
+                    this.currentMode = PREVIEW_MODE;
                     this.showControls = false;
                 });
             },
@@ -209,19 +233,19 @@
 
                     /* Todo: check the following condition. It may contain some undefined references: this.onSave */
                     if (typeof this.onSave === 'function') {
-                        this.languageBackup = this.language;
-                        this.markupBackup = this.markup;
+                        this.languageBackup = this.currentLanguage;
+                        this.markupBackup = this.value;
                         this.$emit('on-save');
                         this.showControls = false;
                     }
                 });
             },
             activateEditor() {
-                this.mode = EDIT_MODE;
+                this.currentMode = EDIT_MODE;
                 this.showControls = true;
             },
             isInEditMode() {
-                return this.showControls && this.mode === this.EDIT_MODE;
+                return this.showControls && this.currentMode === this.EDIT_MODE;
             }
         }
     };
