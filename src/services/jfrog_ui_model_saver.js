@@ -17,7 +17,6 @@ class JFrogUIModelSaver {
 			}
 		});
 
-		console.log(this.controller);
 	}
 
 	save(objectName) {
