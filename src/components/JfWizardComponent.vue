@@ -1,33 +1,26 @@
 <template>
-
     <div>
         <div class="jf-wizard-container">
             <div class="wizard-bar">
                 <ul>
-                    <li v-for="tab in tabs" :class="{'active': active.title === tab.title}" v-if="isVisible(tab)">
+                    <li v-for="(tab,index) in tabs" :key="index" :class="{'active': active.title === tab.title}" v-show="isVisible(tab)">
                         <a href="" @click.prevent="_switch(tab)">{{tab.title}}</a>
                     </li>
                 </ul>
             </div>
-
             <div class="wizard-content">
                 <slot></slot>
             </div>
         </div>
-
     </div>
-
 </template>
 
 <script>
-
     export default {
         name: 'jf-wizard',
         props: ['config'],
         'jf@inject': [
-            '$scope',
             'JFrogEventBus',
-            '$element',
             'JFrogUIUtils'
         ],
         data() {
@@ -38,16 +31,9 @@
         },
         created() {
             this.JFrogEventBus.registerOnScope(this.$scope, this.JFrogEventBus.getEventsDefinition().WIZARD_TAB_CHANGE, tab => {
-                this._switch(tab);
+                this.switch(tab);
             });
-            this.onTabSwitch = this.$scope.onTabSwitch;
-            this.config = this.$scope.config;
             this.init = true;
-        },
-        ng1_legacy: {
-            ng1postLinkFn($scope, element, attrs) {
-            },
-            'controllerAs': '$ctrl'
         },
         methods: {
             registerTab(tab) {
@@ -57,22 +43,18 @@
                 }
                 this.tabs.push(tab);
             },
-            _switch(tab) {
+            switch(tab) {
                 this.$element.find('.wizard-content').scrollTop(0);
                 this.active = typeof tab === 'string' ? _.find(this.tabs, t => t.title === tab) : tab;
                 this.$emit('on-tab-switch', { tab: this.active.title });
                 this.JFrogUIUtils.fireResizeEvent();
             },
             isVisible(tab) {
-                return !tab.isVisibleTab || typeof tab.isVisibleTab === 'function' && tab.isVisibleTab();
+                return typeof tab.isVisibleTab == "undefined" || //If isVisible is NOT defined
+                (typeof tab.isVisibleTab == "boolean" && !!tab.isVisibleTab) || //isVisible is a boolean and its value is true
+                 (typeof tab.isVisibleTab === 'function' && tab.isVisibleTab()); //isVisible is a function and its output is truthy
             }
         }
     }
 
 </script>
-
-<style scoped lang="less">
-
-
-
-</style>
