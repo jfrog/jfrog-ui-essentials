@@ -20,11 +20,13 @@ import { JFrogUILibConfig } from './services/providers/JFrogUiLibConfigProvider.
 import { main } from './init/MainRunBlock.js';
 import { config } from './configs/ConfigConfig.js';
 import { jfrogUiEssentialsConfig } from './configs/JfrogUiEssentialsConfig.js';
+import { codeMirrorAsciidocConfig } from './configs/CodeMirrorAsciidocConfig';
 import JFrogUI from './plugins/JFrogUI';
 
 export const servicesRegistration = {
     registerConfigs: () => JFrogUI.registerConfigs({
         jfrogUiEssentialsConfig,
+        codeMirrorAsciidocConfig,
         config
     }),
     registerRunBlocks: () => JFrogUI.registerRunBlocks({ main }),

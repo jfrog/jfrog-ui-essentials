@@ -122,6 +122,7 @@
 
             },
             onInputChange(val) {
+                this.$emit('jf-select-change');
                 this.$emit('input', val)
             },
             onSelect($item, $model) {

@@ -8,11 +8,15 @@
                     {{editorLabel}}
                 </div>
                 <div class="lang-select-wrapper" v-if="showControls && isEditable">
-                    <jf-ui-select class="form-group-cell" :jf-select-disabled="!isInEditMode()" v-model="currentLanguage" jf-select-change="onLanguageChange()" :jf-select-options="['Markdown','Asciidoc','Plain Text']">
+                    <jf-ui-select class="form-group-cell"
+                                  :jf-select-disabled="!isInEditMode()"
+                                  v-model="currentLanguage"
+                                  @jf-select-change="onLanguageChange"
+                                  :jf-select-options="['Markdown','Asciidoc','Plain Text']">
                     </jf-ui-select>
                 </div>
                 <div class="switch-wrapper" v-if="showControls">
-                    <jf-switch v-model="currentMode" @input="onChangeModeInternal()" :options="modeOptions" controller="switchController" class="no-margin-top">
+                    <jf-switch v-model="currentMode" @input="onChangeModeInternal()" :options="modeOptions" ref="switchController" class="no-margin-top">
                     </jf-switch>
                 </div>
                 <button class="btn btn-default edit-button" type="button" v-if="!showControls && isEditable" @click="activateEditor()">
@@ -33,6 +37,7 @@
                                 mime-type="text/x-markdown"
                                 mode="gfm"
                                 :allow-edit="true"
+                                :key="currentLanguage"
                                 height="100%"
                                 :autofocus="!preventAutoFocus"
                                 enable-copy-to-clipboard="value && value.length"
@@ -43,6 +48,7 @@
                                 mime-type="text/x-markdown"
                                 mode="asciidoc"
                                 :allow-edit="true"
+                                :key="currentLanguage"
                                 height="100%"
                                 :autofocus="!preventAutoFocus"
                                 enable-copy-to-clipboard="value && value.length"
@@ -51,6 +57,7 @@
                 </jf-code-mirror>
                 <jf-code-mirror v-if="currentLanguage === 'Plain Text'"
                                 :allow-edit="true"
+                                :key="currentLanguage"
                                 height="100%"
                                 :autofocus="!preventAutoFocus"
                                 enable-copy-to-clipboard="value && value.length"
@@ -108,7 +115,6 @@
                 webworkerOk: null,
                 previewersCount: null,
                 modeOptions: null,
-                switchController: null,
                 onSave: null,
                 preview: { length: null },
                 currentLanguage: this.language || 'Markdown',
@@ -198,7 +204,7 @@
                 if (this.canRenderPreview()) {
                     this.renderPreview();
                 }
-                this.$timeout(() => this.switchController.updateOptionObjects());
+                this.$timeout(() => this.$refs.switchController.updateOptionObjects());
             },
             onChangeModeInternal() {
                 if (this.currentMode === PREVIEW_MODE)
