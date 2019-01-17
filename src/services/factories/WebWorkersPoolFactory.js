@@ -1,9 +1,10 @@
 export function WebWorkersPool() {
-    this.$inject('$q');
+    let injections = $jfrog.get(['$q']);
     'ngInject';
     return class WebWorkersPool {
 
         constructor(webworkerPath, poolSize = 10) {
+            _.extend(this, injections)
             this.webworkerPath = webworkerPath;
             this.poolSize = poolSize;    //           this.debug();
         }
@@ -105,8 +106,8 @@ export function WebWorkersPool() {
             freeSpot.worker.postMessage(msg);
 
             return defer.promise;
-        }   
+        }
 
-    }   
+    }
 ;
 }

@@ -16,6 +16,11 @@
         data() {
             return {};
         },
+        methods: {
+            getCurrentTabName() {
+                return this.$parent.currentTab && this.$parent.currentTab.name;
+            }
+        },
         ng1_legacy: { require: '^jfTabs' }
     }
 
@@ -23,6 +28,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

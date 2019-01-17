@@ -21,8 +21,7 @@
         props: [
             'jfSwitchTitle',
             'options',
-            'ngModel',
-            'controller',
+            'value',
             'disabled',
             'helpTooltip',
             'jfSwitchClass'
@@ -38,18 +37,12 @@
             // array of objects of type {'value': ..., 'text': ...}
             // The model is assigned the value, and the text is displayed
 
-            this.controller = this;
-
             this.updateOptionObjects();
 
-            if (_.isEmpty(this.ngModel))
-                this.ngModel = this.optionObjects[0].value;
+            if (_.isEmpty(this.value))
+                this.$emit('input', this.optionObjects[0].value);
         },
         ng1_legacy: {
-            ng1postLinkFn($scope, attrs, $element, ngModelCtrl) {
-                $scope.jfSwitch.ngModelCtrl = ngModelCtrl;
-            },
-            require: 'ngModel',
             'controllerAs': 'jfSwitch'
         },
         methods: {
@@ -67,10 +60,10 @@
             selectOption(option) {
                 if (this.disabled)
                     return;
-                this.ngModelCtrl.$setViewValue(option.value);
+                this.$emit('input', option.value);
             },
             isSelected(option) {
-                return this.ngModel === option.value;
+                return this.value === option.value;
             }
         }
     }

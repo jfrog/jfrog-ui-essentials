@@ -1,10 +1,9 @@
 export function JFrogUIWebWorker() {
-    this.$inject('$q', 'JFrogUILibConfig', 'WebWorkersPool');
+    let injections = $jfrog.get(['$q', 'JFrogUILibConfig', 'WebWorkersPool']);
     'ngInject';
     return class JFrogUIWebWorker {
         constructor() {
-            this.$q = this.$q;
-            this.JFrogUILibConfig = this.JFrogUILibConfig;
+            _.extend(this, injections)
             this.wwPool = new this.WebWorkersPool(this.getPathToWebWorker(), 1);
         }
         getPathToWebWorker() {
@@ -104,9 +103,9 @@ export function JFrogUIWebWorker() {
                 defer.reject();
             });
 
-            return defer.promise;   
+            return defer.promise;
 
         }
-    }   
+    }
 ;
 }

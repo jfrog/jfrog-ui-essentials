@@ -58,6 +58,10 @@
 
     </div>
     `;
+
+    const PREVIEW_MODE  = 'Preview';
+    const EDIT_MODE = 'Edit';
+
     export default {
         template: TEMPLATE,
         name: 'jf-markup-editor',
