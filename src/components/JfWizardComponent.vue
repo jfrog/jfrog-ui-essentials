@@ -31,7 +31,7 @@
         },
         created() {
             this.JFrogEventBus.registerOnScope(this.$scope, this.JFrogEventBus.getEventsDefinition().WIZARD_TAB_CHANGE, tab => {
-                this.switch(tab);
+                this._switch(tab);
             });
             this.init = true;
         },
@@ -43,7 +43,7 @@
                 }
                 this.tabs.push(tab);
             },
-            switch(tab) {
+            _switch(tab) {
                 this.$element.find('.wizard-content').scrollTop(0);
                 this.active = typeof tab === 'string' ? _.find(this.tabs, t => t.title === tab) : tab;
                 this.$emit('on-tab-switch', { tab: this.active.title });
