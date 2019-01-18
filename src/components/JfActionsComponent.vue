@@ -1,35 +1,35 @@
 <template>
-
     <div>
         <ul class="list-inline" v-show="getActiveActionsCount()">
-            <li v-show="fixedActions.length" v-for="actionObj in fixedActions" @click="doAction(actionObj,$event)" :class="{disabled: actionObj.disabled || (actionObj.disabledWhen && actionObj.disabledWhen())}" class="action-button" v-if="!actionObj.visibleWhen || actionObj.visibleWhen()">
-
+            <li v-for="(actionObj,index) in fixedActions" :key="index"
+                @click="doAction(actionObj,$event)"
+                :class="{disabled: actionObj.disabled || (actionObj.disabledWhen && actionObj.disabledWhen())}"
+                class="action-button"
+                v-show="!actionObj.visibleWhen || actionObj.visibleWhen()">
                 <a :href=" actionObj.href " download="">
                     <i class="action-icon icon" :class="actionObj.icon"></i> {{actionObj.title}}
                 </a>
             </li>
             <li v-show="dynamicActions.length" class="action-button">
-                <span class="dropdown" dropdown="" is-open="isDropdownOpen">
-              <ul class="dropdown-menu dropdown-menu-right actions-dropdown text-left">
-                  <li v-for="actionObj in dynamicActions" class="action-item dynamic-action" v-if="(!actionObj.visibleWhen || actionObj.visibleWhen()) && !actionObj.isHidden">
-                      <a href="" class="action-container" @click.prevent="doAction(actionObj,$event)">
-                          <span class="action-icon icon" v-if="actionObj.icon" :class="actionObj.icon">
-                          </span>
-                <span class="action-icon" v-if="actionObj.image && !actionObj.icon">
-                              <img :src="actionObj.image">
-                          </span>
-                <span class="action-name">{{actionObj.title}}</span>
-                </a>
+                <span class="dropdown" :class="{ open: isDropdownOpen }">
+                    <ul class="dropdown-menu dropdown-menu-right actions-dropdown text-left">
+                        <li v-for="(actionObj,index) in dynamicActions" :key="index" class="action-item dynamic-action"
+                            v-show="(!actionObj.visibleWhen || actionObj.visibleWhen()) && !actionObj.isHidden">
+                            <a href="#" class="action-container" @click.prevent="doAction(actionObj,$event)">
+                                <span class="action-icon icon" v-if="actionObj.icon" :class="actionObj.icon"></span>
+                                <span class="action-icon" v-if="actionObj.image && !actionObj.icon">
+                                    <img :src="actionObj.image">
+                                </span>
+                                <span class="action-name">{{actionObj.title}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <a href="#" class="dropdown-toggle actions-more" @click.prevent="isDropdownOpen = !isDropdownOpen">
+                        {{int_label}} <i class="action-icon icon icon-small-arrow-down"></i>
+                    </a>
+                </span>
             </li>
         </ul>
-        <a href="" class="dropdown-toggle actions-more" dropdown-toggle="">
-            {{label}} <i class="action-icon icon icon-small-arrow-down"></i>
-        </a>
-        </span>
-
-        </li>
-        </ul>
-
         <!--<li ng-repeat="action in actions">-->
         <!--<a><span class="glyphicon glyphicon-refresh"></span>{{action.name}}</a></li>-->
         <!--<li><a><span class="glyphicon glyphicon-trash"></span>Delete Content</a></li>-->
@@ -43,127 +43,131 @@
     export default {
         name: 'jf-actions',
         props: [
-            'parentController',
             'label',
             'initMethod',
             'fixedActionsNames',
             'disableMouseOverEvents',
             'showDropDownForOneItem'
         ],
-        'jf@inject': [
-            '$scope',
-            '$timeout'
-        ],
         data() {
             return {
-                fixedActions: null,
-                dynamicActions: null,
-                isDropdownOpen: null,
-                anyActionHasAnIcon: null,
-                actions: null
+                fixedActions: [],
+                dynamicActions: [],
+                isDropdownOpen: false,
+                anyActionHasAnIcon: false,
+                actionsList: {
+                    actions: []
+                },
+                int_label: this.label || 'Actions',
+                clicked:false,
+                stayOpened:false
             };
         },
-        created() {
-            this.isDropdownOpen = false;
-            this.$scope.$watch('jfActions.hasSingleVisibleAction()', (newVal, oldVal) => {
-                if (newVal !== oldVal) {
-                    this._divideActions();
-                }
-            });
-        },
-        mounted() {
-            if (!this.label)
-                this.label = 'Actions';
-
-            if (this.parentController && this.initMethod && this.parentController[this.initMethod]) {
-                this.parentController[this.initMethod](this);
-            } else {
-                console.error('jfActionsController: Missing parent-controller & init-method attributes');
+        computed: {
+            hasSingleVisibleAction() {
+                return this.getActiveActionsCount() === 1 && !this.showDropDownForOneItem;
             }
         },
-        ng1_legacy: {
-            ng1postLinkFn($scope, element, attr, jfActions) {
-                let dropdownOver = false;
-                let buttonOver = false;
-                let $dropdownElement = $(element).find('.actions-more');
-                let $buttonElement = $(element).find('.action-button');
-                let stayOpened = false;
-                let clicked = false;
-
-                jfActions.disableMouseOverEvents = jfActions.disableMouseOverEvents !== undefined;
-
-                if (!jfActions.disableMouseOverEvents) {
-                    $dropdownElement.on('mouseup', () => {
-                        if (!stayOpened) {
-                            clicked = true;
-                        }
-                    });
-                    $dropdownElement.on('mouseenter', () => {
-                        buttonOver = true;
-                        jfActions._toggleDropdown(true);
-                    });
-                    $dropdownElement.on('mouseleave', () => {
-                        buttonOver = false;
-                        if (!stayOpened) {
-                            jfActions._toggleDropdown(dropdownOver);
-                        }
-                    });
-                    $buttonElement.on('mouseenter', () => {
-                        dropdownOver = true;
-                        jfActions._toggleDropdown(true);
-                    });
-                    $buttonElement.on('mouseleave', () => {
-                        dropdownOver = false;
-                        if (!stayOpened) {
-                            $timeout(() => {
-                                jfActions._toggleDropdown(buttonOver || dropdownOver);
-                            }, 200);
-                        }
-                    });
-                }
-
-
-                let unwatch = $scope.$watch('jfActions.isDropdownOpen', (newVal, oldVal) => {
-                    if (!newVal && clicked) {
-                        jfActions.isDropdownOpen = true;
-                        clicked = false;
-                        stayOpened = true;
-                    } else if (!newVal && stayOpened) {
-                        stayOpened = false;
-                    }
-
-                });
-
-                $scope.$on('$destroy', () => {
-                    if (!jfActions.disableMouseOverEvents) {
-                        $dropdownElement.off('mouseup');
-                        $dropdownElement.off('mouseenter');
-                        $dropdownElement.off('mouseleave');
-                        $buttonElement.off('mouseenter');
-                        $buttonElement.off('mouseleave');
-                    }
-                    unwatch();
-                });
-
-                jfActions.showDropdown = () => {
-                    stayOpened = true;
-                    clicked = true;
-                    buttonOver = true;
-                    dropdownOver = true;
-                    jfActions._toggleDropdown(true);
-                };
-
-                jfActions.hideDropdown = () => {
-                    stayOpened = false;
-                    clicked = false;
-                    buttonOver = false;
-                    dropdownOver = false;
-                    jfActions._toggleDropdown(false);
-                }
-    ;
+        watch: {
+            actionsList(newVal){
+                console.log("in watch for actions")
+                this._divideActions();
             },
-            'controllerAs': 'jfActions'
+            isDropdownOpen(newVal){
+                if (!newVal && this.clicked) {
+                    this.isDropdownOpen = true;
+                    this.clicked = false;
+                    this.stayOpened = true;
+                } else if (!newVal && this.stayOpened) {
+                    this.stayOpened = false;
+                }
+            }
         },
+        mounted() {
+            let thisComponent = this;
+                 this.intervalId = setInterval(() => {
+                    thisComponent._divideActions();
+                }, 2000);
+            if (!thisComponent.initMethod || !thisComponent.$parent[thisComponent.initMethod]) {
+                console.error('jfActions: Missing init-method attribute');
+                return;
+            } else {
+                thisComponent.$parent[thisComponent.initMethod](thisComponent);
+            }
+
+            thisComponent.$watch('hasSingleVisibleAction', (newVal, oldVal) => {
+                if (newVal !== oldVal) {
+                    thisComponent._divideActions();
+                }
+            });
+
+            let dropdownOver = false;
+            let buttonOver = false;
+            let $dropdownElement = thisComponent.$element.find('.actions-more');
+            let $buttonElement = thisComponent.$element.find('.action-button');
+
+
+            if (!thisComponent.disableMouseOverEvents) {
+                $dropdownElement.on('mouseup', () => {
+                    if (!thisComponent.stayOpened) {
+                        thisComponent.clicked = true;
+                    }
+                });
+
+                $dropdownElement.on('mouseenter', () => {
+                    buttonOver = true;
+                    thisComponent._toggleDropdown(true);
+                });
+                $dropdownElement.on('mouseleave', () => {
+                    buttonOver = false;
+                    if (!thisComponent.stayOpened) {
+                        thisComponent._toggleDropdown(dropdownOver);
+                    }
+                });
+                $buttonElement.on('mouseenter', () => {
+                    dropdownOver = true;
+                    thisComponent._toggleDropdown(true);
+                });
+                $buttonElement.on('mouseleave', () => {
+                    dropdownOver = false;
+                    if (!thisComponent.stayOpened) {
+                        setTimeout(() => {
+                            thisComponent._toggleDropdown(buttonOver || dropdownOver);
+                        }, 200);
+                    }
+                });
+            }
+
+            this.showDropdown = () => {
+                this.stayOpened = true;
+                this.clicked = true;
+                buttonOver = true;
+                dropdownOver = true;
+                this._toggleDropdown(true);
+            };
+
+            this.hideDropdown = () => {
+                this.stayOpened = false;
+                this.clicked = false;
+                buttonOver = false;
+                dropdownOver = false;
+                this._toggleDropdown(false);
+            };
+        },
+
+        beforeDestroy() {
+            clearInterval(this.intervalId);
+            if (!this.disableMouseOverEvents) {
+                let $dropdownElement = this.$element.find('.actions-more');
+                let $buttonElement = this.$element.find('.action-button');
+                $dropdownElement.off('mouseup');
+                $dropdownElement.off('mouseenter');
+                $dropdownElement.off('mouseleave');
+                $buttonElement.off('mouseenter');
+                $buttonElement.off('mouseleave');
+            }
+        },
+
         methods: {
             setActionsHandler(actionsHandler) {
                 this.actionsHandler = actionsHandler;
@@ -175,7 +179,7 @@
                 this.actionsDictionary = actionsDictionary;
             },
             setActions(actions) {
-                this.actions = actions || [];
+                this.actionsList.actions = actions;
                 this._transformActionsData();
             },
             doAction(actionObj, e) {
@@ -194,23 +198,23 @@
                 }
             },
             getActiveActionsCount() {
-                if (!this.actions || !this.actions.length)
+                if (!this.actionsList.actions || !this.actionsList.actions.length)
                     return 0;
-                return _.filter(this.actions, act => !act.visibleWhen || act.visibleWhen()).length;
+                return _.filter(this.actionsList.actions, act => !act.visibleWhen || act.visibleWhen()).length;
             },
             _toggleDropdown(isOpen) {
-                this.$timeout(() => {
+                setTimeout(() => {
                     this.isDropdownOpen = isOpen;
-                });
+                },10);
             },
             _transformActionsData() {
                 // extend action properties from ACTIONS dictionary
-                this.actions.forEach(actionObj => {
+                this.actionsList.actions.forEach(actionObj => {
                     if (!this.actionsDictionary[actionObj.name]) {
                         console.log('Unrecognized action', actionObj.name);
                         return true;
                     }
-                    angular.extend(actionObj, this.actionsDictionary[actionObj.name]);
+                    Vue.util.extend(actionObj, this.actionsDictionary[actionObj.name]);
                 });
                 // Divide actions to fixed and dynamic (dropdown)
                 this._divideActions();
@@ -219,35 +223,32 @@
                 this.fixedActions = [];
                 this.dynamicActions = [];
 
-                if (this.hasSingleVisibleAction()) {
-                    this.fixedActions.push(this.actions.find(action => action.visibleWhen()));
+                if (this.hasSingleVisibleAction) {
+                    this.fixedActions.push(this.actionsList.actions.find(action => action.visibleWhen()));
                     return;
                 }
 
-                _.forEach(this.actions, actionObj => {
+                _.forEach(this.actionsList.actions, actionObj => {
                     if (_.includes(this.fixedActionsNames, actionObj.name)) {
                         this.fixedActions.push(actionObj);
                     } else {
                         this.dynamicActions.push(actionObj);
-                        if (actionObj.icon) {
-                            this.anyActionHasAnIcon = true;
-                        }
+                        this.anyActionHasAnIcon = this.anyActionHasAnIcon || !!actionObj.icon;
                     }
                 });
                 if (this.fixedActions.length === 0 && this.dynamicActions.length === 1 && !this.showDropDownForOneItem) {
                     this.fixedActions.push(this.dynamicActions.pop());
                 }
             },
-            hasSingleVisibleAction() {
-                return this.getActiveActionsCount() === 1 && !this.showDropDownForOneItem;
-            }
+
         }
     }
 
 </script>
 
 <style scoped lang="less">
-
-
-
+    /* An inherited style is causing a small inverted triangle to be displayed */
+    .dropdown-toggle::after {
+        display: none;
+    }
 </style>
