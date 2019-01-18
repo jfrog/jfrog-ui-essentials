@@ -47,6 +47,7 @@ import JFrogUI from './plugins/JFrogUI';
 import 'jquery-contextmenu';
 import VueClipboard from 'vue-clipboard2';
 import Toasted from 'vue-toasted';
+import vClickOutside from 'v-click-outside';
 
 window.$ = $;
 window.jQuery = $;
@@ -65,6 +66,7 @@ export default {
         Vue.use(VueClipboard);
         Vue.use(Toasted);
         Vue.use(VueCodemirror);
+        Vue.use(vClickOutside);
     }
 }
 

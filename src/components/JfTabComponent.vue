@@ -1,7 +1,8 @@
 <template>
 
     <div>
-        <div v-if="getCurrentTabName() === name">
+        <div>
+        <div v-if="name === currentTabName">
             <slot></slot>
         </div>
     </div>
@@ -16,12 +17,11 @@
         data() {
             return {};
         },
-        methods: {
-            getCurrentTabName() {
-                return this.$parent.currentTab && this.$parent.currentTab.name;
+        computed: {
+            currentTabName: function() {
+                return this.$parent.currentTab.name;
             }
-        },
-        ng1_legacy: { require: '^jfTabs' }
+        }
     }
 
 </script>

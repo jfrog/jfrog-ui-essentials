@@ -2,22 +2,22 @@
 
     <div>
         <ul class="nav nav-tabs">
-            <li v-for="tab in tabsVisible" :class="{active:isActiveTab(tab), disabled:tab.isDisabled, [tab.class] : hasClass(tab)}" class="jf-tabs-tab-header" :style="{width: getTabWidthForStyle()}" :jf-disable-feature=" tab.feature ">
+            <li v-for="(tab,index) in tabsVisible" :key="index" :class="{active:isActiveTab(tab), disabled:tab.isDisabled, [tab.class] : hasClass(tab)}" class="jf-tabs-tab-header" :style="{width: getTabWidthForStyle()}" :jf-disable-feature=" tab.feature ">
                 <a @click.prevent="onClickTab(tab, true)" style="z-index: 999999">
                     <div class="jf-tab-header-container" v-jf-tooltip-on-overflow><span>{{dictionary[tab.name]}}</span>
                     </div>
                 </a>
             </li>
             <li class="action-expand" v-show="tabsCollapsed.length">
-                <span class="dropdown" dropdown="" is-open="isDropdownOpen">
-                <a href="" class="dropdown-toggle nav-tabs-more" dropdown-toggle=""><i class="icon-arrow"></i></a>
-                <ul class="dropdown-menu dropdown-menu-right dropdown-container text-left">
-                    <li class="dropdown-item" v-for="tab in tabsCollapsed" :class="{[tab.class] : hasClass(tab)}" :jf-disable-feature=" tab.feature ">
-                        <a @click.prevent="onClickTab(tab, true)" v-jf-tooltip-on-overflow><span>{{dictionary[tab.name]}}</span></a>
+                <span class="dropdown" :class="{ open: isDropdownOpen }"  v-click-outside="closeDropdown">
+                    <a href="#" @click.prevent="isDropdownOpen = !isDropdownOpen" class="dropdown-toggle nav-tabs-more"><i class="icon-arrow"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-right dropdown-container text-left">
+                        <li class="dropdown-item" v-for="(tab, index) in tabsCollapsed" :key="index" :class="{[tab.class] : hasClass(tab)}" :jf-disable-feature=" tab.feature ">
+                            <a @click.prevent="onClickTab(tab, true)" v-jf-tooltip-on-overflow><span>{{dictionary[tab.name]}}</span></a>
+                        </li>
+                    </ul>
+                </span>
             </li>
-        </ul>
-        </span>
-        </li>
         </ul>
         <slot></slot>
     </div>
@@ -47,15 +47,17 @@
             return {
                 tabsVisible: null,
                 tabsCollapsed: [],
-                isDropdownOpen: null
+                isDropdownOpen: false,
+                currentTab: {
+                    name: null
+                }
             };
         },
         created() {
             this.stateParams = this.$stateParams;
             this.state = this.$state;
             this.EVENTS = this.JFrogEventBus.getEventsDefinition();
-
-            this.currentTab = { name: this.stateParams.tab };
+            this.currentTab.name = this.stateParams.tab;
         },
         mounted() {
             this._registerEvents();
@@ -103,7 +105,7 @@
                 this.JFrogEventBus.registerOnScope(this.$scope, this.EVENTS.TABS_REFRESH, () => this.initTabs());
                 // URL changed (like back button / forward button / someone input a URL)
                 this.JFrogEventBus.registerOnScope(this.$scope, this.EVENTS.TABS_URL_CHANGED, stateParams => {
-                    this.currentTab = { name: stateParams.tab };
+                    this.currentTab.name = stateParams.tab;
                 });
 
                 let unwatch = this.$scope.$watch('jfTabs.tabs', (newVal, oldVal) => {
@@ -130,6 +132,7 @@
                 /* Todo: check the following condition. It may contain some undefined references: this.onTabChange */
                 // if the tab is in the more section replace it
                 // with the last tab in the main tabs.
+                this.isDropdownOpen = false;
                 if (this.$emit('on-tab-change', { tab: tab }) === false || tab.isDisabled) {
                     return;
                 }
@@ -137,7 +140,7 @@
 //                this.state.go(this.state.current, { tab: tab.name }, { notify: false });
                 this.currentTab.name = tab.name;
 
-                this.state.current.tabChange = tabChange;
+                this.state.current = Object.assign({tabChange: tabChange});
             },
             _ensureTabVisible(tab) {
                 let collapsedTab = this._getCollapsedTab(tab);
@@ -170,6 +173,9 @@
             hasClass(obj) {
                 if (obj && obj.class)
                     return true;
+            },
+            closeDropdown() {
+                this.isDropdownOpen = false;
             }
         }
     }
@@ -178,6 +184,8 @@
 
 <style scoped lang="less">
 
-
+.dropdown-toggle::after {
+    display: none;
+}
 
 </style>
