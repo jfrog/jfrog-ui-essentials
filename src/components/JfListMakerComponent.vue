@@ -21,7 +21,7 @@
                 <div class="list-maker-list-row" v-for="(value, index) in int_values" :key="index">
                     <div class="list-maker-row-value" v-jf-tooltip-on-overflow>{{value}}</div>
                     <div class="list-maker-list-buttons">
-                        <a href="" class="icon icon-close" @click.prevent="removeValue(index)" v-if="int_values.length > minLength" :disabled="ngDisabled"></a>
+                        <a href="" class="icon icon-close" @click.prevent="removeValue(index)" v-if="int_values.length > int_minLength" :disabled="ngDisabled"></a>
                     </div>
                 </div>
             </div>
@@ -58,7 +58,8 @@
                 // The three variables below are being added to avoid mutating the prop
                 int_values: this.values || [],
                 int_listId: this.listId,
-                int_noSort: this.noSort
+                int_noSort: this.noSort,
+                int_minLength: this.minLength || 0
             };
         },
         watch: {
@@ -77,8 +78,6 @@
             if (this.int_values && !this.int_noSort) {
                 this.int_values = _.sortBy(this.int_values);
             }
-            this.minLength = this.minLength || 0;
-
             if (!this.int_listId) {
                 let randomId = Math.floor(1000000000 * Math.random());
                 this.int_listId = 'list-id-' + randomId;
