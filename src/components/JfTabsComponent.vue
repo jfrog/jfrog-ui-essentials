@@ -63,7 +63,11 @@
             this._registerEvents();
             this.initTabs();
         },
-        ng1_legacy: { 'controllerAs': 'jfTabs' },
+        beforeDestroy() {
+            $(window).off('resize.tabs');
+            unwatch();
+            stateChangeListner();
+        },
         methods: {
             initTabs() {
                 // wait for the element to render and calculate how many tabs should display
@@ -119,11 +123,6 @@
                 $(window).on('resize.tabs', () => {
                     this.initTabs();
                     this.$scope.$digest();
-                });
-                this.$scope.$on('$destroy', () => {
-                    $(window).off('resize.tabs');
-                    unwatch();
-                    stateChangeListner();
                 });
 
             },
