@@ -29,7 +29,7 @@
 
                 <!--ACTIONS-->
                 <span class="actions">
-                <i v-if="showSelected && selectedItems().length" @click="unSelectAll()" class="clear-field">×</i>
+                <i v-if="showSelected && selectedItems().length" @click.stop="unSelectAll()" class="clear-field">×</i>
                 <i class="icon-small-arrow-down"></i>
             </span>
 
@@ -220,7 +220,9 @@
                 return selected.length;
             },
             applyChanges() {
-                this.$emit('on-change');
+                Vue.nextTick(() => {
+                    this.$emit('on-change');
+                })
             },
             selectedItems() {
                 let selected = _.filter(this.items, item => item.isSelected);
