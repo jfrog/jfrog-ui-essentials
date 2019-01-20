@@ -48,8 +48,28 @@ const JFrogUI = {
                     });
                     return match;
                 }
-                else if (_.isObject(filterBy)) {
-                    console.error('Filtering by object is not currently supported');
+                else if (_.isObject(filterBy) && _.isObject(item)) {
+
+                    let recursiveMatchFinder = (obj, filterObj) => {
+                        let match = true;
+                        _.forEach(_.entries(obj), ([key, val]) => {
+                            if (filterObj[key]) {
+                                if (!_.isObject(filterObj[key]) && !_.isObject(val)) {
+                                    if ((val + '').indexOf(filterObj[key]) === -1) {
+                                        match = false;
+                                        return false;
+                                    }
+                                }
+                                else {
+                                    match = recursiveMatchFinder(val, filterObj[key]);
+                                    if (!match) return false;
+                                }
+                            }
+                        });
+                        return match;
+                    }
+
+                    return recursiveMatchFinder(item, filterBy);
                 }
             });
         }

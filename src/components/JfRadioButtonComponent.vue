@@ -34,22 +34,13 @@
         },
         mounted() {
 
-            /* (NG2VUE) This was moved from created() to mounted() */
-            /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
             this.$transclude((clone) => {
-                this.$timeout(() => {
-                    this.$element.find('label').prepend(clone);
-                }, 0, false);
+                this.$element.find('label').prepend(clone);
             });
 
-            /* (NG2VUE) This was moved from created() to mounted() */
-            /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
-
             this.$set(this.$scope, 'onClickTemplate', () => {
-                this.$timeout(() => {
-                    $(this.$element).parent().find('input[type=radio]').prop('checked', false);
-                    $(this.$element).find('input[type=radio]').prop('checked', true);
-                });
+                $(this.$element).parent().find('input[type=radio]').prop('checked', false);
+                $(this.$element).find('input[type=radio]').prop('checked', true);
             });
         }
     }
@@ -58,6 +49,60 @@
 
 <style scoped lang="less">
 
+    .jf-radio-button {
+        font-weight: 100;
+        input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        input[type="radio"] + span {
+            display: inline-block;
+            background: #fff url(../assets/images/radio.png) left top no-repeat;
+            width: 17px;
+            height: 17px;
+            margin: -1px 5px 0 0;
+            position: relative;
+            vertical-align: middle;
+        }
+
+
+
+        input[type="radio"][disabled],
+        input[type="radio"][disabled] + span,
+        input[type="radio"][disabled]:hover + span {
+            background-image: url(../assets/images/radio_disabled.png);
+        }
+        input[type="radio"][disabled]:checked + span,
+        input[type="radio"][disabled]:hover:checked + span {
+            background-image: url(../assets/images/radio_checked_disabled.png);
+        }
+
+        /*
+        input[type="radio"]:focus + span {
+          background-image: url(images/radio_hover.png);
+        }
+        */
+
+        &:hover input[type="radio"] + span {
+            background-image: url(../assets/images/radio_hover.png);
+        }
+
+        input[type="radio"]:checked + span,
+        input[type="radio"]:hover:checked + span {
+            background-image: url(../assets/images/radio_checked.png);
+        }
+
+        .helper {
+            display: block;
+            padding-left: 26px;
+            color: #9e9e9e;
+        }
+    }
+
+    jf-radio-button + jf-radio-button {
+        margin-left: 30px;
+    }
 
 
 </style>

@@ -2,46 +2,46 @@
 
     <div>
         <div :class="{'disabled':disabled,'with-text-inputs':textInputs,'borderless':borderless}" class="jf-multi-dropdown">
-    
+
             <label v-if="label">{{label}} <span v-if="showLabelCounter && selectedItems().length">({{selectedItems().length}})</span></label>
-    
-    
+
+
             <div class="main-box" :class="{'selected-view' : selectedItems().length,
                         'no-items': !items.length && noItemsMessage,
                         'no-label': !label}" @click="onClick()">
-    
-    
+
+
                 <!--Default-->
                 <span v-if="showSelected && !selectedItems().length">{{title}}</span>
-    
+
                 <!--SHOW SELECTED COUNTER-->
                 <span v-if="!showSelected" class="title-wrapper">
                 {{title}}
                 <span class="selected-counter">({{getSelectedCount()}})</span>
                 </span>
-    
+
                 <!--Something selected and shown-->
                 <span v-if="showSelected && selectedItems().length">
                 {{getSelectedForTitle()}}
             </span>
-    
-    
-    
+
+
+
                 <!--ACTIONS-->
                 <span class="actions">
                 <i v-if="showSelected && selectedItems().length" @click="unSelectAll()" class="clear-field">×</i>
                 <i class="icon-small-arrow-down"></i>
             </span>
-    
+
             </div>
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
             <div v-if="opened" class="drop-down-container">
                 <div class="filter-container" v-if="!noFilter">
                     <form>
@@ -56,7 +56,7 @@
                             <input type="checkbox" :disabled="item.disabled" @input="onSelection()" v-model="item.isSelected">
                             <span></span> <i v-if="item.iconClass" class="item-icon" :class="item.iconClass"></i> {{ item.text }}
                         </label>
-                        <jf-radio-button v-if="singleSelection" :text="item.text">
+                        <jf-radio-button :key="item.isSelected" ref="radioButtons" v-if="singleSelection" :text="item.text">
                             <input type="radio" v-model="singleSelectionIndex" :value="item.$id" @input="onSingleSelection()" :disabled="item.disabled">
                         </jf-radio-button>
                         <span class="text-input-wrapper" v-if="textInputs">
@@ -118,10 +118,10 @@
             };
         },
         created() {
-    
-            this.filter = this.$filter('filter');
+
+            this.filter = this.$filterArray;
             this.opened = false;
-    
+
             this.$scope.$watch('jfMultiDropdown.items', (newVal, oldVal) => {
                 if (newVal) {
                     this.sortItems();
@@ -139,7 +139,7 @@
                     }
                 }
             });
-    
+
             this.$scope.$watch('jfMultiDropdown.dropdownOpened', val => {
                 if (val === true) {
                     if (!this.items) {
@@ -157,10 +157,10 @@
         mounted() {
             let disabled = _.filter(this.items, item => item.disabled);
             let selected = _.filter(this.items, item => item.isSelected);
-    
+
             /* (NG2VUE) This was moved from created() to mounted() */
             /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
-    
+
             this.handleOutsideClick();
         },
         ng1_legacy: { 'controllerAs': 'jfMultiDropdown' },
@@ -176,7 +176,6 @@
                         this.sendOpenStateChange();
                         this.sortItems();
                     }
-                    this.$scope.$apply();
                 };
                 $(document).on('click', handler);
                 this.$scope.$on('$destroy', () => {
@@ -198,20 +197,23 @@
                     if (!this.opened) {
                         this.sortItems();
                     }
-                    this.filterText = '';   
-    
-                }   
-    
+                    this.filterText = '';
+
+                }
+
             },
             onSingleSelection() {
-                this.items.forEach(item => {
-                    if (!item.disabled) {
-                        item.isSelected = false;
-                    }
-                });
-                let selected = _.find(this.items, item => item.$id == this.singleSelectionIndex);
-                selected.isSelected = true;
-                this.applyChanges();
+                Vue.nextTick(() => {
+                    this.items.forEach((item, index) => {
+                        if (!item.disabled) {
+                            item.isSelected = false;
+                            this.$refs.radioButtons[index].$forceUpdate();
+                        }
+                    });
+                    let selected = _.find(this.items, item => item.$id == this.singleSelectionIndex);
+                    selected.isSelected = true;
+                    this.applyChanges();
+                })
             },
             getSelectedCount() {
                 let selected = _.filter(this.items, item => item.isSelected && !item.isAllToggleCheckbox);
@@ -274,8 +276,8 @@
                     });
                 }
                 this.unSelectAll();
-            }   
-    
+            }
+
         }
     }
 
@@ -283,6 +285,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

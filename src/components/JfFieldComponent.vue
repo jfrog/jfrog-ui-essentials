@@ -75,7 +75,9 @@
 
             if (this.inputElement.length) {
                 this.inputName = this.inputElement[0].attributes['name'] ? this.inputElement[0].attributes['name'].value : '';
-                this.formField = window[this.$element.parents('form')[0].attributes['name'].value][this.inputName];
+                this.formField = this.$element.parents('form')[0].attributes['name']
+                                    ? window[this.$element.parents('form')[0].attributes['name'].value][this.inputName]
+                                    : null
 
                 this.inferRules();
                 this.init();

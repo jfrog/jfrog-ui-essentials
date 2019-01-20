@@ -47,7 +47,6 @@
             }
         },
         ng1_legacy: {
-            require: '^jfDrawers',
             'controllerAs': 'jfDrawer'
         },
         methods: {
