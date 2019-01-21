@@ -50,7 +50,8 @@
                 isDropdownOpen: false,
                 currentTab: {
                     name: null
-                }
+                },
+                tabwidth: this.tabWidth || "100"
             };
         },
         created() {
@@ -65,8 +66,8 @@
         },
         beforeDestroy() {
             $(window).off('resize.tabs');
-            unwatch();
-            stateChangeListner();
+            this.unwatch();
+            this.stateChangeListener();
         },
         methods: {
             initTabs() {
@@ -96,7 +97,7 @@
                 });
                 let container = $(this.$element).children().eq(0);
                 let containerWidth = container.width();
-                let tabWidth = this.getTabWidthForStyle().endsWith('px') ? parseInt(this.tabWidth) : containerWidth * parseInt(this.tabWidth) / 100;
+                let tabWidth = this.getTabWidthForStyle().endsWith('px') ? parseInt(this.tabwidth) : containerWidth * parseInt(this.tabwidth) / 100;
                 let containerMargin = parseInt(this.containerMargin);
 
                 let expanderWidth = $('.action-expand').eq(0).outerWidth(true);
@@ -112,19 +113,21 @@
                     this.currentTab.name = stateParams.tab;
                 });
 
-                let unwatch = this.$scope.$watch('jfTabs.tabs', (newVal, oldVal) => {
-                    this._calculateTabsSize();
-                }, true);
-
-                let stateChangeListner = this.$rootScope.$on('$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) => {
-                    toState.tabChange = false;
-                });
-
                 $(window).on('resize.tabs', () => {
                     this.initTabs();
                     this.$scope.$digest();
                 });
 
+            },
+            unwatch() {
+                return this.$scope.$watch('jfTabs.tabs', (newVal, oldVal) => {
+                    this._calculateTabsSize();
+                }, true);
+            }, 
+            stateChangeListener() { 
+                return this.$rootScope.$on('$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) => {
+                    toState.tabChange = false;
+                });
             },
             onClickTab(tab, tabChange) {
 
@@ -167,7 +170,7 @@
                 return _.find(this.tabsCollapsed, { name: tab.name });
             },
             getTabWidthForStyle() {
-                return this.tabWidth.endsWith('%') ? this.tabWidth : this.tabWidth.endsWith('px') ? this.tabWidth : this.tabWidth + 'px';
+                return this.tabwidth.endsWith('%') ? this.tabwidth : this.tabwidth.endsWith('px') ? this.tabwidth : this.tabwidth + 'px';
             },
             hasClass(obj) {
                 if (obj && obj.class)
