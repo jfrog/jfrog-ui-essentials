@@ -105,9 +105,16 @@ export class JFrogNotifications {
             messageInnerDiv.innerText = messageInnerDiv.textContent = content;
         }
 
-
         messageDiv.append(messageInnerDiv);
         notificationElement.append(messageDiv);
+
+        // add style
+        notificationElement.style.position = 'absolute';
+        notificationElement.style.left = '0';
+        notificationElement.style.right = '0';
+        notificationElement.style.marginLeft = 'auto';
+        notificationElement.style.marginRight = 'auto';
+        notificationElement.style.marginTop = '0';
     }
 
     /**

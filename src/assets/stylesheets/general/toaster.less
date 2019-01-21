@@ -100,7 +100,7 @@
     padding: 0;
     line-height: normal;
     font-weight: 400;
-    margin-bottom: 15px!important;
+   // margin-bottom: 15px!important;
 
 
     &:before {
@@ -115,38 +115,35 @@
 
     ////// TODO: Change to 3 notification max
     ////// multiple toasters design
-    //&:nth-child(2),
-    //&:nth-child(3) {
-    //  pointer-events: none;
-    //  transition: opacity .5s,
-    //  transform .3s;
-    //  .toast-message > div {
-    //    max-height: 82px;
-    //    overflow: hidden;
-    //  }
-    //}
-    //&:nth-child(2) {
-    //  z-index: -1;
-    //  bottom: 70px;
-    //  transform: scale(0.99);
-    //}
-    //// 60-10
-    //&:nth-child(3) {
-    //  z-index: -2;
-    //  bottom: 140px;
-    //  transform: scale(0.98);
-    //}
-    //// 120-20
-    //
-    //&:nth-child(n+4) {
-    //  z-index: -5;
-    //  margin-top: -82px;
-    //  bottom: 140px;
-    //  transform: scale(0.94);
-    //}
-    //&:nth-child(n+5) {
-    //  display: none;
-    //}
+    &:nth-last-child(2),
+    &:nth-last-child(3) {
+      pointer-events: none;
+      transition: opacity .5s,
+      transform .3s;
+      .toast-message > div {
+        overflow: hidden;
+      }
+    }
+    &:nth-last-child(2) {
+      z-index: -1;
+      margin-top: 2px!important;
+      transform: scale(0.99) translateY(-35px)!important;
+    }
+
+    &:nth-last-child(3) {
+      z-index: -2;
+      margin-top: 4px!important;
+      transform: scale(0.98) translateY(-35px)!important;
+    }
+
+    &:nth-last-child(n+4) {
+      z-index: -5;
+      margin-top: -8px!important;
+      transform: scale(0.94) translateY(-35px)!important;
+    }
+    &:nth-last-child(n+5) {
+      display: none;
+    }
 
     .toast-title {
       display: table-cell;
