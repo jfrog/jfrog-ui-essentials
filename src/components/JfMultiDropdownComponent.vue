@@ -56,7 +56,7 @@
                             <input type="checkbox" :disabled="item.disabled" @input="onSelection()" v-model="item.isSelected">
                             <span></span> <i v-if="item.iconClass" class="item-icon" :class="item.iconClass"></i> {{ item.text }}
                         </label>
-                        <jf-radio-button :key="item.isSelected" ref="radioButtons" v-if="singleSelection" :text="item.text">
+                        <jf-radio-button :key="item.isSelected" v-if="singleSelection" :text="item.text">
                             <input type="radio" v-model="singleSelectionIndex" :value="item.$id" @input="onSingleSelection()" :disabled="item.disabled">
                         </jf-radio-button>
                         <span class="text-input-wrapper" v-if="textInputs">
@@ -207,7 +207,6 @@
                     this.items.forEach((item, index) => {
                         if (!item.disabled) {
                             item.isSelected = false;
-                            this.$refs.radioButtons[index].$forceUpdate();
                         }
                     });
                     let selected = _.find(this.items, item => item.$id == this.singleSelectionIndex);
