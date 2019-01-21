@@ -73,8 +73,8 @@
             height: 18px;
 
             position: absolute;
-            top: 1px;
-            left: 6px;
+            top: 1px!important;
+            left: 6px!important;
 
             &:hover, &.active {
                 background-position: -20px 0;

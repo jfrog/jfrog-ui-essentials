@@ -1,18 +1,17 @@
 <template>
 
-    <div>
-        <div>
-            <span class="panel-heading" v-if="jfPanelHeading">
+    <div :class="containerClass">
+        <span class="panel-heading" v-if="jfPanelHeading">
             {{jfPanelHeading}} <jf-help-tooltip :html="jfPanelHelpTooltip" v-if="jfPanelHelpTooltip"></jf-help-tooltip>
         </span>
-            <div class="panel-body">
-                <div class="panel panel-default clearfix">
-                    <slot></slot>
-                </div>
+        <div class="panel-body">
+            <div class="panel panel-default clearfix">
+                <slot></slot>
             </div>
         </div>
 
     </div>
+
 
 </template>
 
@@ -28,20 +27,35 @@
         ],
         'jf@inject': ['$element'],
         data() {
-            return {};
+            return {
+                todo: false,
+                hasNested: false
+            };
         },
-        ng1_legacy: { 'controllerAs': '$ctrl' },
+        computed: {
+            containerClass() {
+                return `panel-container${this.jfPanelClasses ? ' ' + this.jfPanelClasses : '' } ${this.bordered || this.hasNested ? 'bordered' : ''}`;
+            }
+        },
         methods: {
             hasNestedJfPanel() {
-                return this.$element.has('jf-panel').length > 0;
+                if (!this.$element) {
+                    return false;
+                }
+                return this.$element[0].getElementsByClassName('panel-body').length > 1;
             }
-        }
-    }
+        },
+        mounted() {
+            this.hasNested = this.hasNestedJfPanel();
+        },
+        ng1_legacy: {'controllerAs': '$ctrl'}
+    };
 
 </script>
 
 <style scoped lang="less">
-
-
+    .jf-help-tooltip {
+        display: inline-block;
+    }
 
 </style>
