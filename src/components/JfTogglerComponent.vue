@@ -1,7 +1,7 @@
 <template>
 
-    <div>
-        <div class="switch-toggle" :class="{'left': isToggledToLeft, 'right': !isToggledToLeft}" @click="toggleSelection()">
+    <div class="jf-toggler">
+        <div class="switch-toggle" :class="{'left': value, 'right': !value}" @click="toggleSelection()">
             <span></span>
         </div>
     </div>
@@ -12,22 +12,13 @@
 
     export default {
         name: 'jf-toggler',
-        props: ['isToggledToLeft'],
+        props: ['value'],
         data() {
             return {};
         },
-        mounted() {
-            this.isToggledToLeft = !!this.isToggledToLeft;
-        },
-        ng1_legacy: { 'controllerAs': '$ctrl' },
         methods: {
             toggleSelection() {
-                this.isToggledToLeft = !this.isToggledToLeft;
-    
-                /* Todo: check the following condition. It may contain some undefined references: this.onToggle */
-                if (typeof this.onToggle === 'function') {
-                    this.$emit('on-toggle');
-                }
+                this.$emit('input', !this.value);
             }
         }
     }
@@ -36,6 +27,80 @@
 
 <style scoped lang="less">
 
+@import "../../src/assets/stylesheets/main.less";
+.jf-toggler {
+  display: inline-block;
+  .switch-toggle {
+    display: inline-block;
+    width: 35px;
+    padding: 2px;
+    border-radius: 20px;
+    position: relative;
+    height: 19px;
+    cursor: pointer;
+    vertical-align: middle;
+    margin:  -2px 5px 0px 5px;
+    transition: all .25s ease-in;
+    span {
+      display: inline-block;
+      background: #fff;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      transition: all .15s ease-in;
+    }
+  }
+}
+
+.switch-toggle {
+    &.left {
+      background: @greenBGPrimary; // fallback
+      span {
+        left: 2px;
+      }
+    }
+    &.right {
+      background: @grayBGDisabled; // fallback
+      span {
+        left: 18px;
+      }
+    }
+  }
+
+.jf-toggler-text {
+  font-weight: 600;
+}
+
+// This is not wrapped by jf-toggler intentionally
+.small-toggler {
+  .jf-toggler-text {
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .switch-toggle {
+    width: 22px;
+    padding: 2px;
+    border-radius: 20px;
+    height: 13px;
+    span {
+      width: 9px;
+      height: 9px;
+    }
+    &.left {
+      span {
+        left: 2px;
+      }
+    }
+    &.right {
+      span {
+        left: 11px;
+      }
+    }
+  }
+}
+    
     
 
 </style>

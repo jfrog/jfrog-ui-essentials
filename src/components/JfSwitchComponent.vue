@@ -5,7 +5,7 @@
             <span v-if="jfSwitchTitle" class="jf-switch-title">{{jfSwitchTitle}}</span>
             <jf-help-tooltip v-if="helpTooltip" :html="helpTooltip"></jf-help-tooltip>
             <ul class="jf-switch-options">
-                <li v-for="option in optionObjects">
+                <li v-for="(option, index) in optionObjects" :key="index">
                     <a class="jf-switch-option" href="" @click.prevent="selectOption(option)" :class="{active: isSelected(option), disabled: disabled}">{{option.text}}</a>
                 </li>
             </ul>
@@ -42,9 +42,6 @@
             if (_.isEmpty(this.value))
                 this.$emit('input', this.optionObjects[0].value);
         },
-        ng1_legacy: {
-            'controllerAs': 'jfSwitch'
-        },
         methods: {
             updateOptionObjects() {
                 this.optionObjects = this.options.map(option => {
@@ -71,7 +68,48 @@
 </script>
 
 <style scoped lang="less">
+@import "../../src/assets/stylesheets/main.less";
+.jf-switch {
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 400;
 
+  .jf-switch-title {
+    color: @grayFontDarker;
+    margin-right: 10px;
+  }
 
+  .jf-switch-options {
+    display: inline-block;
+
+    li {
+      display: inline-block;
+      padding: 0;
+
+      &:not(:first-child)::before {
+        content: "|";
+        color: @grayFontGeneral;
+        padding: 0 4px 0 6px;
+      }
+    }
+  }
+
+  .jf-switch-option {
+    font-weight: 400;
+    color: @grayFontGeneral;
+    text-decoration: none;
+    
+    &:hover, &.active {
+      color: @greenFontHeader;
+    }
+    &.disabled {
+      color: @grayFontGeneral;
+      &.active {
+        color: darken(@grayFontGeneral, 30%);
+        font-weight: 600;
+      }
+    }
+  }
+}
 
 </style>
