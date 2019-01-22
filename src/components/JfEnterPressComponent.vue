@@ -6,7 +6,22 @@
 
 <script>
 
-    import KEYS from '@/constants/keys.constants.js';
+    /* ---------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------- */
+
+
+
+        // No need for this component being converted. Simply use -
+        //   <input v-on:keyup.enter="callback">
+
+
+
+    /* ---------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------- */
+
+
+
+    import KEYS from '../constants/keys.constants.js';
     export default {
         name: 'jf-enter-press',
         'jf@inject': [
@@ -17,11 +32,11 @@
             return {};
         },
         mounted() {
-    
+
             /* (NG2VUE) This was moved from created() to mounted() */
             /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
             this.$element.on('keypress', e => this._onKeyPress(e));
-    
+
             /* (NG2VUE) This was moved from created() to mounted() */
             /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
             this.$scope.$on('$destroy', () => this.$element.off('keypress'));
@@ -43,6 +58,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>
