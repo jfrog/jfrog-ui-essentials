@@ -179,6 +179,7 @@
             },
             setActionsDictionary(actionsDictionary) {
                 this.actionsDictionary = actionsDictionary;
+                this._transformActionsData();
             },
             setActions(actions) {
                 this.actionsList.actions = actions;
@@ -210,6 +211,9 @@
                 },10);
             },
             _transformActionsData() {
+                if (!this.actionsDictionary || !this.actionsList) {
+                    return;
+                }
                 // extend action properties from ACTIONS dictionary
                 this.actionsList.actions.forEach(actionObj => {
                     if (!this.actionsDictionary[actionObj.name]) {
