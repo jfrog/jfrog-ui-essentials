@@ -21,7 +21,8 @@
         props: ['config'],
         'jf@inject': [
             'JFrogEventBus',
-            'JFrogUIUtils'
+            'JFrogUIUtils',
+            '$scope'
         ],
         data() {
             return {
