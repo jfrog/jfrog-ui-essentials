@@ -33,7 +33,7 @@
     export default {
         name: 'jf-list-maker',
         props: [
-            'values',
+            'value',
             'label',
             'helpTooltip',
             'objectName',
@@ -49,14 +49,13 @@
             'validationRegexMessage',
             'caseInsensitive'
         ],
-        'jf@inject': ['$attrs'],
         data() {
             return {
                 newValue: "",
                 errorMessage: null,
                 derivedPlaceHolder: this.placeholder || `New ${this.objectName || "Value"}`,
                 // The three variables below are being added to avoid mutating the prop
-                int_values: this.values || [],
+                int_values: this.value || [],
                 int_listId: this.listId,
                 int_noSort: this.noSort,
                 int_minLength: this.minLength || 0
@@ -83,7 +82,6 @@
                 this.int_listId = 'list-id-' + randomId;
             }
         },
-        ng1_legacy: { 'controllerAs': 'jfListMaker' },
         methods: {
             addValue() {
                 this.errorMessage = null;
@@ -104,14 +102,11 @@
                 if (!this.int_noSort) {
                     this.int_values = _.sortBy(this.int_values);
                 }
+                this.$emit('input', this.int_values);
             },
             removeValue(index) {
                 this.int_values.splice(index, 1);
-
-                /* NOTE: The parent will need to use the sync modifier to read the changed value */
-                /* https://vuejs.org/v2/guide/components-custom-events.html#sync-Modifier */
-                this.$emit('update:values', this.int_values);
-
+                this.$emit('input', this.int_values);
                 this.$emit('on-after-delete-value');
             },
             _isValueUnique(text) {
