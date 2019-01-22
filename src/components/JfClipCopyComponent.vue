@@ -1,9 +1,13 @@
 <template>
     <span class="clip-copy-button">
-        <a class="copy-to-clip icon icon-copy-to-clipboard-2" :id="copyIconId" @click="doCopy"></a>
-        <b-tooltip :show.sync="showTooltip" :target="copyIconId" placement="bottom" ref="tooltip">
-              {{tooltipText}}
-        </b-tooltip>
+        <a class="copy-to-clip icon icon-copy-to-clipboard-2"
+           :id="copyIconId"
+           @click="doCopy"
+            v-jf-tooltip.bind="tooltipText">
+        </a>
+        <!--<b-tooltip :show.sync="showTooltip" :target="copyIconId" placement="bottom" ref="tooltip">-->
+              <!--{{tooltipText}}-->
+        <!--</b-tooltip>-->
     </span>
 </template>
 
