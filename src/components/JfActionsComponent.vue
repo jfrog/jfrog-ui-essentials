@@ -85,15 +85,17 @@
         },
         mounted() {
             let thisComponent = this;
-                 this.intervalId = setInterval(() => {
-                    thisComponent._divideActions();
-                }, 2000);
+
             if (!thisComponent.initMethod || !thisComponent.$parent[thisComponent.initMethod]) {
                 console.error('jfActions: Missing init-method attribute');
                 return;
             } else {
                 thisComponent.$parent[thisComponent.initMethod](thisComponent);
             }
+
+            this.intervalId = setInterval(() => {
+                thisComponent._divideActions();
+            }, 2000);
 
             thisComponent.$watch('hasSingleVisibleAction', (newVal, oldVal) => {
                 if (newVal !== oldVal) {
