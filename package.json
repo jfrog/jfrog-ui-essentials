@@ -53,6 +53,7 @@
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "nodemon": "^1.18.9",
+    "prettier": "1.16.0",
     "vue-template-compiler": "^2.5.17"
   }
 }
