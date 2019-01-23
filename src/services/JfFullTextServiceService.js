@@ -1,7 +1,6 @@
 export class JfFullTextService {
     constructor() {
-        this.$inject('$rootScope', 'JFrogModal');
-        this.$rootScope = this.$rootScope;
+        this.$inject('JFrogModal');
         this.modal = this.JFrogModal;
     }
 
@@ -9,22 +8,15 @@ export class JfFullTextService {
         if (!text || !text.length) {
             return;
         }
-        this.$set(this, 'modalScope', this.$rootScope.$new());
-        this.$set(this.modalScope, 'modalTitle', textSubject);
-        this.$set(this.modalScope, 'closeModal', () => {
-            return this.modalInstance.close();
-        });
-        if (!showAsList)
-            this.$set(this.modalScope, 'text', this.toHtmlRows(text));
-        else {
-            this.$set(this.modalScope, 'list', text);
-            this.$set(this.modalScope, 'onItemClick', item => {
-                this.modalInstance.close();
-                if (listItemClickCB)
-                    listItemClickCB(item);
-            });
+        let options = {
+            windowClass: 'full-text-modal' + (windowClass ? ' ' + windowClass : ''),
+            title: textSubject,
+            text: !showAsList && this.toHtmlRows(text),
+            list: showAsList && text,
+            listItemClickCB: listItemClickCB
         }
-        this.$set(this, 'modalInstance', this.modal.launchModal('@full.text.modal', this.modalScope, modalWidth, true, { windowClass: 'full-text-modal' + (windowClass ? ' ' + windowClass : '') }));
+
+        this.modal.launchModal('@full.text.modal', {}, modalWidth, true, options);
     }
     toHtmlRows(text) {
         if (typeof text === 'string') {

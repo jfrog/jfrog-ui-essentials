@@ -1,5 +1,6 @@
 import JFrogConfirmModalComponent from '../components/JfConfirmModalComponent.vue'
 import JFrogCodeModalComponent from '../components/JfCodeModalComponent.vue'
+import JfFullTextModalComponent from '../components/JfFullTextModalComponent.vue'
 export class JFrogModal {
     /* @ngInject */
     constructor() {
@@ -79,12 +80,15 @@ export class JFrogModal {
 
         let ModalComponent;
         switch (modalObj.templateUri) {
-            case "@confirm_modal":
+            case '@confirm_modal':
                 ModalComponent = JFrogConfirmModalComponent
-                break;
-            case "@code_modal":
+                break
+            case '@code_modal':
                 ModalComponent = JFrogCodeModalComponent
-                break;
+                break
+            case '@full.text.modal':
+                ModalComponent = JfFullTextModalComponent
+                break
             default:
                 debugger;
                 let customTemplatesBaseUrl = this.JFrogUILibConfig.getConfig().customModalTemplatesPath;
