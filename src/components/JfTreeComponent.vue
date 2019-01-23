@@ -179,11 +179,11 @@
                 elem.append(templateElem.children()[0]);
             },
             _normalizeWheelEvent(event) {
-                var PIXEL_STEP = 10;
-                var LINE_HEIGHT = 40;
-                var PAGE_HEIGHT = 800;
+                let PIXEL_STEP = 10;
+                let LINE_HEIGHT = 40;
+                let PAGE_HEIGHT = 800;
 
-                var sX = 0, sY = 0, pX = 0, pY = 0;
+                let sX = 0, sY = 0, pX = 0, pY = 0;
 
                 if ('detail' in event) {
                     sY = event.detail;
