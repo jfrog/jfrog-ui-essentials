@@ -25,7 +25,7 @@ export class JFrogModal {
             scope: scope,
             size: size
         };
-        return this._launch(modalObj, scope, size, cancelable, options);
+        return this._launch(modalObj, size, cancelable, options);
     }
     /**
 	 * Use template markup
@@ -44,7 +44,7 @@ export class JFrogModal {
             scope: scope,
             size: size
         };
-        return this._launch(modalObj, scope, size, cancelable, options);
+        return this._launch(modalObj,  size, cancelable, options);
     }
     attachToDOM(ModalComponent, props) {
         $('#jfModal___BV_modal_outer_').parent().remove();//Remove any existing modal divs
@@ -59,13 +59,19 @@ export class JFrogModal {
         });
         return modalInstance;
     }
-    _launch(modalObj, scope, size, cancelable, options) {
+    _launch(modalObj, size, cancelable, options) {
         if (!cancelable) {
             modalObj.backdrop = 'static';
             modalObj.keyboard = false;
         }
-        if (options && _.isObject(options))
+
+        if (options && _.isObject(options)) {
             _.extend(modalObj, options);
+        }
+
+        let result = new Promise( (resolve, reject) => {
+            modalObj.result = {resolve, reject};
+        } );
 
         let focused = $(':focus');
         if (focused.length)
@@ -80,12 +86,15 @@ export class JFrogModal {
                 ModalComponent = JFrogCodeModalComponent
                 break;
             default:
+                debugger;
                 let customTemplatesBaseUrl = this.JFrogUILibConfig.getConfig().customModalTemplatesPath;
-                if (customTemplatesBaseUrl && !customTemplatesBaseUrl.endsWith('/'))
+                if (customTemplatesBaseUrl && !customTemplatesBaseUrl.endsWith('/')) {
                     customTemplatesBaseUrl += '/';
-                modelObj.templateUri = (customTemplate ? customTemplatesBaseUrl : this.templatesBaseUrl) + model.templateUri + '.html';
+                }
+                modalObj.templateUri = `${customTemplatesBaseUrl}${
+                    modalObj.templateUri
+                }.html`
         }
-
 
         let modalInstance = this.attachToDOM(ModalComponent, modalObj)
 
@@ -98,6 +107,12 @@ export class JFrogModal {
                 $('.modal-dialog').css('max-width', size);
             });
         }
+
+        return {
+            result: result,
+            close: () => modalInstance.$refs.jfModal.hide(),
+        }
+
         /*
         this._calculateMaxHeight();
         let keyDownBinded = this._onKeyDown.bind(this);
@@ -216,7 +231,7 @@ export class JFrogModal {
             beforeMessage: beforeMessage,
             objectName: objectName,
         }
-        this.launchModal('@code_modal', null, 'sm', null, options);
+        return this.launchModal('@code_modal', null, 'sm', null, options);
     }
 
     /**
@@ -231,23 +246,18 @@ export class JFrogModal {
         buttons = buttons || {};
         buttons.confirm = buttons.confirm || 'Confirm';
         buttons.cancel = buttons.cancel || 'Cancel';
-        return new Promise( (resolve,reject) => {
-            let options = {
-                buttons: buttons,
-                content: content,
-                title: title || 'Are you sure?',
-                checkboxLabel: checkboxLabel,
-                checkbox: { checked: false },
-                result: {resolve,reject},
-                onCheckboxStateChange: state => {
-                    if (checkBoxChangeListener)
-                        checkBoxChangeListener(state, options)
-                },
-            }
-            this.launchModal('@confirm_modal', {}, 'sm', null, options);
-        }).catch(e=>{
-            console.error(e);
-        });
+        let options = {
+            buttons: buttons,
+            content: content,
+            title: title || 'Are you sure?',
+            checkboxLabel: checkboxLabel,
+            checkbox: { checked: false },
+            onCheckboxStateChange: state => {
+                if (checkBoxChangeListener)
+                    checkBoxChangeListener(state, options)
+            },
+        }
+        return this.launchModal('@confirm_modal', {}, 'sm', null, options).result;
     }
 
     launchWizard(wizardDefinitionObject) {
