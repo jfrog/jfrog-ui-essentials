@@ -33,9 +33,6 @@
                 okOnly: true,
             };
         },
-        mounted(){
-            console.log("in full text", this.$props);
-        },
         methods: {
             onItemClick(item){
                 this.$refs.jfModal.hide();
