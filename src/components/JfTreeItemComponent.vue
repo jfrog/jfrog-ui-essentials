@@ -78,7 +78,7 @@
                 }
             },
             _watchExpansion() {
-                this.$scope.$watch('jfTreeItem.isExpanded()', expanded => this._syncExpansionClass(expanded));
+                this.$scope.$watch(() => this.isExpanded(), expanded => this._syncExpansionClass(expanded));
 
                 this.$scope.$watch('jfTreeItem.data', () => this._syncExpansionClass(this.isExpanded()));
             },
@@ -92,11 +92,11 @@
                     }
                 };
 
-                this.$scope.$watch('jfTreeItem.tree.api.$freezedSelected || jfTreeItem.tree.api.$selectedNode', selected => {
+                this.$scope.$watch(() => this.tree.api.$freezedSelected || this.tree.api.$selectedNode, selected => {
                     let iAmSelected = selected === this.data.data;
                     toggleClass(iAmSelected, 'selected');
                 });
-                this.$scope.$watch('jfTreeItem.tree.api.$freezedPreSelected || jfTreeItem.tree.api.$preSelectedNode', preSelected => {
+                this.$scope.$watch(() => this.tree.api.$freezedPreSelected || this.tree.api.$preSelectedNode, preSelected => {
                     let iAmPreSelected = preSelected === this.data.data;
                     toggleClass(iAmPreSelected, 'pre-selected');
                 });
@@ -139,7 +139,7 @@
                 let elem = $(this.$element).find('.jf-tree-item-content .node-text');
                 if (elem.length) {
                     let text = elem.text();
-                    elem.unhighlight();
+//                    elem.unhighlight();
                     if (text && this.tree.api.quickFindTerm) {
                         let asmResponse = this.asm.match(text, this.tree.api.quickFindTerm);
                         if (asmResponse.matched) {
@@ -179,7 +179,7 @@
             },
             createIndentation() {
                 if (!this.tree.api.linesVisible) {
-                    this.$set(this.data, 'data.$indentation', _.map(new Array(this.data.level), i => ({})));
+                    this.$set(this.data.data, '$indentation', _.map(new Array(this.data.level), i => ({})));
                     return;
                 }
 
@@ -205,7 +205,7 @@
                     indentation.push(unit);
                     relevantItem = relevantItem.parent;
                 }
-                this.$set(this.data, 'data.$indentation', indentation.reverse());
+                this.$set(this.data.data, '$indentation', indentation.reverse());
             }
         }
     }

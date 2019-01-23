@@ -2,7 +2,10 @@
 
     <div>
         <div class="jf-context-menu" :style="position" v-if="isOpen">
-            <a href="" v-for="action in actions" @click.prevent="_onActionClick($event,action)" :href="action.link" class="action-item" :icon-name="action.icon || ''">
+            <a href="" v-for="action in actions"
+               @click.prevent="_onActionClick($event, action)"
+               :href="action.link" class="action-item"
+               :icon-name="action.icon || ''">
                 <i class="action-icon" :class="action.icon"></i>
                 <span>{{action.name}}</span>
             </a>
@@ -90,8 +93,8 @@
                 this.$scope.$on('$destroy', () => {
                     $(document).off('mousedown', handler);
                 });
-            }   
-    
+            }
+
         }
     }
 
@@ -99,6 +102,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

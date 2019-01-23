@@ -365,24 +365,28 @@ export class DependencyInjectionManager {
 
     _injectDefaultInjections(injectee) {
         let dim = this;
-        injectee.$jfrog = Vue.prototype.$jfrog;
-        injectee.$inject = function(...injections) {
-            dim.injectOn(this, ...injections);
-        };
+        if (!injectee.$jfrog) {
+            injectee.$jfrog = Vue.prototype.$jfrog;
+            injectee.$inject = function(...injections) {
+                dim.injectOn(this, ...injections);
+            };
 
-        let router = this.router;
-        injectee.$router = router;
-        Object.defineProperty(injectee, '$route', {
-            get() {
-                return router.currentRoute;
-            }
-        })
-        injectee.$set = Vue.set.bind(Vue);
-        injectee.$delete = Vue.delete.bind(Vue);
+            let router = this.router;
+            injectee.$router = router;
+            Object.defineProperty(injectee, '$route', {
+                get() {
+                    return router.currentRoute;
+                }
+            })
+            injectee.$set = Vue.set.bind(Vue);
+            injectee.$delete = Vue.delete.bind(Vue);
+        }
 
     }
 
     _makeInjectableReactive(serviceInstance, serviceName) {
+        if (!serviceInstance.$reactive) return;
+
         let dim = this;
         let vue = new Vue({
             data() {
@@ -403,6 +407,7 @@ export class DependencyInjectionManager {
             }
 
         })
+        serviceInstance.$reactive = true;
 
     }
 

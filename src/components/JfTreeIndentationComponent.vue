@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <div class="indentation-wrap" :style="{width: (indentation.length * 26) + 'px'}">
+        <div class="indentation-wrap" :style="{width: (indentation ? indentation.length * 26 : 0) + 'px'}">
             <div class="indentation-flex-wrap" v-html="indentationHtml" v-if="visible">
             </div>
         </div>
@@ -28,6 +28,7 @@
         },
         created() {
             this.$scope.$watch('jfTreeIndentation.indentation', () => {
+                if (!this.indentation) return;
                 // Build the inner html for the units here in js, it is much faster than using ng-repeat
                 let indentationHtml = '';
                 let htmlForIndentation = indentation => {
@@ -40,7 +41,7 @@
                 this.indentation.forEach(indentation => {
                     indentationHtml += htmlForIndentation(indentation);
                 });
-                this.indentationHtml = this.$sce.trustAsHtml(indentationHtml);
+                this.indentationHtml = indentationHtml;
             });
         },
         ng1_legacy: { 'controllerAs': 'jfTreeIndentation' }
@@ -50,6 +51,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

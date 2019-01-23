@@ -1,10 +1,9 @@
 import {TreeViewPane} from '@/ui_components/jf_tree/tree_view_pane';
 export function JFTreeApi() {
-    this.$inject('$q', '$timeout', 'AdvancedStringMatch', 'ContextMenuService', 'JFrogEventBus');
-    'ngInject';
+    let injections = $jfrog.get(['$q', '$timeout', 'AdvancedStringMatch', 'ContextMenuService', 'JFrogEventBus']);
     class JFTreeApiClass {
-        /* @ngInject */
         constructor(appScope) {
+            _.extend(this, injections);
             this.$root = [];
             this.$viewPanes = [];
             this.$openedNodes = [];
@@ -37,7 +36,7 @@ export function JFTreeApi() {
             this.$viewPanes.forEach(vp => vp._buildFlatItems());
             if (!this.$isReady) {
                 this.$isReady = true;
-                this.$timeout(() => this.fire('ready'));
+                this.fire('ready');
             }
         }
 

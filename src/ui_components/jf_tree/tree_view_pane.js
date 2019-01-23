@@ -75,7 +75,7 @@ export class TreeViewPane {
             } else
                 delete this.scrollTimeout;
         };
-        cycle();   
+        cycle();
 
     }
 
@@ -118,16 +118,14 @@ export class TreeViewPane {
         if (this.itemsPerPage === 'auto') {
             this.autoHeight = true;
             this._setAutoItemsPerPage();
-        }   
+        }
 
     }
 
     _setAutoItemsPerPage() {
-        this.treeApi.$timeout(() => {
-            let containerHeight = $(this.dirCtrl.$element).parent().height();
-            this.containerHeight = containerHeight;
-            this.setItemsPerPage(Math.floor(containerHeight / parseFloat(this.itemHeight)));
-        });
+        let containerHeight = $(this.dirCtrl.$element).parent().height();
+        this.containerHeight = containerHeight;
+        this.setItemsPerPage(Math.floor(containerHeight / parseFloat(this.itemHeight)));
     }
 
     _hasHorizontalScrollbar() {
@@ -261,7 +259,7 @@ export class TreeViewPane {
             }
             return !remove;
         });
-        this.update();   
+        this.update();
 
     }
 
@@ -398,7 +396,7 @@ export class TreeViewPane {
                 delete this.treeApi.$rootCache;
                 this.treeApi.getChildren().then(() => doRefresh());
             } else
-                doRefresh();   
+                doRefresh();
 
         }
         return defer.promise;
@@ -534,7 +532,7 @@ export class TreeViewPane {
             }
             this.scrollTo(scrollIndex + displace + hScrollFactor, jump ? 0 : undefined);
         }
-        this.dirCtrl.syncFakeScroller(false);   
+        this.dirCtrl.syncFakeScroller(false);
 
     }
 
@@ -643,6 +641,6 @@ export class TreeViewPane {
             'connection-point': connectionPoint,
             'last-connection-point': lastConnectionPoint
         };
-    }   
+    }
 
 }

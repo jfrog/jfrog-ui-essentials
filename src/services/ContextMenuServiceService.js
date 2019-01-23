@@ -1,12 +1,7 @@
 export class ContextMenuService {
     /* @ngInject */
     constructor() {
-        this.$inject('$timeout', '$document', 'JFrogEventBus', '$compile', '$rootScope');
-        this.$timeout = this.$timeout;
-        this.$compile = this.$compile;
-        this.$rootScope = this.$rootScope;
-        this.$document = this.$document;
-        this.JFrogEventBus = this.JFrogEventBus;
+        this.$inject('$timeout', 'JFrogEventBus', '$compile', '$rootScope');
         this.EVENTS = this.JFrogEventBus.getEventsDefinition();
         this._compileContextMenu();
     }
@@ -19,16 +14,16 @@ export class ContextMenuService {
     _getDirectiveForCompile(directiveName) {
         let directiveElementName = _.kebabCase(directiveName);
         let directiveElement = document.createElement(directiveElementName);
-        return angular.element(directiveElement.outerHTML);
+        return $('<div>' + directiveElement.outerHTML + '</div>').children()[0];
     }
     /***
 	 * _compileContextMenu - Copmile the context menu once and apend to body
 	 * @private
 	 * */
     _compileContextMenu() {
-        this.$set(this, '$body', $(this.$document).find('body:eq(0)'));
+        this.$body = $(document).find('body:eq(0)');
         if (!this.$body.find('jf-context-menu').length) {
-            this.$set(this, '$scope', this.$rootScope.$new());
+            this.$scope = this.$rootScope.$new();
             let markup = this._getDirectiveForCompile('jfContextMenu');
             let elem = this.$compile(markup)(this.$scope);
             this.$body.append(elem);
@@ -80,5 +75,5 @@ export class ContextMenuService {
                 return false;
             }
         });
-    }   
+    }
 }

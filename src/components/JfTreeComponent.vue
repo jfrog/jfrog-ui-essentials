@@ -8,9 +8,9 @@
                         <div class="scroll-faker" v-init="initScrollFaker()" :style="{height: (getTotalScrollHeight() > maxFakeScrollHeight ? maxFakeScrollHeight : getTotalScrollHeight()) + 'px'}">
                         </div>
                     </div>
-                    <div class="h-scroll-wrapper" :style="{height: (getPageHeight() + getTranslate()) + 'px'}" v-msd-wheel="'onMouseWheel($event, $delta, $deltaX, $deltaY)'">
+                    <div class="h-scroll-wrapper" :style="{height: (getPageHeight() + getTranslate()) + 'px'}" @mousewheel="onMouseWheel($event, $delta, $deltaX, $deltaY)">
                         <div class="h-scroll-content">
-                            <jf-tree-item v-for="(item, $index) in viewPane._getPageData()" :tree="jfTree" :item-id="$index" :data="item"></jf-tree-item>
+                            <jf-tree-item v-for="(item, $index) in viewPane._getPageData()" :key="$index" :tree="jfTree" :item-id="$index" :data="item"></jf-tree-item>
                         </div>
                     </div>
                 </div>
@@ -49,7 +49,10 @@
             return {
                 viewPane: null,
                 maxFakeScrollHeight: 1000000,
-                noFilterResults: null
+                noFilterResults: null,
+                virtualScrollIndex: 0,
+                virtScrollDisplacement: 0,
+                currentPage: 0
             };
         },
         created() {
@@ -66,9 +69,6 @@
                         this.$timeout(() => this.refresh(false));
                     });
 
-                    this.currentPage = 0;
-                    this.virtualScrollIndex = 0;
-                    this.virtScrollDisplacement = 0;
                 }
             });
 
@@ -83,11 +83,6 @@
         },
         mounted() {
             this.viewPaneName = this.viewPaneName || 'default';
-            let relevant = this.api.getPreSelectedNode() || this.api.getSelectedNode();
-            let parent = this.api.getParentNode(relevant);
-
-            /* (NG2VUE) This was moved from created() to mounted() */
-            /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
 
             $(this.$element).find('.jf-tree').keydown(e => {
                 this.$timeout(() => {
@@ -165,24 +160,23 @@
                 let existingScope = _.find(this.cellScopes, s => s.node === node.data);
                 let itemScope;
                 if (!existingScope) {
-                    itemScope = this.$rootScope.$new();
-
-                    this.cellScopes.push(itemScope);
-
-                    _.extend(itemScope, {
+                    itemScope = this.$rootScope.$new({
                         node: node.data,
                         appScope: this.api.appScope,
                         tree: { api: this.api }
                     });
+
+                    this.cellScopes.push(itemScope);
+
                 } else
                     itemScope = existingScope;
 
                 let template = _.isFunction(this.api.nodeTemplate) ? this.api.nodeTemplate(node.data) : this.api.nodeTemplate;
 
-                let templateElem = $(template);
-                this.$compile(templateElem)(itemScope);
+                let templateElem = $('<div>' + template + '</div>');
+                this.$compile(templateElem.children()[0])(itemScope);
                 elem.empty();
-                elem.append(templateElem);
+                elem.append(templateElem.children()[0]);
             },
             _normalizeWheelEvent(event) {
                 var PIXEL_STEP = 10;
@@ -253,8 +247,8 @@
                     delete this.viewPane.scrollTimeout;
                 }
 
-                let normalDelta = this._normalizeWheelEvent($event.originalEvent).pixelY;
-                let xDelta = this._normalizeWheelEvent($event.originalEvent).pixelX;
+                let normalDelta = this._normalizeWheelEvent($event).pixelY;
+                let xDelta = this._normalizeWheelEvent($event).pixelX;
 
                 if (Math.abs(normalDelta) < Math.abs(xDelta)) {
                     $event.stopPropagation();
@@ -304,37 +298,34 @@
             initScrollFaker() {
                 let scrollParent = $(this.$element).find('.scroll-faker-container');
                 scrollParent.on('scroll', e => {
-                    this.$scope.$apply(() => {
-                        if (this.$settingScroll) {
-                            delete this.$settingScroll;
-                            return;
+                    if (this.$settingScroll) {
+                        delete this.$settingScroll;
+                        return;
+                    }
+                    if (this.viewPane.scrollTimeout) {
+                        this.$timeout.cancel(this.viewPane.scrollTimeout);
+                        delete this.viewPane.scrollTimeout;
+                    }
+                    let len = this.viewPane._getPrePagedData().length;
+                    if (len) {
+                        let maxScrollTop = scrollParent[0].scrollHeight - scrollParent.outerHeight();
+                        let relativePosition = scrollParent.scrollTop() / maxScrollTop;
+                        if (_.isNaN(relativePosition)) {
+                            relativePosition = 1;
                         }
-                        if (this.viewPane.scrollTimeout) {
-                            this.$timeout.cancel(this.viewPane.scrollTimeout);
-                            delete this.viewPane.scrollTimeout;
-                        }
-                        let len = this.viewPane._getPrePagedData().length;
-                        if (len) {
-                            let maxScrollTop = scrollParent[0].scrollHeight - scrollParent.outerHeight();
-                            let relativePosition = scrollParent.scrollTop() / maxScrollTop;
-                            if (_.isNaN(relativePosition)) {
-                                relativePosition = 1;
-                            }
-                            let newScrollIndex = relativePosition * (len - this.viewPane.itemsPerPage);
-                            if (newScrollIndex < 0)
-                                newScrollIndex = 0;
-                            this.virtualScrollIndex = Math.floor(newScrollIndex);
-                            this.virtScrollDisplacement = newScrollIndex - this.virtualScrollIndex;
-                            this.currentPage = Math.floor((this.virtualScrollIndex + this.viewPane.itemsPerPage - 1) / this.viewPane.itemsPerPage);
-                        } else {
-                            this.virtualScrollIndex = 0;
-                            this.virtScrollDisplacement = 0;
-                            this.currentPage = 0;
-                        }
-                        this.api.fire('pagination.change', this.paginationApi.getCurrentPage());
-                    });
-                })
-    ;
+                        let newScrollIndex = relativePosition * (len - this.viewPane.itemsPerPage);
+                        if (newScrollIndex < 0)
+                            newScrollIndex = 0;
+                        this.virtualScrollIndex = Math.floor(newScrollIndex);
+                        this.virtScrollDisplacement = newScrollIndex - this.virtualScrollIndex;
+                        this.currentPage = Math.floor((this.virtualScrollIndex + this.viewPane.itemsPerPage - 1) / this.viewPane.itemsPerPage);
+                    } else {
+                        this.virtualScrollIndex = 0;
+                        this.virtScrollDisplacement = 0;
+                        this.currentPage = 0;
+                    }
+                    this.api.fire('pagination.change', this.paginationApi.getCurrentPage());
+                });
             },
             getTranslate() {
                 let displacement = this.$freezedVScrollDisplacement !== undefined ? this.$freezedVScrollDisplacement : this.virtScrollDisplacement;
@@ -382,10 +373,204 @@
         }
     }
 
+    class PaginationApi {
+        constructor(treeCtrl) {
+            this.treeCtrl = treeCtrl;
+        }
+        getTotalPages() {
+            return Math.ceil(this.treeCtrl.viewPane.getTotalLengthOfData() / this.treeCtrl.viewPane.itemsPerPage);
+        }
+        getCurrentPage() {
+            return this.treeCtrl.currentPage + 1;
+        }
+        nextPage() {
+            if (this.getCurrentPage() === this.getTotalPages()) return;
+            this.treeCtrl.currentPage++;
+            this.syncVirtualScroll();
+            this.update();
+            this.treeCtrl.api.fire('pagination.change', this.getCurrentPage());
+        }
+
+        prevPage() {
+            if (this.getCurrentPage() === 1) return;
+            this.treeCtrl.currentPage--;
+            this.syncVirtualScroll();
+            this.update();
+            this.treeCtrl.api.fire('pagination.change', this.getCurrentPage());
+        }
+
+        setPage(pageNum) {
+            if (pageNum < 1 || pageNum > this.getTotalPages()) return;
+
+            this.treeCtrl.currentPage = pageNum - 1;
+
+            this.syncVirtualScroll()
+            this.update();
+            this.treeCtrl.api.fire('pagination.change', this.getCurrentPage());
+        }
+
+        update() {
+            if (this.getCurrentPage() > this.getTotalPages()) {
+                this.setPage(this.getTotalPages());
+            }
+
+            if (this.listeners) this.listeners.forEach(listener=>listener(this.getCurrentPage()));
+        }
+
+        registerChangeListener(listener) {
+            if (!this.listeners) this.listeners = []
+            this.listeners.push(listener);
+        }
+
+        syncVirtualScroll() {
+            this.treeCtrl.virtualScrollIndex = this.treeCtrl.currentPage*this.treeCtrl.viewPane.itemsPerPage;
+            this.treeCtrl.syncFakeScroller();
+        }
+
+    }
+
 </script>
 
 <style scoped lang="less">
+    @import "../../src/assets/stylesheets/variables.less";
+    @import "../../src/assets/stylesheets/mixins.less";
 
+    /deep/ .jf-tree {
+        width: 100%;
+        outline: none;
+        position: relative;
+        .jf-tree-container {
+            width: 100%;
+            overflow: visible;
+            .tree-items-container {
+                position: relative;
+                .scroll-faker-container {
+                    position: absolute;
+                    width: 30px;
+                    //        height: 100%;
+                    overflow: auto;
+                    overflow-x: hidden;
+                    z-index: 1;
+                    .scroll-faker {
+                    }
+                }
+                .h-scroll-wrapper {
+                    overflow-x: auto;
+                    overflow-y: hidden;
+                    .h-scroll-content {
+                        display: inline-block;
+                        min-width: 100%;
 
+                        .jf-tree-item {
+                            cursor: pointer;
+                            position: relative;
+                            .user-select(none);
+
+                            &:before {
+                                content: '';
+                                height: inherit;
+                                width: 100%;
+                                left: 0;
+                                right: 0;
+                                opacity: .1;
+                                position: absolute;
+                            }
+
+                            &.quick-find-match {
+                                .node-text {
+                                    font-weight: 900;
+                                }
+                            }
+                            &:hover {
+                                .jf-tree-item-content {
+                                    color: @blackBGLight;
+                                }
+                            }
+                            &.selected {
+                                &:before {
+                                    background: #2291B2;
+                                    //              background-color: #e9f4f7;
+                                }
+                                .jf-tree-item-content {
+                                    color: @blackBGLight;
+                                }
+                            }
+                            &.pre-selected:not(.selected) {
+                                &:before {
+                                    background: #919191;
+                                    //              background-color: #f4f4f4;
+                                }
+                            }
+                            //        border: 1px red solid;
+                            .jf-tree-item-container {
+                                display: flex;
+                                flex-direction: row;
+                                white-space: nowrap;
+                                jf-tree-indentation {
+                                    .indentation-wrap {
+                                        display: inline-block;
+                                        .indentation-flex-wrap {
+                                            position: absolute;
+                                            top:0;
+                                            left:0;
+                                            bottom: 0;
+                                            display: flex;
+                                            flex-direction: row;
+                                            .indentation-unit {
+                                                width: 26px;
+                                                background-size: 100% 100%;
+                                                opacity: .3;
+                                            }
+                                        }
+                                    }
+                                }
+                                .no-children-line-extension {
+                                    //              position: absolute;
+                                    opacity: .3;
+                                    min-width: 15px;
+                                    display: inline-block;
+                                    margin-right: 11px;
+                                }
+
+                                .node-expander {
+                                    min-width: 26px;
+                                    position: relative;
+                                    display: inline-block;
+                                    cursor: pointer;
+                                    color: #aaaaaa;
+                                    &:hover {
+                                        color: @greenBGDark;
+                                    }
+                                    .icon-addons-arrow-right {
+                                        transform: rotate(0deg) translate(8px, 0px) scale(.8,.8);
+                                        display: inline-block;
+                                    }
+                                    &.expanded {
+                                        .icon-addons-arrow-right {
+                                            transform: rotate(90deg) translate(0px, -9px) scale(.8,.8);
+                                        }
+                                    }
+                                    .spinner-msg-local {
+                                        position: absolute;
+                                        top: ~"calc(50% - 10px)";
+                                        left: ~"calc(50% - 10px)";
+                                    }
+                                }
+                                .jf-tree-item-content {
+                                    display: inline-block;
+                                    margin-left: 2px;
+                                    padding-right: 30px;
+                                    .highlight {
+                                        color: #222;
+                                        background-color: yellow;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 </style>
