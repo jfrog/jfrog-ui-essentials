@@ -1,18 +1,11 @@
+import JFrogConfirmModalComponent from '../components/JfConfirmModalComponent.vue'
+import JFrogCodeModalComponent from '../components/JfCodeModalComponent.vue'
 export class JFrogModal {
     /* @ngInject */
     constructor() {
-        this.$inject('$modal', '$rootScope', '$injector', '$q', '$sce', '$timeout', 'JFrogEventBus', 'JFrogUILibConfig', 'JFrogUIUtils');
-        this.modal = this.$modal;
-        this.$rootScope = this.$rootScope;
-        this.$q = this.$q;
-        this.$timeout = this.$timeout;
-        this.$sce = this.$sce;
+        this.$inject( '$rootScope', '$injector', '$q', '$sce', '$timeout', 'JFrogEventBus', 'JFrogUILibConfig', 'JFrogUIUtils');
         this.templatesBaseUrl = 'ui_components/jfrog_modal/templates/';
-        this.JFrogUILibConfig = this.JFrogUILibConfig;
-        this.JFrogEventBus = this.JFrogEventBus;
-        this.JFrogUIUtils = this.JFrogUIUtils;
-        this.$injector = this.$injector;
-        this.EVENTS = this.JFrogEventBus.getEventsDefinition();   
+        this.EVENTS = this.JFrogEventBus.getEventsDefinition();
     }
     /**
      * build the path to the template location
@@ -26,17 +19,9 @@ export class JFrogModal {
     launchModal(templateUri, scope, size, cancelable = true, options) {
         if (!size)
             size = 'lg';
-        let customTemplate = true;
-        if (templateUri.startsWith('@')) {
-            customTemplate = false;
-            templateUri = templateUri.substr(1);
-        }
-        let customTemplatesBaseUrl = this.JFrogUILibConfig.getConfig().customModalTemplatesPath;
-        if (customTemplatesBaseUrl && !customTemplatesBaseUrl.endsWith('/'))
-            customTemplatesBaseUrl += '/';
-        let templateUrl = (customTemplate ? customTemplatesBaseUrl : this.templatesBaseUrl) + templateUri + '.html';
+
         let modalObj = {
-            templateUrl: templateUrl,
+            templateUri: templateUri,
             scope: scope,
             size: size
         };
@@ -61,6 +46,19 @@ export class JFrogModal {
         };
         return this._launch(modalObj, scope, size, cancelable, options);
     }
+    attachToDOM(ModalComponent, props) {
+        $('#jfModal___BV_modal_outer_').parent().remove();//Remove any existing modal divs
+        let ComponentClass = Vue.extend(ModalComponent)
+        let modalInstance = new ComponentClass({
+            propsData: props
+        })
+        $(modalInstance.$mount().$el).appendTo('#app')
+        Vue.nextTick()
+        .then(function () {
+            modalInstance.$refs.jfModal.show()
+        });
+        return modalInstance;
+    }
     _launch(modalObj, scope, size, cancelable, options) {
         if (!cancelable) {
             modalObj.backdrop = 'static';
@@ -72,15 +70,35 @@ export class JFrogModal {
         let focused = $(':focus');
         if (focused.length)
             focused.blur();
-        let modalInstance = this.modal.open(modalObj);
+
+        let ModalComponent;
+        switch (modalObj.templateUri) {
+            case "@confirm_modal":
+                ModalComponent = JFrogConfirmModalComponent
+                break;
+            case "@code_modal":
+                ModalComponent = JFrogCodeModalComponent
+                break;
+            default:
+                let customTemplatesBaseUrl = this.JFrogUILibConfig.getConfig().customModalTemplatesPath;
+                if (customTemplatesBaseUrl && !customTemplatesBaseUrl.endsWith('/'))
+                    customTemplatesBaseUrl += '/';
+                modelObj.templateUri = (customTemplate ? customTemplatesBaseUrl : this.templatesBaseUrl) + model.templateUri + '.html';
+        }
+
+
+        let modalInstance = this.attachToDOM(ModalComponent, modalObj)
+
         this.JFrogEventBus.registerOnScope(this.$rootScope, this.EVENTS.CLOSE_MODAL, () => {
-            modalInstance.dismiss();
+            modalInstance.$refs.jfModal.hide()
         });
+
         if (typeof size == 'number') {
             this.$timeout(() => {
                 $('.modal-dialog').css('max-width', size);
             });
         }
+        /*
         this._calculateMaxHeight();
         let keyDownBinded = this._onKeyDown.bind(this);
         if (modalInstance.result) {
@@ -98,8 +116,7 @@ export class JFrogModal {
         $(window).resize(() => {
             this._calculateMaxHeight();
         });
-        $(document).on('keydown', keyDownBinded);
-        return modalInstance;
+        $(document).on('keydown', keyDownBinded);*/
     }
     _onKeyDown(event) {
         let target = $(event.target);
@@ -133,7 +150,6 @@ export class JFrogModal {
      * Calculate and set the max-height attribute of a modal's body
      * */
     _calculateMaxHeight(isWizardStep) {
-        // return this.oldResize();
         if (this.modalIsClosing) {
             this.$set(this, 'modalIsClosing', false);
             return;
@@ -184,33 +200,6 @@ export class JFrogModal {
         modalBody.css('max-height', maxHeight);
     }
 
-    oldResize() {
-        this.$timeout(() => {
-            if ($('.wizard-modal').length > 0) {
-                // modal height - header - footer
-                let MH = $('.wizard-modal').height(),
-                    // Modal height
-                    HH = $('.modal-header').outerHeight() || 0,
-                    // Header height
-                    FH = $('.modal-footer').outerHeight() || 0;
-                // Footer height
-                let maxHeight = MH - HH - FH;
-                $('.modal-body').css('max-height', maxHeight);
-                return;
-            }
-            let VPH = window.innerHeight,
-                // View port height
-                MOT = 110,
-                //Modal offset top
-                HH = $('.modal-header').outerHeight() || 0,
-                // Header height
-                FH = $('.modal-footer').outerHeight() || 0;
-            // Footer height
-            // Calculate: MPH - (MOT*2) - HH - FH = maxHeight
-            let maxHeight = VPH - MOT * 2 - HH - FH;
-            $('.modal-body').css('max-height', maxHeight);
-        }, 100);
-    }
     /**
      * launch a modal that shows content in a codemirror container
      *
@@ -218,19 +207,16 @@ export class JFrogModal {
      * @param content - content for the code mirror container
      * @param mode - mode for code mirror editor options (usually {name: <mimetype>}
      * @param beforeMessage - message to insert before the codemirror element
-     * @returns {{Modal instance}}
      */
-    launchCodeModal(title, content, mode, beforeMessage = undefined, objectName = undefined) {
-        let modalInstance;
-        let modalScope = this.$rootScope.$new();
-        modalScope.closeModal = () => modalInstance.close();
-        modalScope.content = content;
-        modalScope.mode = mode;
-        modalScope.title = title;
-        //this.$sce.trustAsHtml(title);
-        modalScope.beforeMessage = beforeMessage;
-        modalScope.objectName = objectName;
-        return modalInstance = this.launchModal('@code_modal', modalScope);
+    launchCodeModal(title, content, mode, beforeMessage, objectName) {
+        let options = {
+            content: content,
+            mode: mode,
+            title: title,
+            beforeMessage: beforeMessage,
+            objectName: objectName,
+        }
+        this.launchModal('@code_modal', null, 'sm', null, options);
     }
 
     /**
@@ -245,21 +231,23 @@ export class JFrogModal {
         buttons = buttons || {};
         buttons.confirm = buttons.confirm || 'Confirm';
         buttons.cancel = buttons.cancel || 'Cancel';
-        title = title || 'Are you sure?';
-        let modalInstance;
-        let modalScope = this.$rootScope.$new();
-        modalScope.buttons = buttons;
-        modalScope.content = content;
-        //this.$sce.trustAsHtml(content);
-        modalScope.title = title;
-        //this.$sce.trustAsHtml(title);
-        modalScope.checkboxLabel = checkboxLabel;
-        modalScope.checkbox = { checked: false };
-        modalScope.onCheckboxStateChange = state => {
-            if (checkBoxChangeListener)
-                checkBoxChangeListener(state, modalScope);
-        };
-        return this.launchModal('@confirm_modal', modalScope, 'sm').result;
+        return new Promise( (resolve,reject) => {
+            let options = {
+                buttons: buttons,
+                content: content,
+                title: title || 'Are you sure?',
+                checkboxLabel: checkboxLabel,
+                checkbox: { checked: false },
+                result: {resolve,reject},
+                onCheckboxStateChange: state => {
+                    if (checkBoxChangeListener)
+                        checkBoxChangeListener(state, options)
+                },
+            }
+            this.launchModal('@confirm_modal', {}, 'sm', null, options);
+        }).catch(e=>{
+            console.error(e);
+        });
     }
 
     launchWizard(wizardDefinitionObject) {
@@ -281,5 +269,5 @@ export class JFrogModal {
                 wizardModalScope.$wizardCtrl.cancel();
         });
         return modalInstance.result;
-    }   
+    }
 }
