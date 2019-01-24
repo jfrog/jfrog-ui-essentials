@@ -1,6 +1,7 @@
 import JFrogConfirmModalComponent from '../components/JfConfirmModalComponent.vue'
 import JFrogCodeModalComponent from '../components/JfCodeModalComponent.vue'
 import JfFullTextModalComponent from '../components/JfFullTextModalComponent.vue'
+import JfDynamicModalComponent from '../components/JfDynamicModalComponent.js'
 export class JFrogModal {
     /* @ngInject */
     constructor() {
@@ -13,20 +14,19 @@ export class JFrogModal {
      * and delegate to the $modal service
      * return the modal instance
      *
-     * @param templateUri
+     * @param template
      * @param scope
      * @returns {{Modal instance}}
      */
-    launchModal(templateUri, scope, size, cancelable = true, options) {
+    launchModal(template, scope, size, cancelable = true, options) {
         if (!size)
             size = 'lg';
 
         let modalObj = {
-            templateUri: templateUri,
-            scope: scope,
+            template: template,
             size: size
         };
-        return this._launch(modalObj, size, cancelable, options);
+        return this._launch(modalObj, scope, size, cancelable, options);
     }
     /**
 	 * Use template markup
@@ -42,10 +42,9 @@ export class JFrogModal {
             size = 'lg';
         let modalObj = {
             template: templateMarkup,
-            scope: scope,
             size: size
         };
-        return this._launch(modalObj,  size, cancelable, options);
+        return this._launch(modalObj, scope, size, cancelable, options);
     }
     attachToDOM(ModalComponent, props) {
         $('#jfModal___BV_modal_outer_').parent().remove();//Remove any existing modal divs
@@ -60,7 +59,7 @@ export class JFrogModal {
         });
         return modalInstance;
     }
-    _launch(modalObj, size, cancelable, options) {
+    _launch(modalObj, scope, size, cancelable, options) {
         if (!cancelable) {
             modalObj.backdrop = 'static';
             modalObj.keyboard = false;
@@ -79,25 +78,38 @@ export class JFrogModal {
             focused.blur();
 
         let ModalComponent;
-        switch (modalObj.templateUri) {
+        switch (modalObj.template) {
             case '@confirm_modal':
-                ModalComponent = JFrogConfirmModalComponent
+                ModalComponent = JFrogConfirmModalComponent;
                 break
             case '@code_modal':
-                ModalComponent = JFrogCodeModalComponent
+                ModalComponent = JFrogCodeModalComponent;
                 break
             case '@full.text.modal':
-                ModalComponent = JfFullTextModalComponent
+                ModalComponent = JfFullTextModalComponent;
                 break
             default:
-                debugger;
-                let customTemplatesBaseUrl = this.JFrogUILibConfig.getConfig().customModalTemplatesPath;
-                if (customTemplatesBaseUrl && !customTemplatesBaseUrl.endsWith('/')) {
-                    customTemplatesBaseUrl += '/';
+                ModalComponent = new JfDynamicModalComponent();
+                let modifiers = this.JFrogUILibConfig.getConfig().customModalTemplates[modalObj.template];
+                ModalComponent.template = `<b-modal
+                    ref="jfModal"
+                    id="jfModal"
+                    :no-close-on-backdrop="noCloseOnBackDrop"
+                    :no-close-on-esc="noCloseOnEsc"
+                    >${modifiers.template}</b-modal>`;
+                _.extend(ModalComponent, _.pick(modifiers, ["jf@inject"]));
+
+                if( scope ) {
+                    _.extend(modalObj, scope);
+                    ModalComponent.props = [
+                        ...ModalComponent.props,
+                        ...Object.keys(scope),
+                    ]
                 }
-                modalObj.templateUri = `${customTemplatesBaseUrl}${
-                    modalObj.templateUri
-                }.html`
+
+                _.forEach(modifiers.methods, (method,methodName) => {
+                    ModalComponent.methods[methodName] = method;
+                });
         }
 
         let modalInstance = this.attachToDOM(ModalComponent, modalObj)

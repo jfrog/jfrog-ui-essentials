@@ -16,7 +16,7 @@ export class JfFullTextService {
             listItemClickCB: listItemClickCB
         }
 
-        this.modal.launchModal('@full.text.modal', {}, modalWidth, true, options);
+        return this.modal.launchModal('@full.text.modal', {}, modalWidth, true, options);
     }
     toHtmlRows(text) {
         if (typeof text === 'string') {
