@@ -1,6 +1,6 @@
 <template>
 
-    <div>
+    <div class="jf-tree-indentation">
         <div class="indentation-wrap" :style="{width: (indentation ? indentation.length * 26 : 0) + 'px'}">
             <div class="indentation-flex-wrap" v-html="indentationHtml" v-if="visible">
             </div>

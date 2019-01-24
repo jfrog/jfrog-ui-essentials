@@ -8,7 +8,7 @@
                         <div class="scroll-faker" v-init="initScrollFaker()" :style="{height: (getTotalScrollHeight() > maxFakeScrollHeight ? maxFakeScrollHeight : getTotalScrollHeight()) + 'px'}">
                         </div>
                     </div>
-                    <div class="h-scroll-wrapper" :style="{height: (getPageHeight() + getTranslate()) + 'px'}" @mousewheel="onMouseWheel($event, $delta, $deltaX, $deltaY)">
+                    <div class="h-scroll-wrapper" :style="{height: (getPageHeight() + getTranslate()) + 'px'}" @mousewheel.prevent="onMouseWheel">
                         <div class="h-scroll-content">
                             <jf-tree-item v-for="(item, $index) in viewPane._getPageData()" :key="$index" :tree="jfTree" :item-id="$index" :data="item"></jf-tree-item>
                         </div>
@@ -66,7 +66,7 @@
                     this.paginationApi = new PaginationApi(this);
 
                     this.paginationApi.registerChangeListener(() => {
-                        this.$timeout(() => this.refresh(false));
+                        this.refresh(false);
                     });
 
                 }
@@ -246,7 +246,6 @@
                     this.$timeout.cancel(this.viewPane.scrollTimeout);
                     delete this.viewPane.scrollTimeout;
                 }
-
                 let normalDelta = this._normalizeWheelEvent($event).pixelY;
                 let xDelta = this._normalizeWheelEvent($event).pixelX;
 
@@ -257,10 +256,10 @@
 
                 let scrollAmount = 0.02 * Math.abs(normalDelta);
                 let scrollPosBefore = this.viewPane._getCurrentScrollPos();
-                if ($deltaY < 0) {
+                if ($event.deltaY > 0) {
                     // scrollUp
                     this.viewPane._scrollTo(scrollPosBefore + scrollAmount);
-                } else if ($deltaY > 0) {
+                } else if ($event.deltaY < 0) {
                     // scrollDown
                     this.viewPane._scrollTo(scrollPosBefore - scrollAmount);
                 }
@@ -506,7 +505,7 @@
                                 display: flex;
                                 flex-direction: row;
                                 white-space: nowrap;
-                                jf-tree-indentation {
+                                .jf-tree-indentation {
                                     .indentation-wrap {
                                         display: inline-block;
                                         .indentation-flex-wrap {
