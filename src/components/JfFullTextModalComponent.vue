@@ -3,6 +3,7 @@
         ref="jfModal"
         id="jfModal"
         :ok-only="okOnly"
+        @ok="$ok"
         ok-title="Close"
         ok-variant="secondary"
         >
