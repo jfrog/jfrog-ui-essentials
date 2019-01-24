@@ -4,6 +4,7 @@
         id="jfModal"
         :ok-only="okOnly"
         ok-title="Close"
+        @ok="$ok"
         ok-variant="secondary"
         >
         <template slot="modal-title">
@@ -25,6 +26,7 @@
     </b-modal>
 </template >
 <script>
+    import ModalMixins from "./ModalMixins.js";
     export default {
         name: 'jf-modal',
         props: [
@@ -33,6 +35,7 @@
             "objectName",
             "mode"
         ],
+        mixins:[ModalMixins],
         data() {
             return {
                 okOnly: true,

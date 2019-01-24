@@ -61,8 +61,8 @@ export class JFrogModal {
     }
     _launch(modalObj, scope, size, cancelable, options) {
         if (!cancelable) {
-            modalObj.backdrop = 'static';
-            modalObj.keyboard = false;
+            modalObj._backdrop = 'static';
+            modalObj._keyboard = false;
         }
 
         if (options && _.isObject(options)) {
@@ -70,7 +70,7 @@ export class JFrogModal {
         }
 
         let result = new Promise( (resolve, reject) => {
-            modalObj.result = {resolve, reject};
+            modalObj._result = {resolve, reject};
         } );
 
         let focused = $(':focus');

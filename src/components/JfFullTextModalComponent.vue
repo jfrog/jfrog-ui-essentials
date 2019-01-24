@@ -16,10 +16,10 @@
         <div class="modal-body text-to-list" v-if="list">
             <p v-for="(item,index) in list" :key="index" class="full-text-item" v-html="item" @click="onItemClick(item)"></p>
         </div>
-
     </b-modal>
 </template >
 <script>
+    import ModalMixins from "./ModalMixins.js";
     export default {
         name: 'jf-fulltext-modal',
         props: [
@@ -28,6 +28,7 @@
             "list",
             "listItemClickCB"
         ],
+        mixins:[ModalMixins],
         data() {
             return {
                 okOnly: true,

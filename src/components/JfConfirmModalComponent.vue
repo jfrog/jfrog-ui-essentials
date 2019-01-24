@@ -2,7 +2,7 @@
     <b-modal
         ref="jfModal"
         id="jfModal"
-        @hide="handleHide"
+        @hide="_handleHide"
         :no-close-on-backdrop="noCloseOnBackDrop"
         :no-close-on-esc="noCloseOnEsc"
         >
@@ -18,59 +18,29 @@
                         ng-change="onCheckboxStateChange(checkbox.checked)"
                         ng-model="checkbox.checked">
                 </jf-checkbox> -->
-                <button class="btn btn-default" @click="handleCancel()" id="popup-cancel">{{int_buttons.cancel}}</button>
-                <button class="btn btn-primary" @click="handleOk()" id="popup-confirm">{{int_buttons.confirm}}</button>
+                <button class="btn btn-default" @click="$dismiss()" id="popup-cancel">{{int_buttons.cancel}}</button>
+                <button class="btn btn-primary" @click="$close(true)" id="popup-confirm">{{int_buttons.confirm}}</button>
         </template>
         <div v-html="content"></div>
     </b-modal>
 </template >
 <script>
+    import ModalMixins from "./ModalMixins.js";
     export default {
         name: 'jf-modal',
         props: [
             "title",
             "buttons",
-            "content",
-            "result",
-            "keyboard",
-            "backdrop"
+            "content"
         ],
+        mixins:[ModalMixins],
         data() {
             return {
                 int_buttons: this.buttons || {
                     cancel: "Cancel",
                     confirm: "Confirm"
-                },
-                noCloseOnBackDrop: this.backdrop != 'static',
-                noCloseOnEsc: this.keyboard,
-                promiseIsPending: true
+                }
             };
-        },
-
-        mounted() {
-        },
-        methods: {
-            handleOk(){
-                //Important to resolve the promise before invoking hide
-                if( this.$props.result ) {
-                    this.promiseIsPending = !this.promiseIsPending;
-                    this.$props.result.resolve();
-                }
-                this.$refs.jfModal.hide();
-            },
-            handleCancel(){
-                if( this.$props.result ) {
-                    this.promiseIsPending = !this.promiseIsPending;
-                    this.$props.result.reject();
-                }
-                this.$refs.jfModal.hide();
-            },
-            handleHide(){
-                if( this.$props.result && this.promiseIsPending ) {
-                    console.log("In handleHide promise handling");
-                    this.$props.result.reject();
-                }
-            }
         }
 };
 
