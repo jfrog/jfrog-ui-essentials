@@ -17,11 +17,11 @@
         name: 'jf-text-box',
         props: [
             'text',
-            'numOfLines',
             'modalTitle',
             'seeAllText',
             'maxLines',
-            'noAction'
+            'noAction',
+            'customAction'
         ],
         'jf@inject': [
             '$scope',
@@ -108,7 +108,6 @@
                                 }
                                 else this.wrapSeeAll = false;
                     */
-                    i -= 5; 
                     let fit = words.slice(0, i);
 
                     this.setStageText(_.trimEnd(fit.join('')) + (this.isOverflowing ? ' ' : ''));
