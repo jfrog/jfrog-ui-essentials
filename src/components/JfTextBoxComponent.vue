@@ -2,8 +2,7 @@
 
     <div>
         <div class="jf-text-box-container">
-            <div class="jf-text-box-content-current">{{content}}
-                <div v-if="ready && isOverflowing" class="jf-text-box-show-all" :style="{'white-space': wrapSeeAll ? 'inherit' : 'nowrap'}" @click="seeAll()" v-html="seeAllCustomText"></div>
+            <div class="jf-text-box-content-current">{{content}}<span v-if="ready && isOverflowing" class="jf-text-box-show-all" :style="{'white-space': wrapSeeAll ? 'inherit' : 'nowrap'}" @click="seeAll()" v-html="seeAllCustomText"></span>
             </div>
             <div class="jf-text-box-content-full"></div>
             <div class="jf-text-box-content-stage"></div>
@@ -35,7 +34,7 @@
         ],
         data() {
             return {
-                content: String,
+                content: null,
                 ready: null,
                 wrapSeeAll: null,
                 seeAllCustomText: this.seeAllText || '(Show All ...)'
@@ -85,7 +84,7 @@
                     let getNumOfLinesUntil = (index, withSeeAll = true) => {
                         this.setStageText(_.trimEnd(words.slice(0, index).join('')) + (withSeeAll ? ' ' : ''))
                         if (withSeeAll) this.stageElement.append($(`  <div class="jf-text-box-show-all">${this.seeAllCustomText}</div>`));
-                        return this.numOfStageRows;
+                        return this.numOfStageRows();
                     }
                     while (getNumOfLinesUntil(i) <= this.numOfWholeRows && i <= words.length) {
                         i++;
@@ -109,13 +108,14 @@
                                 }
                                 else this.wrapSeeAll = false;
                     */
+                    i -= 5; 
                     let fit = words.slice(0, i);
 
                     this.setStageText(_.trimEnd(fit.join('')) + (this.isOverflowing ? ' ' : ''));
                     if (this.isOverflowing) this.stageElement.append($(`<div class="jf-text-box-show-all">${this.seeAllCustomText}</div>`));
 
                     let m = 0;
-                    while (this.numOfStageRows > this.numOfWholeRows && i > m) {
+                    while (this.numOfStageRows() > this.numOfWholeRows && i > m) {
                         m++;
 
                         fit = words.slice(0, i - m);
@@ -127,6 +127,10 @@
                 }
                 this.ready = true;
                 this.$forceUpdate();
+            },
+            numOfStageRows() {
+                let contentHeight = this.stageElement.height();
+                return Math.ceil(contentHeight / this.lineHeight - 0.1);
             },
 
             splitText(text) {
@@ -247,13 +251,6 @@
             numOfVisibleRows: {
                 get: function() {
                     let contentHeight = this.currentTextElement.height();
-                    return Math.ceil(contentHeight / this.lineHeight - 0.1);
-                }
-            },
-
-            numOfStageRows: {
-                get: function() {
-                    let contentHeight = this.stageElement.height();
                     return Math.ceil(contentHeight / this.lineHeight - 0.1);
                 }
             },
