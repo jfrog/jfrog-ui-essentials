@@ -89,6 +89,7 @@ export class JFrogModal {
                 ModalComponent = JfFullTextModalComponent;
                 break
             default:
+                // Have intentionally not used this as a mixin because we are modifying the template
                 ModalComponent = new JfDynamicModalComponent();
                 let modifiers = this.JFrogUILibConfig.getConfig().customModalTemplates[modalObj.template];
                 ModalComponent.template = `<b-modal
@@ -124,12 +125,6 @@ export class JFrogModal {
             });
         }
 
-        return {
-            result: result,
-            close: () => modalInstance.$refs.jfModal.hide(),
-        }
-
-        /*
         this._calculateMaxHeight();
         let keyDownBinded = this._onKeyDown.bind(this);
         if (modalInstance.result) {
@@ -147,7 +142,15 @@ export class JFrogModal {
         $(window).resize(() => {
             this._calculateMaxHeight();
         });
-        $(document).on('keydown', keyDownBinded);*/
+        $(document).on('keydown', keyDownBinded);
+
+        /* The interface expects a result (promise) & a close method to be returned */
+        return {
+            result: result,
+            close: () => modalInstance.$refs.jfModal.hide(),
+        }
+
+
     }
     _onKeyDown(event) {
         let target = $(event.target);
@@ -277,23 +280,19 @@ export class JFrogModal {
     }
 
     launchWizard(wizardDefinitionObject) {
-        let wizardModalScope = this.$rootScope.$new();
-        wizardModalScope.$wizardDef = wizardDefinitionObject;
-        WizardController.prototype.JFrogModal = this;
-        wizardModalScope.$wizardCtrl = new WizardController(wizardDefinitionObject);
-        wizardDefinitionObject.controller.prototype.$wizardCtrl = wizardModalScope.$wizardCtrl;
-        let controllerInstance = this.$injector.instantiate(wizardDefinitionObject.controller);
-        let controllerObject = {};
-        controllerObject[wizardDefinitionObject.controllerAs || 'ctrl'] = controllerInstance;
-        _.extend(wizardModalScope, controllerObject);
-        wizardModalScope.$wizardCtrl.$userCtrl = controllerInstance;
-        let modalInstance = this.launchModal('@wizard_modal', wizardModalScope, wizardDefinitionObject.size || 'lg', wizardDefinitionObject.cancelable && wizardDefinitionObject.backdropCancelable, wizardDefinitionObject.modalOptions);
+        let wizardModalScope = {
+            $wizardDef:wizardDefinitionObject,
+        };
 
-        wizardModalScope.$wizardCtrl.$modalInstance = modalInstance;
+        let modalInstance = this.launchModal('@wizard_modal', wizardModalScope, wizardDefinitionObject.size || 'lg',
+                            wizardDefinitionObject.cancelable && wizardDefinitionObject.backdropCancelable,
+                            wizardDefinitionObject.modalOptions);
+
         modalInstance.result.catch(reason => {
             if (reason)
-                wizardModalScope.$wizardCtrl.cancel();
+                modalInstance.cancel();
         });
+
         return modalInstance.result;
     }
 }
