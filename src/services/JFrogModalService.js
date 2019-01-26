@@ -2,6 +2,7 @@ import JFrogConfirmModalComponent from '../components/JfConfirmModalComponent.vu
 import JFrogCodeModalComponent from '../components/JfCodeModalComponent.vue'
 import JfFullTextModalComponent from '../components/JfFullTextModalComponent.vue'
 import JfDynamicModalComponent from '../components/JfDynamicModalComponent.js'
+import JWizardModalComponent from '../components/JWizardModalComponent.vue'
 export class JFrogModal {
     /* @ngInject */
     constructor() {
@@ -88,35 +89,41 @@ export class JFrogModal {
             case '@full.text.modal':
                 ModalComponent = JfFullTextModalComponent;
                 break
+            case '@wizard_modal':
+                ModalComponent = JWizardModalComponent;
+                //Passing this instance into the wizard so that it can resize if necessary
+                modalObj.JFrogModal = this;
+                break
             default:
                 // Have intentionally not used this as a mixin because we are modifying the template
                 ModalComponent = new JfDynamicModalComponent();
+                //Get the custom Modal's details
                 let modifiers = this.JFrogUILibConfig.getConfig().customModalTemplates[modalObj.template];
+                //Embed the dynamic content into a modal
                 ModalComponent.template = `<b-modal
                     ref="jfModal"
                     id="jfModal"
                     :no-close-on-backdrop="noCloseOnBackDrop"
                     :no-close-on-esc="noCloseOnEsc"
                     >${modifiers.template}</b-modal>`;
-                _.extend(ModalComponent, _.pick(modifiers, ["jf@inject"]));
+                delete modifiers.template;
+                //Add any properties specified in the dynamic modal to this component definition
+                ModalComponent.mixins = [modifiers];
 
                 if( scope ) {
                     _.extend(modalObj, scope);
+                    /* Specifically for backward compatibility. If any fields are passed, add them as props */
                     ModalComponent.props = [
                         ...ModalComponent.props,
                         ...Object.keys(scope),
                     ]
                 }
-
-                _.forEach(modifiers.methods, (method,methodName) => {
-                    ModalComponent.methods[methodName] = method;
-                });
         }
 
         let modalInstance = this.attachToDOM(ModalComponent, modalObj)
 
         this.JFrogEventBus.registerOnScope(this.$rootScope, this.EVENTS.CLOSE_MODAL, () => {
-            modalInstance.$refs.jfModal.hide()
+            modalInstance.$refs.jfModal.hide();
         });
 
         if (typeof size == 'number') {
@@ -203,7 +210,7 @@ export class JFrogModal {
             let modal = $('.modal-content');
             let modalBody = modal.find('.modal-body');
             // Calculate and show content
-            let wizardModalContainer = modal.find('.wizard-modal');
+            let wizardModalContainer = modalBody.closest('.wizard-modal');
             if (wizardModalContainer.length > 0) {
                 modalBody.hide();
                 this.resizeWizardModalBody(modal, wizardModalContainer, modalBody);
@@ -280,13 +287,18 @@ export class JFrogModal {
     }
 
     launchWizard(wizardDefinitionObject) {
-        let wizardModalScope = {
-            $wizardDef:wizardDefinitionObject,
-        };
+        let wizardHooks = new wizardDefinitionObject.controller();
+        delete wizardDefinitionObject.controller;
 
-        let modalInstance = this.launchModal('@wizard_modal', wizardModalScope, wizardDefinitionObject.size || 'lg',
+        let options = {
+            wizardDefinitionObject,
+            wizardHooks
+        };
+        _.extend(options, wizardDefinitionObject.modalOptions);
+
+        let modalInstance = this.launchModal('@wizard_modal', null, wizardDefinitionObject.size || 'lg',
                             wizardDefinitionObject.cancelable && wizardDefinitionObject.backdropCancelable,
-                            wizardDefinitionObject.modalOptions);
+                            options);
 
         modalInstance.result.catch(reason => {
             if (reason)
