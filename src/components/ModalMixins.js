@@ -1,11 +1,34 @@
 export default {
-    props: ['_keyboard', '_backdrop', '_result'],
+    props: [
+        'uiEssNoCloseOnEsc',
+        'uiEssNoCloseOnBackdrop',
+        'uiEssModalPromise',
+        'uiEssSize',
+        'dontRejectOnClose',
+    ],
     data() {
         return {
-            noCloseOnBackDrop: this._backdrop != 'static',
-            noCloseOnEsc: this._keyboard,
-            _promiseIsPending: true,
+            modalProps: {
+                ref: 'jfModal',
+                id: 'jfModal',
+                centered: true,
+                'no-close-on-esc': this.uiEssNoCloseOnEsc,
+                'no-close-on-backdrop': this.uiEssNoCloseOnBackdrop,
+                'on:hide': '_handleHide',
+                size:
+                    this.uiEssSize == 'lg' || this.uiEssSize == 'sm'
+                        ? this.uiEssSize
+                        : '',
+            },
+            promiseIsPending: true,
         }
+    },
+    mounted() {
+        this.$nextTick(() => {
+            if (typeof this._size == 'number') {
+                $('.modal-dialog').css('max-width', this._size)
+            }
+        })
     },
     methods: {
         //Added for backward compatibility
@@ -16,13 +39,11 @@ export default {
             this.$close(true)
         },
         $close(succeeded) {
-            if (this.$props._result) {
-                this._promiseIsPending = !this._promiseIsPending
-                if (succeeded) {
-                    this.$props._result.resolve()
-                } else {
-                    this.$props._result.reject()
-                }
+            if (succeeded && this.$props.uiEssModalPromise) {
+                    this.promiseIsPending = false;
+                    this.$props.uiEssModalPromise.resolve()
+            } else {
+                this.$dismiss();
             }
             this.$refs.jfModal.hide()
         },
@@ -32,15 +53,18 @@ export default {
         },
 
         $dismiss() {
-            if (this.$props._result) {
-                this._promiseIsPending = !this._promiseIsPending
-                this.$props._result.reject()
+            if (!this.dontRejectOnClose && this.$props.uiEssModalPromise) {
+                this.promiseIsPending = false;;
+                this.$props.uiEssModalPromise.reject();
             }
-            this.$refs.jfModal.hide()
+            this.$refs.jfModal.hide();
         },
         _handleHide() {
-            if (this.$props._result && this._promiseIsPending) {
-                this.$props._result.reject()
+            if (this.dontRejectOnClose) {
+                return;
+            }
+            if (this.$props.uiEssModalPromise && this.promiseIsPending) {
+                this.$props.uiEssModalPromise.reject();
             }
         },
     },

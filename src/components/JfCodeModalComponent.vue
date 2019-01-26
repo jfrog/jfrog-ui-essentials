@@ -1,7 +1,6 @@
 <template>
     <b-modal
-        ref="jfModal"
-        id="jfModal"
+        v-bind="modalProps"
         :ok-only="okOnly"
         ok-title="Close"
         @ok="$ok"
@@ -11,7 +10,7 @@
             <h4 class="modal-title" id="popup-header" v-html="title"></h4>
         </template>
 
-        <p ng-if="beforeMessage" ng-bind-html="beforeMessage"></p>
+        <p v-if="beforeMessage" v-html="beforeMessage"></p>
 
         <div class="codemirror-wrapper">
             <jf-clip-copy :text-to-copy="content || ''"
@@ -33,7 +32,8 @@
             "title",
             "content",
             "objectName",
-            "mode"
+            "mode",
+            "beforeMessage"
         ],
         mixins:[ModalMixins],
         data() {

@@ -19,13 +19,9 @@ export class JFrogModal {
      * @param scope
      * @returns {{Modal instance}}
      */
-    launchModal(template, scope, size, cancelable = true, options) {
-        if (!size)
-            size = 'lg';
-
+    launchModal(template, scope = {}, size, cancelable = true, options) {
         let modalObj = {
-            template: template,
-            size: size
+            template: template
         };
         return this._launch(modalObj, scope, size, cancelable, options);
     }
@@ -39,13 +35,9 @@ export class JFrogModal {
 	 * @returns {{Modal instance}}
 	 */
     launchModalWithTemplateMarkup(templateMarkup, scope, size, cancelable = true, options) {
-        if (!size)
-            size = 'lg';
-        let modalObj = {
-            template: templateMarkup,
-            size: size
-        };
-        return this._launch(modalObj, scope, size, cancelable, options);
+        return new Promise((resolve, reject)=>{
+            reject("Deprecated. Please use launchModal itself");
+        })
     }
     attachToDOM(ModalComponent, props) {
         $('#jfModal___BV_modal_outer_').parent().remove();//Remove any existing modal divs
@@ -60,18 +52,19 @@ export class JFrogModal {
         });
         return modalInstance;
     }
-    _launch(modalObj, scope, size, cancelable, options) {
-        if (!cancelable) {
-            modalObj._backdrop = 'static';
-            modalObj._keyboard = false;
-        }
+    _launch(modalObj, scope, size, cancelable = true, options) {
+
+        modalObj.uiEssNoCloseOnBackdrop = cancelable === false;
+        modalObj.uiEssNoCloseOnEsc = cancelable === false
+        modalObj.uiEssSize = size || 'lg';
 
         if (options && _.isObject(options)) {
             _.extend(modalObj, options);
         }
 
+        //The interface expects a promise to be returned
         let result = new Promise( (resolve, reject) => {
-            modalObj._result = {resolve, reject};
+            modalObj.uiEssModalPromise = { resolve, reject }
         } );
 
         let focused = $(':focus');
@@ -98,17 +91,12 @@ export class JFrogModal {
                 // Have intentionally not used this as a mixin because we are modifying the template
                 ModalComponent = new JfDynamicModalComponent();
                 //Get the custom Modal's details
-                let modifiers = this.JFrogUILibConfig.getConfig().customModalTemplates[modalObj.template];
+
+                let modifiers = typeof modalObj.template == 'object' ? modalObj.template : this.JFrogUILibConfig.getConfig().customModalTemplates[modalObj.template];
                 //Embed the dynamic content into a modal
-                ModalComponent.template = `<b-modal
-                    ref="jfModal"
-                    id="jfModal"
-                    :no-close-on-backdrop="noCloseOnBackDrop"
-                    :no-close-on-esc="noCloseOnEsc"
-                    >${modifiers.template}</b-modal>`;
-                delete modifiers.template;
+                ModalComponent.template = `<b-modal v-bind="modalProps">${modifiers.template}</b-modal>`;
                 //Add any properties specified in the dynamic modal to this component definition
-                ModalComponent.mixins = [modifiers];
+                ModalComponent.mixins.push(modifiers);
 
                 if( scope ) {
                     _.extend(modalObj, scope);
@@ -126,12 +114,7 @@ export class JFrogModal {
             modalInstance.$refs.jfModal.hide();
         });
 
-        if (typeof size == 'number') {
-            this.$timeout(() => {
-                $('.modal-dialog').css('max-width', size);
-            });
-        }
-
+        //TODO much of this logic can be moved to the mixin
         this._calculateMaxHeight();
         let keyDownBinded = this._onKeyDown.bind(this);
         if (modalInstance.result) {
@@ -276,12 +259,9 @@ export class JFrogModal {
             buttons: buttons,
             content: content,
             title: title || 'Are you sure?',
-            checkboxLabel: checkboxLabel,
+            checkboxLabel,
             checkbox: { checked: false },
-            onCheckboxStateChange: state => {
-                if (checkBoxChangeListener)
-                    checkBoxChangeListener(state, options)
-            },
+            checkBoxChangeListener,
         }
         return this.launchModal('@confirm_modal', {}, 'sm', null, options).result;
     }
@@ -296,7 +276,11 @@ export class JFrogModal {
         };
         _.extend(options, wizardDefinitionObject.modalOptions);
 
-        let modalInstance = this.launchModal('@wizard_modal', null, wizardDefinitionObject.size || 'lg',
+        if (wizardDefinitionObject.size && typeof wizardDefinitionObject.size === 'string' && wizardDefinitionObject.size != 'lg' && wizardDefinitionObject.size != 'sm' ) {
+            return new Promise(resolve, reject => reject("Invalid size specified. Please pass lg or sm"));
+        }
+
+        let modalInstance = this.launchModal('@wizard_modal', null, wizardDefinitionObject.size,
                             wizardDefinitionObject.cancelable && wizardDefinitionObject.backdropCancelable,
                             options);
 

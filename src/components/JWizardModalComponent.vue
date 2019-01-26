@@ -1,11 +1,6 @@
 <template>
     <b-modal
-        ref="jfModal"
-        id="jfModal"
-        :ok-only="okOnly"
-        ok-title="Close"
-        @ok="$ok"
-        ok-variant="secondary"
+        v-bind="modalProps"
         :modal-class="classForStep"
         >
             <template slot="modal-header">
@@ -15,14 +10,14 @@
                         v-if="wizardDefinitionObject.steps[currentStep-1].icon"
                         :class="{'build-animation' : wizardDefinitionObject.steps[currentStep-1].buildIcon}">
 
-                        <!-- <img ng-srcset="{{wizardDefinitionObject.steps[currentStep-1].iconSrcset}}"
-                            ng-src="{{wizardDefinitionObject.steps[currentStep-1].icon}}"
+                        <img :srcset="wizardDefinitionObject.steps[currentStep-1].iconSrcset"
+                            :src="wizardDefinitionObject.steps[currentStep-1].icon"
                             alt="">
 
-                        <img ng-srcset="{{wizardDefinitionObject.steps[currentStep-1].buildIconSrcset}}"
-                            ng-src="{{wizardDefinitionObject.steps[currentStep-1].buildIcon}}"
+                        <img :srcset="wizardDefinitionObject.steps[currentStep-1].buildIconSrcset"
+                            ng-src="wizardDefinitionObject.steps[currentStep-1].buildIcon"
                             v-if="wizardDefinitionObject.steps[currentStep-1].buildIcon"
-                            alt="" class="build"> -->
+                            alt="" class="build">
                     </div>
                     <div class="title">
                         <h1 v-if="wizardDefinitionObject.steps[currentStep-1].name">{{wizardDefinitionObject.steps[currentStep-1].name}}</h1>
@@ -162,20 +157,13 @@
                 }
 
                 let currentStep = this.wizardDefinitionObject.steps[this.currentStep - 1];
-                let modifiers = this.JFrogUILibConfig.getConfig().customModalTemplates[currentStep.template];
+                let modifiers = typeof currentStep.template == 'object' ? currentStep.template :
+                this.JFrogUILibConfig.getConfig().customModalTemplates[currentStep.template];
                 let ComponentClass = Vue.extend({
                     name: "wizard-page",
                     template: modifiers.template,
                     mixins:[ modifiers ],
-                    props:["WizCtrl"],
-                    watch: {
-                        WizCtrl: {
-                            deep: true,
-                            handler: function () {
-                                console.log("WizCtrl watch called");
-                            }
-                        }
-                    }
+                    props:["WizCtrl"]
                 });
                 let component = new ComponentClass({propsData: {
                     WizCtrl: this.wizardHooks

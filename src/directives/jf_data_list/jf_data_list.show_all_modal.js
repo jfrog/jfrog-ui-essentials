@@ -1,0 +1,50 @@
+export const JF_Data_LIST_MODAL = {
+           template: `
+            <template slot="modal-header">
+                <button type="button" class="close" data-dismiss="close" aria-label="Close" @click="$dismiss()"><span aria-hidden="_true">×</span></button>
+                <h4 class="modal-title" id="popup-header">{{items.length}} {{colName}} For {{objectName}} '{{rowName}}'</h4>
+            </template>
+            <div class="modal-body clearfix">
+                <input type="text" name="filter" class="input-text" v-model="filter.text" placeholder="Filter">
+                <div class="group-list-wrapper" v-if="!noResults()">
+                    <ul class="group-list">
+                        <li class="group-list-item" v-jf-tooltip-on-overflow v-for="(item, $index) in items" v-if="filterItem(item)">
+                            <div v-if="!item.url" v-html="item.label"></div>
+                            <a v-if="item.url" class="jf-link" :href="item.url" v-html="item.label" target="_blank"></a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="empty-filter-placeholder filter-no-results" v-if="noResults()">
+                    Current filter has no results. <a href="" class="jf-link" @click.prevent="filter.text = ''">Clear filter</a>
+                </div>
+
+            </div>
+            <template slot="modal-footer">
+                <button class="btn btn-default" @click="close()" id="popup-cancel">Close</button>
+            </template>
+    `,
+           'jf@inject': ['JFrogUIUtils'],
+           methods: {
+               filterItem(item) {
+                   if (this.filter.text) {
+                       let escaped = this.JFrogUIUtils.escapeForRegex(
+                           this.filter.text
+                       )
+                       let regex = new RegExp(
+                           '.*' + escaped.split('\\*').join('.*') + '.*',
+                           'i'
+                       )
+                       return regex.test(item.label)
+                   } else {
+                       return true
+                   }
+               },
+               noResults() {
+                   let filteredResults = _.filter(this.items, item => {
+                       return this.filterItem(item)
+                   })
+                   return filteredResults.length === 0
+               },
+           },
+       }

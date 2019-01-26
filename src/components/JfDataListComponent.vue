@@ -3,7 +3,7 @@
     <div>
         <table class="data-list">
             <tbody>
-                <tr class="data-list-item" v-for="(item,index) in formattedItems" v-if="!item.isHidden">
+                <tr class="data-list-item" v-for="(item,index) in formattedItems" :key="index" v-if="!item.isHidden">
                     <td class="data-list-item-label">{{item.label}}:</td>
                     <td class="data-list-item-value">
                         <div class="value">
@@ -12,7 +12,7 @@
                             <div v-if="!item.isUrl && !isArray(item.value)" v-html="item.value" v-jf-tooltip-on-overflow>
                             </div>
                             <div v-if="isArray(item.value)"  :id="'data-list-row-' + index">
-                                <div class="tag" v-for="tag in item.value">
+                                <div class="tag" v-for="(tag, index2) in item.value" :key="index2">
                                     <a class="gridcell-content-text jf-link" v-if="tag.url" :href="tag.url" target="_blank" v-html="tag.label">
                                     </a>
                                     <span class="gridcell-content-text" v-if="!tag.url" v-html="tag.label"></span>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-
+    import {JF_Data_LIST_MODAL} from "@/directives/jf_data_list/jf_data_list.show_all_modal.js";
     export default {
         name: 'jf-data-list',
         props: ['items'],
@@ -92,30 +92,15 @@
             showAll(model, rowName, objectName) {
                 //objectName = _.startCase(objectName.indexOf('/') >= 0 ? objectName.split('/')[0] : this.objectName);
 
-                let modalScope = this.$rootScope.$new();
-                modalScope.items = model;
-                modalScope.rowName = rowName;
-                modalScope.objectName = objectName;
-
-                modalScope.filter = {};
-                modalScope.filterItem = item => {
-                    if (modalScope.filter.text) {
-                        let escaped = this.JFrogUIUtils.escapeForRegex(modalScope.filter.text);
-                        let regex = new RegExp('.*' + escaped.split('\\*').join('.*') + '.*', 'i');
-                        return regex.test(item.label);
-                    } else {
-                        return true;
-                    }
+                let modalScope = {
+                    items: model,
+                    rowName: rowName,
+                    colName: "",
+                    objectName: objectName,
+                    filter: {},
                 };
 
-                modalScope.noResults = () => {
-                    let filteredResults = _.filter(modalScope.items, item => {
-                        return modalScope.filterItem(item);
-                    });
-                    return filteredResults.length === 0;
-                };
-
-                this.JFrogModal.launchModalWithTemplateMarkup(require('@/directives/jf_data_list/jf_data_list.show_all_modal.html'), modalScope, 'sm', true);
+                this.JFrogModal.launchModal(JF_Data_LIST_MODAL, modalScope, 'sm', true, {dontRejectOnClose:true});
             },
             isArray(o) {
                 return Array.isArray(o);

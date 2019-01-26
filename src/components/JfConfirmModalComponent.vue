@@ -1,23 +1,16 @@
 <template>
-    <b-modal
-        ref="jfModal"
-        id="jfModal"
-        @hide="_handleHide"
-        :no-close-on-backdrop="noCloseOnBackDrop"
-        :no-close-on-esc="noCloseOnEsc"
-        >
+    <b-modal v-bind="modalProps" @hide="_handleHide">
         <template slot="modal-title">
             <h4 class="modal-title" id="popup-header" v-html="title"></h4>
         </template>
         <template slot="modal-footer">
-                <!-- TODO -->
-                <!-- <jf-checkbox ng-if="checkboxLabel"
+                <jf-checkbox v-if="checkboxLabel"
                             class="pull-left"
-                            text="{{checkboxLabel}}">
+                            :text="checkboxLabel">
                     <input type="checkbox"
-                        ng-change="onCheckboxStateChange(checkbox.checked)"
-                        ng-model="checkbox.checked">
-                </jf-checkbox> -->
+                        @change="onCheckboxStateChange(checkbox.checked)"
+                        v-model="checkbox.checked">
+                </jf-checkbox>
                 <button class="btn btn-default" @click="$dismiss()" id="popup-cancel">{{int_buttons.cancel}}</button>
                 <button class="btn btn-primary" @click="$close(true)" id="popup-confirm">{{int_buttons.confirm}}</button>
         </template>
@@ -31,8 +24,18 @@
         props: [
             "title",
             "buttons",
-            "content"
+            "content",
+            "checkbox",
+            "checkboxLabel",
+            "checkBoxChangeListener"
         ],
+        methods:{
+            onCheckboxStateChange(state) {
+                if (typeof this.checkBoxChangeListener == "function"){
+                    this.checkBoxChangeListener(state);
+                }
+            }
+        },
         mixins:[ModalMixins],
         data() {
             return {
