@@ -53,6 +53,7 @@ window.$ = $;
 window.jQuery = $;
 
 require('../node_modules/jf-tooltipster/js/jquery.tooltipster');
+require('billboard.js/dist/billboard.min.css');
 
 window.CodeMirror = require('codemirror');
 

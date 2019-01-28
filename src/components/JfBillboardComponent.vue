@@ -1,34 +1,30 @@
 <template>
 
-    <div></div>
+    <div ref="chart"></div>
 
 </template>
 
 <script>
-
+import { bb } from 'billboard.js';
     export default {
         name: 'jf-billboard',
         props: [
             'hideSearch',
             'options'
         ],
-        'jf@inject': [
-            '$element',
-            '$timeout',
-            '$window',
-            '$scope'
-        ],
         data() {
             return {};
         },
-        ng1_legacy: { 'controllerAs': 'jfBillboard' },
+        mounted() {
+            this._generate();
+        },
         methods: {
             _generate() {
                 if (this.chart) {
                     this.chart.destroy();
                 }
     
-                this.$timeout(() => {
+                setTimeout(() => {
                     // timeout ensures element is sized in DOM before initializing bb
                     /* Polyfill for IE 11 which doesnt support Object.assign */
                     if (typeof Object.assign != 'function') {
@@ -66,25 +62,22 @@
     
                     /* End Polyfill for IE 11 which doesnt support Object.assign */
     
-                    this.chart = bb.generate(Object.assign({ bindto: this.$element[0] }, this.options));
+                    this.chart = bb.generate(Object.assign({ bindto: this.$refs.chart }, this.options));
                 });
     
-                this.$window.addEventListener('onorientationchange', () => {
+                window.addEventListener('onorientationchange', () => {
                     this.chart.resize();
                 });
             },
-            $onChanges(changes) {
-                if (changes.options && this.chart) {
-                    this._generate();
-                }
-            },
-            $postLink() {
+        },
+        updated() {
+            if (this.chart) {
                 this._generate();
-            },
-            $onDestroy() {
-                if (this.chart) {
-                    this.chart.destroy();
-                }
+            }
+        },
+        beforeDestroy() {
+            if (this.chart) {
+                this.chart.destroy();
             }
         }
     }
@@ -94,5 +87,4 @@
 <style scoped lang="less">
 
     
-
 </style>
