@@ -972,35 +972,6 @@
                 .empty-placeholder();
             }
         }
-        .group-list {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-
-            max-height: 320px;
-            padding: 0;
-            margin-top: 10px;
-            margin-bottom: 10px;
-
-            .group-list-item {
-                display: block;
-                padding: 10px 15px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-
-                &:nth-child(odd) {
-                    background-color: @grayGridRow;
-                }
-                &:nth-child(even) {
-                    background-color: @white;
-                }
-                .permissions-form &:hover {
-                    background-color: @grayGridRowHover;
-                }
-            }
-        }
     }
 
     .empty-placeholder() {
