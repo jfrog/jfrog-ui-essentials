@@ -35,13 +35,7 @@
             'containerMargin'
         ],
         'jf@inject': [
-            '$scope',
-            '$state',
-            '$timeout',
-            '$element',
-            '$stateParams',
-            'JFrogEventBus',
-            '$rootScope'
+            'JFrogEventBus'
         ],
         data() {
             return {
@@ -55,8 +49,7 @@
             };
         },
         created() {
-            this.stateParams = this.$stateParams;
-            this.state = this.$state;
+            this.stateParams = this.$route.query;
             this.EVENTS = this.JFrogEventBus.getEventsDefinition();
             this.currentTab.name = this.stateParams.tab;
         },
@@ -72,7 +65,7 @@
         methods: {
             initTabs() {
                 // wait for the element to render and calculate how many tabs should display
-                this.$timeout(() => {
+                setTimeout(() => {
                     this._calculateTabsSize();
 
                     let tab = this._getTab(this.currentTab);
@@ -95,7 +88,7 @@
                 let visibleTabs = _.filter(this.tabs, tab => {
                     return tab.isVisible !== false;
                 });
-                let container = $(this.$element).children().eq(0);
+                let container = $(this.$el).children().eq(0);
                 let containerWidth = container.width();
                 let tabWidth = this.getTabWidthForStyle().endsWith('px') ? parseInt(this.tabwidth) : containerWidth * parseInt(this.tabwidth) / 100;
                 let containerMargin = parseInt(this.containerMargin);
@@ -107,25 +100,24 @@
                 this.tabsVisible = _.take(visibleTabs, tabsToTake);
             },
             _registerEvents() {
-                this.JFrogEventBus.registerOnScope(this.$scope, this.EVENTS.TABS_REFRESH, () => this.initTabs());
+                this.JFrogEventBus.registerOnScope(this, this.EVENTS.TABS_REFRESH, () => this.initTabs());
                 // URL changed (like back button / forward button / someone input a URL)
-                this.JFrogEventBus.registerOnScope(this.$scope, this.EVENTS.TABS_URL_CHANGED, stateParams => {
+                this.JFrogEventBus.registerOnScope(this, this.EVENTS.TABS_URL_CHANGED, stateParams => {
                     this.currentTab.name = stateParams.tab;
                 });
 
                 $(window).on('resize.tabs', () => {
                     this.initTabs();
-                    this.$scope.$digest();
                 });
 
             },
             unwatch() {
-                return this.$scope.$watch('jfTabs.tabs', (newVal, oldVal) => {
+                return this.$watch('jfTabs.tabs', (newVal, oldVal) => {
                     this._calculateTabsSize();
                 }, true);
             }, 
             stateChangeListener() { 
-                return this.$rootScope.$on('$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) => {
+                return this.$root.$on('$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) => {
                     toState.tabChange = false;
                 });
             },
@@ -139,7 +131,6 @@
 //                this.state.go(this.state.current, { tab: tab.name }, { notify: false });
                 this.currentTab.name = tab.name;
 
-                this.state.current = Object.assign({tabChange: tabChange});
             },
             _ensureTabVisible(tab) {
                 let collapsedTab = this._getCollapsedTab(tab);
