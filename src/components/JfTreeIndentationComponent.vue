@@ -20,14 +20,12 @@
             'linesBackgrounds'
         ],
         'jf@inject': [
-            '$scope',
-            '$sce'
         ],
         data() {
             return { indentationHtml: null };
         },
         created() {
-            this.$scope.$watch('jfTreeIndentation.indentation', () => {
+            this.$watch('jfTreeIndentation.indentation', () => {
                 if (!this.indentation) return;
                 // Build the inner html for the units here in js, it is much faster than using ng-repeat
                 let indentationHtml = '';
