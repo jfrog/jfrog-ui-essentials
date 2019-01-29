@@ -56,20 +56,12 @@ import jfDragDrop from './components/JfDragDropComponent.vue';
 import jfTabularDnd from './components/JfTabularDndComponent.vue';
 import jfWizard from './components/JfWizardComponent.vue';
 import jfWizardElement from './components/JfWizardElementComponent.vue';
-import uiSelectMatch from './sourceless/components/UiSelectMatchComponent.vue';
-import uiSelect from './sourceless/components/UiSelectComponent.vue';
-import uiSelectChoices from './sourceless/components/UiSelectChoicesComponent.vue';
-import ngMessages from './sourceless/components/NgMessagesComponent.vue';
 import vSelect from './../node_modules/vue-select/src/components/Select.vue'
 import Multiselect from './../node_modules/vue-multiselect/src/index.js'
 
 
 const Vue = window.Vue;
 let components = [
-    ngMessages,
-    uiSelectChoices,
-    uiSelect,
-    uiSelectMatch,
     jfWizardElement,
     jfWizard,
     jfTabularDnd,
