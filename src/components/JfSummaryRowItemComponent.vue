@@ -1,9 +1,14 @@
 <template>
-
-    <div>
-        <div></div>
+    <div class="summery-labeled-item"
+         v-if="summaryItemIsActive">
+        <div class="summary-item-label">{{summaryItemLabel}}</div>
+        <div class="jf-summary-row-item">
+            <span v-if="summaryItemUnwrap">
+                <slot></slot>
+            </span>
+            <slot v-if="!summaryItemUnwrap"></slot>
+        </div>
     </div>
-
 </template>
 
 <script>
@@ -11,31 +16,18 @@
     export default {
         name: 'jf-summary-row-item',
         props: [
-            'colTemplate',
-            'colScope',
-            'noWrap'
+            'summaryItemLabel',
+            'summaryItemUnwrap',
+            'summaryItemIsActive',
         ],
-        'jf@inject': [
-            '$element',
-            '$compile'
-        ],
-        data() {
+        data () {
             return {};
         },
-        mounted() {
-            let placeholder = this.$element.find('div');
-            let col = $(this.noWrap ? `${ this.colTemplate }` : `<span>${ this.colTemplate }</span>`);
-            let e = this.$compile(col)(this.colScope);
-            placeholder.after(e);
-            placeholder.remove();
-        },
-        ng1_legacy: { 'controllerAs': '$ctrl' }
+        mounted() {},
     }
 
 </script>
 
 <style scoped lang="less">
-
-    
 
 </style>

@@ -1,51 +1,125 @@
 <template>
-
-    <div></div>
-
+    <div class="summary-row jf-content-section"
+         :style="$ctrl.inlineStyle">
+        <slot></slot>
+    </div>
 </template>
 
 <script>
 
     export default {
         name: 'jf-summary-row',
-        props: [
-            'columns',
-            'parentScope'
+        props: [],
+        'jf@inject': [
+            '$element'
         ],
         data() {
-            return {};
+            return {
+                columnsToShow: [],
+                inlineStyle: {},
+            };
         },
         mounted() {
             this.filterOutUnactiveColumns();
             this.setColumnsLayout();
         },
-        ng1_legacy: { 'controllerAs': '$ctrl' },
         methods: {
             filterOutUnactiveColumns() {
-                this.columnsToShow = _.filter(this.columns, col => {
-                    return col.isActive;
-                });
+                this.columnsToShow = this.$element.find('.summery-labeled-item');
             },
             setColumnsLayout() {
                 let layout = '';
                 _.forEach(this.columnsToShow, col => {
-                    if (!col.width) {
-                        col.width = '1fr';
-                    }
-                    layout += `${ col.width } `;
+                    layout += `${ $(col).attr('width') || '1fr' } `;
                 });
                 this.inlineStyle = {
-                    gridTemplateColumns: layout,
-                    '-ms-grid-columns': layout
+                    gridTemplateColumns:layout,
+                    "-ms-grid-columns":layout
                 };
             }
-        }
+        },
+        ng1_legacy: { 'controllerAs': '$ctrl' }
     }
 
 </script>
 
 <style scoped lang="less">
+    @import '../assets/stylesheets/variables';
+    .summary-row {
+        display: grid;
+        // The default 4 fractions division is arbitrary and should be overwritten by code using this class
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        @padding: 20px;
+        @height: 120px;
 
-    
+        width: 100%;
+        height: @height;
+        padding: @padding @padding/2;
+        &.jf-content-section {
+            margin-bottom: 0;
+        }
+        .summery-labeled-item {
+            /* IE10+ CSS styles */
+            -ms-grid-row: 1;
+            @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+                height: ~"calc( @{height} - 2*@{padding} )";
+            }
+            .loop(@i) when (@i > 0) {
+                .loop((@i - 1));    // next iteration
+                // Loop body - set ms grid col
+                @t: ~":nth-child(@{i})";
+                &@{t} {
+                    -ms-grid-column: @i;
+                }
+            }
+            .loop(100);
 
+            padding: 0 @padding;
+            vertical-align: top;
+            font-size: 12px;
+            display: block;
+            &:not(:first-child):not(.no-separator) {
+                border-left: 1px solid @grayBorderLighter;
+            }
+
+            line-height: 28px;
+            white-space: normal;
+            color: lighten(@grayFontGeneral, 20%);
+
+            span {
+                display: block;
+                font-size: 14px;
+                font-weight: normal;
+                color: @greenBGSecondaryText;
+            }
+            i:not(.colored-icon) {
+                color: @greenBGSecondaryText;
+            }
+
+            .summary-icon-column i.icon {
+                font-size: 42px;
+                position: relative;
+                top: 20px;
+                left: 15px;
+            }
+
+            &:not(.downloads) {
+                display: inline-block;
+                overflow: hidden;
+                .jf-summary-row-item > span:not(.no-ellipsis) {
+                    width: 100% !important;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    a {
+                        max-width: 100% !important;
+                        display: inline-block;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+        }
+    }
 </style>
