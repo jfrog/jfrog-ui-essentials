@@ -1,37 +1,31 @@
 <template>
-
     <div>
         <div class="grid-pagination text-right" v-if="paginationApi.getTotalPages()">
             <p>
-                <input type="text" class="grid-page-box" :style="{'width': (CONSTANTS.PAGINATION_DIGIT_WIDTH_PX + paginationApi.getTotalPages().toString().length * CONSTANTS.PAGINATION_DIGIT_WIDTH_PX) + 'px'}" v-jf-tooltip="'Jump to Page'" @blur="onBlur()" v-model="pageViewModel" @input="pageChanged()">
+                <input type="text" class="grid-page-box" :style="{'width': (CONSTANTS.PAGINATION_DIGIT_WIDTH_PX + paginationApi.getTotalPages().toString().length * CONSTANTS.PAGINATION_DIGIT_WIDTH_PX) + 'px'}" jf-tooltip="Jump to Page" @blur="onBlur()" v-model="pageViewModel" @input="pageChanged()">
                 out of {{ paginationApi.getTotalPages() }}
                 <a href="" @click.prevent="prevPage()" :class="{disabled: currentPage === 1}">‹</a>
                 <a href="" @click.prevent="nextPage()" :class="{disabled: currentPage === paginationApi.getTotalPages()}">›</a>
             </p>
         </div>
     </div>
-
 </template>
 
 <script>
-
     import { GENERAL_CONSTANTS } from '@/constants/general.constants.js';
     export default {
         name: 'jf-drag-drop-pagination',
         props: ['paginationApi'],
         data() {
             return {
-                CONSTANTS: { PAGINATION_DIGIT_WIDTH_PX: null },
                 pageViewModel: 1,
-                currentPage: null
+                currentPage: this.paginationApi && this.paginationApi.currentPage ? this.paginationApi.currentPage : 0,
             };
         },
         created() {
-            this.CONSTANTS = GENERAL_CONSTANTS;
+            this.CONSTANTS = _.extend({ PAGINATION_DIGIT_WIDTH_PX: null}, GENERAL_CONSTANTS );
         },
         mounted() {
-            this.currentPage = 0;
-
             if (this.paginationApi) {
                 this.currentPage = this.paginationApi.getCurrentPage();
                 this.pageViewModel = this.currentPage;
@@ -42,7 +36,6 @@
                 });
             }
         },
-        ng1_legacy: { 'controllerAs': 'jfDragDropPagination' },
         methods: {
             onBlur() {
                 this.pageViewModel = parseInt(this.pageViewModel);
@@ -64,11 +57,11 @@
             },
             nextPage() {
                 this.paginationApi.nextPage();
-                this.currentPage = this.paginationApi.getCurrentPage();
+                this.pageViewModel = this.currentPage = this.paginationApi.getCurrentPage();
             },
             prevPage() {
                 this.paginationApi.prevPage();
-                this.currentPage = this.paginationApi.getCurrentPage();
+                this.pageViewModel = this.currentPage = this.paginationApi.getCurrentPage();
             }
         }
     };

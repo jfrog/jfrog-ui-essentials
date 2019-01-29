@@ -89,18 +89,19 @@
         data() {
             return {
                 filterList: null,
-                paginationApi: null
+                paginationApi: null,
+                itemsPerPage: this.items.length,
+                currentPage: 1
             };
         },
         created() {
             this.paginationApi = new PaginationApi(this);
-            this.currentPage = 1;
         },
          mounted() {
             this.$nextTick(()=>{
-                    let containerHeight = this.$element.find('.group-list-wrapper').innerHeight();
-                    let itemHeight = this.$element.find('.group-list-item').outerHeight();
-                    this.itemsPerPage = Math.floor(containerHeight / itemHeight);
+                let containerHeight = this.$element.find('.group-list-wrapper').innerHeight();
+                let itemHeight = this.$element.find('.group-list-item').outerHeight();
+                this.itemsPerPage = Math.floor(containerHeight / itemHeight);
             });
         },
         methods: {
@@ -174,8 +175,6 @@
 
             .group-list {
                 user-select: none;
-                max-height: 320px;
-                overflow-y:scroll;
                 padding: 0;
                 margin-top: 10px;
                 margin-bottom: 10px;
