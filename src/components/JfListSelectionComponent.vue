@@ -195,7 +195,8 @@
                     }
 
                     &.highlighted {
-                        background-color:@grayBGDark;
+                        //This !important is only necessary temporarily. It is being overridden by another occurrence of .group-list-item.highlighted selector - which should get removed once we clean up
+                        background-color:@grayBGDark !important;
                     }
                 }
             }
