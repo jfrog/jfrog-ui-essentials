@@ -2918,13 +2918,13 @@ html[data-v-052faf86] {
   color: #d73f3f;
 }
 
-.jf-summary-row-item > span[data-v-00d18301]:not(.no-ellipsis) {
+.jf-summary-row-item > span[data-v-52aacba8]:not(.no-ellipsis) {
   width: 100% !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.jf-summary-row-item > span:not(.no-ellipsis) a[data-v-00d18301] {
+.jf-summary-row-item > span:not(.no-ellipsis) a[data-v-52aacba8] {
   max-width: 100% !important;
   display: inline-block;
   white-space: nowrap;

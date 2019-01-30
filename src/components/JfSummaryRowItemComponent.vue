@@ -3,7 +3,7 @@
          v-if="summaryItemIsActive">
         <div class="summary-item-label">{{summaryItemLabel}}</div>
         <div class="jf-summary-row-item">
-            <span v-if="!summaryItemUnwrap">
+            <span class="summary-item-wrapper" v-if="!summaryItemUnwrap">
                 <slot></slot>
             </span>
             <slot v-if="summaryItemUnwrap"></slot>
