@@ -1,6 +1,6 @@
 import { JFTreeApi } from './services/factories/JfTreeApiFactory.js';
 import { JFrogTableViewOptions } from './services/factories/JFrogTableViewOptionsFactory.js';
-import { JFrogUIModelSaverFactory } from './services/factories/JFrogUiModelSaverFactoryFactory.js';
+import { JFrogUIModelSaverFactory } from './services/factories/JFrogUiModelSaverFactory.js';
 import { JFrogUIWebWorker } from './services/factories/JFrogUiWebWorkerFactory.js';
 import { recursiveDirective } from './services/factories/RecursiveDirectiveFactory.js';
 import { WebWorkersPool } from './services/factories/WebWorkersPoolFactory.js';

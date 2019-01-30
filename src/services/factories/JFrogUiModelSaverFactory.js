@@ -1,9 +1,12 @@
-var injections;
+import _ from 'lodash';
+import { DeepDiff } from 'deep-diff';
+
 class JFrogUIModelSaver {
-	constructor(controller, modelObjects, excludePaths) {
-		_.extend(this, injections);
-		// this.JFrogModal = JFrogModal;
-		// this.$q = $q;
+    constructor(controller, modelObjects, excludePaths) {
+        let injected = $jfrog.get(['$timeout', 'JFrogModal', '$q']);
+        this.$timeout = injected.$timeout;
+        this.$q = injected.$q;
+        this.JFrogModal = injected.JFrogModal;
 		this.controller = controller;
 		this.controller._$modelSaver$_ = this;
 		this.confirmOnLeave = true;
@@ -29,7 +32,7 @@ class JFrogUIModelSaver {
 		let isSaved = true;
 		for (let objectNameI in this.modelObjects) {
 			let objectName = this.modelObjects[objectNameI];
-			if (!angular.equals(this.savedModels[objectName], this.controller[objectName])) {
+			if (!_.isEqual(this.savedModels[objectName], this.controller[objectName])) {
 				let deefObj = DeepDiff(this.savedModels[objectName], this.controller[objectName]);
 				if (this._isDiffReal(deefObj, this.excludePaths[objectNameI])) {
 					isSaved = false;
@@ -91,7 +94,10 @@ class JFrogUIModelSaver {
 				'Discard Changes', {confirm: 'Discard'})
 			    .then(() => {
 				    defer.resolve();
-			    })
+                })
+                .catch( e => {
+                    defer.reject();
+                })
 			    .finally(() => {
 				    JFrogUIModelSaverFactory.prototype.confirmDiscardModalOpen = false;
 			    });
@@ -102,24 +108,40 @@ class JFrogUIModelSaver {
 		return defer.promise;
 	}
 }
+
+/*
+Utility method which returns the closest vue instance
+
+References:
+https://github.com/vuejs/vue/issues/5621
+https://forum.vuejs.org/t/dom-element-to-vue-component/7617/2
+https://jsfiddle.net/Linusborg/50wL7mdz/19156/
+*/
+function findVueComponent(node) {
+    if (node.__vue__) {
+        return node.__vue__
+    } else {
+        return findVueComponent(node.parentNode)
+    }
+}
+
 export function JFrogUIModelSaverFactory() {
-	// this.$inject('$timeout', 'JFrogModal', '$q');
-	injections = $jfrog.get(['$timeout', 'JFrogModal', '$q']);
+
     return {
         get confirmDiscardModalOpen() {
             return JFrogUIModelSaverFactory.prototype.confirmDiscardModalOpen;
         },
         createInstance: (controller, modelObjects, excludePaths) => {
             excludePaths = excludePaths || [];
-            return new JFrogUIModelSaver(controller, modelObjects, excludePaths, this.$timeout, this.JFrogModal, this.$q);
+            return new JFrogUIModelSaver(controller, modelObjects, excludePaths);
         },
         checkDiscardConfirmation: ($q, e) => {
-            let defer = this.$q.defer();
+            let defer = $q.defer();
             let forms = $('form');
             let changeDiscovered = false;
             for (let i = 0; i < forms.length; i++) {
                 let form = forms[i];
-                let controller = angular.element(form).controller() || angular.element(form).scope().$ctrl;
+                let controller = findVueComponent(form)
 
                 if (controller && controller._$modelSaver$_ && controller._$modelSaver$_.confirmOnLeave && !controller._$modelSaver$_.isModelSaved()) {
                     changeDiscovered = true;
@@ -127,6 +149,8 @@ export function JFrogUIModelSaverFactory() {
                     controller._$modelSaver$_.ask().then(() => {
                         controller._$modelSaver$_.confirmOnLeave = false;
                         defer.resolve();
+                    }).catch( e => {
+                        defer.reject();
                     });
 
                     break;
