@@ -1,7 +1,9 @@
+var injections;
 class JFrogUIModelSaver {
-	constructor(controller, modelObjects, excludePaths, $timeout, JFrogModal, $q) {
-		this.JFrogModal = JFrogModal;
-		this.$q = $q;
+	constructor(controller, modelObjects, excludePaths) {
+		_.extend(this, injections);
+		// this.JFrogModal = JFrogModal;
+		// this.$q = $q;
 		this.controller = controller;
 		this.controller._$modelSaver$_ = this;
 		this.confirmOnLeave = true;
@@ -9,7 +11,7 @@ class JFrogUIModelSaver {
 		this.excludePaths = excludePaths;
 		this.savedModels = {};
 		this.saved = false;
-		$timeout(() => {
+		this.$timeout(() => {
 			if (!this.saved) {
 				this.save();
 			}
@@ -101,7 +103,8 @@ class JFrogUIModelSaver {
 	}
 }
 export function JFrogUIModelSaverFactory() {
-    this.$inject('$timeout', 'JFrogModal', '$q');
+	// this.$inject('$timeout', 'JFrogModal', '$q');
+	injections = $jfrog.get(['$timeout', 'JFrogModal', '$q']);
     return {
         get confirmDiscardModalOpen() {
             return JFrogUIModelSaverFactory.prototype.confirmDiscardModalOpen;
