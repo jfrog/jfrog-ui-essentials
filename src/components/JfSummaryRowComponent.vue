@@ -76,24 +76,24 @@
 
             padding: 0 @padding;
             vertical-align: top;
-            font-size: 12px;
+            font-size: @jfFontSizeSmall;
             display: block;
             &:not(:first-child):not(.no-separator) {
-                border-left: 1px solid @grayBorderLighter;
+                border-left: 1px solid @jfColorMediumGrey;
             }
 
             line-height: 28px;
             white-space: normal;
-            color: lighten(@grayFontGeneral, 20%);
+            color: lighten(@jfColorAlmostBlack, 20%);
 
             span {
                 display: block;
-                font-size: 14px;
-                font-weight: normal;
-                color: @greenBGSecondaryText;
+                font-size: @jfFontSizeNormal;
+                font-weight: @jfFontWeightNormal;
+                color: @jfColorBlack;
             }
             i:not(.colored-icon) {
-                color: @greenBGSecondaryText;
+                color: @jfColorBlack;
             }
 
             .summary-icon-column i.icon {
@@ -106,19 +106,6 @@
             &:not(.downloads) {
                 display: inline-block;
                 overflow: hidden;
-                .jf-summary-row-item > span:not(.no-ellipsis) {
-                    width: 100% !important;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    a {
-                        max-width: 100% !important;
-                        display: inline-block;
-                        white-space: nowrap;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                    }
-                }
             }
         }
     }
