@@ -37,6 +37,7 @@
     "v-click-outside": "^2.0.2",
     "vee-validate": "2.1.5",
     "vue": "^2.5.17",
+    "vue-bootstrap-datetimepicker": "^5.0.1",
     "vue-clipboard2": "^0.2.1",
     "vue-codemirror": "^4.0.6",
     "vue-moment": "^4.0.0",
@@ -46,6 +47,10 @@
     "vue-virtual-scroller": "^1.0.0-beta.4"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.7.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.13",
+    "@fortawesome/free-regular-svg-icons": "^5.7.0",
+    "@fortawesome/free-solid-svg-icons": "^5.7.0",
     "@vue/cli-plugin-babel": "^3.2.0",
     "@vue/cli-plugin-eslint": "^3.2.0",
     "@vue/cli-service": "^3.2.0",

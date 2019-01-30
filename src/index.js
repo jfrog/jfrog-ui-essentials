@@ -43,13 +43,21 @@ import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
 import '../node_modules/jf-tooltipster/css/tooltipster.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import $ from 'jquery';
+import moment from 'moment';
 import JFrogUI from './plugins/JFrogUI';
 import 'jquery-contextmenu';
 import VueClipboard from 'vue-clipboard2';
 import Toasted from 'vue-toasted';
 import vClickOutside from 'v-click-outside';
+// date-time picker TODO use a different date time picker
+import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css';
+import '@fortawesome/fontawesome-free/css/fontawesome.css';
+import '@fortawesome/fontawesome-free/css/regular.css';
+import '@fortawesome/fontawesome-free/css/solid.css';
+
 
 window.$ = $;
+window.moment = moment;
 window.jQuery = $;
 
 require('../node_modules/jf-tooltipster/js/jquery.tooltipster');
@@ -72,5 +80,20 @@ export default {
         Vue.use(VueMoment);
     }
 }
+
+// date-time picker TODO use a different date time picker
+$.extend(true, $.fn.datetimepicker.defaults, {
+    icons: {
+        time: 'far fa-clock',
+        date: 'far fa-calendar',
+        up: 'fas fa-arrow-up',
+        down: 'fas fa-arrow-down',
+        previous: 'fas fa-chevron-left',
+        next: 'fas fa-chevron-right',
+        today: 'fas fa-calendar-check',
+        clear: 'far fa-trash-alt',
+        close: 'far fa-times-circle'
+    }
+});
 
 export {JFrogUI}
