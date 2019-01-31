@@ -44,6 +44,7 @@
             this.asm = this.AdvancedStringMatch;
         },
         mounted() {
+            $(this.$el).prop('comp', this);
             this._watchSelection();
             this._watchExpansion();
 

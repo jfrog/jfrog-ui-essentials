@@ -815,7 +815,7 @@ export function JFTreeApi() {
                 selector: '.jf-tree .jf-tree-item',
                 build: $trigger => {
                     let defer = this.$q.defer();
-                    let rowCtrl = angular.element($trigger[0]).controller('jfTreeItem');
+                    let rowCtrl = ($($trigger[0]).is('.jf-tree-item') ? $($trigger[0]) : $($($trigger[0]).parents('jf-tree-item')[0])).prop('comp');
                     let items = rowCtrl.data.data.$cachedCMItems;
                     if (items) {
                         defer.resolve(items);

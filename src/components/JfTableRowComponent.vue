@@ -121,8 +121,6 @@
 </template>
 
 <script>
-    import { IdState } from 'vue-virtual-scroller';
-
     export default {
         name: 'jf-table-row',
         props: [
@@ -338,17 +336,15 @@
                 if (this.rowId === 'headers')
                     return;
 
-/*
-                $(this.$element).draggable({
+                window.$(this.$element).draggable({
                     helper: 'clone',
                     scroll: true,
                     distance: 10,
                     appendTo: $(this.tableView.$element).find('.jf-table-view-container'),
-                    start: (event, ui) => this.$scope.$apply(() => this.dragStart(event, ui)),
-                    stop: (event, ui) => this.$scope.$apply(() => this.dragStop(event, ui)),
-                    drag: (event, ui) => this.$scope.$apply(() => this.dragMove(event, ui))
+                    start: (event, ui) => this.dragStart(event, ui),
+                    stop: (event, ui) => this.dragStop(event, ui),
+                    drag: (event, ui) => this.dragMove(event, ui)
                 });
-*/
                 $(this.$element).addClass('drag-enabled');
             },
             dragStart(event, ui) {
