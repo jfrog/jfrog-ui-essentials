@@ -1,16 +1,16 @@
-import 'codemirror/lib/codemirror.css'
-import 'codemirror/mode/javascript/javascript.js'
-import 'codemirror/mode/xml/xml.js'
-import 'codemirror/mode/markdown/markdown.js'
-import 'codemirror/mode/gfm/gfm.js'
-import 'codemirror/addon/mode/overlay.js'
-import 'codemirror/addon/edit/matchbrackets.js'
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/mode/javascript/javascript.js';
+import 'codemirror/mode/xml/xml.js';
+import 'codemirror/mode/markdown/markdown.js';
+import 'codemirror/mode/gfm/gfm.js';
+import 'codemirror/addon/mode/overlay.js';
+import 'codemirror/addon/edit/matchbrackets.js';
 
-import 'codemirror/addon/selection/mark-selection.js'
-import 'codemirror/addon/search/searchcursor.js'
-import 'codemirror/addon/dialog/dialog.js'
-import 'codemirror/addon/dialog/dialog.css'
-import 'codemirror/addon/search/search.js'
+import 'codemirror/addon/selection/mark-selection.js';
+import 'codemirror/addon/search/searchcursor.js';
+import 'codemirror/addon/dialog/dialog.js';
+import 'codemirror/addon/dialog/dialog.css';
+import 'codemirror/addon/search/search.js';
 //import 'codemirror/theme/monokai.css'
 //import 'codemirror/addon/selection/active-line.js'
 //import 'codemirror/addon/hint/show-hint.js'
@@ -80,7 +80,7 @@ export default {
         Vue.use(vClickOutside);
         Vue.use(VueMoment);
     }
-}
+};
 
 // date-time picker TODO use a different date time picker
 $.extend(true, $.fn.datetimepicker.defaults, {
@@ -97,4 +97,15 @@ $.extend(true, $.fn.datetimepicker.defaults, {
     }
 });
 
-export {JFrogUI}
+// Fix for toasted library. It is injecting its css to the end of the head tag, which makes it difficult to override.
+// This will move the library styling to the beginning of the head tag
+(function () {
+    let xpath = '//style[contains(text(),\'.toasted.rounded\')]';
+    let toastedLibraryStyleElement = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE,
+        null).singleNodeValue;
+    let head = document.getElementsByTagName('head')[0];
+    head.removeChild(toastedLibraryStyleElement);
+    head.prepend(toastedLibraryStyleElement);
+})();
+
+export {JFrogUI};
