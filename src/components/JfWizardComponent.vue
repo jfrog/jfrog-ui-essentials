@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="jf-wizard">
         <div class="jf-wizard-container">
             <div class="wizard-bar">
                 <ul>
