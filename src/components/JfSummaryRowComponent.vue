@@ -107,6 +107,10 @@
                 display: inline-block;
                 overflow: hidden;
             }
+
+            /deep/ span.jf-text-box-show-all {
+                display: inline;
+            }
         }
     }
 </style>
