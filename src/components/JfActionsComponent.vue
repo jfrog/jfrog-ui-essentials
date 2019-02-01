@@ -253,28 +253,12 @@
 </script>
 
 <style scoped lang="less">
-    @import "../../src/assets/stylesheets/variables.less";
+
     /* An inherited style is causing a small inverted triangle to be displayed */
     .dropdown-toggle::after {
         display: none;
     }
-     .action-button {
+    .action-button {
         cursor: pointer;
-        overflow: hidden;
-        display: table-cell;
-        vertical-align: middle;
-        text-align: center;
-        .action-icon {
-            top: 0 !important;
-            &:before {
-                font-size: 17px !important;
-                line-height: 2;
-            }
-        }
-        .action-icon:hover {
-            &:before {
-                color: @greenBGDark;
-            }
-        }
     }
 </style>
