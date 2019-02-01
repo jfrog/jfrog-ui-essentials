@@ -13,7 +13,11 @@
       v-html="getItemValue(item.value)"
       v-jf-tooltip-on-overflow
     ></div>
-    <div v-if="!item.isUrl && !isArray(item.value) && !item.template" v-html="item.value" v-jf-tooltip-on-overflow></div>
+    <div
+      v-if="!item.isUrl && !isArray(item.value) && !item.template"
+      v-html="item.value"
+      v-jf-tooltip-on-overflow
+    ></div>
     <div v-if="isArray(item.value) && !item.template" :id="'data-list-row-' + index">
       <div class="tag" v-for="(tag, index2) in item.value" :key="index2">
         <a
@@ -27,7 +31,7 @@
       </div>
       <a
         class="jf-link gridcell-showall"
-        v-if="item.value.length >= 1 && htmlIsOverflowing('#data-list-row-' + index)"
+        v-if="showAllValue"
         href
         @click.prevent="showAll(item.value,item.label,item.objectName)"
       >(See {{item.value.length &gt; 1 ? 'All' : 'List'}})</a>
@@ -39,23 +43,32 @@
 </template>
 
 <script>
-import _ from 'lodash';
+import _ from 'lodash'
+import {JF_Data_LIST_MODAL} from "@/directives/jf_data_list/jf_data_list.show_all_modal.js";
 export default {
-    name: 'datalist-dynamic-component',
-    props: ['item'],
+    name: 'jf-datalist-item-component',
+    props: ['item', 'index'],
+    'jf@inject': [
+        'JFrogModal',
+        'JFrogUIUtils'
+    ],
+    data() {
+        return {
+            showAllValue: false
+        }
+    },
     mounted() {
-        this.createTemplate();
+        this.showAllValue = (this.item.value.length >= 1) ? this.htmlIsOverflowing('#data-list-row-' + this.index) : false;
+        if(this.showAllValue) { this.$forceUpdate }
+        this.createTemplate()
     },
     updated() {
-        this.createTemplate();
+        this.createTemplate()
     },
     methods: {
         htmlIsOverflowing(rowId) {
             if (!this.$el) return false
-
-            console.log('rowId IS ', rowId)
-            let elem = this.$element.find(rowId)
-            console.log('ELEMENT IS ', elem)
+            let elem = $(rowId);
             let children = elem.children('.tag')
             let maxWidth =
                 elem.closest('.data-list-item-value').outerWidth() - 60
@@ -80,8 +93,6 @@ export default {
             return elem.children('.tag.overflowing-child').length > 0
         },
         showAll(model, rowName, objectName) {
-            //objectName = _.startCase(objectName.indexOf('/') >= 0 ? objectName.split('/')[0] : this.objectName);
-
             let modalScope = {
                 items: model,
                 rowName: rowName,
@@ -113,26 +124,68 @@ export default {
                 typeof item.template === 'object'
                     ? item.template
                     : {
-                        template: item.template,
-                    }
+                          template: item.template,
+                      }
             let template = `<div>${mixin.template}</div>`
             let ComponentClass = Vue.extend({
                 name: 'template-component',
                 template: template,
                 mixins: [mixin],
-                props: ['item',...Object.keys(item.scope|| {})],
+                props: ['item', ...Object.keys(item.scope || {})],
             })
             let component = new ComponentClass({
-                propsData: _.extend({
+                propsData: _.extend(
+                    {
+                        item: _.omit(item, ['scope']),
                     item: _.omit(item, ['scope']),                    
-                }, item.scope),
-
+                        item: _.omit(item, ['scope']),
+                    },
+                    item.scope
+                ),
             })
             component.$mount()
             this.$refs.templateValue.append(component.$el)
-        }
+        },
     },
 }
 </script>
 <style lang="less">
+@import "../../src/assets/stylesheets/main.less";
+.modal-header {
+    display: block !important;
+    .close {
+        padding: 0 !important;
+    }
+}
+.modal-body {
+    .group-list {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        max-height: 320px;
+        padding: 0;
+        margin-top: 10px;
+        margin-bottom: 10px;
+
+        .group-list-item {
+        display: block;
+        padding: 10px 15px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &:nth-child(odd) {
+            background-color: @grayGridRow;
+        }
+        &:nth-child(even) {
+            background-color: @white;
+        }
+        .permissions-form &:hover {
+            background-color: @grayGridRowHover;
+        }
+        }
+    }
+}
 </style>

@@ -6,7 +6,7 @@
                 <tr class="data-list-item" v-for="(item,index) in formattedItems" :key="index" >
                     <td class="data-list-item-label">{{item.label}}:</td>
                     <td class="data-list-item-value">
-                        <datalist-dynamic-component :item="item"></datalist-dynamic-component>                       
+                        <jf-datalist-item-component :item="item" :index="index"></jf-datalist-item-component>                       
                     </td>
                 </tr>
             </tbody>
@@ -16,12 +16,11 @@
 </template>
 
 <script>
-    import DatalistDynamicComponent from './DatalistDynamicComponent.vue'
-    import {JF_Data_LIST_MODAL} from "@/directives/jf_data_list/jf_data_list.show_all_modal.js";
+    import JfDatalistItemComponent from './JfDatalistItemComponent.vue'
     export default {
         name: 'jf-data-list',
         props: ['items'],
-        components: { DatalistDynamicComponent },
+        components: { JfDatalistItemComponent },
         'jf@inject': [
             '$scope',
             '$rootScope',
@@ -33,11 +32,8 @@
             return { formattedItems: null,isMounted: false };
         },
         created() {
-            console.log("****** ITEMS ARE",this.items)
             this.$scope.$watch('jfDataList.items', items => {
-                console.log('changed');
                 if (items) {
-                    console.log("FORMATED")
                     this.formattedItems = _.filter(items, item => {
                         return item.label != '';
                     });
@@ -46,13 +42,11 @@
         },
         mounted() {
             this.$forceUpdate();
-            console.log("*** MOUNTED")
             this.isMounted = true;
             this.formattedItems = this.filterItems(this.formattedItems);      
         },
         ng1_legacy: { 'controllerAs': 'jfDataList' },
-        methods: {
-            
+        methods: {            
             filterItems(items) {
                 return items.filter(i => !i.isHidden);
             }
