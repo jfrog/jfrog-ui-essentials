@@ -2,7 +2,7 @@ import JFrogConfirmModalComponent from '../components/JfConfirmModalComponent.vu
 import JFrogCodeModalComponent from '../components/JfCodeModalComponent.vue'
 import JfFullTextModalComponent from '../components/JfFullTextModalComponent.vue'
 import JfDynamicModalComponent from '../components/JfDynamicModalComponent.js'
-import JWizardModalComponent from '../components/JWizardModalComponent.vue'
+import JfWizardModalComponent from '../components/JfWizardModalComponent.vue'
 export class JFrogModal {
     /* @ngInject */
     constructor() {
@@ -57,6 +57,7 @@ export class JFrogModal {
         modalObj.uiEssNoCloseOnBackdrop = cancelable === false;
         modalObj.uiEssNoCloseOnEsc = cancelable === false
         modalObj.uiEssSize = size || 'lg';
+        modalObj.uiEssModalClass = options.class || '';
 
         if (options && _.isObject(options)) {
             _.extend(modalObj, options);
@@ -83,7 +84,7 @@ export class JFrogModal {
                 ModalComponent = JfFullTextModalComponent;
                 break
             case '@wizard_modal':
-                ModalComponent = JWizardModalComponent;
+                ModalComponent = JfWizardModalComponent;
                 //Passing this instance into the wizard so that it can resize if necessary
                 modalObj.JFrogModal = this;
                 break

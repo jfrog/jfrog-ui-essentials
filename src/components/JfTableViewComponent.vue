@@ -441,6 +441,8 @@
 
     @import "../../src/assets/stylesheets/bootstrap-variables.less";
     @import "../../src/assets/stylesheets/variables.less";
+    @import  '../../src/assets/stylesheets/mixins.less';
+
     /deep/ .jf-table-view {
         width: 100%;
         position: relative;
@@ -808,8 +810,7 @@
                                 left: 10px;
                             }
                         }
-                        .selection-button,
-                        .action-button {
+                        .selection-button{
                             cursor: pointer;
                             overflow: hidden;
                             display: table-cell;
@@ -963,28 +964,4 @@
         }
 
     }
-
-    // CSS for the 'show all' modal
-    #show-all-modal {
-        .modal-body {
-            margin-bottom: 10px;
-            .empty-filter-placeholder {
-                .empty-placeholder();
-            }
-        }
-    }
-
-    .empty-placeholder() {
-        height: 80px;
-        line-height: 25px;
-        width: 100%;
-        text-align: center;
-        padding: 30px;
-        margin-top: 30px;
-        background-color: @grayBGDark;
-        &.drop-target-mark {
-            border: dashed black 1px;
-        }
-    }
-
 </style>

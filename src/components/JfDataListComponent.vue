@@ -6,7 +6,7 @@
                 <tr class="data-list-item" v-for="(item,index) in formattedItems" :key="index" >
                     <td class="data-list-item-label">{{item.label}}:</td>
                     <td class="data-list-item-value">
-                        <jf-datalist-item-component :item="item" :index="index"></jf-datalist-item-component>                       
+                        <jf-datalist-item-component :item="item" :index="index"></jf-datalist-item-component>
                     </td>
                 </tr>
             </tbody>
@@ -43,10 +43,10 @@
         mounted() {
             this.$forceUpdate();
             this.isMounted = true;
-            this.formattedItems = this.filterItems(this.formattedItems);      
+            this.formattedItems = this.filterItems(this.formattedItems);
         },
         ng1_legacy: { 'controllerAs': 'jfDataList' },
-        methods: {            
+        methods: {
             filterItems(items) {
                 return items.filter(i => !i.isHidden);
             }
@@ -54,6 +54,7 @@
     }
 
 </script>
+
 
 <style scoped lang="less">
 @import "../../src/assets/stylesheets/main.less";
@@ -109,6 +110,22 @@
     }
   }
 }
+
+</style>
+<style lang="less">
+    /* IMPORTANT!!  This is NOT scoped because the modal that is displayed is not its child  */
+    @import  '../../src/assets/stylesheets/mixins.less';
+    @import "../../src/assets/stylesheets/variables.less";
+
+    .show-all-modal {
+        .modal-body {
+            margin-bottom: 10px;
+            .empty-filter-placeholder {
+                .empty-placeholder();
+            }
+        }
+    }
+
 
 
 </style>

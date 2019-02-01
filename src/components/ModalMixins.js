@@ -5,6 +5,7 @@ export default {
         'uiEssModalPromise',
         'uiEssSize',
         'dontRejectOnClose',
+        'uiEssModalClass',
     ],
     data() {
         return {
@@ -12,6 +13,7 @@ export default {
                 ref: 'jfModal',
                 id: 'jfModal',
                 centered: true,
+                'modal-class': this.uiEssModalClass || '',
                 'no-close-on-esc': this.uiEssNoCloseOnEsc,
                 'no-close-on-backdrop': this.uiEssNoCloseOnBackdrop,
                 'on:hide': '_handleHide',
@@ -40,10 +42,10 @@ export default {
         },
         $close(succeeded) {
             if (succeeded && this.$props.uiEssModalPromise) {
-                    this.promiseIsPending = false;
-                    this.$props.uiEssModalPromise.resolve()
+                this.promiseIsPending = false
+                this.$props.uiEssModalPromise.resolve()
             } else {
-                this.$dismiss();
+                this.$dismiss()
             }
             this.$refs.jfModal.hide()
         },
@@ -54,17 +56,17 @@ export default {
 
         $dismiss() {
             if (!this.dontRejectOnClose && this.$props.uiEssModalPromise) {
-                this.promiseIsPending = false;;
-                this.$props.uiEssModalPromise.reject();
+                this.promiseIsPending = false
+                this.$props.uiEssModalPromise.reject()
             }
-            this.$refs.jfModal.hide();
+            this.$refs.jfModal.hide()
         },
         _handleHide() {
             if (this.dontRejectOnClose) {
-                return;
+                return
             }
             if (this.$props.uiEssModalPromise && this.promiseIsPending) {
-                this.$props.uiEssModalPromise.reject();
+                this.$props.uiEssModalPromise.reject()
             }
         },
     },
