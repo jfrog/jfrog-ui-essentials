@@ -50,7 +50,8 @@ export default {
     props: ['item', 'index'],
     'jf@inject': [
         'JFrogModal',
-        'JFrogUIUtils'
+        'JFrogUIUtils',
+        'JFrogUILibConfig'
     ],
     data() {
         return {
@@ -124,10 +125,11 @@ export default {
             let mixin =
                 typeof item.template === 'object'
                     ? item.template
+                    : !this.isHtml(item.template) ? this.JFrogUILibConfig.getConfig().customModalTemplates[item.template]
                     : {
                           template: item.template,
-                      }
-            let template = `<div>${mixin.template}</div>`
+                      };
+            let template = `${mixin.template}`
             let ComponentClass = Vue.extend({
                 name: 'template-component',
                 template: template,
@@ -145,6 +147,9 @@ export default {
             component.$mount()
             this.$refs.templateValue.append(component.$el)
         },
+        isHtml(value) {
+            return /<[a-z/][\s\S]*>/i.test(value);
+        }
     },
 }
 </script>
