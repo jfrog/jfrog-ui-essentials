@@ -106,7 +106,8 @@ export default {
                 modalScope,
                 'sm',
                 true,
-                { dontRejectOnClose: true }
+                { dontRejectOnClose: true,
+                class: "show-all-modal" }
             )
         },
         isArray(o) {
@@ -137,7 +138,7 @@ export default {
                 propsData: _.extend(
                     {
                         item: _.omit(item, ['scope']),
-                    item: _.omit(item, ['scope']),                    
+                    item: _.omit(item, ['scope']),
                         item: _.omit(item, ['scope']),
                     },
                     item.scope
@@ -149,42 +150,48 @@ export default {
     },
 }
 </script>
+
 <style lang="less">
-@import "../../src/assets/stylesheets/main.less";
-.modal-header {
-    display: block !important;
-    .close {
-        padding: 0 !important;
+
+    @import "../../src/assets/stylesheets/variables.less";
+    @import  '../../src/assets/stylesheets/mixins.less';
+.show-all-modal {
+    .modal-header {
+        display: block !important;
+        .close {
+            padding: 0 !important;
+        }
     }
-}
-.modal-body {
-    .group-list {
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-
-        max-height: 320px;
-        padding: 0;
-        margin-top: 10px;
+    .modal-body {
         margin-bottom: 10px;
+        .empty-filter-placeholder {
+            .empty-placeholder();
+        }
+        .group-list {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
 
-        .group-list-item {
-        display: block;
-        padding: 10px 15px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+            max-height: 320px;
+            padding: 0;
+            margin-top: 10px;
+            margin-bottom: 10px;
 
-        &:nth-child(odd) {
-            background-color: @grayGridRow;
-        }
-        &:nth-child(even) {
-            background-color: @white;
-        }
-        .permissions-form &:hover {
-            background-color: @grayGridRowHover;
-        }
+            .group-list-item {
+                display: block;
+                padding: 10px 15px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+
+                &:nth-child(odd) {
+                    background-color: @grayGridRow;
+                }
+                &:nth-child(even) {
+                    background-color: @white;
+                }
+            }
         }
     }
 }

@@ -57,7 +57,7 @@
 
 
 <style scoped lang="less">
-@import "../../src/assets/stylesheets/main.less";
+@import "../../src/assets/stylesheets/variables.less";
 .data-list {
   width: 100%;
   table-layout: fixed;
@@ -110,22 +110,5 @@
     }
   }
 }
-
-</style>
-<style lang="less">
-    /* IMPORTANT!!  This is NOT scoped because the modal that is displayed is not its child  */
-    @import  '../../src/assets/stylesheets/mixins.less';
-    @import "../../src/assets/stylesheets/variables.less";
-
-    .show-all-modal {
-        .modal-body {
-            margin-bottom: 10px;
-            .empty-filter-placeholder {
-                .empty-placeholder();
-            }
-        }
-    }
-
-
 
 </style>
