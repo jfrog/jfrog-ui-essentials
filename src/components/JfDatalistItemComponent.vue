@@ -137,9 +137,7 @@ export default {
             let component = new ComponentClass({
                 propsData: _.extend(
                     {
-                        item: _.omit(item, ['scope']),
-                    item: _.omit(item, ['scope']),
-                        item: _.omit(item, ['scope']),
+                        item: _.omit(item, ['scope']),                    
                     },
                     item.scope
                 ),
