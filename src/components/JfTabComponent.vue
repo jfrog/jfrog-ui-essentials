@@ -1,16 +1,12 @@
 <template>
-
     <div>
-        <div>
         <div v-if="name === currentTabName">
             <slot></slot>
         </div>
     </div>
-
 </template>
 
 <script>
-
     export default {
         name: 'jf-tab',
         props: ['name'],
@@ -23,11 +19,4 @@
             }
         }
     }
-
 </script>
-
-<style scoped lang="less">
-
-
-
-</style>

@@ -1,17 +1,13 @@
 <template>
-
-    <div>
-        <div class="jf-switch" :class="jfSwitchClass" >
-            <span v-if="jfSwitchTitle" class="jf-switch-title">{{jfSwitchTitle}}</span>
-            <jf-help-tooltip v-if="helpTooltip" :html="helpTooltip"></jf-help-tooltip>
-            <ul class="jf-switch-options">
-                <li v-for="(option, index) in optionObjects" :key="index">
-                    <a class="jf-switch-option" href="" @click.prevent="selectOption(option)" :class="{active: isSelected(option), disabled: disabled}">{{option.text}}</a>
-                </li>
-            </ul>
-        </div>
+    <div class="jf-switch" :class="jfSwitchClass" >
+        <span v-if="jfSwitchTitle" class="jf-switch-title">{{jfSwitchTitle}}</span>
+        <jf-help-tooltip v-if="helpTooltip" :html="helpTooltip"></jf-help-tooltip>
+        <ul class="jf-switch-options">
+            <li v-for="(option, index) in optionObjects" :key="index">
+                <a class="jf-switch-option" href="" @click.prevent="selectOption(option)" :class="{active: isSelected(option), disabled: disabled}">{{option.text}}</a>
+            </li>
+        </ul>
     </div>
-
 </template>
 
 <script>
@@ -98,7 +94,7 @@
     font-weight: 400;
     color: @grayFontGeneral;
     text-decoration: none;
-    
+
     &:hover, &.active {
       color: @greenFontHeader;
     }

@@ -1,15 +1,11 @@
 <template>
-
-    <div>
-        <div class="jf-switch-toggler" :class="{'left-option-selected' : isLeftOptionOn,
-                    'right-option-selected' : !isLeftOptionOn}">
-            <span class="left-option-text jf-toggler-text" v-html="leftOption.text"></span>
-            <jf-toggler @input="toggleSelection()" v-model="isLeftOptionOn">
-            </jf-toggler>
-            <span class="right-option-text jf-toggler-text" v-html="rightOption.text"></span>
-        </div>
+    <div class="jf-switch-toggler" :class="{'left-option-selected' : isLeftOptionOn,
+                'right-option-selected' : !isLeftOptionOn}">
+        <span class="left-option-text jf-toggler-text" v-html="leftOption.text"></span>
+        <jf-toggler @input="toggleSelection()" v-model="isLeftOptionOn">
+        </jf-toggler>
+        <span class="right-option-text jf-toggler-text" v-html="rightOption.text"></span>
     </div>
-
 </template>
 
 <script>
@@ -35,7 +31,7 @@
             // array of strings
             // array of objects of type {'value': ..., 'text': ...}
             // The model is assigned the value, and the text is displayed
-    
+
             this.setOptionObjects();
             if (_.isEmpty(this.model)) {
                 this.model = this.leftOption.value;
@@ -46,7 +42,7 @@
             toggleSelection() {
                 this.model = this.model === this.leftOption.value ? this.rightOption.value : this.leftOption.value;
                 this.$emit('input', this.model);
-                
+
             },
             setOptionObjects() {
                 let optionObjects = this.options.map(option => {
@@ -59,7 +55,7 @@
                         return option;
                     }
                 });
-    
+
                 this.leftOption = optionObjects[0];
                 this.rightOption = optionObjects[1];
             }
@@ -90,6 +86,6 @@
       background: @greenBGPrimary; // fallback
     }
   }
-}    
+}
 
 </style>

@@ -1,6 +1,5 @@
 <template>
-
-    <div>
+    <div class="jf-tabs">
         <ul class="nav nav-tabs">
             <li v-for="(tab,index) in tabsVisible" :key="index" :class="{active:isActiveTab(tab), disabled:tab.isDisabled, [tab.class] : hasClass(tab)}" class="jf-tabs-tab-header" :style="{width: getTabWidthForStyle()}" :jf-disable-feature=" tab.feature ">
                 <a @click.prevent="onClickTab(tab, true)" style="z-index: 999999">
@@ -25,7 +24,6 @@
 </template>
 
 <script>
-
     export default {
         name: 'jf-tabs',
         props: [
@@ -115,8 +113,8 @@
                 return this.$watch('jfTabs.tabs', (newVal, oldVal) => {
                     this._calculateTabsSize();
                 }, true);
-            }, 
-            stateChangeListener() { 
+            },
+            stateChangeListener() {
                 return this.$root.$on('$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) => {
                     toState.tabChange = false;
                 });
