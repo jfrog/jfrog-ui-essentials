@@ -57,7 +57,7 @@ export class JFrogModal {
         modalObj.uiEssNoCloseOnBackdrop = cancelable === false;
         modalObj.uiEssNoCloseOnEsc = cancelable === false
         modalObj.uiEssSize = size || 'lg';
-        modalObj.uiEssModalClass = options.class || '';
+        modalObj.uiEssModalClass = options && options.class || '';
 
         if (options && _.isObject(options)) {
             _.extend(modalObj, options);
