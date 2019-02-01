@@ -21,34 +21,27 @@
         name: 'jf-data-list',
         props: ['items'],
         components: { JfDatalistItemComponent },
-        'jf@inject': [
-            '$scope',
-            '$rootScope',
-            '$element',
-            'JFrogModal',
-            'JFrogUIUtils'
-        ],
         data() {
-            return { formattedItems: null,isMounted: false };
+            return { formattedItems: [],isMounted: false };
         },
-        created() {
-            this.$scope.$watch('jfDataList.items', items => {
-                if (items) {
-                    this.formattedItems = _.filter(items, item => {
-                        return item.label != '';
-                    });
-                }
-            });
+        watch: {
+            items(newVal) {
+                this.filterItems(newVal);
+            }
         },
         mounted() {
             this.$forceUpdate();
             this.isMounted = true;
-            this.formattedItems = this.filterItems(this.formattedItems);
+            this.filterItems(this.items);
         },
         ng1_legacy: { 'controllerAs': 'jfDataList' },
         methods: {
             filterItems(items) {
-                return items.filter(i => !i.isHidden);
+                if(items) {
+                    this.formattedItems = _.filter(items, item => {
+                        return item.label != '' && !item.isHidden;
+                    });
+                }
             }
         }
     }
