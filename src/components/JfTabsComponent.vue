@@ -32,7 +32,8 @@
             'tabs',
             'dictionary',
             'tabWidth',
-            'containerMargin'
+            'containerMargin',
+            'activeTab'
         ],
         'jf@inject': [
             'JFrogEventBus'
@@ -51,7 +52,7 @@
         created() {
             this.stateParams = this.$route.query;
             this.EVENTS = this.JFrogEventBus.getEventsDefinition();
-            this.currentTab.name = this.stateParams.tab;
+            this.currentTab.name = this.stateParams.activeTab || this.activeTab;
         },
         mounted() {
             this._registerEvents();
@@ -128,9 +129,10 @@
                     return;
                 }
                 this._ensureTabVisible(tab);
-//                this.state.go(this.state.current, { tab: tab.name }, { notify: false });
+                this.$router.replace( { query: {
+                    activeTab: tab.name
+                } } );
                 this.currentTab.name = tab.name;
-
             },
             _ensureTabVisible(tab) {
                 let collapsedTab = this._getCollapsedTab(tab);
