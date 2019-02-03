@@ -815,7 +815,7 @@ export function JFrogTableViewOptions() {
             if (this.paginationMode === this.PAGINATION) {
                 return this.dirCtrl ? this.getPrePagedData().slice(this.dirCtrl.currentPage * this.rowsPerPage, this.dirCtrl.currentPage * this.rowsPerPage + this.rowsPerPage) : [];
             } else if (this.paginationMode === this.VIRTUAL_SCROLL) {
-                return this.dirCtrl ? this.getPrePagedData().slice(this.dirCtrl.vsStartIndex, this.dirCtrl.vsEndIndex) : [];
+                return this.dirCtrl && this.dirCtrl.vsApi && this.dirCtrl.vsApi.getPageData ? this.dirCtrl.vsApi.getPageData() : [];
             } else if (this.paginationMode === this.EXTERNAL_PAGINATION || this.paginationMode === this.INFINITE_SCROLL) {
                 return this.getRawData();
             }

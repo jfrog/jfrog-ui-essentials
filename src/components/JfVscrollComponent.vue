@@ -7,9 +7,9 @@
                     <div class="scroll-faker" v-init="initScrollFaker()" :style="{height: (getTotalScrollHeight() > maxFakeScrollHeight ? maxFakeScrollHeight : getTotalScrollHeight()) + 'px'}">
                     </div>
                 </div>
-                <div class="h-scroll-wrapper" :style="{height: (getPageHeight() + getTranslate()) + 'px'}" msd-wheel="'onMouseWheel($event, $delta, $deltaX, $deltaY)'">
+                <div class="h-scroll-wrapper" :style="{height: (getPageHeight() + getTranslate()) + 'px'}" @mousewheel.prevent="onMouseWheel">
                     <div class="h-scroll-content">
-                        <jf-vscroll-element :key="$index" v-for="(item, $index) in getPage()" :vscroll="jfVScroll" :data="item" :index="$index" :template="transcludedContent" :variable="withEach"></jf-vscroll-element>
+                        <jf-vscroll-element :key="item.$$$id" v-for="(item, $index) in getPage()" :vscroll="jfVScroll" :data="item" :index="$index" :template="transcludedContent" :variable="withEach"></jf-vscroll-element>
                     </div>
                 </div>
             </div>
@@ -37,14 +37,18 @@
             return {
                 ready: null,
                 maxFakeScrollHeight: 1000000,
-                transcludedContent: null
+                transcludedContent: null,
+                containerHeight: 0,
+                scrollTimeout: undefined,
+                virtualScrollIndex: 0,
+                virtScrollDisplacement: 0,
+                settingScroll: false
             };
         },
         created() {
 
             this.virtualScrollIndex = 0;
             this.virtScrollDisplacement = 0;
-            this.scrollTimeout = undefined;
 
             this.itemsPerPage = 1;
             this.itemHeight = undefined;
@@ -56,12 +60,10 @@
                 if (this.ready)
                     whenReadyDefer.resolve();
             });
-
-            this.$scope.$watch('jfVScroll.containerHeight', () => {
-                this._setAutoItemsPerPage();
-            });
         },
         mounted() {
+            this.containerHeight = $(this.$element).parent().height();
+            this._setAutoItemsPerPage();
             this._initApi();
         },
         ng1_legacy: {
@@ -69,12 +71,11 @@
                 return {
                     post(scope, element, attrs, directiveCtrl) {
                         transcludeFn(clone => {
-                            console.log('!!!!!', clone)
                             let html = '';
                             for (let i = 0; i < clone.length; i++) {
                                 html += clone[i].outerHTML || '';
                             }
-                            html = html.replace('v-once', '');
+                            html = html.replace('v-pre', '');
                             directiveCtrl.transcludedContent = html;
                         });
                     }
@@ -83,9 +84,11 @@
             'controllerAs': 'jfVScroll'
         },
         computed: {
+/*
             containerHeight() {
                 return $(this.$element).parent().height();
             }
+*/
         },
         methods: {
             setItemHeight(itemHeight) {
@@ -110,32 +113,33 @@
             initScrollFaker() {
                 let scrollParent = $(this.$element).find('.scroll-faker-container');
                 scrollParent.on('scroll', e => {
-                    this.$scope.$apply(() => {
-                        if (this.$settingScroll) {
-                            delete this.$settingScroll;
-                            return;
+                    if (this.settingScroll) {
+                        this.settingScroll = false;
+                        return;
+                    }
+                    if (this.autoScrolling) {
+                        return;
+                    }
+                    if (this.scrollTimeout) {
+                        this.$timeout.cancel(this.scrollTimeout);
+                        delete this.scrollTimeout;
+                    }
+                    let len = this.in.length;
+                    if (len) {
+                        let maxScrollTop = scrollParent[0].scrollHeight - scrollParent.outerHeight();
+                        let relativePosition = scrollParent.scrollTop() / maxScrollTop;
+                        if (_.isNaN(relativePosition)) {
+                            relativePosition = 1;
                         }
-                        if (this.scrollTimeout) {
-                            this.$timeout.cancel(this.scrollTimeout);
-                            delete this.scrollTimeout;
-                        }
-                        let len = this.in.length;
-                        if (len) {
-                            let maxScrollTop = scrollParent[0].scrollHeight - scrollParent.outerHeight();
-                            let relativePosition = scrollParent.scrollTop() / maxScrollTop;
-                            if (_.isNaN(relativePosition)) {
-                                relativePosition = 1;
-                            }
-                            let newScrollIndex = relativePosition * (len - this.itemsPerPage);
-                            if (newScrollIndex < 0)
-                                newScrollIndex = 0;
-                            this.virtualScrollIndex = Math.floor(newScrollIndex);
-                            this.virtScrollDisplacement = newScrollIndex - this.virtualScrollIndex;
-                        } else {
-                            this.virtualScrollIndex = 0;
-                            this.virtScrollDisplacement = 0;
-                        }
-                    });
+                        let newScrollIndex = relativePosition * (len - this.itemsPerPage);
+                        if (newScrollIndex < 0)
+                            newScrollIndex = 0;
+                        this.virtualScrollIndex = Math.floor(newScrollIndex);
+                        this.virtScrollDisplacement = newScrollIndex - this.virtualScrollIndex;
+                    } else {
+                        this.virtualScrollIndex = 0;
+                        this.virtScrollDisplacement = 0;
+                    }
                 });
             },
             syncFakeScroller(delay = true) {
@@ -146,7 +150,7 @@
                 let sync = () => {
                     let maxScrollTop = scrollParent[0].scrollHeight - scrollParent.outerHeight();
                     let scrollTop = Math.floor(maxScrollTop * relativePosition);
-                    this.$settingScroll = true;
+                    this.settingScroll = true;
                     scrollParent.scrollTop(scrollTop);
                 };
                 if (delay)
@@ -182,14 +186,14 @@
             getTotalScrollHeight() {
                 return this.in.length * this.itemHeight;
             },
-            onMouseWheel($event, $delta, $deltaX, $deltaY) {
+            onMouseWheel($event) {
                 if (this.scrollTimeout) {
                     this.$timeout.cancel(this.scrollTimeout);
-                    delete this.scrollTimeout;
+                    this.scrollTimeout = undefined;
                 }
 
-                let normalDelta = this._normalizeWheelEvent($event.originalEvent).pixelY;
-                let xDelta = this._normalizeWheelEvent($event.originalEvent).pixelX;
+                let normalDelta = this._normalizeWheelEvent($event).pixelY;
+                let xDelta = this._normalizeWheelEvent($event).pixelX;
 
                 if (Math.abs(normalDelta) < Math.abs(xDelta)) {
                     $event.stopPropagation();
@@ -198,10 +202,10 @@
 
                 let scrollAmount = 0.02 * Math.abs(normalDelta);
                 let scrollPosBefore = this._getCurrentScrollPos();
-                if ($deltaY < 0) {
+                if ($event.deltaY > 0) {
                     // scrollUp
                     this._scrollTo(scrollPosBefore + scrollAmount);
-                } else if ($deltaY > 0) {
+                } else if ($event.deltaY < 0) {
                     // scrollDown
                     this._scrollTo(scrollPosBefore - scrollAmount);
                 }
@@ -228,7 +232,7 @@
 
                 if (this.scrollTimeout) {
                     this.$timeout.cancel(this.scrollTimeout);
-                    delete this.scrollTimeout;
+                    this.scrollTimeout = undefined;
                 }
                 let quadraticEase = k => k * (2 - k);
 
@@ -244,9 +248,13 @@
                     currentStep++;
                     if (currentStep <= steps) {
                         this.scrollTimeout = this.$timeout(() => cycle(), interval);
-                    } else
-                        delete this.scrollTimeout;
+                    }
+                    else {
+                        this.scrollTimeout = undefined;
+                        this.autoScrolling = false;
+                    }
                 };
+                this.autoScrolling = true;
                 cycle();
 
             },
@@ -408,23 +416,23 @@
             registerScrollListener(listener) {
                 if (!this.scrollListener) {
                     this.scrollListener = listener;
-                    this.$scope.$watch('jfVScroll.virtualScrollIndex + jfVScroll.virtScrollDisplacement', () => {
+                    this.$scope.$watch(() => this.virtualScrollIndex + this.virtScrollDisplacement, () => {
                         this.scrollListener(this._getCurrentScrollPos());
                     });
                 }
             },
             _initApi() {
                 if (this.api) {
-                    this.$set(this.api, 'getPageData', () => this.getPage());
-                    this.$set(this.api, 'reset', item => this.resetScroll());
-                    this.$set(this.api, 'centerOnItem', item => this.centerOnItem(item));
-                    this.$set(this.api, 'bringItemToView', (item, jump = true) => this.bringItemToView(item, jump));
-                    this.$set(this.api, 'freezeScroll', () => this._freezeVScroll());
-                    this.$set(this.api, 'unFreezeScroll', () => this._unFreezeVScroll());
-                    this.$set(this.api, 'sync', () => this.syncFakeScroller(false));
-                    this.$set(this.api, 'scroll', (numOfRows, duration = 500) => this.scroll(numOfRows, duration));
-                    this.$set(this.api, 'scrollTo', (scrollPos, duration = 500) => this.scrollTo(scrollPos, duration));
-                    this.$set(this.api, 'registerScrollListener', listener => this.registerScrollListener(listener));
+                    this.api.getPageData = () => this.getPage();
+                    this.api.reset = item => this.resetScroll();
+                    this.api.centerOnItem = item => this.centerOnItem(item);
+                    this.api.bringItemToView = (item, jump = true) => this.bringItemToView(item, jump);
+                    this.api.freezeScroll = () => this._freezeVScroll();
+                    this.api.unFreezeScroll = () => this._unFreezeVScroll();
+                    this.api.sync = () => this.syncFakeScroller(false);
+                    this.api.scroll = (numOfRows, duration = 500) => this.scroll(numOfRows, duration);
+                    this.api.scrollTo = (scrollPos, duration = 500) => this.scrollTo(scrollPos, duration);
+                    this.api.registerScrollListener = listener => this.registerScrollListener(listener);
 
                 }
             }
@@ -436,6 +444,28 @@
 
 <style scoped lang="less">
 
+    /deep/ .v-scroll-container {
+        overflow: hidden;
+        position: relative;
+        .scroll-faker-container {
+            position: absolute;
+            width: 16px;
+            overflow: auto;
+            overflow-x: hidden;
+            z-index: 1000;
+            .scroll-faker {
+            }
+        }
+        .h-scroll-wrapper {
+            overflow-x: auto;
+            overflow-y: hidden;
+            .h-scroll-content {
+                display: inline-block;
+                min-width: 100%;
+
+            }
+        }
+    }
 
 
 </style>

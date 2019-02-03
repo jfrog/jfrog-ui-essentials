@@ -25,7 +25,10 @@
                 </div>
 
 
-                <div v-if="options.getPrePagedData().length > 1 && options && options.paginationMode === options.VIRTUAL_SCROLL" class="table-rows-container">
+                <div v-if="options.getPrePagedData().length > 1 && options && options.paginationMode === options.VIRTUAL_SCROLL"
+                     :style="{height: getActualPageHeight() + 'px'}"
+                     class="table-rows-container">
+<!--
                     <recycle-scroller :emit-update="true" @update="updateVScroll"
                                       :items="options.getPrePagedData()"
                                       :item-height="parseInt(options.rowHeight)"
@@ -33,12 +36,11 @@
                                       key-field="$$$id">
                         <jf-table-row slot-scope="{ item, index }" :table-view="jfTableView" :row-id="index" :data="item"></jf-table-row>
                     </recycle-scroller>
-
-<!--
-                    <jf-vscroll with-each="entity" :in="options.getPrePagedData()" :api="vsApi">
-                        <jf-table-row :table-view="jfTableView" :row-id="$index" :data="entity"></jf-table-row>
-                    </jf-vscroll>
 -->
+
+                    <jf-vscroll with-each="entity" :in="options.getPrePagedData()" :api="vsApi">
+                        <jf-table-row v-pre :table-view="jfTableView" :row-id="v_index" :data="entity"></jf-table-row>
+                    </jf-vscroll>
                 </div>
 
                 <div v-if="options && options.paginationMode !== options.VIRTUAL_SCROLL" class="table-rows-container">
@@ -83,11 +85,15 @@
         ],
         data() {
             return {
-                vsApi: { onInit: {} },
+                vsApi: {
+                    onInit: () => {
+                        this.vsApi.registerScrollListener(scrollPos => this.onVScroll(scrollPos))
+                    }
+                },
                 noFilterResults: null,
                 tableFilter: null,
-                vsStartIndex: null,
-                vsEndIndex: null,
+                currentPage: 0,
+                jfTableView: this
             };
         },
         created() {
@@ -365,10 +371,6 @@
                     $(document).off('click', handler);
                 });
             },
-            updateVScroll(startIndex, endIndex) {
-                this.vsStartIndex = startIndex;
-                this.vsEndIndex = endIndex;
-            }
 
 
         }

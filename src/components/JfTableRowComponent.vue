@@ -100,7 +100,7 @@
                     </a>
                 </div>
                 <div class="action-button" :style="{height: tableView.options.rowHeight, width: tableView.options.actionButtonSize + 'px', visibility: tableView.options.hasVisibleActionsFor(data) ? 'visible' : 'hidden'}" v-if="tableView.options && !tableView.options.isRowActionGroupingDisabled && tableView.options.actions.length > 3 ">
-                    <div class="action-icon icon-more" @click="toggleActionsDropdown($event)" v-jf-tooltip.bind="actionsDropdownOpen ? '' : 'Actions'"></div>
+                    <div class="action-icon icon-more" @click="toggleActionsDropdown($event)" v-jf-tooltip.bind="actionsTooltip"></div>
                 </div>
             </div>
         </div>
@@ -139,6 +139,11 @@
                 hoveringResize: null,
                 actionsDropdownOpen: null
             };
+        },
+        computed: {
+            actionsTooltip() {
+                return this.actionsDropdownOpen ? '' : 'Actions';
+            }
         },
         created() {
             this.EVENTS = this.JFrogEventBus.getEventsDefinition();

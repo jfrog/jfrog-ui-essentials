@@ -19,41 +19,47 @@
         ],
         'jf@inject': [
             '$scope',
+            '$compile',
             '$element',
             '$timeout'
         ],
         data() {
             return {};
         },
+        computed: {
+        },
         created() {
 
+/*
             let unwatchHeight = this.$scope.$watch('jfVScrollElement.childrenHeight', () => {
                 if (this.childrenHeight && this.childrenHeight > 1) {
                     this.vscroll.setItemHeight(this.childrenHeight);
                     unwatchHeight();
                 }
             });
+*/
 
             this.$scope.$watch('jfVScrollElement.data', () => {
                 if (!this.elementScope || !this.variable || !this.data) return;
                 this.elementScope[this.variable] = this.data;
             });
         },
-        ng1_legacy: {
-            ng1postLinkFn(scope, element, attrs, directiveCtrl) {
+        mounted() {
+            let elementScope = this.$scope.$parent.$parent.$new({
+                [this.variable]: this.data,
+                v_index: this.index
+            });
+            let target = $(this.$element).find('.compile-placeholder');
 
-                let elementScope = scope.$parent.$parent.$parent.$new({
-                    [directiveCtrl.variable]: directiveCtrl.data,
-                    $index: directiveCtrl.index
-                });
-                let target = $(element).find('.compile-placeholder');
-
-                directiveCtrl.elementScope = elementScope;
-                let tplE = $(`<div><div>${ directiveCtrl.template }</div></div>`);
-                $jfrog.get('$compile')(tplE.children()[0])(elementScope);
+            this.elementScope = elementScope;
+            Vue.nextTick(() => {
+                let tplE = $(`<div><div>${ this.template }</div></div>`);
+                this.$compile(tplE.children()[0])(elementScope);
                 target.replaceWith(tplE.children()[0]);
-
-            },
+                this.vscroll.setItemHeight(this.childrenHeight());
+            })
+        },
+        ng1_legacy: {
             'controllerAs': 'jfVScrollElement'
         },
         methods: {
