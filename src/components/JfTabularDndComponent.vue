@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <div class="jf-tabular-dnd" tabindex="0">
+        <div class="jf-tabular-dnd" tabindex="0" :disabled="disabled">
             <div class="tabular-dnd-table-container available-table" :class="{'no-data': !availableItems.length && (!availableItemsTableOptions || (!availableItemsTableOptions.draggedRow && !availableItemsTableOptions.draggedRows)) && !selectedItems.length && (!selectedItemsTableOptions || (!selectedItemsTableOptions.draggedRow && !selectedItemsTableOptions.draggedRows))}">
                 <jf-table-view :options="availableItemsTableOptions"></jf-table-view>
             </div>
@@ -306,7 +306,7 @@
 
     @import "../../src/assets/stylesheets/variables.less";
 
-    .jf-tabular-dnd {
+    /deep/ .jf-tabular-dnd {
 
         display: flex;
         flex-direction: row;
@@ -415,42 +415,41 @@
                 }
             }
         }
-    }
+        &[disabled="disabled"] {
+            opacity: 0.45;
+            .jf-table-view .jf-table-view-container .jf-table-row {
+                &:not(.headers):last-child{
+                    background: transparent;
+                }
+            }
+            .dnd-actions-wrap .dnd-actions li span,
+            .jf-table-view .jf-table-view-container .jf-table-row .jf-table-cell .jf-table-cell-content {
+                &, .selection-icon, .selection-button {
+                    cursor: default;
+                }
+            }
+        }
 
-    jf-tabular-dnd:not([disabled="disabled"]) .jf-tabular-dnd {
-        .jf-table-view .jf-table-view-container .jf-table-row:not(.drag-mark):not(.headers) {
-            &:last-child {
-                background: transparent;
-                opacity: 0.45!important;
-                .jf-table-cell {
-                    &, .selection-icon, .selection-button {
-                        cursor: default;
+        &:not([disabled="disabled"]) {
+            .jf-table-view .jf-table-view-container .jf-table-row:not(.drag-mark):not(.headers) {
+                &:last-child {
+                    background: transparent;
+                    opacity: 0.45!important;
+                    .jf-table-cell {
+                        &, .selection-icon, .selection-button {
+                            cursor: default;
+                        }
                     }
                 }
             }
         }
+
     }
 
     body.grabbing {
         cursor: grabbing!important;
     }
 
-    jf-tabular-dnd[disabled="disabled"] {
-        .jf-tabular-dnd {
-            opacity: 0.45;
-        }
-        .jf-table-view .jf-table-view-container .jf-table-row {
-            &:not(.headers):last-child{
-                background: transparent;
-            }
-        }
-        .jf-tabular-dnd .dnd-actions-wrap .dnd-actions li span,
-        .jf-table-view .jf-table-view-container .jf-table-row .jf-table-cell .jf-table-cell-content {
-            &, .selection-icon, .selection-button {
-                cursor: default;
-            }
-        }
-    }
 
 
 </style>
