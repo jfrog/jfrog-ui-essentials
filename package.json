@@ -1,25 +1,14 @@
 {
   "name": "jfrog-ui-essentials",
-  "description": "JFrog UI Essentials",
   "version": "3.0.0-vue-dev",
-  "main": "./dist/jfrog-ui-essentials.common.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jfrog/jfrog-ui-essentials.git"
-  },
+  "description": "JFrog UI Essentials",
   "scripts": {
     "build": "vue-cli-service build --target lib --name jfrog-ui-essentials src/index.js",
+    "lint": "vue-cli-service lint",
     "dev": "nodemon -w src/ -e js,html,css,less,vue -x vue-cli-service  -- build --target lib --name jfrog-ui-essentials --formats commonjs src/index.js dev",
-    "watch": "vue-cli-service build --mode development --target lib --name jfrog-ui-essentials src/index.js",
-    "lint": "vue-cli-service lint"
+    "test:unit": "vue-cli-service test:unit",
+    "watch": "vue-cli-service build --mode development --target lib --name jfrog-ui-essentials src/index.js"
   },
-  "files": [
-    "dist/*",
-    "src/*",
-    "public/*",
-    "*.json",
-    "*.js"
-  ],
   "dependencies": {
     "axios": "^0.18.0",
     "billboard.js": "^1.7.1",
@@ -54,9 +43,13 @@
     "@fortawesome/free-solid-svg-icons": "^5.7.0",
     "@vue/cli-plugin-babel": "^3.2.0",
     "@vue/cli-plugin-eslint": "^3.2.0",
+    "@vue/cli-plugin-unit-jest": "^3.4.0",
     "@vue/cli-service": "^3.2.0",
     "@vue/eslint-config-standard": "^4.0.0",
+    "@vue/test-utils": "^1.0.0-beta.20",
+    "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0-0",
     "html-loader": "^0.5.5",
@@ -65,5 +58,17 @@
     "nodemon": "^1.18.9",
     "prettier": "1.16.0",
     "vue-template-compiler": "^2.5.17"
+  },
+  "files": [
+    "dist/*",
+    "src/*",
+    "public/*",
+    "*.json",
+    "*.js"
+  ],
+  "main": "./dist/jfrog-ui-essentials.common.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jfrog/jfrog-ui-essentials.git"
   }
 }
