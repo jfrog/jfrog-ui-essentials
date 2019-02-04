@@ -1,13 +1,14 @@
 const Vue = window.Vue;
-import {Ng1AttributeDirectiveAdapter} from '@/plugins/JFrogUI/Ng1AttributeDirectiveAdapter';
 
 Vue.directive('jf-include-replace', {
-    bind: function (el, binding, vnode) {
-        let patchedLinkFn = Ng1AttributeDirectiveAdapter.patchLinkFunction(ng1LinkFunction, null);
-        patchedLinkFn(el, binding, vnode);
-    }
+    updated: function(el, binding) {
+        console.log(`updated: ${binding && binding.value}`)
+        let element = $(el)
+        element.replaceWith(element.children());
+    },
+    inserted: function (el, binding) {
+        console.log(`inserted: ${binding && binding.value}`)
+        let element = $(el)
+        element.replaceWith(element.children());
+    },
 })
-
-function ng1LinkFunction(scope, el, attrs) {
-    el.replaceWith(el.children());
-}
