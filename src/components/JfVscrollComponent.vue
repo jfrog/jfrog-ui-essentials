@@ -7,7 +7,7 @@
                     <div class="scroll-faker" v-init="initScrollFaker()" :style="{height: (getTotalScrollHeight() > maxFakeScrollHeight ? maxFakeScrollHeight : getTotalScrollHeight()) + 'px'}">
                     </div>
                 </div>
-                <div class="h-scroll-wrapper" :style="{height: (getPageHeight() + getTranslate()) + 'px'}" @mousewheel.prevent="onMouseWheel">
+                <div class="h-scroll-wrapper" :style="{height: (getPageHeight() + getTranslate()) + 'px'}" @mousewheel="onMouseWheel">
                     <div class="h-scroll-content">
                         <jf-vscroll-element :key="item.$$$id" v-for="(item, $index) in getPage()" :vscroll="jfVScroll" :data="item" :index="$index" :template="transcludedContent" :variable="withEach"></jf-vscroll-element>
                     </div>
@@ -421,10 +421,17 @@
                     });
                 }
             },
+            refresh() {
+                Vue.nextTick(() => {
+                    this.containerHeight = $(this.$element).parent().height();
+                    this._setAutoItemsPerPage();
+                })
+            },
             _initApi() {
                 if (this.api) {
                     this.api.getPageData = () => this.getPage();
                     this.api.reset = item => this.resetScroll();
+                    this.api.refresh = () => this.refresh();
                     this.api.centerOnItem = item => this.centerOnItem(item);
                     this.api.bringItemToView = (item, jump = true) => this.bringItemToView(item, jump);
                     this.api.freezeScroll = () => this._freezeVScroll();

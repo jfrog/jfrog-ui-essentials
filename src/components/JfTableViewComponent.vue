@@ -11,7 +11,7 @@
                 </a>
             </div>
 
-            <jf-table-top :table-view="jfTableView"></jf-table-top>
+            <jf-table-top :total-records="getTotalRecords()" :table-view="jfTableView"></jf-table-top>
 
             <div class="columns-customization-wrap" v-if="options && options.columnsCustomization">
                 <div class="columns-customization pull-right">
@@ -25,7 +25,7 @@
                 </div>
 
 
-                <div v-if="options.getPrePagedData().length > 1 && options && options.paginationMode === options.VIRTUAL_SCROLL"
+                <div v-if="options && options.paginationMode === options.VIRTUAL_SCROLL"
                      :style="{height: getActualPageHeight() + 'px'}"
                      class="table-rows-container">
 <!--
@@ -93,6 +93,7 @@
                 noFilterResults: null,
                 tableFilter: null,
                 currentPage: 0,
+                allSelected: false,
                 jfTableView: this
             };
         },

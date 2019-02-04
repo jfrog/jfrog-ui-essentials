@@ -429,12 +429,18 @@
             handleScrollOnDrag(target, event) {
                 if (this.tableView.options.paginationMode === this.tableView.options.VIRTUAL_SCROLL) {
 
-                    let tableView = this.tableView;
+                    let tableView;
 
                     if (this.tableView.options.registeredTabularDnd && target) {
                         let rowCtrl = $(target).prop('ctrl');
                         tableView = rowCtrl.tableView;
                     }
+                    else if (!this.tableView.options.registeredTabularDnd) {
+                        tableView = this.tableView;
+                    }
+
+                    if (!tableView) return;
+
 
                     let container = $(tableView.$element).find('.table-rows-container');
                     let containerY = container[0].getClientRects()[0].y;

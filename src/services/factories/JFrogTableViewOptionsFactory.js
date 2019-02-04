@@ -174,6 +174,10 @@ export function JFrogTableViewOptions() {
                 this.dirCtrl._fireDebouncedRowsInView();
             }
 
+            if (this.registeredTabularDnd && this.registeredTabularDnd.dndCtrl) {
+                Vue.nextTick(() => this.registeredTabularDnd.dndCtrl.$forceUpdate());
+            }
+
             return this;
         }
 
@@ -1447,6 +1451,7 @@ export function JFrogTableViewOptions() {
             this.refreshFilter();
 
             this.fire('row.dragged', this.data);
+            this.dirCtrl.vsApi.refresh();
         }
 
         dropDraggedRows(targetRow, draggedRows = null, tabularDndDrag = false) {
@@ -1471,6 +1476,9 @@ export function JFrogTableViewOptions() {
             this.refreshFilter();
 
             this.fire('row.dragged', this.data);
+
+            this.dirCtrl.vsApi.refresh();
+
         }
 
         markDropTarget(rowElem) {

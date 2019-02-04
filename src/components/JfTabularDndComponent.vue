@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <div class="jf-tabular-dnd" tabindex="0">
+        <div class="jf-tabular-dnd" tabindex="0" :disabled="disabled">
             <div class="tabular-dnd-table-container available-table" :class="{'no-data': !availableItems.length && (!availableItemsTableOptions || (!availableItemsTableOptions.draggedRow && !availableItemsTableOptions.draggedRows)) && !selectedItems.length && (!selectedItemsTableOptions || (!selectedItemsTableOptions.draggedRow && !selectedItemsTableOptions.draggedRows))}">
                 <jf-table-view :options="availableItemsTableOptions"></jf-table-view>
             </div>
@@ -214,7 +214,7 @@
 
                 let selected = this.selectedItemsTableOptions.getSelected();
                 selected.forEach(s => delete s.$selected);
-                this.$set(this.selectedItemsTableOptions, 'dirCtrl.allSelected', false);
+                this.$set(this.selectedItemsTableOptions.dirCtrl, 'allSelected', false);
                 let filtered = this.selectedItemsTableOptions.getFilteredData();
                 filtered = this._getOnlyDraggables(filtered);
                 this.availableItems.splice(this.availableItems.length, 0, ...filtered);
@@ -228,13 +228,14 @@
 
                 let selected = this.availableItemsTableOptions.getSelected();
                 selected.forEach(s => delete s.$selected);
-                this.$set(this.availableItemsTableOptions, 'dirCtrl.allSelected', false);
+                this.$set(this.availableItemsTableOptions.dirCtrl, 'allSelected', false);
                 let filtered = this.availableItemsTableOptions.getFilteredData();
                 filtered = this._getOnlyDraggables(filtered);
                 this.selectedItems.splice(this.selectedItems.length, 0, ...filtered);
                 _.remove(this.availableItems, i => _.includes(filtered, i));
                 this._refreshBothTables();
                 this._fireOnChange();
+
             },
             excludeSelected() {
                 if (!this.isIncludeListItemSelected() || this.disabled)
@@ -242,7 +243,7 @@
 
                 let selected = this.selectedItemsTableOptions.getSelected();
                 selected.forEach(s => delete s.$selected);
-                this.$set(this.selectedItemsTableOptions, 'dirCtrl.allSelected', false);
+                this.$set(this.selectedItemsTableOptions.dirCtrl, 'allSelected', false);
                 let filtered = this.selectedItemsTableOptions.getFilteredData();
                 _.remove(selected, i => !_.includes(filtered, i));
                 selected = this._getOnlyDraggables(selected);
@@ -257,7 +258,7 @@
 
                 let selected = this.availableItemsTableOptions.getSelected();
                 selected.forEach(s => delete s.$selected);
-                this.$set(this.availableItemsTableOptions, 'dirCtrl.allSelected', false);
+                this.$set(this.availableItemsTableOptions.dirCtrl, 'allSelected', false);
                 let filtered = this.availableItemsTableOptions.getFilteredData();
                 _.remove(selected, i => !_.includes(filtered, i));
                 selected = this._getOnlyDraggables(selected);
@@ -285,6 +286,7 @@
                 ].forEach(tableOptions => {
                     tableOptions.update();
                     tableOptions.refreshFilter();
+                    tableOptions.dirCtrl.vsApi.refresh();
                 });
             },
             onDragTransfer(draggedRows, originTableOptions) {
@@ -301,6 +303,152 @@
 </script>
 
 <style scoped lang="less">
+
+    @import "../../src/assets/stylesheets/variables.less";
+
+    /deep/ .jf-tabular-dnd {
+
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        outline: none;
+        padding: 30px 0;
+        margin: 30px 0;
+        border-top: 1px solid @grayBorderLighter;
+        border-bottom: 1px solid @grayBorderLighter;
+
+        .tabular-dnd-table-container {
+            width: 42%;
+            display: flex;
+            flex-direction: column;
+            .jf-table-row {
+                &:not(.headers) {
+                    &.selected {
+                        background-color: @grayBGLight;
+                    }
+                    &:hover,
+                    &.selected {
+                        cursor: grab;
+                    }
+                }
+            }
+            .jf-table-view .jf-table-top .counter-and-filter-wrapper .jf-table-filter input {
+                width: 280px;
+            }
+            .jf-table-view {
+                .jf-table-view-container {
+                    .jf-table-top .counter-and-filter-wrapper .table-counter {
+                        height: 22px;
+                    }
+                    .empty-table-placeholder:not(.filter-no-results) {
+                        margin-top: 2px;
+                        padding: 0;
+                        color: @grayBGDark;
+                        background-color: white;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        font-size: 26px;
+                        border:2px dashed;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        &.drop-target-mark {
+                            background-color: @grayBGLight;
+                            cursor: grabbing!important;
+                        }
+                    }
+                }
+            }
+            &.no-data {
+                .jf-table-view {
+                    .jf-table-view-container {
+                        .empty-table-placeholder:not(.filter-no-results) {
+                            background-color: @grayBGLighter;
+                        }
+                    }
+                }
+            }
+        }
+
+        .dnd-actions-wrap {
+            width: 16%;
+            .dnd-actions {
+                margin-top: 130px;
+                padding: 0;
+                text-align: center;
+
+                li {
+                    display: block;
+                    padding: 1px;
+                    text-align: center;
+
+                    span {
+                        display: inline-block;
+                        font-size: 24px;
+                        font-weight: 100;
+                        background-color: @greenFontHeader;
+                        color: white;
+                        line-height: 19px;
+                        width: 24px;
+                        height: 24px;
+                        cursor: pointer;
+                        overflow: hidden;
+                        padding-right: 1px;
+                        border-radius: 50%;
+                        &.dnd-exclude-selected {
+                            padding-right: 2px;
+                        }
+                        &.dnd-include-selected {
+                            padding-left: 2px;
+                        }
+                        &.dnd-exclude-all {
+                            padding-left: 0px;
+                        }
+                        &.dnd-include-all {
+                            padding-left: 2px;
+                        }
+                        &[disabled] {
+                            background-color: @grayBGDarker;
+                            cursor:default;
+                        }
+                    }
+                }
+            }
+        }
+        &[disabled="disabled"] {
+            opacity: 0.45;
+            .jf-table-view .jf-table-view-container .jf-table-row {
+                &:not(.headers):last-child{
+                    background: transparent;
+                }
+            }
+            .dnd-actions-wrap .dnd-actions li span,
+            .jf-table-view .jf-table-view-container .jf-table-row .jf-table-cell .jf-table-cell-content {
+                &, .selection-icon, .selection-button {
+                    cursor: default;
+                }
+            }
+        }
+
+        &:not([disabled="disabled"]) {
+            .jf-table-view .jf-table-view-container .jf-table-row:not(.drag-mark):not(.headers) {
+                &:last-child {
+                    background: transparent;
+                    opacity: 0.45!important;
+                    .jf-table-cell {
+                        &, .selection-icon, .selection-button {
+                            cursor: default;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    body.grabbing {
+        cursor: grabbing!important;
+    }
 
 
 

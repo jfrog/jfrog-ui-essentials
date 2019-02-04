@@ -18,9 +18,8 @@ export class AngularScopeServiceMock {
                 }
             }
         }
-        this.$watch = (expr, callback) => {
-            vueComp.$watch(expr, callback);
-            callback(_.get(vueComp, expr));
+        this.$watch = (expr, callback, deep) => {
+            vueComp.$watch(expr, callback, {deep, immediate: true});
         }
 
         this.$destroy = () => {
