@@ -1447,6 +1447,7 @@ export function JFrogTableViewOptions() {
             this.refreshFilter();
 
             this.fire('row.dragged', this.data);
+            this.dirCtrl.vsApi.refresh();
         }
 
         dropDraggedRows(targetRow, draggedRows = null, tabularDndDrag = false) {
