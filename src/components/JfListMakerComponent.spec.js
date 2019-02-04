@@ -1,13 +1,15 @@
-import { shallowMount } from '@vue/test-utils'
-import JfListMakerComponent from './JfListMakerComponent.vue'
+import {shallowMount} from '@vue/test-utils';
+import JfListMakerComponent from './JfListMakerComponent.vue';
 
 describe('JfListMakerComponent', () => {
     it('renders a form', () => {
         const wrapper = shallowMount(JfListMakerComponent, {
             propsData: {},
-            stubs:["jf-field"]
-        })
+            stubs: ['jf-field']
+        });
         expect(wrapper.contains('form')).toBe(true);
+    });
+});
     })
     it('renders a + button to add new elements to the list', () => {
         const wrapper = shallowMount(JfListMakerComponent, {

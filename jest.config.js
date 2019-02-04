@@ -21,7 +21,6 @@ module.exports = {
   ],
   testURL: 'http://localhost/',
   setupFiles:["./src/jest-setup.js"],
-  /* Commenting out these lines since they clutter up the console  */
-//   collectCoverage: false,
-//   collectCoverageFrom: ["**/src/**/*.{js,vue}", "!**/node_modules/**"]
+  collectCoverage: false,
+  collectCoverageFrom: ["**/src/**/*.{js,vue}", "!**/node_modules/**"]
 }
