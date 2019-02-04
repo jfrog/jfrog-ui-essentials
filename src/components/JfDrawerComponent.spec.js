@@ -1,28 +1,31 @@
 import {shallowMount} from '@vue/test-utils';
 import JfDrawerComponent from './JfDrawerComponent.vue';
 
+const createDrawerWrapper = options => {
+    return shallowMount(JfDrawerComponent, {
+        ...options,
+        stubs: ['b-collapse', 'b-card']
+    });
+};
+
 describe('JfDrawerComponent', () => {
+
     it('should set open variable to be true', () => {
-        const wrapper = shallowMount(JfDrawerComponent, {
+        const wrapper = createDrawerWrapper({
             propsData: {
                 openFirst: '0'
-            },
-            stubs: ['b-collapse', 'b-card']
+            }
         });
         expect(wrapper.vm.opened).toBe(true);
     });
-});
 
-
-describe('JfDrawerComponent', () => {
     it('should fireResizeEvent when opened', () => {
-        const wrapper = shallowMount(JfDrawerComponent, {
-            stubs: ['b-collapse', 'b-card']
-        });
+        const wrapper = createDrawerWrapper();
         let vm = wrapper.vm;
         vm.utils = {};
         vm.utils.fireResizeEvent = jest.fn();
-        vm.onClickHeader();
+        const drawerHeaderElement = wrapper.find('.drawer-header');
+        drawerHeaderElement.trigger('click');
         expect(vm.utils.fireResizeEvent).toHaveBeenCalled();
     });
 });
