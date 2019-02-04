@@ -39,10 +39,6 @@
             });
 */
 
-            this.$scope.$watch('jfVScrollElement.data', () => {
-                if (!this.elementScope || !this.variable || !this.data) return;
-                this.elementScope[this.variable] = this.data;
-            });
         },
         mounted() {
             let elementScope = this.$scope.$parent.$parent.$new({
@@ -57,6 +53,10 @@
                 this.$compile(tplE.children()[0])(elementScope);
                 target.replaceWith(tplE.children()[0]);
                 this.vscroll.setItemHeight(this.childrenHeight());
+                this.$scope.$watch('jfVScrollElement.data', () => {
+                    if (!this.elementScope || !this.variable || !this.data) return;
+                    this.elementScope[this.variable] = this.data;
+                });
             })
         },
         ng1_legacy: {

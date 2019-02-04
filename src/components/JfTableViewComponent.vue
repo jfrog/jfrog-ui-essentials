@@ -25,7 +25,7 @@
                 </div>
 
 
-                <div v-if="options.getPrePagedData().length > 1 && options && options.paginationMode === options.VIRTUAL_SCROLL"
+                <div v-if="options && options.paginationMode === options.VIRTUAL_SCROLL"
                      :style="{height: getActualPageHeight() + 'px'}"
                      class="table-rows-container">
 <!--
