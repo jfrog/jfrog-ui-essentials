@@ -19,5 +19,6 @@ module.exports = {
   testMatch: [
     '**/src/**/*.spec.(js)'
   ],
-  testURL: 'http://localhost/'
+  testURL: 'http://localhost/',
+  setupFiles:["./src/jest-setup.js"]
 }

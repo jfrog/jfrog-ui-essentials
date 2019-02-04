@@ -29,7 +29,7 @@
     </div>
 </template>
 <script>
-
+    import _ from "lodash";
     export default {
         name: 'jf-list-maker',
         props: [
@@ -119,9 +119,3 @@
     };
 
 </script>
-
-<style scoped lang="less">
-
-
-
-</style>
