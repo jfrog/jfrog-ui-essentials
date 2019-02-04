@@ -4,7 +4,7 @@
         <div class="jf-table-top clearfix">
 
             <div class="counter-and-filter-wrapper">
-                <div v-if="tableView.options && !tableView.options.noCount" class="table-counter">{{ tableView.getTotalRecords() }}<span v-if="tableView.getSelectedRecords()"> ({{tableView.getSelectedRecords()}} Selected)</span></div>
+                <div v-if="tableView.options && !tableView.options.noCount" class="table-counter">{{ totalRecords }}<span v-if="tableView.getSelectedRecords()"> ({{tableView.getSelectedRecords()}} Selected)</span></div>
                 <div class="jf-table-filter">
                     <input class="input-text" v-if="tableView.options && tableView.options.filterVisible" :disabled="isFilterDisabled()" v-model="tableView.tableFilter" ng-model-options="{debounce: { 'default': 500 } }" @input="tableView.onUpdateFilter()" :class="{'no-results': tableView.noFilterResults}" placeholder="Filter" v-init="tableView.initFilter()" v-jf-tooltip.bind="filterTooltip">
                 </div>
@@ -28,7 +28,10 @@
 
     export default {
         name: 'jf-table-top',
-        props: ['tableView'],
+        props: [
+            'tableView',
+            'totalRecords'
+        ],
         data() {
             return {};
         },
