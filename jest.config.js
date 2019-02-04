@@ -20,5 +20,7 @@ module.exports = {
     '**/src/**/*.spec.(js)'
   ],
   testURL: 'http://localhost/',
-  setupFiles:["./src/jest-setup.js"]
+  setupFiles:["./src/jest-setup.js"],
+  collectCoverage: true,
+  collectCoverageFrom: ["**/src/**/*.{js,vue}", "!**/node_modules/**"]
 }
