@@ -93,6 +93,7 @@
                 noFilterResults: null,
                 tableFilter: null,
                 currentPage: 0,
+                allSelected: false,
                 jfTableView: this
             };
         },

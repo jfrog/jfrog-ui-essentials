@@ -174,6 +174,10 @@ export function JFrogTableViewOptions() {
                 this.dirCtrl._fireDebouncedRowsInView();
             }
 
+            if (this.registeredTabularDnd && this.registeredTabularDnd.dndCtrl) {
+                Vue.nextTick(() => this.registeredTabularDnd.dndCtrl.$forceUpdate());
+            }
+
             return this;
         }
 
