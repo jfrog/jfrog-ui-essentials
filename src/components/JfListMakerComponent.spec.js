@@ -9,8 +9,8 @@ describe('JfListMakerComponent', () => {
         });
         expect(wrapper.contains('form')).toBe(true);
     });
-});
-    })
+
+
     it('renders a + button to add new elements to the list', () => {
         const wrapper = shallowMount(JfListMakerComponent, {
             propsData: {},
@@ -47,4 +47,4 @@ describe('JfListMakerComponent', () => {
         wrapper.setData({ newValue: 'a' })
         expect(wrapper.find('.icon.icon-new').attributes("disabled")).toBe("disabled")
     })
-})
+});
