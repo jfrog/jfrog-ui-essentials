@@ -12,7 +12,7 @@ const mountComponent = function( props ){
     let options = {
         localVue,
         propsData: Object.assign({}, props),
-        stubs: ['jf-field', 'jf-ui-select'],
+        stubs: ['jf-field','jf-ui-select']
     }
     return shallowMount(JfListMakerComponent, options);
 }
@@ -24,6 +24,7 @@ const BUTTON_ADD = '.icon.icon-new';
 const BUTTON_DELETE = '.icon-close';
 //Inputs
 const INPUT_TEXT = `input.input-text`;
+const INPUT_DROPDOWN = 'jf-ui-select-stub'//This is -stub since the child is stubbed
 
 //Events
 const EVENT_ON_ADD_VALUE = 'on-add-value';
@@ -301,7 +302,7 @@ describe('JfListMakerComponent', () => {
             const wrapper = mountComponent({
                 noSort: true,
                 value: ['a'],
-            });141
+            });
 
             wrapper.find(INPUT_TEXT).setValue("A");
 
@@ -327,7 +328,7 @@ describe('JfListMakerComponent', () => {
     });//caseInsensitive
 
 
-    /* describe('predefinedValues', function() {
+    describe('predefinedValues', function() {
 
         it('if predefined values are passed a dropdown should be displayed instead of text input', function() {
             const wrapper = mountComponent({
@@ -335,11 +336,53 @@ describe('JfListMakerComponent', () => {
                 predefinedValues:['a','b'],
             })
 
-            console.log(wrapper.find(INPUT_TEXT).html())
-
-
+            expect(wrapper.find(INPUT_TEXT).exists()).toBe(false)
+            expect(wrapper.find(INPUT_DROPDOWN).exists()).toBe(true)
         });
 
     })//predefinedValues
- */
+
+    describe('hideAddNewFields', function () {
+
+        it('If hideAddNewFields is passed as true, the input is not displayed at all', function() {
+            let wrapper = mountComponent({
+                value: ['a'],
+                hideAddNewFields: true,
+            })
+
+            expect(wrapper.find(INPUT_TEXT).exists()).toBe(false)
+            expect(wrapper.find(INPUT_DROPDOWN).exists()).toBe(false)
+
+            wrapper = mountComponent({
+                value: ['a'],
+                hideAddNewFields: true,
+                predefinedValues: ['a', 'b'],
+            })
+            expect(wrapper.find(INPUT_TEXT).exists()).toBe(false)
+            expect(wrapper.find(INPUT_DROPDOWN).exists()).toBe(false)
+        })
+
+    })//hideAddNewFields
+
+
+    describe('minLength', function() {
+
+        it('if minLength is passed, the delete button is only displayed if there are more than the min length', function() {
+            let wrapper = mountComponent({
+                value: ['a'],
+                minLength: 2
+            })
+            expect(wrapper.find(BUTTON_DELETE).exists()).toBe(false)
+            wrapper = mountComponent({
+                value: ['a', 'b', 'c'],
+                minLength: 2,
+            })
+            expect(wrapper.find(BUTTON_DELETE).exists()).toBe(true)
+        });
+
+    })//minLength
+
+
+
+
 });
