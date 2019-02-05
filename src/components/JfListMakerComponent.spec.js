@@ -39,7 +39,12 @@ const MSG_VALUE_ALREADY_EXISTS = `Value already exists`
 
 describe('JfListMakerComponent', () => {
     describe("display", function() {
-        const wrapper = mountComponent();
+        let wrapper;
+
+        beforeEach(function() {
+            wrapper = mountComponent();
+        });
+
         it('should render a form', () => {
             expect(wrapper.contains('form')).toBe(true);
         });
@@ -59,7 +64,7 @@ describe('JfListMakerComponent', () => {
             ).not.toBe('disabled')
         })
         it('If ng-disabled prop is passed, the + button is disabled even if content is typed in', () => {
-            const wrapper = mountComponent({
+            wrapper = mountComponent({
                 "ng-disabled": true,
             });
             wrapper.find(INPUT_TEXT).setValue("a");
@@ -67,7 +72,7 @@ describe('JfListMakerComponent', () => {
         })
 
         it('should display passed in values in the list', function () {
-            const wrapper = mountComponent({
+            wrapper = mountComponent({
                 value: ['a'],
             })
             //text
@@ -83,7 +88,7 @@ describe('JfListMakerComponent', () => {
 
         it('should display new values in the list', function () {
 
-            const wrapper = mountComponent({
+            wrapper = mountComponent({
                 value: ['a'],
             });
 
@@ -96,7 +101,7 @@ describe('JfListMakerComponent', () => {
         })
 
         it('should display new values in the list', function () {
-            const wrapper = mountComponent({
+            wrapper = mountComponent({
                 value: ["a", "b"],
             });
             expect(wrapper.findAll(SELECTOR_A_LIST_ROW).at(0).text()).toEqual("a")
@@ -107,11 +112,15 @@ describe('JfListMakerComponent', () => {
 
     describe("events and validations", function() {
         describe("addition", function() {
+            let wrapper;
 
-            it(`if valid text is entered in the textbox and the + button clicked, it should\n\temit "${EVENT_ON_ADD_VALUE}", "${EVENT_ON_AFTER_ADD_VALUE}" & "${EVENT_INPUT}"`, function() {
-                const wrapper = mountComponent({
+            beforeEach(function() {
+                wrapper = mountComponent({
                     value: ['a'],
                 })
+            });
+
+            it(`if valid text is entered in the textbox and the + button clicked, it should\n\temit "${EVENT_ON_ADD_VALUE}", "${EVENT_ON_AFTER_ADD_VALUE}" & "${EVENT_INPUT}"`, function() {
 
                 //Set some data
                 wrapper.find(INPUT_TEXT).setValue("b");
@@ -131,10 +140,6 @@ describe('JfListMakerComponent', () => {
             })
 
             it('if the text entered is already in the passed-in list, no event must be emitted', function () {
-                const wrapper = mountComponent({
-                    value: ["a"]
-                });
-
                 //Set some data
                 wrapper.find(INPUT_TEXT).setValue("a");
                 //Click on the + button
@@ -146,9 +151,6 @@ describe('JfListMakerComponent', () => {
             });
 
             it('Empty strings (with padding) must not be accepted', function () {
-                const wrapper = mountComponent({
-                    value: ["a"]
-                });
 
                 //Set an empty string as the data
                 wrapper.find(INPUT_TEXT).setValue(" ");
