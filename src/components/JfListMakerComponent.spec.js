@@ -19,6 +19,7 @@ const mountComponent = function( props ){
 
 //selectors
 const SELECTOR_A_LIST_ROW = `.list-maker-row-value`;
+const SELECTOR_ERROR_MESSAGE = `.jf-validation`;
 //Buttons
 const BUTTON_ADD = '.icon.icon-new';
 const BUTTON_DELETE = '.icon-close';
@@ -139,7 +140,7 @@ describe('JfListMakerComponent', () => {
                 //Click on the + button
                 wrapper.find(BUTTON_ADD).trigger("click");
                 //Validations
-                expect(wrapper.find(".jf-validation").text()).toEqual(MSG_VALUE_ALREADY_EXISTS);
+                expect(wrapper.find(SELECTOR_ERROR_MESSAGE).text()).toEqual(MSG_VALUE_ALREADY_EXISTS);
                 expect(wrapper.emitted()[EVENT_ON_ADD_VALUE]).toBeFalsy();
                 expect(wrapper.emitted()[EVENT_ON_AFTER_ADD_VALUE]).toBeFalsy();
             });
@@ -154,7 +155,7 @@ describe('JfListMakerComponent', () => {
                 //Click on the + button
                 wrapper.find(BUTTON_ADD).trigger("click");
                 //Validations
-                expect(wrapper.find(".jf-validation").text()).toEqual(
+                expect(wrapper.find(SELECTOR_ERROR_MESSAGE).text()).toEqual(
                     MSG_MUST_INPUT_VALUE
                 )
                 expect(wrapper.emitted()[EVENT_ON_ADD_VALUE]).toBeFalsy();
@@ -273,7 +274,7 @@ describe('JfListMakerComponent', () => {
             wrapper.find(INPUT_TEXT).setValue("1");
 
             wrapper.find(BUTTON_ADD).trigger('click')
-            expect(wrapper.find(".jf-validation").text()).toEqual(
+            expect(wrapper.find(SELECTOR_ERROR_MESSAGE).text()).toEqual(
                 'Value not valid'
             )
             expect(wrapper.emitted()[EVENT_INPUT][0]).toEqual([['a']])
@@ -289,7 +290,7 @@ describe('JfListMakerComponent', () => {
             wrapper.find(INPUT_TEXT).setValue("1");
 
             wrapper.find(BUTTON_ADD).trigger('click')
-            expect(wrapper.find(".jf-validation").text()).toEqual(
+            expect(wrapper.find(SELECTOR_ERROR_MESSAGE).text()).toEqual(
                 errorMessage
             )
         });
