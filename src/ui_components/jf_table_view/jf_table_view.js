@@ -50,7 +50,9 @@ class jfTableViewController {
         })
 
         let on_resize = () => {
-            this.options._normalizeWidths();
+            this.$timeout(() => {
+	            this.options._normalizeWidths();
+            });
             this._fireDebouncedRowsInView()
         }
         
