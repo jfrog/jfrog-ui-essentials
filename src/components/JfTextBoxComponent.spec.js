@@ -3,7 +3,10 @@ import JfTextBoxComponent from './JfTextBoxComponent.vue';
 
 describe('JfTextBoxComponent', () => {
 
-    const showAllElement = '.jf-text-box-show-all';
+    const showAllLink = '.jf-text-box-show-all';
+    const showAllLinkText = 'showMore';
+    const sampleText = 'This is a testing sample data for text box';
+    const displayText = '.jf-text-box-content-current';
 
     it('contains the element text box container', () => {
         const wrapper = shallowMount(JfTextBoxComponent, {
@@ -16,8 +19,8 @@ describe('JfTextBoxComponent', () => {
         jest.useFakeTimers();
         const wrapper = shallowMount(JfTextBoxComponent, {
             propsData: {
-                text: 'example text',
-                seeAllText: 'showMore'
+                text: sampleText,
+                seeAllText: showAllLinkText
             },
             computed: {
                 isOverflowing() {
@@ -26,16 +29,16 @@ describe('JfTextBoxComponent', () => {
             }
         });
         jest.runAllTimers();
-        expect(wrapper.find(showAllElement).exists()).toBe(true);
-        expect(wrapper.find(showAllElement).text()).toBe('showMore');
+        expect(wrapper.find(showAllLink).exists()).toBe(true);
+        expect(wrapper.find(showAllLink).text()).toBe(showAllLinkText);
     });
 
     it('When text overflows onclicking show-all element opens modal', () => {
         jest.useFakeTimers();
         const wrapper = shallowMount(JfTextBoxComponent, {
             propsData: {
-                text: 'example text',
-                seeAllText: 'showMore'
+                text: sampleText,
+                seeAllText: showAllLinkText
             },
             computed: {
                 isOverflowing() {
@@ -44,19 +47,18 @@ describe('JfTextBoxComponent', () => {
             },
             mocks: {
                 JfFullTextService: {
-                    showFullTextModal: function () {
+                    showFullTextModal: jest.fn(function () {
                         let result = new Promise((resolve, reject) => {
                             resolve()
                         })
                         return { result };
-                    }
+                    })
                 }
             }
         });
-        wrapper.vm.seeAll = jest.fn();
         jest.runAllTimers();
-        wrapper.find(showAllElement).trigger('click');
-        expect(wrapper.vm.seeAll).toHaveBeenCalled();
+        wrapper.find(showAllLink).trigger('click');
+        expect(wrapper.vm.JfFullTextService.showFullTextModal).toHaveBeenCalled();
         
     });
 
@@ -64,7 +66,7 @@ describe('JfTextBoxComponent', () => {
         jest.useFakeTimers();
         const wrapper = shallowMount(JfTextBoxComponent, {
             propsData: {
-                text: 'example text'
+                text: sampleText
             },
             computed: {
                 isOverflowing() {
@@ -73,7 +75,7 @@ describe('JfTextBoxComponent', () => {
             },
         });
         jest.runAllTimers();
-        expect(wrapper.find('.jf-text-box-content-current').text()).toBe('example text');
+        expect(wrapper.find(displayText).text()).toBe(sampleText);
     });
 
 
