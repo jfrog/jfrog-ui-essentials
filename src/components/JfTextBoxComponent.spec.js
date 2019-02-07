@@ -3,8 +3,11 @@ import JfTextBoxComponent from './JfTextBoxComponent.vue';
 
 describe('JfTextBoxComponent', () => {
 
+    // Selectors
     const showAllLink = '.jf-text-box-show-all';
     const showAllLinkText = 'showMore';
+
+    // Inputs 
     const sampleText = 'This is a testing sample data for text box';
     const displayText = '.jf-text-box-content-current';
 
