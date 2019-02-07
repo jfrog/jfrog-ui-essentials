@@ -42,7 +42,7 @@ describe('JfListSelectionComponent', () => {
                     }
                 ]
             });
-            //Actually there is one available on the page but is hidden
+
             expect(wrapper.findAll(SELECTOR_LIST_ITEM).length).toBe(3)
         })
 
@@ -57,7 +57,7 @@ describe('JfListSelectionComponent', () => {
                     },
                 ],
             })
-            //Actually there is one available on the page but is hidden
+
             expect(wrapper.findAll(`.icon.${iconClass}`).length).toBe(1)
         })
 
@@ -88,7 +88,7 @@ describe('JfListSelectionComponent', () => {
                 ).toBe(true);
             })
 
-            it('should not highlight the item which has the property "highlighted" if "highlightSelected" is not assed as true, ', function() {
+            it('should not highlight the item which has the property "highlighted" if "highlightSelected" is not passed as true, ', function() {
                 let wrapper = mountComponent({
                     highlightSelected: false,
                     items: [
