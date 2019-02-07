@@ -21,11 +21,14 @@
 
 
         <!-- GROUP HEADER -->
-        <div class="jf-table-cell group-header" v-if="data.$groupHeader" :style="{height: rowId === 'headers' ? '' : tableView.options.rowHeight,
-                        lineHeight: rowId === 'headers' ? '' : tableView.options.rowHeight}">
+        <div class="jf-table-cell group-header"
+             v-if="data.$groupHeader"
+             :style="{height: rowId === 'headers' ? '' : tableView.options.rowHeight,
+                      lineHeight: rowId === 'headers' ? '' : tableView.options.rowHeight}">
 
 
-            <i class="icon icon-small-arrow-down" :class="{'expanded': data.$groupHeader.$expanded}"></i>
+            <i class="icon icon-small-arrow-down"
+               :class="{'expanded': data.$groupHeader.$expanded}"></i>
             <span class="jf-table-cell-content group-header" v-if="!data.$groupHeader.col.cellTemplate">
                 {{data.$groupHeader.value}}
             </span>
@@ -203,6 +206,7 @@
             toggleGroupExpansion() {
                 this.$set(this.data.$groupHeader, '$expanded', !this.data.$groupHeader.$expanded);
                 this.tableView.options.updateGroupExpansionState(this.data);
+                this.$forceUpdate();
             },
             fireAction(action) {
                 action.callback(this.data);

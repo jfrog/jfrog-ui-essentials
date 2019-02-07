@@ -18,7 +18,7 @@ export class AngularScopeServiceMock {
                 }
             }
         }
-        this.$watch = (expr, callback, deep) => {
+        this.$watch = (expr, callback, deep = false) => {
             vueComp.$watch(expr, callback, {deep, immediate: true});
         }
 

@@ -20,15 +20,25 @@ let cellTemplateGenerators = {
 
         displayModel = displayModel ? `{{${ listModel }.length}} | {{${ displayModel }}}` : `{{${ externalCountModel } ? ${ externalCountModel } : ${ listModel }.length}} | {{${ listModel }.join(\', \')}}{{${ externalCountModel } && ${ externalCountModel } > ${ listModel }.length ? ',...' : ''}}`;
 
-        let id = `${ testIdPrefix }{{row.uid}}_${ nextId }`;
+        let id = `'${ testIdPrefix }' + row.uid + '_${ nextId }'`;
 
-        let template = `<div><div v-if="${ listModel }.length" 
-                                   :class="{'ui-grid-cell-contents no-tooltip': true, 'always-show': ${ showAsyncData } || ${ alwaysShow } }"id="${ id }">
+        let template = `<div>
+                            <div v-if="${ listModel }.length"
+                                 @mouseenter="table.options.isOverflowing('${ testIdPrefix }'+row.uid+'_'+${ nextId })"   
+                                 :class="{'ui-grid-cell-contents no-tooltip': true, 'always-show': ${ showAsyncData } || ${ alwaysShow }}" 
+                                 :id="${ id }">
                                 <span class="gridcell-content-text">${ displayModel }</span>
-                                 <a class="jf-link gridcell-showall" v-if="!(${ showAsyncData }) && (table.options.isOverflowing('${ testIdPrefix }'+row.uid+'_'+${ nextId }) || ${ alwaysShow })" href @click="table.options.showAll(${ listModel },${ rowNameModel },col);$event.stopPropagation()"> (See All)</a>
-                                 <a class="jf-link gridcell-showall" v-if="${ showAsyncData }" href @click="table.options.asyncShowAll(${ rowNameModel },col)"> (See All)</a>
+                                <a class="jf-link gridcell-showall" 
+                                v-if="!(${ showAsyncData })" 
+                                @click="table.options.showAll(${ listModel },${ rowNameModel },col);$event.stopPropagation()"> (See All)</a>
+                                <a class="jf-link gridcell-showall" 
+                                v-if="${ showAsyncData }" 
+                                @click="table.options.asyncShowAll(${ rowNameModel },col)"> (See All)</a>
                              </div>
-                             <div v-if="!${ listModel }.length" class="ui-grid-cell-contents no-tooltip" id="${ id }">-</div></div>`;
+                             <div v-if="!${ listModel }.length" 
+                                  class="ui-grid-cell-contents no-tooltip" 
+                                  :id="${ id }">-</div>
+                        </div>`;
 
         nextId++;
         return template;

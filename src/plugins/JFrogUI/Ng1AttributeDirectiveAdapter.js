@@ -52,7 +52,12 @@ export class Ng1AttributeDirectiveAdapter {
             if (binding.modifiers.bind) {
                 Object.defineProperty(attrs, _.camelCase(binding.name), {
                     get() {
-                        return _.get(vnode.context, _.trim(binding.expression, '\''));
+                        if (!_.isFunction(binding.value)) {
+                            return _.get(vnode.context, _.trim(binding.expression, '\''));
+                        }
+                        else {
+                            return binding.value();
+                        }
                     }
                 })
             }
@@ -70,7 +75,7 @@ export class Ng1AttributeDirectiveAdapter {
 
             attrs.$observe = (path, cb) => {
                 if (path === _.camelCase(binding.name)) {
-                    vnode.context.$watch(binding.expression, () => {
+                    vnode.context.$watch(!_.isFunction(binding.value) ? binding.expression : binding.value, () => {
                         cb(_.get(vnode.context, _.trim(binding.expression, '\'')))
                     })
                 }

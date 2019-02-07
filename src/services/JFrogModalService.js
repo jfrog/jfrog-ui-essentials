@@ -3,11 +3,11 @@ import JFrogCodeModalComponent from '../components/JfCodeModalComponent.vue'
 import JfFullTextModalComponent from '../components/JfFullTextModalComponent.vue'
 import JfDynamicModalComponent from '../components/JfDynamicModalComponent.js'
 import JfWizardModalComponent from '../components/JfWizardModalComponent.vue'
+import JfShowAllModalComponent from '../components/JfShowAllModalComponent.vue'
 export class JFrogModal {
     /* @ngInject */
     constructor() {
         this.$inject( '$rootScope', '$injector', '$q', '$sce', '$timeout', 'JFrogEventBus', 'JFrogUILibConfig', 'JFrogUIUtils');
-        this.templatesBaseUrl = 'ui_components/jfrog_modal/templates/';
         this.EVENTS = this.JFrogEventBus.getEventsDefinition();
     }
     /**
@@ -46,6 +46,7 @@ export class JFrogModal {
             propsData: props
         })
         $(modalInstance.$mount().$el).appendTo('#app')
+        window.oooooooooo = modalInstance.$refs.jfModal;
         Vue.nextTick()
         .then(function () {
             modalInstance.$refs.jfModal.show()
@@ -87,6 +88,9 @@ export class JFrogModal {
                 ModalComponent = JfWizardModalComponent;
                 //Passing this instance into the wizard so that it can resize if necessary
                 modalObj.JFrogModal = this;
+                break
+            case '@show_all_modal':
+                ModalComponent = JfShowAllModalComponent;
                 break
             default:
                 // Have intentionally not used this as a mixin because we are modifying the template

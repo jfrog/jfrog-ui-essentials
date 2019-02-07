@@ -2,7 +2,12 @@
 
     <div>
         <div class="grid-batch-actions text-right">
-            <div class="grid-batch-action-wrapper" :class="{'more-actions': action === MORE_ACTIONS}" v-for="(action, $index) in actions" :data-action-id="action.name" :style="{visibility: action === MORE_ACTIONS || visibleActions.indexOf(action) !== -1 ? 'inherit' : 'hidden', opacity: action === MORE_ACTIONS || visibleActions.indexOf(action) !== -1 ? 1 : 0}" v-jf-tooltip.bind="isDisabled(action) ? action.getDisabledTooltip() : ''">
+            <div class="grid-batch-action-wrapper"
+                 :class="{'more-actions': action === MORE_ACTIONS}"
+                 v-for="(action, $index) in actions"
+                 :data-action-id="action.name"
+                 :style="{visibility: action === MORE_ACTIONS || (visibleActions && visibleActions.indexOf(action) !== -1) ? 'inherit' : 'hidden', opacity: action === MORE_ACTIONS || (visibleActions && visibleActions.indexOf(action) !== -1) ? 1 : 0}"
+                 v-jf-tooltip.bind="() => isDisabled(action) && action.getDisabledTooltip ? action.getDisabledTooltip() : ''">
                 <a :class="{disabled: isDisabled(action), ['btn batch-action-' + action.icon]: true}" v-if="action !== MORE_ACTIONS && (!action.visibleWhen || action.visibleWhen())" @click.prevent="perform(action)">
                     <img :src="'images/' + action.icon + '.png'" v-if="action.img">
                     <i :class="'icon icon-' + action.icon" v-if="!action.img"></i> {{ action.name }}

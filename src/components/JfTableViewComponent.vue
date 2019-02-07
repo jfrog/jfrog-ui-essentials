@@ -102,7 +102,7 @@
             this.cellScopes = [];
 
             this.$scope.$watch('jfTableView.options', options => {
-                if (this.options) {
+                if (this.options && !this.options.dirCtrl) {
                     this.options._setDirectiveController(this);
                 }
                 if (this.options && !this.paginationApi) {

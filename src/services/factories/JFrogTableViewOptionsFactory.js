@@ -777,7 +777,7 @@ export function JFrogTableViewOptions() {
             this.refreshFilter();
         }
 
-        updateGroupExpansionState(groupHeaderRow) {
+        updateGroupExpansionState(groupHeaderRow, doUpdate = true) {
             let field = groupHeaderRow.$groupHeader.field;
             let value = groupHeaderRow.$groupHeader.value;
             let toRemove = _.filter(this.groupedData, row => {
@@ -787,12 +787,9 @@ export function JFrogTableViewOptions() {
 
             if (groupHeaderRow.$groupHeader.$expanded) {
                 let index = _.indexOf(this.groupedData, groupHeaderRow);
-                Array.prototype.splice.apply(this.groupedData, [
-                    index + 1,
-                    0
-                ].concat(this.fullGroupedData[value]));
+                this.groupedData.splice(index + 1, 0, ...this.fullGroupedData[value]);
             }
-            this.update(false, true);
+            if (doUpdate) this.update(false, true);
         }
 
         setFirstColumn(field) {
@@ -954,7 +951,8 @@ export function JFrogTableViewOptions() {
 
             if (this.paginationMode === this.EXTERNAL_PAGINATION || this.externalSortCallback || !this.sortByField) {
                 return sourceData;
-            } else {
+            }
+            else {
                 if (!this.sortedData) {
                     sourceData = this._saveAndRemoveSubRows(sourceData);
                     let colObj = _.find(this.columns, { field: this.sortByField });
@@ -984,7 +982,7 @@ export function JFrogTableViewOptions() {
                                     }
                                     this.groupedData.forEach(row => {
                                         if (row.$groupHeader) {
-                                            this.updateGroupExpansionState(row);
+                                            this.updateGroupExpansionState(row, false);
                                         }
                                     });
                                     this.sortedData = sourceData;
@@ -1010,7 +1008,7 @@ export function JFrogTableViewOptions() {
                                         }
                                         this.groupedData.forEach(row => {
                                             if (row.$groupHeader) {
-                                                this.updateGroupExpansionState(row);
+                                                this.updateGroupExpansionState(row, false);
                                             }
                                         });
                                         this.sortedData = sourceData;
@@ -1045,7 +1043,7 @@ export function JFrogTableViewOptions() {
                                         }
                                         this.groupedData.forEach(row => {
                                             if (row.$groupHeader) {
-                                                this.updateGroupExpansionState(row);
+                                                this.updateGroupExpansionState(row, false);
                                             }
                                         });
                                         this.sortedData = sourceData;
@@ -1065,6 +1063,7 @@ export function JFrogTableViewOptions() {
                     } else {
                         this.sortedData = [].concat(sourceData);
                     }
+                    setTimeout(() => this.update());
                 }
                 return this.sortedData;
             }
@@ -1097,7 +1096,7 @@ export function JFrogTableViewOptions() {
                         let toBeOpened = _.find(this.groupedData, { $groupHeader: { value: wasOpened.$groupHeader.value } });
                         if (toBeOpened) {
                             toBeOpened.$groupHeader.$expanded = true;
-                            this.updateGroupExpansionState(toBeOpened);
+                            this.updateGroupExpansionState(toBeOpened, false);
                         }
                     });
                 }
@@ -1313,7 +1312,6 @@ export function JFrogTableViewOptions() {
         }
 
         isOverflowing(cellId) {
-
             let elem = $(this.dirCtrl.$element).find('#' + cellId);
             let text = elem.children('.gridcell-content-text');
             let showAll = elem.children('.gridcell-showall');
@@ -1326,9 +1324,11 @@ export function JFrogTableViewOptions() {
             if (cellItemContent.length > 0 && elem[0].scrollWidth > elem.innerWidth()) {
                 //            elem.css('padding-right',width+'px');
                 elem.addClass('overflow');
+                elem.find('.gridcell-showall').show();
                 return true;
             } else {
                 elem.removeClass('overflow');
+                elem.find('.gridcell-showall').hide();
                 //            elem.css('padding-right','5px');
                 return false;
             }
@@ -1338,32 +1338,15 @@ export function JFrogTableViewOptions() {
         showAll(model, rowName, col) {
             let objectName = _.startCase(this.objectName.indexOf('/') >= 0 ? this.objectName.split('/')[0] : this.objectName);
 
-            let modalScope = this.$rootScope.$new();
-
-            modalScope.items = model;
-            modalScope.colName = col.header;
-            modalScope.rowName = rowName;
-            modalScope.objectName = objectName;
-
-            modalScope.filter = {};
-            modalScope.filterItem = item => {
-                if (modalScope.filter.text) {
-                    let escaped = this.JFrogUIUtils.escapeForRegex(modalScope.filter.text);
-                    let regex = new RegExp('.*' + escaped.split('\\*').join('.*') + '.*', 'i');
-                    return regex.test(item);
-                } else {
-                    return true;
-                }
+            let options = {
+                items: model,
+                colName: col.header,
+                rowName: rowName,
+                objectName: objectName,
+                filter: {}
             };
 
-            modalScope.noResults = () => {
-                let filteredResults = _.filter(modalScope.items, item => {
-                    return modalScope.filterItem(item);
-                });
-                return filteredResults.length === 0;
-            };
-
-            this.JFrogModal.launchModalWithTemplateMarkup(require('@/ui_components/jfrog_grid/show_all_modal.html'), modalScope, 'sm', true);
+            this.JFrogModal.launchModal('@show_all_modal', null, 'sm', false, options);
         }
 
         asyncShowAll(rowName, col) {
