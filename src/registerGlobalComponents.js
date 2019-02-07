@@ -11,7 +11,7 @@ import jfTableViewBatchActions from './components/JfTableViewBatchActionsCompone
 import jfTableRow from './components/JfTableRowComponent.vue';
 import jfTableView from './components/JfTableViewComponent.vue';
 import jfFileDrop from './components/JfFileDropComponent.vue';
-import jfBillboard from './components/JfBillboardComponent.vue';
+import jfGraphs from './components/JfGraphsComponent.vue';
 import jfPendingData from './components/JfPendingDataComponent.vue';
 import jfTextBox from './components/JfTextBoxComponent.vue';
 import jfOnOffSwitch from './components/JfOnOffSwitchComponent.vue';
@@ -106,7 +106,7 @@ let components = [
     jfOnOffSwitch,
     jfTextBox,
     jfPendingData,
-    jfBillboard,
+    jfGraphs,
     jfFileDrop,
     jfTableView,
     jfTableRow,

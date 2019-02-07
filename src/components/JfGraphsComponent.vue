@@ -7,7 +7,7 @@
 <script>
 import { bb } from 'billboard.js';
     export default {
-        name: 'jf-billboard',
+        name: 'jf-graphs',
         props: [
             'hideSearch',
             'options'
