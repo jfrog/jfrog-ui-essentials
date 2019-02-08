@@ -95,7 +95,7 @@ export class JFrogModal {
 
                 let modifiers = typeof modalObj.template == 'object' ? modalObj.template : this.JFrogUILibConfig.getConfig().customModalTemplates[modalObj.template];
                 //Embed the dynamic content into a modal
-                ModalComponent.template = `<b-modal v-bind="modalProps">${modifiers.template}</b-modal>`;
+                ModalComponent.template = `<b-modal v-bind="modalProps" @hide="_handleHide" @hidden="_afterModalHidden">${modifiers.template}</b-modal>`;
                 //Add any properties specified in the dynamic modal to this component definition
                 ModalComponent.mixins.push(modifiers);
 

@@ -6,6 +6,8 @@
         @ok="$ok"
         ok-title="Close"
         ok-variant="secondary"
+        @hide="_handleHide"
+        @hidden="_afterModalHidden"
         >
         <template slot="modal-title">
             <h3 class="modal-title" id="popup-header">{{title}}</h3>
@@ -18,7 +20,7 @@
             <p v-for="(item,index) in list" :key="index" class="full-text-item" v-html="item" @click="onItemClick(item)"></p>
         </div>
     </b-modal>
-</template >
+</template>
 <script>
     import ModalMixins from "./ModalMixins.js";
     export default {

@@ -2,6 +2,8 @@
     <b-modal
         v-bind="modalProps"
         :modal-class="classForStep"
+        @hidden="_afterModalHidden"
+        @hide="_handleHide"
         >
             <template slot="modal-header">
                 <span v-if="wizardDefinitionObject.cancelable" class="icon icon-clear" @click="dismiss()"></span>

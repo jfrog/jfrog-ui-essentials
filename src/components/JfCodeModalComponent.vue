@@ -5,6 +5,8 @@
         ok-title="Close"
         @ok="$ok"
         ok-variant="secondary"
+        @hide="_handleHide"
+        @hidden="_afterModalHidden"
         >
         <template slot="modal-title">
             <h4 class="modal-title" id="popup-header" v-html="title"></h4>
@@ -23,7 +25,7 @@
             </jf-code-mirror>
         </div>
     </b-modal>
-</template >
+</template>
 <script>
     import ModalMixins from "./ModalMixins.js";
     export default {

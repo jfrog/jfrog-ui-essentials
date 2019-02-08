@@ -16,7 +16,6 @@ export default {
                 'modal-class': this.uiEssModalClass || '',
                 'no-close-on-esc': this.uiEssNoCloseOnEsc,
                 'no-close-on-backdrop': this.uiEssNoCloseOnBackdrop,
-                'on:hide': '_handleHide',
                 size:
                     this.uiEssSize == 'lg' || this.uiEssSize == 'sm'
                         ? this.uiEssSize

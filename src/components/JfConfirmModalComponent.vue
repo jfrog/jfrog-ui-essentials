@@ -1,5 +1,5 @@
 <template>
-    <b-modal v-bind="modalProps" @hide="_handleHide">
+    <b-modal v-bind="modalProps" @hide="_handleHide" @hidden="_afterModalHidden">
         <template slot="modal-title">
             <h4 class="modal-title" id="popup-header" v-html="title"></h4>
         </template>
