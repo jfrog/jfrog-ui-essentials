@@ -1,3 +1,18 @@
+const removeClassIfNecessary = function (selector, className) {
+    const element = $(selector);
+    if (element.hasClass(className)) {
+        element.removeClass(className);
+    }
+}
+
+const hack = function(){
+    Vue.nextTick()
+        .then(() => {
+            removeClassIfNecessary('#jfModal___BV_modal_outer_',"show");
+            removeClassIfNecessary('#jfModal',"show");
+            $('#jfModal___BV_modal_outer_').parent().remove();//Remove any existing modal divs
+        });
+};
 export default {
     props: [
         'uiEssNoCloseOnEsc',
@@ -52,7 +67,9 @@ export default {
         dismiss() {
             this.$dismiss()
         },
-
+        _afterModalHidden(){
+            hack();
+        },
         $dismiss() {
             if (!this.dontRejectOnClose && this.$props.uiEssModalPromise) {
                 this.promiseIsPending = false
@@ -61,6 +78,7 @@ export default {
             this.$refs.jfModal.hide()
         },
         _handleHide() {
+            setTimeout(hack,10);
             if (this.dontRejectOnClose) {
                 return
             }

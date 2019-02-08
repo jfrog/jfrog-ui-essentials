@@ -3,6 +3,36 @@ import JFrogCodeModalComponent from '../components/JfCodeModalComponent.vue'
 import JfFullTextModalComponent from '../components/JfFullTextModalComponent.vue'
 import JfDynamicModalComponent from '../components/JfDynamicModalComponent.js'
 import JfWizardModalComponent from '../components/JfWizardModalComponent.vue'
+
+const whenElementIsVisible = function (selector, callBack, count = 0) {
+    if ($(selector)[0]) {
+        callBack();
+    } else if (count < 180) {
+        setTimeout(function () {
+            whenElementIsVisible(selector, callBack, ++count);
+        }, 1000)
+    }
+}
+
+const addClassIfNecessary = function(selector,className) {
+    const element = $(selector);
+    if(!element.hasClass(className)) {
+        element.addClass(className);
+    }
+}
+/* This hack causes the modal to become visible immediately.
+The issue can be observed if you comment out the next few lines of code
+and then try to load the show-all modal from the jf-table-view demo page
+(cell template example)
+*/
+const forceModalVisibility = function() {
+    Vue.nextTick().then( ()=>{
+        whenElementIsVisible("#jfModal", () => {
+            addClassIfNecessary("#jfModal___BV_modal_backdrop_","show");
+            addClassIfNecessary("#jfModal","show");
+        })
+    });
+}
 export class JFrogModal {
     /* @ngInject */
     constructor() {
@@ -45,11 +75,8 @@ export class JFrogModal {
             propsData: props
         })
         $(modalInstance.$mount().$el).appendTo('#app')
-        window.oooooooooo = modalInstance.$refs.jfModal;
-        Vue.nextTick()
-        .then(function () {
-            modalInstance.$refs.jfModal.show()
-        });
+        modalInstance.$refs.jfModal.show()
+        forceModalVisibility();//hack
         return modalInstance;
     }
     _launch(modalObj, scope, size, cancelable = true, options) {
