@@ -1,4 +1,5 @@
 import cellTemplateGenerators from '@/ui_components/jf_table_view/cell_template_generators';
+import { JF_Data_LIST_MODAL } from "@/directives/jf_data_list/jf_data_list.show_all_modal.js";
 const COMMON_ACTIONS = {
 	delete: {
 		icon: 'icon icon-clear',
@@ -1338,15 +1339,23 @@ export function JFrogTableViewOptions() {
         showAll(model, rowName, col) {
             let objectName = _.startCase(this.objectName.indexOf('/') >= 0 ? this.objectName.split('/')[0] : this.objectName);
 
-            let options = {
+            let modalScope = {
                 items: model,
                 colName: col.header,
                 rowName: rowName,
                 objectName: objectName,
                 filter: {}
             };
-
-            this.JFrogModal.launchModal('@show_all_modal', null, 'sm', false, options);
+            this.JFrogModal.launchModal(
+                JF_Data_LIST_MODAL,
+                modalScope,
+                'sm',
+                false,
+                {
+                    dontRejectOnClose: true,
+                    class: "show-all-modal"
+                }
+            )
         }
 
         asyncShowAll(rowName, col) {

@@ -14,7 +14,7 @@ export const JF_Data_LIST_MODAL = {
             <div class="group-list-wrapper" v-if="!noResults()">
                 <ul class="group-list">
                     <li class="group-list-item" v-jf-tooltip-on-overflow v-for="(item, $index) in items" v-if="filterItem(item)">
-                        <div v-if="!item.url" v-html="item.label"></div>
+                        <div v-if="!item.url" v-html="item.label || item"></div>
                         <a v-if="item.url" class="jf-link" :href="item.url" v-html="item.label" target="_blank"></a>
                     </li>
                 </ul>

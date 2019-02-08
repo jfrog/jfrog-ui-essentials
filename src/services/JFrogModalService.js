@@ -3,7 +3,6 @@ import JFrogCodeModalComponent from '../components/JfCodeModalComponent.vue'
 import JfFullTextModalComponent from '../components/JfFullTextModalComponent.vue'
 import JfDynamicModalComponent from '../components/JfDynamicModalComponent.js'
 import JfWizardModalComponent from '../components/JfWizardModalComponent.vue'
-import JfShowAllModalComponent from '../components/JfShowAllModalComponent.vue'
 export class JFrogModal {
     /* @ngInject */
     constructor() {
@@ -88,9 +87,6 @@ export class JFrogModal {
                 ModalComponent = JfWizardModalComponent;
                 //Passing this instance into the wizard so that it can resize if necessary
                 modalObj.JFrogModal = this;
-                break
-            case '@show_all_modal':
-                ModalComponent = JfShowAllModalComponent;
                 break
             default:
                 // Have intentionally not used this as a mixin because we are modifying the template
