@@ -8,7 +8,9 @@
     "dev": "nodemon --ignore 'src/**/*.spec.js' -w src/ -e js,html,css,less,vue -x vue-cli-service  -- build --target lib --name jfrog-ui-essentials --formats commonjs src/index.js dev",
     "test:unit:coverage": "vue-cli-service test:unit --coverage",
     "test:unit": "vue-cli-service test:unit --watch",
-    "watch": "vue-cli-service build --mode development --target lib --name jfrog-ui-essentials src/index.js"
+    "watch": "vue-cli-service build --mode development --target lib --name jfrog-ui-essentials src/index.js",
+    "//postshringwrap":"hack for an issue in npm. see https://npm.community/t/some-packages-have-dist-tarball-as-http-and-not-https/285/16",
+    "postshrinkwrap": "if [ \"`uname`\" = \"Darwin\" ]; then sed -i '' -e 's/http:\\/\\//https:\\/\\//g' package-lock.json; else sed -i -e 's/http:\\/\\//https:\\/\\//g' package-lock.json; fi"
   },
   "dependencies": {
     "axios": "^0.18.0",
