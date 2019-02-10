@@ -7,6 +7,7 @@ ENV HOME=/data
 RUN apt-get update && \
     npm install -g gulp && \
     npm install -g npm@6.2.0 && \
-    npm install -g npm-cli-login
+    npm install -g npm-cli-login && \
+    apt-get install -y git
 
 CMD ["/bin/bash", "-c", "npm install --verbose && gulp build"]
