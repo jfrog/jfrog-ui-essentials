@@ -16,7 +16,7 @@
         </template>
         <div v-html="content"></div>
     </b-modal>
-</template >
+</template>
 <script>
     import ModalMixins from "./ModalMixins.js";
     export default {

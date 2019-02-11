@@ -1,3 +1,5 @@
+import Q from 'q'
+
 const removeClassIfNecessary = function (selector, className) {
     const element = $(selector);
     if (element.hasClass(className)) {
@@ -13,7 +15,11 @@ const hack = function(){
             $('#jfModal___BV_modal_outer_').parent().remove();//Remove any existing modal divs
         });
 };
+
 export default {
+    'jf@inject': [
+        '$q',
+    ],
     props: [
         'uiEssNoCloseOnEsc',
         'uiEssNoCloseOnBackdrop',
@@ -29,14 +35,14 @@ export default {
                 id: 'jfModal',
                 centered: true,
                 'modal-class': this.uiEssModalClass || '',
-                'no-close-on-esc': this.uiEssNoCloseOnEsc,
-                'no-close-on-backdrop': this.uiEssNoCloseOnBackdrop,
+                'no-close-on-esc': this.uiEssNoCloseOnEsc || false,
+                'no-close-on-backdrop': this.uiEssNoCloseOnBackdrop || false,
                 size:
                     this.uiEssSize == 'lg' || this.uiEssSize == 'sm'
                         ? this.uiEssSize
                         : '',
             },
-            promiseIsPending: true,
+            modalPromise : this.uiEssModalPromise || Q.defer()
         }
     },
     mounted() {
@@ -47,24 +53,21 @@ export default {
         })
     },
     methods: {
-        //Added for backward compatibility
-        close() {
+        close() {//Added for backward compatibility
             this.$close(true)
         },
-        $ok() {
+        $ok() {//Added for backward compatibility
             this.$close(true)
         },
         $close(succeeded) {
-            if (succeeded && this.$props.uiEssModalPromise) {
-                this.promiseIsPending = false
-                this.$props.uiEssModalPromise.resolve()
-            } else {
+            if (!succeeded) {
                 this.$dismiss()
+            } else {
+                this.modalPromise.resolve()
+                this.$refs.jfModal.hide()
             }
-            this.$refs.jfModal.hide()
         },
-        //Added for backward compatibility
-        dismiss() {
+        dismiss() {//Added for backward compatibility
             this.$dismiss()
         },
         _afterModalHidden(){
@@ -75,16 +78,25 @@ export default {
                 this.promiseIsPending = false
                 this.$props.uiEssModalPromise.reject()
             }
+        },
+
+        handlePromise(){
+            if (this.modalPromise.promise.isPending()) {
+                if (!this.dontRejectOnClose) {
+                    this.modalPromise.reject()
+                } else {
+                    this.modalPromise.resolve()
+                }
+            }
+        },
+
+        $dismiss() {
+            this.handlePromise();
             this.$refs.jfModal.hide()
         },
         _handleHide() {
+            this.handlePromise();
             setTimeout(hack,10);
-            if (this.dontRejectOnClose) {
-                return
-            }
-            if (this.$props.uiEssModalPromise && this.promiseIsPending) {
-                this.$props.uiEssModalPromise.reject()
-            }
         },
     },
 }

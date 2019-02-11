@@ -85,15 +85,11 @@ export class JFrogModal {
         modalObj.uiEssNoCloseOnEsc = cancelable === false
         modalObj.uiEssSize = size || 'lg';
         modalObj.uiEssModalClass = options && options.class || '';
+        modalObj.uiEssModalPromise = this.$q.defer();
 
         if (options && _.isObject(options)) {
             _.extend(modalObj, options);
         }
-
-        //The interface expects a promise to be returned
-        let result = new Promise( (resolve, reject) => {
-            modalObj.uiEssModalPromise = { resolve, reject }
-        } );
 
         let focused = $(':focus');
         if (focused.length)
@@ -164,7 +160,7 @@ export class JFrogModal {
 
         /* The interface expects a result (promise) & a close method to be returned */
         return {
-            result: result,
+            result: modalObj.uiEssModalPromise.promise,
             close: () => modalInstance.$refs.jfModal.hide(),
         }
 
