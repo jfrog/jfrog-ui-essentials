@@ -1,18 +1,25 @@
 import {shallowMount} from '@vue/test-utils';
 import JfTabComponent from './JfTabComponent.vue';
 
+const tabValue = 'tab1';
+const tabData = "Esse pariatur aliqua ad laboris eiusmod minim."
+
 describe('JfTabComponent', () => {
-    it('', () => {
+    it('tab is rendered when values are same', () => {
+        jest.useFakeTimers();
         const wrapper = shallowMount(JfTabComponent, {
             propsData: {
-                name: 'tab1'
+                name: tabValue
             },
             computed: {
                 currentTabName() {
-                    return 'tab1'
+                    return tabValue;
                 }
+            },
+            slots: {
+                default: `<div class="slot-test">${tabData}</div>`
             }
         })
-        expect(wrapper.vm.$el).toMatchSnapshot();
+        expect(wrapper.find('.slot-test').text()).toBe(tabData);
     })
 })
