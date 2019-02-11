@@ -90,7 +90,7 @@
             return {
                 filterList: null,
                 paginationApi: null,
-                itemsPerPage: this.items.length,
+                itemsPerPage: this.items && this.items.length || 0,
                 currentPage: 1
             };
         },
@@ -99,6 +99,9 @@
         },
          mounted() {
             this.$nextTick(()=>{
+                if( !this.$element ) {
+                    return;
+                }
                 let containerHeight = this.$element.find('.group-list-wrapper').innerHeight();
                 let itemHeight = this.$element.find('.group-list-item').outerHeight();
                 this.itemsPerPage = Math.floor(containerHeight / itemHeight);
