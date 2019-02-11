@@ -1,5 +1,5 @@
-import { shallowMount, mount } from '@vue/test-utils';
-import ModalMixin from './ModalMixins.js'
+import { shallowMount } from '@vue/test-utils';
+import ModalMixin from './index.js'
 import Q from 'q'
 
 // Utility method to avoid code duplication
