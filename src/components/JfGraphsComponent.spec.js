@@ -1,17 +1,17 @@
 import {shallowMount} from '@vue/test-utils';
-import JfBillboardComponent from './JfBillboardComponent.vue';
+import JfGraphsComponent from './JfGraphsComponent.vue';
 
-describe('JfBillboardComponent', () => {
+describe('JfGraphsComponent', () => {
 
     it('Contains an element to render graph', () => {
-        const wrapper = shallowMount(JfBillboardComponent, {
+        const wrapper = shallowMount(JfGraphsComponent, {
             propsData: {}
         });
         expect(wrapper.find({ ref: 'chart' }).exists()).toBe(true);
     });
-    
+
     it('contains a prop options', () => {
-        const wrapper = shallowMount(JfBillboardComponent, {
+        const wrapper = shallowMount(JfGraphsComponent, {
             propsData: {
                 options: 'chart-data'
             }
