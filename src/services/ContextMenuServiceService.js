@@ -1,4 +1,4 @@
-import ContextMenuComponent from '@/components/JfContextMenuComponent.vue'
+import ContextMenuComponent from '@/components/JfContextMenuComponent/index.vue'
 export class ContextMenuService {
     /* @ngInject */
     constructor() {

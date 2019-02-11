@@ -1,8 +1,8 @@
-import JFrogConfirmModalComponent from '../components/JfConfirmModalComponent.vue'
-import JFrogCodeModalComponent from '../components/JfCodeModalComponent.vue'
-import JfFullTextModalComponent from '../components/JfFullTextModalComponent.vue'
-import JfDynamicModalComponent from '../components/JfDynamicModalComponent.js'
-import JfWizardModalComponent from '../components/JfWizardModalComponent.vue'
+import JFrogConfirmModalComponent from '../components/JfConfirmModalComponent/index.vue'
+import JFrogCodeModalComponent from '../components/JfCodeModalComponent/index.vue'
+import JfFullTextModalComponent from '../components/JfFullTextModalComponent/index.vue'
+import JfDynamicModalComponent from '../components/JfDynamicModalComponent/index.js'
+import JfWizardModalComponent from '../components/JfWizardModalComponent/index.vue'
 
 const whenElementIsVisible = function (selector, callBack, count = 0) {
     if ($(selector)[0]) {

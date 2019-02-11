@@ -1,4 +1,4 @@
-export const JF_Data_LIST_MODAL = {
+export const JfDataListModal = {
            template: `
             <template slot="modal-header">
                 <button type="button" class="close" data-dismiss="close" aria-label="Close" @click="$dismiss()"><span aria-hidden="_true">×</span></button>

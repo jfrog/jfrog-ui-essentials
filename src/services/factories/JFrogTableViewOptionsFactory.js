@@ -1,5 +1,5 @@
 import cellTemplateGenerators from '@/ui_components/jf_table_view/cell_template_generators';
-import { JF_Data_LIST_MODAL } from "@/directives/jf_data_list/jf_data_list.show_all_modal.js";
+import { JfDataListModal } from "@/directives/jf_data_list/jf_data_list.show_all_modal.js";
 const COMMON_ACTIONS = {
 	delete: {
 		icon: 'icon icon-clear',
@@ -1347,7 +1347,7 @@ export function JFrogTableViewOptions() {
                 filter: {}
             };
             this.JFrogModal.launchModal(
-                JF_Data_LIST_MODAL,
+                JfDataListModal,
                 modalScope,
                 'sm',
                 false,
