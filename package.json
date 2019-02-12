@@ -5,7 +5,7 @@
   "scripts": {
     "build": "vue-cli-service build --target lib --name jfrog-ui-essentials src/index.js",
     "lint": "vue-cli-service lint",
-    "dev": "nodemon --ignore 'src/**/*.spec.js' -w src/ -e js,html,css,less,vue -x vue-cli-service  -- build --target lib --name jfrog-ui-essentials --formats commonjs src/index.js dev",
+    "dev": "nodemon --ignore 'src/**/*.spec.js' --ignore 'src/**/*.test.js' -w src/ -e js,html,css,less,vue -x vue-cli-service  -- build --target lib --name jfrog-ui-essentials --formats commonjs src/index.js dev",
     "test:unit:coverage": "vue-cli-service test:unit --coverage",
     "test:unit": "vue-cli-service test:unit --watch",
     "watch": "vue-cli-service build --mode development --target lib --name jfrog-ui-essentials src/index.js",

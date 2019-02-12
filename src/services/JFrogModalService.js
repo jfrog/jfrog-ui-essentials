@@ -1,42 +1,8 @@
-import JFrogConfirmModalComponent from '../components/JfConfirmModalComponent/index.vue'
-import JFrogCodeModalComponent from '../components/JfCodeModalComponent/index.vue'
-import JfFullTextModalComponent from '../components/JfFullTextModalComponent/index.vue'
-import JfDynamicModalComponent from '../components/JfDynamicModalComponent/index.js'
-import JfWizardModalComponent from '../components/JfWizardModalComponent/index.vue'
+import JFrogModalFactory from "./JFrogModalFactory.js"
 
-const whenElementIsVisible = function (selector, callBack, count = 0) {
-    if ($(selector)[0]) {
-        callBack();
-    } else if (count < 180) {
-        setTimeout(function () {
-            whenElementIsVisible(selector, callBack, ++count);
-        }, 1000)
-    }
-}
-
-const addClassIfNecessary = function(selector,className) {
-    const element = $(selector);
-    if(!element.hasClass(className)) {
-        element.addClass(className);
-    }
-}
-/* This hack causes the modal to become visible immediately.
-The issue can be observed if you comment out the next few lines of code
-and then try to load the show-all modal from the jf-table-view demo page
-(cell template example)
-*/
-const forceModalVisibility = function() {
-    Vue.nextTick().then( ()=>{
-        whenElementIsVisible("#jfModal", () => {
-            addClassIfNecessary("#jfModal___BV_modal_backdrop_","show");
-            addClassIfNecessary("#jfModal","show");
-        })
-    });
-}
 export class JFrogModal {
-    /* @ngInject */
     constructor() {
-        this.$inject( '$rootScope', '$injector', '$q', '$sce', '$timeout', 'JFrogEventBus', 'JFrogUILibConfig', 'JFrogUIUtils');
+        this.$inject( '$rootScope', '$q', '$timeout', 'JFrogEventBus', 'JFrogUILibConfig');
         this.EVENTS = this.JFrogEventBus.getEventsDefinition();
     }
     /**
@@ -54,31 +20,7 @@ export class JFrogModal {
         };
         return this._launch(modalObj, scope, size, cancelable, options);
     }
-    /**
-	 * Use template markup
-	 * and delegate to the $modal service
-	 * return the modal instance
-	 *
-	 * @param templateMarkup
-	 * @param scope
-	 * @returns {{Modal instance}}
-	 */
-    launchModalWithTemplateMarkup(templateMarkup, scope, size, cancelable = true, options) {
-        return new Promise((resolve, reject)=>{
-            reject("Deprecated. Please use launchModal itself");
-        })
-    }
-    attachToDOM(ModalComponent, props) {
-        $('#jfModal___BV_modal_outer_').parent().remove();//Remove any existing modal divs
-        let ComponentClass = Vue.extend(ModalComponent)
-        let modalInstance = new ComponentClass({
-            propsData: props
-        })
-        $(modalInstance.$mount().$el).appendTo('#app')
-        modalInstance.$refs.jfModal.show()
-        forceModalVisibility();//hack
-        return modalInstance;
-    }
+
     _launch(modalObj, scope, size, cancelable = true, options) {
 
         modalObj.uiEssNoCloseOnBackdrop = cancelable === false;
@@ -86,6 +28,9 @@ export class JFrogModal {
         modalObj.uiEssSize = size || 'lg';
         modalObj.uiEssModalClass = options && options.class || '';
         modalObj.uiEssModalPromise = this.$q.defer();
+        modalObj.JFrogModal = this;
+
+        let result = modalObj.uiEssModalPromise.promise;
 
         if (options && _.isObject(options)) {
             _.extend(modalObj, options);
@@ -95,64 +40,27 @@ export class JFrogModal {
         if (focused.length)
             focused.blur();
 
-        let ModalComponent;
-        switch (modalObj.template) {
-            case '@confirm_modal':
-                ModalComponent = JFrogConfirmModalComponent;
-                break
-            case '@code_modal':
-                ModalComponent = JFrogCodeModalComponent;
-                break
-            case '@full.text.modal':
-                ModalComponent = JfFullTextModalComponent;
-                break
-            case '@wizard_modal':
-                ModalComponent = JfWizardModalComponent;
-                //Passing this instance into the wizard so that it can resize if necessary
-                modalObj.JFrogModal = this;
-                break
-            default:
-                // Have intentionally not used this as a mixin because we are modifying the template
-                ModalComponent = new JfDynamicModalComponent();
-                //Get the custom Modal's details
-
-                let modifiers = typeof modalObj.template == 'object' ? modalObj.template : this.JFrogUILibConfig.getConfig().customModalTemplates[modalObj.template];
-                //Embed the dynamic content into a modal
-                ModalComponent.template = `<b-modal v-bind="modalProps" @hide="_handleHide" @hidden="_afterModalHidden">${modifiers.template}</b-modal>`;
-                //Add any properties specified in the dynamic modal to this component definition
-                ModalComponent.mixins.push(modifiers);
-
-                if( scope ) {
-                    _.extend(modalObj, scope);
-                    /* Specifically for backward compatibility. If any fields are passed, add them as props */
-                    ModalComponent.props = [
-                        ...ModalComponent.props,
-                        ...Object.keys(scope),
-                    ]
-                }
-        }
-
-        let modalInstance = this.attachToDOM(ModalComponent, modalObj)
+        let modalInstance = (new JFrogModalFactory()).getModal(modalObj, scope, this.JFrogUILibConfig);
 
         this.JFrogEventBus.registerOnScope(this.$rootScope, this.EVENTS.CLOSE_MODAL, () => {
-            modalInstance.$refs.jfModal.hide();
+            modalInstance.$close(true);
         });
 
         //TODO much of this logic can be moved to the mixin
         this._calculateMaxHeight();
         let keyDownBinded = this._onKeyDown.bind(this);
-        if (modalInstance.result) {
-            // Modal close event handler is registered as result.then(errorCallback)
-            // In some cases the modal close event is caught by result.finally()
-            modalInstance.result.then(() => {
-            }, () => {
-                this.$set(this, 'modalIsClosing', true);
-            }).finally(() => {
-                this.$set(this, 'modalIsClosing', true);
-                $(window).off('resize', this._calculateMaxHeight());
-                $(document).off('keydown', keyDownBinded);
-            });
-        }
+
+        // Modal close event handler is registered as result.then(errorCallback)
+        // In some cases the modal close event is caught by result.finally()
+        result.then(() => {
+        }, () => {
+            this.modalIsClosing = true;
+        }).finally(() => {
+            this.modalIsClosing = true;
+            $(window).off('resize', this._calculateMaxHeight());
+            $(document).off('keydown', keyDownBinded);
+        });
+
         $(window).resize(() => {
             this._calculateMaxHeight();
         });
@@ -160,8 +68,8 @@ export class JFrogModal {
 
         /* The interface expects a result (promise) & a close method to be returned */
         return {
-            result: modalObj.uiEssModalPromise.promise,
-            close: () => modalInstance.$refs.jfModal.hide(),
+            result: result,
+            close: () => modalInstance.$close(true),
         }
 
 
