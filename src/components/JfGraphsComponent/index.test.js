@@ -22,37 +22,16 @@ describe('JfGraphsComponent', () => {
                 options
             }
         });
-        // mocking the method to generate graph
-        const _generate = function () {
-            bb.generate(Object.assign({ bindto: wrapper.find({ ref: 'chart' }) }, wrapper.vm.options))
-        }
-        wrapper.setMethods({ _generate })
-        wrapper.vm._generate();
-
-        // to replace auto-generated ids by billboard
+        
+        /* replacing auto-generated ids by billboard */
+        
+        // get the id value generated and replacing it with empty string
         const idValue = new RegExp(`${wrapper.vm.$el.innerHTML.substr(93, 13)}`, "g");       
         expect.addSnapshotSerializer({
-            test: (val) => val.innerHTML.replace(idValue, 'test'),
-            print: (val) => `${val.innerHTML.replace(idValue, 'test')}`
+            test: (val) => val.innerHTML.replace(idValue, ''),
+            print: (val) => `${val.innerHTML.replace(idValue, '')}`
           })
 
         expect(wrapper.vm.$el).toMatchSnapshot();
     });
-
-    it('Contains an element to render graph', () => {
-        const wrapper = shallowMount(JfGraphsComponent, {
-            propsData: {}
-        });
-        expect(wrapper.find({ ref: 'chart' }).exists()).toBe(true);
-    });
-
-    it('contains a prop options', () => {
-        const wrapper = shallowMount(JfGraphsComponent, {
-            propsData: {
-                options: 'chart-data'
-            }
-        });
-        expect(wrapper.props().options).toBe('chart-data');
-    });
-
 });
