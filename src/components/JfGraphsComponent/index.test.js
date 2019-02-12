@@ -16,7 +16,6 @@ const options = {
 describe('JfGraphsComponent', () => {
 
     it('should match the snapshot', () => {
-        jest.useFakeTimers();
         const wrapper = shallowMount(JfGraphsComponent, {
             propsData: {
                 options
