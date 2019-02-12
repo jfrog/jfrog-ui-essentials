@@ -15,6 +15,8 @@ module.exports = {
     bs_firefox_win: {
       base: 'BrowserStack',
       browser: 'firefox',
+        // TODO: FF 65 compatibility
+      browser_version: '64.0',
       os: 'Windows',
       os_version: '8.1'
     },
