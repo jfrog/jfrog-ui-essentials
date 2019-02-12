@@ -619,18 +619,14 @@ div.ui-grid-cell input.ng-valid {
 }
 
 //special-row class is used in storage summary grid for TOTAL and TRASH CAN rows (RTFACT-9187)
-.ui-grid-row.special-row {
+.special-row {
   font-weight: 600;
+  background-color: white !important;
 
-  &:first-child {
+  & + .ui-grid-row:not(&) {
     border-top: 1px solid @greenFontHeader;
   }
-  &:nth-child(2) {
-    border-top: 1px solid @grayGridHeader;
-    border-bottom: 1px solid @greenFontHeader;
-  }
 
-  background-color: white !important;
   * {
     background-color: transparent !important;
   }
