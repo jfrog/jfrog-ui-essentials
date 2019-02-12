@@ -117,5 +117,26 @@ describe('JfTabsComponent', () => {
         });
         jest.runAllTimers();
         expect(wrapper.vm.currentTab.name).toBe(wrapper.vm.activeTab);
-    })
+    });
+
+    it('Renders jf-tab from slot', () => {
+        jest.useFakeTimers();
+        const wrapper = shallowMount(JfTabsComponent, {
+            propsData,
+            slots: {
+                default: '<jf-tab></jf-tab>'
+            },
+            localVue,
+            mocks: {
+                $route,
+                $router,
+                JFrogEventBus
+            },
+            stubs: {
+                JfTab: '<div class="tab-data">Data for the tab</div>'
+            }
+        });
+        jest.runAllTimers();
+        expect(wrapper.find('.tab-data').exists()).toBe(true);
+    });
 })
