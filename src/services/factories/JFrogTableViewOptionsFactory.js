@@ -1,5 +1,5 @@
 import cellTemplateGenerators from '@/ui_components/jf_table_view/cell_template_generators';
-import { JfDataListModal } from "@/directives/jf_data_list/jf_data_list.show_all_modal.js";
+import { JfDataListModal } from "@/components/JfDataListModal/index.js";
 const COMMON_ACTIONS = {
 	delete: {
 		icon: 'icon icon-clear',
