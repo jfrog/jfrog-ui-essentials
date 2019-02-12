@@ -56,11 +56,6 @@ describe('JFrogModalService', () => {
         let serviceInstance
         beforeEach(function() {
             serviceInstance = new JFrogModal();
-            serviceInstance.$refs = {
-                jfModal: {
-                    show: jest.fn()
-                }
-            }
         });
 
         describe('confirm', function() {
