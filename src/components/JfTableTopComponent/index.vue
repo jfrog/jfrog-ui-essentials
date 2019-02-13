@@ -10,8 +10,11 @@
                 </div>
             </div>
 
-            <div class="batch-actions-wrapper" v-if="tableView.options">
-                <jf-table-view-batch-actions :table-options="tableView.options" :actions="tableView.options.batchActions"></jf-table-view-batch-actions>
+                <div class="batch-actions-wrapper" v-if="tableView.options">
+                <jf-table-view-batch-actions
+                    :table-options="tableView.options"
+                    :actions="tableView.options.batchActions">
+                </jf-table-view-batch-actions>
             </div>
 
             <div class="pagination-controls" v-if="tableView.options">

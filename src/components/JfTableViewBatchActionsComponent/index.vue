@@ -37,7 +37,8 @@
         data() {
             return { MORE_ACTIONS: { '@@MORE_ACTIONS@@': '@@MORE_ACTIONS@@' } };
         },
-        created() {
+        mounted() {
+
             this.$scope.$watch('jfTableViewBatchActions.tableOptions', () => {
                 if (!this.tableOptions)
                     return;
@@ -45,30 +46,21 @@
                     this.$timeout(() => this.updateMoreActions());
                 });
             });
-        },
-        mounted() {
-
-            /* (NG2VUE) This was moved from created() to mounted() */
-            /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
 
             this.$scope.$on('ui-layout.resize', () => {
                 this.$timeout(() => this.calcActionsVisibility());
             });
 
-            /* (NG2VUE) This was moved from created() to mounted() */
-            /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
             $(window).on('resize', () => {
                 this.$timeout(() => this.calcActionsVisibility());
             });
 
-            /* (NG2VUE) This was moved from created() to mounted() */
-            /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
-
             this.$scope.$watch('jfTableViewBatchActions.actions', () => this.$timeout(() => this.calcActionsVisibility()));
 
-            /* (NG2VUE) This was moved from created() to mounted() */
-            /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
-            this.$timeout(() => this.calcActionsVisibility());
+            this.$timeout(() => {
+                this.calcActionsVisibility();
+                this.$forceUpdate();
+            });
         },
         ng1_legacy: { 'controllerAs': 'jfTableViewBatchActions' },
         methods: {
