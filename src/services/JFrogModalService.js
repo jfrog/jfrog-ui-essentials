@@ -22,7 +22,6 @@ export class JFrogModal {
     }
 
     _launch(modalObj, scope, size, cancelable = true, options) {
-
         modalObj.uiEssNoCloseOnBackdrop = cancelable === false;
         modalObj.uiEssNoCloseOnEsc = cancelable === false
         modalObj.uiEssSize = size || 'lg';
@@ -185,8 +184,6 @@ export class JFrogModal {
      */
     confirm(content, title, buttons, checkboxLabel, checkBoxChangeListener) {
         buttons = buttons || {};
-        buttons.confirm = buttons.confirm || 'Confirm';
-        buttons.cancel = buttons.cancel || 'Cancel';
         let options = {
             buttons: buttons,
             content: content,
@@ -202,18 +199,15 @@ export class JFrogModal {
         let wizardHooks = new wizardDefinitionObject.controller();
         delete wizardDefinitionObject.controller;
 
+        wizardDefinitionObject.cancelable = !!(wizardDefinitionObject.cancelable && wizardDefinitionObject.backdropCancelable);
+
         let options = {
             wizardDefinitionObject,
             wizardHooks
         };
         _.extend(options, wizardDefinitionObject.modalOptions);
-
-        if (wizardDefinitionObject.size && typeof wizardDefinitionObject.size === 'string' && wizardDefinitionObject.size != 'lg' && wizardDefinitionObject.size != 'sm' ) {
-            return new Promise(resolve, reject => reject("Invalid size specified. Please pass lg or sm"));
-        }
-
         let modalInstance = this.launchModal('@wizard_modal', null, wizardDefinitionObject.size,
-                            wizardDefinitionObject.cancelable && wizardDefinitionObject.backdropCancelable,
+                            wizardDefinitionObject.cancelable,
                             options);
 
         modalInstance.result.catch(reason => {

@@ -38,11 +38,11 @@
         },
         mixins:[ModalMixins],
         data() {
+            let int_buttons = this.buttons || {};
+            int_buttons.cancel = int_buttons.cancel || "Cancel";
+            int_buttons.confirm = int_buttons.confirm || "Confirm";
             return {
-                int_buttons: this.buttons || {
-                    cancel: "Cancel",
-                    confirm: "Confirm"
-                }
+                int_buttons
             };
         }
 };

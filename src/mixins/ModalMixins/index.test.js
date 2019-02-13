@@ -21,41 +21,33 @@ describe('ModalMixin', () => {
 
     describe('methods', function() {
 
-        let methods = ["close", "$ok", "$close", 'dismiss', '$dismiss']
+        let methods = [ "show", "close", "$ok", "$close", 'dismiss', '$dismiss']
         it(`should expose the following methods ${methods.toString()}`, function() {
             let wrapper = mountComponent();
             for(let method of methods) {
                 expect(typeof wrapper.vm[method]).toBe("function");
             }
         });
-        describe('close', function() {
-            it("close is a backward compatible method which simply delegates to $close", function() {
-                let wrapper = mountComponent();
-                wrapper.vm.$close = jest.fn();
-                wrapper.vm.close();
-                expect(wrapper.vm.$close).toHaveBeenCalledWith(true);
-            })
+        it("close is a backward compatible method which simply delegates to $close", function() {
+            let wrapper = mountComponent();
+            wrapper.vm.$close = jest.fn();
+            wrapper.vm.close();
+            expect(wrapper.vm.$close).toHaveBeenCalledWith(true);
+        })
 
-        });//close
+        it("$ok is a backward compatible method which simply delegates to $close", function() {
+            let wrapper = mountComponent();
+            wrapper.vm.$close = jest.fn();
+            wrapper.vm.$ok();
+            expect(wrapper.vm.$close).toHaveBeenCalledWith(true);
+        })
 
-        describe('$ok', function() {
-            it("$ok is a backward compatible method which simply delegates to $close", function() {
-                let wrapper = mountComponent();
-                wrapper.vm.$close = jest.fn();
-                wrapper.vm.$ok();
-                expect(wrapper.vm.$close).toHaveBeenCalledWith(true);
-            })
-        });//$ok
-
-        describe('dismiss', function() {
-            it("dismiss is a backward compatible method which simply delegates to $dismiss", function() {
-                let wrapper = mountComponent();
-                wrapper.vm.$dismiss = jest.fn();
-                wrapper.vm.dismiss();
-                expect(wrapper.vm.$dismiss).toHaveBeenCalled();
-            })
-        });//dismiss
-
+        it("dismiss is a backward compatible method which simply delegates to $dismiss", function() {
+            let wrapper = mountComponent();
+            wrapper.vm.$dismiss = jest.fn();
+            wrapper.vm.dismiss();
+            expect(wrapper.vm.$dismiss).toHaveBeenCalled();
+        })
 
         describe('$close', function() {
             it('if no params are passed, it should delegate to $dismiss', function() {
