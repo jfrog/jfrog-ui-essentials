@@ -44,7 +44,7 @@
 
 <script>
 import _ from 'lodash'
-import {JfDataListModal} from "@/directives/jf_data_list/jf_data_list.show_all_modal.js";
+import { JfDataListModal } from "@/components/JfDataListModal/index.js";
 export default {
     name: 'jf-datalist-item-component',
     props: ['item', 'index'],

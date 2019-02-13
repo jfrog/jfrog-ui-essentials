@@ -16,6 +16,36 @@ const hack = function(){
         });
 };
 
+const whenElementIsVisible = function (selector, callBack, count = 0) {
+    if ($(selector)[0]) {
+        callBack();
+    } else if (count < 180) {
+        setTimeout(function () {
+            whenElementIsVisible(selector, callBack, ++count);
+        }, 1000)
+    }
+}
+
+const addClassIfNecessary = function (selector, className) {
+    const element = $(selector);
+    if (!element.hasClass(className)) {
+        element.addClass(className);
+    }
+}
+/* This hack causes the modal to become visible immediately.
+The issue can be observed if you comment out the next few lines of code
+and then try to load the show-all modal from the jf-table-view demo page
+(cell template example)
+*/
+const forceModalVisibility = function () {
+    Vue.nextTick().then(() => {
+        whenElementIsVisible("#jfModal", () => {
+            addClassIfNecessary("#jfModal___BV_modal_backdrop_", "show");
+            addClassIfNecessary("#jfModal", "show");
+        })
+    });
+}
+
 export default {
     'jf@inject': [
         '$q',
@@ -53,6 +83,12 @@ export default {
         })
     },
     methods: {
+        show(selector){
+            $('#jfModal___BV_modal_outer_').parent().remove();//Remove any existing modal divs
+            $(this.$mount().$el).appendTo(selector)
+            this.$refs.jfModal.show();
+            forceModalVisibility();//hack
+        },
         close() {//Added for backward compatibility
             this.$close(true)
         },

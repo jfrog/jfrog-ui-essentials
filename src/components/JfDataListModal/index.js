@@ -1,5 +1,5 @@
 export const JfDataListModal = {
-           template: `
+    template: `
             <template slot="modal-header">
                 <button type="button" class="close" data-dismiss="close" aria-label="Close" @click="$dismiss()"><span aria-hidden="_true">×</span></button>
                 <h4 class="modal-title" id="popup-header">{{items.length}} {{colName}} For {{objectName}} '{{rowName}}'</h4>
@@ -26,27 +26,27 @@ export const JfDataListModal = {
 
             <!-- modal-body content -->
     `,
-           'jf@inject': ['JFrogUIUtils'],
-           methods: {
-               filterItem(item) {
-                   if (this.filter.text) {
-                       let escaped = this.JFrogUIUtils.escapeForRegex(
-                           this.filter.text
-                       )
-                       let regex = new RegExp(
-                           '.*' + escaped.split('\\*').join('.*') + '.*',
-                           'i'
-                       )
-                       return regex.test(item.label)
-                   } else {
-                       return true
-                   }
-               },
-               noResults() {
-                   let filteredResults = _.filter(this.items, item => {
-                       return this.filterItem(item)
-                   })
-                   return filteredResults.length === 0
-               },
-           },
-       }
+    'jf@inject': ['JFrogUIUtils'],
+    methods: {
+        filterItem(item) {
+            if (this.filter.text) {
+                let escaped = this.JFrogUIUtils.escapeForRegex(
+                    this.filter.text
+                )
+                let regex = new RegExp(
+                    '.*' + escaped.split('\\*').join('.*') + '.*',
+                    'i'
+                )
+                return regex.test(item.label)
+            } else {
+                return true
+            }
+        },
+        noResults() {
+            let filteredResults = _.filter(this.items, item => {
+                return this.filterItem(item)
+            })
+            return filteredResults.length === 0
+        },
+    },
+}
