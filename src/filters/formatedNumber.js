@@ -3,7 +3,7 @@ export function FormatedNumber() {
     return function(value) {
         var newValue = value;
         if (value >= 1000) {
-            var suffixes = ["", "k", "m", "b","t"];
+            var suffixes = ["", "k", "M", "G","T"];
             var suffixNum = Math.floor( (""+value).length/3 );
             var shortValue = '';
             for (var precision = 2; precision >= 1; precision--) {
