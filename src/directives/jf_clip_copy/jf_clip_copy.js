@@ -49,12 +49,18 @@ class jfClipCopyController {
             this.timeoutPromise = null;
         }
 
-        let objectNameText = this.keepTooltipLetterCase ? this.objectName : this.objectName.charAt(0).toUpperCase() + this.objectName.substr(1);
-        this.tooltipText = `${(this.objectName ? objectNameText : 'Value')} copied to clipboard`;
+        this.tooltipText = this.getTooltipTextAfterCopy();
         this.timeoutPromise = this.$timeout(()=>{
             this.tooltipText = this.origTooltip;
         },this.FEEDBACK_DELAY);
 
+    }
+
+    getTooltipTextAfterCopy() {
+        let defaultText = 'copied to clipboard';
+        if(!this.objectName) return `Value ${defaultText}`;
+	    let objectNameText = this.keepTooltipLetterCase ? this.objectName : this.objectName.charAt(0).toUpperCase() + this.objectName.substr(1);
+	    return `${objectNameText} ${defaultText}`;
     }
 }
 
