@@ -1064,7 +1064,6 @@ export function JFrogTableViewOptions() {
                     } else {
                         this.sortedData = [].concat(sourceData);
                     }
-                    setTimeout(() => this.update());
                 }
                 return this.sortedData;
             }
