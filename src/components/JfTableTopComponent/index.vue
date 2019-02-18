@@ -18,7 +18,7 @@
             </div>
 
             <div class="pagination-controls" v-if="tableView.options">
-                <jf-drag-drop-pagination :pagination-api="tableView.paginationApi" v-if="tableView.paginationApi && tableView.options.paginationVisible">
+                <jf-drag-drop-pagination ref="pagination" :pagination-api="tableView.paginationApi" v-if="tableView.paginationApi && tableView.options.paginationVisible">
                 </jf-drag-drop-pagination>
             </div>
 

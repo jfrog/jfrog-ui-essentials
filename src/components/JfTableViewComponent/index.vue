@@ -11,7 +11,7 @@
                 </a>
             </div>
 
-            <jf-table-top :total-records="getTotalRecords()" :table-view="jfTableView"></jf-table-top>
+            <jf-table-top ref="top" :total-records="getTotalRecords()" :table-view="jfTableView"></jf-table-top>
 
             <div class="columns-customization-wrap" v-if="options && options.columnsCustomization">
                 <div class="columns-customization pull-right">
