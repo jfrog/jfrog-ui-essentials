@@ -51,7 +51,7 @@ class jfTableViewController {
 
         let on_resize = () => {
             this.$timeout(() => {
-	            this.options._normalizeWidths();
+	            if (this.options) this.options._normalizeWidths();
             });
             this._fireDebouncedRowsInView()
         }
@@ -211,7 +211,7 @@ class jfTableViewController {
 
     _fireDebouncedRowsInView() {
 
-        if (!this.options.hasListenersFor('row.in.view')) return;
+        if (!this.options || !this.options.hasListenersFor('row.in.view')) return;
 
         let debounceCall = (debouncedFunc, debounceTime) => {
             if (this.debounceTimeout) this.$timeout.cancel(this.debounceTimeout);
