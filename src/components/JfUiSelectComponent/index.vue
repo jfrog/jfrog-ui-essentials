@@ -48,13 +48,13 @@
 
             };
         },
+        computed:{
+
+        },
         beforeMount() {
             parseInt(this.jfSelectLoadChunks)
             this.displayAttr = this.jfSelectDisplayAttr || null
 
-            if (!this.value) {
-                this.value = [];
-            }
         },
         mounted() {
 
