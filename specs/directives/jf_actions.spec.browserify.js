@@ -85,7 +85,7 @@ describe('unit test: jf_actions', function () {
 			flushAndApply();
 
 			$('.dropdown').trigger("mouseenter");
-			$('li.action-item:first').find('a').click();
+			$('li.action-item:first').find('.action-container').click();
 
 			expect($('#xxx').length).toEqual(1);
 	});
