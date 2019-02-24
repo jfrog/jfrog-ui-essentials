@@ -4,6 +4,7 @@ export function JFTreeApi() {
     class JFTreeApiClass {
         constructor(appScope) {
             _.extend(this, injections);
+            this.dataWasSet = false;
             this.$root = [];
             this.$viewPanes = [];
             this.$openedNodes = [];
@@ -155,7 +156,10 @@ export function JFTreeApi() {
 
         _getQuickFindFlatMatches() {
             let matches = [];
-            this.$viewPanes.forEach(vp => matches = matches.concat(vp.getQuickFindMatches()));
+            this.$viewPanes.forEach(vp => {
+                matches = matches.concat(vp.getQuickFindMatches())
+                if (vp.dirCtrl) vp.dirCtrl.refreshHack.count++;
+            });
             return matches;
         }
 

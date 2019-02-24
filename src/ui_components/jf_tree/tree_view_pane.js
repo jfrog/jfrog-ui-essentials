@@ -109,6 +109,7 @@ export class TreeViewPane {
             this.dirCtrl.virtualScrollIndex = 0;
 
         this.dirCtrl.syncFakeScroller(false);
+        this.dirCtrl.refreshHack.count++;
     }
 
     _setDirectiveController(directiveController) {
@@ -602,45 +603,51 @@ export class TreeViewPane {
         let height = parseFloat(this.itemHeight);
         let canvas = $(`<canvas width="26" height="${ height }"></canvas>`)[0];
         let ctx = canvas.getContext('2d');
-        ctx.strokeStyle = '#aaaaaa';
 
-        ctx.beginPath();
-        ctx.moveTo(13, 0);
-        ctx.lineTo(13, height);
-        ctx.stroke();
-        let verticalLine = canvas.toDataURL('image/png', 1);
+        if (ctx) {
+            ctx.strokeStyle = '#aaaaaa';
 
-        ctx.clearRect(0, 0, 26, height);
-        ctx.beginPath();
-        ctx.moveTo(0, height / 2);
-        ctx.lineTo(26, height / 2);
-        ctx.stroke();
-        let horizontalLine = canvas.toDataURL('image/png', 1);
+            ctx.beginPath();
+            ctx.moveTo(13, 0);
+            ctx.lineTo(13, height);
+            ctx.stroke();
+            let verticalLine = canvas.toDataURL('image/png', 1);
 
-        ctx.clearRect(0, 0, 26, height);
-        ctx.beginPath();
-        ctx.moveTo(13, 0);
-        ctx.lineTo(13, height);
-        ctx.moveTo(13, height / 2);
-        ctx.lineTo(26, height / 2);
-        ctx.stroke();
-        let connectionPoint = canvas.toDataURL('image/png', 1);
+            ctx.clearRect(0, 0, 26, height);
+            ctx.beginPath();
+            ctx.moveTo(0, height / 2);
+            ctx.lineTo(26, height / 2);
+            ctx.stroke();
+            let horizontalLine = canvas.toDataURL('image/png', 1);
 
-        ctx.clearRect(0, 0, 26, height);
-        ctx.beginPath();
-        ctx.moveTo(13, 0);
-        ctx.lineTo(13, height / 2);
-        ctx.lineTo(26, height / 2);
-        ctx.stroke();
-        let lastConnectionPoint = canvas.toDataURL('image/png', 1);
+            ctx.clearRect(0, 0, 26, height);
+            ctx.beginPath();
+            ctx.moveTo(13, 0);
+            ctx.lineTo(13, height);
+            ctx.moveTo(13, height / 2);
+            ctx.lineTo(26, height / 2);
+            ctx.stroke();
+            let connectionPoint = canvas.toDataURL('image/png', 1);
+
+            ctx.clearRect(0, 0, 26, height);
+            ctx.beginPath();
+            ctx.moveTo(13, 0);
+            ctx.lineTo(13, height / 2);
+            ctx.lineTo(26, height / 2);
+            ctx.stroke();
+            let lastConnectionPoint = canvas.toDataURL('image/png', 1);
 
 
-        this.linesBackgrounds = {
-            'vertical-line': verticalLine,
-            'horizontal-line': horizontalLine,
-            'connection-point': connectionPoint,
-            'last-connection-point': lastConnectionPoint
-        };
+            this.linesBackgrounds = {
+                'vertical-line': verticalLine,
+                'horizontal-line': horizontalLine,
+                'connection-point': connectionPoint,
+                'last-connection-point': lastConnectionPoint
+            };
+        }
+        else {
+            this.linesBackgrounds = {};
+        }
     }
 
 }

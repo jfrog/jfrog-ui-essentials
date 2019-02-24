@@ -98,7 +98,7 @@ function setup(operations = () => {}) {
 
 describe('JfTableViewComponent', () => {
 
-    it('should show only empty table placeholder', () => {
+    test('should show only empty table placeholder', () => {
 
         let {elems} = setup((options) => {
             options.setData([]);
@@ -118,7 +118,7 @@ describe('JfTableViewComponent', () => {
 
     });
 
-    it('should show add entity button', () => {
+    test('should show add entity button', () => {
         let {elems} = setup((options) => {
             options.setNewEntityAction(() => {
             });
@@ -127,7 +127,7 @@ describe('JfTableViewComponent', () => {
         expect(elems.newEntityButton.at(0).element.textContent.trim()).toEqual('Add a Test Entity');
     });
 
-    it('should call callback when pressing add entity button', (done) => {
+    test('should call callback when pressing add entity button', (done) => {
         let {elems} = setup((options) => {
             options.setNewEntityAction(() => {
                 done();
@@ -137,7 +137,7 @@ describe('JfTableViewComponent', () => {
         elems.newEntityButton.trigger('click');
     });
 
-    it('should show headers', () => {
+    test('should show headers', () => {
         let {elems} = setup((options) => {
             options.showHeaders();
         })
@@ -146,7 +146,7 @@ describe('JfTableViewComponent', () => {
         expect(elems.customColumns.length).toEqual(0);
     });
 
-    it('should toggle columns visibility', () => {
+    test('should toggle columns visibility', () => {
         delete localStorage.jfTableViewSettings;
 
         let {elems, wrapper, options} = setup((options) => {
@@ -177,7 +177,7 @@ describe('JfTableViewComponent', () => {
 
     });
 
-    it('should show data rows, pagination and filter', () => {
+    test('should show data rows, pagination and filter', () => {
         var testData = [
             {userName: 'Shlomo', email: 'shlomo@lam.biz', subscription: 'Free', number: 4},
             {userName: 'Reuven', email: 'reu@ven.buzz', subscription: 'Premium', number: 1},
@@ -207,7 +207,7 @@ describe('JfTableViewComponent', () => {
         expect(elems.dataCells.at(7).element.textContent.trim()).toEqual((testData[1].number * 3).toString());
     });
 
-    it('should sort when clicking header', () => {
+    test('should sort when clicking header', () => {
         let testData = [
             {userName: 'Shlomo', email: 'shlomo@lam.biz', subscription: 'Free', number: 4},
             {userName: 'Reuven', email: 'reu@ven.buzz', subscription: 'Premium', number: 1},
@@ -251,7 +251,7 @@ describe('JfTableViewComponent', () => {
 
     });
 
-    it('should display action buttons & call action callback when action button clicked', (done) => {
+    test('should display action buttons & call action callback when action button clicked', (done) => {
         let testData = [
             {userName: 'Shlomo', email: 'shlomo@lam.biz', subscription: 'Free', number: 4},
             {userName: 'Reuven', email: 'reu@ven.buzz', subscription: 'Premium', number: 1},
@@ -289,7 +289,7 @@ describe('JfTableViewComponent', () => {
 
     });
 
-    it('should call appScope methods', (done) => {
+    test('should call appScope methods', (done) => {
         let testData = createTestData(76);
 
         let {elems, wrapper} = setup((options) => {
@@ -322,7 +322,7 @@ describe('JfTableViewComponent', () => {
 
     });
 
-    it('should filter results', () => {
+    test('should filter results', () => {
 
         let testData = [
             {userName: 'Shlomo Azar', email: 'shlomo@lam.biz', subscription: 'Free', number: 4},
@@ -375,7 +375,7 @@ describe('JfTableViewComponent', () => {
 
     });
 
-    it('should display pagination status and paginate correctly', () => {
+    test('should display pagination status and paginate correctly', () => {
 
         let testData = createTestData(76);
 
@@ -427,7 +427,7 @@ describe('JfTableViewComponent', () => {
 
     });
 
-    it('should work with external pagination', (done) => {
+    test('should work with external pagination', (done) => {
 
         let testData = createTestData(76);
 
@@ -572,7 +572,7 @@ describe('JfTableViewComponent', () => {
 
     });
 
-    it('should allow single selection', (done) => {
+    test('should allow single selection', (done) => {
         let testData = createTestData(25);
 
         let {elems, wrapper, options} = setup((options) => {
@@ -616,7 +616,7 @@ describe('JfTableViewComponent', () => {
 
     });
 
-    it('should allow multi selection', (done) => {
+    test('should allow multi selection', (done) => {
         let testData = createTestData(25);
 
         let {elems, wrapper, options} = setup((options) => {
@@ -688,7 +688,7 @@ describe('JfTableViewComponent', () => {
 
     });
 
-    it('should support grouping and expanding group headers', () => {
+    test('should support grouping and expanding group headers', () => {
         let testData = createTestData(100);
 
         let {elems, wrapper} = setup((options) => {
@@ -716,7 +716,7 @@ describe('JfTableViewComponent', () => {
 
     })
 
-    it('should support sub rows', (done) => {
+    test('should support sub rows', (done) => {
         let testData = createTestData(15);
         let subRows1 = createTestData(5);
         let subRows2 = createTestData(3);

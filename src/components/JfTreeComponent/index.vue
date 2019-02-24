@@ -34,10 +34,10 @@
 
     export default {
         name: 'jf-tree',
-        props: [
-            'api',
-            'viewPaneName'
-        ],
+        props: {
+            api: {},
+            viewPaneName: { default: 'default'}
+        },
         'jf@inject': [
             '$scope',
             '$element',
@@ -52,7 +52,8 @@
                 noFilterResults: null,
                 virtualScrollIndex: 0,
                 virtScrollDisplacement: 0,
-                currentPage: 0
+                currentPage: 0,
+                refreshHack: {count: 1}
             };
         },
         created() {
@@ -82,7 +83,6 @@
             });
         },
         mounted() {
-            this.viewPaneName = this.viewPaneName || 'default';
 
             $(this.$element).find('.jf-tree').keydown(e => {
                 this.$timeout(() => {
@@ -357,6 +357,7 @@
                 return el.offsetWidth - el.clientWidth;
             },
             refresh() {
+                setTimeout(() => this.refreshHack.count++);
             },
             isEmpty() {
                 return !!(this.api.dataWasSet && !this.viewPane._getRawData().length && !this.viewPane.$freezed);

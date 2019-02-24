@@ -1,6 +1,6 @@
 <template>
 
-    <div class="jf-tree-item" :class="getClasses().concat(getCustomClasses())" @click="onItemClick($event)" @dblclick="onItemDoubleClick()" :style="{height: tree.viewPane.itemHeight, 'line-height': tree.viewPane.itemHeight}">
+    <div :class="refreshHack.count && getClasses().concat(getCustomClasses())" @click="onItemClick($event)" @dblclick="onItemDoubleClick()" :style="{height: tree.viewPane.itemHeight, 'line-height': tree.viewPane.itemHeight}">
 
         <div class="jf-tree-item-container" :style="{height: tree.viewPane.itemHeight, 'line-height': tree.viewPane.itemHeight}">
             <jf-tree-indentation :visible="tree.api.linesVisible" :height="tree.viewPane.itemHeight" :lines-backgrounds="tree.viewPane.linesBackgrounds" :indentation="getIndentation()"></jf-tree-indentation>
@@ -38,7 +38,9 @@
             'AdvancedStringMatch'
         ],
         data() {
-            return {};
+            return {
+                refreshHack: this.tree.refreshHack
+            };
         },
         created() {
             this.asm = this.AdvancedStringMatch;
@@ -140,7 +142,7 @@
                 let elem = $(this.$element).find('.jf-tree-item-content .node-text');
                 if (elem.length) {
                     let text = elem.text();
-//                    elem.unhighlight();
+                    elem.unhighlight();
                     if (text && this.tree.api.quickFindTerm) {
                         let asmResponse = this.asm.match(text, this.tree.api.quickFindTerm);
                         if (asmResponse.matched) {
@@ -152,7 +154,7 @@
                 }
             },
             getClasses() {
-                let classes = [];
+                let classes = ['jf-tree-item'];
                 if (this.isQuickFindMatch())
                     classes.push('quick-find-match');
                 return classes;

@@ -61,6 +61,8 @@ window.$ = $;
 window.moment = moment;
 window.jQuery = $;
 
+require('./misc/jquery.highlight');
+
 require('../node_modules/jf-tooltipster/js/jquery.tooltipster');
 require('billboard.js/dist/billboard.min.css');
 
