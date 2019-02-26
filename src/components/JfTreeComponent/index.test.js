@@ -601,10 +601,11 @@ describe('JfTreeComponent', () => {
         expect(elems.nodeTexts.at(2).text()).toEqual('Sub Item 2');
         expect(elems.nodeTexts.at(3).text()).toEqual('Level 3 Item');
 
-        wrapper.vm.$forceUpdate();
+
         await treeApi.setDrillDownMode();
 
-//        await wait();
+        wrapper.vm.$forceUpdate();
+
         elems = getElements(wrapper);
 
         expect(treeApi.isNodeOpen(simpleTestData[0])).toEqual(true);

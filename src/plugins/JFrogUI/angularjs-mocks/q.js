@@ -7,6 +7,9 @@ export class AngularQServiceMock {
         return {
             defer() {
                 return Q.defer();
+            },
+            when(...args) {
+                return Q.when(...args)
             }
         };
     }
