@@ -85,63 +85,61 @@
         mounted() {
 
             $(this.$element).find('.jf-tree').keydown(e => {
-                this.$timeout(() => {
-                    switch (e.key) {
-                    case 'Down':
-                    case 'ArrowDown':
-                        e.preventDefault();
-                        this.api._onArrowKey(true, this.viewPane);
-                        break;
-                    case 'Up':
-                    case 'ArrowUp':
-                        e.preventDefault();
-                        this.api._onArrowKey(false, this.viewPane);
-                        break;
-                    case 'Enter':
-                        e.preventDefault();
-                        if (this.api.getPreSelectedNode() === this.api.GO_UP_NODE) {
-                            this.api.drillUp();
-                        } else {
-                            this.api.selectPreSelected();
-                            this.api.toggleSelected(true);
-                        }
-                        break;
-                    case 'Right':
-                    case 'ArrowRight': {
-                            e.preventDefault();
-                            let relevant = this.api.getPreSelectedNode() || this.api.getSelectedNode();
-                            if (relevant) {
-                                if (!this.api.isNodeOpen(relevant))
-                                    this.api.openNode(relevant, true);
-                                else {
-                                    if (relevant.$childrenCache && relevant.$childrenCache.length) {
-                                        this.api.preSelectNode(relevant.$childrenCache[0]);
-                                    }
-                                }
-                            }
-                            break;
-                        }
-                    case 'Left':
-                    case 'ArrowLeft': {
-                            e.preventDefault();
-                            let relevant = this.api.getPreSelectedNode() || this.api.getSelectedNode();
-                            if (relevant) {
-                                if (this.api.isNodeOpen(relevant))
-                                    this.api.closeNode(relevant);
-                                else {
-                                    let parent = this.api.getParentNode(relevant);
-                                    if (parent)
-                                        this.api.preSelectNode(parent);
-                                }
-                            }
-                            break;
-                        }
-                    default:
-                        if (!e.ctrlKey && !e.shiftKey && !e.metaKey && e.key.toLowerCase() === String.fromCharCode(e.which).toLowerCase()) {
-                            this.api.fire('keydown', e);
-                        }
+                switch (e.key) {
+                case 'Down':
+                case 'ArrowDown':
+                    e.preventDefault();
+                    this.api._onArrowKey(true, this.viewPane);
+                    break;
+                case 'Up':
+                case 'ArrowUp':
+                    e.preventDefault();
+                    this.api._onArrowKey(false, this.viewPane);
+                    break;
+                case 'Enter':
+                    e.preventDefault();
+                    if (this.api.getPreSelectedNode() === this.api.GO_UP_NODE) {
+                        this.api.drillUp();
+                    } else {
+                        this.api.selectPreSelected();
+                        this.api.toggleSelected(true);
                     }
-                });
+                    break;
+                case 'Right':
+                case 'ArrowRight': {
+                        e.preventDefault();
+                        let relevant = this.api.getPreSelectedNode() || this.api.getSelectedNode();
+                        if (relevant) {
+                            if (!this.api.isNodeOpen(relevant))
+                                this.api.openNode(relevant, true);
+                            else {
+                                if (relevant.$childrenCache && relevant.$childrenCache.length) {
+                                    this.api.preSelectNode(relevant.$childrenCache[0]);
+                                }
+                            }
+                        }
+                        break;
+                    }
+                case 'Left':
+                case 'ArrowLeft': {
+                        e.preventDefault();
+                        let relevant = this.api.getPreSelectedNode() || this.api.getSelectedNode();
+                        if (relevant) {
+                            if (this.api.isNodeOpen(relevant))
+                                this.api.closeNode(relevant);
+                            else {
+                                let parent = this.api.getParentNode(relevant);
+                                if (parent)
+                                    this.api.preSelectNode(parent);
+                            }
+                        }
+                        break;
+                    }
+                default:
+                    if (!e.ctrlKey && !e.shiftKey && !e.metaKey && e.key.toLowerCase() === String.fromCharCode(e.which).toLowerCase()) {
+                        this.api.fire('keydown', e);
+                    }
+                }
             })
     ;
         },

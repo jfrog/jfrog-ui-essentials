@@ -290,7 +290,7 @@ export function JFTreeApi() {
                 return;
 
             if (!this.$preSelectedNode)
-                this.$preSelectedNode = this.$selectedNode;
+                Vue.set(this, '$preSelectedNode', this.$selectedNode);
 
             if (this.quickFindTerm) {
                 if (down)
@@ -652,18 +652,18 @@ export function JFTreeApi() {
         _setSelected(item, fireEvent = true) {
             if (fireEvent && item.data !== this.GO_UP_NODE && this.$selectedNode !== this.GO_UP_NODE) {
                 let entityChange = !this.uniqueIdGetter || item.data && this.$selectedNode && this.uniqueIdGetter(item.data) !== this.uniqueIdGetter(this.$selectedNode) || !this.$selectedNode && item.data || this.$selectedNode && !item.data;
-                this.$selectedNode = item.data;
+                Vue.set(this, '$selectedNode', item.data);
                 if (entityChange) {
                     this.fire('item.selected', item.data);
                 }
             } else {
-                this.$selectedNode = item.data;
+                Vue.set(this, '$selectedNode', item.data);
             }
-            this.$preSelectedNode = null;
+            Vue.set(this, '$preSelectedNode', null);
         }
 
         _preSelect(item) {
-            this.$preSelectedNode = item.data;
+            Vue.set(this, '$preSelectedNode', item.data);
             item.pane.bringItemToView(item);
         }
 
