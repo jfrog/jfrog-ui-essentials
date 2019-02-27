@@ -48,10 +48,10 @@
                 </div>
 
                 <div class="empty-table-placeholder" :style="options.registeredTabularDnd ? options.registeredTabularDnd.emptyTableStyle : {}" v-if="options && options.dataWasSet && !options.getRawData().length && !options.pendingExternalPaging && (!options.externalTotalCount || options.externalTotalCount.total === 0)">
-                    {{options.emptyTableText || 'This table is empty !'}} <a href="" class="jf-link" v-if="options.emptyTableAction && options.emptyTableCallActionText" @click.prevent="options.emptyTableAction()">{{options.emptyTableCallActionText}}</a>
+                    <div v-html="options.emptyTableText || 'This table is empty !'"></div> <a href="" class="jf-link" v-if="options.emptyTableAction && options.emptyTableCallActionText" @click.prevent="options.emptyTableAction()">{{options.emptyTableCallActionText}}</a>
                 </div>
                 <div class="empty-table-placeholder filter-no-results" v-if="options && noFilterResults">
-                    {{options.noFilterResultsText || 'Current filter has no results.'}} <a href="" class="jf-link" v-if="tableFilter" @click.prevent="clearFilter()">Clear filter</a>
+                    <div v-html="options.noFilterResultsText || 'Current filter has no results.'"></div><a href="" class="jf-link" v-if="tableFilter" @click.prevent="clearFilter()">Clear filter</a>
                 </div>
                 <div v-if="options && options.pendingInfiniteScroll" :style="{height: options.rowHeight}" class="loading-more">
                     <div class="spinner-msg-local">
