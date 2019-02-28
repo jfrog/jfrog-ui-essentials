@@ -83,6 +83,12 @@
         &:first-child {
           a:after, a:before {display: none;}
         }
+
+        &.license-required-icon:after,
+        &.license-required:after {
+          top: 50%;
+          transform: translateY(-50%);
+        }
       }
     }
   }

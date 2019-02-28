@@ -5,7 +5,8 @@ export default function jfWizardElement() {
         scope: {
             title: '@',
             isVisibleTab: '&?',
-	        isSelectedTab: '<?'
+	        isSelectedTab: '<?',
+            isDisabledTab: '='
         },
         templateUrl: 'directives/jf_wizard/jf_wizard_element/jf.wizard.element.view.html',
         require: '^jfWizard',
@@ -14,7 +15,8 @@ export default function jfWizardElement() {
             jfWizardCtl.registerTab({
 	            title: attrs.title,
 	            isSelectedTab: $scope.$ctrl.isSelectedTab,
-	            isVisibleTab: $scope.$ctrl.isVisibleTab
+	            isVisibleTab: $scope.$ctrl.isVisibleTab,
+                isDisabledTab: $scope.$ctrl.isDisabledTab
             });
             $scope.$ctrl.jfWizardCtl = jfWizardCtl;
             $scope.$ctrl.title = attrs.title;

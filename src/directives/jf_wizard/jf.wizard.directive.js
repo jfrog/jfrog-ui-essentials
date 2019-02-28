@@ -54,4 +54,7 @@ class jfWizardController {
 	isVisible(tab) {
 		return !tab.isVisibleTab || (typeof tab.isVisibleTab === 'function' && tab.isVisibleTab());
 	}
+	isDisabledTab(tab) {
+		return tab.isDisabledTab;
+	}
 }
