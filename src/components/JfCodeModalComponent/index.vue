@@ -9,7 +9,7 @@
         @hidden="_afterModalHidden"
         >
         <template slot="modal-title">
-            <h4 class="modal-title" id="popup-header" v-html="title"></h4>
+            <div id="popup-header" v-html="title"></div>
         </template>
 
         <p v-if="beforeMessage" v-html="beforeMessage"></p>
