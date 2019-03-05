@@ -1,4 +1,4 @@
-import jfSummaryRowItem from './components/JfSummaryRowItemComponent/index.vue';
+import jfSummaryRowItem from './components/JfSummaryRowComponent/JfSummaryRowItemComponent/index.vue';
 import jfSummaryRow from './components/JfSummaryRowComponent/index.vue';
 import jfDivider from './components/JfDividerComponent/index.vue';
 import jfTreeIndentation from './components/JfTreeIndentationComponent/index.vue';

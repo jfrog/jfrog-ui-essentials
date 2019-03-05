@@ -20,11 +20,11 @@
             };
         },
         mounted() {
-            this.filterOutUnactiveColumns();
+            this.filterOutInactiveColumns();
             this.setColumnsLayout();
         },
         methods: {
-            filterOutUnactiveColumns() {
+            filterOutInactiveColumns() {
                 this.columnsToShow = this.$element.find('.summery-labeled-item');
             },
             setColumnsLayout() {
