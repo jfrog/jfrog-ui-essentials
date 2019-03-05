@@ -76,7 +76,11 @@ export class Ng1AttributeDirectiveAdapter {
             attrs.$observe = (path, cb) => {
                 if (path === _.camelCase(binding.name)) {
                     vnode.context.$watch(!_.isFunction(binding.value) ? binding.expression : binding.value, () => {
-                        cb(_.get(vnode.context, _.trim(binding.expression, '\'')))
+                        if (_.has(vnode.context, _.trim(binding.expression, '\''))) {
+                        }
+                        else if (_.isFunction(binding.value)) {
+                            cb(binding.value())
+                        }
                     })
                 }
                 else {

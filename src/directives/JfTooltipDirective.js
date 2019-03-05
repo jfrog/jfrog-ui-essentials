@@ -17,8 +17,8 @@ function ng1LinkFunction($scope, $element, $attrs) {
         interactive: 'true',
         position: 'bottom',
         theme: 'tooltipster-default bottom',
-        content: () => $attrs.jfTooltip === '' ? null : $attrs.jfTooltip
     });
+    $($element).tooltipster('content', $attrs.jfTooltip === '' ? null : $attrs.jfTooltip);
 
     $attrs.$observe('jfTooltip', val => {
         val = val === '' ? null : val /*this.$sanitize(val)*/;
