@@ -10,7 +10,7 @@
         @hidden="_afterModalHidden"
         >
         <template slot="modal-title">
-            <h3 class="modal-title" id="popup-header">{{title}}</h3>
+            <div id="popup-header">{{title}}</div>
         </template>
 
         <div class="modal-body simple-text" v-if="text">
