@@ -35,25 +35,20 @@
         ],
         data() {
             return {
-                ready: null,
+                ready: false,
                 maxFakeScrollHeight: 1000000,
                 transcludedContent: null,
                 containerHeight: 0,
                 scrollTimeout: undefined,
                 virtualScrollIndex: 0,
                 virtScrollDisplacement: 0,
-                settingScroll: false
+                settingScroll: false,
+                itemHeight: undefined,
+                itemsPerPage: 1
             };
         },
         created() {
 
-            this.virtualScrollIndex = 0;
-            this.virtScrollDisplacement = 0;
-
-            this.itemsPerPage = 1;
-            this.itemHeight = undefined;
-
-            this.ready = false;
             let whenReadyDefer = this.$q.defer();
             this.whenReady = whenReadyDefer.promise;
             this.$scope.$watch('jfVScroll.ready', () => {

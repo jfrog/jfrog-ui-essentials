@@ -2,26 +2,31 @@
 
     <div>
         <div class="jf-tabular-dnd" tabindex="0" :disabled="disabled">
-            <div class="tabular-dnd-table-container available-table" :class="{'no-data': !availableItems.length && (!availableItemsTableOptions || (!availableItemsTableOptions.draggedRow && !availableItemsTableOptions.draggedRows)) && !selectedItems.length && (!selectedItemsTableOptions || (!selectedItemsTableOptions.draggedRow && !selectedItemsTableOptions.draggedRows))}">
+            <div class="tabular-dnd-table-container available-table"
+                 :class="{'no-data': !availableItems.length && (!availableItemsTableOptions || (!availableItemsTableOptions.draggedRow && !availableItemsTableOptions.draggedRows)) && !selectedItems.length && (!selectedItemsTableOptions || (!selectedItemsTableOptions.draggedRow && !selectedItemsTableOptions.draggedRows))}">
                 <jf-table-view :options="availableItemsTableOptions"></jf-table-view>
             </div>
 
             <div class="dnd-actions-wrap">
                 <ul class="dnd-actions">
                     <li>
-                        <span @click="excludeAll()" class="dnd-exclude-all" :disabled="isIncludeListEmpty() || areAllRowsDisabled(selectedItemsTableOptions.getFilteredData()) || disabled">«
+                        <span @click="excludeAll()" class="dnd-exclude-all"
+                              :disabled="isIncludeListEmpty() || areAllRowsDisabled(selectedItemsTableOptions.getFilteredData()) || disabled">«
                     </span>
                     </li>
                     <li>
-                        <span @click="excludeSelected()" class="dnd-exclude-selected" :disabled="!isIncludeListItemSelected() || disabled">‹
+                        <span @click="excludeSelected()" class="dnd-exclude-selected"
+                              :disabled="!isIncludeListItemSelected() || disabled">‹
                     </span>
                     </li>
                     <li>
-                        <span @click="includeSelected()" class="dnd-include-selected" :disabled="!isExcludeListItemSelected() || disabled">›
+                        <span @click="includeSelected()" class="dnd-include-selected"
+                              :disabled="!isExcludeListItemSelected() || disabled">›
                     </span>
                     </li>
                     <li>
-                        <span @click="includeAll()" class="dnd-include-all" :disabled="isExcludeListEmpty() || areAllRowsDisabled(availableItemsTableOptions.getFilteredData()) || disabled">»
+                        <span @click="includeAll()" class="dnd-include-all"
+                              :disabled="isExcludeListEmpty() || areAllRowsDisabled(availableItemsTableOptions.getFilteredData()) || disabled">»
                     </span>
                     </li>
                 </ul>
@@ -64,6 +69,7 @@
                 selectedItemsTableOptions: null,
                 availableItemsColumnsVar: this.availableItemsColumns,
                 selectedItemsColumnsVar: this.selectedItemsColumns,
+                currNumberOfRows: this.numberOfRows || 8
             };
         },
         mounted() {
@@ -76,15 +82,16 @@
 
             this.createTables();
         },
-        ng1_legacy: { 'controllerAs': 'jfTabularDnD' },
+        ng1_legacy: {'controllerAs': 'jfTabularDnD'},
         methods: {
             createAutoColumns() {
                 ['availableItemsColumnsVar', 'selectedItemsColumnsVar'].forEach(columnsArrayName => {
                     let newColumnsArray = _.map(this[columnsArrayName], column => {
-                        if (_.isObject(column))
+                        if (_.isObject(column)) {
                             return column;
-                        else if (_.isString(column))
-                            return { field: column };
+                        } else if (_.isString(column)) {
+                            return {field: column};
+                        }
                     });
                     // Replacing the content of the array without changing the reference to it, to support setting Array literals on templates.
                     this[columnsArrayName].splice(0, this[columnsArrayName].length, ...newColumnsArray);
@@ -94,32 +101,43 @@
 
                 this.createAutoColumns();
 
-                if (!this.numberOfRows)
-                    this.numberOfRows = 8;
-
                 this.availableItemsTableOptions = new this.JFrogTableViewOptions(this.appScope || this.$scope);
                 this.selectedItemsTableOptions = new this.JFrogTableViewOptions(this.appScope || this.$scope);
 
                 let emptyPlaceholdersStyle = {
-                    height: 50 * this.numberOfRows + 'px',
-                    'line-height': 50 * this.numberOfRows + 'px'
+                    height: 50 * this.currNumberOfRows + 'px',
+                    'line-height': 50 * this.currNumberOfRows + 'px'
                 };
 
-                this.availableItemsTableOptions._registerTabularDnd(this, 'available', this.selectedItemsTableOptions, emptyPlaceholdersStyle);
-                this.selectedItemsTableOptions._registerTabularDnd(this, 'selected', this.availableItemsTableOptions, emptyPlaceholdersStyle);
+                this.availableItemsTableOptions._registerTabularDnd(this, 'available', this.selectedItemsTableOptions,
+                    emptyPlaceholdersStyle);
+                this.selectedItemsTableOptions._registerTabularDnd(this, 'selected', this.availableItemsTableOptions,
+                    emptyPlaceholdersStyle);
 
                 let {availableObjectName, selectedObjectName} = this._getObjectNames();
-                this.availableItemsTableOptions.setColumns(this.availableItemsColumnsVar).setSelection(this.availableItemsTableOptions.MULTI_SELECTION).setPaginationMode(this.availableItemsTableOptions.VIRTUAL_SCROLL).showPagination(false).setDraggable().setRowsPerPage(parseInt(this.numberOfRows)).setObjectName(availableObjectName).setRowClassAttr(this.itemClassAttr).disableFilterWhen(() => this.disabled).setEmptyTableText(!this.availableItems.length && !this.selectedItems.length ? 'No data found' : 'Drag row here');
+                this.availableItemsTableOptions.setColumns(this.availableItemsColumnsVar).setSelection(
+                    this.availableItemsTableOptions.MULTI_SELECTION).setPaginationMode(
+                    this.availableItemsTableOptions.VIRTUAL_SCROLL).showPagination(false).setDraggable().setRowsPerPage(
+                    parseInt(this.currNumberOfRows)).setObjectName(availableObjectName).setRowClassAttr(
+                    this.itemClassAttr).disableFilterWhen(() => this.disabled).setEmptyTableText(
+                    !this.availableItems.length && !this.selectedItems.length ? 'No data found' : 'Drag row here');
 
-                this.selectedItemsTableOptions.setColumns(this.selectedItemsColumnsVar).setSelection(this.selectedItemsTableOptions.MULTI_SELECTION).setPaginationMode(this.selectedItemsTableOptions.VIRTUAL_SCROLL).showPagination(false).setDraggable().setRowsPerPage(parseInt(this.numberOfRows)).setObjectName(selectedObjectName).setRowClassAttr(this.itemClassAttr).disableFilterWhen(() => this.disabled).setEmptyTableText('Drag row here');
+                this.selectedItemsTableOptions.setColumns(this.selectedItemsColumnsVar).setSelection(
+                    this.selectedItemsTableOptions.MULTI_SELECTION).setPaginationMode(
+                    this.selectedItemsTableOptions.VIRTUAL_SCROLL).showPagination(false).setDraggable().setRowsPerPage(
+                    parseInt(this.currNumberOfRows)).setObjectName(selectedObjectName).setRowClassAttr(
+                    this.itemClassAttr).disableFilterWhen(() => this.disabled).setEmptyTableText('Drag row here');
 
-                this.$set(this.selectedItemsTableOptions, 'isRowSelectable', this.$set(this.availableItemsTableOptions, 'isRowSelectable', row => this._isItemDraggable(row.entity)));
+                this.$set(this.selectedItemsTableOptions, 'isRowSelectable',
+                    this.$set(this.availableItemsTableOptions, 'isRowSelectable',
+                        row => this._isItemDraggable(row.entity)));
 
 
                 if (!this.disableWholeRowSelection) {
                     let toggleSelection = row => {
-                        if (this.disabled)
+                        if (this.disabled) {
                             return;
+                        }
                         row.entity.$selected = !row.entity.$selected;
                     };
                     this.availableItemsTableOptions.on('row.clicked', toggleSelection);
@@ -135,12 +153,14 @@
                 }));
 
                 this.availableItemsTableOptions.on('selection.change', () => {
-                    if (this.disabled)
+                    if (this.disabled) {
                         this.availableItemsTableOptions.clearSelection();
+                    }
                 });
                 this.selectedItemsTableOptions.on('selection.change', () => {
-                    if (this.disabled)
+                    if (this.disabled) {
                         this.selectedItemsTableOptions.clearSelection();
+                    }
                 });
 
                 this.$scope.$watch('jfTabularDnD.disabled', () => {
@@ -177,40 +197,46 @@
                 };
             },
             areAllRowsDisabled(itemsList) {
-                if (!this.disableWholeRowSelection || !this.itemDraggableAttr || !itemsList)
+                if (!this.disableWholeRowSelection || !this.itemDraggableAttr || !itemsList) {
                     return false;
+                }
                 let filtered = _.filter(itemsList, item => item.hasOwnProperty(`${ this.itemDraggableAttr }`));
                 return filtered.length === itemsList.length;
             },
             isIncludeListEmpty() {
-                if (!this.selectedItemsTableOptions || !this.selectedItemsTableOptions.dirCtrl)
+                if (!this.selectedItemsTableOptions || !this.selectedItemsTableOptions.dirCtrl) {
                     return true;
+                }
                 return !this.selectedItemsTableOptions.getFilteredData().length;
             },
             isExcludeListEmpty() {
-                if (!this.availableItemsTableOptions || !this.availableItemsTableOptions.dirCtrl)
+                if (!this.availableItemsTableOptions || !this.availableItemsTableOptions.dirCtrl) {
                     return true;
+                }
                 return !this.availableItemsTableOptions.getFilteredData().length;
             },
             isIncludeListItemSelected() {
-                if (!this.selectedItemsTableOptions || !this.selectedItemsTableOptions.dirCtrl)
+                if (!this.selectedItemsTableOptions || !this.selectedItemsTableOptions.dirCtrl) {
                     return false;
+                }
                 let selected = this.selectedItemsTableOptions.getSelected();
                 let filtered = this.selectedItemsTableOptions.getFilteredData();
-                selected = _.filter(selected, item => _.includes(filtered, item));
                 return !!selected.length;
+                selected = _.filter(selected, item => _.includes(filtered, item));
             },
             isExcludeListItemSelected() {
-                if (!this.availableItemsTableOptions || !this.availableItemsTableOptions.dirCtrl)
+                if (!this.availableItemsTableOptions || !this.availableItemsTableOptions.dirCtrl) {
                     return false;
+                }
                 let selected = this.availableItemsTableOptions.getSelected();
                 let filtered = this.availableItemsTableOptions.getFilteredData();
                 selected = _.filter(selected, item => _.includes(filtered, item));
                 return !!selected.length;
             },
             excludeAll() {
-                if (this.isIncludeListEmpty() || this.disabled)
+                if (this.isIncludeListEmpty() || this.disabled) {
                     return;
+                }
 
                 let selected = this.selectedItemsTableOptions.getSelected();
                 selected.forEach(s => delete s.$selected);
@@ -223,8 +249,9 @@
                 this._fireOnChange();
             },
             includeAll() {
-                if (this.isExcludeListEmpty() || this.disabled)
+                if (this.isExcludeListEmpty() || this.disabled) {
                     return;
+                }
 
                 let selected = this.availableItemsTableOptions.getSelected();
                 selected.forEach(s => delete s.$selected);
@@ -235,11 +262,11 @@
                 _.remove(this.availableItems, i => _.includes(filtered, i));
                 this._refreshBothTables();
                 this._fireOnChange();
-
             },
             excludeSelected() {
-                if (!this.isIncludeListItemSelected() || this.disabled)
+                if (!this.isIncludeListItemSelected() || this.disabled) {
                     return;
+                }
 
                 let selected = this.selectedItemsTableOptions.getSelected();
                 selected.forEach(s => delete s.$selected);
@@ -253,8 +280,9 @@
                 this._fireOnChange();
             },
             includeSelected() {
-                if (!this.isExcludeListItemSelected() || this.disabled)
+                if (!this.isExcludeListItemSelected() || this.disabled) {
                     return;
+                }
 
                 let selected = this.availableItemsTableOptions.getSelected();
                 selected.forEach(s => delete s.$selected);
@@ -270,14 +298,16 @@
             _getOnlyDraggables(array) {
                 if (this.itemDraggableAttr) {
                     return _.filter(array, item => this._isItemDraggable(item));
-                } else
+                } else {
                     return array;
+                }
             },
             _isItemDraggable(item) {
                 if (this.itemDraggableAttr) {
                     return _.isUndefined(item[this.itemDraggableAttr]) || item[this.itemDraggableAttr];
-                } else
+                } else {
                     return true;
+                }
             },
             _refreshBothTables() {
                 [
@@ -298,7 +328,7 @@
                 this.$emit('on-change');
             }
         }
-    }
+    };
 
 </script>
 
@@ -348,13 +378,13 @@
                         white-space: nowrap;
                         overflow: hidden;
                         font-size: 26px;
-                        border:2px dashed;
+                        border: 2px dashed;
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         &.drop-target-mark {
                             background-color: @grayBGLight;
-                            cursor: grabbing!important;
+                            cursor: grabbing !important;
                         }
                     }
                 }
@@ -409,7 +439,7 @@
                         }
                         &[disabled] {
                             background-color: @grayBGDarker;
-                            cursor:default;
+                            cursor: default;
                         }
                     }
                 }
@@ -418,7 +448,7 @@
         &[disabled="disabled"] {
             opacity: 0.45;
             .jf-table-view .jf-table-view-container .jf-table-row {
-                &:not(.headers):last-child{
+                &:not(.headers):last-child {
                     background: transparent;
                 }
             }
@@ -434,7 +464,7 @@
             .jf-table-view .jf-table-view-container .jf-table-row:not(.drag-mark):not(.headers) {
                 &:last-child {
                     background: transparent;
-                    opacity: 0.45!important;
+                    opacity: 0.45 !important;
                     .jf-table-cell {
                         &, .selection-icon, .selection-button {
                             cursor: default;
@@ -447,9 +477,8 @@
     }
 
     body.grabbing {
-        cursor: grabbing!important;
+        cursor: grabbing !important;
     }
-
 
 
 </style>

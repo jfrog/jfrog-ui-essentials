@@ -692,7 +692,7 @@ export function JFrogTableViewOptions() {
                 if (shouldReCalc && !recurse) {
                     this._normalizeWidths(false, true);
                 } else {
-                    this.ready = true;
+                    Vue.set(this, 'ready', true);
                 }
 
             };

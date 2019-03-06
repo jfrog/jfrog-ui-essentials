@@ -64,7 +64,7 @@
         },
         methods: {
             childrenHeight() {
-                return $(this.$element).children().height();
+                return $(this.$element).children().height() || 50;
             }
         }
     }

@@ -1,9 +1,11 @@
 import {mount, createLocalVue} from '@vue/test-utils';
-import JfTabularDnsComponent from './index.vue';
+import JfTabularDndComponent from './index.vue';
 import {testsBootstrap} from '@/testsBootstrap';
 
 const localVue = createLocalVue();
 testsBootstrap(localVue);
+
+let events = {onChange: () => {}};
 
 function getElements(wrapper) {
     let elems = {};
@@ -27,11 +29,11 @@ function getElements(wrapper) {
 }
 
 
-function setup(propsData = {}, operations = () => {}) {
+function setup(propsData = {}, listeners = {}, operations = () => {}) {
 
     operations();
 
-    const wrapper = mount(JfTreeComponent, {
+    const wrapper = mount(JfTabularDndComponent, {
         localVue,
         propsData: {
             ...propsData
@@ -57,7 +59,7 @@ let columns;
 function setData() {
     availableItems = [];
     selectedItems = [];
-    for (var i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
         availableItems.push({
             name: 'Item ' + (i+1),
             numeric: Math.round(100*Math.random()),
@@ -82,7 +84,58 @@ describe('JfTabularDndComponent', () => {
 
     beforeEach(() => setData());
 
-    test('', () => {})
+    test('should show the element in its initialized state', async () => {
 
+
+        let {elems, wrapper} = setup({
+            availableItems: _.cloneDeep(availableItems),
+            selectedItems: _.cloneDeep(selectedItems),
+            entityName: 'Something',
+            columns
+        }, {
+            onChange: (params) => events.onChange(params),
+        })
+
+        await wait();
+        elems = getElements(wrapper);
+
+        console.dir(wrapper.vm.availableItemsTableOptions.data.length);
+        wrapper.findAll({name: 'jf-vscroll'}).wrappers.forEach(wr => wr.vm.refresh());
+        await wait();
+
+
+        await wait();
+
+        elems = getElements(wrapper);
+
+        expect(elems.container.length).toEqual(1);
+        expect(elems.availableRowElements.length).toEqual(4);
+        expect(elems.selectedRowElements.length).toEqual(0);
+    });
+
+    test('should move all items to the selected table', async () => {
+
+        let {elems, wrapper} = setup({
+            availableItems: _.cloneDeep(availableItems),
+            selectedItems: _.cloneDeep(selectedItems),
+            entityName: 'Something',
+            columns
+        }, {
+            onChange: (params) => events.onChange(params),
+        })
+
+        await wait();
+        elems = getElements(wrapper);
+
+        console.log(wrapper.findAll({name: 'jf-vscroll'}).wrappers.map(wr => wr.vm.ready).join (', '));
+        elems.includeAllButton.at(0).trigger('click');
+
+        await wait();
+        elems = getElements(wrapper);
+
+
+        expect(elems.availableRowElements.length).toEqual(0);
+        expect(elems.selectedRowElements.length).toEqual(4);
+    });
 
 });
