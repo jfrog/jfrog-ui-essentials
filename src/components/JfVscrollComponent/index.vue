@@ -52,8 +52,10 @@
             let whenReadyDefer = this.$q.defer();
             this.whenReady = whenReadyDefer.promise;
             this.$scope.$watch('jfVScroll.ready', () => {
-                if (this.ready)
+                if (this.ready) {
+                    this.refresh();
                     whenReadyDefer.resolve();
+                }
             });
         },
         mounted() {

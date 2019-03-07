@@ -10,6 +10,7 @@ import jfTableCompiledCell from './components/JfTableCompiledCellComponent/index
 import jfTableViewBatchActions from './components/JfTableViewBatchActionsComponent/index.vue';
 import jfTableRow from './components/JfTableRowComponent/index.vue';
 import jfTableView from './components/JfTableViewComponent/index.vue';
+import jfTableViewWrapper from './components/JfTableViewWrapper/index.vue';
 import jfFileDrop from './components/JfFileDropComponent/index.vue';
 import jfGraphs from './components/JfGraphsComponent/index.vue';
 import jfPendingData from './components/JfPendingDataComponent/index.vue';
@@ -109,6 +110,7 @@ let components = [
     jfGraphs,
     jfFileDrop,
     jfTableView,
+    jfTableViewWrapper,
     jfTableRow,
     jfTableViewBatchActions,
     jfTableCompiledCell,

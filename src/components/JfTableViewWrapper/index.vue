@@ -1,0 +1,152 @@
+<template>
+
+    <jf-table-view :options="tableOptions"></jf-table-view>
+
+</template>
+
+<script>
+
+    import JfTableView from '../JfTableViewComponent/index';
+    export default {
+        name: 'jf-table-view-wrapper',
+        components: {JfTableView},
+        props: [
+            'options',
+            'objectName',
+            'tableId',
+            'data',
+            'columns',
+            'actions',
+            'batchActions',
+            'scope',
+            'rowsPerPage',
+            'emptyTableText',
+            'useVirtualScroll',
+            'enableSubrows',
+            'groupBy',
+            'showFilter',
+            'showCounter',
+            'sortable',
+            'disableFilterTooltip'
+        ],
+        'jf@inject': [
+            'JFrogTableViewOptions',
+            '$q',
+            '$scope'
+        ],
+        data() {
+            return {
+                tableOptions: null,
+                columnsSet: false
+            };
+        },
+        watch: {
+            data() {
+                if (this.data && this.data !== this.tableOptions.data) this.setData();
+            },
+            columns() {
+                if (this.columns && !this.columnsSet) {
+                    this.tableOptions.setColumns(this.columns);
+                    this.columnsSet = true;
+                };
+            }
+        },
+        created() {
+            this.tableOptions = this.options || new this.JFrogTableViewOptions(this.scope || this.$scope);
+            if (!_.isUndefined(this.enableSubrows)) {
+                this.tableOptions.enableSubRows();
+            }
+            if (this.tableId) {
+                this.tableOptions.setId(this.tableId);
+            }
+            if (this.objectName) {
+                this.tableOptions.setObjectName(this.objectName);
+            }
+            if (this.rowsPerPage) {
+                if (_.isString(this.rowsPerPage) && this.rowsPerPage !== 'auto') {
+                    console.error('Error: rows-per-page should be a number, or the string \'auto\'.')
+                }
+                this.tableOptions.setRowsPerPage(this.rowsPerPage);
+            }
+            if (this.columns) {
+                if (_.isFunction(this.columns)) {
+                    this.tableOptions.setColumns(this.columns({cellTemplateGenerators: this.JFrogTableViewOptions.cellTemplateGenerators}));
+                }
+                else {
+                    this.tableOptions.setColumns(this.columns);
+                }
+                this.columnsSet = true;
+            }
+            if (this.actions) {
+                this.tableOptions.setActions(this.actions);
+            }
+            if (this.batchActions) {
+                this.tableOptions.setBatchActions(this.batchActions);
+            }
+            if (this.emptyTableText) {
+                this.tableOptions.setEmptyTableText(this.emptyTableText)
+            }
+            if (this.groupBy) {
+                this.tableOptions.groupBy(this.groupBy)
+            }
+            if (!_.isUndefined(this.showFilter)) {
+                this.tableOptions.showFilter(this.showFilter)
+            }
+            if (!_.isUndefined(this.showCounter)) {
+                this.tableOptions.showCounter(this.showCounter)
+            }
+            if (!_.isUndefined(this.sortable)) {
+                this.tableOptions.setSortable(this.sortable)
+            }
+            if (!_.isUndefined(this.useVirtualScroll)) {
+                this.tableOptions.setPaginationMode(this.tableOptions.VIRTUAL_SCROLL)
+            }
+            if (!_.isUndefined(this.disableFilterTooltip)) {
+                this.tableOptions.disableFilterTooltip()
+            }
+
+            if (!this.options) {
+                this.$emit('init', {
+                    tableOptions: this.tableOptions,
+                    cellTemplateGenerators: this.JFrogTableViewOptions.cellTemplateGenerators
+                })
+            }
+            if (this.$listeners['new-entity']) {
+                this.tableOptions.setNewEntityAction(() => {
+                    this.$emit('new-entity');
+                })
+            }
+            if (this.$listeners['row-clicked']) {
+                this.tableOptions.on('row.clicked', (eventData) => {
+                    this.$emit('row-clicked', {eventData});
+                })
+            }
+        },
+        mounted() {
+            if (this.data) this.setData();
+            if (this.$listeners['page-needed']) {
+                this.tableOptions.setPaginationMode(this.tableOptions.EXTERNAL_PAGINATION, pagingData => {
+                    let defer = this.$q.defer();
+                    this.$emit('page-needed', pagingData);
+                    this.pageResolver = defer.resolve;
+                    return defer.promise;
+                });
+            }
+        },
+        methods: {
+            setData() {
+                if (!this.$listeners['page-needed'] && this.tableOptions.paginationMode !== this.tableOptions.EXTERNAL_PAGINATION) {
+                    this.tableOptions.setData(this.data);
+                }
+                else if (this.pageResolver) {
+                    this.pageResolver(this.data);
+                    this.pageResolver = null;
+                }
+            }
+        }
+    }
+</script>
+
+<style scoped lang="less">
+
+</style>
