@@ -1,8 +1,6 @@
 <template>
-    <div>
-        <div v-if="name === currentTabName">
-            <slot></slot>
-        </div>
+    <div v-if="name === currentTabName">
+        <slot></slot>
     </div>
 </template>
 
