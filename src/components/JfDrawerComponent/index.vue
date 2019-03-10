@@ -112,6 +112,7 @@
                 }
             }
             .card {
+                box-shadow:none;
                 border:none;
                 background: transparent;
                 .card-body {
