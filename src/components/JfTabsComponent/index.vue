@@ -34,7 +34,8 @@
             'activeTab'
         ],
         'jf@inject': [
-            'JFrogEventBus'
+            'JFrogEventBus',
+            '$scope'
         ],
         data() {
             return {
@@ -111,7 +112,7 @@
 
             },
             unwatch() {
-                return this.$watch('jfTabs.tabs', (newVal, oldVal) => {
+                return this.$scope.$watch('jfTabs.tabs', (newVal, oldVal) => {
                     this._calculateTabsSize();
                 }, true);
             },

@@ -94,13 +94,18 @@
             </div>
         </div>
 
-        <div class="jf-table-cell actions" :style="{height: rowId === 'headers' ? '' : tableView.options.rowHeight, width: _getRowActionsWidth()}" v-if="rowId !== 'headers' && tableView.options.actions.length && !data.$groupHeader">
+        <div class="jf-table-cell actions"
+             :style="{height: rowId === 'headers' ? '' : tableView.options.rowHeight, width: _getRowActionsWidth()}"
+             v-if="rowId !== 'headers' && tableView.options.actions.length && !data.$groupHeader">
             <div class="jf-table-cell-content">
-                <div class="action-button" :style="{height: tableView.options.rowHeight, width: tableView.options.actionButtonSize + 'px', visibility: !action.visibleWhen || action.visibleWhen(data) ? 'visible' : 'hidden'}" v-if="tableView.options.actions.length <= 3 || tableView.options.isRowActionGroupingDisabled" v-for="action in tableView.options.actions">
-                    <div class="action-icon" @click="fireAction(action);$event.stopPropagation();" v-if="!action.href" v-jf-tooltip.bind="action.tooltip" :class="action.icon"></div>
-                    <a @click.prevent="fireAction(action);$event.stopPropagation();" v-if="action.href" v-jf-tooltip.bind="action.tooltip" :href="action.href(data)">
-                        <div class="action-icon" :class="action.icon"></div>
-                    </a>
+                <div class="action-button"
+                     :style="{height: tableView.options.rowHeight, width: tableView.options.actionButtonSize + 'px', visibility: !action.visibleWhen || action.visibleWhen(data) ? 'visible' : 'hidden'}"
+                     v-if="tableView.options.actions.length <= 3 || tableView.options.isRowActionGroupingDisabled"
+                     v-for="action in tableView.options.actions">
+                    <row-action :action="action"
+                                :data="data"
+                                :on-action-click="fireAction">
+                    </row-action>
                 </div>
                 <div class="action-button" :style="{height: tableView.options.rowHeight, width: tableView.options.actionButtonSize + 'px', visibility: tableView.options.hasVisibleActionsFor(data) ? 'visible' : 'hidden'}" v-if="tableView.options && !tableView.options.isRowActionGroupingDisabled && tableView.options.actions.length > 3 ">
                     <div class="action-icon icon-more" @click="toggleActionsDropdown($event)" v-jf-tooltip.bind="actionsTooltip"></div>
@@ -124,7 +129,11 @@
 </template>
 
 <script>
+    import RowAction from './components/RowAction';
     export default {
+        components: {
+            RowAction
+        },
         name: 'jf-table-row',
         props: [
             'data',

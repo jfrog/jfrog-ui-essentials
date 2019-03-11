@@ -1335,6 +1335,21 @@ export function JFrogTableViewOptions() {
 
         }
 
+        handleListableColumnOverflow(cellId, showAsyncData, externalCountModel ,listModelLength) {
+            let elem = $(this.dirCtrl.$element).find('#' + cellId);
+            let cellItemContent = elem.text().trim();
+            if (cellItemContent.length > 0 && elem[0].scrollWidth > elem.innerWidth() ||
+                (showAsyncData && externalCountModel > listModelLength)) {
+                elem.addClass('overflow');
+                elem.find('.gridcell-showall').show();
+                return true;
+            } else {
+                elem.removeClass('overflow');
+                elem.find('.gridcell-showall').hide();
+                return false;
+            }
+        }
+
         showAll(model, rowName, col) {
             let objectName = _.startCase(this.objectName.indexOf('/') >= 0 ? this.objectName.split('/')[0] : this.objectName);
 

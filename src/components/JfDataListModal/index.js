@@ -37,7 +37,7 @@ export const JfDataListModal = {
                     '.*' + escaped.split('\\*').join('.*') + '.*',
                     'i'
                 )
-                return regex.test(item.label)
+                return (regex.test(item.label) || regex.test(item));
             } else {
                 return true
             }

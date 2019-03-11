@@ -18,13 +18,17 @@ let cellTemplateGenerators = {
 
         testIdPrefix = testIdPrefix ? testIdPrefix + '-' : '';
 
-        displayModel = displayModel ? `{{${ listModel }.length}} | {{${ displayModel }}}` : `{{${ externalCountModel } ? ${ externalCountModel } : ${ listModel }.length}} | {{${ listModel }.join(\', \')}}{{${ externalCountModel } && ${ externalCountModel } > ${ listModel }.length ? ',...' : ''}}`;
+        if(displayModel) {
+            displayModel = `{{${ listModel }.length}} | {{${ displayModel }}}`;
+        } else {
+            displayModel = `{{${ externalCountModel } ? ${ externalCountModel } : ${ listModel }.length}} | {{${ listModel }.join(\', \')}}{{${ externalCountModel } && ${ externalCountModel } > ${ listModel }.length ? ',...' : ''}}`;
+        }
 
         let id = `'${ testIdPrefix }' + row.uid + '_${ nextId }'`;
 
         let template = `<div>
                             <div v-if="${ listModel }.length"
-                                 @mouseenter="table.options.isOverflowing('${ testIdPrefix }'+row.uid+'_'+${ nextId })"   
+                                 @mouseenter="table.options.handleListableColumnOverflow('${ testIdPrefix }'+row.uid+'_'+${ nextId }, ${ showAsyncData }, ${ externalCountModel }, ${ listModel }.length)"   
                                  :class="{'ui-grid-cell-contents no-tooltip': true, 'always-show': ${ showAsyncData } || ${ alwaysShow }}" 
                                  :id="${ id }">
                                 <span class="gridcell-content-text">${ displayModel }</span>
