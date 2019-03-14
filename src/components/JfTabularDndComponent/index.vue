@@ -325,7 +325,7 @@
                 this._fireOnChange();
             },
             _fireOnChange() {
-                this.$emit('on-change');
+                this.$emit('on-change',{available: this.availableItems, selected: this.selectedItems});
             }
         }
     };
