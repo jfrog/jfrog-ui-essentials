@@ -5,3 +5,4 @@ import './directives/JfClearErrorsDirective.js';
 import './directives/JfFakeReadonlyDirective.js';
 import './directives/JfTooltipOnOverflowDirective.js';
 import './directives/JfRevealInputDirective.js';
+import './directives/JfResizeDirective.js';
