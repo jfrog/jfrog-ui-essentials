@@ -59,16 +59,11 @@ const addResizeListener = function (element, fn) {
 
 Vue.directive('jf-resize', {
     inserted: function(el, binding) {
-        addResizeListener(
-            el,
-            _.throttle(() => {
-                if (
-                    binding.value &&
-                    typeof binding.value == 'function'
-                ) {
+        addResizeListener(el,_.debounce(() => {
+                if ( typeof binding.value == 'function') {
                     binding.value()
                 }
-            },2000,{leading:true})
+            },1000,{"leading":false, trailing:true})
         )
     }
 })
