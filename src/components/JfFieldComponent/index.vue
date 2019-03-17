@@ -5,7 +5,7 @@
             <div :class="{'input-label': animated}">
                 <validation-provider :rules="inferredRules" :events="['input', 'focus']" :name="validationDomain">
                     <div slot-scope="{ errors }">
-                        <div :class="{invalid: errors.length}">
+                        <div :class="{invalid: errors.length && !focused}">
                             <slot></slot>
                         </div>
                         <div class="field-validation-error"
@@ -163,7 +163,7 @@
             },
             _onBlur(force) {
                 this.focused = false;
-                this.$timeout(function () {
+                this.$timeout(() => {
                     if (this.formField) {
                         if (force) {
                             this.formField.showErrors = false;
@@ -184,7 +184,7 @@
             },
             _onFocus() {
                 this.focused = true;
-                this.$timeout(function () {
+                this.$timeout(() => {
                     if (this.formField) {
                         this.formField.showErrors = false;
                         this.formField.preventShowErrors = false;
