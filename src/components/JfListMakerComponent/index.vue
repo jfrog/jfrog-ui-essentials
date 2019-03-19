@@ -11,7 +11,7 @@
                 </jf-field>
             </form>
             <div class="list-new-value-button">
-                <i class="icon icon-new" @click="!(ngDisabled || !newValue.length) && addValue()" :disabled="ngDisabled || !newValue.length"></i>
+                <i class="icon icon-plus-sign" @click="!(ngDisabled || !newValue.length) && addValue()" :disabled="ngDisabled || !newValue.length"></i>
             </div>
         </div>
         <div class="jf-validation" v-if="errorMessage">{{errorMessage}}</div>
@@ -176,11 +176,11 @@
     .list-new-value-button {
       margin-top: 0;
       position: absolute;
-      right: 15px;
+      right: 11px;
       bottom: -3px;
 
       i {
-        font-size: 16px;
+        font-size: @jfFontSizeNormal;
       }
     }
     .card .row & , .modal-body & {
@@ -236,7 +236,7 @@
 
           a {
             color: @grayFontLighter;
-            font-size: 16px;
+            font-size: @jfFontSizeLarge;
             position: relative;
             top: 2px;
             &:hover {

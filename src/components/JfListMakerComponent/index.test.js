@@ -21,7 +21,7 @@ const mountComponent = function( props ){
 const SELECTOR_A_LIST_ROW = `.list-maker-row-value`;
 const SELECTOR_ERROR_MESSAGE = `.jf-validation`;
 //Buttons
-const BUTTON_ADD = '.icon.icon-new';
+const BUTTON_ADD = '.icon.icon-plus-sign';
 const BUTTON_DELETE = '.icon-close';
 //Inputs
 const INPUT_TEXT = `input.input-text`;

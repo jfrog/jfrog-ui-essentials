@@ -61,7 +61,7 @@
 
     .jf-help-tooltip {
         position: relative;
-
+        display: inline;
         div {
             display: inline-block;
         }

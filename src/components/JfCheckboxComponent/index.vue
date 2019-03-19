@@ -1,7 +1,7 @@
 <template>
 
-    <div>
-        <label class="jf-checkbox">
+    <div class="jf-checkbox">
+        <label>
             <span></span> {{ text }}
         </label>
     </div>
@@ -34,7 +34,10 @@
     @import "../../assets/stylesheets/variables.less";
 
     .jf-checkbox {
-        font-weight: 400;
+        display: inline;
+        label {
+            font-weight: 400;
+        }
         input[type="checkbox"] {
             position: absolute;
             opacity: 0;
@@ -63,7 +66,7 @@
         }
     }
 
-    jf-checkbox + jf-checkbox {
+    .jf-checkbox + .jf-checkbox {
         margin-left: 20px;
     }
 

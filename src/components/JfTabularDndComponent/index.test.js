@@ -133,7 +133,7 @@ describe('JfTabularDndComponent', () => {
         await wait();
         elems = getElements(wrapper);
 
-
+        // TODO: Fix this
         expect(elems.availableRowElements.length).toEqual(0);
         expect(elems.selectedRowElements.length).toEqual(4);
     });

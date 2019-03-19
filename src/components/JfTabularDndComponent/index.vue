@@ -4,7 +4,9 @@
         <div class="jf-tabular-dnd" tabindex="0" :disabled="disabled">
             <div class="tabular-dnd-table-container available-table"
                  :class="{'no-data': !availableItems.length && (!availableItemsTableOptions || (!availableItemsTableOptions.draggedRow && !availableItemsTableOptions.draggedRows)) && !selectedItems.length && (!selectedItemsTableOptions || (!selectedItemsTableOptions.draggedRow && !selectedItemsTableOptions.draggedRows))}">
-                <jf-table-view :options="availableItemsTableOptions"></jf-table-view>
+                <jf-table-view-wrapper :options="availableItemsTableOptions"
+                                       :data="availableItems">
+                </jf-table-view-wrapper>
             </div>
 
             <div class="dnd-actions-wrap">
@@ -33,7 +35,9 @@
             </div>
 
             <div class="tabular-dnd-table-container selected-table">
-                <jf-table-view :options="selectedItemsTableOptions"></jf-table-view>
+                <jf-table-view-wrapper :options="selectedItemsTableOptions"
+                                       :data="selectedItems">
+                </jf-table-view-wrapper>
             </div>
         </div>
     </div>
@@ -42,8 +46,10 @@
 
 <script>
 
+    import JfTableViewWrapper from '../JfTableViewWrapper/index';
     export default {
         name: 'jf-tabular-dnd',
+        components: {JfTableViewWrapper},
         props: [
             'availableItems',
             'selectedItems',
@@ -72,18 +78,28 @@
                 currNumberOfRows: this.numberOfRows || 8
             };
         },
-        mounted() {
+        created() {
             if (this.columns) {
                 this.availableItemsColumnsVar = _.cloneDeep(this.columns);
                 this.selectedItemsColumnsVar = _.cloneDeep(this.columns);
             }
-            this.availableContainer = $(this.$element).find('.available-table');
-            this.selectedContainer = $(this.$element).find('.selected-table');
 
             this.createTables();
         },
+        watch: {
+            availableItems: val => {
+                return this && this.watchListChanges && this.watchListChanges(val);
+            },
+            selectedItems: val => {
+                return this && this.watchListChanges && this.watchListChanges(val);
+            }
+        },
         ng1_legacy: {'controllerAs': 'jfTabularDnD'},
         methods: {
+            watchListChanges(val) {
+                this._refreshBothTables();
+                this._fireOnChange();
+            },
             createAutoColumns() {
                 ['availableItemsColumnsVar', 'selectedItemsColumnsVar'].forEach(columnsArrayName => {
                     let newColumnsArray = _.map(this[columnsArrayName], column => {
@@ -115,18 +131,29 @@
                     emptyPlaceholdersStyle);
 
                 let {availableObjectName, selectedObjectName} = this._getObjectNames();
-                this.availableItemsTableOptions.setColumns(this.availableItemsColumnsVar).setSelection(
-                    this.availableItemsTableOptions.MULTI_SELECTION).setPaginationMode(
-                    this.availableItemsTableOptions.VIRTUAL_SCROLL).showPagination(false).setDraggable().setRowsPerPage(
-                    parseInt(this.currNumberOfRows)).setObjectName(availableObjectName).setRowClassAttr(
-                    this.itemClassAttr).disableFilterWhen(() => this.disabled).setEmptyTableText(
-                    !this.availableItems.length && !this.selectedItems.length ? 'No data found' : 'Drag row here');
+                this.availableItemsTableOptions
+                    .setColumns(this.availableItemsColumnsVar)
+                    .setSelection(this.availableItemsTableOptions.MULTI_SELECTION)
+                    .setPaginationMode(this.availableItemsTableOptions.VIRTUAL_SCROLL)
+                    .showPagination(false)
+                    .setDraggable()
+                    .setRowsPerPage(parseInt(this.currNumberOfRows))
+                    .setObjectName(availableObjectName)
+                    .setRowClassAttr(this.itemClassAttr)
+                    .disableFilterWhen(() => this.disabled)
+                    .setEmptyTableText(!this.availableItems.length && !this.selectedItems.length ? 'No data found' : 'Drag row here');
 
-                this.selectedItemsTableOptions.setColumns(this.selectedItemsColumnsVar).setSelection(
-                    this.selectedItemsTableOptions.MULTI_SELECTION).setPaginationMode(
-                    this.selectedItemsTableOptions.VIRTUAL_SCROLL).showPagination(false).setDraggable().setRowsPerPage(
-                    parseInt(this.currNumberOfRows)).setObjectName(selectedObjectName).setRowClassAttr(
-                    this.itemClassAttr).disableFilterWhen(() => this.disabled).setEmptyTableText('Drag row here');
+                this.selectedItemsTableOptions
+                    .setColumns(this.selectedItemsColumnsVar)
+                    .setSelection(this.selectedItemsTableOptions.MULTI_SELECTION)
+                    .setPaginationMode(this.selectedItemsTableOptions.VIRTUAL_SCROLL)
+                    .showPagination(false)
+                    .setDraggable()
+                    .setRowsPerPage(parseInt(this.currNumberOfRows))
+                    .setObjectName(selectedObjectName)
+                    .setRowClassAttr(this.itemClassAttr)
+                    .disableFilterWhen(() => this.disabled)
+                    .setEmptyTableText('Drag row here');
 
                 this.$set(this.selectedItemsTableOptions, 'isRowSelectable',
                     this.$set(this.availableItemsTableOptions, 'isRowSelectable',
@@ -169,9 +196,6 @@
                         this.availableItemsTableOptions.clearSelection();
                     }
                 });
-
-                this.availableItemsTableOptions.setData(this.availableItems);
-                this.selectedItemsTableOptions.setData(this.selectedItems);
             },
             _getObjectNames() {
 
