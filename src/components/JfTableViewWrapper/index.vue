@@ -1,6 +1,8 @@
 <template>
 
-    <jf-table-view :options="tableOptions"></jf-table-view>
+    <jf-table-view :options="tableOptions">
+        <slot name="external-filters" slot="external-filters"></slot>
+    </jf-table-view>
 
 </template>
 
@@ -27,7 +29,8 @@
             'showFilter',
             'showCounter',
             'sortable',
-            'disableFilterTooltip'
+            'disableFilterTooltip',
+            'externalSearchFields'
         ],
         'jf@inject': [
             'JFrogTableViewOptions',
@@ -49,6 +52,10 @@
                     this.tableOptions.setColumns(this.columns);
                     this.columnsSet = true;
                 };
+            },
+            externalSearchFields(newVal) {
+                this.tableOptions.externalSearchFields = newVal;
+                this.tableOptions.sendExternalPageRequest();
             }
         },
         created() {
@@ -103,6 +110,9 @@
             }
             if (!_.isUndefined(this.disableFilterTooltip)) {
                 this.tableOptions.disableFilterTooltip()
+            }
+            if (!_.isUndefined(this.externalSearchFields)) {
+                this.tableOptions.externalSearchFields = this.externalSearchFields;
             }
 
             if (!this.options) {

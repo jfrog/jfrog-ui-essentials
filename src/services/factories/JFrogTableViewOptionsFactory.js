@@ -94,6 +94,7 @@ export function JFrogTableViewOptions() {
                 this.noCount = false;
                 this.draggableRows = false;
                 this.rowInViewDebounceTime = 500;
+                this.externalSearchFields = null;
             }
         }
 
@@ -833,8 +834,9 @@ export function JFrogTableViewOptions() {
                 numOfRows: this.rowsPerPage,
                 direction: !this.sortByField ? null : this.revSort ? 'desc' : 'asc',
                 orderBy: this.sortByField,
-                filter: this.dirCtrl.tableFilter || null,
-                filterBy: _.map(this.getFilterables(), 'field')
+                filter: !_.isUndefined(this.externalSearchFields) ? null : (this.dirCtrl.tableFilter || null),
+                filterBy: !_.isUndefined(this.externalSearchFields) ? null : _.map(this.getFilterables(), 'field'),
+                externalSearchFields: this.externalSearchFields || null
             };
             if (_.isEqual(this.lastPaginationParams, paginationParams)) {
                 return;
@@ -854,6 +856,7 @@ export function JFrogTableViewOptions() {
                     })
                     this.pendingExternalPaging = false;
                     this.dirCtrl.noFilterResults = this.externalTotalCount.filtered === 0 && this.externalTotalCount.total > 0;
+                    this.dirCtrl.paginationApi.update();
                 });
             }
         }

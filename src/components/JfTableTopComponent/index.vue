@@ -5,7 +5,10 @@
 
             <div class="counter-and-filter-wrapper">
                 <div v-if="tableView.options && !tableView.options.noCount" class="table-counter">{{ totalRecords }}<span v-if="tableView.getSelectedRecords()"> ({{tableView.getSelectedRecords()}} Selected)</span></div>
-                <div class="jf-table-filter">
+                <div class="external-filters">
+                    <slot name="external-filters"></slot>
+                </div>
+                <div class="jf-table-filter" v-if="!hasExternalFilter">
                     <input class="input-text" v-if="tableView.options && tableView.options.filterVisible" :disabled="isFilterDisabled()" v-model="tableView.tableFilter" ng-model-options="{debounce: { 'default': 500 } }" @input="tableView.onUpdateFilter()" :class="{'no-results': tableView.noFilterResults}" placeholder="Filter" v-init="tableView.initFilter()" v-jf-tooltip.bind="filterTooltip">
                 </div>
             </div>
@@ -41,6 +44,9 @@
         computed: {
             filterTooltip() {
                 return !this.tableView.options.tooltipFilterDisabled ? this.tableView.options.getFilterTooltip() : ''
+            },
+            hasExternalFilter () {
+                return !!this.$slots['external-filters'] || !!this.$scopedSlots['external-filters'];
             }
         },
         ng1_legacy: { 'controllerAs': 'jfTableTop' },

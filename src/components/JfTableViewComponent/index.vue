@@ -11,7 +11,9 @@
                 </a>
             </div>
 
-            <jf-table-top ref="top" :total-records="getTotalRecords()" :table-view="jfTableView"></jf-table-top>
+            <jf-table-top ref="top" :total-records="getTotalRecords()" :table-view="jfTableView">
+                <slot name="external-filters" slot="external-filters"></slot>
+            </jf-table-top>
 
             <div class="columns-customization-wrap" v-if="options && options.columnsCustomization">
                 <div class="columns-customization pull-right">
@@ -553,6 +555,10 @@
 
             .empty-table-placeholder {
                 .empty-placeholder();
+                .empty-placeholder.filter-no-results div {
+                    display: inline;
+                    padding-right: 5px;
+                }
             }
 
             .hover .jf-table-row,
