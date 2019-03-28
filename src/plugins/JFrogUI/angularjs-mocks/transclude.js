@@ -29,7 +29,7 @@ export class AngularTranscludeServiceMock {
                         return component.$slots.default[0];
                     }
                 })
-                cb($(v.$el));
+                cb($(v.$el), v);
             }
         };
 

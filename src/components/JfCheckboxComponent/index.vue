@@ -21,9 +21,13 @@
             return {};
         },
         mounted() {
-            this.$transclude(clone => {
+            this.$transclude((clone, vm) => {
+                this.transcludedVM = vm;
                 this.$element.find('label').prepend(clone);
             });
+        },
+        updated() {
+            if (this.transcludedVM) this.transcludedVM.$forceUpdate();
         },
         ng1_legacy: { 'controllerAs': 'jfCheckbox' },
     }
