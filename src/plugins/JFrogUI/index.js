@@ -34,7 +34,8 @@ const JFrogUI = {
             apiRoot: plugin.$apiRoot,
             get: injectable => this.dim.get(injectable),
             getProvider: injectable => this.dim.getProvider(injectable),
-            injectOn: (obj, ...injections) => this.dim.injectOn(obj, ...injections)
+            injectOn: (obj, ...injections) => this.dim.injectOn(obj, ...injections),
+            router: JFrogUI.dim.router
         }
 
         Vue.prototype.$filterArray = (array, filterBy) => {

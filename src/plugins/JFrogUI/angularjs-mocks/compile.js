@@ -17,6 +17,7 @@ export function AngularCompileServiceMock(element) {
         let options = _.extend({}, _.pick(scope.$comp.$options, 'methods', 'components'), {
             el,
             template,
+            router: $jfrog.router,
             data() {
                 return _.extend({}, props, scope.$comp.$data);
             }
