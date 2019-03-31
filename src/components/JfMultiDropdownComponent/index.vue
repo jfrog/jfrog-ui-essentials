@@ -65,10 +65,10 @@
                     </div>
                 </div>
                 <div class="batch-action-buttons" v-if="items.length">
-                    <button class="btn btn-default pull-right" @click="clearSelection()">
+                    <button type="button" class="btn btn-default pull-right" @click="clearSelection()">
                         {{ singleSelection ? 'Clear selection' : 'Clear All' }}
                     </button>
-                    <button class="btn btn-default pull-right" v-if="!singleSelection" @click="selectAll()">
+                    <button type="button" class="btn btn-default pull-right" v-if="!singleSelection" @click="selectAll()">
                         Select All
                     </button>
                 </div>
@@ -220,7 +220,8 @@
             },
             applyChanges() {
                 Vue.nextTick(() => {
-                    this.$emit('on-change');
+                    let selected = _.filter(this.items, item => item.isSelected);
+                    this.$emit('on-change', selected);
                 })
             },
             selectedItems() {
