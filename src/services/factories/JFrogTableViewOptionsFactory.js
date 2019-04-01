@@ -142,7 +142,13 @@ export function JFrogTableViewOptions() {
 
         setData(data, internalCall) {
 
-            let idPrefix = this.registeredTabularDnd ? this.registeredTabularDnd.dndRole : '';
+            let rnd = Math.floor(10000*Math.random());
+            while (rnd === this.rnd) {
+                rnd = Math.floor(10000*Math.random());
+            }
+            this.rnd = rnd;
+
+            let idPrefix = this.rnd + (this.registeredTabularDnd ? this.registeredTabularDnd.dndRole : '');
             if (this.paginationMode === this.VIRTUAL_SCROLL) {
                 data.forEach((item, i) => {
                     item.$$$id = idPrefix + i +'';

@@ -27,6 +27,7 @@
             'enableSubrows',
             'groupBy',
             'showFilter',
+            'showPagination',
             'showCounter',
             'sortable',
             'disableFilterTooltip',
@@ -98,6 +99,9 @@
             }
             if (!_.isUndefined(this.showFilter)) {
                 this.tableOptions.showFilter(this.showFilter)
+            }
+            if (!_.isUndefined(this.showPagination)) {
+                this.tableOptions.showPagination(this.showPagination)
             }
             if (!_.isUndefined(this.showCounter)) {
                 this.tableOptions.showCounter(this.showCounter)
