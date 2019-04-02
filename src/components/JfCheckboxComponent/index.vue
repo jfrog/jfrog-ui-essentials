@@ -42,9 +42,10 @@
         label {
             font-weight: 400;
         }
-        input[type="checkbox"] {
+        /deep/ input[type="checkbox"] {
             position: absolute;
             opacity: 0;
+            height: 0;
         }
 
         input[type="checkbox"] + span {
