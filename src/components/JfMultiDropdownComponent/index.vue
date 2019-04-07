@@ -172,9 +172,12 @@
                 let handler = e => {
                     let outside = !$(e.target).parents('.jf-multi-dropdown').length || $(e.target).parents('.jf-multi-dropdown')[0] !== $(this.$element).find('.jf-multi-dropdown')[0];
                     if (outside) {
+                        let changed = !!this.opened;
                         this.opened = false;
-                        this.sendOpenStateChange();
-                        this.sortItems();
+                        if (changed) {
+                            this.sendOpenStateChange();
+                            this.sortItems();
+                        }
                     }
                 };
                 $(document).on('click', handler);
