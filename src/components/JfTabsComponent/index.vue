@@ -48,6 +48,11 @@
                 tabwidth: this.tabWidth || "100"
             };
         },
+        watch: {
+            activeTab() {
+                this.currentTab.name = this.activeTab;
+            }
+        },
         created() {
             this.stateParams = this.$route.query;
             this.EVENTS = this.JFrogEventBus.getEventsDefinition();
