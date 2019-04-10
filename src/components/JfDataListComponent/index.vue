@@ -6,7 +6,7 @@
                 <tr class="data-list-item" v-for="(item,index) in formattedItems" :key="index" >
                     <td class="data-list-item-label">{{item.label}}:</td>
                     <td class="data-list-item-value">
-                        <jf-datalist-item-component :item="item" :index="index"></jf-datalist-item-component>
+                        <jf-datalist-item-component :item="item" :index="index" v-on:itemUpdated="updateList"></jf-datalist-item-component>
                     </td>
                 </tr>
             </tbody>
@@ -42,6 +42,10 @@
                         return item.label != '' && !item.isHidden;
                     });
                 }
+            },
+            updateList(updatedItem){
+                this.items[updatedItem.index].value = updatedItem.value;
+                this.$emit("dataListUpdated", this.items);
             }
         }
     }
