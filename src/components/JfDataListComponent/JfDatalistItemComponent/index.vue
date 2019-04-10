@@ -70,10 +70,9 @@ export default {
     methods: {
         deleteTag(tag){
             this.item.value = _.filter(this.item.value, valueItem => valueItem.label !== tag.label)
-            this.$emit('itemUpdated', {
+            this.$emit('item-updated', {
                 index: this.index,
-                label: this.item.label,
-                value: this.item.value,
+                item: this.item,
             })
         },
         htmlIsOverflowing(rowId) {
