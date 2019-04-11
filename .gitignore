@@ -2,8 +2,6 @@
 node_modules
 coverage
 
-dist/*
-.npmrc
 # local env files
 .env.local
 .env.*.local
