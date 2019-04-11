@@ -45,7 +45,7 @@
             },
             updateList(updatedItem){
                 this.items.splice(updatedItem.index, 1, updatedItem.item)
-                this.$emit("dataListUpdated", this.items);
+                this.$emit("data-list-updated", this.items);
             }
         }
     }
