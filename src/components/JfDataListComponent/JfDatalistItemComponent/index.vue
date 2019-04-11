@@ -28,6 +28,7 @@
           v-html="tag.label"
         ></a>
         <span class="gridcell-content-text" v-if="!tag.url" v-html="tag.label"></span>
+        <i v-if="item.delete" @click="deleteTag(tag)" class="icon icon-close delete-tag"></i>
       </div>
       <a
         class="jf-link gridcell-showall"
@@ -67,6 +68,18 @@ export default {
         this.createTemplate()
     },
     methods: {
+        deleteTag(tag){
+            /* 
+                Invoked when user deletes a value in a data list item
+                Updates the value object by removing the entry for the item
+                Emits event with the updated data list item object and the index in the data list
+            */
+            this.item.value = _.filter(this.item.value, valueItem => valueItem.label !== tag.label)
+            this.$emit('item-updated', {
+                index: this.index,
+                item: this.item,
+            })
+        },
         htmlIsOverflowing(rowId) {
             if (!this.$el) return false
             let elem = $(rowId);
@@ -158,6 +171,11 @@ export default {
 
     @import "../../../assets/stylesheets/variables.less";
     @import "../../../assets/stylesheets/mixins.less";
+.delete-tag{
+    font-size: 0.8em;
+    margin-left: 7px;
+    cursor: pointer;
+}
 .show-all-modal {
     .modal-header {
         display: block !important;

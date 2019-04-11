@@ -6,7 +6,7 @@
                 <tr class="data-list-item" v-for="(item,index) in formattedItems" :key="index" >
                     <td class="data-list-item-label">{{item.label}}:</td>
                     <td class="data-list-item-value">
-                        <jf-datalist-item-component :item="item" :index="index"></jf-datalist-item-component>
+                        <jf-datalist-item-component :item="item" :index="index" v-on:item-updated="updateList"></jf-datalist-item-component>
                     </td>
                 </tr>
             </tbody>
@@ -42,6 +42,15 @@
                         return item.label != '' && !item.isHidden;
                     });
                 }
+            },
+            updateList(updatedItem){
+                /* 
+                    Invoked when a value in the data list is deleted
+                    Updates the "items" array with the received data list item
+                    Emits event with the updated data list
+                */
+                this.items.splice(updatedItem.index, 1, updatedItem.item)
+                this.$emit("data-list-updated", this.items);
             }
         }
     }
