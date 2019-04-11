@@ -44,6 +44,11 @@
                 }
             },
             updateList(updatedItem){
+                /* 
+                    Invoked when a value in the data list is deleted
+                    Updates the "items" array with the received data list item
+                    Emits event with the updated data list
+                */
                 this.items.splice(updatedItem.index, 1, updatedItem.item)
                 this.$emit("data-list-updated", this.items);
             }
