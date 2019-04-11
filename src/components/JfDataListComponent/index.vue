@@ -44,7 +44,7 @@
                 }
             },
             updateList(updatedItem){
-                Vue.set(this.items, updatedItem.index, updatedItem.item)
+                this.items.splice(updatedItem.index, 1, updatedItem.item)
                 this.$emit("dataListUpdated", this.items);
             }
         }
