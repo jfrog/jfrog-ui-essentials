@@ -190,7 +190,9 @@
                 let template = row !== 'headers' ? columnObj.cellTemplate : columnObj.headerCellTemplate;
                 let templateElem = $('<div>' + template + '</div>');
                 this._autoAddEllipsisClass(templateElem);
-                rowScope.$comp.$options.components = this.options.appScope.$comp.$options.components;
+                if (this.options.appScope && this.options.appScope.$comp) {
+                    rowScope.$comp.$options.components = this.options.appScope.$comp.$options.components;
+                }
                 this.$compile(templateElem.children()[0])(rowScope);
                 elem.empty();
                 elem.append(templateElem.children()[0]);
