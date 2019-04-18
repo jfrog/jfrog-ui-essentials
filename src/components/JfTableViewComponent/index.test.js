@@ -20,7 +20,7 @@ function getElements(wrapper) {
     elems.filter = wrapper.findAll('.jf-table-filter');
     elems.filterInput = wrapper.findAll('.jf-table-filter > input');
     elems.pagination = wrapper.findAll('.pagination-controls');
-    elems.actionButtons = wrapper.findAll('.action-button > .action-icon');
+    elems.actionButtons = wrapper.findAll('.action-button .action-icon');
     elems.selectionButtons = wrapper.findAll('.selection-icon');
     elems.allRows = wrapper.findAll('.jf-table-row');
     elems.selectedSelectionButtons = wrapper.findAll('.selection-icon.selected');
@@ -438,7 +438,8 @@ describe('JfTableViewComponent', () => {
                 direction: 'asc',
                 orderBy: 'userName',
                 filter: null,
-                filterBy: ['userName', 'email']
+                filterBy: ['userName', 'email'],
+                externalSearchFields: null
             },
             {
                 pageNum: 1,
@@ -446,7 +447,8 @@ describe('JfTableViewComponent', () => {
                 direction: 'asc',
                 orderBy: 'userName',
                 filter: null,
-                filterBy: ['userName', 'email']
+                filterBy: ['userName', 'email'],
+                externalSearchFields: null
             },
             {
                 pageNum: 7,
@@ -454,7 +456,8 @@ describe('JfTableViewComponent', () => {
                 direction: 'asc',
                 orderBy: 'userName',
                 filter: null,
-                filterBy: ['userName', 'email']
+                filterBy: ['userName', 'email'],
+                externalSearchFields: null
             },
             {
                 pageNum: 6,
@@ -462,7 +465,8 @@ describe('JfTableViewComponent', () => {
                 direction: 'asc',
                 orderBy: 'userName',
                 filter: null,
-                filterBy: ['userName', 'email']
+                filterBy: ['userName', 'email'],
+                externalSearchFields: null
             }
         ]
 

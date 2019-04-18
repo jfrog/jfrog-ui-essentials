@@ -840,8 +840,8 @@ export function JFrogTableViewOptions() {
                 numOfRows: this.rowsPerPage,
                 direction: !this.sortByField ? null : this.revSort ? 'desc' : 'asc',
                 orderBy: this.sortByField,
-                filter: !_.isUndefined(this.externalSearchFields) ? null : (this.dirCtrl.tableFilter || null),
-                filterBy: !_.isUndefined(this.externalSearchFields) ? null : _.map(this.getFilterables(), 'field'),
+                filter: !_.isNull(this.externalSearchFields) ? null : (this.dirCtrl.tableFilter || null),
+                filterBy: !_.isNull(this.externalSearchFields) ? null : _.map(this.getFilterables(), 'field'),
                 externalSearchFields: this.externalSearchFields || null
             };
             if (_.isEqual(this.lastPaginationParams, paginationParams)) {
