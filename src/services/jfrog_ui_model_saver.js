@@ -131,7 +131,7 @@ export function JFrogUIModelSaverFactory($timeout, JFrogModal, $q) {
 			let changeDiscovered = false;
 			for (let i = 0; i< forms.length; i++) {
 				let form = forms[i];
-				let controller = angular.element(form).controller(ctrl) || angular.element(form).controller() || angular.element(form).scope().$ctrl;
+				let controller = angular.element(form).controller(ctrl) || angular.element(form).controller() || (angular.element(form).scope() || {}).$ctrl;
 				if (controller && controller._$modelSaver$_ && controller._$modelSaver$_.confirmOnLeave && !controller._$modelSaver$_.isModelSaved()) {
 					changeDiscovered = true;
 
