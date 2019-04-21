@@ -1,7 +1,8 @@
 <template>
 
     <div>
-        <div :class="{'disabled':disabled,'with-text-inputs':textInputs,'borderless':borderless}" class="jf-multi-dropdown">
+        <div :class="{'disabled':disabled,'with-text-inputs':textInputs,'borderless':borderless}"
+             class="jf-multi-dropdown">
 
             <label v-if="label">{{label}} <span v-if="showLabelCounter && selectedItems().length">({{selectedItems().length}})</span></label>
 
@@ -26,7 +27,6 @@
             </span>
 
 
-
                 <!--ACTIONS-->
                 <span class="actions">
                 <i v-if="showSelected && selectedItems().length" @click.stop="unSelectAll()" class="clear-field">×</i>
@@ -36,31 +36,31 @@
             </div>
 
 
-
-
-
-
-
-
             <div v-if="opened" class="drop-down-container">
                 <div class="filter-container" v-if="!noFilter">
                     <form>
                         <jf-field :autofocus="true">
-                            <input type="text" autocomplete="off" name="items-filter" class="input-text" v-model="filterText" :placeholder="filterPlaceholder">
+                            <input type="text" autocomplete="off" name="items-filter" class="input-text"
+                                   v-model="filterText" :placeholder="filterPlaceholder">
                         </jf-field>
                     </form>
                 </div>
                 <div v-if="items.length" class="list-container">
-                    <div class="drop-down-item" v-for="(item, $index) in $filterArray(items, {text: filterText})" :class="{'last-selected': $index === lastSelectedIndex && !filterText, 'disabled': item.disabled}">
+                    <div class="drop-down-item" v-for="(item, $index) in $filterArray(items, {text: filterText})"
+                         :class="{'last-selected': $index === lastSelectedIndex && !filterText, 'disabled': item.disabled}">
                         <label class="jf-checkbox" v-if="!singleSelection">
-                            <input type="checkbox" :disabled="item.disabled" @input="onSelection()" v-model="item.isSelected">
-                            <span></span> <i v-if="item.iconClass" class="item-icon" :class="item.iconClass"></i> {{ item.text }}
+                            <input type="checkbox" :disabled="item.disabled" @change="onSelection()"
+                                   v-model="item.isSelected">
+                            <span></span> <i v-if="item.iconClass" class="item-icon" :class="item.iconClass"></i> {{
+                            item.text }}
                         </label>
                         <jf-radio-button :key="item.isSelected" v-if="singleSelection" :text="item.text">
-                            <input type="radio" v-model="singleSelectionIndex" :value="item.$id" @input="onSingleSelection()" :disabled="item.disabled">
+                            <input type="radio" v-model="singleSelectionIndex" :value="item.$id"
+                                   @input="onSingleSelection()" :disabled="item.disabled">
                         </jf-radio-button>
                         <span class="text-input-wrapper" v-if="textInputs">
-                        <input type="text" name="items-filter" class="input-text" v-model="item.inputTextValue" :placeholder="item.inputPlaceholder || 'Free text'">
+                        <input type="text" name="items-filter" class="input-text" v-model="item.inputTextValue"
+                               :placeholder="item.inputPlaceholder || 'Free text'">
                     </span>
                     </div>
                 </div>
@@ -68,7 +68,8 @@
                     <button type="button" class="btn btn-default pull-right" @click="clearSelection()">
                         {{ singleSelection ? 'Clear selection' : 'Clear All' }}
                     </button>
-                    <button type="button" class="btn btn-default pull-right" v-if="!singleSelection" @click="selectAll()">
+                    <button type="button" class="btn btn-default pull-right" v-if="!singleSelection"
+                            @click="selectAll()">
                         Select All
                     </button>
                 </div>
@@ -163,10 +164,10 @@
 
             this.handleOutsideClick();
         },
-        ng1_legacy: { 'controllerAs': 'jfMultiDropdown' },
+        ng1_legacy: {'controllerAs': 'jfMultiDropdown'},
         methods: {
             sendOpenStateChange() {
-                this.$emit('on-open-state-change', { opened: this.opened });
+                this.$emit('on-open-state-change', {opened: this.opened});
             },
             handleOutsideClick() {
                 let handler = e => {
@@ -225,6 +226,7 @@
                 Vue.nextTick(() => {
                     let selected = _.filter(this.items, item => item.isSelected);
                     this.$emit('on-change', selected);
+                    this.$forceUpdate()
                 })
             },
             selectedItems() {
@@ -289,7 +291,6 @@
 </script>
 
 <style scoped lang="less">
-
 
 
 </style>
