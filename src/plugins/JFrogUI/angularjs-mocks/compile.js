@@ -31,13 +31,11 @@ export function AngularCompileServiceMock(element) {
             parent = parent.$parent;
         }
 
-/*
         let v = new Vue(options);
         v.$mount();
         element.parentNode.replaceChild(v.$el, element);
-*/
 
-        return {$options: options};
+        return v;
 
     }
 }
