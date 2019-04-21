@@ -1,7 +1,10 @@
 <template>
 
     <div>
+        <component v-if="compiledTemplate" :is="compiledTemplate.$options"></component>
+<!--
         <div class="compile-placeholder"></div>
+-->
     </div>
 
 </template>
@@ -24,7 +27,9 @@
             '$timeout'
         ],
         data() {
-            return {};
+            return {
+                compiledTemplate: null
+            };
         },
         computed: {
         },
@@ -40,18 +45,21 @@
 */
 
         },
+        watch: {
+        },
         mounted() {
             let elementScope = this.$scope.$parent.$parent.$new({
                 [this.variable]: this.data,
-                v_index: this.index
+                v_index: () => this.index
             });
-            let target = $(this.$element).find('.compile-placeholder');
+
+//            let target = $(this.$element).find('.compile-placeholder');
 
             this.elementScope = elementScope;
+            let tplE = $(`<div><div>${ this.template }</div></div>`);
+            this.compiledTemplate = this.$compile(tplE.children()[0])(elementScope);
+//              target.replaceWith(tplE.children()[0]);
             Vue.nextTick(() => {
-                let tplE = $(`<div><div>${ this.template }</div></div>`);
-                this.$compile(tplE.children()[0])(elementScope);
-                target.replaceWith(tplE.children()[0]);
                 this.vscroll.setItemHeight(this.childrenHeight());
                 this.$scope.$watch('jfVScrollElement.data', () => {
                     if (!this.elementScope || !this.variable || !this.data) return;

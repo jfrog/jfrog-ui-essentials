@@ -1,14 +1,12 @@
 <template>
 
     <div>
-        <div class="compile-this"></div>
+        <component v-if="compiledTemplate && compiledTemplate.$options" :is="compiledTemplate.$options"></component>
     </div>
 
 </template>
 
 <script>
-    import { IdState } from 'vue-virtual-scroller';
-
     export default {
         name: 'jf-table-compiled-cell',
         props: [
@@ -22,7 +20,9 @@
             '$scope'
         ],
         data() {
-            return {};
+            return {
+                compiledTemplate: null
+            };
         },
         mounted() {
             this.$scope.$watch('compiledCell.tableRow.data', () => {
@@ -32,8 +32,7 @@
         ng1_legacy: { 'controllerAs': 'compiledCell' },
         methods: {
             compile() {
-                let elem = $(this.$element).find(`.compile-this`);
-                this.tableRow.tableView.compileTemplate(elem, this.field, this.rowId);
+                this.compiledTemplate = this.tableRow.tableView.compileTemplate(this.field, this.rowId);
             }
         }
     }

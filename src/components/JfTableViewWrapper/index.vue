@@ -135,6 +135,11 @@
                     this.$emit('row-clicked', {eventData});
                 })
             }
+            if (this.$listeners['external-sort']) {
+                this.tableOptions.useExternalSortCallback((field, dir) => {
+                    this.$emit('external-sort', {field, dir});
+                })
+            }
         },
         mounted() {
             if (this.data) this.setData();

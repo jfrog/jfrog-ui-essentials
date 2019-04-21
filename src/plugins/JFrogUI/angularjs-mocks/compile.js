@@ -8,14 +8,16 @@ export function AngularCompileServiceMock(element) {
         if (controllerAs) {
             template = template.replace(new RegExp(controllerAs.replace(/\$/g, '\\$') + '.' ,'g'), '')
         }
+/*
         let el = document.createElement('div');
         element.parentNode.replaceChild(el, element);
+*/
         let props = {};
         if (scope.$comp.$options.props) Object.keys(scope.$comp.$options.props).forEach(prop => {
             props[prop] = scope.$comp[prop];
         })
         let options = _.extend({}, _.pick(scope.$comp.$options, 'methods', 'components'), {
-            el,
+//            el,
             template,
             router: $jfrog.router,
             data() {
@@ -29,7 +31,13 @@ export function AngularCompileServiceMock(element) {
             parent = parent.$parent;
         }
 
+/*
         let v = new Vue(options);
+        v.$mount();
+        element.parentNode.replaceChild(v.$el, element);
+*/
+
+        return {$options: options};
 
     }
 }

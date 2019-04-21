@@ -85,7 +85,7 @@
                 </div>
             </div>
             <div class="jf-table-cell-content" :class="{'drag-mark': $index === 0 && rowId !== 'headers' && tableView.options.draggableRows}" :style="{'text-align': col.textAlign || 'auto'}" v-if="(col.cellTemplate && rowId !== 'headers') || (col.headerCellTemplate && rowId === 'headers')">
-                <jf-table-compiled-cell :field="col.field" :row-id="rowId" :table-row="jfTableRow">
+                <jf-table-compiled-cell :key="rowId" :field="col.field" :row-id="rowId" :table-row="jfTableRow">
                 </jf-table-compiled-cell>
                 <i v-if="rowId === 'headers' && tableView.options.sortable && (tableView.options.sortByField === col.field || tableView.options.showSortingArrowsAlways) && col.sortable && tableView.options.getRawData().length && (col.header || col.headerCellTemplate)" class="icon sorting-icon" :class="{'icon-down-arrow': tableView.options.revSort && tableView.options.sortByField === col.field, 'icon-up-arrow': !tableView.options.revSort || (tableView.options.sortByField !== col.field && tableView.options.showSortingArrowsAlways), active: tableView.options.sortByField === col.field}"></i>
                 <div class="group-button-wrapper" v-if="rowId === 'headers' && col.allowGrouping">

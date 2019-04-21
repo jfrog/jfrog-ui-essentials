@@ -41,7 +41,7 @@
 -->
 
                     <jf-vscroll with-each="entity" :in="options.getPrePagedData()" :api="vsApi">
-                        <jf-table-row v-pre :table-view="jfTableView" :row-id="v_index" :data="entity"></jf-table-row>
+                        <jf-table-row v-pre :table-view="jfTableView" :row-id="v_index()" :data="entity"></jf-table-row>
                     </jf-vscroll>
                 </div>
 
@@ -147,7 +147,7 @@
                     return parseFloat(this.options.rowHeight) * Math.min(this.options.rowsPerPage, this.options.getPrePagedData().length) + 2;
                 }
             },
-            compileTemplate(elem, field, rowId) {
+            compileTemplate(field, rowId) {
                 let column = field;
                 let row = rowId;
                 let columnObj = _.find(this.options.columns, { field: column });
@@ -182,20 +182,25 @@
 
                     this.cellScopes.push(rowScope);
 
+                    let template = row !== 'headers' ? columnObj.cellTemplate : columnObj.headerCellTemplate;
+                    let templateElem = $('<div>' + template + '</div>');
+                    this._autoAddEllipsisClass(templateElem);
+                    if (this.options.appScope && this.options.appScope.$comp) {
+                        rowScope.$comp.$options.components = this.options.appScope.$comp.$options.components;
+                    }
+                    rowScope.$compiledComponent = this.$compile(templateElem.children()[0])(rowScope);
+                    return rowScope.$compiledComponent;
+
                 } else {
                     existingScope.row.uid = rowId;
                     rowScope = existingScope;
+                    return rowScope.$compiledComponent;
                 }
 
-                let template = row !== 'headers' ? columnObj.cellTemplate : columnObj.headerCellTemplate;
-                let templateElem = $('<div>' + template + '</div>');
-                this._autoAddEllipsisClass(templateElem);
-                if (this.options.appScope && this.options.appScope.$comp) {
-                    rowScope.$comp.$options.components = this.options.appScope.$comp.$options.components;
-                }
-                this.$compile(templateElem.children()[0])(rowScope);
+/*
                 elem.empty();
                 elem.append(templateElem.children()[0]);
+*/
             },
             _autoAddEllipsisClass(templateRoot) {
                 let allText = templateRoot.text();
