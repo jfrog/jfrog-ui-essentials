@@ -1,17 +1,30 @@
 <template>
     <div class="jf-list-maker" >
         <div class="list-new-value" :class="{dropdown: predefinedValues}" v-if="!hideAddNewFields">
-            <form>
+            <div>
                 <jf-field validations="common" :dont-push-down-errors="true" :delayed-init="true">
                     <label v-if="label">{{label}}</label>
                     <jf-help-tooltip v-if="helpTooltip" :html="helpTooltip"></jf-help-tooltip>
-                    <input v-if="!predefinedValues" :type="inputType || 'text'" class="input-text" :placeholder="derivedPlaceHolder" v-model="newValue" :id="'newValueField-' + int_listId" name="newValueField" jf-enter-press="addValue()" @input="errorMessage=null" :disabled="ngDisabled">
-                    <jf-ui-select v-if="predefinedValues" v-model="newValue" :jf-select-placeholder="derivedPlaceHolder" :jf-select-disabled="ngDisabled" :jf-select-options="predefinedValues"></jf-ui-select>
-
+                    <input v-if="!predefinedValues"
+                           :type="inputType || 'text'"
+                           class="input-text"
+                           :placeholder="derivedPlaceHolder"
+                           v-model="newValue"
+                           :id="'newValueField-' + int_listId"
+                           name="newValueField"
+                           @keyup.enter.prevent="addValue"
+                           @input="errorMessage=null"
+                           :disabled="disabled">
+                    <jf-ui-select v-if="predefinedValues"
+                                  v-model="newValue"
+                                  :jf-select-placeholder="derivedPlaceHolder"
+                                  :jf-select-disabled="disabled"
+                                  :jf-select-options="predefinedValues">
+                    </jf-ui-select>
                 </jf-field>
-            </form>
+            </div>
             <div class="list-new-value-button">
-                <i class="icon icon-plus-sign" @click="!(ngDisabled || !newValue.length) && addValue()" :disabled="ngDisabled || !newValue.length"></i>
+                <i class="icon icon-plus-sign" @click="addValue" :disabled="addingNotAllowed"></i>
             </div>
         </div>
         <div class="jf-validation" v-if="errorMessage">{{errorMessage}}</div>
@@ -20,7 +33,12 @@
             <div class="list-maker-list-row" v-for="(value, index) in int_values" :key="index">
                 <div class="list-maker-row-value" v-jf-tooltip-on-overflow>{{value}}</div>
                 <div class="list-maker-list-buttons">
-                    <a href="" class="icon icon-close" @click.prevent="removeValue(index)" v-if="int_values.length > int_minLength" :disabled="ngDisabled"></a>
+                    <a href=""
+                       class="icon icon-close"
+                       @click.prevent="removeValue(index)"
+                       v-if="int_values.length > int_minLength && !disabled"
+                       :disabled="disabled">
+                    </a>
                 </div>
             </div>
         </div>
@@ -35,7 +53,7 @@
             'label',
             'helpTooltip',
             'objectName',
-            'ngDisabled',
+            'disabled',
             'noSort',
             'minLength',
             'inputType',
@@ -67,6 +85,9 @@
             }
         },
         computed:{
+            addingNotAllowed() {
+                return this.disabled || !this.newValue || !this.newValue.length;
+            },
             int_values: function() {
                 let int_values = this.value || [];
                 this.int_noSort = this.noSort || this.$attrs.hasOwnProperty('noSort');
@@ -84,6 +105,9 @@
         },
         methods: {
             addValue() {
+                if (this.addingNotAllowed) {
+                    return;
+                }
                 this.errorMessage = null;
 
                 if (_.isEmpty(this.newValue.trim())) {

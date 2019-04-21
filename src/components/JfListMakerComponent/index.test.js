@@ -45,10 +45,6 @@ describe('JfListMakerComponent', () => {
             wrapper = mountComponent();
         });
 
-        it('should render a form', () => {
-            expect(wrapper.contains('form')).toBe(true);
-        });
-
         it('should render a + button to add new elements to the list', () => {
             expect(wrapper.contains(BUTTON_ADD)).toBe(true);
         })
@@ -63,9 +59,9 @@ describe('JfListMakerComponent', () => {
                 wrapper.find(BUTTON_ADD).attributes('disabled')
             ).not.toBe('disabled')
         })
-        it('If ng-disabled prop is passed, the + button is disabled even if content is typed in', () => {
+        it('If "disabled" prop is passed, the + button is disabled even if content is typed in', () => {
             wrapper = mountComponent({
-                "ng-disabled": true,
+                "disabled": true,
             });
             wrapper.find(INPUT_TEXT).setValue("a");
             expect(wrapper.find(BUTTON_ADD).attributes("disabled")).toBe("disabled")
