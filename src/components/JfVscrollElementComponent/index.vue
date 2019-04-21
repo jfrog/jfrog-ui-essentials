@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <component v-if="compiledTemplate" :is="compiledTemplate.$options"></component>
+        <component v-if="compiledTemplate" :is="compiledTemplate"></component>
 <!--
         <div class="compile-placeholder"></div>
 -->
@@ -22,7 +22,7 @@
         ],
         'jf@inject': [
             '$scope',
-            '$compile',
+            '$compileComp',
             '$element',
             '$timeout'
         ],
@@ -53,12 +53,8 @@
                 v_index: () => this.index
             });
 
-//            let target = $(this.$element).find('.compile-placeholder');
-
             this.elementScope = elementScope;
-            let tplE = $(`<div><div>${ this.template }</div></div>`);
-            this.compiledTemplate = this.$compile(tplE.children()[0])(elementScope);
-//              target.replaceWith(tplE.children()[0]);
+            this.compiledTemplate = this.$compileComp(this.template, elementScope);
             Vue.nextTick(() => {
                 this.vscroll.setItemHeight(this.childrenHeight());
                 this.$scope.$watch('jfVScrollElement.data', () => {

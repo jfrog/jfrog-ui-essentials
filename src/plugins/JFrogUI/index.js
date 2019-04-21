@@ -1,3 +1,4 @@
+import {AngularCompileCompServiceMock} from './angularjs-mocks/compileComp';
 import {AngularFilterServiceMock} from './angularjs-mocks/filter';
 import {AngularSanitizeServiceMock} from './angularjs-mocks/sanitize';
 import {AngularHttpProviderMock} from './angularjs-mocks/http';
@@ -275,6 +276,7 @@ const JFrogUI = {
 
             plugin.dim.registerFunction('$resource', AngularResourceServiceMock);
             plugin.dim.registerFunction('$compile', AngularCompileServiceMock);
+            plugin.dim.registerFunction('$compileComp', AngularCompileCompServiceMock);
             plugin.dim.registerFunction('$timeout', AngularTimeoutServiceMock);
             plugin.dim.registerFunction('$interval', AngularIntervalServiceMock);
             plugin.dim.registerFunction('$filter', AngularFilterServiceMock);

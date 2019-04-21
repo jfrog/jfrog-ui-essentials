@@ -81,7 +81,7 @@
             '$scope',
             '$element',
             '$timeout',
-            '$compile',
+            '$compileComp',
             '$rootScope',
             'JFrogEventBus'
         ],
@@ -126,7 +126,7 @@
 
             $(window).on('resize', on_resize);
             this.$scope.$on('$destroy', () => {
-                this.cellScopes.forEach(s => s.$destroy());
+//                this.cellScopes.forEach(s => s.$destroy());
                 $(window).off('resize', on_resize);
             });
         },
@@ -166,7 +166,7 @@
 
                 let rowScope;
                 if (!existingScope) {
-                    rowScope = this.$rootScope.$new({
+                    rowScope = {
                         row: {
                             entity: rowObj,
                             uid: rowId
@@ -178,17 +178,20 @@
                         grid: { appScope: this.options.appScope },
                         //Backward compatibility with old grid
                         table: { options: this.options }
-                    });
+                    };
 
                     this.cellScopes.push(rowScope);
 
                     let template = row !== 'headers' ? columnObj.cellTemplate : columnObj.headerCellTemplate;
                     let templateElem = $('<div>' + template + '</div>');
                     this._autoAddEllipsisClass(templateElem);
+                    template = templateElem.html();
+/*
                     if (this.options.appScope && this.options.appScope.$comp) {
                         rowScope.$comp.$options.components = this.options.appScope.$comp.$options.components;
                     }
-                    rowScope.$compiledComponent = this.$compile(templateElem.children()[0])(rowScope);
+*/
+                    rowScope.$compiledComponent = this.$compileComp(template, rowScope, this.options.appScope && this.options.appScope.$comp);
                     return rowScope.$compiledComponent;
 
                 } else {
@@ -240,7 +243,7 @@
                 let unusedScopes = _.filter(this.cellScopes, scope => pageData.indexOf(scope.row.entity) === -1);
                 unusedScopes.forEach(s => {
                     this.cellScopes.splice(this.cellScopes.indexOf(s), 1);
-                    s.$destroy();
+//                    s.$destroy();
                 });
                 if (this.paginationApi && updatePagination)
                     this.paginationApi.update();

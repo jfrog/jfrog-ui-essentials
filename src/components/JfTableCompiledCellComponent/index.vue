@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <component v-if="compiledTemplate && compiledTemplate.$options" :is="compiledTemplate.$options"></component>
+        <component v-if="compiledTemplate" :is="compiledTemplate"></component>
     </div>
 
 </template>
