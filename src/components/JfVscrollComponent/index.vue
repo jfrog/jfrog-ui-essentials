@@ -9,7 +9,7 @@
                 </div>
                 <div class="h-scroll-wrapper" :style="{height: (getPageHeight() + getTranslate()) + 'px'}" @mousewheel="onMouseWheel">
                     <div class="h-scroll-content">
-                        <jf-vscroll-element :key="item.$$$id" v-for="(item, $index) in getPage()" :vscroll="jfVScroll" :data="item" :index="$index" :template="childComponent" :variable="withEach"></jf-vscroll-element>
+                        <jf-vscroll-element v-for="(item, $index) in getPage()" :vscroll="jfVScroll" :data="item" :index="$index" :template="childComponent" :variable="withEach"></jf-vscroll-element>
                     </div>
                 </div>
             </div>
