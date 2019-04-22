@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <component v-if="compiledTemplate" :is="compiledTemplate"></component>
+        <component v-if="compiledProps" :is="template" v-bind="compiledProps"></component>
 <!--
         <div class="compile-placeholder"></div>
 -->
@@ -28,7 +28,7 @@
         ],
         data() {
             return {
-                compiledTemplate: null
+                compiledProps: null
             };
         },
         computed: {
@@ -48,18 +48,18 @@
         watch: {
         },
         mounted() {
-            let elementScope = this.$scope.$parent.$parent.$new({
+            let elementScope = {
                 [this.variable]: this.data,
                 v_index: () => this.index
-            });
+            };
 
-            this.elementScope = elementScope;
-            this.compiledTemplate = this.$compileComp(this.template, elementScope);
+//            this.compiledTemplate = this.$compileComp(this.template, {});
+            this.compiledProps = elementScope;
             Vue.nextTick(() => {
                 this.vscroll.setItemHeight(this.childrenHeight());
                 this.$scope.$watch('jfVScrollElement.data', () => {
-                    if (!this.elementScope || !this.variable || !this.data) return;
-                    this.elementScope[this.variable] = this.data;
+                    if (!this.compiledProps || !this.variable || !this.data) return;
+                    this.compiledProps[this.variable] = this.data;
                 });
             })
         },

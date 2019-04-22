@@ -96,12 +96,13 @@
                 tableFilter: null,
                 currentPage: 0,
                 allSelected: false,
-                jfTableView: this
+                jfTableView: this,
+                cellScopes: [],
+                cellComponents: []
             };
         },
         created() {
             this.EVENTS = this.JFrogEventBus.getEventsDefinition();
-            this.cellScopes = [];
 
             this.$scope.$watch('jfTableView.options', options => {
                 if (this.options && !this.options.dirCtrl) {
@@ -148,10 +149,8 @@
                 }
             },
             compileTemplate(field, rowId) {
-                let column = field;
-                let row = rowId;
-                let columnObj = _.find(this.options.columns, { field: column });
-                let rowObj = row !== 'headers' ? this.options.getPageData()[row] : this.options.headersRow;
+                let columnObj = _.find(this.options.columns, { field });
+                let rowObj = rowId !== 'headers' ? this.options.getPageData()[rowId] : this.options.headersRow;
 
                 if (!rowObj)
                     return;
@@ -162,7 +161,7 @@
                     rowObj = groupRowObj;
                 }
 
-                let existingScope = _.find(this.cellScopes, s => s.row.entity === rowObj && s.col === columnObj);
+                let existingScope = _.find(this.cellScopes, s => /*s.row.entity === rowObj &&*/ s.col.field === columnObj.field);
 
                 let rowScope;
                 if (!existingScope) {
@@ -182,7 +181,7 @@
 
                     this.cellScopes.push(rowScope);
 
-                    let template = row !== 'headers' ? columnObj.cellTemplate : columnObj.headerCellTemplate;
+                    let template = rowId !== 'headers' ? columnObj.cellTemplate : columnObj.headerCellTemplate;
                     let templateElem = $('<div>' + template + '</div>');
                     this._autoAddEllipsisClass(templateElem);
                     template = templateElem.html();
@@ -191,19 +190,22 @@
                         rowScope.$comp.$options.components = this.options.appScope.$comp.$options.components;
                     }
 */
-                    rowScope.$compiledComponent = this.$compileComp(template, rowScope, this.options.appScope && this.options.appScope.$comp);
-                    return rowScope.$compiledComponent;
+
+                    let compOptions = this.$compileComp(template, {}, this.options.appScope && this.options.appScope.$comp);
+
+                    compOptions.props = Object.keys(rowScope);
+
+                    this.cellComponents.push(compOptions)
+                    return {comp: compOptions, props: rowScope};
 
                 } else {
-                    existingScope.row.uid = rowId;
-                    rowScope = existingScope;
-                    return rowScope.$compiledComponent;
+                    let index = this.cellScopes.indexOf(existingScope);
+                    let comp = this.cellComponents[index];
+                    let scope = {...existingScope, row: {}}
+                    scope.row.entity = rowObj;
+                    scope.row.uid = rowId;
+                    return {comp, props: scope};
                 }
-
-/*
-                elem.empty();
-                elem.append(templateElem.children()[0]);
-*/
             },
             _autoAddEllipsisClass(templateRoot) {
                 let allText = templateRoot.text();
@@ -240,11 +242,13 @@
             },
             refresh(updatePagination = true) {
                 let pageData = this.options.getPageData();
+/*
                 let unusedScopes = _.filter(this.cellScopes, scope => pageData.indexOf(scope.row.entity) === -1);
                 unusedScopes.forEach(s => {
                     this.cellScopes.splice(this.cellScopes.indexOf(s), 1);
 //                    s.$destroy();
                 });
+*/
                 if (this.paginationApi && updatePagination)
                     this.paginationApi.update();
 

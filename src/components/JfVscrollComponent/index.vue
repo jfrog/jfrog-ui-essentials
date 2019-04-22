@@ -9,7 +9,7 @@
                 </div>
                 <div class="h-scroll-wrapper" :style="{height: (getPageHeight() + getTranslate()) + 'px'}" @mousewheel="onMouseWheel">
                     <div class="h-scroll-content">
-                        <jf-vscroll-element :key="item.$$$id" v-for="(item, $index) in getPage()" :vscroll="jfVScroll" :data="item" :index="$index" :template="transcludedContent" :variable="withEach"></jf-vscroll-element>
+                        <jf-vscroll-element :key="item.$$$id" v-for="(item, $index) in getPage()" :vscroll="jfVScroll" :data="item" :index="$index" :template="childComponent" :variable="withEach"></jf-vscroll-element>
                     </div>
                 </div>
             </div>
@@ -30,6 +30,7 @@
         'jf@inject': [
             '$scope',
             '$timeout',
+            '$compileComp',
             '$element',
             '$q'
         ],
@@ -44,7 +45,8 @@
                 virtScrollDisplacement: 0,
                 settingScroll: false,
                 itemHeight: undefined,
-                itemsPerPage: 1
+                itemsPerPage: 1,
+                childComponent: null
             };
         },
         created() {
@@ -59,6 +61,8 @@
             });
         },
         mounted() {
+            this.childComponent = this.$compileComp(this.transcludedContent, this.$parent.$data, this.$parent);
+            this.childComponent.props = [this.withEach, 'v_index'];
             this.containerHeight = $(this.$element).parent().height();
             this._setAutoItemsPerPage();
             this._initApi();
@@ -86,6 +90,7 @@
                 return $(this.$element).parent().height();
             }
 */
+
         },
         methods: {
             setItemHeight(itemHeight) {

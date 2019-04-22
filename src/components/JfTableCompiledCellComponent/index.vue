@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <component v-if="compiledTemplate" :is="compiledTemplate"></component>
+        <component v-if="compiledTemplate" :is="compiledTemplate.comp" v-bind="compiledTemplate.props"></component>
     </div>
 
 </template>
@@ -32,7 +32,12 @@
         ng1_legacy: { 'controllerAs': 'compiledCell' },
         methods: {
             compile() {
-                this.compiledTemplate = this.tableRow.tableView.compileTemplate(this.field, this.rowId);
+                if (!this.compiledTemplate) {
+                    this.compiledTemplate = this.tableRow.tableView.compileTemplate(this.field, this.rowId);
+                }
+                else {
+                    this.compiledTemplate.props = this.tableRow.tableView.compileTemplate(this.field, this.rowId).props;
+                }
             }
         }
     }
