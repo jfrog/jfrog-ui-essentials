@@ -25,6 +25,7 @@
             'emptyTableText',
             'useVirtualScroll',
             'enableSubrows',
+            'sortBy',
             'groupBy',
             'showFilter',
             'showPagination',
@@ -96,6 +97,9 @@
             }
             if (this.groupBy) {
                 this.tableOptions.groupBy(this.groupBy)
+            }
+            if (this.sortBy) {
+                this.tableOptions.sortBy(this.sortBy)
             }
             if (!_.isUndefined(this.showFilter)) {
                 this.tableOptions.showFilter(this.showFilter)
