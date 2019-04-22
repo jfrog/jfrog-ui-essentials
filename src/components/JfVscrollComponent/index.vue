@@ -49,6 +49,11 @@
                 childComponent: null
             };
         },
+        watch: {
+            in() {
+                this.refresh();
+            }
+        },
         created() {
 
             let whenReadyDefer = this.$q.defer();
