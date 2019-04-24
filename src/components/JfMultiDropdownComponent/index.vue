@@ -125,7 +125,7 @@
 
             this.$scope.$watch('jfMultiDropdown.items', (newVal, oldVal) => {
                 if (newVal) {
-                    this.sortItems();
+                    //this.sortItems();
                     if (this.singleSelection) {
                         this.items.forEach((item, index) => item.$id = index);
                         let disabled = _.filter(this.items, item => item.disabled);
@@ -168,6 +168,9 @@
         methods: {
             sendOpenStateChange() {
                 this.$emit('on-open-state-change', {opened: this.opened});
+                if (!this.opened) {
+                    this.sortItems();
+                }
             },
             handleOutsideClick() {
                 let handler = e => {
@@ -175,9 +178,10 @@
                     if (outside) {
                         let changed = !!this.opened;
                         this.opened = false;
+
                         if (changed) {
                             this.sendOpenStateChange();
-                            this.sortItems();
+
                         }
                     }
                 };
@@ -198,9 +202,6 @@
                     }
                     this.opened = !this.opened;
                     this.sendOpenStateChange();
-                    if (!this.opened) {
-                        this.sortItems();
-                    }
                     this.filterText = '';
 
                 }
@@ -235,6 +236,7 @@
                 return selected;
             },
             sortItems() {
+                if (this.opened) return;
                 if (this.noSelectedFirst) {
                     return;
                 }
