@@ -49,18 +49,13 @@
             data() {
                 if (this.data && this.data !== this.tableOptions.data) this.setData();
             },
-            columns() {
-                if (this.columns && !this.columnsSet) {
-                    this.tableOptions.setColumns(this.columns);
-                    this.columnsSet = true;
-                };
-            },
             externalSearchFields(newVal) {
                 this.tableOptions.externalSearchFields = newVal;
                 this.tableOptions.sendExternalPageRequest();
             }
         },
         created() {
+
             this.tableOptions = this.options || new this.JFrogTableViewOptions(this.scope || this.$scope);
             if (!_.isUndefined(this.enableSubrows)) {
                 this.tableOptions.enableSubRows();
@@ -77,15 +72,21 @@
                 }
                 this.tableOptions.setRowsPerPage(this.rowsPerPage);
             }
-            if (this.columns) {
-                if (_.isFunction(this.columns)) {
-                    this.tableOptions.setColumns(this.columns({cellTemplateGenerators: this.JFrogTableViewOptions.cellTemplateGenerators}));
-                }
-                else {
-                    this.tableOptions.setColumns(this.columns);
-                }
-                this.columnsSet = true;
-            }
+
+            this.$watch(() => this.getActualColumns(), () => {
+                console.log('no...');
+                if (this.columns/* && !this.columnsSet*/) {
+                    this.tableOptions.setColumns(this.getActualColumns());
+                    this.columnsSet = true;
+                };
+            }, {immediate: true})
+
+            /*
+                        if (this.columns) {
+                            this.tableOptions.setColumns(this.getActualColumns());
+                            this.columnsSet = true;
+                        }
+            */
             if (this.actions) {
                 this.tableOptions.setActions(this.actions);
             }
@@ -165,7 +166,21 @@
                     this.pageResolver(this.data);
                     this.pageResolver = null;
                 }
+            },
+            getActualColumns() {
+                if (_.isFunction(this.columns)) {
+                    if (this.JFrogTableViewOptions) {
+                        return this.columns({cellTemplateGenerators: this.JFrogTableViewOptions.cellTemplateGenerators});
+                    }
+                    else {
+                        return null;
+                    }
+                }
+                else {
+                    return this.columns;
+                }
             }
+
         }
     }
 </script>

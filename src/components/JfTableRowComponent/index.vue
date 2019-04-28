@@ -29,7 +29,7 @@
 
             <i class="icon icon-small-arrow-down"
                :class="{'expanded': data.$groupHeader.$expanded}"></i>
-            <span class="jf-table-cell-content group-header" v-if="!data.$groupHeader.col.cellTemplate">
+            <span class="jf-table-cell-content group-header" v-if="data.$groupHeader.col && !data.$groupHeader.col.cellTemplate">
                 {{data.$groupHeader.value}}
             </span>
 
@@ -40,7 +40,7 @@
                 {{data.$groupHeader.value}}
             </span>-->
 
-            <div class="jf-table-cell-content group-header" v-if="data.$groupHeader.col.cellTemplate">
+            <div class="jf-table-cell-content group-header" v-if="data.$groupHeader.col && data.$groupHeader.col.cellTemplate">
                 <jf-table-compiled-cell :field="data.$groupHeader.field" :row-id="rowId" :table-row="jfTableRow">
                 </jf-table-compiled-cell>
             </div>
@@ -171,9 +171,6 @@
             });
             if (this.tableView.options.draggableRows)
                 this.$timeout(() => this.initDragAndDrop());
-
-            /* (NG2VUE) This was moved from created() to mounted() */
-            /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
 
             $(this.$element).prop('ctrl', this);
 

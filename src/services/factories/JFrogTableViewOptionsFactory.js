@@ -394,9 +394,12 @@ export function JFrogTableViewOptions() {
                 if (col.sortable === undefined)
                     col.sortable = true;
             });
-            if (actions.length && !this.actionsAggregated) {
-                this.actionsAggregated = true;
-                this.setActions(this.actions.length ? this.actions.concat(actions) : actions);
+            if (actions.length) {
+                if (!this.actionsAggregated) {
+                    this.actionsAggregated = true;
+                    this.origActions = this.actions;
+                }
+                this.setActions(this.origActions.length ? this.origActions.concat(actions) : actions);
             }
             this._sortableFields = _.map(_.filter(this.columns, c => !_.isUndefined(c.header)), 'field');
             if (this.sortable && !this.sortByField) {
@@ -804,10 +807,12 @@ export function JFrogTableViewOptions() {
         setFirstColumn(field) {
             this.restoreColumnOrder();
             let column = _.find(this.columns, { field });
-            let index = this.columns.indexOf(column);
-            column.$originalIndex = index;
-            this.columns.splice(index, 1);
-            this.columns.splice(0, 0, column);
+            if (column) {
+                let index = this.columns.indexOf(column);
+                column.$originalIndex = index;
+                this.columns.splice(index, 1);
+                this.columns.splice(0, 0, column);
+            }
         }
 
 

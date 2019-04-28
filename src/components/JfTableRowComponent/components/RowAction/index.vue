@@ -6,7 +6,7 @@
              v-jf-tooltip.bind="action.tooltip"
              :class="action.icon">
         </div>
-        <a @click.prevent="actionHandler(action,$event)"
+        <a @click="actionHandler(action,$event)"
            v-if="action.href"
            :href="action.href(data)">
             <div class="action-icon"

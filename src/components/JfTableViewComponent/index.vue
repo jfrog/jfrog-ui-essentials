@@ -161,7 +161,7 @@
                     rowObj = groupRowObj;
                 }
 
-                let existingScope = _.find(this.cellScopes, s => /*s.row.entity === rowObj &&*/ s.col.field === columnObj.field);
+                let existingScope = _.find(this.cellScopes, s => s.row.uid === rowId && s.col.field === columnObj.field);
 
                 let rowScope;
                 if (!existingScope) {

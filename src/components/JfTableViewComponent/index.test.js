@@ -172,8 +172,8 @@ describe('JfTableViewComponent', () => {
         elems = getElements(wrapper);
         expect(elems.headersCells.length).toEqual(2);
 
-        expect(options.visibleFields).toEqual(["number", "userName"])
-        expect(localStorage.jfTableViewSettings).toEqual('{"test-table":["number","userName"]}')
+        expect(options.visibleFields).toEqual(["userName", "number"])
+        expect(localStorage.jfTableViewSettings).toEqual('{"test-table":["userName","number"]}')
 
     });
 
