@@ -74,7 +74,6 @@
             }
 
             this.$watch(() => this.getActualColumns(), () => {
-                console.log('no...');
                 if (this.columns/* && !this.columnsSet*/) {
                     this.tableOptions.setColumns(this.getActualColumns());
                     this.columnsSet = true;
