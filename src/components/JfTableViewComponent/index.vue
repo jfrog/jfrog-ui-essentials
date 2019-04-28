@@ -105,7 +105,7 @@
             this.EVENTS = this.JFrogEventBus.getEventsDefinition();
 
             this.$scope.$watch('jfTableView.options', options => {
-                if (this.options && !this.options.dirCtrl) {
+                if (this.options && this.options.dirCtrl !== this) {
                     this.options._setDirectiveController(this);
                 }
                 if (this.options && !this.paginationApi) {

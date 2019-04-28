@@ -117,10 +117,11 @@
             <i class="icon-menu-arrow"></i>
         </div>
 
-        <div class="jf-table-row-actions-dropdown" v-if="actionsDropdownOpen" v-jf-reparent="'tableView.$containerElement'">
+        <div class="jf-table-row-actions-dropdown" v-if="actionsDropdownOpen">
             <div v-for="action in tableView.options.actions" v-if="!action.visibleWhen || action.visibleWhen(data)" @click="fireAction(action);$event.stopPropagation();actionsDropdownOpen=false;" class="action-item" :icon-name="action.icon || ''">
-                <i class="action-icon" v-if="!action.href" :class="action.icon"></i>
-                <span>{{action.tooltip}}</span>
+                <i class="action-icon" :class="action.icon"></i>
+                <span v-if="!action.href">{{action.tooltip}}</span>
+                <a v-if="action.href" :href="action.href(data)">{{action.tooltip}}</a>
             </div>
         </div>
 
@@ -218,7 +219,7 @@
                 this.$forceUpdate();
             },
             fireAction(action) {
-                action.callback(this.data);
+                if (action.callback) action.callback(this.data);
                 this.tableView.onUpdateFilter();
             },
             onMouseMove(e) {
