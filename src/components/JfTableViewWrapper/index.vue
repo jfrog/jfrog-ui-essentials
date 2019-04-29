@@ -32,7 +32,8 @@
             'showCounter',
             'sortable',
             'disableFilterTooltip',
-            'externalSearchFields'
+            'externalSearchFields',
+            'newEntityCustomText'
         ],
         'jf@inject': [
             'JFrogTableViewOptions',
@@ -121,6 +122,9 @@
             }
             if (!_.isUndefined(this.externalSearchFields)) {
                 this.tableOptions.externalSearchFields = this.externalSearchFields;
+            }
+            if (!_.isUndefined(this.newEntityCustomText)) {
+                this.tableOptions.newEntityCustomText = this.newEntityCustomText;
             }
 
             if (!this.options) {
