@@ -16,7 +16,7 @@
     "axios": "^0.18.0",
     "billboard.js": "^1.7.1",
     "bootstrap": "4.2.1",
-    "bootstrap-vue": "^2.0.0-rc.11",
+    "bootstrap-vue": "^2.0.0-rc.19",
     "codemirror": "5.42.2",
     "components-jqueryui": "^1.12.1",
     "deep-diff": "^1.0.2",
