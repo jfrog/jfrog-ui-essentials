@@ -56,7 +56,7 @@
                         </label>
                         <jf-radio-button :key="item.isSelected" v-if="singleSelection" :text="item.text">
                             <input type="radio" v-model="singleSelectionIndex" :value="item.$id"
-                                   @input="onSingleSelection()" :disabled="item.disabled">
+                                   @change="onSingleSelection()" :disabled="item.disabled">
                         </jf-radio-button>
                         <span class="text-input-wrapper" v-if="textInputs">
                         <input type="text" name="items-filter" class="input-text" v-model="item.inputTextValue"
