@@ -168,7 +168,7 @@
         methods: {
             sendOpenStateChange() {
                 this.$emit('on-open-state-change', {opened: this.opened});
-                if (!this.opened) {
+                if (!this.opened && !this.singleSelection) {
                     this.sortItems();
                 }
             },
