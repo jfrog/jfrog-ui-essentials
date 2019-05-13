@@ -165,7 +165,7 @@
                         if (this.disabled) {
                             return;
                         }
-                        row.entity.$selected = !row.entity.$selected;
+                        this.$set(row.entity, '$selected', !row.entity.$selected);
                     };
                     this.availableItemsTableOptions.on('row.clicked', toggleSelection);
                     this.selectedItemsTableOptions.on('row.clicked', toggleSelection);
