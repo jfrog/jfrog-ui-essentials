@@ -256,7 +256,7 @@
 
             },
             clearSelection() {
-                this.options.getRawData().forEach(row => delete row.$selected);
+                this.options.getRawData().forEach(row => this.$delete(row, '$selected'));
                 this.allSelected = false;
             },
             toggleSelectAll() {
