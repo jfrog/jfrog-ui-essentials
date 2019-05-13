@@ -162,7 +162,7 @@
 
                 if (!this.disableWholeRowSelection) {
                     let toggleSelection = row => {
-                        if (this.disabled) {
+                        if (this.disabled || (this.itemDraggableAttr && row.entity[this.itemDraggableAttr] === false)) {
                             return;
                         }
                         this.$set(row.entity, '$selected', !row.entity.$selected);
@@ -221,10 +221,10 @@
                 };
             },
             areAllRowsDisabled(itemsList) {
-                if (!this.disableWholeRowSelection || !this.itemDraggableAttr || !itemsList) {
+                if (!this.itemDraggableAttr || !itemsList) {
                     return false;
                 }
-                let filtered = _.filter(itemsList, item => item.hasOwnProperty(`${ this.itemDraggableAttr }`));
+                let filtered = _.filter(itemsList, item => item.hasOwnProperty(`${ this.itemDraggableAttr }`) && item[this.itemDraggableAttr] === false);
                 return filtered.length === itemsList.length;
             },
             isIncludeListEmpty() {
