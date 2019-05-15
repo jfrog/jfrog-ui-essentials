@@ -4,7 +4,7 @@
         <table class="data-list">
             <tbody>
                 <tr class="data-list-item" v-for="(item,index) in formattedItems" :key="index" >
-                    <td class="data-list-item-label">{{item.label}}:</td>
+                    <td v-if="!item.hideLabel" class="data-list-item-label">{{item.label}}:</td>
                     <td class="data-list-item-value">
                         <jf-datalist-item-component :item="item" :index="index" v-on:item-updated="updateList"></jf-datalist-item-component>
                     </td>
