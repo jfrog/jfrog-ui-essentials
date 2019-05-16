@@ -580,8 +580,8 @@ export function JFrogTableViewOptions() {
                 this.$timeout(() => this.sendExternalPageRequest());
                 this.initialExternalPaginationSent = true;
             } else if (this.paginationMode === this.INFINITE_SCROLL) {
-                this._initInfiniteScroll();
                 this.$timeout(() => {
+                    this._initInfiniteScroll();
                     if (!this.infiniteScrollChunkSize && this.rowsPerPage)
                         this.infiniteScrollChunkSize = this.rowsPerPage;
                     this.sendInfiniteScrollRequest();
@@ -594,31 +594,28 @@ export function JFrogTableViewOptions() {
         }
 
         _initInfiniteScroll() {
-            let scrollParent = $(this.dirCtrl.$element).scrollParent();
+            let scrollParent = window.$(this.dirCtrl.$element).scrollParent();
 
             const EDGE = 50;
 
             scrollParent.on('scroll', e => {
-                if (!this.infiniteScrollHasMore || this.pendingInfiniteScroll)
-                    return;
-                this.dirCtrl.$scope.$apply(() => {
-                    let bottomReached = false;
-                    if (scrollParent[0] === document) {
-                        if ($(window).scrollTop() + $(window).height() >= $(document).height() - EDGE) {
-                            bottomReached = true;
-                        }
-                    } else {
-                        if (scrollParent[0].scrollHeight - scrollParent.scrollTop() <= scrollParent[0].clientHeight + EDGE) {
-                            bottomReached = true;
-                        }
+                if (!this.infiniteScrollHasMore || this.pendingInfiniteScroll) return;
+                let bottomReached = false;
+                if (scrollParent[0] === document) {
+                    if (window.$(window).scrollTop() + window.$(window).height() >= window.$(document).height() - EDGE) {
+                        bottomReached = true;
                     }
-                    if (bottomReached) {
-                        e.preventDefault();
-                        this.infiniteScrollOffset += this.infiniteScrollChunkSize;
-                        this.rowsPerPage += this.infiniteScrollChunkSize;
-                        this.sendInfiniteScrollRequest();
+                } else {
+                    if (scrollParent[0].scrollHeight - scrollParent.scrollTop() <= scrollParent[0].clientHeight + EDGE) {
+                        bottomReached = true;
                     }
-                });
+                }
+                if (bottomReached) {
+                    e.preventDefault();
+                    this.infiniteScrollOffset += this.infiniteScrollChunkSize;
+                    this.rowsPerPage += this.infiniteScrollChunkSize;
+                    this.sendInfiniteScrollRequest();
+                }
             });
         }
 

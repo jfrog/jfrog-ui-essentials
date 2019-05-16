@@ -148,6 +148,14 @@
                     this.$emit('external-sort', {field, dir});
                 })
             }
+            if (this.$listeners['load-more']) {
+                this.tableOptions.setPaginationMode(this.tableOptions.INFINITE_SCROLL, (params) => {
+                    let defer = this.$q.defer();
+                    this.$emit('load-more', params);
+                    this.pageResolver = defer.resolve;
+                    return defer.promise;
+                })
+            }
         },
         mounted() {
             if (this.data) this.setData();
@@ -162,7 +170,7 @@
         },
         methods: {
             setData() {
-                if (!this.$listeners['page-needed'] && this.tableOptions.paginationMode !== this.tableOptions.EXTERNAL_PAGINATION) {
+                if (!this.$listeners['page-needed'] && !this.$listeners['load-more'] && this.tableOptions.paginationMode !== this.tableOptions.EXTERNAL_PAGINATION) {
                     this.tableOptions.setData(this.data);
                 }
                 else if (this.pageResolver) {
