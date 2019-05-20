@@ -114,7 +114,7 @@
             if (!_.isUndefined(this.sortable)) {
                 this.tableOptions.setSortable(this.sortable)
             }
-            if (!_.isUndefined(this.useVirtualScroll)) {
+            if (!_.isUndefined(this.useVirtualScroll) && !this.$listeners['load-more']) {
                 this.tableOptions.setPaginationMode(this.tableOptions.VIRTUAL_SCROLL)
             }
             if (!_.isUndefined(this.disableFilterTooltip)) {
@@ -149,7 +149,7 @@
                 })
             }
             if (this.$listeners['load-more']) {
-                this.tableOptions.setPaginationMode(this.tableOptions.INFINITE_SCROLL, (params) => {
+                this.tableOptions.setPaginationMode(!_.isUndefined(this.useVirtualScroll) ? this.tableOptions.INFINITE_VIRTUAL_SCROLL : this.tableOptions.INFINITE_SCROLL, (params) => {
                     let defer = this.$q.defer();
                     this.$emit('load-more', params);
                     this.pageResolver = defer.resolve;

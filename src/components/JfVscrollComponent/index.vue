@@ -9,7 +9,7 @@
                 </div>
                 <div class="h-scroll-wrapper" :style="{height: (getPageHeight() + getTranslate()) + 'px'}" @mousewheel="onMouseWheel">
                     <div class="h-scroll-content">
-                        <jf-vscroll-element v-for="(item, $index) in getPage()" :vscroll="jfVScroll" :data="item" :index="$index" :template="childComponent" :variable="withEach"></jf-vscroll-element>
+                        <jf-vscroll-element v-for="(item, $index) in getPage()" :vscroll="jfVScroll" :data="item" :index="$index" :template="childComponent" :variable="withEach" :last="$index === getPage().length - 1"></jf-vscroll-element>
                     </div>
                 </div>
             </div>
@@ -25,7 +25,8 @@
         props: [
             'withEach',
             'api',
-            'in'
+            'in',
+            'preventDefaultScroll'
         ],
         'jf@inject': [
             '$scope',
@@ -67,7 +68,7 @@
         },
         mounted() {
             this.childComponent = this.$compileComp(this.transcludedContent, this.$parent.$data, this.$parent);
-            this.childComponent.props = [this.withEach, 'v_index'];
+            this.childComponent.props = [this.withEach, 'v_index', 'is_last'];
             this.containerHeight = $(this.$element).parent().height();
             this._setAutoItemsPerPage();
             this._initApi();
@@ -117,6 +118,9 @@
                     return;
                 this.itemsPerPage = Math.floor(this.containerHeight / this.itemHeight);
             },
+            getItemsPerPage() {
+                return this.itemsPerPage;
+            },
             initScrollFaker() {
                 let scrollParent = $(this.$element).find('.scroll-faker-container');
                 scrollParent.on('scroll', e => {
@@ -143,6 +147,13 @@
                             newScrollIndex = 0;
                         this.virtualScrollIndex = Math.floor(newScrollIndex);
                         this.virtScrollDisplacement = newScrollIndex - this.virtualScrollIndex;
+
+                        if (this.virtualScrollIndex + this.itemsPerPage >= this.in.length - 2) {
+                            if (this.bottomReachedListener) {
+                                this.bottomReachedListener();
+                            }
+                        }
+
                     } else {
                         this.virtualScrollIndex = 0;
                         this.virtScrollDisplacement = 0;
@@ -217,8 +228,9 @@
                     this._scrollTo(scrollPosBefore - scrollAmount);
                 }
 
-                if (scrollPosBefore !== this._getCurrentScrollPos())
+                if (scrollPosBefore !== this._getCurrentScrollPos() || this.preventDefaultScroll) {
                     $event.preventDefault();    //        this.syncFakeScroller(false);
+                }
             },
             _getCurrentScrollPos() {
                 return this.virtualScrollIndex + this.virtScrollDisplacement;
@@ -289,6 +301,15 @@
                 if (this.virtualScrollIndex + this.itemsPerPage >= this.in.length) {
                     this.virtualScrollIndex = this.in.length - this.itemsPerPage;
                     this.virtScrollDisplacement = 0;
+                    if (this.bottomReachedListener) {
+                        this.bottomReachedListener();
+                    }
+                }
+
+                if (this.virtualScrollIndex + this.itemsPerPage >= this.in.length - 2) {
+                    if (this.bottomReachedListener) {
+                        this.bottomReachedListener();
+                    }
                 }
 
                 if (this.virtualScrollIndex < 0)
@@ -428,6 +449,9 @@
                     });
                 }
             },
+            registerBottomReachedListener(listener) {
+                this.bottomReachedListener = listener;
+            },
             refresh() {
                 Vue.nextTick(() => {
                     this.containerHeight = $(this.$element).parent().height();
@@ -447,6 +471,9 @@
                     this.api.scroll = (numOfRows, duration = 500) => this.scroll(numOfRows, duration);
                     this.api.scrollTo = (scrollPos, duration = 500) => this.scrollTo(scrollPos, duration);
                     this.api.registerScrollListener = listener => this.registerScrollListener(listener);
+                    this.api.registerBottomReachedListener = listener => this.registerBottomReachedListener(listener);
+                    this.api.getItemsPerPage = () => this.getItemsPerPage();
+                    this.api.whenReady = () => this.whenReady;
 
                 }
             }

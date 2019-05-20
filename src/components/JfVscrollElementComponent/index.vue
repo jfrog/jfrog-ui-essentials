@@ -2,9 +2,6 @@
 
     <div>
         <component v-if="compiledProps" :is="template" v-bind="compiledProps"></component>
-<!--
-        <div class="compile-placeholder"></div>
--->
     </div>
 
 </template>
@@ -18,6 +15,7 @@
             'template',
             'variable',
             'index',
+            'last',
             'vscroll'
         ],
         'jf@inject': [
@@ -50,7 +48,8 @@
         mounted() {
             let elementScope = {
                 [this.variable]: this.data,
-                v_index: () => this.index
+                v_index: () => this.index,
+                is_last: () => this.last
             };
 
 //            this.compiledTemplate = this.$compileComp(this.template, {});

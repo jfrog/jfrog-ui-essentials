@@ -43,6 +43,7 @@ export function JFrogTableViewOptions() {
             this.VIRTUAL_SCROLL = 1;
             this.EXTERNAL_PAGINATION = 2;
             this.INFINITE_SCROLL = 3;
+            this.INFINITE_VIRTUAL_SCROLL = 4;
 
             this._setDefaults();
         }
@@ -461,7 +462,7 @@ export function JFrogTableViewOptions() {
                         this.$timeout(() => this.sendExternalPageRequest());
                     }
                 }
-            } else if (this.paginationMode === this.INFINITE_SCROLL) {
+            } else if (this.paginationMode === this.INFINITE_SCROLL || this.paginationMode === this.INFINITE_VIRTUAL_SCROLL) {
                 if (!paginationCallback || typeof paginationCallback !== 'function') {
                     console.error('Setting pagination mode to INFINITE_SCROLL require pagination callback function as the second parameter of setPaginationMode');
                     this.paginationMode = this.PAGINATION;
@@ -579,7 +580,7 @@ export function JFrogTableViewOptions() {
             if (this.paginationMode === this.EXTERNAL_PAGINATION) {
                 this.$timeout(() => this.sendExternalPageRequest());
                 this.initialExternalPaginationSent = true;
-            } else if (this.paginationMode === this.INFINITE_SCROLL) {
+            } else if (this.paginationMode === this.INFINITE_SCROLL || this.paginationMode === this.INFINITE_VIRTUAL_SCROLL) {
                 this.$timeout(() => {
                     this._initInfiniteScroll();
                     if (!this.infiniteScrollChunkSize && this.rowsPerPage)
@@ -594,29 +595,37 @@ export function JFrogTableViewOptions() {
         }
 
         _initInfiniteScroll() {
-            let scrollParent = window.$(this.dirCtrl.$element).scrollParent();
-
             const EDGE = 50;
+            if (this.paginationMode === this.INFINITE_SCROLL) {
+                let scrollParent = window.$(this.dirCtrl.$element).scrollParent();
 
-            scrollParent.on('scroll', e => {
-                if (!this.infiniteScrollHasMore || this.pendingInfiniteScroll) return;
-                let bottomReached = false;
-                if (scrollParent[0] === document) {
-                    if (window.$(window).scrollTop() + window.$(window).height() >= window.$(document).height() - EDGE) {
-                        bottomReached = true;
+                scrollParent.on('scroll', e => {
+                    if (!this.infiniteScrollHasMore || this.pendingInfiniteScroll) return;
+                    let bottomReached = false;
+                    if (scrollParent[0] === document) {
+                        if (window.$(window).scrollTop() + window.$(window).height() >= window.$(document).height() - EDGE) {
+                            bottomReached = true;
+                        }
+                    } else {
+                        if (scrollParent[0].scrollHeight - scrollParent.scrollTop() <= scrollParent[0].clientHeight + EDGE) {
+                            bottomReached = true;
+                        }
                     }
-                } else {
-                    if (scrollParent[0].scrollHeight - scrollParent.scrollTop() <= scrollParent[0].clientHeight + EDGE) {
-                        bottomReached = true;
+                    if (bottomReached) {
+                        e.preventDefault();
+                        this.infiniteScrollOffset += this.infiniteScrollChunkSize;
+                        this.rowsPerPage += this.infiniteScrollChunkSize;
+                        this.sendInfiniteScrollRequest();
                     }
-                }
-                if (bottomReached) {
-                    e.preventDefault();
-                    this.infiniteScrollOffset += this.infiniteScrollChunkSize;
-                    this.rowsPerPage += this.infiniteScrollChunkSize;
-                    this.sendInfiniteScrollRequest();
-                }
-            });
+                });
+            }
+            else if (this.paginationMode === this.INFINITE_VIRTUAL_SCROLL) {
+                this.dirCtrl.vsApi.registerBottomReachedListener(() => {
+                    if (!this.infiniteScrollHasMore || this.pendingInfiniteScroll) return;
+                    this.infiniteScrollOffset = this.getRawData().length;
+                    this.sendInfiniteScrollRequest()
+                })
+            }
         }
 
         getActionsContainerWidthInPixels() {
@@ -826,7 +835,7 @@ export function JFrogTableViewOptions() {
         getPageData() {
             if (this.paginationMode === this.PAGINATION) {
                 return this.dirCtrl ? this.getPrePagedData().slice(this.dirCtrl.currentPage * this.rowsPerPage, this.dirCtrl.currentPage * this.rowsPerPage + this.rowsPerPage) : [];
-            } else if (this.paginationMode === this.VIRTUAL_SCROLL) {
+            } else if (this.paginationMode === this.VIRTUAL_SCROLL || this.paginationMode === this.INFINITE_VIRTUAL_SCROLL) {
                 return this.dirCtrl && this.dirCtrl.vsApi && this.dirCtrl.vsApi.getPageData ? this.dirCtrl.vsApi.getPageData() : [];
             } else if (this.paginationMode === this.EXTERNAL_PAGINATION || this.paginationMode === this.INFINITE_SCROLL) {
                 return this.getRawData();
@@ -875,7 +884,7 @@ export function JFrogTableViewOptions() {
             }
             let promise = this.infiniteScrollCallback({
                 offset: this.infiniteScrollOffset,
-                numOfRows: this.infiniteScrollChunkSize
+                numOfRows: this.infiniteScrollChunkSize !== 'auto' ? this.infiniteScrollChunkSize : 2 + Math.floor(this.dirCtrl.getActualPageHeight() / parseInt(this.rowHeight)) //vsApi.getItemsPerPage()
             });
             if (!promise || !promise.then) {
                 console.error('Infinite scroll callback should return promise');

@@ -27,25 +27,25 @@
                 </div>
 
 
-                <div v-if="options && options.paginationMode === options.VIRTUAL_SCROLL"
+                <div v-if="options && (options.paginationMode === options.VIRTUAL_SCROLL || options.paginationMode === options.INFINITE_VIRTUAL_SCROLL)"
                      :style="{height: getActualPageHeight() + 'px'}"
                      class="table-rows-container">
-<!--
-                    <recycle-scroller :emit-update="true" @update="updateVScroll"
-                                      :items="options.getPrePagedData()"
-                                      :item-height="parseInt(options.rowHeight)"
-                                      :style="{height: getActualPageHeight() + 'px'}"
-                                      key-field="$$$id">
-                        <jf-table-row slot-scope="{ item, index }" :table-view="jfTableView" :row-id="index" :data="item"></jf-table-row>
-                    </recycle-scroller>
--->
-
-                    <jf-vscroll with-each="entity" :in="options.getPrePagedData()" :api="vsApi">
-                        <jf-table-row v-pre :table-view="jfTableView" :row-id="v_index()" :data="entity"></jf-table-row>
+                    <jf-vscroll with-each="entity"
+                                :prevent-default-scroll="this.options.pendingInfiniteScroll"
+                                :in="options.getPrePagedData()"
+                                :api="vsApi">
+                        <div v-pre>
+                            <div v-if="is_last() && options && options.pendingInfiniteScroll && options.paginationMode === options.INFINITE_VIRTUAL_SCROLL" :style="{height: options.rowHeight}" class="loading-more">
+                                <div class="spinner-msg-local">
+                                    <div class="icon-hourglass-local"></div>
+                                </div>
+                            </div>
+                            <jf-table-row v-else :table-view="jfTableView" :row-id="v_index()" :data="entity"></jf-table-row>
+                        </div>
                     </jf-vscroll>
                 </div>
 
-                <div v-if="options && options.paginationMode !== options.VIRTUAL_SCROLL" class="table-rows-container">
+                <div v-if="options && options.paginationMode !== options.VIRTUAL_SCROLL && options.paginationMode !== options.INFINITE_VIRTUAL_SCROLL" class="table-rows-container">
                     <jf-table-row :key="$index" v-for="(entity, $index) in options.getPageData()" :table-view="jfTableView" :row-id="$index" :data="entity"></jf-table-row>
                 </div>
 
@@ -55,7 +55,7 @@
                 <div class="empty-table-placeholder filter-no-results" v-if="options && noFilterResults">
                     <div v-html="options.noFilterResultsText || 'Current filter has no results.'"></div><a href="" class="jf-link" v-if="tableFilter" @click.prevent="clearFilter()">Clear filter</a>
                 </div>
-                <div v-if="options && options.pendingInfiniteScroll" :style="{height: options.rowHeight}" class="loading-more">
+                <div v-if="options && options.pendingInfiniteScroll && options.paginationMode !== options.INFINITE_VIRTUAL_SCROLL" :style="{height: options.rowHeight}" class="loading-more">
                     <div class="spinner-msg-local">
                         <div class="icon-hourglass-local"></div>
                     </div>
@@ -143,7 +143,12 @@
             },
             getActualPageHeight() {
                 if (this.options.rowsPerPage === 'auto' && $(this.$element).find('.table-rows-container').length) {
-                    return Math.min($(this.$element).parent().height() - $(this.$element).find('.table-rows-container').position().top, parseFloat(this.options.rowHeight) * this.options.getPrePagedData().length);
+                    if (this.options.paginationMode !== this.options.INFINITE_VIRTUAL_SCROLL) {
+                        return Math.min($(this.$element).parent().height() - $(this.$element).find('.table-rows-container').position().top, parseFloat(this.options.rowHeight) * this.options.getPrePagedData().length);
+                    }
+                    else {
+                        return $(this.$element).parent().height() - $(this.$element).find('.table-rows-container').position().top;
+                    }
                 } else {
                     return parseFloat(this.options.rowHeight) * Math.min(this.options.rowsPerPage, this.options.getPrePagedData().length) + 2;
                 }
