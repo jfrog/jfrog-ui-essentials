@@ -880,11 +880,11 @@ export function JFrogTableViewOptions() {
             if (!promise || !promise.then) {
                 console.error('Infinite scroll callback should return promise');
             } else {
-                this.pendingInfiniteScroll = true;
+                Vue.set(this, 'pendingInfiniteScroll', true);
                 return promise.then(moreData => {
                     this.setData(this.data.concat(moreData.data), '$$internal$$');
                     this.infiniteScrollHasMore = moreData.hasMore;
-                    this.pendingInfiniteScroll = false;
+                    Vue.set(this, 'pendingInfiniteScroll', false);
                 });
             }
         }
