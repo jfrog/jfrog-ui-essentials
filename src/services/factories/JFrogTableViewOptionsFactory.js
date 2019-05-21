@@ -878,20 +878,30 @@ export function JFrogTableViewOptions() {
             }
         }
 
-        sendInfiniteScrollRequest() {
+        sendInfiniteScrollRequest(resetData = false) {
             if (!this.dirCtrl || this.pendingInfiniteScroll) {
                 return;
             }
-            let promise = this.infiniteScrollCallback({
+            let endlessScrollParams = {
                 offset: this.infiniteScrollOffset,
                 numOfRows: this.infiniteScrollChunkSize !== 'auto' ? this.infiniteScrollChunkSize : 2 + Math.floor(this.dirCtrl.getActualPageHeight() / parseInt(this.rowHeight)) //vsApi.getItemsPerPage()
-            });
+            };
+            if (this.externalSearchFields) {
+                endlessScrollParams = Object.assign({}, {
+                    externalSearchFields: this.externalSearchFields
+                });
+            }
+            let promise = this.infiniteScrollCallback(endlessScrollParams);
             if (!promise || !promise.then) {
                 console.error('Infinite scroll callback should return promise');
             } else {
                 Vue.set(this, 'pendingInfiniteScroll', true);
                 return promise.then(moreData => {
-                    this.setData(this.data.concat(moreData.data), '$$internal$$');
+                    if (resetData) {
+                        this.setData(moreData.data, '$$internal$$');
+                    } else {
+                        this.setData(this.data.concat(moreData.data), '$$internal$$');
+                    }
                     this.infiniteScrollHasMore = moreData.hasMore;
                     Vue.set(this, 'pendingInfiniteScroll', false);
                 });

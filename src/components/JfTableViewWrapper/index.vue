@@ -52,7 +52,13 @@
             },
             externalSearchFields(newVal) {
                 this.tableOptions.externalSearchFields = newVal;
-                this.tableOptions.sendExternalPageRequest();
+                if (this.tableOptions.paginationMode ===  this.tableOptions.INFINITE_SCROLL
+                || this.tableOptions.paginationMode ===  this.tableOptions.INFINITE_VIRTUAL_SCROLL) {
+                    this.tableOptions.sendInfiniteScrollRequest(true);
+                }
+                if (this.tableOptions.paginationMode ===  this.tableOptions.EXTERNAL_PAGINATION) {
+                    this.tableOptions.sendExternalPageRequest();
+                }
             }
         },
         created() {

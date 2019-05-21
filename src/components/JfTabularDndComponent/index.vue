@@ -205,14 +205,14 @@
                     if (this.entityName.indexOf('/') !== -1) {
                         let [single, plural] = this.entityName.split('/');
                         availableObjectName = 'Available ' + single + '/' + 'Available ' + plural;
-                        selectedObjectName = 'Selected ' + single + '/' + 'Selected ' + plural;
+                        selectedObjectName = 'Included ' + single + '/' + 'Included ' + plural;
                     } else {
                         availableObjectName = 'Available ' + this.entityName;
-                        selectedObjectName = 'Selected ' + this.entityName;
+                        selectedObjectName = 'Included ' + this.entityName;
                     }
                 } else {
                     availableObjectName = 'Available Item';
-                    selectedObjectName = 'Selected Item';
+                    selectedObjectName = 'Included Item';
                 }
 
                 return {
