@@ -144,14 +144,13 @@
                 this.onUpdateFilter();
             },
             getActualPageHeight(maxForInfiniteVirtualScroll = false) {
-                if (this.options.rowsPerPage === 'auto' && $(this.$element).find('.table-rows-container').length) {
-                    if (maxForInfiniteVirtualScroll) {
-                        return $(this.$element).parent().height() - $(this.$element).find('.table-rows-container').position().top;
-                    }
-                    else {
-                        return Math.min($(this.$element).parent().height() - $(this.$element).find('.table-rows-container').position().top, parseFloat(this.options.rowHeight) * this.options.getPrePagedData().length);
-                    }
-                } else {
+                if (maxForInfiniteVirtualScroll) {
+                    return $(this.$element).parent().height() - $(this.$element).find('.table-rows-container').position().top;
+                }
+                else if (this.options.rowsPerPage === 'auto' && $(this.$element).find('.table-rows-container').length) {
+                    return Math.min($(this.$element).parent().height() - $(this.$element).find('.table-rows-container').position().top, parseFloat(this.options.rowHeight) * this.options.getPrePagedData().length);
+                }
+                else {
                     return parseFloat(this.options.rowHeight) * Math.min(this.options.rowsPerPage, this.options.getPrePagedData().length) + 2;
                 }
             },
