@@ -884,7 +884,7 @@ export function JFrogTableViewOptions() {
             }
             let endlessScrollParams = {
                 offset: this.infiniteScrollOffset,
-                numOfRows: this.infiniteScrollChunkSize !== 'auto' ? this.infiniteScrollChunkSize : 2 + Math.floor(this.dirCtrl.getActualPageHeight() / parseInt(this.rowHeight)) //vsApi.getItemsPerPage()
+                numOfRows: this.infiniteScrollChunkSize !== 'auto' ? this.infiniteScrollChunkSize : 2 + Math.floor(this.dirCtrl.getActualPageHeight(true) / parseInt(this.rowHeight)) //vsApi.getItemsPerPage()
             };
             if (this.externalSearchFields) {
                 endlessScrollParams = Object.assign({}, {

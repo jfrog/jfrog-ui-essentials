@@ -123,6 +123,8 @@
             let on_resize = () => {
                 this.options._normalizeWidths();
                 this._fireDebouncedRowsInView();
+                this.$forceUpdate();
+                if (this.vsApi && this.vsApi.refresh) this.vsApi.refresh();
             };
 
             $(window).on('resize', on_resize);
@@ -141,13 +143,13 @@
                 this.tableFilter = '';
                 this.onUpdateFilter();
             },
-            getActualPageHeight() {
+            getActualPageHeight(maxForInfiniteVirtualScroll = false) {
                 if (this.options.rowsPerPage === 'auto' && $(this.$element).find('.table-rows-container').length) {
-                    if (this.options.paginationMode !== this.options.INFINITE_VIRTUAL_SCROLL) {
-                        return Math.min($(this.$element).parent().height() - $(this.$element).find('.table-rows-container').position().top, parseFloat(this.options.rowHeight) * this.options.getPrePagedData().length);
+                    if (maxForInfiniteVirtualScroll) {
+                        return $(this.$element).parent().height() - $(this.$element).find('.table-rows-container').position().top;
                     }
                     else {
-                        return $(this.$element).parent().height() - $(this.$element).find('.table-rows-container').position().top;
+                        return Math.min($(this.$element).parent().height() - $(this.$element).find('.table-rows-container').position().top, parseFloat(this.options.rowHeight) * this.options.getPrePagedData().length);
                     }
                 } else {
                     return parseFloat(this.options.rowHeight) * Math.min(this.options.rowsPerPage, this.options.getPrePagedData().length) + 2;
