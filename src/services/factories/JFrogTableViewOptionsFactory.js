@@ -878,13 +878,21 @@ export function JFrogTableViewOptions() {
             }
         }
 
-        sendInfiniteScrollRequest(resetData = false) {
+        sendInfiniteScrollRequest(resetData = false, recurse = 0) {
             if (!this.dirCtrl || this.pendingInfiniteScroll) {
                 return;
             }
+            let wholePageHeight = this.dirCtrl.getActualPageHeight(true);
+            if (!wholePageHeight && recurse < 20) {
+                setTimeout(() => {
+                    this.sendInfiniteScrollRequest(resetData, ++recurse);
+                }, 100)
+                return;
+            }
+
             let endlessScrollParams = {
                 offset: this.infiniteScrollOffset,
-                numOfRows: this.infiniteScrollChunkSize !== 'auto' ? this.infiniteScrollChunkSize : 2 + Math.floor(this.dirCtrl.getActualPageHeight(true) / parseInt(this.rowHeight)) //vsApi.getItemsPerPage()
+                numOfRows: this.infiniteScrollChunkSize !== 'auto' ? this.infiniteScrollChunkSize : 2 + Math.floor(wholePageHeight / parseInt(this.rowHeight)) //vsApi.getItemsPerPage()
             };
             if (this.externalSearchFields) {
                 endlessScrollParams = Object.assign({}, {
