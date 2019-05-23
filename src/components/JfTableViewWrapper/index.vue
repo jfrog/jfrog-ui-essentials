@@ -47,8 +47,11 @@
             };
         },
         watch: {
-            data() {
-                if (this.data && this.data !== this.tableOptions.data) this.setData();
+            data: {
+                deep: true,
+                handler: function(val) {
+                    if (val && val !== this.tableOptions.data) this.setData();
+                }
             },
             externalSearchFields(newVal) {
                 this.tableOptions.externalSearchFields = newVal;
@@ -164,7 +167,7 @@
             }
         },
         mounted() {
-            if (this.data) this.setData();
+            if (this.data) this.setData(true);
             if (this.$listeners['page-needed']) {
                 this.tableOptions.setPaginationMode(this.tableOptions.EXTERNAL_PAGINATION, pagingData => {
                     let defer = this.$q.defer();
@@ -175,9 +178,12 @@
             }
         },
         methods: {
-            setData() {
+            setData(initialSet) {
                 if (!this.$listeners['page-needed'] && !this.$listeners['load-more'] && this.tableOptions.paginationMode !== this.tableOptions.EXTERNAL_PAGINATION) {
                     this.tableOptions.setData(this.data);
+                }
+                else if (!initialSet && this.$listeners['load-more'] && !this.pageResolver) {
+                    this.tableOptions.setData(this.data.data, '$$internal$$');
                 }
                 else if (this.pageResolver) {
                     this.pageResolver(this.data);
