@@ -883,7 +883,7 @@ export function JFrogTableViewOptions() {
                 return;
             }
             let wholePageHeight = this.dirCtrl.getActualPageHeight(true);
-            if (!wholePageHeight && recurse < 20) {
+            if (wholePageHeight < parseInt(this.rowHeight) && recurse < 20) {
                 setTimeout(() => {
                     this.sendInfiniteScrollRequest(resetData, ++recurse);
                 }, 100)
