@@ -4,6 +4,11 @@ export const jfrogUiEssentialsConfig = () => {
     let injections = $jfrog.get(['$qProvider', 'JFrogUILibConfigProvider']);
     injections.$qProvider.errorOnUnhandledRejections(false);
 
+    if (window.$$$$jfuieConfig) {
+        injections.JFrogUILibConfigProvider.setConfig(window.$$$$jfuieConfig);
+        delete window.$$$$jfuieConfig;
+    }
+
     let customMessages = injections.JFrogUILibConfigProvider.getConfig().customValidationMessages || {};
     let customValidationRules = injections.JFrogUILibConfigProvider.getConfig().customValidationRules || {};
 

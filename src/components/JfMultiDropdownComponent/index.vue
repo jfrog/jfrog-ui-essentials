@@ -51,8 +51,8 @@
                         <label class="jf-checkbox" v-if="!singleSelection">
                             <input type="checkbox" :disabled="item.disabled" @change="onSelection()"
                                    v-model="item.isSelected">
-                            <span></span> <i v-if="item.iconClass" class="item-icon" :class="item.iconClass"></i> {{
-                            item.text }}
+                            <span></span> <i v-if="item.iconClass" class="item-icon" :class="item.iconClass"></i>
+                            {{ item.text }}
                         </label>
                         <jf-radio-button :key="item.isSelected" v-if="singleSelection" :text="item.text">
                             <input type="radio" v-model="singleSelectionIndex" :value="item.$id"
@@ -156,12 +156,6 @@
             });
         },
         mounted() {
-            let disabled = _.filter(this.items, item => item.disabled);
-            let selected = _.filter(this.items, item => item.isSelected);
-
-            /* (NG2VUE) This was moved from created() to mounted() */
-            /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
-
             this.handleOutsideClick();
         },
         ng1_legacy: {'controllerAs': 'jfMultiDropdown'},
@@ -169,7 +163,7 @@
             sendOpenStateChange() {
                 this.$emit('on-open-state-change', {opened: this.opened});
                 if (!this.opened && !this.singleSelection) {
-                    this.sortItems();
+//                    this.sortItems();
                 }
             },
             handleOutsideClick() {

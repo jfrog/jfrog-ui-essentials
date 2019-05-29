@@ -73,6 +73,9 @@ const VueMoment = require('vue-moment');
 
 export default {
     install(Vue, options) {
+        if (options && options.config) {
+            window.$$$$jfuieConfig = options.config;
+        }
         servicesRegistration.registerAll();
         Vue.use(BootstrapVue);
         Vue.use(VueVirtualScroller);
