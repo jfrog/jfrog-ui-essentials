@@ -1,5 +1,5 @@
 export default {
-    "required": "You must fill in this field",
+    "required": "This field is mandatory",
     "unique": "This value must be unique",
     "validator": "This value is invalid",
     "email": "Please enter a valid email",

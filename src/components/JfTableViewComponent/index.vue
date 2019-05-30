@@ -840,6 +840,9 @@
                                 left: 10px;
                             }
                         }
+                        .action-button .action-icon.icon-clear:hover:before {
+                            color: @jfColorRed;
+                        }
                         .selection-button{
                             cursor: pointer;
                             overflow: hidden;
@@ -852,10 +855,15 @@
                                     font-size: 17px !important;
                                     line-height: 2;
                                 }
-                            }
-                            .action-icon:hover {
-                                &:before {
-                                    color: @greenBGDark;
+                                &:hover {
+                                    &:before {
+                                        color: @greenBGDark;
+                                    }
+                                }
+                                &.icon-clear:hover {
+                                    &:before {
+                                        color: @jfColorRed;
+                                    }
                                 }
                             }
                         }

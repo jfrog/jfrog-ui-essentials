@@ -223,6 +223,7 @@
     box-sizing: content-box;
     max-height: 200px;
     overflow: auto;
+    margin-top: 15px;
 
     .list-maker-list-row {
       border-top: 1px solid #e4e4e4;

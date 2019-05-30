@@ -3,13 +3,13 @@
     <div>
         <div class="jf-drawer">
             <div class="drawer-header" @click="onClickHeader()">
-                <i class="icon-small-arrow-down" :class="{'drawer-arrow-close' : !opened}"></i>
                 <div class="drawer-header-title">
                     {{ header }}
                 </div>
                 <div class="drawer-header-description">
                     {{ description }}
                 </div>
+                <i class="icon-small-arrow-down" :class="{'drawer-arrow-close' : !opened}"></i>
             </div>
             <b-collapse class="drawer-content" v-model="opened" id="collapse">
                 <b-card>
@@ -75,7 +75,7 @@
 
             .icon-small-arrow-down {
                 transform: rotate(0deg) scale(1.2);
-                margin: 0 10px;
+                margin: 0 10px 0 auto;
 
                 &.drawer-arrow-close {
                     transform: rotate(-90deg) scale(1.2);
