@@ -2,7 +2,7 @@
     const TEMPLATE = `
     <div>
 
-        <multi-select @open="opened" :options-limit="loadChunks" :internal-search="false" @search-change="onSearch" :allow-empty="false" :disabled="jfSelectDisabled" :close-on-select="!jfSelectMultiple" :multiple="jfSelectMultiple" @input="onInputChange" :value="value" :options="jfSelectOptions" :searchable="true" :show-labels="false" :placeholder="jfSelectPlaceholder" :track-by="displayAttr" :label="displayAttr">
+        <multi-select @open="opened" :options-limit="loadChunks" :internal-search="false" @search-change="onSearch" :allow-empty="false" :disabled="jfSelectDisabled" :close-on-select="!jfSelectMultiple" :multiple="jfSelectMultiple" @input="onInputChange" :value="value" :options="manipulatedList" :searchable="true" :show-labels="false" :placeholder="jfSelectPlaceholder" :track-by="displayAttr" :label="displayAttr">
 
        <template slot="singleLabel" slot-scope="props">
 
@@ -16,7 +16,7 @@
       <div class="option__desc"><span class="option__title"><i  v-if="props.option.icon" class="icon option__icon" :class="props.option.icon"></i>{{ displayAttr ? setSelectText(props.option[displayAttr]) : setSelectText(props.option)  }} <jf-help-tooltip :html="jfSelectHelpTooltips(props.option)" v-if="jfSelectHelpTooltips"></jf-help-tooltip></span></div>
     </template>
 
-     <template v-if="jfSelectLoadChunks && jfSelectLoadChunks < jfSelectOptions.length" slot="afterList" slot-scope="props">
+     <template v-if="jfSelectLoadChunks && jfSelectLoadChunks < manipulatedList.length" slot="afterList" slot-scope="props">
  <div class="option__desc"><span @click="increaseLimit" :class="{'disabled':exccededLimit}" class="option__title load-more">  {{jfSelectLoadMoreLabel || 'Load More'}} <div class="multiselect__spinner" style="display:none;"></div> </span> </div>
     </template>
 
@@ -40,8 +40,14 @@
             'jfSelectHelpTooltips',
             'value'
         ],
+        watch:{
+            jfSelectOptions(){
+                this.manipulatedList = _.cloneDeep(this.jfSelectOptions);
+            }
+        },
         data() {
             return {
+                manipulatedList: _.cloneDeep(this.jfSelectOptions),
                 jfSelectOptionsView: null,
                 exccededLimit: null,
                 loadChunks: this.jfSelectLoadChunks
@@ -57,8 +63,6 @@
 
         },
         mounted() {
-
-            this.originalOptionsList = _.cloneDeep(this.jfSelectOptions)
             if (this.jfSelectLoadChunks) {
                 this.originalLoadChunks = this.jfSelectLoadChunks
             }
@@ -100,8 +104,8 @@
             },
             onSearch(searchQ, id) {
 
-                this.jfSelectOptions.splice(0, this.jfSelectOptions.length)
-                this.jfSelectOptions.push(..._.filter(this.originalOptionsList, (o) => {
+                this.manipulatedList.splice(0, this.manipulatedList.length)
+                this.manipulatedList.push(..._.filter(this.jfSelectOptions, (o) => {
 
 
                     if (_.isObject(o)) {
