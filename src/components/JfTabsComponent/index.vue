@@ -134,6 +134,7 @@
                 }
                 this._ensureTabVisible(tab);
                 this.$router.replace( { query: {
+                    ...this.$router.currentRoute.query,
                     activeTab: tab.name
                 } } );
                 this.currentTab.name = tab.name;
