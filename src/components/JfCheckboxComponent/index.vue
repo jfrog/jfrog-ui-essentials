@@ -4,6 +4,10 @@
         <label>
             <span></span> {{ text }}
         </label>
+        <jf-help-tooltip v-if="helpTooltip && helpTooltip.length"
+                         class="help-tooltip"
+                         :text="helpTooltip">
+        </jf-help-tooltip>
     </div>
 
 </template>
@@ -12,7 +16,10 @@
 
     export default {
         name: 'jf-checkbox',
-        props: ['text'],
+        props: {
+            text: String,
+            helpTooltip: String
+        },
         'jf@inject': [
             '$element',
             '$transclude'
