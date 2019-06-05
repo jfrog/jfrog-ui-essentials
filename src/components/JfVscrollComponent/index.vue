@@ -69,7 +69,7 @@
         mounted() {
             this.childComponent = this.$compileComp(this.transcludedContent, this.$parent.$data, this.$parent);
             this.childComponent.props = [this.withEach, 'v_index', 'is_last'];
-            this.containerHeight = $(this.$element).parent().height();
+            this.containerHeight = $(this.$element).parent().height() + 1;
             this._setAutoItemsPerPage();
             this._initApi();
         },
@@ -454,7 +454,7 @@
             },
             refresh() {
                 Vue.nextTick(() => {
-                    this.containerHeight = $(this.$element).parent().height();
+                    this.containerHeight = $(this.$element).parent().height() + 1;
                     this._setAutoItemsPerPage();
                 })
             },
