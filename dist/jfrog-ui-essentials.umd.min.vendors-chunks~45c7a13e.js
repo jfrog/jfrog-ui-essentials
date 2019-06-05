@@ -1,0 +1,2 @@
+(("undefined"!==typeof self?self:this)["webpackJsonpjfrog_ui_essentials"]=("undefined"!==typeof self?self:this)["webpackJsonpjfrog_ui_essentials"]||[]).push([[116],{"742c":function(e,t,n){"use strict";var s=n("18e2"),f=n("1738"),i=Object(s["a"])(function(e){e.setHours(0,0,0,0)},function(e,t){e.setDate(e.getDate()+t)},function(e,t){return(t-e-(t.getTimezoneOffset()-e.getTimezoneOffset())*f["c"])/f["a"]},function(e){return e.getDate()-1});t["a"]=i;i.range}}]);
+//# sourceMappingURL=jfrog-ui-essentials.umd.min.vendors-chunks~45c7a13e.js.map

@@ -1,0 +1,2 @@
+(("undefined"!==typeof self?self:this)["webpackJsonpjfrog_ui_essentials"]=("undefined"!==typeof self?self:this)["webpackJsonpjfrog_ui_essentials"]||[]).push([[18],{f07f:function(e,t,n){"use strict";t["a"]=function(e,t){var n=e.ownerSVGElement||e;if(n.createSVGPoint){var i=n.createSVGPoint();return i.x=t.clientX,i.y=t.clientY,i=i.matrixTransform(e.getScreenCTM().inverse()),[i.x,i.y]}var s=e.getBoundingClientRect();return[t.clientX-s.left-e.clientLeft,t.clientY-s.top-e.clientTop]}}}]);
+//# sourceMappingURL=jfrog-ui-essentials.umd.min.vendors-chunks~0c6d3cf0.js.map

@@ -1,4 +1,5 @@
 const IS_DEV = process.argv.includes('dev');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const config = {
     runtimeCompiler: true,
@@ -13,7 +14,25 @@ const config = {
                     }
                 }]
             }]
+        },
+        plugins: [
+            new BundleAnalyzerPlugin({analyzerPort: 8024}),
+        ],
+        optimization: {
+            splitChunks: {
+                cacheGroups: {
+                    commons: {
+                        test: /[\\/]node_modules[\\/]/,
+                        name: 'vendors-chunks',
+                        chunks: 'all',
+                        minSize: 0,
+                        maxSize: 10000,
+                        minChunks: 1,
+                    },
+                }
+            }
         }
+
     }
 };
 

@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://jfrog-ui-essentials/./node_modules/axios/index.js"],"names":["module","exports","__webpack_require__"],"mappings":"0LAAAA,EAAAC,QAAiBC,EAAQ","file":"jfrog-ui-essentials.umd.min.vendors-chunks~970c3094.js","sourcesContent":["module.exports = require('./lib/axios');"],"sourceRoot":""}

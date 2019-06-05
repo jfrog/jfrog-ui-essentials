@@ -1,0 +1,2 @@
+(("undefined"!==typeof self?self:this)["webpackJsonpjfrog_ui_essentials"]=("undefined"!==typeof self?self:this)["webpackJsonpjfrog_ui_essentials"]||[]).push([[143],{"0866":function(e,t,s){"use strict";t.__esModule=!0,t.default=void 0;var l=f(s("b664")),n=f(s("600b")),u=s("0a8d");function f(e){return e&&e.__esModule?e:{default:e}}var o={BButton:l.default,BBtn:l.default,BButtonClose:n.default,BBtnClose:n.default},a={install:(0,u.installFactory)({components:o})};t.default=a}}]);
+//# sourceMappingURL=jfrog-ui-essentials.umd.min.vendors-chunks~54b3d9d6.js.map

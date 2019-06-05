@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://jfrog-ui-essentials/./node_modules/d3-shape/src/identity.js"],"names":[],"mappings":";;;;;;AAAe;AACf;AACA,CAAC","file":"jfrog-ui-essentials.umd.vendors-chunks~318dd4c0.js","sourcesContent":["export default function(d) {\n  return d;\n}\n"],"sourceRoot":""}
