@@ -42,12 +42,12 @@ const JFrogUI = {
         Vue.prototype.$filterArray = (array, filterBy) => {
             return _.filter(array, item => {
                 if (_.isString(filterBy) && _.isString(item)) {
-                    return item.indexOf(filterBy) !== -1;
+                    return item.toLowerCase().indexOf(filterBy.toLowerCase()) !== -1;
                 }
                 else if (_.isString(filterBy) && _.isObject(item)) {
                     let match = false;
                     _.forEach(_.values(item), val => {
-                        if (_.isString(val) && val.indexOf(filterBy) !== -1) {
+                        if (_.isString(val) && val.toLowerCase().indexOf(filterBy.toLowerCase()) !== -1) {
                             match = true;
                             return false;
                         }
@@ -61,7 +61,7 @@ const JFrogUI = {
                         _.forEach(_.entries(obj), ([key, val]) => {
                             if (filterObj[key]) {
                                 if (!_.isObject(filterObj[key]) && !_.isObject(val)) {
-                                    if ((val + '').indexOf(filterObj[key]) === -1) {
+                                    if ((val + '').toLowerCase().indexOf(filterObj[key].toLowerCase()) === -1) {
                                         match = false;
                                         return false;
                                     }
