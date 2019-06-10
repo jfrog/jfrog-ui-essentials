@@ -48,6 +48,7 @@
                 <div v-if="items.length" class="list-container">
                     <div class="drop-down-item" v-for="(item, $index) in $filterArray(items, {text: filterText})" :key="$index + filterText"
                          :class="{'last-selected': $index === lastSelectedIndex && !filterText, 'disabled': item.disabled}">
+
                         <label class="jf-checkbox" v-if="!singleSelection">
                             <input type="checkbox" :disabled="item.disabled" @change="onSelection()"
                                    v-model="item.isSelected">
