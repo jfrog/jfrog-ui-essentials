@@ -2,7 +2,7 @@
     <div class="wizard-element-container" v-if="config.enableNgShow" v-show="title && title === selectedTitle">
         <slot></slot>
     </div>
-    <div class="wizard-element-container" v-if="!config.enableNgShow && title && title === selectedTitle">
+    <div class="wizard-element-container" v-else-if="!config.enableNgShow && title && title === selectedTitle">
         <slot></slot>
     </div>
 </template>

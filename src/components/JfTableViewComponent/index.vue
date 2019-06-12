@@ -614,7 +614,8 @@
                     .jf-table-cell-content {
                     }
                     &.actions {
-                        display: inline-table !important;
+//                        display: inline-table !important;
+                        visibility: visible;
                     }
                     &.selection{
                         &.single-selection{
@@ -735,7 +736,8 @@
                     }
 
                     &.actions {
-                        display: none;
+                        display: inline-table;
+                        visibility: collapse;
                     }
                     &.selection,
                     &.actions {
