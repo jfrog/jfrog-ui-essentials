@@ -116,7 +116,7 @@
                 previewersCount: null,
                 modeOptions: null,
                 onSave: null,
-                preview: { length: null },
+                preview: '',
                 currentLanguage: this.language || 'Markdown',
                 currentMode: this.mode || EDIT_MODE,
                 isEditable: this.editable,
