@@ -98,7 +98,7 @@
         }
 
         .drawer-content {
-            padding: 15px 0;
+            padding: 15px 0 0;
             overflow: hidden;
             transition: height .2s ease-in-out;
             // drawer in drawer
