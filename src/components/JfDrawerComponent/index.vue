@@ -62,7 +62,7 @@
 
     .jf-drawer {
         position: relative;
-//        padding: 15px 0;
+        padding: 15px 0;
         border-bottom: 1px solid #e9e9e9;
 
         .drawer-header {
@@ -98,7 +98,7 @@
         }
 
         .drawer-content {
-//            padding: 20px 0 20px 30px;
+            padding: 15px 0;
             overflow: hidden;
             transition: height .2s ease-in-out;
             // drawer in drawer
