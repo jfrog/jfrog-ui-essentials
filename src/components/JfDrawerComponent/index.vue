@@ -12,9 +12,7 @@
                 <i class="icon-small-arrow-down" :class="{'drawer-arrow-close' : !opened}"></i>
             </div>
             <b-collapse class="drawer-content" v-model="opened" id="collapse">
-                <b-card>
-                    <slot></slot>
-                </b-card>
+                <slot></slot>
             </b-collapse>
         </div>
     </div>
@@ -109,14 +107,6 @@
                 padding-bottom: 0;
                 .drawer-header i.icon-small-arrow-down {
                     display: none;
-                }
-            }
-            .card {
-                box-shadow:none;
-                border:none;
-                background: transparent;
-                .card-body {
-                    padding: 0;
                 }
             }
         }
