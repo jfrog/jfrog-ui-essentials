@@ -164,6 +164,7 @@
                     this.pageResolver = defer.resolve;
                     return defer.promise;
                 })
+                if (this.sortable) this.tableOptions.setSortable(true);
             }
         },
         mounted() {

@@ -522,6 +522,12 @@ export function JFrogTableViewOptions() {
                 this.externalSortCallback(field, this.revSort ? 'desc' : 'asc');
                 return;
             }
+            else if (this.infiniteScrollCallback && sendExternal) {
+                this.infiniteScrollOffset = 0;
+                if (this.dirCtrl && this.dirCtrl.vsApi) this.dirCtrl.vsApi.reset();
+                this.sendInfiniteScrollRequest(false, true);
+                return;
+            }
 
             if (this.paginationMode === this.EXTERNAL_PAGINATION && sendExternal) {
                 this.sendExternalPageRequest();
@@ -878,14 +884,14 @@ export function JFrogTableViewOptions() {
             }
         }
 
-        sendInfiniteScrollRequest(resetData = false, recurse = 0) {
+        sendInfiniteScrollRequest(resetData = false, sortChange = false, recurse = 0) {
             if (!this.dirCtrl || this.pendingInfiniteScroll) {
                 return;
             }
             let wholePageHeight = this.dirCtrl.getActualPageHeight(true);
             if (wholePageHeight < parseInt(this.rowHeight) && recurse < 20) {
                 setTimeout(() => {
-                    this.sendInfiniteScrollRequest(resetData, ++recurse);
+                    this.sendInfiniteScrollRequest(resetData, sortChange, ++recurse);
                 }, 100)
                 return;
             }
@@ -899,6 +905,14 @@ export function JFrogTableViewOptions() {
                     externalSearchFields: this.externalSearchFields
                 });
             }
+            if (this.sortable) {
+                Object.assign(endlessScrollParams, {
+                    sortBy: this.sortByField,
+                    sortDir: this.revSort ? 'desc' : 'asc',
+                    sortChanged: !!sortChange
+                });
+            }
+
             let promise = this.infiniteScrollCallback(endlessScrollParams);
             if (!promise || !promise.then) {
                 console.error('Infinite scroll callback should return promise');
@@ -989,7 +1003,7 @@ export function JFrogTableViewOptions() {
 
         getSortedData(sourceData) {
 
-            if (this.paginationMode === this.EXTERNAL_PAGINATION || this.externalSortCallback || !this.sortByField) {
+            if (this.paginationMode === this.EXTERNAL_PAGINATION || this.paginationMode === this.INFINITE_VIRTUAL_SCROLL || this.externalSortCallback || !this.sortByField) {
                 return sourceData;
             }
             else {
