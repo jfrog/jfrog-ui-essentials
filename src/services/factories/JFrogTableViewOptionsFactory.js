@@ -525,7 +525,7 @@ export function JFrogTableViewOptions() {
             else if (this.infiniteScrollCallback && sendExternal) {
                 this.infiniteScrollOffset = 0;
                 if (this.dirCtrl && this.dirCtrl.vsApi) this.dirCtrl.vsApi.reset();
-                this.sendInfiniteScrollRequest(false, true);
+                this.sendInfiniteScrollRequest(true, true);
                 return;
             }
 
