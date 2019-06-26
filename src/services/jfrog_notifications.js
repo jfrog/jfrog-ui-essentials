@@ -4,12 +4,13 @@
  */
 export class JFrogNotifications {
 	/* @ngInject */
-    constructor(toaster, $timeout, $rootScope, JFrogEventBus) {
+    constructor(toaster, $timeout, $rootScope, JFrogEventBus, $sanitize) {
         this.toast = toaster;
         this.$timeout = $timeout;
         this.lastNotification = null;
         this.JFrogEventBus = JFrogEventBus;
         this.$rootScope = $rootScope;
+        this.$sanitize = $sanitize;
         this.EVENTS = JFrogEventBus.getEventsDefinition();
 
         this.errors = [];
@@ -43,7 +44,7 @@ export class JFrogNotifications {
             this.toast.pop({
                 type: 'success',
                 timeout: message.timeout || 5000,
-                body: message.info,
+                body: this.$sanitize(message.info),
                 showCloseButton: true,
                 bodyOutputType: allowHtml ? 'trustedHtml' : undefined,
                 clickHandler: this.notifClickHandle,
@@ -63,7 +64,7 @@ export class JFrogNotifications {
             let instance = this.toast.pop({
                 type: 'error',
                 timeout: message.timeout || 0,
-                body: message.error,
+                body: this.$sanitize(message.error),
                 showCloseButton: true,
                 bodyOutputType: allowHtml ? 'trustedHtml' : undefined,
                 clickHandler: this.notifClickHandle
@@ -82,7 +83,7 @@ export class JFrogNotifications {
             this.toast.pop({
                 type: 'warning',
                 timeout: message.timeout || 5000,
-                body: message.warn,
+                body: this.$sanitize(message.warn),
                 showCloseButton: true,
                 bodyOutputType: allowHtml ? 'trustedHtml' : undefined,
                 clickHandler: this.notifClickHandle
