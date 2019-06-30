@@ -33,7 +33,8 @@
             'sortable',
             'disableFilterTooltip',
             'externalSearchFields',
-            'newEntityCustomText'
+            'newEntityCustomText',
+            'disableNewEntity'
         ],
         'jf@inject': [
             'JFrogTableViewOptions',
@@ -142,7 +143,8 @@
                     cellTemplateGenerators: this.JFrogTableViewOptions.cellTemplateGenerators
                 })
             }
-            if (this.$listeners['new-entity']) {
+            if ((_.isUndefined(this.disableNewEntity) || !this.disableNewEntity)
+                && this.$listeners['new-entity']) {
                 this.tableOptions.setNewEntityAction(() => {
                     this.$emit('new-entity');
                 })
