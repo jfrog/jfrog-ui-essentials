@@ -217,7 +217,7 @@
             },
             fireAction(action) {
                 if (action.callback) action.callback(this.data);
-                this.tableView.onUpdateFilter();
+                this.tableView.onUpdateFilter(false);
             },
             onMouseMove(e) {
                 if (!this.resizingColumns) {

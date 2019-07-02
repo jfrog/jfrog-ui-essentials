@@ -240,11 +240,13 @@
                     elementToAddTo.addClass('overflow-ellipsis');
                 }
             },
-            onUpdateFilter() {
+            onUpdateFilter(resetPagination = true) {
                 this.options.refreshFilter();
                 this.refresh();
-                this.paginationApi.setPage(1, true);
-                this.paginationApi.update();
+                if (resetPagination) {
+                    this.paginationApi.setPage(1, true);
+                    this.paginationApi.update();
+                }
             },
             refresh(updatePagination = true) {
                 let pageData = this.options.getPageData();

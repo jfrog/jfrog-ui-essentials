@@ -506,7 +506,7 @@ export function JFrogTableViewOptions() {
             let sendExternal = false;
 
             if (!resort && this.sortByField === field) {
-                this.revSort = !this.revSort;
+                this.revSort = !this.revSort    ;
                 sendExternal = true;
             } else if (!resort) {
                 this.revSort = false;
