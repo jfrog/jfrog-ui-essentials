@@ -965,6 +965,10 @@
                 span {
                     margin-left: 8px;
                 }
+                a {
+                    margin-left: 8px;
+                    color: #707070;
+                }
                 .action-icon {
                     &:before {
                         width: auto !important;
