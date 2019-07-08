@@ -26,6 +26,7 @@
             'useVirtualScroll',
             'enableSubrows',
             'sortBy',
+            'sortDir',
             'groupBy',
             'showFilter',
             'showPagination',
@@ -111,6 +112,9 @@
             }
             if (this.sortBy) {
                 this.tableOptions.sortBy(this.sortBy)
+            }
+            if (this.sortDir && this.sortDir === 'desc') {
+                this.tableOptions.reverseSortingDir();
             }
             if (!_.isUndefined(this.showFilter)) {
                 this.tableOptions.showFilter(this.showFilter)
