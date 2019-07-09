@@ -776,6 +776,11 @@
                                     transform: rotate(-180deg);
                                 }
                             }
+                            &.sortable-aligned-center {
+                                i.icon-small-arrow-down {
+                                    margin-right: -25px;
+                                }
+                            }
                             &:hover {
                                 .icon.sorting-icon:not(.active) {
                                     color: @grayBorderDarker;

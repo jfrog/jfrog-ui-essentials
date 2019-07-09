@@ -67,12 +67,7 @@
             <div class="jf-table-cell-content"
                  v-jf-tooltip-on-overflow
                  :class="{'row-expander-content': $index === 0 && tableView.options.subRowsEnabled,
-                            'YO' : !(rowId === 'headers' &&
-                                        tableView.options.sortable &&
-                                        (tableView.options.sortByField === col.field || tableView.options.showSortingArrowsAlways) &&
-                                        col.sortable && tableView.options.getRawData().length &&
-                                        (col.header || col.headerCellTemplate)) &&
-                                        col.textAlign === 'center'}" :style="{'text-align': col.textAlign || 'auto'}" v-if="(!col.cellTemplate && rowId !== 'headers') || (!col.headerCellTemplate && rowId === 'headers')">
+                            'sortable-aligned-center' : col.sortable && col.textAlign === 'center'}" :style="{'text-align': col.textAlign || 'auto'}" v-if="(!col.cellTemplate && rowId !== 'headers') || (!col.headerCellTemplate && rowId === 'headers')">
                 {{getField(col.field)}}
                 <i class="icon sorting-icon icon-small-arrow-down" :class="{'rotate180': !tableView.options.revSort || (tableView.options.sortByField !== col.field && tableView.options.showSortingArrowsAlways),
                               active: tableView.options.sortByField === col.field,
