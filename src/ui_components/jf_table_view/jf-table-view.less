@@ -94,6 +94,11 @@
       position: relative;
       border-top: 1px solid @jfColorGrey;
       .jf-table-row {
+        &.sortable-aligned-center {
+          i.icon-small-arrow-down {
+            margin-right: -25px;
+          }
+        }
       }
     }
     .columns-customization-icon {
@@ -489,8 +494,12 @@
     }
   }
   .table-view-column-button {
+    display: inline-block;
     font-size: 24px;
     cursor: pointer;
+    &:hover:not(:disabled) {
+      color: @color-JFrog-green !important;
+    }
     &[disabled] {
       opacity: .3;
 

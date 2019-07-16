@@ -81,13 +81,7 @@
         </div>
         <div class="jf-table-cell-content"
              ng-class="{'row-expander-content': $index === 0 && jfTableRow.tableView.options.subRowsEnabled,
-                        'YO' : !(jfTableRow.rowId === 'headers' &&
-                                    jfTableRow.tableView.options.sortable &&
-                                    (jfTableRow.tableView.options.sortByField === col.field || jfTableRow.tableView.options.showSortingArrowsAlways) &&
-                                    col.sortable && jfTableRow.tableView.options.getRawData().length &&
-                                    (col.header || col.headerCellTemplate)) &&
-                                    col.textAlign === 'center'}"
-
+                        'sortable-aligned-center' : col.sortable && col.textAlign === 'center'}"
              ng-style="{'text-align': col.textAlign || 'auto'}"
              jf-tooltip-on-overflow
              ng-if="(!col.cellTemplate && jfTableRow.rowId !== 'headers') || (!col.headerCellTemplate && jfTableRow.rowId === 'headers')">
