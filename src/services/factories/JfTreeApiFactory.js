@@ -816,10 +816,10 @@ export function JFTreeApi() {
 
         _createContextMenu() {
             this.ContextMenuService.contextMenu({
-                selector: '.jf-tree .jf-tree-item',
+                selector: '.jf-tree .jf-tree-item-vue',
                 build: $trigger => {
                     let defer = this.$q.defer();
-                    let rowCtrl = ($($trigger[0]).is('.jf-tree-item') ? $($trigger[0]) : $($($trigger[0]).parents('jf-tree-item')[0])).prop('comp');
+                    let rowCtrl = ($($trigger[0]).is('.jf-tree-item-vue') ? $($trigger[0]) : $($($trigger[0]).parents('jf-tree-item-vue')[0])).prop('comp');
                     let items = rowCtrl.data.data.$cachedCMItems;
                     if (items) {
                         defer.resolve(items);

@@ -459,7 +459,7 @@
                         display: inline-block;
                         min-width: 100%;
 
-                        .jf-tree-item {
+                        .jf-tree-item-vue {
                             cursor: pointer;
                             position: relative;
                             .user-select(none);

@@ -154,7 +154,7 @@
                 }
             },
             getClasses() {
-                let classes = ['jf-tree-item'];
+                let classes = ['jf-tree-item-vue'];
                 if (this.isQuickFindMatch())
                     classes.push('quick-find-match');
                 return classes;

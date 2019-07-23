@@ -11,9 +11,9 @@ function getElements(wrapper) {
     elems.mainTreeElement = wrapper.findAll('.jf-tree');
     elems.missingDataGetters= wrapper.findAll('.missing-data-setters');
     elems.emptyTreePlaceholder= wrapper.findAll('.empty-tree-placeholder');
-    elems.items = wrapper.findAll('.jf-tree-item');
+    elems.items = wrapper.findAll('.jf-tree-item-vue');
     elems.nodeTexts = wrapper.findAll('.node-text');
-    elems.pane2Items = wrapper.find('.pane2-container').element ? wrapper.find('.pane2-container').findAll('.jf-tree-item') : [];
+    elems.pane2Items = wrapper.find('.pane2-container').element ? wrapper.find('.pane2-container').findAll('.jf-tree-item-vue') : [];
     elems.pane2NodeTexts = wrapper.find('.pane2-container').element ? wrapper.find('.pane2-container').findAll('.node-text') : [];
     elems.qfHighlights = wrapper.findAll('.highlight');
 
