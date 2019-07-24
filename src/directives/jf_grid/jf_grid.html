@@ -10,7 +10,7 @@
     </div>
     <div class="wrapper-grid-actions" ng-show="!noPagination || !noCount || gridOptions.batchActions.length || filterField">
 
-        <div class="counter-and-filter">
+        <div class="counter-and-filter" ng-if="!noCount || filterField">
             <div ng-if="!noCount" class="grid-counter">{{ getTotalRecords() }}<span ng-if="getSelectedRecords()"> ({{getSelectedRecords()}} Selected)</span></div>
 
             <div ng-if="filterField" class="filter-group">

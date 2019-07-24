@@ -1,4 +1,7 @@
-<div class="jf-table-top clearfix">
+<div class="jf-table-top clearfix"
+     ng-if="!jfTableTop.tableView.getTotalLength() ||
+            jfTableTop.tableView.options.filterVisible ||
+			jfTableTop.tableView.options.batchActions.length">
 
 	<div class="counter-and-filter-wrapper">
 		<div ng-if="!jfTableTop.tableView.options.noCount" class="table-counter">{{ jfTableTop.tableView.getTotalRecords() }}<span ng-if="jfTableTop.tableView.getSelectedRecords()"> ({{jfTableTop.tableView.getSelectedRecords()}} Selected)</span></div>
@@ -16,14 +19,12 @@
 		</div>
 	</div>
 
-	<div class="batch-actions-wrapper">
-		<jf-table-view-batch-actions table-options="jfTableTop.tableView.options"
-		                             actions="jfTableTop.tableView.options.batchActions"></jf-table-view-batch-actions>
+	<div class="batch-actions-wrapper" ng-if="jfTableTop.tableView.options.batchActions">
+		<jf-table-view-batch-actions table-options="jfTableTop.tableView.options" actions="jfTableTop.tableView.options.batchActions"></jf-table-view-batch-actions>
 	</div>
 
-	<div class="pagination-controls">
-		<jf-drag-drop-pagination pagination-api="jfTableTop.tableView.paginationApi"
-		                         ng-if="jfTableTop.tableView.paginationApi && jfTableTop.tableView.options.paginationVisible">
+	<div class="pagination-controls" ng-if="jfTableTop.tableView.paginationApi && jfTableTop.tableView.options.paginationVisible && jfTableTop.tableView.paginationApi.getTotalPages() > 1">
+		<jf-drag-drop-pagination pagination-api="jfTableTop.tableView.paginationApi">
 		</jf-drag-drop-pagination>
 	</div>
 
