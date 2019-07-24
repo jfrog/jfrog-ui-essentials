@@ -474,6 +474,7 @@
     /deep/ .jf-table-view {
         width: 100%;
         position: relative;
+        margin-top: 20px;
         .columns-customization-wrap {
             width: 100%;
             position: absolute;
@@ -506,9 +507,8 @@
         .jf-table-top {
             display: flex;
             flex-direction: row;
-            margin-bottom: 20px;
-            height: 66px;
-
+            height: auto;
+            // counter and filter
             .counter-and-filter-wrapper {
                 flex-grow: 1;
                 max-width: 380px;
@@ -532,10 +532,10 @@
                 }
             }
 
+            // batch
             .batch-actions-wrapper {
                 flex-grow: 1;
                 align-self: flex-end;
-                margin-bottom: 14px;
                 white-space: nowrap;
                 position: relative;
                 width: 100%;
@@ -547,9 +547,10 @@
                 }
             }
 
+
+            // pagination
             .pagination-controls {
                 align-self: flex-end;
-                margin-bottom: 13px;
                 .grid-pagination {
                     margin: 0;
                     white-space: nowrap;

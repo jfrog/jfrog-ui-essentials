@@ -93,6 +93,9 @@
 
 <style scoped lang="less">
 
+§    .grid-pagination {
+        p {margin: 0;}
+    }
 
 
 </style>

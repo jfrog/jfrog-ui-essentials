@@ -1,8 +1,7 @@
 <template>
 
     <div>
-        <div class="jf-table-top clearfix">
-
+        <div class="jf-table-top clearfix" v-if="tableView.options && tableView.options.getRawData().length">
             <div class="counter-and-filter-wrapper">
                 <div v-if="tableView.options && !tableView.options.noCount" class="table-counter">{{ totalRecords }}<span v-if="tableView.getSelectedRecords()"> ({{tableView.getSelectedRecords()}} Selected)</span></div>
                 <div class="external-filters">
@@ -13,14 +12,14 @@
                 </div>
             </div>
 
-                <div class="batch-actions-wrapper" v-if="tableView.options">
+            <div class="batch-actions-wrapper" v-if="tableView.options && tableView.options.batchActions.length">
                 <jf-table-view-batch-actions
                     :table-options="tableView.options"
                     :actions="tableView.options.batchActions">
                 </jf-table-view-batch-actions>
             </div>
 
-            <div class="pagination-controls" v-if="tableView.options">
+            <div class="pagination-controls" v-if="tableView.options && tableView.paginationApi.getTotalPages() > 1">
                 <jf-drag-drop-pagination ref="pagination" :pagination-api="tableView.paginationApi" v-if="tableView.paginationApi && tableView.options.paginationVisible">
                 </jf-drag-drop-pagination>
             </div>
