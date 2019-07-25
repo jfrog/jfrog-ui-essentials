@@ -2,7 +2,11 @@
 
     <div>
         <div class="jf-table-top clearfix" v-if="tableView.options && tableView.options.getRawData().length">
-            <div class="counter-and-filter-wrapper">
+            <div class="counter-and-filter-wrapper"
+                 v-if="!tableView.options.noCount || hasExternalFilter || tableView.options.filterVisible">
+
+
+
                 <div v-if="tableView.options && !tableView.options.noCount" class="table-counter">{{ totalRecords }}<span v-if="tableView.getSelectedRecords()"> ({{tableView.getSelectedRecords()}} Selected)</span></div>
                 <div class="external-filters">
                     <slot name="external-filters"></slot>
@@ -12,7 +16,7 @@
                 </div>
             </div>
 
-            <div class="batch-actions-wrapper" v-if="tableView.options && tableView.options.batchActions.length">
+            <div class="batch-actions-wrapper" v-if="tableView.options && tableView.options.batchActions && tableView.options.batchActions.length">
                 <jf-table-view-batch-actions
                     :table-options="tableView.options"
                     :actions="tableView.options.batchActions">
