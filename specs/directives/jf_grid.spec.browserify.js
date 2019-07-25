@@ -51,10 +51,6 @@ describe('jf_grid', () => {
         expect(counterElement.text()).toEqual('2 Records');
     });
 
-    it ('should display pagination', () =>{
-        expect(jfGridElement.getGridPagination().length).toEqual(1);
-    });
-
     it ('should display actions', () => {
         expect(jfGridElement.getActions(0).length).toEqual(0);
         expect(jfGridElement.getActions(1).length).toEqual(1);
