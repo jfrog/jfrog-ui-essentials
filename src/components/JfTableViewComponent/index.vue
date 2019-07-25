@@ -551,6 +551,7 @@
             // pagination
             .pagination-controls {
                 align-self: flex-end;
+                flex-grow: 2;
                 .grid-pagination {
                     margin: 0;
                     white-space: nowrap;
