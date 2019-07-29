@@ -114,6 +114,7 @@
                     this.paginationApi.registerChangeListener(() => {
                         this.refresh(false);
                         this._fireDebouncedRowsInView();
+                        this.options._normalizeWidths();
                     });
 
                     this.currentPage = 0;
