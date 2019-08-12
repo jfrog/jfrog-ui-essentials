@@ -1,18 +1,25 @@
 <template>
 
     <div>
-        <div class="jf-table-top clearfix" v-if="tableView.options && tableView.options.getRawData().length">
+        <div class="jf-table-top clearfix">
             <div class="counter-and-filter-wrapper"
-                 v-if="!tableView.options.noCount || hasExternalFilter || tableView.options.filterVisible">
-
-
+                 v-if="!tableView.options.getRawData().length || hasExternalFilter || tableView.options.filterVisible">
 
                 <div v-if="tableView.options && !tableView.options.noCount" class="table-counter">{{ totalRecords }}<span v-if="tableView.getSelectedRecords()"> ({{tableView.getSelectedRecords()}} Selected)</span></div>
                 <div class="external-filters">
                     <slot name="external-filters"></slot>
                 </div>
                 <div class="jf-table-filter" v-if="!hasExternalFilter">
-                    <input class="input-text" v-if="tableView.options && tableView.options.filterVisible" :disabled="isFilterDisabled()" v-model="tableView.tableFilter" ng-model-options="{debounce: { 'default': 500 } }" @input="tableView.onUpdateFilter()" :class="{'no-results': tableView.noFilterResults}" placeholder="Filter" v-init="tableView.initFilter()" v-jf-tooltip.bind="filterTooltip">
+                    <input class="input-text"
+                           v-if="tableView.options && tableView.options.filterVisible"
+                           :disabled="isFilterDisabled()"
+                           v-model="tableView.tableFilter"
+                           ng-model-options="{debounce: { 'default': 500 } }"
+                           @input="tableView.onUpdateFilter()"
+                           :class="{'no-results': tableView.noFilterResults}"
+                           placeholder="Filter"
+                           v-init="tableView.initFilter()"
+                           v-jf-tooltip.bind="filterTooltip">
                 </div>
             </div>
 
