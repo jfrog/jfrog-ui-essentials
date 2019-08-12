@@ -230,7 +230,25 @@ export class TreeViewPane {
     }
 
     _addChildren(children, level = 0, parent = null, atEnd = false) {
-        let parentIndex = parent ? this.$flatItems.indexOf(parent) + (atEnd ? parent.data.$childrenCache.length : 0) : (atEnd ? this.$flatItems.length - 1 : -1);
+        let parentIndex
+        if (parent) {
+            let additionals = 0;
+            if (atEnd) {
+                let addAdditionals = (rootArray) => {
+                    rootArray.forEach(node => {
+                        additionals++;
+                        if (this.isNodeOpen(node)) {
+                            addAdditionals(this._flatFromNode(node).data.$childrenCache)
+                        }
+                    })
+                }
+                addAdditionals(parent.data.$childrenCache)
+            }
+            parentIndex = this.$flatItems.indexOf(parent) + additionals;
+        }
+        else {
+            parentIndex = atEnd ? this.$flatItems.length - 1 : -1;
+        }
         let added = [];
         children.forEach((node) => {
             let flatItem = this._createFlatItem(node, level, parent);

@@ -262,7 +262,6 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService,
             if (flat) {
                 flat.pane._addChildren(replacements, flat.level, flat.parent, true);
                 flat.pane.$flatItems.splice(flat.pane.$flatItems.indexOf(flat), 1);
-                console.log(flat.parent.data.$childrenCache.indexOf(node));
                 flat.parent.data.$childrenCache.splice(flat.parent.data.$childrenCache.indexOf(node), 1, ...replacements);
             }
         }
