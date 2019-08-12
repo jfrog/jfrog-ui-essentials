@@ -35,7 +35,11 @@
             'disableFilterTooltip',
             'externalSearchFields',
             'newEntityCustomText',
-            'disableNewEntity'
+            'disableNewEntity',
+            'emptyTableCallToAction',
+            'emptyTableAction',
+            'externalSortCallback',
+            'keyField'
         ],
         'jf@inject': [
             'JFrogTableViewOptions',
@@ -107,6 +111,12 @@
             if (this.emptyTableText) {
                 this.tableOptions.setEmptyTableText(this.emptyTableText)
             }
+            if (this.emptyTableCallToAction) {
+                this.tableOptions.setEmptyTableCallToAction(this.emptyTableCallToAction)
+            }
+            if (this.emptyTableAction) {
+                this.tableOptions.setEmptyTableAction(this.emptyTableAction)
+            }
             if (this.groupBy) {
                 this.tableOptions.groupBy(this.groupBy)
             }
@@ -115,6 +125,9 @@
             }
             if (this.sortDir && this.sortDir === 'desc') {
                 this.tableOptions.reverseSortingDir();
+            }
+            if (this.keyField) {
+                this.tableOptions.setKey(this.keyField);
             }
             if (!_.isUndefined(this.showFilter)) {
                 this.tableOptions.showFilter(this.showFilter)
@@ -187,7 +200,15 @@
         methods: {
             setData(initialSet) {
                 if (!this.$listeners['page-needed'] && !this.$listeners['load-more'] && this.tableOptions.paginationMode !== this.tableOptions.EXTERNAL_PAGINATION) {
-                    this.tableOptions.setData(this.data);
+                    if (this.data && !_.isUndefined(this.data.isUpdate) && this.data.data) {
+                        if (this.data.isUpdate) {
+                            this.tableOptions.updateData(this.data.data);
+                        } else {
+                            this.tableOptions.setData(this.data.data);
+                        }
+                    } else {
+                        this.tableOptions.setData(this.data);
+                    }
                 }
                 else if (!initialSet && this.$listeners['load-more'] && !this.pageResolver) {
                     this.tableOptions.setData(this.data.data, '$$internal$$');
