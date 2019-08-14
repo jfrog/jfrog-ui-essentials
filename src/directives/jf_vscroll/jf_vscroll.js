@@ -100,6 +100,13 @@ class jfVScrollController {
                     if (newScrollIndex < 0) newScrollIndex = 0;
                     this.virtualScrollIndex = Math.floor(newScrollIndex);
                     this.virtScrollDisplacement = newScrollIndex - this.virtualScrollIndex;
+
+                    if (this.virtualScrollIndex + this.itemsPerPage >= len - 2) {
+                        if (this.bottomReachedListener) {
+                            this.bottomReachedListener();
+                        }
+                    }
+
                 }
                 else {
                     this.virtualScrollIndex = 0;
@@ -128,6 +135,10 @@ class jfVScrollController {
         let vScrollIndex = this.virtualScrollIndex;
         let additionals = vScrollIndex + this.itemsPerPage + 2 <= this.origArray().length ? 2 : vScrollIndex + this.itemsPerPage + 1 <= this.origArray().length ? 1 : 0;
         return this.origArray().slice(vScrollIndex, vScrollIndex + this.itemsPerPage + additionals);
+    }
+
+    registerBottomReachedListener(listener) {
+        this.bottomReachedListener = listener;
     }
 
     getTranslate() {
@@ -251,6 +262,15 @@ class jfVScrollController {
         if (this.virtualScrollIndex + this.itemsPerPage >= this.origArray().length) {
             this.virtualScrollIndex = this.origArray().length - this.itemsPerPage;
             this.virtScrollDisplacement = 0;
+            if (this.bottomReachedListener) {
+                this.bottomReachedListener();
+            }
+        }
+
+        if (this.virtualScrollIndex + this.itemsPerPage >= this.origArray().length - 2) {
+            if (this.bottomReachedListener) {
+                this.bottomReachedListener();
+            }
         }
 
         if (this.virtualScrollIndex < 0) this.virtualScrollIndex = 0;
@@ -395,7 +415,7 @@ class jfVScrollController {
             this.api.scroll = (numOfRows, duration = 500) => this.scroll(numOfRows, duration);
             this.api.scrollTo = (scrollPos, duration = 500) => this.scrollTo(scrollPos, duration);
             this.api.registerScrollListener = (listener) => this.registerScrollListener(listener);
-
+            this.api.registerBottomReachedListener = listener => this.registerBottomReachedListener(listener);
         }
     }
 

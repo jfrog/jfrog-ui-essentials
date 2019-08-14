@@ -31,18 +31,26 @@
         </div>
 
 
-        <div ng-if="jfTableView.options.paginationMode === jfTableView.options.VIRTUAL_SCROLL"
+        <div ng-if="jfTableView.options.paginationMode === jfTableView.options.VIRTUAL_SCROLL || jfTableView.options.paginationMode === jfTableView.options.INFINITE_VIRTUAL_SCROLL"
              class="table-rows-container"
              ng-style="{height: jfTableView.getActualPageHeight() + 'px'}">
             <jf-vscroll with-each="entity" in="jfTableView.options.getPrePagedData()" api="jfTableView.vsApi">
-                <jf-table-row ng-non-bindable
-                              table-view="jfTableView"
-                              row-id="$index"
-                              data="entity"></jf-table-row>
+                <div ng-non-bindable>
+                    <div ng-if="$is_last() && jfTableView.options && jfTableView.options.pendingInfiniteScroll && jfTableView.options.paginationMode === jfTableView.options.INFINITE_VIRTUAL_SCROLL"
+                         ng-style="{height: jfTableView.options.rowHeight}" class="loading-more">
+                        <div class="spinner-msg-local">
+                            <div class="icon-hourglass-local"></div>
+                        </div>
+                    </div>
+                    <jf-table-row ng-if="!$is_last() || !jfTableView.options || !jfTableView.options.pendingInfiniteScroll || jfTableView.options.paginationMode !== jfTableView.options.INFINITE_VIRTUAL_SCROLL"
+                                  table-view="jfTableView"
+                                  row-id="$index"
+                                  data="entity"></jf-table-row>
+                </div>
             </jf-vscroll>
         </div>
 
-        <div ng-if="jfTableView.options.paginationMode !== jfTableView.options.VIRTUAL_SCROLL"
+        <div ng-if="jfTableView.options.paginationMode !== jfTableView.options.VIRTUAL_SCROLL && jfTableView.options.paginationMode !== jfTableView.options.INFINITE_VIRTUAL_SCROLL"
              class="table-rows-container">
             <jf-table-row ng-repeat="entity in jfTableView.options.getPageData() track by $index"
                           table-view="jfTableView"
@@ -60,7 +68,7 @@
              ng-if="jfTableView.noFilterResults">
             {{jfTableView.options.noFilterResultsText || 'Current filter has no results.'}} <a href class="jf-link" ng-if="jfTableView.tableFilter" ng-click="jfTableView.clearFilter()">Clear filter</a>
         </div>
-        <div ng-if="jfTableView.options.pendingInfiniteScroll"
+        <div ng-if="jfTableView.options.pendingInfiniteScroll && jfTableView.options.paginationMode !== jfTableView.options.INFINITE_VIRTUAL_SCROLL"
              ng-style="{height: jfTableView.options.rowHeight}"
              class="loading-more">
             <div class="spinner-msg-local">

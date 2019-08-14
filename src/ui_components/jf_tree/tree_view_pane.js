@@ -7,6 +7,7 @@ export class TreeViewPane {
         this.itemHeight = '50px';
         this.itemsPerPage = 25;
 
+        this.bottomReached = false;
         this._renderLinesBackgrounds();
     }
 
@@ -98,8 +99,16 @@ export class TreeViewPane {
             this.dirCtrl.virtScrollDisplacement = 0;
         }
         if (this.dirCtrl.virtualScrollIndex + this.itemsPerPage >= this._getPrePagedData().length) {
+            if (!this.bottomReached) {
+                this.treeApi.fire('bottom-reached');
+                this.bottomReached = true;
+            }
+
             this.dirCtrl.virtualScrollIndex = this._getPrePagedData().length - this.itemsPerPage;
             this.dirCtrl.virtScrollDisplacement = 0;
+        }
+        else {
+            this.bottomReached = false;
         }
 
         if (this.dirCtrl.virtualScrollIndex < 0) this.dirCtrl.virtualScrollIndex = 0;
@@ -220,8 +229,26 @@ export class TreeViewPane {
         if (this.dirCtrl) this.dirCtrl.syncFakeScroller();
     }
 
-    _addChildren(children, level = 0, parent = null) {
-        let parentIndex = this.$flatItems.indexOf(parent);
+    _addChildren(children, level = 0, parent = null, atEnd = false) {
+        let parentIndex
+        if (parent) {
+            let additionals = 0;
+            if (atEnd) {
+                let addAdditionals = (rootArray) => {
+                    rootArray.forEach(node => {
+                        additionals++;
+                        if (this.isNodeOpen(node)) {
+                            addAdditionals(this._flatFromNode(node).data.$childrenCache)
+                        }
+                    })
+                }
+                addAdditionals(parent.data.$childrenCache)
+            }
+            parentIndex = this.$flatItems.indexOf(parent) + additionals;
+        }
+        else {
+            parentIndex = atEnd ? this.$flatItems.length - 1 : -1;
+        }
         let added = [];
         children.forEach((node) => {
             let flatItem = this._createFlatItem(node, level, parent);

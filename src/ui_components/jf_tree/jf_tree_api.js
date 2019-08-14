@@ -14,7 +14,7 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService,
             this.ContextMenuService = ContextMenuService;
             this.actions = [];
             this.listeners = {};
-            this.supportedEvents = ['ready', 'pagination.change', 'item.clicked', 'item.dblClicked', 'item.selected', 'item.before.open', 'keydown'];
+            this.supportedEvents = ['ready', 'pagination.change', 'item.clicked', 'item.dblClicked', 'item.selected', 'item.before.open', 'keydown', 'bottom-reached'];
             this.appScope = appScope;
             this.objectName = 'Item';
             this.GO_UP_NODE = {$specialNode: 'GO_UP'};
@@ -254,6 +254,15 @@ export function JFTreeApi($q, $timeout, AdvancedStringMatch, ContextMenuService,
 
             if (viewPane) {
                 return viewPane.findNodeByUniqueId(uniqueId);
+            }
+        }
+
+        replaceNode(node, replacements) {
+            let flat = this._flatFromNode(node);
+            if (flat) {
+                flat.pane._addChildren(replacements, flat.level, flat.parent, true);
+                flat.pane.$flatItems.splice(flat.pane.$flatItems.indexOf(flat), 1);
+                flat.parent.data.$childrenCache.splice(flat.parent.data.$childrenCache.indexOf(node), 1, ...replacements);
             }
         }
 
