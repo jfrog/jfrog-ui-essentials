@@ -7,7 +7,7 @@
          @mouseup="rowId === 'headers' && tableView.options.resizableColumns && onMouseUp($event)"
          @mouseleave="rowId === 'headers' && tableView.options.resizableColumns && onMouseUp($event)"
          @click="onRowClick($event)"
-         :class="{headers: rowId === 'headers', 'group-header': data && data.$groupHeader, 'expanded': data && data.$groupHeader && data.$groupHeader.$expanded, 'sub-row': data && data.$parentRow, sticky: data && data.$sticky, selected: data && data.$selected, 'drag-mark': rowId !== 'headers' && tableView.options.draggableRows && !(tableView.options.registeredTabularDnd.dndCtrl.disabled) && isRowDraggable(), [data[tableView.options.rowClassAttr]]: tableView.options.rowClassAttr && data[tableView.options.rowClassAttr]}"
+         :class="{headers: rowId === 'headers', 'group-header': data && data.$groupHeader, 'expanded': data && data.$groupHeader && data.$groupHeader.$expanded, 'sub-row': data && data.$parentRow, sticky: data && data.$sticky, selected: data && data.$selected, 'drag-mark': rowId !== 'headers' && tableView.options.draggableRows && !(tableView.options.registeredTabularDnd && tableView.options.registeredTabularDnd.dndCtrl.disabled) && isRowDraggable(), [data[tableView.options.rowClassAttr]]: tableView.options.rowClassAttr && data[tableView.options.rowClassAttr]}"
          :style="{height: rowId === 'headers' ? '' : tableView.options.rowHeight, opacity: tableView.options.ready ? 1 : 0}">
 
         <div class="jf-table-cell selection" :class="{'single-selection' : tableView.options.selectionMode === tableView.options.SINGLE_SELECTION}" :style="{height: tableView.options.rowHeight, width: tableView.options.selectionColumnWidth + 'px'}" v-if="tableView.options.hasSelection()">
