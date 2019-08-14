@@ -39,8 +39,9 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 			this.VIRTUAL_SCROLL = 1;
 			this.EXTERNAL_PAGINATION = 2;
 			this.INFINITE_SCROLL = 3;
+            this.INFINITE_VIRTUAL_SCROLL = 4;
 
-			this._setDefaults();
+            this._setDefaults();
 		}
 
 		_setDefaults() {
@@ -431,7 +432,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
                     }
 				}
 			}
-			else if (this.paginationMode === this.INFINITE_SCROLL) {
+			else if (this.paginationMode === this.INFINITE_SCROLL || this.paginationMode === this.INFINITE_VIRTUAL_SCROLL) {
                 if (!paginationCallback || typeof paginationCallback !== 'function') {
                     console.error('Setting pagination mode to INFINITE_SCROLL require pagination callback function as the second parameter of setPaginationMode');
                     this.paginationMode = this.PAGINATION;
@@ -547,9 +548,9 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				$timeout(() => this.sendExternalPageRequest());
 				this.initialExternalPaginationSent = true;
 			}
-            else if (this.paginationMode === this.INFINITE_SCROLL) {
-				this._initInfiniteScroll();
+            else if (this.paginationMode === this.INFINITE_SCROLL || this.paginationMode === this.INFINITE_VIRTUAL_SCROLL) {
                 $timeout(() => {
+                    this._initInfiniteScroll();
                     if (!this.infiniteScrollChunkSize && this.rowsPerPage) this.infiniteScrollChunkSize = this.rowsPerPage;
                 	this.sendInfiniteScrollRequest()
                     this.initialInfiniteScrollRequestSent = true;
@@ -564,30 +565,38 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
             let scrollParent = $(this.dirCtrl.$element).scrollParent();
 
             const EDGE = 50;
-
-            scrollParent.on('scroll',(e) => {
-            	if (!this.infiniteScrollHasMore || this.pendingInfiniteScroll) return;
-            	this.dirCtrl.$scope.$apply(() => {
-                    let bottomReached = false;
-                    if (scrollParent[0] === document) {
-                        if($(window).scrollTop() + $(window).height() >= $(document).height() - EDGE) {
-                            bottomReached = true;
+            if (this.paginationMode === this.INFINITE_SCROLL) {
+                scrollParent.on('scroll',(e) => {
+                    if (!this.infiniteScrollHasMore || this.pendingInfiniteScroll) return;
+                    this.dirCtrl.$scope.$apply(() => {
+                        let bottomReached = false;
+                        if (scrollParent[0] === document) {
+                            if($(window).scrollTop() + $(window).height() >= $(document).height() - EDGE) {
+                                bottomReached = true;
+                            }
                         }
-                    }
-                    else {
-                        if(scrollParent[0].scrollHeight - scrollParent.scrollTop() <= scrollParent[0].clientHeight + EDGE) {
-                            bottomReached = true;
+                        else {
+                            if(scrollParent[0].scrollHeight - scrollParent.scrollTop() <= scrollParent[0].clientHeight + EDGE) {
+                                bottomReached = true;
+                            }
                         }
-                    }
-                    if (bottomReached) {
-                        e.preventDefault();
-                        this.infiniteScrollOffset += this.infiniteScrollChunkSize;
-                        this.rowsPerPage += this.infiniteScrollChunkSize;
-                        this.sendInfiniteScrollRequest()
-                    }
-	            })
-            })
-		}
+                        if (bottomReached) {
+                            e.preventDefault();
+                            this.infiniteScrollOffset += this.infiniteScrollChunkSize;
+                            this.rowsPerPage += this.infiniteScrollChunkSize;
+                            this.sendInfiniteScrollRequest()
+                        }
+                    })
+                })
+            }
+            else if (this.paginationMode === this.INFINITE_VIRTUAL_SCROLL) {
+                this.dirCtrl.vsApi.registerBottomReachedListener(() => {
+                    if (!this.infiniteScrollHasMore || this.pendingInfiniteScroll) return;
+                    this.infiniteScrollOffset = this.getRawData().length;
+                    this.sendInfiniteScrollRequest()
+                })
+            }
+        }
 
         getActionsContainerWidthInPixels() {
             return this.actionButtonSize * (this.actions.length <= 3 || this.isRowActionGroupingDisabled ? this.actions.length : 1);
@@ -801,7 +810,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 				return this.getPrePagedData().slice(this.dirCtrl.currentPage * this.rowsPerPage,
 					this.dirCtrl.currentPage * this.rowsPerPage + this.rowsPerPage);
 			}
-			else if (this.paginationMode === this.VIRTUAL_SCROLL) {
+			else if (this.paginationMode === this.VIRTUAL_SCROLL || this.paginationMode === this.INFINITE_VIRTUAL_SCROLL) {
 				return this.dirCtrl.vsApi.getPageData();
 			}
 			else if (this.paginationMode === this.EXTERNAL_PAGINATION || this.paginationMode === this.INFINITE_SCROLL) {
@@ -932,7 +941,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
 		getSortedData(sourceData) {
 
-			if (this.paginationMode === this.EXTERNAL_PAGINATION || this.externalSortCallback || !this.sortByField) {
+			if (this.paginationMode === this.EXTERNAL_PAGINATION || this.paginationMode === this.INFINITE_VIRTUAL_SCROLL || this.externalSortCallback || !this.sortByField) {
 				return sourceData;
 			}
 			else {

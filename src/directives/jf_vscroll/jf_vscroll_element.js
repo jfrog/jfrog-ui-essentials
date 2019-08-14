@@ -19,6 +19,7 @@ export function jfVScrollElement($compile) {
 
             elementScope[directiveCtrl.variable] = directiveCtrl.data;
             elementScope['$index'] = directiveCtrl.index;
+            elementScope['$is_last'] = () => directiveCtrl.vscroll.origArray().indexOf(directiveCtrl.data) === directiveCtrl.vscroll.origArray().length - 1;
 
             directiveCtrl.elementScope = elementScope;
             let compiled = $compile($(`<div>${directiveCtrl.template}</div>`))(elementScope);
