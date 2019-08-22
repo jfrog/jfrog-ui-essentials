@@ -7,7 +7,7 @@ export function jfCodeMirror() {
             mimeType: '@',
             mode: '@',
             model: '=',
-            allowEdit: '=',
+            allowEdit: '@',
             height: '@?',
             apiAccess: '=',
             autofocus: '@',
@@ -42,7 +42,7 @@ class jfCodeController {
 
         this.editorOptions = {
             lineNumbers: true,
-            readOnly: !this.allowEdit, // Don't use nocursor - it disables search
+            readOnly: this.allowEdit, // Don't use nocursor - it disables search
             lineWrapping: true,
             mode: this.mode || 'links',
             viewportMargin: 65,
