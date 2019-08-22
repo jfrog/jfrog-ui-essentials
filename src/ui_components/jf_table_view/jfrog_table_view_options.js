@@ -155,7 +155,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
 			this.dataWasSet = true;
 
-            if (this.paginationMode === this.VIRTUAL_SCROLL && this.dirCtrl) {
+            if ((this.paginationMode === this.VIRTUAL_SCROLL || this.paginationMode === this.INFINITE_VIRTUAL_SCROLL) && this.dirCtrl) {
                 this.dirCtrl.vsApi.reset();
             }
             if (this.dirCtrl) {
@@ -488,6 +488,12 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
             if (this.externalSortCallback && sendExternal) {
                 this.externalSortCallback(field, this.revSort ? 'desc' : 'asc');
+
+                if (this.paginationMode === this.INFINITE_VIRTUAL_SCROLL) {
+                	this.dirCtrl.vsApi.reset();
+                	this.setData([]);
+                	this.sendInfiniteScrollRequest();
+                }
                 return;
             }
 
