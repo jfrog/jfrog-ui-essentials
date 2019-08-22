@@ -42,7 +42,7 @@ class jfCodeController {
 
         this.editorOptions = {
             lineNumbers: true,
-            readOnly: this.allowEdit, // Don't use nocursor - it disables search
+            readOnly: this.allowEdit, // enables nocursor usage if provided in the params for mobile layout
             lineWrapping: true,
             mode: this.mode || 'links',
             viewportMargin: 65,
