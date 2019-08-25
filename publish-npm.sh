@@ -9,7 +9,7 @@
 # You should run this file in the following manner for a regular (major/minor) version: #
 #  source ./publish-npm.sh 2.1.5                                                        #
 # Or for a beta version:                                                                #
-#  source 3.0.0-beta.1                                                 #
+#  source ./publish-npm.sh 3.0.0-beta.1                                                 #
 #########################################################################################
 
 ####### Colors #############

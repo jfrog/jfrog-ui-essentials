@@ -581,6 +581,8 @@
 
             .empty-table-placeholder {
                 .empty-placeholder();
+                height: auto;
+                min-height: 80px;
                 .empty-placeholder.filter-no-results div {
                     display: inline;
                     padding-right: 5px;
