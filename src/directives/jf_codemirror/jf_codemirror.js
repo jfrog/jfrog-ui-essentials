@@ -40,15 +40,11 @@ class jfCodeController {
     $onInit() {
 	    this._formatModel();
 	    this.autofocus = this.autofocus === 'true';
-
-        console.log(this);
-
         let readOnlyParam = !this.allowEdit;
-        
+
         if(!_.isUndefined(this.noCursor) && this.noCursor) {
             readOnlyParam = 'nocursor';
         }
-
 
         this.editorOptions = {
             lineNumbers: true,
