@@ -7,7 +7,8 @@ export function jfCodeMirror() {
             mimeType: '@',
             mode: '@',
             model: '=',
-            allowEdit: '@',
+            allowEdit: '=',
+            noCursor: '=',
             height: '@?',
             apiAccess: '=',
             autofocus: '@',
@@ -40,9 +41,18 @@ class jfCodeController {
 	    this._formatModel();
 	    this.autofocus = this.autofocus === 'true';
 
+        console.log(this);
+
+        let readOnlyParam = !this.allowEdit;
+        
+        if(!_.isUndefined(this.noCursor) && this.noCursor) {
+            readOnlyParam = 'nocursor';
+        }
+
+
         this.editorOptions = {
             lineNumbers: true,
-            readOnly: this.allowEdit, // enables nocursor usage if provided in the params for mobile layout
+            readOnly: readOnlyParam, // enables nocursor usage if provided in the params for mobile layout
             lineWrapping: true,
             mode: this.mode || 'links',
             viewportMargin: 65,
