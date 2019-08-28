@@ -40,15 +40,16 @@ class jfCodeController {
     $onInit() {
 	    this._formatModel();
 	    this.autofocus = this.autofocus === 'true';
-        let readOnlyParam = !this.allowEdit;
+        let isReadOnlyMode = !this.allowEdit;
 
+        // enables nocursor usage if provided in the params for mobile layout
         if(!_.isUndefined(this.noCursor) && this.noCursor) {
-            readOnlyParam = 'nocursor';
+            isReadOnlyMode = 'nocursor';
         }
 
         this.editorOptions = {
             lineNumbers: true,
-            readOnly: readOnlyParam, // enables nocursor usage if provided in the params for mobile layout
+            readOnly: isReadOnlyMode, 
             lineWrapping: true,
             mode: this.mode || 'links',
             viewportMargin: 65,
