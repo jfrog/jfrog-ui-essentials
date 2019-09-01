@@ -8,6 +8,7 @@ export function jfCodeMirror() {
             mode: '@',
             model: '=',
             allowEdit: '=',
+            noCursor: '=',
             height: '@?',
             apiAccess: '=',
             autofocus: '@',
@@ -39,10 +40,16 @@ class jfCodeController {
     $onInit() {
 	    this._formatModel();
 	    this.autofocus = this.autofocus === 'true';
+        let isReadOnlyMode = !this.allowEdit;
+
+        // enables nocursor usage if provided in the params for mobile layout
+        if(!_.isUndefined(this.noCursor) && this.noCursor) {
+            isReadOnlyMode = 'nocursor';
+        }
 
         this.editorOptions = {
             lineNumbers: true,
-            readOnly: !this.allowEdit, // Don't use nocursor - it disables search
+            readOnly: isReadOnlyMode, 
             lineWrapping: true,
             mode: this.mode || 'links',
             viewportMargin: 65,
