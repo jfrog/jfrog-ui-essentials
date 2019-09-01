@@ -16,7 +16,7 @@ const COMMON_ACTIONS = {
 
 let defaultAppOptions;
 
-export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFrogDownload, JFrogModal, JFrogUIUtils) {
+export function JFrogTableViewOptions($q, $timeout, $rootScope, $modal, $state, JFrogDownload, JFrogModal, JFrogUIUtils) {
 	'ngInject';
 	createContextMenu();
 	class JFrogTableViewOptionsClass {
@@ -134,8 +134,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 		}
 
 		setData(data, internalCall) {
-
-			if (this.paginationMode === this.EXTERNAL_PAGINATION && internalCall !== '$$internal$$') {
+            if (this.paginationMode === this.EXTERNAL_PAGINATION && internalCall !== '$$internal$$') {
 				console.error('When using external pagination, you should not call setData directly !');
 			}
 			else if (this.paginationMode === this.INFINITE_SCROLL && internalCall !== '$$internal$$') {
@@ -155,7 +154,7 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
 			this.dataWasSet = true;
 
-            if ((this.paginationMode === this.VIRTUAL_SCROLL || this.paginationMode === this.INFINITE_VIRTUAL_SCROLL) && this.dirCtrl) {
+            if ((this.paginationMode === this.VIRTUAL_SCROLL || (this.paginationMode === this.INFINITE_VIRTUAL_SCROLL && internalCall !== '$$internal$$')) && this.dirCtrl) {
                 this.dirCtrl.vsApi.reset();
             }
             if (this.dirCtrl) {
@@ -491,7 +490,10 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
 
                 if (this.paginationMode === this.INFINITE_VIRTUAL_SCROLL) {
                 	this.dirCtrl.vsApi.reset();
-                	this.setData([]);
+                	delete this.infiniteScrollHasMore;
+                	delete this.pendingInfiniteScroll;
+                    this.infiniteScrollOffset = 0;
+                	this.setData([], '$$internal$$');
                 	this.sendInfiniteScrollRequest();
                 }
                 return;
@@ -597,9 +599,14 @@ export function JFrogTableViewOptions($timeout, $rootScope, $modal, $state, JFro
             }
             else if (this.paginationMode === this.INFINITE_VIRTUAL_SCROLL) {
                 this.dirCtrl.vsApi.registerBottomReachedListener(() => {
-                    if (!this.infiniteScrollHasMore || this.pendingInfiniteScroll) return;
+                	let defer = $q.defer();
+                    if (!this.infiniteScrollHasMore) return true;
+                    if (this.pendingInfiniteScroll) return $q.reject();
                     this.infiniteScrollOffset = this.getRawData().length;
-                    this.sendInfiniteScrollRequest()
+                    this.sendInfiniteScrollRequest().then(() => {
+                    	defer.resolve();
+                    })
+                    return defer.promise;
                 })
             }
         }

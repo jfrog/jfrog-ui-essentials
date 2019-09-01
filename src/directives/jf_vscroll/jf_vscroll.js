@@ -103,7 +103,16 @@ class jfVScrollController {
 
                     if (this.virtualScrollIndex + this.itemsPerPage >= len - 2) {
                         if (this.bottomReachedListener) {
-                            this.bottomReachedListener();
+                            this.bottomReachedListenerPending = true;
+                            let response = this.bottomReachedListener();
+                            if (response.then) {
+                                this.bottomReachedListener().then(() => {
+                                    this.bottomReachedListenerPending = false;
+                                })
+                            }
+                            else if (response) {
+                                this.bottomReachedListenerPending = false;
+                            }
                         }
                     }
 
@@ -190,7 +199,7 @@ class jfVScrollController {
             this._scrollTo(scrollPosBefore - scrollAmount);
         }
 
-        if (scrollPosBefore !== this._getCurrentScrollPos()) $event.preventDefault();
+        if (scrollPosBefore !== this._getCurrentScrollPos() || this.bottomReachedListenerPending) $event.preventDefault();
 //        this.syncFakeScroller(false);
     }
 
@@ -262,14 +271,20 @@ class jfVScrollController {
         if (this.virtualScrollIndex + this.itemsPerPage >= this.origArray().length) {
             this.virtualScrollIndex = this.origArray().length - this.itemsPerPage;
             this.virtScrollDisplacement = 0;
-            if (this.bottomReachedListener) {
-                this.bottomReachedListener();
-            }
         }
 
         if (this.virtualScrollIndex + this.itemsPerPage >= this.origArray().length - 2) {
             if (this.bottomReachedListener) {
-                this.bottomReachedListener();
+                this.bottomReachedListenerPending = true;
+                let response = this.bottomReachedListener();
+                if (response.then) {
+                    response.then(() => {
+                        this.bottomReachedListenerPending = false;
+                    })
+                }
+                else if (response) {
+                    this.bottomReachedListenerPending = false;
+                }
             }
         }
 
