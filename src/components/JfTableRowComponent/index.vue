@@ -217,9 +217,9 @@
             onMouseMove(e) {
                 if (!this.resizingColumns) {
                     if (this.hoveringResize && this.hoveringResize.left)
-                        delete this.hoveringResize.left.$dragRightBorder;
+                        this.$delete(this.hoveringResize.left, '$dragRightBorder');
                     if (this.hoveringResize && this.hoveringResize.right)
-                        delete this.hoveringResize.right.$dragLeftBorder;
+                        this.$delete(this.hoveringResize.right, '$dragLeftBorder');
                     this.hoveringResize = this._getHoveringResizePoint(e);
                 } else {
                     this.dragColumnResize(e);
@@ -273,9 +273,9 @@
             },
             onMouseUp(e) {
                 if (this.hoveringResize && this.hoveringResize.left)
-                    delete this.hoveringResize.left.$dragRightBorder;
+                    this.$delete(this.hoveringResize.left, '$dragRightBorder');
                 if (this.hoveringResize && this.hoveringResize.right)
-                    delete this.hoveringResize.right.$dragLeftBorder;
+                    this.$delete(this.hoveringResize.right, '$dragLeftBorder');
                 this.resizingColumns = false;
                 delete this.resizeDragStart;
             },
