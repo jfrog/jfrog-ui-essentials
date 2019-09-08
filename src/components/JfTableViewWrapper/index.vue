@@ -202,7 +202,7 @@
                 if (!this.$listeners['page-needed'] && !this.$listeners['load-more'] && this.tableOptions.paginationMode !== this.tableOptions.EXTERNAL_PAGINATION) {
                     if (this.data && !_.isUndefined(this.data.isUpdate) && this.data.data) {
                         if (this.data.isUpdate) {
-                            this.tableOptions.updateData(this.data.data);
+                            this.tableOptions.updateData(this.data.data, this.data.removeIfMissing);
                         } else {
                             this.tableOptions.setData(this.data.data);
                         }
