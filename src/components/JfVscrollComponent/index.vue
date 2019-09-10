@@ -7,7 +7,7 @@
                     <div class="scroll-faker" v-init="initScrollFaker()" :style="{height: (getTotalScrollHeight() > maxFakeScrollHeight ? maxFakeScrollHeight : getTotalScrollHeight()) + 'px'}">
                     </div>
                 </div>
-                <div class="h-scroll-wrapper" :style="{height: (getPageHeight() + getTranslate()) + 'px'}" @mousewheel="onMouseWheel">
+                <div class="h-scroll-wrapper" :style="{height: (getPageHeight() + getTranslate()) + 'px'}" @wheel="onMouseWheel">
                     <div class="h-scroll-content">
                         <jf-vscroll-element v-for="(item, $index) in getPage()" :vscroll="jfVScroll" :data="item" :index="$index" :template="childComponent" :variable="withEach" :last="$index === getPage().length - 1"></jf-vscroll-element>
                     </div>
