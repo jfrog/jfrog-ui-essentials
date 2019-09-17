@@ -5,7 +5,7 @@
 	    ng-style="{width: jfTabs.getTabWidthForStyle()}"
 	    jf-disable-feature="{{ tab.feature }}">
 		<a ng-click="jfTabs.onClickTab(tab, true)" style="z-index: 999999">
-			<div class="jf-tab-header-container" jf-tooltip-on-overflow><span>{{jfTabs.dictionary[tab.name]}}</span>
+			<div class="jf-tab-header-container" jf-tooltip-on-overflow><span ng-bind-html="jfTabs.dictionary[tab.name]"></span>
 			</div>
 		</a>
 	</li>
@@ -17,7 +17,7 @@
                     ng-class="{[tab.class] : jfTabs.hasClass(tab)}"
                     jf-disable-feature="{{ tab.feature }}">
                     <a ng-click="jfTabs.onClickTab(tab, true)"
-                       jf-tooltip-on-overflow><span>{{jfTabs.dictionary[tab.name]}}</span></a>
+                       jf-tooltip-on-overflow><span ng-bind-html="jfTabs.dictionary[tab.name]"></span></a>
                 </li>
             </ul>
         </span>
