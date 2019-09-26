@@ -103,7 +103,7 @@
 </script>
 
 <style scoped lang="less">
-  @import '../../assets/stylesheets/main';
+  @import '../../assets/stylesheets/variables';
   .jf-context-menu {
     background: white;
     position: absolute;

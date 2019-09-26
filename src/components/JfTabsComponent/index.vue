@@ -180,7 +180,7 @@
 </script>
 
 <style scoped lang="less">
-@import "../../assets/stylesheets/main.less";
+@import "../../assets/stylesheets/variables";
 .dropdown-toggle::after {
     display: none;
 }
@@ -239,8 +239,6 @@
 
       a span {
         position: relative;
-
-        .license-required-icon;
 
         &::after {
           top: -2px;

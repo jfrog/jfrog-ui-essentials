@@ -114,7 +114,7 @@
 </script>
 
 <style lang="less">
-    @import '../../assets/stylesheets/main';
+    @import '../../assets/stylesheets/variables';
 
     .jf-datetimepicker {
         .disabled {

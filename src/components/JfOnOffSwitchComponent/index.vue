@@ -41,7 +41,7 @@
 </script>
 
 <style scoped lang="less">
-@import "../../assets/stylesheets/main.less";
+@import "../../assets/stylesheets/variables";
 .jf-on-off-toggler {
   &.on-selected {
     span {

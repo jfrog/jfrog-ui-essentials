@@ -64,7 +64,7 @@
 </script>
 
 <style scoped lang="less">
-@import "../../assets/stylesheets/main.less";
+@import "../../assets/stylesheets/variables";
 .jf-switch {
   margin-bottom: 16px;
   font-size: 14px;

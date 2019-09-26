@@ -22,7 +22,7 @@
 </script>
 
 <style scoped lang="less">
-    @import '../../assets/stylesheets/main';
+    @import '../../assets/stylesheets/variables';
 
     .jf-divider {
         .jf-divider-container {
