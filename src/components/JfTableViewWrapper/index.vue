@@ -208,6 +208,7 @@
                         }
                     } else {
                         this.tableOptions.setData(this.data);
+                        this.tableOptions.refreshFilter();
                     }
                 }
                 else if (!initialSet && this.$listeners['load-more'] && !this.pageResolver) {
