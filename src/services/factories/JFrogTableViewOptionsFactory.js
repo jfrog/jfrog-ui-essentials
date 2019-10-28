@@ -449,6 +449,10 @@ export function JFrogTableViewOptions() {
             return this;
         }
 
+        hideSelectAll() {
+            this.noSelectAll = true;
+        }
+
         setPaginationMode(pagiMode, paginationCallback) {
             this.paginationMode = pagiMode;
             if (this.paginationMode === this.EXTERNAL_PAGINATION) {

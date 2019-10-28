@@ -12,7 +12,7 @@
 
         <div class="jf-table-cell selection" :class="{'single-selection' : tableView.options.selectionMode === tableView.options.SINGLE_SELECTION}" :style="{height: tableView.options.rowHeight, width: tableView.options.selectionColumnWidth + 'px'}" v-if="tableView.options.hasSelection()">
             <div class="jf-table-cell-content">
-                <div class="selection-button" v-if="(!data.$groupHeader && rowId !== 'headers') || (tableView.options.selectionMode === tableView.options.MULTI_SELECTION && tableView.options.getRawData().length)" :style="{height: tableView.options.rowHeight, width: tableView.options.selectionColumnWidth +'px'}">
+                <div class="selection-button" v-if="(!data.$groupHeader && rowId !== 'headers') || (tableView.options.selectionMode === tableView.options.MULTI_SELECTION && tableView.options.getRawData().length && !tableView.options.noSelectAll)" :style="{height: tableView.options.rowHeight, width: tableView.options.selectionColumnWidth +'px'}">
                     <div class="selection-icon icon icon-datagrid-v" :class="{selected: data.$selected || (rowId === 'headers' && tableView.allSelected)}" @click="toggleSelection(rowId === 'headers');$event.stopPropagation();">
                     </div>
                 </div>

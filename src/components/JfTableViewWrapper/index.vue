@@ -39,7 +39,8 @@
             'emptyTableCallToAction',
             'emptyTableAction',
             'externalSortCallback',
-            'keyField'
+            'keyField',
+            'hideSelectAll'
         ],
         'jf@inject': [
             'JFrogTableViewOptions',
@@ -75,6 +76,9 @@
             this.tableOptions = this.options || new this.JFrogTableViewOptions(this.scope || this.$scope);
             if (!_.isUndefined(this.enableSubrows)) {
                 this.tableOptions.enableSubRows();
+            }
+            if (!_.isUndefined(this.hideSelectAll)) {
+                this.tableOptions.hideSelectAll();
             }
             if (this.tableId) {
                 this.tableOptions.setId(this.tableId);
