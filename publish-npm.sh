@@ -69,6 +69,7 @@ function stash_npmrc {
 function un_stash_npmrc {
     # Un-stash the .npmrc file
     echo -e "${YELLOW}Un-stashing your .npmrc file${NC}"
+    rm -f ~/.npmrc
     mv ~/.NPMTMP ~/.npmrc
     return 0
 }
