@@ -199,10 +199,12 @@ export class JFrogModal {
     }
 
     setModalBodyMaxHeight(modal,modalBody,modalHeight){
-        let headerHeight = modal.find('.modal-header').outerHeight() || 0,   // Header height
-            footerHeight = modal.find('.modal-footer').outerHeight() || 0,  // Footer height
-            maxHeight = modalHeight - headerHeight - footerHeight;
-        modalBody.css('max-height', maxHeight);
+        setTimeout(() => {
+            let headerHeight = modal.find('.modal-header').height() || 0,   // Header height
+                footerHeight = modal.find('.modal-footer').height() || 0,  // Footer height
+                maxHeight = modalHeight - headerHeight - footerHeight;
+            modalBody.css('max-height', maxHeight);
+        }, 50);
     }
 
 
