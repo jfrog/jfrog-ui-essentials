@@ -43,7 +43,7 @@ class jfActionsController {
 		    e.preventDefault();
 		    return;
 	    }
-	    if (actionObj.name === 'Download') {
+	    if (actionObj.name === 'Download' && actionObj.xrayShouldValidate) {
 		    e.preventDefault();
 	    }
 	    if (this.actionsHandler) {
