@@ -55,7 +55,7 @@ class jfTableViewController {
             });
             this._fireDebouncedRowsInView()
         }
-        
+
         $(window).on('resize',on_resize);
         $scope.$on('$destroy', ()=>{
             this.cellScopes.forEach(s=>s.$destroy());
@@ -321,7 +321,7 @@ class jfTableViewController {
 jfTableViewController.$inject = ['$scope','$element', '$timeout', '$compile', '$rootScope', 'JFrogEventBus'];
 
 class PaginationApi {
-    constructor(tableCtrl) {
+    constructor(tableCtrl,JFrogEventBus) {
         this.tableCtrl = tableCtrl;
     }
     getTotalPages() {
@@ -337,6 +337,9 @@ class PaginationApi {
         this.update();
         this.sendExternalPageRequest();
 	    this.tableCtrl.options.fire('pagination.change', this.getCurrentPage());
+	    this.tableCtrl.options.fire('pagination:change', this.getCurrentPage());
+        //this.JFrogEventBus.dispatch('pagination:change', this);
+
     }
     prevPage() {
         if (this.getCurrentPage() === 1) return;

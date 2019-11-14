@@ -13,6 +13,8 @@ let events = {
 
 	RESET_GRID_PAGINATION: 'reset:grid:pagination',
 
+	PAGINATION_CHANGE: 'pagination:change',
+
 	TABLEVIEW_HIDE_ACTIONS_DROPDOWN: 'tableview:hide:actions:dropdown',
 
 	CONTEXT_MENU_OPEN: 'context:menu:open',

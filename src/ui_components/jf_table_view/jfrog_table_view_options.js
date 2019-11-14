@@ -16,7 +16,7 @@ const COMMON_ACTIONS = {
 
 let defaultAppOptions;
 
-export function JFrogTableViewOptions($q, $timeout, $rootScope, $modal, $state, JFrogDownload, JFrogModal, JFrogUIUtils) {
+export function JFrogTableViewOptions($q, $timeout, $rootScope, $modal, $state, JFrogDownload, JFrogModal, JFrogUIUtils,JFrogEventBus) {
 	'ngInject';
 	createContextMenu();
 	class JFrogTableViewOptionsClass {
@@ -42,6 +42,7 @@ export function JFrogTableViewOptions($q, $timeout, $rootScope, $modal, $state, 
             this.INFINITE_VIRTUAL_SCROLL = 4;
 
             this._setDefaults();
+
 		}
 
 		_setDefaults() {
@@ -122,6 +123,9 @@ export function JFrogTableViewOptions($q, $timeout, $rootScope, $modal, $state, 
 		}
 
 		fire(event, ...params) {
+			if(event === 'pagination.change'){
+				_inject("JFrogEventBus").dispatch('pagination:change', this);
+			}
 			if (this.listeners[event]) {
 				this.listeners[event].forEach(listener=>listener(...params))
 			}
@@ -134,6 +138,7 @@ export function JFrogTableViewOptions($q, $timeout, $rootScope, $modal, $state, 
 		}
 
 		setData(data, internalCall) {
+
             if (this.paginationMode === this.EXTERNAL_PAGINATION && internalCall !== '$$internal$$') {
 				console.error('When using external pagination, you should not call setData directly !');
 			}
