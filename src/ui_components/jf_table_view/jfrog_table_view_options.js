@@ -124,7 +124,7 @@ export function JFrogTableViewOptions($q, $timeout, $rootScope, $modal, $state, 
 
 		fire(event, ...params) {
 			if(event === 'pagination.change'){
-				window._inject("JFrogEventBus").dispatch('pagination:change', this);
+				JFrogEventBus.dispatch('pagination:change', this);
 			}
 			if (this.listeners[event]) {
 				this.listeners[event].forEach(listener=>listener(...params))
