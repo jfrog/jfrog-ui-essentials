@@ -40,7 +40,8 @@
             'emptyTableAction',
             'externalSortCallback',
             'keyField',
-            'hideSelectAll'
+            'hideSelectAll',
+            'singleRowSelection',
         ],
         'jf@inject': [
             'JFrogTableViewOptions',
@@ -133,6 +134,9 @@
             if (this.keyField) {
                 this.tableOptions.setKey(this.keyField);
             }
+            if (this.singleRowSelection) {
+                this.tableOptions.setSelection(this.tableOptions.SINGLE_SELECTION);
+            }
             if (!_.isUndefined(this.showFilter)) {
                 this.tableOptions.showFilter(this.showFilter)
             }
@@ -173,6 +177,11 @@
             if (this.$listeners['row-clicked']) {
                 this.tableOptions.on('row.clicked', (eventData) => {
                     this.$emit('row-clicked', {eventData});
+                })
+            }
+            if (this.$listeners['selection-change']) {
+                this.tableOptions.on('selection.change', (eventData) => {
+                    this.$emit('selection-change', {eventData});
                 })
             }
             if (this.$listeners['external-sort']) {
