@@ -46,7 +46,7 @@
         },
         methods: {
             doCopy() {
-                this.$copyText(this.textToCopy)
+                navigator.clipboard.writeText(this.textToCopy)
                     .then(this.onSuccessfulCopy())
                     .catch((e) => {
                         console.log(e);
