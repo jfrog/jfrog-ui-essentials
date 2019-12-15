@@ -97,6 +97,9 @@
     "url": "https://github.com/jfrog/jfrog-ui-essentials.git",
     "type": "git"
   },
+  "scripts": {
+    "reset": "rm -rf node_modules/; rm -f package-lock.json; npm install --package-lock"
+  },
   "description": "JFrog UI Essentials",
   "license": "Apache-2.0",
   "version": "2.4.8-beta.12",

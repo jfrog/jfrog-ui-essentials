@@ -139,11 +139,18 @@
     -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
   }
+  .custom-template {
+    & > div {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 }
 
 .dropped-item {
   &:not(.drag-helper) {
-    padding-right: 20px;
+    padding-right: 31px;
   }
   
   &,
@@ -162,7 +169,7 @@
 .delete-drop-item {
   position: absolute;
   top: 3px;
-  right: 6px;
+  right: 12px;
   text-decoration: none;
   font-size: 18px;
 
