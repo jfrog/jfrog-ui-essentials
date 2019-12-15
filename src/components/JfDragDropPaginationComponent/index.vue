@@ -2,7 +2,12 @@
     <div>
         <div class="grid-pagination text-right" v-if="paginationApi.getTotalPages()">
             <p>
-                <input type="text" class="grid-page-box" :style="{'width': (CONSTANTS.PAGINATION_DIGIT_WIDTH_PX + paginationApi.getTotalPages().toString().length * CONSTANTS.PAGINATION_DIGIT_WIDTH_PX) + 'px'}" jf-tooltip="Jump to Page" @blur="onBlur()" v-model="pageViewModel" @input="pageChanged()">
+                <input type="text" class="grid-page-box"
+                       :style="{'width': (CONSTANTS.PAGINATION_DIGIT_WIDTH_PX + paginationApi.getTotalPages().toString().length * CONSTANTS.PAGINATION_DIGIT_WIDTH_PX) + 'px'}"
+                       jf-tooltip="Jump to Page"
+                       @blur="onBlur()"
+                       v-model="pageViewModel"
+                       @input="pageChanged">
                 out of {{ paginationApi.getTotalPages() }}
                 <a href="" @click.prevent="prevPage()" :class="{disabled: currentPage === 1}">‹</a>
                 <a href="" @click.prevent="nextPage()" :class="{disabled: currentPage === paginationApi.getTotalPages()}">›</a>
@@ -39,14 +44,19 @@
         methods: {
             onBlur() {
                 this.pageViewModel = parseInt(this.pageViewModel);
-                if (!this.pageViewModel)
+                if (!this.pageViewModel || isNaN(this.pageViewModel)) {
                     this.pageViewModel = this.currentPage;
+                }
             },
             pageChanged() {
-                this.pageViewModel = parseInt(this.pageViewModel);
-                if (this.pageViewModel !== 0 && !this.pageViewModel)
+                const parsedPageNumber = parseInt(this.pageViewModel);
+                if (isNaN(parsedPageNumber)) {
                     return;
-
+                }
+                this.pageViewModel = parsedPageNumber;
+                if ((this.pageViewModel !== 0 && !this.pageViewModel)) {
+                    return;
+                }
                 this.currentPage = this.pageViewModel;
                 if (this.currentPage < 1)
                     this.currentPage = 1;
