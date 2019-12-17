@@ -13,7 +13,7 @@
 #########################################################################################
 
 ####### Colors #############
-    RED='\033[0;31m'
+RED='\033[0;31m'
 YELLOW='\033[0;33m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
@@ -22,16 +22,16 @@ NC='\033[0m' # No Color
 # If jq is not installed run: brew install jq
 
 # If no version is supplied - exit with error
-    if [ -z $1 ]; then
-echo -e "${RED}ERROR:${NC}" You must supply a valid version!
-return
+if [ -z $1 ]; then
+    echo -e "${RED}ERROR:${NC}" You must supply a valid version!
+    return
 fi
 
 # If version is not SemVer compliant - exit with error
     SEMVER_REGEX="^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(\\-[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?(\\+[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?$"
 if ! [[ "$1" =~ $SEMVER_REGEX ]]; then
-echo -e "${RED}ERROR:${NC}" You must supply a SemVer compatible version!
-return
+    echo -e "${RED}ERROR:${NC}" You must supply a SemVer compatible version!
+    return
 fi
 
 # Update the version of jfrog-ui-essentials in the package.json file
@@ -61,16 +61,27 @@ echo -e "${YELLOW}Creating and pushing a new tag:${NC}"
 git tag $1
 git push --tags
 
+NPMTMP=~/.NPMTMP
+NPMRC=~/.npmrc
+
 function stash_npmrc {
     echo -e "${YELLOW}Stashing your .npmrc file${NC}"
-    mv ~/.npmrc ~/.NPMTMP
+    if test -f "$NPMRC"; then
+        mv "$NPMRC" "$NPMTMP"
+    else
+        echo -e "${YELLOW}$NPMRC file does not exist${NC}"
+    fi
 }
 
 function un_stash_npmrc {
     # Un-stash the .npmrc file
     echo -e "${YELLOW}Un-stashing your .npmrc file${NC}"
-    rm -f ~/.npmrc
-    mv ~/.NPMTMP ~/.npmrc
+    if test -f "$NPMTMP"; then
+        rm -f "$NPMRC"
+        mv "$NPMTMP" "$NPMRC"
+    else
+        echo -e "${YELLOW}$NPMTMP file does not exist${NC}"
+    fi
     return 0
 }
 
@@ -83,9 +94,11 @@ npm login || { un_stash_npmrc ; return 1; }
 
 # If the second arg $2 is set to "beta" or $1 ends with "-beta" - assume a beta version is being published
 if [ -n $2 -a "$2" =~ ^.*beta$ ] || [[ $1 =~ ^.*-.*$ ]]; then
- echo -e "${YELLOW}Publishing a beta version ${GREEN}$1${YELLOW}:${NC}"
- npm publish --tag beta || { un_stash_npmrc ; return 1; }
+    echo -e "${YELLOW}Publishing a beta version ${GREEN}$1${YELLOW}:${NC}"
+    npm publish --tag beta || { un_stash_npmrc ; return 1; }
 else
- echo -e "${YELLOW}Publishing version ${GREEN}$1${YELLOW}:${NC}"
- npm publish || { un_stash_npmrc ; return 1; }
+    echo -e "${YELLOW}Publishing version ${GREEN}$1${YELLOW}:${NC}"
+    npm publish || { un_stash_npmrc ; return 1; }
 fi
+# Un-stash the .npmrc file
+un_stash_npmrc
