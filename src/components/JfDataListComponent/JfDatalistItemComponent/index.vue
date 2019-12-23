@@ -189,11 +189,6 @@ export default {
             .empty-placeholder();
         }
         .group-list {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-
             max-height: 320px;
             padding: 0;
             margin-top: 10px;
