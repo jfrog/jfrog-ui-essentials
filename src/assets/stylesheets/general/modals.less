@@ -5,16 +5,28 @@
     width: auto !important;
     max-width: 875px;
     margin: 110px auto 0;
+    & > .modal-content {
+      border-radius: 6px;
+      border: 6px solid rgba(248, 250, 251, 0.2);
+      box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.06);
+    }
   }
 
   .modal-header {
-    padding: 5px 0 3px 35px;
-    line-height: 50px;
-    background-color: @grayBGLighter;
+    padding: 0 0 0 35px;
+    background: #f1f3f8;
+    line-height: 1em;
+
+    .modal-title {
+      color: #999db4;
+      text-transform: uppercase;
+      padding: 0;
+      line-height: 50px;
+    }
 
     .close {
       margin: 0 20px;
-      line-height: 50px;
+      //line-height: 50px;
       font-size: 24px;
       font-weight: 300;
       color: @blackFontDark;
