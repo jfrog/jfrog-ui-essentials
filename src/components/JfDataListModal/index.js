@@ -1,7 +1,7 @@
 export const JfDataListModal = {
     template: `
             <template slot="modal-header">
-                <button type="button" class="close" data-dismiss="close" aria-label="Close" @click="$dismiss()"><span aria-hidden="_true">×</span></button>
+                <button type="button" class="close" data-dismiss="close" aria-label="Close" @click="$dismiss()"><span aria-hidden="_true"><i class="icon-close"></i></span></button>
                 <h4 class="modal-title" id="popup-header">{{items.length}} {{colName}} For {{objectName}} '{{rowName}}'</h4>
             </template>
             <template slot="modal-footer">
