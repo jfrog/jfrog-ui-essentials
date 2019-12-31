@@ -61,7 +61,7 @@
         <div class="empty-table-placeholder"
              ng-style="jfTableView.options.registeredTabularDnd.emptyTableStyle"
              ng-if="jfTableView.options.dataWasSet && !jfTableView.options.getRawData().length && !jfTableView.options.pendingExternalPaging && (!jfTableView.options.externalTotalCount || jfTableView.options.externalTotalCount.total === 0)">
-            {{jfTableView.options.emptyTableText || 'This table is empty !'}} <a href class="jf-link" ng-if="jfTableView.options.emptyTableAction && jfTableView.options.emptyTableCallActionText"
+            {{jfTableView.options.emptyTableText || 'There is no data to display'}} <a href class="jf-link" ng-if="jfTableView.options.emptyTableAction && jfTableView.options.emptyTableCallActionText"
                                                                                  ng-click="jfTableView.options.emptyTableAction()">{{jfTableView.options.emptyTableCallActionText}}</a>
         </div>
         <div class="empty-table-placeholder filter-no-results"
