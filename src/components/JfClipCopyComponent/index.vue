@@ -43,14 +43,16 @@
             copyToClipboard() {
                 const configObj = {
                     text: () => this.textToCopy,
-                    container: document.getElementById('jfModal')
                 };
+                if(document.getElementById('jfModal')){
+                    Object.assign(configObj,{container: document.getElementById('jfModal')})
+                }
+
                 const clipboard = new ClipboardJS('.copy-to-clip', configObj );
                 clipboard.on('success', function (e) {
-                    console.log('ss', e);
+
                 });
                 clipboard.on('error', function (e) {
-                    console.log("spetznaz");
                     console.log(e);
                 });
             },
