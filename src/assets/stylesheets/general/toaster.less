@@ -84,23 +84,21 @@
 
 .toasted-container {
   .toasted {
-    background: #fff;
+    background: #414857;
     clear: both;
-    color: @grayFontGeneral;
+    color: #c9d0e3;
     cursor: auto;
     display: table;
     filter: alpha(opacity=100);
-    height: 72px;
     position: relative;
     width: 450px;
     box-shadow: 0 0 12px #999999;
     bottom: 0;
     opacity: 1;
-    //margin-top: 0;
     padding: 0;
     line-height: normal;
     font-weight: 400;
-   // margin-bottom: 15px!important;
+    border-radius: 4px;
 
 
     &:before {
@@ -149,11 +147,11 @@
       display: table-cell;
       width: 70px;
       text-align: center;
-      padding: 20px;
+      vertical-align: middle;
       &:before {
         content: '';
         font-family: "artifactory" !important;
-        font-size: 30px;
+        font-size: 25px;
         font-weight: normal;
       }
     }
@@ -173,9 +171,10 @@
         background: @greenFontHeader;
       }
       &, & a {
-        color: @greenFontHeader;
+        //color: @greenFontHeader;
       }
       .toast-title:before {
+        color: @greenFontHeader;
         content: '\e97f';
       }
     }
@@ -184,10 +183,11 @@
         background: @redError;
       }
       &, & a {
-        color: @redError;
+        //color: @redError;
       }
       .toast-title:before {
-        content: '\e97a';
+        color: @redError;
+        content: '\ea22';
       }
     }
     &.toasted-warning {
@@ -195,10 +195,11 @@
         background: @yellowWarning;
       }
       &, & a {
-        color: @yellowWarning;
+        //color: @yellowWarning;
       }
       .toast-title:before {
-        content: '\e97e';
+        content: '\ea23';
+        color: @yellowWarning;
       }
     }
     &.toasted-info {
@@ -206,10 +207,11 @@
         background: @blueMain;
       }
       &, & a {
-        color: @blueMain;
+        //color: @blueMain;
       }
       .toast-title:before {
-        content: "\e002";
+        content: "\ea24";
+        color: @blueMain;
       }
     }
 
@@ -227,34 +229,9 @@
     -ms-word-wrap: break-word;
     word-wrap: break-word;
     font-size: 14px;
-    padding: 0 58px 0 0;
+    padding: 0 35px 0 0;
     vertical-align: middle;
     word-break: break-word;
-    // fade on top of bottom for multiple line text
-    &:before,
-    &:after {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 73px;
-      height: 20px;
-    }
-    &:before {
-      top: 0;
-      /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&1+0,1+34,0.6+100 */
-      background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 34%, rgba(255, 255, 255, 0.6) 100%); /* FF3.6-15 */
-      background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 34%, rgba(255, 255, 255, 0.6) 100%); /* Chrome10-25,Safari5.1-6 */
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 34%, rgba(255, 255, 255, 0.6) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#99ffffff', GradientType=0); /* IE6-9 */
-    }
-    &:after {
-      bottom: 0;
-      /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0.6+0,1+66,1+100 */
-      background: -moz-linear-gradient(top, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 1) 66%, rgba(255, 255, 255, 1) 100%); /* FF3.6-15 */
-      background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 1) 66%, rgba(255, 255, 255, 1) 100%); /* Chrome10-25,Safari5.1-6 */
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 1) 66%, rgba(255, 255, 255, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#99ffffff', endColorstr='#ffffff', GradientType=0); /* IE6-9 */
-    }
     & > div {
       padding: 20px 25px 20px 0;
       overflow: auto;
@@ -264,22 +241,15 @@
   }
 
   .toast-close-button {
-    text-shadow: 0 1px 0 #ffffff;
-    opacity: 0.8;
-    color: #ccc; // TODO: Add to variables
     position: absolute;
     right: 0;
     top: 0;
-    bottom: 0;
-    font-size: 30px;
-    padding-left: 13px;
-    padding-right: 14px;
+    font-size: 24px;
     border: 0;
-    border-left: 1px solid @grayBorderLight;
-    width: 57px;
     cursor: pointer;
     text-decoration: none;
     background: transparent;
+    color: #c9d0e3;
     &:hover {
       color: inherit;
       opacity: 1;
