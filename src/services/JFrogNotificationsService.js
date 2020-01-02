@@ -66,7 +66,8 @@ export class JFrogNotifications {
         return Vue.toasted.show('WILL BE DELETED', {
             position: 'top-center',
             containerClass: 'toast-top-center',
-            duration: timeout || 5000
+            duration: timeout || 5000,
+            closeOnSwipe: false
         });
     }
 
