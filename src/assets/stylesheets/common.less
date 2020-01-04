@@ -17,12 +17,11 @@ h2 {
 .alert {
   position: relative;
   border-radius: 0;
-  background: #f9f8f8;
   border: 0 none;
   padding: 14px 30px 14px 49px;
-  color: black;
-  font-weight: @jfFontWeightNormal;
-
+  background: #f8fafb;
+  color: #999db4;
+  text-transform: uppercase;
   a {
     text-decoration: none;
     font-weight: @jfFontWeightSemiBold;
@@ -55,29 +54,29 @@ h2 {
 
   // Success
   &.alert-success {
-    border-left: 3px solid #50ac59;
+    border-left: 3px solid #429f46;
     &:before {
-      content: "\e97f";
-      color: #50ac59;
+      content: "\E97F";
+      color: #429f46;
     }
   }
 
   // Warning
   &.alert-warning {
-    border-left: 3px solid #fb8c00;
+    border-left: 3px solid #f3c43d;
     &:before {
-      content: "\e97e";
-      color: #fb8c00;
+      content: "\EA23";
+      color: #f3c43d;
       left: 14px;
     }
   }
 
   // Error
   &.alert-danger {
-    border-left: 3px solid #d7593e;
+    border-left: 3px solid #d73f3f;
     &:before {
-      content: "\e97a";
-      color: #d7593e;
+      content: "\EA22";
+      color: #d73f3f;
     }
   }
 
