@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="empty-table-placeholder" :style="options.registeredTabularDnd ? options.registeredTabularDnd.emptyTableStyle : {}" v-if="options && options.dataWasSet && !options.getRawData().length && !options.pendingExternalPaging && (!options.externalTotalCount || options.externalTotalCount.total === 0)">
-                    <div v-html="options.emptyTableText || 'There is no data to display'"></div> <a href="" class="jf-link" v-if="options.emptyTableAction && options.emptyTableCallActionText" @click.prevent="options.emptyTableAction()">{{options.emptyTableCallActionText}}</a>
+                    <p><span v-html="options.emptyTableText || 'There is no data to display'"></span> <a href="" class="jf-link" v-if="options.emptyTableAction && options.emptyTableCallActionText" @click.prevent="options.emptyTableAction()">{{options.emptyTableCallActionText}}</a></p>
                 </div>
                 <div class="empty-table-placeholder filter-no-results" v-if="options && noFilterResults">
                     <div v-html="options.noFilterResultsText || 'Current filter has no results.'"></div><a href="" class="jf-link" v-if="tableFilter" @click.prevent="clearFilter()">Clear filter</a>
