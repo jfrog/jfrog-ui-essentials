@@ -42,7 +42,7 @@
             'keyField',
             'hideSelectAll',
             'singleRowSelection',
-            'rowClassProp',
+            'rowClassAttr',
         ],
         'jf@inject': [
             'JFrogTableViewOptions',
@@ -162,8 +162,8 @@
             if (!_.isUndefined(this.newEntityCustomText)) {
                 this.tableOptions.newEntityCustomText = this.newEntityCustomText;
             }
-            if (!_.isUndefined(this.rowClassProp)) {
-                this.tableOptions.setRowClassAttr(this.rowClassProp);
+            if (!_.isUndefined(this.rowClassAttr)) {
+                this.tableOptions.setRowClassAttr(this.rowClassAttr);
             }
             if (!this.options) {
                 this.$emit('init', {
