@@ -1,6 +1,4 @@
-<script>
-
-    const TEMPLATE = `
+<template>
     <div>
         <div class="jf-markup-editor" :class="{'has-editor-label':editorLabel}" v-if="webworkerOk || previewersCount === 2">
             <div class="controls">
@@ -86,13 +84,13 @@
         </div>
 
     </div>
-    `;
+</template>
+<script>
 
     const PREVIEW_MODE  = 'Preview';
     const EDIT_MODE = 'Edit';
 
     export default {
-        template: TEMPLATE,
         name: 'jf-markup-editor',
         props: [
             'value',
@@ -108,7 +106,8 @@
         'jf@inject': [
             '$timeout',
             '$scope',
-            'JFrogUIWebWorker'
+            'JFrogUIWebWorker',
+            '$sanitize'
         ],
         data() {
             return {
@@ -174,7 +173,7 @@
                 });
             },
             setPreview(preview) {
-                this.preview = preview;
+                this.preview = this.$sanitize(preview);
             },
             currentLanguageHasPreviewRenderer() {
                 return this.renderers && this.renderers[this.currentLanguage.toLowerCase()];

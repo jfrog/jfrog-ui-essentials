@@ -8,12 +8,12 @@ const removeClassIfNecessary = function (selector, className) {
 }
 
 const hack = function(){
-    Vue.nextTick()
-        .then(() => {
-            removeClassIfNecessary('#jfModal___BV_modal_outer_',"show");
-            removeClassIfNecessary('#jfModal',"show");
-            $('#jfModal___BV_modal_outer_').parent().remove();//Remove any existing modal divs
-        });
+    //Vue.nextTick()
+    //    .then(() => {
+    //        removeClassIfNecessary('#jfModal___BV_modal_outer_',"show");
+    //        removeClassIfNecessary('#jfModal',"show");
+    //        $('#jfModal___BV_modal_outer_').parent().remove();//Remove any existing modal divs
+    //    });
 };
 
 const whenElementIsVisible = function (selector, callBack, count = 0) {
@@ -38,12 +38,12 @@ and then try to load the show-all modal from the jf-table-view demo page
 (cell template example)
 */
 const forceModalVisibility = function () {
-    Vue.nextTick().then(() => {
-        whenElementIsVisible("#jfModal", () => {
-            addClassIfNecessary("#jfModal___BV_modal_backdrop_", "show");
-            addClassIfNecessary("#jfModal", "show");
-        })
-    });
+    //Vue.nextTick().then(() => {
+    //    whenElementIsVisible("#jfModal", () => {
+    //        addClassIfNecessary("#jfModal___BV_modal_backdrop_", "show");
+    //        addClassIfNecessary("#jfModal", "show");
+    //    })
+    //});
 }
 
 export default {
@@ -126,10 +126,10 @@ export default {
             }
         },
 
-        $dismiss() {
-            this.handlePromise();
-            this.$refs.jfModal.hide()
-        },
+        //$dismiss() {
+        //    this.handlePromise();
+        //    this.$refs.jfModal.hide()
+        //},
         _handleHide() {
             this.handlePromise();
             setTimeout(hack,10);

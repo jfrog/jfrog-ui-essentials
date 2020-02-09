@@ -1,7 +1,7 @@
 <template>
     <b-modal v-bind="modalProps" @hide="_handleHide" @hidden="_afterModalHidden">
         <template slot="modal-title">
-            <div id="popup-header" v-html="title"></div>
+            <div id="popup-header" v-html="sanitizedTitle"></div>
         </template>
         <template slot="modal-footer">
                 <jf-checkbox v-if="checkboxLabel"
@@ -14,7 +14,7 @@
                 <button class="btn btn-default" @click="$dismiss()" id="popup-cancel">{{int_buttons.cancel}}</button>
                 <button class="btn btn-primary" @click="$close(true)" id="popup-confirm">{{int_buttons.confirm}}</button>
         </template>
-        <div v-html="content"></div>
+        <div v-html="sanitizedContent"></div>
     </b-modal>
 </template>
 <script>
@@ -28,6 +28,9 @@
             "checkbox",
             "checkboxLabel",
             "checkBoxChangeListener"
+        ],
+        'jf@inject': [
+            '$sanitize'
         ],
         methods:{
             onCheckboxStateChange(state) {
@@ -44,6 +47,14 @@
             return {
                 int_buttons
             };
+        },
+        computed: {
+            sanitizedTitle() {
+                return this.$sanitize(this.title);
+            },
+            sanitizedContent() {
+                return this.$sanitize(this.content);
+            }
         }
 };
 

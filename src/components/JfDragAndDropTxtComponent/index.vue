@@ -2,10 +2,13 @@
 
     <div>
         <div class="drag-and-drop-txt-wrapper" :class="{'ready-for-upload':shouldDisplayUploadIcon()}">
-            <label v-if="dndHeadingHtml" v-html="dndHeadingHtml"></label>
-            <jf-field :autofocus="dndAutoFocus">
+            <label v-if="dndHeadingHtml" v-html="sanitizedHeaderHtml"></label>
+            <jf-field :autofocus="autofocus">
                 <textarea name="dndtext" class="input-text monospaced" v-model="dndContent" @input="dndChange()" :style="dndStyle" :required="dndRequired" spellcheck="false"></textarea>
-                <label class="call-to-action-label" v-html="dndCallToAction" :class="{'icon-upload':shouldDisplayUploadIcon()}"></label>
+                <label class="call-to-action-label"
+                       v-html="sanitizedCallToAction"
+                       :class="{'icon-upload':shouldDisplayUploadIcon()}">
+                </label>
             </jf-field>
         </div>
     </div>
@@ -28,7 +31,8 @@
             '$scope',
             '$element',
             '$attrs',
-            'JFrogNotifications'
+            'JFrogNotifications',
+            '$sanitize'
         ],
         data() {
             return {};
@@ -39,11 +43,6 @@
             this.entered = false;
         },
         mounted() {
-            this.dndAutoFocus = this.dndAutoFocus === undefined ? true : this.dndAutoFocus;
-    
-            this.dndCallToAction = this.dndCallToAction || `Copy your text or
-    <b>drop a file</b>`;
-    
             /* (NG2VUE) This was moved from created() to mounted() */
             /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
     
@@ -173,6 +172,18 @@
                 let dndWrapper = $(this.$element).find('.drag-and-drop-txt-wrapper');
                 // dndWrapper.removeClass('icon-upload');
                 dndWrapper.toggleClass('over');
+            }
+        },
+        computed: {
+            autofocus() {
+                return this.dndAutoFocus === undefined ? true : this.dndAutoFocus;
+            },
+            sanitizedHeaderHtml() {
+                return this.text ? this.$sanitize(this.dndHeadingHtml) : '';
+            },
+            sanitizedCallToAction() {
+                return this.text ? this.$sanitize(this.dndCallToAction) : `Copy your text or
+    <b>drop a file</b>`;
             }
         }
     }

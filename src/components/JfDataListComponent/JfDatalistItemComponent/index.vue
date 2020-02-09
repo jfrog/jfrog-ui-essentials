@@ -1,25 +1,20 @@
 <template>
   <div class="value" ref="templateValue">
     <a
-      v-if="item.isUrl && ( item.url == undefined || item.url.length )"
-      :href="item.url ? item.url : item.value"
-      v-html="item.value"
+      v-if="itemIsLink"
+      :href="viewItem.url ? viewItem.url : viewItem.value"
+      v-html="viewItem.value"
       target="_blank"
       class="jf-link"
       v-jf-tooltip-on-overflow
     ></a>
     <div
-      v-if="(item.isUrl && item.url != undefined && !item.url.length) || (!item.value)"
-      v-html="getItemValue(item.value)"
+      v-if="itemIsLinkWithUrl || itemIsPlainText"
+      v-html="viewItem.value"
       v-jf-tooltip-on-overflow
     ></div>
-    <div
-      v-if="!item.isUrl && !isArray(item.value) && !item.template"
-      v-html="item.value"
-      v-jf-tooltip-on-overflow
-    ></div>
-    <div v-if="isArray(item.value) && !item.template" :id="'data-list-row-' + index">
-      <div class="tag" v-for="(tag, index2) in item.value" :key="index2">
+    <div v-if="itemIsTagsArray" :id="'data-list-row-' + index">
+      <div class="tag" v-for="(tag, index2) in viewItem.value" :key="index2">
         <a
           class="gridcell-content-text jf-link"
           v-if="tag.url"
@@ -28,17 +23,17 @@
           v-html="tag.label"
         ></a>
         <span class="gridcell-content-text" v-if="!tag.url" v-html="tag.label"></span>
-        <i v-if="item.delete" @click="deleteTag(tag)" class="icon icon-close delete-tag"></i>
+        <i v-if="viewItem.delete" @click="deleteTag(tag)" class="icon icon-close delete-tag"></i>
       </div>
       <a
         class="jf-link gridcell-showall"
         v-if="showAllValue"
         href
-        @click.prevent="showAll(item.value,item.label,item.objectName)"
-      >(See {{item.value.length &gt; 1 ? 'All' : 'List'}})</a>
+        @click.prevent="showAll(viewItem.value,viewItem.label,viewItem.objectName)"
+      >(See {{viewItem.value.length &gt; 1 ? 'All' : 'List'}})</a>
     </div>
-    <div class="copy" v-if="item.copy && !isArray(item.value)">
-      <jf-clip-copy :text-to-copy="item.value"></jf-clip-copy>
+    <div class="copy" v-if="viewItem.copy && !isArray(viewItem.value)">
+      <jf-clip-copy :text-to-copy="viewItem.value"></jf-clip-copy>
     </div>
   </div>
 </template>
@@ -52,7 +47,8 @@ export default {
     'jf@inject': [
         'JFrogModal',
         'JFrogUIUtils',
-        'JFrogUILibConfig'
+        'JFrogUILibConfig',
+        '$sanitize'
     ],
     data() {
         return {
@@ -60,7 +56,7 @@ export default {
         }
     },
     mounted() {
-        this.showAllValue = (this.item.value.length >= 1) ? this.htmlIsOverflowing('#data-list-row-' + this.index) : false;
+        this.showAllValue = (this.viewItem.value.length >= 1) ? this.htmlIsOverflowing('#data-list-row-' + this.index) : false;
         if(this.showAllValue) { this.$forceUpdate }
         this.createTemplate()
     },
@@ -131,7 +127,7 @@ export default {
             return value || '&nbsp'
         },
         createTemplate() {
-            let item = this.item
+            const item = this.viewItem;
             if (!item.template) {
                 return
             }
@@ -164,6 +160,44 @@ export default {
             return /<[a-z/][\s\S]*>/i.test(value);
         }
     },
+    computed: {
+        itemIsPlainText() {
+            const { value, isUrl, template } = this.item;
+            return (!isUrl && !this.isArray(value) && !template);
+        },
+        itemIsLink() {
+            const { value, isUrl, template } = this.item;
+            return (value && !this.isArray(value) && isUrl && !template);
+        },
+        itemIsLinkWithUrl() {
+            const { value, isUrl, url } = this.item;
+            return (isUrl && url != undefined && !url.length) || (!value);
+        },
+        itemIsTagsArray() {
+            const { value, template } = this.item;
+            return (this.isArray(value) && !template);
+        },
+        viewItem() {
+            const res = { ...this.item };
+            const { value } = this.item;
+            if(this.itemIsLink) {
+                res.value = this.$sanitize(value);
+            }
+            if (this.itemIsLinkWithUrl || this.itemIsPlainText) {
+                res.value = this.$sanitize(value) || '&nbsp';
+            }
+            if(this.itemIsTagsArray) {
+                res.value = value.map(tag => {
+                    return {
+                        ...tag,
+                        label: this.$sanitize(tag.label)
+                    }
+                });
+            }
+
+            return res;
+        }
+    }
 }
 </script>
 

@@ -1,10 +1,10 @@
 <template>
     <div class="jf-switch-toggler" :class="{'left-option-selected' : isLeftOptionOn,
                 'right-option-selected' : !isLeftOptionOn}">
-        <span class="left-option-text jf-toggler-text" v-html="leftOption.text"></span>
+        <span class="left-option-text jf-toggler-text">{{ leftOption.text }}></span>
         <jf-toggler @input="toggleSelection()" v-model="isLeftOptionOn">
         </jf-toggler>
-        <span class="right-option-text jf-toggler-text" v-html="rightOption.text"></span>
+        <span class="right-option-text jf-toggler-text">{{ rightOption.text }}</span>
     </div>
 </template>
 

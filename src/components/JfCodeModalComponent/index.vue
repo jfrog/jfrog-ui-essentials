@@ -9,10 +9,10 @@
         @hidden="_afterModalHidden"
         >
         <template slot="modal-title">
-            <div id="popup-header" v-html="title"></div>
+            <div id="popup-header" v-html="sanitizedTitle"></div>
         </template>
 
-        <p v-if="beforeMessage" v-html="beforeMessage"></p>
+        <p v-if="beforeMessage" v-html="sanitizedBeforeMessage"></p>
 
         <div class="codemirror-wrapper">
             <jf-clip-copy :text-to-copy="content || ''"
@@ -37,6 +37,9 @@
             "mode",
             "beforeMessage"
         ],
+        'jf@inject': [
+            '$sanitize'
+        ],
         mixins:[ModalMixins],
         data() {
             return {
@@ -45,6 +48,14 @@
                     name: ""
                 }
             };
+        },
+        computed: {
+            sanitizedBeforeMessage() {
+                return this.$sanitize(this.beforeMessage);
+            },
+            sanitizedTitle() {
+                return this.$sanitize(this.title);
+            }
         }
 };
 

@@ -4,7 +4,7 @@
         <div class="jf-marquee-container">
             <span v-init="checkOverflow()">
     		<slot v-if="!$transclude.isSlotFilled('innerHtml')"></slot>
-    		<slot v-html="innerHtml" v-if="$transclude.isSlotFilled('innerHtml')"></slot>
+    		<slot v-html="$sanitize(innerHtml)" v-if="$transclude.isSlotFilled('innerHtml')"></slot>
     	</span>
         </div>
     </div>
@@ -21,7 +21,8 @@
             '$timeout',
             '$interval',
             '$scope',
-            '$transclude'
+            '$transclude',
+            '$sanitize'
         ],
         data() {
             return {};
