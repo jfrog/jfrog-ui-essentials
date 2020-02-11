@@ -14,10 +14,15 @@
         </template>
 
         <div class="modal-body simple-text" v-if="text">
-            <p v-html="text" class="full-text-item"></p>
+            <p v-html="sanitizedText" class="full-text-item"></p>
         </div>
         <div class="modal-body text-to-list" v-if="list">
-            <p v-for="(item,index) in list" :key="index" class="full-text-item" v-html="item" @click="onItemClick(item)"></p>
+            <p v-for="(item,index) in sanitizedList"
+               :key="index"
+               class="full-text-item"
+               v-html="item"
+               @click="onItemClick(item)">
+            </p>
         </div>
     </b-modal>
 </template>
@@ -31,6 +36,9 @@
             "list",
             "listItemClickCB"
         ],
+        'jf@inject': [
+            '$sanitize'
+        ],
         mixins:[ModalMixins],
         data() {
             return {
@@ -43,6 +51,17 @@
                 if (typeof this.listItemClickCB == "function") {
                     this.listItemClickCB(item);
                 }
+            }
+        },
+        computed: {
+            sanitizedText() {
+                return this.text ? this.$sanitize(this.text) : '';
+            },
+            sanitizedList() {
+                if (this.list && Array.isArray(this.list)) {
+                    return this.list.map(item => this.$sanitize(item));
+                }
+                return [];
             }
         }
 };

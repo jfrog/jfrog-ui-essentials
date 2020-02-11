@@ -2,7 +2,12 @@
 
     <div>
         <div class="jf-text-box-container">
-            <div class="jf-text-box-content-current">{{content}}<span v-if="ready && isOverflowing" class="jf-text-box-show-all" :style="{'white-space': wrapSeeAll ? 'inherit' : 'nowrap'}" @click="seeAll()" v-html="seeAllCustomText"></span>
+            <div class="jf-text-box-content-current">{{ content }} <span v-if="ready && isOverflowing"
+                      class="jf-text-box-show-all"
+                      :style="{'white-space': wrapSeeAll ? 'inherit' : 'nowrap'}"
+                      @click="seeAll()"
+                      v-html="seeAllCustomText">
+                </span>
             </div>
             <div class="jf-text-box-content-full"></div>
             <div class="jf-text-box-content-stage"></div>
@@ -30,19 +35,18 @@
             '$interval',
             '$compile',
             '$q',
-            'JfFullTextService'
+            'JfFullTextService',
+            '$sanitize'
         ],
         data() {
             return {
                 content: null,
                 ready: null,
-                wrapSeeAll: null,
-                seeAllCustomText: this.seeAllText || '(Show All ...)'
+                wrapSeeAll: null
             };
         },
         mounted() {
-
-            this.fullTextElement.text(this.text)
+            this.fullTextElement.text(this.sanitizedText);
             this.registerResize();
             setTimeout(() => this.refreshText());
             this.fullTextModal= this.JfFullTextService
@@ -75,11 +79,11 @@
                 this.measureLineHeight();
 
                 if (!this.isOverflowing) {
-                    this.content = this.text;
+                    this.content = this.sanitizedText;
                 }
                 else {
                     this.stageElement.html('');
-                    let words = this.splitText(this.text);
+                    let words = this.splitText(this.sanitizedText);
                     let i = 1;
                     let getNumOfLinesUntil = (index, withSeeAll = true) => {
                         this.setStageText(_.trimEnd(words.slice(0, index).join('')) + (withSeeAll ? ' ' : ''))
@@ -170,7 +174,7 @@
 
             seeAll() {
                 if (this.noAction) return;
-                let text = this.text;
+                let text = this.sanitizedText;
                 if (this.customAction) {
                     this.customAction({text})
                 }
@@ -186,6 +190,12 @@
             /* Getter Elements */
         },
         computed: {
+            seeAllCustomText() {
+                return this.seeAllText ? this.$sanitize(this.seeAllText) : '(Show All ...)'
+            },
+            sanitizedText() {
+                return this.$sanitize(this.text);
+            },
             containerElement: {
                 get: function(){
                     if (!this.cachedContainerElement) {

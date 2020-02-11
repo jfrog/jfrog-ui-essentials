@@ -5,8 +5,8 @@
                     'off-selected' : !isOn}">
             <jf-toggler v-model="isOn">
             </jf-toggler>
-            <span class="on-option-text jf-toggler-text" v-html="on"></span>
-            <span class="off-option-text jf-toggler-text" v-html="off"></span>
+            <span class="on-option-text jf-toggler-text">{{ on }}</span>
+            <span class="off-option-text jf-toggler-text">{{ off }}</span>
         </div>
     </div>
 

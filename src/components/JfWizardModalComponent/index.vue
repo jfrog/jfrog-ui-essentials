@@ -7,23 +7,23 @@
         >
             <template slot="modal-header">
                 <span v-if="wizardDefinitionObject.cancelable" class="icon icon-clear" @click="dismiss()"></span>
-                <div class="title-wrapper icon-hidden" :class="{'no-border' : wizardDefinitionObject.steps[currentStep-1].hideTitleBorder}">
+                <div class="title-wrapper icon-hidden" :class="{'no-border' : currentStepDefinition.hideTitleBorder}">
                     <div class="icon"
-                        v-if="wizardDefinitionObject.steps[currentStep-1].icon"
-                        :class="{'build-animation' : wizardDefinitionObject.steps[currentStep-1].buildIcon}">
+                        v-if="currentStepDefinition.icon"
+                        :class="{'build-animation' : currentStepDefinition.buildIcon}">
 
-                        <img :srcset="wizardDefinitionObject.steps[currentStep-1].iconSrcset"
-                            :src="wizardDefinitionObject.steps[currentStep-1].icon"
+                        <img :srcset="currentStepDefinition.iconSrcset"
+                            :src="currentStepDefinition.icon"
                             alt="">
 
-                        <img :srcset="wizardDefinitionObject.steps[currentStep-1].buildIconSrcset"
-                            ng-src="wizardDefinitionObject.steps[currentStep-1].buildIcon"
-                            v-if="wizardDefinitionObject.steps[currentStep-1].buildIcon"
+                        <img :srcset="currentStepDefinition.buildIconSrcset"
+                            ng-src="currentStepDefinition.buildIcon"
+                            v-if="currentStepDefinition.buildIcon"
                             alt="" class="build">
                     </div>
                     <div class="title">
-                        <h1 v-if="wizardDefinitionObject.steps[currentStep-1].name">{{wizardDefinitionObject.steps[currentStep-1].name}}</h1>
-                        <div class="description" v-if="wizardDefinitionObject.steps[currentStep-1].description" v-html="wizardDefinitionObject.steps[currentStep-1].description"></div>
+                        <h1 v-if="currentStepDefinition.name">{{currentStepDefinition.name}}</h1>
+                        <div class="description" v-if="currentStepDescription" v-html="currentStepDescription"></div>
                     </div>
                 </div>
             </template>
@@ -48,49 +48,49 @@
 
 
                     <div class="modal-footer-buttons-container">
-                        <div v-if="!wizardDefinitionObject.steps[currentStep-1].customButtons">
-                            <button v-if="currentStep > 1 && wizardDefinitionObject.steps[currentStep-2].supportReturnTo !== false"
+                        <div v-if="!currentStepDefinition.customButtons">
+                            <button v-if="currentStep > 1 && prevStepDefinition.supportReturnTo !== false"
                                     class="btn"
                                     @click="prevStep()"
                                     :disabled="pending"
                                     id="wizard-popup-prev">Back</button>
-                            <button v-if="currentStep < totalSteps && wizardDefinitionObject.steps[currentStep-1].skippable"
+                            <button v-if="currentStep < totalSteps && currentStepDefinition.skippable"
                                     class="btn"
                                     @click="nextStep(true)"
                                     :disabled="pending"
                                     jf-clear-errors
                                     id="wizard-popup-skip">Skip</button>
                             <button v-if="currentStep < totalSteps"
-                                    :disabled="pending || !wizardHooks.isStepCompleted(wizardDefinitionObject.steps[currentStep-1])"
+                                    :disabled="pending || !wizardHooks.isStepCompleted(currentStepDefinition)"
                                     class="btn"
                                     @click="nextStep()"
                                     id="wizard-popup-next">Next</button>
                             <button v-if="currentStep === totalSteps"
-                                    :disabled="pending || (!wizardHooks.isStepCompleted(wizardDefinitionObject.steps[currentStep-1]) && !wizardDefinitionObject.steps[currentStep-1].skippable)"
+                                    :disabled="pending || (!wizardHooks.isStepCompleted(currentStepDefinition) && !currentStepDefinition.skippable)"
                                     class="btn"
                                     @click="finish()"
                                     id="wizard-popup-finish">Finish</button>
                         </div>
-                        <div v-if="wizardDefinitionObject.steps[currentStep-1].customButtons">
-                            <span v-for="(button, index) in wizardDefinitionObject.steps[currentStep-1].customButtons" :key="index">
-                                <button v-if="button.action==='back' && (currentStep > 1 && wizardDefinitionObject.steps[currentStep-2].supportReturnTo !== false)"
+                        <div v-if="currentStepDefinition.customButtons">
+                            <span v-for="(button, index) in currentStepDefinition.customButtons" :key="index">
+                                <button v-if="button.action==='back' && (currentStep > 1 && prevStepDefinition.supportReturnTo !== false)"
                                         class="btn"
                                         @click="prevStep()"
                                         :disabled="pending"
                                         id="wizard-popup-prev-custom">{{button.label}}</button>
-                                <button v-if="button.action==='skip' && (currentStep < totalSteps && wizardDefinitionObject.steps[currentStep-1].skippable)"
+                                <button v-if="button.action==='skip' && (currentStep < totalSteps && currentStepDefinition.skippable)"
                                         class="btn"
                                         @click="nextStep(true)"
                                         :disabled="pending"
                                         jf-clear-errors
                                         id="wizard-popup-skip-custom">{{button.label}}</button>
                                 <button v-if="button.action==='next' && (currentStep < totalSteps)"
-                                        :disabled="pending || !wizardHooks.isStepCompleted(wizardDefinitionObject.steps[currentStep-1])"
+                                        :disabled="pending || !wizardHooks.isStepCompleted(currentStepDefinition)"
                                         class="btn"
                                         @click="nextStep()"
                                         id="wizard-popup-next-custom">{{button.label}}</button>
                                 <button v-if="button.action==='finish' && (currentStep === totalSteps)"
-                                        :disabled="pending || (!wizardHooks.isStepCompleted(wizardDefinitionObject.steps[currentStep-1]) && !wizardDefinitionObject.steps[currentStep-1].skippable)"
+                                        :disabled="pending || (!wizardHooks.isStepCompleted(currentStepDefinition) && !currentStepDefinition.skippable)"
                                         class="btn"
                                         @click="finish()"
                                         id="wizard-popup-finish-custom">{{button.label}}</button>
@@ -115,7 +115,8 @@
         mixins: [ModalMixins],
             "jf@inject": [
             'JFrogUILibConfig',
-            'JFrogNotifications'
+            'JFrogNotifications',
+            '$sanitize'
         ],
         props:[
             'wizardDefinitionObject',
@@ -145,8 +146,21 @@
         },
 
         computed: {
+            prevStepDefinition() {
+                return this.wizardDefinitionObject.steps[this.currentStep -2];
+            },
+            currentStepDefinition() {
+                return this.wizardDefinitionObject.steps[this.currentStep -1];
+            },
+            nextStepDefinition() {
+                return this.wizardDefinitionObject.steps[this.currentStep];
+            },
+            currentStepDescription() {
+                return this.currentStepDefinition.description
+                    ? this.$sanitize(this.currentStepDefinition.description) : ''
+            },
             classForStep: function() {
-                return `wizard-modal ${this.wizardDefinitionObject.steps[this.currentStep-1].class || ""}`;
+                return `wizard-modal ${this.currentStepDefinition.class || ""}`;
             }
         },
         methods: {
@@ -158,7 +172,7 @@
                     currentPageContainer.removeChild(currentPage);
                 }
 
-                let currentStep = this.wizardDefinitionObject.steps[this.currentStep - 1];
+                let currentStep = this.currentStepDefinition;
                 let modifiers = typeof currentStep.template == 'object' ? currentStep.template :
                 this.JFrogUILibConfig.getConfig().customModalTemplates[currentStep.template];
                 let ComponentClass = Vue.extend({
@@ -182,17 +196,17 @@
             },
 
             titleInit() {
-                if (this.wizardHooks.onWizardShow) this.wizardHooks.onWizardShow(this.wizardDefinitionObject.steps[this.currentStep - 1]);
+                if (this.wizardHooks.onWizardShow) this.wizardHooks.onWizardShow(this.currentStepDefinition);
             },
 
             nextStep(skip) {
                 if (this.wizardHooks.onStepChange) {
-                    let response = this.wizardHooks.onStepChange(this.wizardDefinitionObject.steps[this.currentStep], this.wizardDefinitionObject.steps[this.currentStep - 1], skip ? 'skip' : 'next');
+                    let response = this.wizardHooks.onStepChange(this.nextStepDefinition, this.currentStepDefinition, skip ? 'skip' : 'next');
                     if (response && response.then) {
                         this.pending = true;
                         response.then((pRes) => {
                             if (pRes !== false) this.currentStep++
-                            if (this.wizardHooks.afterStepChange) this.wizardHooks.afterStepChange(this.wizardDefinitionObject.steps[this.currentStep - 1], this.wizardDefinitionObject.steps[this.currentStep - 2], skip ? 'skip' : 'next');
+                            if (this.wizardHooks.afterStepChange) this.wizardHooks.afterStepChange(this.currentStepDefinition, this.prevStepDefinition, skip ? 'skip' : 'next');
                             this.pending = false;
                         })
                             .catch(() => {
@@ -202,7 +216,7 @@
                     }
                     else if (response !== false) {
                         this.currentStep++;
-                        if (this.wizardHooks.afterStepChange) this.wizardHooks.afterStepChange(this.wizardDefinitionObject.steps[this.currentStep - 1], this.wizardDefinitionObject.steps[this.currentStep - 2], skip ? 'skip' : 'next');
+                        if (this.wizardHooks.afterStepChange) this.wizardHooks.afterStepChange(this.currentStepDefinition, this.prevStepDefinition, skip ? 'skip' : 'next');
                     }
                 }
                 else {
@@ -213,12 +227,12 @@
 
             prevStep() {
                 if (this.wizardHooks.onStepChange) {
-                    let response = this.wizardHooks.onStepChange(this.wizardDefinitionObject.steps[this.currentStep - 2], this.wizardDefinitionObject.steps[this.currentStep - 1], 'prev');
+                    let response = this.wizardHooks.onStepChange(this.prevStepDefinition, this.currentStepDefinition, 'prev');
                     if (response && response.then) {
                         this.pending = true;
                         response.then((pRes) => {
                             if (pRes !== false) this.currentStep--;
-                            if (this.wizardHooks.afterStepChange) this.wizardHooks.afterStepChange(this.wizardDefinitionObject.steps[this.currentStep - 1], this.wizardDefinitionObject.steps[this.currentStep], 'prev');
+                            if (this.wizardHooks.afterStepChange) this.wizardHooks.afterStepChange(this.currentStepDefinition, this.nextStepDefinition, 'prev');
                             this.pending = false;
                         })
                             .catch(() => {
@@ -227,7 +241,7 @@
                     }
                     else if (response !== false) {
                         this.currentStep--;
-                        if (this.wizardHooks.afterStepChange) this.wizardHooks.afterStepChange(this.wizardDefinitionObject.steps[this.currentStep - 1], this.wizardDefinitionObject.steps[this.currentStep], 'prev');
+                        if (this.wizardHooks.afterStepChange) this.wizardHooks.afterStepChange(this.currentStepDefinition, this.nextStepDefinition, 'prev');
                     }
                 }
                 else {
