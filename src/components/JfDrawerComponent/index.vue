@@ -2,7 +2,7 @@
 
     <div>
         <div class="jf-drawer">
-            <div class="drawer-header" @click="onClickHeader()">
+            <div class="drawer-header" @click="onClickHeader()" v-jf-tooltip.bind="headerTooltip">
                 <div class="drawer-header-title">
                     {{ header }}
                 </div>
@@ -26,7 +26,8 @@
         props: [
             'header',
             'description',
-            'openFirst'
+            'openFirst',
+            'headerTooltip'
         ],
         'jf@inject': [
             'JFrogUIUtils',
