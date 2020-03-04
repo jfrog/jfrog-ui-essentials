@@ -289,5 +289,12 @@
     .codemirror-wrapper {
         position:relative;
     }
+    .code-mirror-copy{
+     position: absolute;
+        right: 10px;
+        top:5px;
+        z-index: 1;
+    }
+
 
 </style>

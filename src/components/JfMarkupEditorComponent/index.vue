@@ -259,6 +259,24 @@
 
 <style scoped lang="less">
 
+    .jf-markup-editor{
+        .preview-wrapper{
+            //border: none;
+            .no-markup {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                background-color: #f8fafb;
+                font-weight: 600;
+                font-size: 14px;
+                color: #999db4;
+                line-height: 1.5em;
+                min-height: 80px;
+            }
+        }
+    }
 
 
 </style>

@@ -1,6 +1,6 @@
 <template>
     <span class="clip-copy-button">
-        <a class="copy-to-clip icon icon-copy-to-clipboard-2"
+        <a class="copy-to-clip icon icon-jfui-copy"
            @click="copyToClipboard"
            v-jf-tooltip.bind="tooltipText">
         </a>
@@ -63,6 +63,6 @@
 
 <style scoped lang="less">
     .copy-to-clip {
-        font-size: 14px;
+        font-size: 18px;
     }
 </style>
