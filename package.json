@@ -69,7 +69,7 @@
     "jf-angular-ui-grid": "^1.0.0",
     "codemirror": "5.0.0",
     "clipboard": "1.5.5",
-    "lodash": "3.10.1",
+    "lodash": "4.17.13",
     "later": "*",
     "moment-jdateformatparser": "^1.1.0",
     "moment": "2.19.1",
