@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="grid-pagination text-right" v-if="paginationApi.getTotalPages()">
+        <div class="grid-pagination text-right" style="border:none" v-if="paginationApi.getTotalPages()">
             <p>
                 <input type="text" class="grid-page-box"
                        :style="{'width': (CONSTANTS.PAGINATION_DIGIT_WIDTH_PX + paginationApi.getTotalPages().toString().length * CONSTANTS.PAGINATION_DIGIT_WIDTH_PX) + 'px'}"
@@ -77,9 +77,3 @@
     };
 
 </script>
-
-<style scoped lang="less">
-
-
-
-</style>
