@@ -50,7 +50,7 @@
 
                 const clipboard = new ClipboardJS('.copy-to-clip', configObj );
                 clipboard.on('success', function (e) {
-
+                    window.store.dispatch('CREATE_NOTIFICATION', {info: 'Text copied'});
                 });
                 clipboard.on('error', function (e) {
                     console.log(e);

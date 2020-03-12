@@ -9,7 +9,7 @@ let cellTemplateGenerators = {
     },
 
     booleanColumn: function (model) {
-        return '<div class="grid-checkbox"><input v-model="' + model + '" type="checkbox" disabled/><span class="icon icon-v"></span></div>';
+        return '<div class="grid-checkbox"><input v-model="' + model + '" type="checkbox" disabled/><span class="icon icon-jfui-check"></span></div>';
     },
     checkboxColumn: function (model, click, disabled) {
         return '<div><div class="grid-cell-checkbox"><jf-checkbox><input v-model="' + model + '"' + (click && click.length ? ' @input="' + click + '"' : '') + (disabled && disabled.length ? ' :disabled="' + disabled + '"' : '') + ' type="checkbox"/></jf-checkbox></div></div>';

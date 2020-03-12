@@ -291,7 +291,7 @@
     }
     .code-mirror-copy{
      position: absolute;
-        right: 10px;
+        right: 20px;
         top:5px;
         z-index: 1;
     }
