@@ -570,7 +570,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
                     let columns = columns;
                     for (let i in columns) {
                         let col = columns[i];
-                        if (row.$groupHeader || (_.get(row, col.field) && _.contains(_.get(row, col.field).toString().toLowerCase(), pagingData.filter.toLowerCase()))) return true;
+                        if (row.$groupHeader || (_.get(row, col.field) && _.includes(_.get(row, col.field).toString().toLowerCase(), pagingData.filter.toLowerCase()))) return true;
                     }
                     return false;
                 })

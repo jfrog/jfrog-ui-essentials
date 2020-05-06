@@ -117,12 +117,12 @@ class jfTabsController {
     }
 
     _getTab(tab) {
-        let currentTab = _.findWhere(this.tabs, {name: tab.name});
+        let currentTab = _.find(this.tabs, {name: tab.name});
         return currentTab;
     }
 
     _getCollapsedTab(tab) {
-        return _.findWhere(this.tabsCollapsed, {name: tab.name})
+        return _.find(this.tabsCollapsed, {name: tab.name})
     }
 
     getTabWidthForStyle() {

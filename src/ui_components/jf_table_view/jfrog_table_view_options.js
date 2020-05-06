@@ -1077,7 +1077,7 @@ export function JFrogTableViewOptions($q, $timeout, $rootScope, $modal, $state, 
 									}
 								}
 								else {
-									this.sortedData = _.sortByOrder(sourceData, item => {
+									this.sortedData = _.orderBy(sourceData, item => {
 										let val = _.get(item, this.sortByField);
 										return _.isString(val) ? val.toLowerCase() : _.isArray(val) ? val.length : val;
 									}, !this.revSort);
@@ -1150,7 +1150,7 @@ export function JFrogTableViewOptions($q, $timeout, $rootScope, $modal, $state, 
 						let col = this.columns[i];
 						if ((this.defaultFilterByAll && col.filterable !== false) || (!this.defaultFilterByAll && col.filterable === true)) {
 							if ((row.$sticky && !row.$stickyFilterable) || this._isSubVisible(row, col) || row.$groupHeader || (_.get(row,
-									col.field) && _.contains(_.get(row, col.field).toString().toLowerCase(),
+									col.field) && _.includes(_.get(row, col.field).toString().toLowerCase(),
 									this.dirCtrl.tableFilter.toLowerCase()))) {
 								return true;
 							}
@@ -1172,7 +1172,7 @@ export function JFrogTableViewOptions($q, $timeout, $rootScope, $modal, $state, 
 				for (let i = 0; i < row.$subRows.length; i++) {
 					let subRow = row.$subRows[i];
 					if ((this.defaultFilterByAll && col.filterable !== false) || (!this.defaultFilterByAll && col.filterable === true)) {
-						if ((_.get(subRow, col.field) && _.contains(_.get(subRow, col.field).toString().toLowerCase(),
+						if ((_.get(subRow, col.field) && _.includes(_.get(subRow, col.field).toString().toLowerCase(),
 								this.dirCtrl.tableFilter.toLowerCase()))) {
 							subsVisible = true;
 							break;
@@ -1647,11 +1647,11 @@ export function JFrogTableViewOptions($q, $timeout, $rootScope, $modal, $state, 
 								}
 								else if (key.startsWith('@')) {
 									let actionName = key.substr(1);
-									let action = _.findWhere(additionalActions, {name: actionName});
+									let action = _.find(additionalActions, {name: actionName});
 									action.do();
 								}
 								else {
-									let act = _.findWhere(allActions, {key: key});
+									let act = _.find(allActions, {key: key});
 									act.callback(row);
 									if (act.href) {
 										let url = grid.options.getActionHref(act, row);

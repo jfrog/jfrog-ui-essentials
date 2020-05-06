@@ -147,10 +147,10 @@ export class AdvancedStringMatch {
 
 	doHighlight(elem,segments,hlElemType = 'span',hlClass = 'highlight') {
 		let contents = elem.contents();
-		let textNode = _.findWhere(contents,{nodeType:3});
+		let textNode = _.find(contents,{nodeType:3});
 		if (!textNode) {
 			for (let i = 0; i<contents.length; i++) {
-				textNode = _.findWhere(contents[i].childNodes,{nodeType:3});
+				textNode = _.find(contents[i].childNodes,{nodeType:3});
 				if (textNode) break;
 			}
 		}
