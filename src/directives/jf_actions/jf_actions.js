@@ -90,7 +90,7 @@ class jfActionsController {
 	    }
 
         _.forEach(this.actions, (actionObj) => {
-            if (_.contains(this.fixedActionsNames, actionObj.name)) {
+            if (_.includes(this.fixedActionsNames, actionObj.name)) {
                 this.fixedActions.push(actionObj);
             }
             else {

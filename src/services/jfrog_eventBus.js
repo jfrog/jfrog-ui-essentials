@@ -109,7 +109,7 @@ export class JFrogEventBus {
         if(this._listeners[eventName] == 'undefined') {
             throw new Error('This event does not exist');
         }
-        if(!_.findWhere(this._listeners[eventName], {_id: id})) {
+        if(!_.find(this._listeners[eventName], {_id: id})) {
             throw new Error('This callback is not registered under this event name')
         }
 

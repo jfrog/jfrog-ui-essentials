@@ -23,7 +23,6 @@ const vendorsPathes = {
 			'node_modules/angular-file-upload/angular-file-upload.js',
 			'node_modules/jquery-contextmenu/dist/jquery.contextMenu.js',
 			'node_modules/components-jqueryui/jquery-ui.js',
-			'node_modules/lodash/index.js',
 			'node_modules/codemirror/lib/codemirror.js',
 			'node_modules/jf-angular-ui-codemirror/ui-codemirror.js',
 			'node_modules/ui-select/dist/select.js',

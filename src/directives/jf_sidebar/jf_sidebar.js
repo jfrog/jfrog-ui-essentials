@@ -593,7 +593,7 @@ class jfSidebarController {
 
 
 	isCurrentItem(subItem) {
-		let result = _.contains(this.$state.current.name, subItem.state);
+		let result = _.includes(this.$state.current.name, subItem.state);
 		if (result && subItem.stateParams) {
 			let relevantParams = _.pick(this.$state.params, Object.keys(subItem.stateParams));
 			result = angular.equals(relevantParams, subItem.stateParams);

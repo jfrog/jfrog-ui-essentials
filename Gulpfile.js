@@ -94,7 +94,7 @@ gulp.task('build',
 );
 
 // Same as build:common just copy styleguide
-gulp.task("build:dev", 
+gulp.task("build:dev",
     function(callback) {
         runSequence(
             'build:common',
@@ -105,7 +105,7 @@ gulp.task("build:dev",
 );
 
 // Clean up
-gulp.task('clean', function() { 
+gulp.task('clean', function() {
     return gulp.src(CONFIG.DESTINATIONS.TARGET, { read: false })
         .pipe(rimraf({ force: true }));
 });
@@ -183,7 +183,7 @@ gulp.task('copyEssentialsVendorDependency', function () {
 // bundle application code
 gulp.task("webpack", function (callback) {
     return webpack(webpackConfig, function (err, stats) {
-        if (err || _.contains(stats.toString({}),'ERROR')) {
+        if (err || _.includes(stats.toString({}),'ERROR')) {
             runSequence(['clean'],()=>{
                 gutil.log(gutil.colors.red.bgYellow.bold(stats.toString({})));
                 gutil.log(gutil.colors.red.bgYellow.bold('ERRORS IN WEBPACK BUILD!!!'));
@@ -324,7 +324,7 @@ function transformFilename(file, hash) {
 }
 
 gulp.task("revision", function(){
-    if (process.env.BUILD_NUMBER) {    
+    if (process.env.BUILD_NUMBER) {
         var revAll = new RevAll({transformFilename: transformFilename});
         return gulp.src(CONFIG.DESTINATIONS.TARGET_REV)
             .pipe(revAll.revision())
@@ -337,7 +337,7 @@ gulp.task("revision", function(){
 })
 
 gulp.task("revreplace", ['revision'], function() {
-    if (process.env.BUILD_NUMBER) {    
+    if (process.env.BUILD_NUMBER) {
         var manifest = gulp.src(CONFIG.DESTINATIONS.TARGET + "/rev-manifest.json");
         return gulp.src(CONFIG.SOURCES.INDEX)
             .pipe(revReplace({manifest: manifest}))

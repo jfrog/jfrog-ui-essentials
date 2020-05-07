@@ -77,7 +77,7 @@ class JFrogGrid {
 
     getSortColumn() {
         if (_.isEmpty(this.api.grid.columns)) {
-            return _.findWhere(this.columnDefs, {sort: {}});
+            return _.find(this.columnDefs, {sort: {}});
         }
         else {
             return this.api.grid.getColumnSorting()[0];
@@ -129,7 +129,7 @@ class JFrogGrid {
         if (this.api.grouping) {
             let origFunc = this.api.grouping.groupColumn;
             this.api.grouping.groupColumn = (columnName) => {
-                let column = _.findWhere(this.api.grid.columns,{displayName: columnName});
+                let column = _.find(this.api.grid.columns,{displayName: columnName});
                 let field = column.field;
                 this.api.grid.rows.forEach((row)=>{
                     if (row.entity[field] === undefined) {
@@ -834,7 +834,7 @@ class JFrogGrid {
     }
 
     _addSubRows(row) {
-        let rows = _.pluck(this.api.grid.rows,'entity');
+        let rows = _.map(this.api.grid.rows,'entity');
         let index = _.indexOf(rows,row) + 1;
         let newSubRows = _.filter(row.$subRows,(subRow)=>{
             return this.data.indexOf(subRow) === -1;
@@ -855,7 +855,7 @@ class JFrogGrid {
 
     _defaultSortingAlgorithm(colRef, a,b) {
 
-        let dir = _.findWhere(this.api.grid.columns, {field: colRef.field}).sort.direction;
+        let dir = _.find(this.api.grid.columns, {field: colRef.field}).sort.direction;
 
         if (a.$row.$parentRow && a.$row.$parentRow === b.$row) {
             return dir === 'asc' ? 1 : -1;
@@ -984,7 +984,7 @@ export class JFrogGridFactory {
                 if (!uiGrid) return;
                 let grid = uiGrid.grid;
                 let rowActions = grid.appScope.grids[grid.id].buttons;
-                let customActionsRaw = _.pluck(grid.columns,'colDef.customActions');
+                let customActionsRaw = _.map(grid.columns,'colDef.customActions');
                 let allActions = [];
                 if (customActionsRaw) {
                     customActionsRaw.forEach((acts)=>{
@@ -1071,11 +1071,11 @@ export class JFrogGridFactory {
                                 }
                                 else if (key.startsWith('@')) {
                                     let actionName = key.substr(1);
-                                    let action = _.findWhere(additionalActions, {name: actionName});
+                                    let action = _.find(additionalActions, {name: actionName});
                                     action.do();
                                 }
                                 else {
-                                    let act = _.findWhere(allActions,{key: key});
+                                    let act = _.find(allActions,{key: key});
                                     grid.options.callActionCallback(act,row);
                                     if (act.href) {
                                         let url = grid.options.getActionHref(act,row);

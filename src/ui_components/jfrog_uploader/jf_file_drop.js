@@ -33,7 +33,7 @@ export function jfFileDrop($timeout) {
             }
 
             $scope.jfFileUploader.anyFileUploadInProgress = () => {
-                return _.findWhere(this.jfFileUploader.queue,(item)=>{ return item.progress === true });
+                return _.find(this.jfFileUploader.queue,(item)=>{ return item.progress === true });
             }
 
 	        $scope.removeItemCallback = (fileItem) => {
