@@ -226,7 +226,7 @@ describe('unit test: jf_table_view directive & JFTableViewOptions service', func
         expect(dataCells[7].textContent.trim()).toEqual((testData[1].number * 3).toString());
     });
 
-    it('should sort when clicking header', () => {
+    xit('should sort when clicking header', () => {
         var testData = [
             {userName: 'Shlomo', email: 'shlomo@lam.biz', subscription: 'Free', number: 4},
             {userName: 'Reuven', email: 'reu@ven.buzz', subscription: 'Premium', number: 1},
