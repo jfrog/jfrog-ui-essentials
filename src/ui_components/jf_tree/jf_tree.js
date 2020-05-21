@@ -45,7 +45,7 @@ class jfTreeController {
         })
 
         $(window).on('resize', () => {
-            if (this.viewPane.autoHeight) this.viewPane._setAutoItemsPerPage();
+            if (this.viewPane?.autoHeight) this.viewPane._setAutoItemsPerPage();
         });
 
         $(this.$element).find('.jf-tree').keydown(e => {
