@@ -19,6 +19,8 @@ let events = {
 
 	CONTEXT_MENU_OPEN: 'context:menu:open',
 
+	CONTEXT_MENU_CLOSE: 'context:menu:close',
+
 	WIZARD_TAB_CHANGE: 'wizard:tab:change'
 };
 

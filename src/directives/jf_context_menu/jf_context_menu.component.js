@@ -31,6 +31,9 @@ class jfContextMenuController {
 			this._setContextMenuPosition(options.actions.length || Object.keys(options.actions).length, options.event.pageX, options.event.pageY);
 			this.isOpen = true;
 		});
+		this.JFrogEventBus.registerOnScope(this.$scope, this.EVENTS.CONTEXT_MENU_CLOSE, (options) => {
+			this.isOpen = false;
+		});
 	}
 
 	/***
