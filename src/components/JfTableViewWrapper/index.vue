@@ -1,6 +1,6 @@
 <template>
 
-    <jf-table-view :options="tableOptions">
+    <jf-table-view :options="tableOptions" ref="tableView">
         <slot name="external-filters" slot="external-filters"></slot>
     </jf-table-view>
 
