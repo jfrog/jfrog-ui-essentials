@@ -65,7 +65,7 @@
     "babel-loader": "^4.1.0"
   },
   "dependencies": {
-    "angular": "1.7.2",
+    "angular": "1.8.0",
     "angular-animate": "1.7.2",
     "angular-cookies": "1.3.13",
     "angular-eonasdan-datetimepicker": "0.3.9",
