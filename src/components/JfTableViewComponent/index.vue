@@ -1,9 +1,7 @@
 <template>
 
     <div>
-
-        <div class="jf-table-view" style="clear: both">
-
+        <div class="jf-table-view" style="clear: both" :id="options.tableId">
             <div class="new-entity-wrapper">
                 <a href="" class="new-entity" @click.prevent="createNewEntity()" v-if="options && options.newEntityCallback">
                     <i class="icon icon-new"></i> <span v-if="options && !options.newEntityCustomText">Add {{options.useAnWithObjectName ? 'an' : 'a'}} {{objectName ? objectName.split('/')[0] : options.objectName ? options.objectName.split('/')[0] : 'Item'}}</span>

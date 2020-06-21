@@ -201,6 +201,17 @@
                 })
                 if (this.sortable) this.tableOptions.setSortable(true);
             }
+
+            window.store.subscribeAction(({type, payload}) => {
+                if (type === 'CHANGE_TABLE_PAGINATION') {
+                    const {tableId, toPage = 1} = payload;
+
+                    if (this.$refs.tableView && tableId === this.$refs.tableView.options.tableId) {
+                        if (!this.$refs.tableView.$refs.top.$refs.pagination) return;
+                        this.$refs.tableView.$refs.top.$refs.pagination.paginationApi.setPage(toPage);
+                    }
+                }
+            })
         },
         mounted() {
             if (this.data) this.setData(true);
