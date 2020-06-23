@@ -205,10 +205,12 @@
             window.store.subscribeAction(({type, payload}) => {
                 if (type === 'CHANGE_TABLE_PAGINATION') {
                     const {tableId, toPage = 1} = payload;
-
                     if (this.$refs.tableView && tableId === this.$refs.tableView.options.tableId) {
-                        if (!this.$refs.tableView.$refs.top.$refs.pagination) return;
-                        this.$refs.tableView.$refs.top.$refs.pagination.paginationApi.setPage(toPage);
+                        if (!this.$refs.tableView.$refs.top.$refs.pagination) {
+                            this.$refs.tableView.currentPage = 0;
+                        } else {
+                            this.$refs.tableView.$refs.top.$refs.pagination.paginationApi.setPage(toPage);
+                        }
                     }
                 }
             })
