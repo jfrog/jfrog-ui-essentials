@@ -10,7 +10,7 @@ export class JFrogSubRouter {
         this.supportedEvents = [
             'state.change',
             'params.change'
-        ]   
+        ]
 ;
     }
     createLocalRouter(config) {
@@ -145,7 +145,7 @@ export class JFrogSubRouter {
                     }
                 }
             }
-        }));   
+        }));
     }
     _destroyScope() {
         this.$config.$scope.unwatchParams();
@@ -205,7 +205,7 @@ export class JFrogSubRouter {
                             this.$set(this.$config.$params, key, value);
                         }
                     }
-                }   
+                }
             }
         }
     }
@@ -289,14 +289,14 @@ export class JFrogSubRouter {
                 params[searchParam] = search[searchParam];
             }
         });
-        return params;   
+        return params;
     }
     _initParams() {
         this.$set(this.$config, '$params', {});
         let configParams = this._getParametersFromConfig();
         configParams.all.forEach(param => {
             this.$set(this.$config.$params, param, null);
-        });   
+        });
     }
     _mapPathToParams() {
         if (!this.$config)
@@ -316,7 +316,7 @@ export class JFrogSubRouter {
             if (!search[queryParam]) {
                 this.$set(this.$config.$params, queryParam, null);
             }
-        })   
+        })
 ;
     }
     _mapParamsToPath() {
@@ -396,5 +396,5 @@ export class JFrogSubRouter {
         if (!pathPart)
             return pathPart;
         return decodeURIComponent(pathPart.replace(/~2F/g, '%2F'));
-    }   
+    }
 }

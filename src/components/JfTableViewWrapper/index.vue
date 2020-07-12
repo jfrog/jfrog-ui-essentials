@@ -177,6 +177,11 @@
                     this.$emit('new-entity');
                 })
             }
+            if (this.$listeners['pagination-change']) {
+                this.tableOptions.on('pagination.change', (eventData) => {
+                    this.$emit('pagination-change', {eventData});
+                })
+            }
             if (this.$listeners['row-clicked']) {
                 this.tableOptions.on('row.clicked', (eventData) => {
                     this.$emit('row-clicked', {eventData});

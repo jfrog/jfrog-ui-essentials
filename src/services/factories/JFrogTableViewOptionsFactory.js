@@ -142,7 +142,6 @@ export function JFrogTableViewOptions() {
         }
 
         setData(data, internalCall) {
-
             let rnd = Math.floor(10000*Math.random());
             while (rnd === this.rnd) {
                 rnd = Math.floor(10000*Math.random());
