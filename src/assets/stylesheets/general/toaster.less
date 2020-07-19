@@ -81,25 +81,21 @@
 
 //========================================================================//
 
-
 .toasted-container {
   .toasted {
     background: #414857;
-    clear: both;
     color: #c9d0e3;
     cursor: auto;
-    display: table;
-    filter: alpha(opacity=100);
-    position: relative;
     width: 450px;
     box-shadow: 0 0 12px #999999;
-    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    filter: alpha(opacity=100);
     opacity: 1;
     padding: 0;
     line-height: normal;
     font-weight: 400;
     border-radius: 4px;
-
 
     &:before {
       content: '';
@@ -112,7 +108,6 @@
       border-radius: 2px 0 0 2px;
     }
 
-    ////// TODO: Change to 3 notification max
     ////// multiple toasters design
     &:nth-last-child(2),
     &:nth-last-child(3) {
@@ -128,13 +123,11 @@
       margin-top: 2px!important;
       transform: scale(0.99) translateY(-35px)!important;
     }
-
     &:nth-last-child(3) {
       z-index: -2;
       margin-top: 4px!important;
       transform: scale(0.98) translateY(-35px)!important;
     }
-
     &:nth-last-child(n+4) {
       z-index: -5;
       margin-top: -8px!important;
@@ -144,71 +137,77 @@
       display: none;
     }
 
+    // close button
+    .toast-close-button {
+      position: absolute;
+      right: 0;
+      top: 0;
+      font-size: 24px;
+      border: 0;
+      cursor: pointer;
+      text-decoration: none;
+      background: transparent;
+      color: #c9d0e3;
+      &:hover {
+        color: inherit;
+        opacity: 1;
+      }
+      &:focus {
+        outline: none;
+      }
+    }
+
+    // toast icon
     .toast-title {
-      display: table-cell;
       width: 70px;
       text-align: center;
       vertical-align: middle;
+      margin-right: 15px;
       &:before {
         content: '';
-        font-family: "artifactory" !important;
+        font-family: "artifactory2" !important;
         font-size: 25px;
         font-weight: normal;
       }
     }
 
-    ::-webkit-scrollbar {
-      -webkit-appearance: none;
-      width: 7px;
-    }
-    ::-webkit-scrollbar-thumb {
-      border-radius: 4px;
-      background-color: rgba(0, 0, 0, .5);
-      -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
-    }
-
+    // success message
     &.toasted-primary {
       &:before {
         background: @greenFontHeader;
-      }
-      &, & a {
-        //color: @greenFontHeader;
       }
       .toast-title:before {
         color: @greenFontHeader;
         content: '\ea24';
       }
     }
+
+    // error message
     &.toasted-error {
       &:before {
         background: @redError;
-      }
-      &, & a {
-        //color: @redError;
       }
       .toast-title:before {
         color: @redError;
         content: '\ea22';
       }
     }
+
+    // warning message
     &.toasted-warning {
       &:before {
         background: @yellowWarning;
-      }
-      &, & a {
-        //color: @yellowWarning;
       }
       .toast-title:before {
         content: '\ea23';
         color: @yellowWarning;
       }
     }
+
+    // info message
     &.toasted-info {
       &:before {
         background: @blueMain;
-      }
-      &, & a {
-        //color: @blueMain;
       }
       .toast-title:before {
         content: "\ea24";
@@ -216,55 +215,39 @@
       }
     }
 
-    a {
-      text-decoration: underline;
-      &:hover {
-        text-decoration: none;
+    // toast message
+    .toast-message {
+      flex: 1;
+      -ms-word-wrap: break-word;
+      word-wrap: break-word;
+      font-size: 14px;
+      padding: 0 35px 0 0;
+      vertical-align: middle;
+      word-break: break-word;
+      & > div {
+        padding: 20px 25px 20px 0;
+        overflow: auto;
+        max-height: 150px;
+        transition: max-height .2s;
       }
-    }
-
-  }
-
-  .toast-message {
-    display: table-cell;
-    -ms-word-wrap: break-word;
-    word-wrap: break-word;
-    font-size: 14px;
-    padding: 0 35px 0 0;
-    vertical-align: middle;
-    word-break: break-word;
-    & > div {
-      padding: 20px 25px 20px 0;
-      overflow: auto;
-      max-height: 150px;
-      transition: max-height .2s;
-    }
-    a {
-      color: #40be46;
-      text-decoration: none;
-      &:hover {
+      a {
+        color: #40be46;
         text-decoration: underline;
+        &:hover {
+          text-decoration: none;
+        }
       }
     }
   }
 
-  .toast-close-button {
-    position: absolute;
-    right: 0;
-    top: 0;
-    font-size: 24px;
-    border: 0;
-    cursor: pointer;
-    text-decoration: none;
-    background: transparent;
-    color: #c9d0e3;
-    &:hover {
-      color: inherit;
-      opacity: 1;
-    }
-    &:focus {
-      outline: none;
-    }
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .5);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
   }
 }
 
