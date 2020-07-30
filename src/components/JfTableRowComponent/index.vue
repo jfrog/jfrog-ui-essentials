@@ -120,8 +120,11 @@
             <i class="icon-menu-arrow"></i>
         </div>
 
-        <div class="jf-table-row-actions-dropdown" v-if="actionsDropdownOpen">
-            <div v-for="action in tableView.options.actions" v-if="!action.visibleWhen || action.visibleWhen(data)" @click="fireAction(action);$event.stopPropagation();actionsDropdownOpen=false;" class="action-item" :icon-name="action.icon || ''">
+        <div class="jf-table-row-actions-dropdown" ref="jfTableRowActionsDropdown" :class="outOfViewport"
+             v-if="actionsDropdownOpen">
+            <div v-for="action in tableView.options.actions" v-if="!action.visibleWhen || action.visibleWhen(data)"
+                 @click="fireAction(action);$event.stopPropagation();actionsDropdownOpen=false;" class="action-item"
+                 :icon-name="action.icon || ''">
                 <i class="action-icon" :class="action.icon"></i>
                 <span v-if="!action.href">{{action.tooltip}}</span>
                 <a v-if="action.href" :href="action.href(data)" :download="data.name">{{action.tooltip}}</a>
@@ -153,7 +156,9 @@
         data() {
             return {
                 hoveringResize: null,
-                actionsDropdownOpen: null
+                actionsDropdownOpen: null,
+                outOfViewport: {}
+
             };
         },
         computed: {
@@ -345,11 +350,24 @@
                 $event.stopPropagation();
                 this.tableView.options.toggleExpansion(this.data);
             },
-            toggleActionsDropdown(e) {
+            async toggleActionsDropdown(e) {
                 e.stopPropagation();
                 let origState = this.actionsDropdownOpen;
                 this.JFrogEventBus.dispatch(this.EVENTS.TABLEVIEW_HIDE_ACTIONS_DROPDOWN, this.tableView);
                 this.actionsDropdownOpen = !origState;
+                await this.$nextTick();
+                this.applyOutOfViewport();
+            },
+            applyOutOfViewport() {
+                try {
+                    const el = this.$refs.jfTableRowActionsDropdown;
+                    const rect = el.getBoundingClientRect();
+                    const isOutofViewPort = rect.bottom > (window.innerHeight || document.documentElement.clientHeight);
+                    this.outOfViewport = isOutofViewPort ? {'out-of-viewport': true} : {};
+                } catch (e) {
+                    this.outOfViewport = {};
+                }
+
             },
             initDragAndDrop() {
                 if (this.rowId === 'headers')

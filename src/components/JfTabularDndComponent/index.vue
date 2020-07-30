@@ -394,6 +394,11 @@
                     .jf-table-top .counter-and-filter-wrapper .table-counter {
                         height: 22px;
                     }
+                    .empty-table-placeholder{
+                        &.filter-no-results{
+                            flex-direction: column;
+                        }
+                    }
                     .empty-table-placeholder:not(.filter-no-results) {
                         margin-top: 2px;
                         padding: 0;

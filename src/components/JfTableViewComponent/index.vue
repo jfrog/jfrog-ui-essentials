@@ -971,6 +971,9 @@
             right: 26px;
             z-index: 9999999;
             box-shadow: 0 2px 12px rgba(0, 0, 0, .25);
+            &.out-of-viewport{
+                top: ~"calc(100% - 150px)";
+            }
             .action-item {
                 cursor: pointer;
                 height: 40px;
