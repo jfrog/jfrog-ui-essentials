@@ -40,7 +40,6 @@ import {jfFakeReadonly} from "./jf_fake_read_only/jf_fake_readonly";
 import {jfMarkupEditor} from "./jf_markup_editor/jf_markup_editor";
 import {jfJsTreeWrap} from "./jf_js_tree_wrap/jf_js_tree_wrap";
 import {jfAutoComplete} from "./jf_auto_complete/jf_auto_complete";
-import {jfDatetimepicker} from "./jf_datetimepicker/jf_datetimepicker";
 import {jfDynamicTemplate} from "./jf_dynamic_template/jf_dynamic_template";
 import {jfListSelection} from "./jf_list_selection/jf_list_selection";
 import {jfDragAndDropTxt} from './jf_drag_and_drop_txt/jf_drag_and_drop_txt';
@@ -92,7 +91,6 @@ angular.module('jfrog.ui.essentials.directives', [MODULE_DATA_LIST])
         'jfPasswordStrength': jfPasswordStrength,
         'jfClearErrors': jfClearErrors,
         'jfFakeReadonly': jfFakeReadonly,
-	    'jfDatetimepicker': jfDatetimepicker,
 	    'jfDynamicTemplate': jfDynamicTemplate,
 	    'jfListSelection': jfListSelection,
         'jfMarkupEditor': jfMarkupEditor,
