@@ -29,7 +29,6 @@ angular.module('jfrog.ui.essentials', [
         'ui.bootstrap',
         'ui.grid.draggable-rows',
         'monospaced.mousewheel',
-        'ae-datetimepicker',
 
 
     // Library modules
