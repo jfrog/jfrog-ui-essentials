@@ -3,9 +3,9 @@ export function jfTooltip($sanitize) {
         restrict: 'A',
         link: function($scope, $element, $attrs) {
 	        let content = ($attrs.jfTooltip === '' ? null : $sanitize($attrs.jfTooltip));
-	        $($element).tooltipster({
+            $($element).tooltipster({
                 animation: 'fade',
-                contentAsHTML : 'true',
+                contentAsHTML : !$attrs.disableJfTooltipHtml,
                 trigger: 'hover',
                 onlyOne: 'true',
                 interactive: 'true',
