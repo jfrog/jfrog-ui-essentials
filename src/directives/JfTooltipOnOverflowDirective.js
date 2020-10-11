@@ -3,12 +3,16 @@ import {Ng1AttributeDirectiveAdapter} from '@/plugins/JFrogUI/Ng1AttributeDirect
 
 Vue.directive('jf-tooltip-on-overflow', {
     bind: function (el, binding, vnode) {
-        let patchedLinkFn = Ng1AttributeDirectiveAdapter.patchLinkFunction(ng1LinkFunction, null);
+        const opts = {
+            shouldSanitize: !binding.modifiers.html
+        }
+        let patchedLinkFn = Ng1AttributeDirectiveAdapter.patchLinkFunction(ng1LinkFunction.bind(this,opts), null);
         patchedLinkFn(el, binding, vnode);
     }
 });
 
-function ng1LinkFunction($scope, $element, $attrs) {
+function ng1LinkFunction({ shouldSanitize } ,$scope, $element, $attrs) {
+    const sanitize = $jfrog.get('$sanitize');
     $($element).on('mouseenter', (e) => {
         let targets = [$($element), $(e.target)];
         let tooltipShown = false;
@@ -20,9 +24,10 @@ function ng1LinkFunction($scope, $element, $attrs) {
             let target = targets[i];
 
             let targetContent = target.children(':not(:visible)').length ? target.children(':visible')
-                                                                                 .text()
-                                                                                 .trim() : target.text().trim();
-            targetContent = (targetContent === '' ? null : targetContent/*$sanitize(targetContent)*/);
+                .text()
+                .trim() : target.text().trim();
+            targetContent = (targetContent === '' ? null : targetContent);
+            targetContent = shouldSanitize ? sanitize(targetContent) : targetContent;
             if (!isNoTooltip(target) && target[0].scrollWidth > Math.round(target.innerWidth())) {
                 if (!!targetContent && !target.hasClass('tooltipstered')) {
                     let options = {
