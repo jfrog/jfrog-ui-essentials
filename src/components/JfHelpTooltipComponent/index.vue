@@ -2,7 +2,7 @@
 
     <div :v-jf-tooltip="html" class="jf-help-tooltip">
         <div>
-            <span class="tooltip-icon jf-tooltipster">
+            <span class="tooltip-icon jf-tooltipster" @click="tooltipClick($event)">
             <span><slot></slot></span>
             </span>
         </div>
@@ -25,6 +25,12 @@
         ],
         data() {
             return {};
+        },
+        methods: {
+            tooltipClick(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
         },
         ng1_legacy: {
             ng1postLinkFn($scope, element, attrs, ctrl) {
