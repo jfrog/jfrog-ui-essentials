@@ -1,6 +1,6 @@
 {
   "name": "jfrog-ui-essentials",
-  "version": "3.0.0-beta.70",
+  "version": "3.0.0-beta.71",
   "description": "JFrog UI Essentials",
   "scripts": {
     "reset": "rm -rf node_modules; rm package-lock.json; npm install --package-lock; npm run build",
