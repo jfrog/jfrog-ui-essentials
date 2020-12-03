@@ -206,11 +206,13 @@
                                     groupHeader.$selected = false;
                             }
                         }
-                        if (this.data.$groupHeader)
+                        if (this.data.$groupHeader){
                             this.tableView.groupSelection(this.data);
+                        }
                     } else if (this.tableView.options.selectionMode === this.tableView.options.SINGLE_SELECTION) {
+                        const wasSelected = this.data.$selected;
                         this.tableView.clearSelection();
-                        this.$set(this.data, '$selected', true);
+                        this.$set(this.data, '$selected', !wasSelected);
                     }
                 } else {
                     this.tableView.toggleSelectAll();
