@@ -972,7 +972,7 @@
             z-index: 9999999;
             box-shadow: 0 2px 12px rgba(0, 0, 0, .25);
             &.out-of-viewport{
-                top: ~"calc(100% - 150px)";
+                top: ~"calc(100% - 165px)";
             }
             .action-item {
                 cursor: pointer;
