@@ -356,21 +356,25 @@
                 this.JFrogEventBus.dispatch(this.EVENTS.TABLEVIEW_HIDE_ACTIONS_DROPDOWN, this.tableView);
                 this.actionsDropdownOpen = !origState;
                 await this.$nextTick();
-                this.applyOutOfViewport();
+                await this.applyOutOfViewport(e.pageY);
             },
-            applyOutOfViewport() {
+            async applyOutOfViewport(clickHeight) {
                 try {
                     const el = this.$refs.jfTableRowActionsDropdown;
+                    if(!el) {
+                        this.outOfViewport = {};
+                        return
+                    }
                     const dropdownRect = el.getBoundingClientRect();
                     const [tableRowsContainer] = document.getElementsByClassName('table-rows-container');
                     const tableRowsRect = tableRowsContainer.getBoundingClientRect()
                     const isOutOfViewPort = dropdownRect.bottom > (window.innerHeight || document.documentElement.clientHeight);
-                    const isOutOfTableRowsContainer = (dropdownRect.bottom - tableRowsRect.bottom) > -10
+                    const isOutOfTableRowsContainer = ( tableRowsRect.bottom - clickHeight) < dropdownRect.height;
+                    await this.$nextTick();
                     this.outOfViewport = (isOutOfViewPort || isOutOfTableRowsContainer) ? {'out-of-viewport': true} : {};
                 } catch (e) {
                     this.outOfViewport = {};
                 }
-
             },
             initDragAndDrop() {
                 if (this.rowId === 'headers')
