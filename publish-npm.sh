@@ -93,12 +93,13 @@ echo -e "${YELLOW}Log in to npm using your credentials${NC}"
 npm login || { un_stash_npmrc ; return 1; }
 
 # If the second arg $2 is set to "beta" or $1 ends with "-beta" - assume a beta version is being published
-if [ -n $2 -a "$2" =~ ^.*beta$ ] || [[ $1 =~ ^.*-.*$ ]]; then
+if [[ $1 =~ ^.*-.*$ ]]; then
     echo -e "${YELLOW}Publishing a beta version ${GREEN}$1${YELLOW}:${NC}"
     npm publish --tag beta || { un_stash_npmrc ; return 1; }
 else
     echo -e "${YELLOW}Publishing version ${GREEN}$1${YELLOW}:${NC}"
     npm publish || { un_stash_npmrc ; return 1; }
 fi
+
 # Un-stash the .npmrc file
 un_stash_npmrc
