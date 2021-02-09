@@ -99,7 +99,7 @@
     "moment": "2.19.1",
     "moment-jdateformatparser": "^1.1.0",
     "ng-clip": "0.2.6",
-    "selectize": "0.12.1",
+    "selectize": "^0.12.2",
     "ui-select": "0.18.1",
     "zeroclipboard": "2.2.0"
   }
