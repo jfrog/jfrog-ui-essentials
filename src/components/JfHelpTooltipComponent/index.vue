@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import sanitizeMixin from '../../mixins/Sanitize'
 
     export default {
         name: 'jf-help-tooltip',
@@ -23,6 +24,7 @@
         'jf@inject': [
             '$transclude',
         ],
+        mixins: [sanitizeMixin],
         data() {
             return {};
         },

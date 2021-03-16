@@ -1,5 +1,8 @@
 const Vue = window.Vue;
 import {Ng1AttributeDirectiveAdapter} from '@/plugins/JFrogUI/Ng1AttributeDirectiveAdapter';
+import sanitizeMixin from '../mixins/Sanitize';
+
+const { $sanitize } = sanitizeMixin.methods;
 
 Vue.directive('jf-tooltip', {
     bind: function (el, binding, vnode) {
@@ -18,10 +21,9 @@ function ng1LinkFunction($scope, $element, $attrs) {
         position: 'bottom',
         theme: 'tooltipster-default bottom',
     });
-    $($element).tooltipster('content', $attrs.jfTooltip === '' ? null : $attrs.jfTooltip);
+    $($element).tooltipster('content', $attrs.jfTooltip === '' ? null : $sanitize($attrs.jfTooltip));
 
     $attrs.$observe('jfTooltip', val => {
-        val = val === '' ? null : val /*this.$sanitize(val)*/;
-        $($element).tooltipster('content', val);
+        $($element).tooltipster('content', val === '' ? null : $sanitize(val));
     });
 }

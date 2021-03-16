@@ -14,6 +14,7 @@
     "postshrinkwrap": "if [ \"`uname`\" = \"Darwin\" ]; then sed -i '' -e 's/http:\\/\\//https:\\/\\//g' package-lock.json; else sed -i -e 's/http:\\/\\//https:\\/\\//g' package-lock.json; fi"
   },
   "dependencies": {
+    "@braintree/sanitize-url": "^5.0.0",
     "axios": "^0.18.0",
     "billboard.js": "1.9.5",
     "bootstrap": "4.3.1",
@@ -27,7 +28,7 @@
     "jquery-contextmenu": "1.8.1",
     "js-beautify": "^1.8.9",
     "lodash": "^4.17.11",
-    "sanitize-html": "^1.20.0",
+    "sanitize-html": "^1.27.5",
     "tooltipster": "^4.2.6",
     "v-click-outside": "^2.0.2",
     "vee-validate": "2.1.5",

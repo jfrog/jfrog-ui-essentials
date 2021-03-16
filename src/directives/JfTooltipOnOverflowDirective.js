@@ -1,5 +1,8 @@
 const Vue = window.Vue;
 import {Ng1AttributeDirectiveAdapter} from '@/plugins/JFrogUI/Ng1AttributeDirectiveAdapter';
+import sanitizeMixin from '../mixins/Sanitize';
+
+const { $sanitize } = sanitizeMixin.methods;
 
 Vue.directive('jf-tooltip-on-overflow', {
     bind: function (el, binding, vnode) {
@@ -12,7 +15,7 @@ Vue.directive('jf-tooltip-on-overflow', {
 });
 
 function ng1LinkFunction({ shouldSanitize } ,$scope, $element, $attrs) {
-    const sanitize = $jfrog.get('$sanitize');
+
     $($element).on('mouseenter', (e) => {
         let targets = [$($element), $(e.target)];
         let tooltipShown = false;
@@ -27,7 +30,7 @@ function ng1LinkFunction({ shouldSanitize } ,$scope, $element, $attrs) {
                 .text()
                 .trim() : target.text().trim();
             targetContent = (targetContent === '' ? null : targetContent);
-            targetContent = shouldSanitize ? sanitize(targetContent) : targetContent;
+            targetContent = $sanitize(targetContent);
             if (!isNoTooltip(target) && target[0].scrollWidth > Math.round(target.innerWidth())) {
                 if (!!targetContent && !target.hasClass('tooltipstered')) {
                     let options = {
