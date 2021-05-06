@@ -1,13 +1,14 @@
+input.input-text,
 .input-text {
   border: 1px solid @grayBorderLighter;
-  border-radius: 0;
+  border-radius: 4px;
   outline: none;
   box-shadow: none;
 
   width: 100%;
   padding: 0 10px;
   transition: border-color .5s ease;
-  
+
   &:not(textarea) {
     height: 40px;
   }
@@ -34,7 +35,7 @@
   &:not(.not-disabled-style)[disabled] {
     background: @grayBGLighter;
   }
-  
+
   &::-ms-clear,
   &::-ms-reveal {
     display: none;
