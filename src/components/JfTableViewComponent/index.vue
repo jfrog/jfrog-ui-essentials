@@ -515,6 +515,7 @@
             display: flex;
             flex-direction: row;
             height: auto;
+            margin: 16px 0;
             // counter and filter
             .counter-and-filter-wrapper {
                 flex-grow: 1;
@@ -523,10 +524,9 @@
                 width: 100%;
                 .table-counter {
                     white-space: nowrap;
-                    font-size: 16px;
-                    font-weight: 700;
-                    height: 14px;
-                    margin-bottom: 10px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    margin-bottom: 8px;
                     color: @blackBGLight;
                 }
                 .jf-table-filter {
@@ -547,6 +547,11 @@
                 position: relative;
                 width: 100%;
                 min-width: 95px;
+                margin: 0;
+                .grid-batch-actions {
+                    padding: 0;
+                    bottom: auto;
+                }
                 jf-table-view-batch-actions {
                     position: absolute;
                     bottom: 0;
