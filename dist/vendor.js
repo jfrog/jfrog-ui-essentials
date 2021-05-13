@@ -20,7 +20,6 @@ const vendorsPathes = {
 			'node_modules/jf-angular-ui-layout/ui-layout.js',
 			'node_modules/angular-resource/angular-resource.js',
 			'node_modules/angularjs-toaster/toaster.js',
-			'node_modules/angular-file-upload/angular-file-upload.js',
 			'node_modules/jquery-contextmenu/dist/jquery.contextMenu.js',
 			'node_modules/components-jqueryui/jquery-ui.js',
 			'node_modules/lodash/lodash.js',
