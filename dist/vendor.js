@@ -31,6 +31,7 @@ const vendorsPathes = {
 			'node_modules/ng-clip/dest/ng-clip.min.js',
 			'node_modules/jf-angular-ui-utils/ui-utils.js',
 			'vendor/jquery.highlight.js',
+			'vendor/angular-file-upload.js',
 			'node_modules/jf-tooltipster/js/jquery.tooltipster.min.js',
 			'node_modules/angular-capitalize-filter/capitalize.js',
 			'vendor/draggable-rows.js',
@@ -103,6 +104,7 @@ module.exports = {
 	ESSENTIALS_VENDORS: vendorsPathes,
     JS: [
         'vendor/jquery.highlight.js',
+		'vendor/angular-file-upload.js',
         'vendor/draggable-rows.js'
     ],
     JS_FOR_KARMA: [
