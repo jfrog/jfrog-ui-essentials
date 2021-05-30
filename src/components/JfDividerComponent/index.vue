@@ -29,11 +29,10 @@
             display: flex;
             margin-bottom: 30px;
             .jf-divider-header {
-                font-size: 14px;
-                color: @blackBGLight;
+                font-size: 16px;
+                color: @shuttleGray;
                 margin-bottom: -5px;
-                margin-left: -5px;
-                font-weight: 600;
+                font-weight: 400;
             }
             .jf-divider-line {
                 flex: 1;
