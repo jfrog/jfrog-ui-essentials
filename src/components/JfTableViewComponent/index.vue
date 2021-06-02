@@ -525,9 +525,9 @@
                 .table-counter {
                     white-space: nowrap;
                     font-size: 14px;
-                    font-weight: 500;
+                    font-weight: 600;
                     margin-bottom: 8px;
-                    color: @blackBGLight;
+                    color: @shuttleGray;
                 }
                 .jf-table-filter {
                     i {
