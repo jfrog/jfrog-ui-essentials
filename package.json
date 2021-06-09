@@ -96,7 +96,7 @@
     "js-beautify": "1.6.11",
     "later": "*",
     "lodash": "^4.17.15",
-    "moment": "2.19.1",
+    "moment": "^2.19.3",
     "moment-jdateformatparser": "^1.1.0",
     "ng-clip": "0.2.6",
     "selectize": "^0.12.2",
