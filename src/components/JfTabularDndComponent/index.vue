@@ -361,15 +361,13 @@
     @import "../../assets/stylesheets/variables.less";
 
     /deep/ .jf-tabular-dnd {
-
         display: flex;
         flex-direction: row;
         width: 100%;
         outline: none;
-        padding: 30px 0;
-        margin: 30px 0;
-        border-top: 1px solid @grayBorderLighter;
-        border-bottom: 1px solid @grayBorderLighter;
+        padding: 0;
+        margin: 0;
+        border: none;
 
         .tabular-dnd-table-container {
             width: 42%;
@@ -390,6 +388,10 @@
                 width: 280px;
             }
             .jf-table-view {
+                margin: 0;
+                .jf-table-top {
+                    margin-top: 0;
+                }
                 .jf-table-view-container {
                     .jf-table-top .counter-and-filter-wrapper .table-counter {
                         height: 22px;
