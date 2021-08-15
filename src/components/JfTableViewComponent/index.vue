@@ -355,6 +355,13 @@
                         return !record.$parentRow;
                     }).length;
                 }
+                /* rows with $doNotCount property won't be included
+                   in total records count
+                 */
+                if (this.options.data) {
+                    count -= _.filter(this.options.data, {$doNotCount: true}).length
+                }
+
                 return count + ' ' + this.getObjectNameByCount(count);
             },
             getObjectNameByCount(count, objectName) {

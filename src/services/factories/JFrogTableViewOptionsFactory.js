@@ -972,10 +972,6 @@ export function JFrogTableViewOptions() {
             });
 
             data.splice(0, 0, ...stickies);
-            Array.prototype.splice.apply(data, [
-                0,
-                0
-            ].concat(stickies));
         }
 
         _saveAndRemoveSubRows(data) {
@@ -1177,7 +1173,10 @@ export function JFrogTableViewOptions() {
                     for (let i in this.columns) {
                         let col = this.columns[i];
                         if (this.defaultFilterByAll && col.filterable !== false || !this.defaultFilterByAll && col.filterable === true) {
-                            if (row.$sticky && !row.$stickyFilterable || this._isSubVisible(row, col) || row.$groupHeader || _.get(row, col.field) && _.includes(_.get(row, col.field).toString().toLowerCase(), this.dirCtrl.tableFilter.toLowerCase())) {
+                            if (row.$sticky && !row.$stickyFilterable ||
+                                this._isSubVisible(row, col) || row.$groupHeader ||
+                                _.get(row, col.field) &&
+                                _.includes(_.get(row, col.field).toString().toLowerCase(), this.dirCtrl.tableFilter.toLowerCase())) {
                                 return true;
                             }
                         }
