@@ -1,17 +1,19 @@
 <template>
-
-    <div class="jf-toggler">
-        <div class="switch-toggle" :class="{'left': value, 'right': !value}" @click="toggleSelection()">
-            <span></span>
-        </div>
+  <div class="jf-toggler">
+    <div
+      class="switch-toggle"
+      :class="{'left': value, 'right': !value}"
+      @click="toggleSelection()"
+    >
+      <span />
     </div>
-
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-toggler',
+        name: 'JfToggler',
         props: ['value'],
         data() {
             return {};

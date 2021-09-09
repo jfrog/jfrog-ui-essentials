@@ -1,35 +1,48 @@
 <template>
-    <b-modal
-        ref="jfModal"
-        id="jfModal"
-        :ok-only="okOnly"
-        @ok="$ok"
-        ok-title="Close"
-        ok-variant="secondary"
-        @hide="_handleHide"
-        @hidden="_afterModalHidden"
-        >
-        <template slot="modal-title">
-            <div id="popup-header">{{title}}</div>
-        </template>
+  <b-modal
+    id="jfModal"
+    ref="jfModal"
+    :ok-only="okOnly"
+    ok-title="Close"
+    ok-variant="secondary"
+    @ok="$ok"
+    @hide="_handleHide"
+    @hidden="_afterModalHidden"
+  >
+    <template slot="modal-title">
+      <div id="popup-header">
+        {{ title }}
+      </div>
+    </template>
 
-        <div class="modal-body simple-text" v-if="text">
-            <p v-html="sanitizedText" class="full-text-item"></p>
-        </div>
-        <div class="modal-body text-to-list" v-if="list">
-            <p v-for="(item,index) in sanitizedList"
-               :key="index"
-               class="full-text-item"
-               v-html="item"
-               @click="onItemClick(item)">
-            </p>
-        </div>
-    </b-modal>
+    <div
+      v-if="text"
+      class="modal-body simple-text"
+    >
+      <p
+        class="full-text-item"
+        v-html="sanitizedText"
+      />
+    </div>
+    <div
+      v-if="list"
+      class="modal-body text-to-list"
+    >
+      <p
+        v-for="(item,index) in sanitizedList"
+        :key="index"
+        class="full-text-item"
+        @click="onItemClick(item)"
+        v-html="item"
+      />
+    </div>
+  </b-modal>
 </template>
 <script>
     import ModalMixins from "@/mixins/ModalMixins/index.js";
     export default {
-        name: 'jf-fulltext-modal',
+        name: 'JfFulltextModal',
+        mixins: [ModalMixins],
         props: [
             "title",
             "text",
@@ -39,19 +52,10 @@
         'jf@inject': [
             '$sanitize'
         ],
-        mixins:[ModalMixins],
         data() {
             return {
                 okOnly: true,
             };
-        },
-        methods: {
-            onItemClick(item){
-                this.$refs.jfModal.hide();
-                if (typeof this.listItemClickCB == "function") {
-                    this.listItemClickCB(item);
-                }
-            }
         },
         computed: {
             sanitizedText() {
@@ -62,6 +66,14 @@
                     return this.list.map(item => this.$sanitize(item));
                 }
                 return [];
+            }
+        },
+        methods: {
+            onItemClick(item){
+                this.$refs.jfModal.hide();
+                if (typeof this.listItemClickCB == "function") {
+                    this.listItemClickCB(item);
+                }
             }
         }
 };

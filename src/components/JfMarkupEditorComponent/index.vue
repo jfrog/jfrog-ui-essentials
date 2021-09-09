@@ -1,89 +1,141 @@
 <template>
-    <div>
-        <div class="jf-markup-editor" :class="{'has-editor-label':editorLabel}" v-if="webworkerOk || previewersCount === 2">
-            <div class="controls">
-                <div class="editor-label" v-if="editorLabel" :class="{'editor-label-position':isInEditMode()}">
-                    {{editorLabel}}
-                </div>
-                <div class="lang-select-wrapper" v-if="showControls && isEditable">
-                    <jf-ui-select class="form-group-cell"
-                                  :jf-select-disabled="!isInEditMode()"
-                                  v-model="currentLanguage"
-                                  @jf-select-change="onLanguageChange"
-                                  :jf-select-options="['Markdown','Asciidoc','Plain Text']">
-                    </jf-ui-select>
-                </div>
-                <div class="switch-wrapper" v-if="showControls">
-                    <jf-switch v-model="currentMode" @input="onChangeModeInternal()" :options="modeOptions" ref="switchController" class="no-margin-top">
-                    </jf-switch>
-                </div>
-                <button class="btn btn-default edit-button" type="button" v-if="!showControls && isEditable" @click="activateEditor()">
-                    <span v-if="value && value.length > 0">
-                    <i class="icon icon-edit-pen"></i>
-                    <span>Edit</span>
-                    </span>
-                    <span v-if="!value || value.length === 0">
-                    <i class="icon icon-new"></i>
-                    <span>Add</span>
-                    </span>
-                </button>
-            </div>
-
-            <div class="code-mirror-wrapper codemirror-wrapper"  v-if="isInEditMode()">
-
-                <jf-code-mirror v-if="currentLanguage === 'Markdown'"
-                                mime-type="text/x-markdown"
-                                mode="gfm"
-                                :allow-edit="true"
-                                :key="currentLanguage"
-                                height="100%"
-                                :autofocus="!preventAutoFocus"
-                                enable-copy-to-clipboard="value && value.length"
-                                clipboard-copy-entity-name="text"
-                                :value="value" @input="$emit('input', arguments[0])">
-                </jf-code-mirror>
-                <jf-code-mirror v-if="currentLanguage === 'Asciidoc'"
-                                mime-type="text/x-markdown"
-                                mode="asciidoc"
-                                :allow-edit="true"
-                                :key="currentLanguage"
-                                height="100%"
-                                :autofocus="!preventAutoFocus"
-                                enable-copy-to-clipboard="value && value.length"
-                                clipboard-copy-entity-name="text"
-                                :value="value" @input="$emit('input', arguments[0])">
-                </jf-code-mirror>
-                <jf-code-mirror v-if="currentLanguage === 'Plain Text'"
-                                :allow-edit="true"
-                                :key="currentLanguage"
-                                height="100%"
-                                :autofocus="!preventAutoFocus"
-                                enable-copy-to-clipboard="value && value.length"
-                                clipboard-copy-entity-name="text"
-                                :value="value" @input="$emit('input', arguments[0])">
-                </jf-code-mirror>
-                <button v-if="onSave" @click="onSaveClick()" class="btn btn-primary save-button pull-right">
-                    Save
-                </button>
-                <button v-if="!hideCancelButton" @click="onCancel()" class="btn btn-secondary clancel-button pull-right">
-                    Cancel
-                </button>
-            </div>
-
-            <div class="preview-wrapper"  v-if="!isInEditMode()">
-                <div class="preview" :class="{'empty-preview': !preview || preview.length === 0}" v-html="preview">
-                </div>
-                <div class="no-markup" v-if="!preview">
-                    <span>No markup available.</span>&nbsp;
-                    <a class="jf-link" v-if="!showControls && isEditable" @click.prevent="activateEditor()">
-                        Add markup.
-                    </a>
-                </div>
-            </div>
-
+  <div>
+    <div
+      v-if="webworkerOk || previewersCount === 2"
+      class="jf-markup-editor"
+      :class="{'has-editor-label':editorLabel}"
+    >
+      <div class="controls">
+        <div
+          v-if="editorLabel"
+          class="editor-label"
+          :class="{'editor-label-position':isInEditMode()}"
+        >
+          {{ editorLabel }}
         </div>
+        <div
+          v-if="showControls && isEditable"
+          class="lang-select-wrapper"
+        >
+          <jf-ui-select
+            v-model="currentLanguage"
+            class="form-group-cell"
+            :jf-select-disabled="!isInEditMode()"
+            :jf-select-options="['Markdown','Asciidoc','Plain Text']"
+            @jf-select-change="onLanguageChange"
+          />
+        </div>
+        <div
+          v-if="showControls"
+          class="switch-wrapper"
+        >
+          <jf-switch
+            ref="switchController"
+            v-model="currentMode"
+            :options="modeOptions"
+            class="no-margin-top"
+            @input="onChangeModeInternal()"
+          />
+        </div>
+        <button
+          v-if="!showControls && isEditable"
+          class="btn btn-default edit-button"
+          type="button"
+          @click="activateEditor()"
+        >
+          <span v-if="value && value.length > 0">
+            <i class="icon icon-edit-pen" />
+            <span>Edit</span>
+          </span>
+          <span v-if="!value || value.length === 0">
+            <i class="icon icon-new" />
+            <span>Add</span>
+          </span>
+        </button>
+      </div>
 
+      <div
+        v-if="isInEditMode()"
+        class="code-mirror-wrapper codemirror-wrapper"
+      >
+        <jf-code-mirror
+          v-if="currentLanguage === 'Markdown'"
+          :key="currentLanguage"
+          mime-type="text/x-markdown"
+          mode="gfm"
+          :allow-edit="true"
+          height="100%"
+          :autofocus="!preventAutoFocus"
+          enable-copy-to-clipboard="value && value.length"
+          clipboard-copy-entity-name="text"
+          :value="value"
+          @input="$emit('input', arguments[0])"
+        />
+        <jf-code-mirror
+          v-if="currentLanguage === 'Asciidoc'"
+          :key="currentLanguage"
+          mime-type="text/x-markdown"
+          mode="asciidoc"
+          :allow-edit="true"
+          height="100%"
+          :autofocus="!preventAutoFocus"
+          enable-copy-to-clipboard="value && value.length"
+          clipboard-copy-entity-name="text"
+          :value="value"
+          @input="$emit('input', arguments[0])"
+        />
+        <jf-code-mirror
+          v-if="currentLanguage === 'Plain Text'"
+          :key="currentLanguage"
+          :allow-edit="true"
+          height="100%"
+          :autofocus="!preventAutoFocus"
+          enable-copy-to-clipboard="value && value.length"
+          clipboard-copy-entity-name="text"
+          :value="value"
+          @input="$emit('input', arguments[0])"
+        />
+        <button
+          v-if="onSave"
+          class="btn btn-primary save-button pull-right"
+          @click="onSaveClick()"
+        >
+          Save
+        </button>
+        <button
+          v-if="!hideCancelButton"
+          class="btn btn-secondary clancel-button pull-right"
+          @click="onCancel()"
+        >
+          Cancel
+        </button>
+      </div>
+
+      <div
+        v-if="!isInEditMode()"
+        class="preview-wrapper"
+      >
+        <div
+          class="preview"
+          :class="{'empty-preview': !preview || preview.length === 0}"
+          v-html="preview"
+        />
+        <div
+          v-if="!preview"
+          class="no-markup"
+        >
+          <span>No markup available.</span>&nbsp;
+          <a
+            v-if="!showControls && isEditable"
+            class="jf-link"
+            @click.prevent="activateEditor()"
+          >
+            Add markup.
+          </a>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 <script>
 
@@ -91,7 +143,7 @@
     const EDIT_MODE = 'Edit';
 
     export default {
-        name: 'jf-markup-editor',
+        name: 'JfMarkupEditor',
         props: [
             'value',
             'previewRenderers',

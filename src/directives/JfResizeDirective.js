@@ -1,5 +1,5 @@
-const Vue = window.Vue;
 import _ from "lodash";
+const Vue = window.Vue;
 
 /*
 Reference: http://www.backalleycoder.com/2013/03/18/cross-browser-event-based-element-resize-detection/
@@ -63,7 +63,7 @@ Vue.directive('jf-resize', {
                 if ( typeof binding.value == 'function') {
                     binding.value()
                 }
-            },1000,{"leading":false, trailing:true})
+            },1000,{"leading": false, trailing: true})
         )
     }
 })

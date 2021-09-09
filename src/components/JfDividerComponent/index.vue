@@ -1,18 +1,18 @@
 <template>
-
-    <div class="jf-divider">
-        <div class="jf-divider-container">
-            <div class="jf-divider-header">{{text}}</div>
-            <div class="jf-divider-line"></div>
-        </div>
+  <div class="jf-divider">
+    <div class="jf-divider-container">
+      <div class="jf-divider-header">
+        {{ text }}
+      </div>
+      <div class="jf-divider-line" />
     </div>
-
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-divider',
+        name: 'JfDivider',
         props: ['text'],
         data() {
             return {};

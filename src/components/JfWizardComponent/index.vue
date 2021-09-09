@@ -1,23 +1,31 @@
 <template>
-    <div class="jf-wizard">
-        <div class="jf-wizard-container">
-            <div class="wizard-bar">
-                <ul>
-                    <li v-for="(tab,index) in tabs" :key="index" :class="{'active': active.title === tab.title}" v-show="isVisible(tab)">
-                        <a href="" @click.prevent="_switch(tab)">{{tab.title}}</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="wizard-content">
-                <slot></slot>
-            </div>
-        </div>
+  <div class="jf-wizard">
+    <div class="jf-wizard-container">
+      <div class="wizard-bar">
+        <ul>
+          <li
+            v-for="(tab,index) in tabs"
+            v-show="isVisible(tab)"
+            :key="index"
+            :class="{'active': active.title === tab.title}"
+          >
+            <a
+              href=""
+              @click.prevent="_switch(tab)"
+            >{{ tab.title }}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="wizard-content">
+        <slot />
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
     export default {
-        name: 'jf-wizard',
+        name: 'JfWizard',
         props: ['config'],
         'jf@inject': [
             'JFrogEventBus',

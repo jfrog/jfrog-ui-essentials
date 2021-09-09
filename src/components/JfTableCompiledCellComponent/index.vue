@@ -1,14 +1,16 @@
 <template>
-
-    <div>
-        <component v-if="compiledTemplate" :is="compiledTemplate.comp" v-bind="compiledTemplate.props"></component>
-    </div>
-
+  <div>
+    <component
+      :is="compiledTemplate.comp"
+      v-if="compiledTemplate"
+      v-bind="compiledTemplate.props"
+    />
+  </div>
 </template>
 
 <script>
     export default {
-        name: 'jf-table-compiled-cell',
+        name: 'JfTableCompiledCell',
         props: [
             'field',
             'rowId',

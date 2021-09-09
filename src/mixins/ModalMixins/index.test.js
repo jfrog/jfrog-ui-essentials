@@ -3,10 +3,10 @@ import ModalMixin from './index.js'
 import Q from 'q'
 
 // Utility method to avoid code duplication
-const mountComponent = function (props={}) {
+const mountComponent = function (props = {}) {
     let Component = {
         template: "<div></div>",
-        mixins:[ModalMixin]
+        mixins: [ModalMixin]
     }
     let options = {
         propsData: Object.assign({}, props),
@@ -105,7 +105,7 @@ describe('ModalMixin', () => {
                 let wrapper = mountComponent(
                     {
                         uiEssModalPromise: deferred,
-                        dontRejectOnClose:true
+                        dontRejectOnClose: true
                     }
                 );
                 wrapper.vm.$refs = {

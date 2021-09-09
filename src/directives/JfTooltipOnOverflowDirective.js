@@ -1,6 +1,6 @@
-const Vue = window.Vue;
 import {Ng1AttributeDirectiveAdapter} from '@/plugins/JFrogUI/Ng1AttributeDirectiveAdapter';
 import sanitizeMixin from '../mixins/Sanitize';
+const Vue = window.Vue;
 
 const { $sanitize } = sanitizeMixin.methods;
 
@@ -48,7 +48,7 @@ function ng1LinkFunction({ shouldSanitize } ,$scope, $element, $attrs) {
                     }
                     target.tooltipster(options);
                     target.tooltipster('show');
-                } else if (!!targetContent) {
+                } else if (targetContent) {
                     target.tooltipster('enable');
 
                     if (target.tooltipster('content') != targetContent) {

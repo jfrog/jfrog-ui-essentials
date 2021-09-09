@@ -1,20 +1,21 @@
 <template>
-
-    <div>
-        <div class="jf-marquee-container">
-            <span v-init="checkOverflow()">
-    		<slot v-if="!$transclude.isSlotFilled('innerHtml')"></slot>
-    		<slot v-html="$sanitize(innerHtml)" v-if="$transclude.isSlotFilled('innerHtml')"></slot>
-    	</span>
-        </div>
+  <div>
+    <div class="jf-marquee-container">
+      <span v-init="checkOverflow()">
+        <slot v-if="!$transclude.isSlotFilled('innerHtml')" />
+        <slot
+          v-if="$transclude.isSlotFilled('innerHtml')"
+          v-html="$sanitize(innerHtml)"
+        />
+      </span>
     </div>
-
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-marquee',
+        name: 'JfMarquee',
         props: ['disabled'],
         'jf@inject': [
             '$element',

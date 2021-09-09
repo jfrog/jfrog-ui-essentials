@@ -1,26 +1,50 @@
 <template>
-    <b-modal v-bind="modalProps" @hide="_handleHide" @hidden="_afterModalHidden">
-        <template slot="modal-title">
-            <div id="popup-header" v-html="sanitizedTitle"></div>
-        </template>
-        <template slot="modal-footer">
-                <jf-checkbox v-if="checkboxLabel"
-                            class="pull-left"
-                            :text="checkboxLabel">
-                    <input type="checkbox"
-                        @change="onCheckboxStateChange(checkbox.checked)"
-                        v-model="checkbox.checked">
-                </jf-checkbox>
-                <button class="btn btn-default" @click="$dismiss()" id="popup-cancel">{{int_buttons.cancel}}</button>
-                <button class="btn btn-primary" @click="$close(true)" id="popup-confirm">{{int_buttons.confirm}}</button>
-        </template>
-        <div v-html="sanitizedContent"></div>
-    </b-modal>
+  <b-modal
+    v-bind="modalProps"
+    @hide="_handleHide"
+    @hidden="_afterModalHidden"
+  >
+    <template slot="modal-title">
+      <div
+        id="popup-header"
+        v-html="sanitizedTitle"
+      />
+    </template>
+    <template slot="modal-footer">
+      <jf-checkbox
+        v-if="checkboxLabel"
+        class="pull-left"
+        :text="checkboxLabel"
+      >
+        <input
+          v-model="checkbox.checked"
+          type="checkbox"
+          @change="onCheckboxStateChange(checkbox.checked)"
+        >
+      </jf-checkbox>
+      <button
+        id="popup-cancel"
+        class="btn btn-default"
+        @click="$dismiss()"
+      >
+        {{ int_buttons.cancel }}
+      </button>
+      <button
+        id="popup-confirm"
+        class="btn btn-primary"
+        @click="$close(true)"
+      >
+        {{ int_buttons.confirm }}
+      </button>
+    </template>
+    <div v-html="sanitizedContent" />
+  </b-modal>
 </template>
 <script>
     import ModalMixins from "@/mixins/ModalMixins/index.js";
     export default {
-        name: 'jf-modal',
+        name: 'JfModal',
+        mixins: [ModalMixins],
         props: [
             "title",
             "buttons",
@@ -32,14 +56,6 @@
         'jf@inject': [
             '$sanitize'
         ],
-        methods:{
-            onCheckboxStateChange(state) {
-                if (typeof this.checkBoxChangeListener == "function"){
-                    this.checkBoxChangeListener(state);
-                }
-            }
-        },
-        mixins:[ModalMixins],
         data() {
             let int_buttons = this.buttons || {};
             int_buttons.cancel = int_buttons.cancel || "Cancel";
@@ -54,6 +70,13 @@
             },
             sanitizedContent() {
                 return this.$sanitize(this.content);
+            }
+        },
+        methods: {
+            onCheckboxStateChange(state) {
+                if (typeof this.checkBoxChangeListener == "function"){
+                    this.checkBoxChangeListener(state);
+                }
             }
         }
 };

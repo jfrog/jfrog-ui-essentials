@@ -1,6 +1,6 @@
-import {shallowMount} from '@vue/test-utils';
-import {mount} from '@vue/test-utils';
-import {createLocalVue} from '@vue/test-utils';
+import {shallowMount,mount,createLocalVue} from '@vue/test-utils';
+
+
 import {testsBootstrap} from '@/testsBootstrap';
 import JfSummaryRowComponent from './index.vue';
 import JfSummaryRowItemComponent from './JfSummaryRowItemComponent/index.vue';

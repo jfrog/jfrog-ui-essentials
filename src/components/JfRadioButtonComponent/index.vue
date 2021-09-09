@@ -1,24 +1,38 @@
 <template>
-
-    <div><span>
-        <label v-if="text" class="jf-radio-button">
-            <span></span> {{ text }}
-        <span class="helper" v-if="helper">{{helper}}</span>
-        </label>
-        <label v-if="!text" class="jf-radio-button">
-            <span></span>
-            <span slot="template" @click="onClickTemplate()"></span>
-            <span class="helper" v-if="helper">{{helper}}</span>
-        </label>
-        </span>
-    </div>
-
+  <div>
+    <span>
+      <label
+        v-if="text"
+        class="jf-radio-button"
+      >
+        <span /> {{ text }}
+        <span
+          v-if="helper"
+          class="helper"
+        >{{ helper }}</span>
+      </label>
+      <label
+        v-if="!text"
+        class="jf-radio-button"
+      >
+        <span />
+        <span
+          slot="template"
+          @click="onClickTemplate()"
+        />
+        <span
+          v-if="helper"
+          class="helper"
+        >{{ helper }}</span>
+      </label>
+    </span>
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-radio-button',
+        name: 'JfRadioButton',
         props: [
             'text',
             'helper'

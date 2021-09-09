@@ -26,7 +26,7 @@ describe('ConfirmModal', () => {
             let wrapper = mountComponent({
                 checkbox: { checked: false },
                 checkboxLabel: "Quis excepteur Lorem qui dolore veniam fugiat eiusmod ut consequat commodo laboris id.",
-                checkBoxChangeListener:mockedFn
+                checkBoxChangeListener: mockedFn
             });
             wrapper.find(SELECTOR_CHECKBOX).trigger("change");
             expect(mockedFn).toHaveBeenCalled();

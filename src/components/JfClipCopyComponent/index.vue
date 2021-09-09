@@ -1,20 +1,21 @@
 <template>
-    <span class="clip-copy-button">
-        <a class="copy-to-clip icon icon-jfui-copy"
-           @click="copyToClipboard"
-           v-jf-tooltip.bind="tooltipText">
-        </a>
-    </span>
+  <span class="clip-copy-button">
+    <a
+      v-jf-tooltip.bind="tooltipText"
+      class="copy-to-clip icon icon-jfui-copy"
+      @click="copyToClipboard"
+    />
+  </span>
 </template>
 
 <script>
 
+    import * as ClipboardJS from 'clipboard';
     const TOOLTIP_DEFAULT_TEXT = 'Copy to clipboard';
     const DEFAULT_FEEDBACK_DELAY = 4000;
-    import * as ClipboardJS from 'clipboard';
 
     export default {
-        name: 'jf-clip-copy',
+        name: 'JfClipCopy',
         props: ['textToCopy',
             'objectName',
             'keepTooltipLetterCase'],

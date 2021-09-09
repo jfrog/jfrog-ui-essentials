@@ -142,16 +142,16 @@ export function JFrogTableViewOptions() {
         }
 
         setData(data, internalCall) {
-            let rnd = Math.floor(10000*Math.random());
+            let rnd = Math.floor(10000 * Math.random());
             while (rnd === this.rnd) {
-                rnd = Math.floor(10000*Math.random());
+                rnd = Math.floor(10000 * Math.random());
             }
             this.rnd = rnd;
 
             let idPrefix = this.rnd + (this.registeredTabularDnd ? this.registeredTabularDnd.dndRole : '');
             if (this.paginationMode === this.VIRTUAL_SCROLL) {
                 data.forEach((item, i) => {
-                    item.$$$id = idPrefix + i +'';
+                    item.$$$id = idPrefix + i + '';
                 })
             }
 
@@ -509,7 +509,7 @@ export function JFrogTableViewOptions() {
             let sendExternal = false;
 
             if (!resort && this.sortByField === field) {
-                this.revSort = !this.revSort    ;
+                this.revSort = !this.revSort;
                 sendExternal = true;
             } else if (!resort) {
                 this.revSort = false;

@@ -1,19 +1,26 @@
 <template>
-
-    <div>
-        <ng-messages for="field.$error" class="jf-validation" :style="{position: dontPushDown ? 'absolute' : 'relative'}">
-            <div v-for="(key, value) in messages">
-                <div ng-message-exp="key" id="validation-label">{{ applyParams(value) }}</div>
-            </div>
-        </ng-messages>
-    </div>
-
+  <div>
+    <ng-messages
+      for="field.$error"
+      class="jf-validation"
+      :style="{position: dontPushDown ? 'absolute' : 'relative'}"
+    >
+      <div v-for="(key, value) in messages">
+        <div
+          id="validation-label"
+          ng-message-exp="key"
+        >
+          {{ applyParams(value) }}
+        </div>
+      </div>
+    </ng-messages>
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-validation',
+        name: 'JfValidation',
         props: [
             'field',
             'dictionary',

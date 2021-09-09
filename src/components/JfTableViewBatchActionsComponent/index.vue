@@ -1,36 +1,48 @@
 <template>
-
-    <div>
-        <div class="grid-batch-actions text-right">
-            <div class="grid-batch-action-wrapper"
-                 :class="{'more-actions': action === MORE_ACTIONS}"
-                 v-for="(action, $index) in actions"
-                 :data-action-id="action.name"
-                 :style="{visibility: action === MORE_ACTIONS || (visibleActions && visibleActions.indexOf(action) !== -1) ? 'inherit' : 'hidden', opacity: action === MORE_ACTIONS || (visibleActions && visibleActions.indexOf(action) !== -1) ? 1 : 0}"
-                 v-jf-tooltip.bind="() => isDisabled(action) && action.getDisabledTooltip ? action.getDisabledTooltip() : ''">
-                <a :class="{disabled: isDisabled(action), ['btn batch-action-' + action.icon]: true}"
-                   v-if="action !== MORE_ACTIONS && (!action.visibleWhen || action.visibleWhen())"
-                   @click.prevent="perform(action)">
-                    <img :src="'images/' + action.icon + '.png'" v-if="action.img">
-                    <i :class="'icon icon-' + action.icon" v-if="!action.img"></i> {{ action.name }}
-                </a>
-                <div class="more-wrapper" v-if="action === MORE_ACTIONS">
-                    <jf-actions :parent-controller="jfTableViewBatchActions"
-                                label="More Actions"
-                                init-method="initActions"
-                                :show-drop-down-for-one-item="true">
-                    </jf-actions>
-                </div>
-            </div>
+  <div>
+    <div class="grid-batch-actions text-right">
+      <div
+        v-for="(action, $index) in actions"
+        v-jf-tooltip.bind="() => isDisabled(action) && action.getDisabledTooltip ? action.getDisabledTooltip() : ''"
+        class="grid-batch-action-wrapper"
+        :class="{'more-actions': action === MORE_ACTIONS}"
+        :data-action-id="action.name"
+        :style="{visibility: action === MORE_ACTIONS || (visibleActions && visibleActions.indexOf(action) !== -1) ? 'inherit' : 'hidden', opacity: action === MORE_ACTIONS || (visibleActions && visibleActions.indexOf(action) !== -1) ? 1 : 0}"
+      >
+        <a
+          v-if="action !== MORE_ACTIONS && (!action.visibleWhen || action.visibleWhen())"
+          :class="{disabled: isDisabled(action), ['btn batch-action-' + action.icon]: true}"
+          @click.prevent="perform(action)"
+        >
+          <img
+            v-if="action.img"
+            :src="'images/' + action.icon + '.png'"
+          >
+          <i
+            v-if="!action.img"
+            :class="'icon icon-' + action.icon"
+          /> {{ action.name }}
+        </a>
+        <div
+          v-if="action === MORE_ACTIONS"
+          class="more-wrapper"
+        >
+          <jf-actions
+            :parent-controller="jfTableViewBatchActions"
+            label="More Actions"
+            init-method="initActions"
+            :show-drop-down-for-one-item="true"
+          />
         </div>
+      </div>
     </div>
-
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-table-view-batch-actions',
+        name: 'JfTableViewBatchActions',
         props: [
             'actions',
             'tableOptions'

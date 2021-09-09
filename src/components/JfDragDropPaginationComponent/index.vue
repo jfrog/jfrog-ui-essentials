@@ -1,25 +1,40 @@
 <template>
-    <div>
-        <div class="grid-pagination text-right grid-pagination-wrap" style="border:none" v-if="paginationApi.getTotalPages()">
-            <p>
-                <input type="text" class="grid-page-box"
-                       :style="{'width': (CONSTANTS.PAGINATION_DIGIT_WIDTH_PX + paginationApi.getTotalPages().toString().length * CONSTANTS.PAGINATION_DIGIT_WIDTH_PX) + 'px'}"
-                       jf-tooltip="Jump to Page"
-                       @blur="onBlur()"
-                       v-model="pageViewModel"
-                       @input="pageChanged">
-                out of {{ paginationApi.getTotalPages() }}
-                <a href="" @click.prevent="prevPage()" :class="{disabled: currentPage === 1}">‹</a>
-                <a href="" @click.prevent="nextPage()" :class="{disabled: currentPage === paginationApi.getTotalPages()}">›</a>
-            </p>
-        </div>
+  <div>
+    <div
+      v-if="paginationApi.getTotalPages()"
+      class="grid-pagination text-right grid-pagination-wrap"
+      style="border:none"
+    >
+      <p>
+        <input
+          v-model="pageViewModel"
+          type="text"
+          class="grid-page-box"
+          :style="{'width': (CONSTANTS.PAGINATION_DIGIT_WIDTH_PX + paginationApi.getTotalPages().toString().length * CONSTANTS.PAGINATION_DIGIT_WIDTH_PX) + 'px'}"
+          jf-tooltip="Jump to Page"
+          @blur="onBlur()"
+          @input="pageChanged"
+        >
+        out of {{ paginationApi.getTotalPages() }}
+        <a
+          href=""
+          :class="{disabled: currentPage === 1}"
+          @click.prevent="prevPage()"
+        >‹</a>
+        <a
+          href=""
+          :class="{disabled: currentPage === paginationApi.getTotalPages()}"
+          @click.prevent="nextPage()"
+        >›</a>
+      </p>
     </div>
+  </div>
 </template>
 
 <script>
     import { GENERAL_CONSTANTS } from '@/constants/general.constants.js';
     export default {
-        name: 'jf-drag-drop-pagination',
+        name: 'JfDragDropPagination',
         props: ['paginationApi'],
         data() {
             return {

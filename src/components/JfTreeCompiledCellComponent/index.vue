@@ -1,15 +1,13 @@
 <template>
-
-    <div>
-        <div class="compile-this"></div>
-    </div>
-
+  <div>
+    <div class="compile-this" />
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-tree-compiled-cell',
+        name: 'JfTreeCompiledCell',
         props: [
             'itemId',
             'treeItem'

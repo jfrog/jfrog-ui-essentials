@@ -1,15 +1,17 @@
 <template>
-
-    <div>
-        <component v-if="compiledProps" :is="template" v-bind="compiledProps"></component>
-    </div>
-
+  <div>
+    <component
+      :is="template"
+      v-if="compiledProps"
+      v-bind="compiledProps"
+    />
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-vscroll-element',
+        name: 'JfVscrollElement',
         props: [
             'data',
             'template',
@@ -31,6 +33,8 @@
         },
         computed: {
         },
+        watch: {
+        },
         created() {
 
 /*
@@ -42,8 +46,6 @@
             });
 */
 
-        },
-        watch: {
         },
         mounted() {
             let elementScope = {

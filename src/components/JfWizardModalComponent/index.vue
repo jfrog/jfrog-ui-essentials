@@ -1,124 +1,180 @@
 <template>
-    <b-modal
-        v-bind="modalProps"
-        :modal-class="classForStep"
-        @hidden="_afterModalHidden"
-        @hide="_handleHide"
+  <b-modal
+    v-bind="modalProps"
+    :modal-class="classForStep"
+    @hidden="_afterModalHidden"
+    @hide="_handleHide"
+  >
+    <template slot="modal-header">
+      <span
+        v-if="wizardDefinitionObject.cancelable"
+        class="icon icon-clear"
+        @click="dismiss()"
+      />
+      <div
+        class="title-wrapper icon-hidden"
+        :class="{'no-border' : currentStepDefinition.hideTitleBorder}"
+      >
+        <div
+          v-if="currentStepDefinition.icon"
+          class="icon"
+          :class="{'build-animation' : currentStepDefinition.buildIcon}"
         >
-            <template slot="modal-header">
-                <span v-if="wizardDefinitionObject.cancelable" class="icon icon-clear" @click="dismiss()"></span>
-                <div class="title-wrapper icon-hidden" :class="{'no-border' : currentStepDefinition.hideTitleBorder}">
-                    <div class="icon"
-                        v-if="currentStepDefinition.icon"
-                        :class="{'build-animation' : currentStepDefinition.buildIcon}">
+          <img
+            :srcset="currentStepDefinition.iconSrcset"
+            :src="currentStepDefinition.icon"
+            alt=""
+          >
 
-                        <img :srcset="currentStepDefinition.iconSrcset"
-                            :src="currentStepDefinition.icon"
-                            alt="">
+          <img
+            v-if="currentStepDefinition.buildIcon"
+            :srcset="currentStepDefinition.buildIconSrcset"
+            ng-src="currentStepDefinition.buildIcon"
+            alt=""
+            class="build"
+          >
+        </div>
+        <div class="title">
+          <h1 v-if="currentStepDefinition.name">
+            {{ currentStepDefinition.name }}
+          </h1>
+          <div
+            v-if="currentStepDescription"
+            class="description"
+            v-html="currentStepDescription"
+          />
+        </div>
+      </div>
+    </template>
+    <div
+      ref="currentPage"
+      class="modal-body clearfix "
+    />
+    <template slot="modal-footer">
+      <div jf-disable-ng-animate>
+        <div
+          v-if="doNotShowWizardAgain"
+          class="pull-left"
+        >
+          <jf-checkbox :text="doNotShowWizardAgain.label">
+            <input
+              v-model="doNotShowWizardAgain.model"
+              type="checkbox"
+              @change="preventShowingWizardAgain()"
+            >
+          </jf-checkbox>
+        </div>
+        <div class="progress-indicator">
+          <div
+            v-for="(led, index) in wizardDefinitionObject.steps"
+            :key="index"
+            class="progress-indicator-led"
+            :class="{current: $index === currentStep-1}"
+          />
+        </div>
 
-                        <img :srcset="currentStepDefinition.buildIconSrcset"
-                            ng-src="currentStepDefinition.buildIcon"
-                            v-if="currentStepDefinition.buildIcon"
-                            alt="" class="build">
-                    </div>
-                    <div class="title">
-                        <h1 v-if="currentStepDefinition.name">{{currentStepDefinition.name}}</h1>
-                        <div class="description" v-if="currentStepDescription" v-html="currentStepDescription"></div>
-                    </div>
-                </div>
-            </template>
-            <div ref="currentPage" class="modal-body clearfix ">
 
-            </div>
-            <template slot="modal-footer">
-                <div jf-disable-ng-animate>
-                    <div class="pull-left"
-                        v-if="doNotShowWizardAgain">
-                        <jf-checkbox :text="doNotShowWizardAgain.label">
-                            <input type="checkbox"
-                                @change="preventShowingWizardAgain()"
-                                v-model="doNotShowWizardAgain.model">
-                        </jf-checkbox>
-                    </div>
-                    <div class="progress-indicator">
-                        <div class="progress-indicator-led"
-                            :class="{current: $index === currentStep-1}"
-                            v-for="(led, index) in wizardDefinitionObject.steps" :key="index"></div>
-                    </div>
+        <div class="modal-footer-buttons-container">
+          <div v-if="!currentStepDefinition.customButtons">
+            <button
+              v-if="currentStep > 1 && prevStepDefinition.supportReturnTo !== false"
+              id="wizard-popup-prev"
+              class="btn"
+              :disabled="pending"
+              @click="prevStep()"
+            >
+              Back
+            </button>
+            <button
+              v-if="currentStep < totalSteps && currentStepDefinition.skippable"
+              id="wizard-popup-skip"
+              class="btn"
+              :disabled="pending"
+              jf-clear-errors
+              @click="nextStep(true)"
+            >
+              Skip
+            </button>
+            <button
+              v-if="currentStep < totalSteps"
+              id="wizard-popup-next"
+              :disabled="pending || !wizardHooks.isStepCompleted(currentStepDefinition)"
+              class="btn"
+              @click="nextStep()"
+            >
+              Next
+            </button>
+            <button
+              v-if="currentStep === totalSteps"
+              id="wizard-popup-finish"
+              :disabled="pending || (!wizardHooks.isStepCompleted(currentStepDefinition) && !currentStepDefinition.skippable)"
+              class="btn"
+              @click="finish()"
+            >
+              Finish
+            </button>
+          </div>
+          <div v-if="currentStepDefinition.customButtons">
+            <span
+              v-for="(button, index) in currentStepDefinition.customButtons"
+              :key="index"
+            >
+              <button
+                v-if="button.action==='back' && (currentStep > 1 && prevStepDefinition.supportReturnTo !== false)"
+                id="wizard-popup-prev-custom"
+                class="btn"
+                :disabled="pending"
+                @click="prevStep()"
+              >{{ button.label }}</button>
+              <button
+                v-if="button.action==='skip' && (currentStep < totalSteps && currentStepDefinition.skippable)"
+                id="wizard-popup-skip-custom"
+                class="btn"
+                :disabled="pending"
+                jf-clear-errors
+                @click="nextStep(true)"
+              >{{ button.label }}</button>
+              <button
+                v-if="button.action==='next' && (currentStep < totalSteps)"
+                id="wizard-popup-next-custom"
+                :disabled="pending || !wizardHooks.isStepCompleted(currentStepDefinition)"
+                class="btn"
+                @click="nextStep()"
+              >{{ button.label }}</button>
+              <button
+                v-if="button.action==='finish' && (currentStep === totalSteps)"
+                id="wizard-popup-finish-custom"
+                :disabled="pending || (!wizardHooks.isStepCompleted(currentStepDefinition) && !currentStepDefinition.skippable)"
+                class="btn"
+                @click="finish()"
+              >{{ button.label }}</button>
 
-
-                    <div class="modal-footer-buttons-container">
-                        <div v-if="!currentStepDefinition.customButtons">
-                            <button v-if="currentStep > 1 && prevStepDefinition.supportReturnTo !== false"
-                                    class="btn"
-                                    @click="prevStep()"
-                                    :disabled="pending"
-                                    id="wizard-popup-prev">Back</button>
-                            <button v-if="currentStep < totalSteps && currentStepDefinition.skippable"
-                                    class="btn"
-                                    @click="nextStep(true)"
-                                    :disabled="pending"
-                                    jf-clear-errors
-                                    id="wizard-popup-skip">Skip</button>
-                            <button v-if="currentStep < totalSteps"
-                                    :disabled="pending || !wizardHooks.isStepCompleted(currentStepDefinition)"
-                                    class="btn"
-                                    @click="nextStep()"
-                                    id="wizard-popup-next">Next</button>
-                            <button v-if="currentStep === totalSteps"
-                                    :disabled="pending || (!wizardHooks.isStepCompleted(currentStepDefinition) && !currentStepDefinition.skippable)"
-                                    class="btn"
-                                    @click="finish()"
-                                    id="wizard-popup-finish">Finish</button>
-                        </div>
-                        <div v-if="currentStepDefinition.customButtons">
-                            <span v-for="(button, index) in currentStepDefinition.customButtons" :key="index">
-                                <button v-if="button.action==='back' && (currentStep > 1 && prevStepDefinition.supportReturnTo !== false)"
-                                        class="btn"
-                                        @click="prevStep()"
-                                        :disabled="pending"
-                                        id="wizard-popup-prev-custom">{{button.label}}</button>
-                                <button v-if="button.action==='skip' && (currentStep < totalSteps && currentStepDefinition.skippable)"
-                                        class="btn"
-                                        @click="nextStep(true)"
-                                        :disabled="pending"
-                                        jf-clear-errors
-                                        id="wizard-popup-skip-custom">{{button.label}}</button>
-                                <button v-if="button.action==='next' && (currentStep < totalSteps)"
-                                        :disabled="pending || !wizardHooks.isStepCompleted(currentStepDefinition)"
-                                        class="btn"
-                                        @click="nextStep()"
-                                        id="wizard-popup-next-custom">{{button.label}}</button>
-                                <button v-if="button.action==='finish' && (currentStep === totalSteps)"
-                                        :disabled="pending || (!wizardHooks.isStepCompleted(currentStepDefinition) && !currentStepDefinition.skippable)"
-                                        class="btn"
-                                        @click="finish()"
-                                        id="wizard-popup-finish-custom">{{button.label}}</button>
-
-                                <button v-if="isFunction(button.action)"
-                                        :disabled="button.isDisabled && button.isDisabled()"
-                                        class="btn"
-                                        @click="button.action()"
-                                        id="wizard-popup-custom-button">{{button.label}}</button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </template>
-    </b-modal>
+              <button
+                v-if="isFunction(button.action)"
+                id="wizard-popup-custom-button"
+                :disabled="button.isDisabled && button.isDisabled()"
+                class="btn"
+                @click="button.action()"
+              >{{ button.label }}</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </template>
+  </b-modal>
 </template>
 <script>
     import ModalMixins from '@/mixins/ModalMixins/index.js'
 
     export default {
-        name:'jf-wizard-modal',
+        name: 'JfWizardModal',
         mixins: [ModalMixins],
             "jf@inject": [
             'JFrogUILibConfig',
             'JFrogNotifications',
             '$sanitize'
         ],
-        props:[
+        props: [
             'wizardDefinitionObject',
             'wizardHooks',
             'JFrogModal',
@@ -127,30 +183,17 @@
             return {
                 currentStep: !this.wizardDefinitionObject.initialStep ? 1 : _.findIndex(wizardDefinitionObject.steps, { id: this.wizardDefinitionObject.initialStep }) + 1,
                 totalSteps: this.wizardDefinitionObject.steps.length,
-                doNotShowWizardAgain:this.wizardDefinitionObject.doNotShowWizardAgain,
+                doNotShowWizardAgain: this.wizardDefinitionObject.doNotShowWizardAgain,
                 pending: false
             };
         },
 
-        mounted(){
-            this.getContentForPage();
-        },
-
-        watch:{
-            currentStep(){
-                this.getContentForPage();
-            },
-            wizardHooks(){
-                this.$forceUpdate();
-            }
-        },
-
         computed: {
             prevStepDefinition() {
-                return this.wizardDefinitionObject.steps[this.currentStep -2];
+                return this.wizardDefinitionObject.steps[this.currentStep - 2];
             },
             currentStepDefinition() {
-                return this.wizardDefinitionObject.steps[this.currentStep -1];
+                return this.wizardDefinitionObject.steps[this.currentStep - 1];
             },
             nextStepDefinition() {
                 return this.wizardDefinitionObject.steps[this.currentStep];
@@ -163,6 +206,19 @@
                 return `wizard-modal ${this.currentStepDefinition.class || ""}`;
             }
         },
+
+        watch: {
+            currentStep(){
+                this.getContentForPage();
+            },
+            wizardHooks(){
+                this.$forceUpdate();
+            }
+        },
+
+        mounted(){
+            this.getContentForPage();
+        },
         methods: {
             getContentForPage() {
                 this.titleInit();
@@ -173,13 +229,13 @@
                 }
 
                 let currentStep = this.currentStepDefinition;
-                let modifiers = typeof currentStep.template == 'object' ? currentStep.template :
-                this.JFrogUILibConfig.getConfig().customModalTemplates[currentStep.template];
+                let modifiers = typeof currentStep.template == 'object' ? currentStep.template
+                : this.JFrogUILibConfig.getConfig().customModalTemplates[currentStep.template];
                 let ComponentClass = Vue.extend({
-                    name: "wizard-page",
-                    template: modifiers.template,
-                    mixins:[ modifiers ],
-                    props:["WizCtrl"]
+                    name: "WizardPage",
+                    mixins: [ modifiers ],
+                    props: ["WizCtrl"],
+                    template: modifiers.template
                 });
                 let component = new ComponentClass({propsData: {
                     WizCtrl: this.wizardHooks

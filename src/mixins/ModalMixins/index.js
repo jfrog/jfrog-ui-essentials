@@ -1,11 +1,11 @@
 import Q from 'q'
 
-const removeClassIfNecessary = function (selector, className) {
+/*const removeClassIfNecessary = function (selector, className) {
     const element = $(selector);
     if (element.hasClass(className)) {
         element.removeClass(className);
     }
-}
+}*/
 
 const hack = function(){
     //Vue.nextTick()
@@ -26,12 +26,12 @@ const whenElementIsVisible = function (selector, callBack, count = 0) {
     }
 }
 
-const addClassIfNecessary = function (selector, className) {
+/*const addClassIfNecessary = function (selector, className) {
     const element = $(selector);
     if (!element.hasClass(className)) {
         element.addClass(className);
     }
-}
+}*/
 /* This hack causes the modal to become visible immediately.
 The issue can be observed if you comment out the next few lines of code
 and then try to load the show-all modal from the jf-table-view demo page
@@ -72,7 +72,7 @@ export default {
                         ? this.uiEssSize
                         : '',
             },
-            modalPromise : this.uiEssModalPromise || Q.defer()
+            modalPromise: this.uiEssModalPromise || Q.defer()
         }
     },
     mounted() {
@@ -89,10 +89,10 @@ export default {
             this.$refs.jfModal.show();
             forceModalVisibility();//hack
         },
-        close() {//Added for backward compatibility
+        close() { //Added for backward compatibility
             this.$close(true)
         },
-        $ok() {//Added for backward compatibility
+        $ok() { //Added for backward compatibility
             this.$close(true)
         },
         $close(succeeded) {
@@ -103,7 +103,7 @@ export default {
                 this.$refs.jfModal.hide()
             }
         },
-        dismiss() {//Added for backward compatibility
+        dismiss() { //Added for backward compatibility
             this.$dismiss()
         },
         _afterModalHidden(){

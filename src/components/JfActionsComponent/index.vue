@@ -1,47 +1,83 @@
 <template>
-    <div>
-        <ul class="list-inline" v-show="getActiveActionsCount()">
-            <li v-for="(actionObj,index) in fixedActions" :key="index"
-                @click="doAction(actionObj,$event)"
-                :class="{disabled: actionObj.disabled || (actionObj.disabledWhen && actionObj.disabledWhen())}"
-                class="action-button"
-                v-show="!actionObj.visibleWhen || actionObj.visibleWhen()">
-                <a :href=" actionObj.href " download="">
-                    <i class="action-icon icon" :class="actionObj.icon"></i> {{actionObj.title}}
-                </a>
-            </li>
-            <li v-show="dynamicActions.length" class="action-button">
-                <span class="dropdown" :class="{ open: isDropdownOpen }">
-                    <ul class="dropdown-menu dropdown-menu-right actions-dropdown text-left">
-                        <li v-for="(actionObj,index) in dynamicActions" :key="index" class="action-item dynamic-action"
-                            v-show="(!actionObj.visibleWhen || actionObj.visibleWhen()) && !actionObj.isHidden">
-                            <a href="#" class="action-container" @click.prevent="doAction(actionObj,$event)">
-                                <span class="action-icon icon" v-if="actionObj.icon" :class="actionObj.icon"></span>
-                                <span class="action-icon" v-if="actionObj.image && !actionObj.icon">
-                                    <img :src="actionObj.image">
-                                </span>
-                                <span class="action-name">{{actionObj.title}}</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <a href="#" class="dropdown-toggle actions-more" @click.prevent="isDropdownOpen = !isDropdownOpen">
-                        {{int_label}} <i class="action-icon icon icon-small-arrow-down"></i>
-                    </a>
+  <div>
+    <ul
+      v-show="getActiveActionsCount()"
+      class="list-inline"
+    >
+      <li
+        v-for="(actionObj,index) in fixedActions"
+        v-show="!actionObj.visibleWhen || actionObj.visibleWhen()"
+        :key="index"
+        :class="{disabled: actionObj.disabled || (actionObj.disabledWhen && actionObj.disabledWhen())}"
+        class="action-button"
+        @click="doAction(actionObj,$event)"
+      >
+        <a
+          :href=" actionObj.href "
+          download=""
+        >
+          <i
+            class="action-icon icon"
+            :class="actionObj.icon"
+          /> {{ actionObj.title }}
+        </a>
+      </li>
+      <li
+        v-show="dynamicActions.length"
+        class="action-button"
+      >
+        <span
+          class="dropdown"
+          :class="{ open: isDropdownOpen }"
+        >
+          <ul class="dropdown-menu dropdown-menu-right actions-dropdown text-left">
+            <li
+              v-for="(actionObj,index) in dynamicActions"
+              v-show="(!actionObj.visibleWhen || actionObj.visibleWhen()) && !actionObj.isHidden"
+              :key="index"
+              class="action-item dynamic-action"
+            >
+              <a
+                href="#"
+                class="action-container"
+                @click.prevent="doAction(actionObj,$event)"
+              >
+                <span
+                  v-if="actionObj.icon"
+                  class="action-icon icon"
+                  :class="actionObj.icon"
+                />
+                <span
+                  v-if="actionObj.image && !actionObj.icon"
+                  class="action-icon"
+                >
+                  <img :src="actionObj.image">
                 </span>
+                <span class="action-name">{{ actionObj.title }}</span>
+              </a>
             </li>
-        </ul>
-        <!--<li ng-repeat="action in actions">-->
-        <!--<a><span class="glyphicon glyphicon-refresh"></span>{{action.name}}</a></li>-->
-        <!--<li><a><span class="glyphicon glyphicon-trash"></span>Delete Content</a></li>-->
-        <!--<li><a><span class="glyphicon glyphicon-cloud-upload"></span>Upload to Bintray</a></li>-->
-    </div>
-
+          </ul>
+          <a
+            href="#"
+            class="dropdown-toggle actions-more"
+            @click.prevent="isDropdownOpen = !isDropdownOpen"
+          >
+            {{ int_label }} <i class="action-icon icon icon-small-arrow-down" />
+          </a>
+        </span>
+      </li>
+    </ul>
+    <!--<li ng-repeat="action in actions">-->
+    <!--<a><span class="glyphicon glyphicon-refresh"></span>{{action.name}}</a></li>-->
+    <!--<li><a><span class="glyphicon glyphicon-trash"></span>Delete Content</a></li>-->
+    <!--<li><a><span class="glyphicon glyphicon-cloud-upload"></span>Upload to Bintray</a></li>-->
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-actions',
+        name: 'JfActions',
         props: [
             'label',
             'initMethod',
@@ -59,8 +95,8 @@
                     actions: []
                 },
                 int_label: this.label || 'Actions',
-                clicked:false,
-                stayOpened:false
+                clicked: false,
+                stayOpened: false
             };
         },
         computed: {

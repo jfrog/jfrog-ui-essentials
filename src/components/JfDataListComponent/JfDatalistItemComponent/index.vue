@@ -1,39 +1,60 @@
 <template>
-  <div class="value" ref="templateValue">
+  <div
+    ref="templateValue"
+    class="value"
+  >
     <a
       v-if="itemIsLink"
+      v-jf-tooltip-on-overflow
       :href="viewItem.url ? viewItem.url : viewItem.value"
-      v-html="viewItem.value"
       target="_blank"
       class="jf-link"
-      v-jf-tooltip-on-overflow
-    ></a>
+      v-html="viewItem.value"
+    />
     <div
       v-if="itemIsLinkWithUrl || itemIsPlainText"
-      v-html="viewItem.value"
       v-jf-tooltip-on-overflow
-    ></div>
-    <div v-if="itemIsTagsArray" :id="'data-list-row-' + index">
-      <div class="tag" v-for="(tag, index2) in viewItem.value" :key="index2">
+      v-html="viewItem.value"
+    />
+    <div
+      v-if="itemIsTagsArray"
+      :id="'data-list-row-' + index"
+    >
+      <div
+        v-for="(tag, index2) in viewItem.value"
+        :key="index2"
+        class="tag"
+      >
         <a
-          class="gridcell-content-text jf-link"
           v-if="tag.url"
+          class="gridcell-content-text jf-link"
           :href="tag.url"
           target="_blank"
           v-html="tag.label"
-        ></a>
-        <span class="gridcell-content-text" v-if="!tag.url" v-html="tag.label"></span>
-        <i v-if="viewItem.delete" @click="deleteTag(tag)" class="icon icon-close delete-tag"></i>
+        />
+        <span
+          v-if="!tag.url"
+          class="gridcell-content-text"
+          v-html="tag.label"
+        />
+        <i
+          v-if="viewItem.delete"
+          class="icon icon-close delete-tag"
+          @click="deleteTag(tag)"
+        />
       </div>
       <a
-        class="jf-link gridcell-showall"
         v-if="showAllValue"
+        class="jf-link gridcell-showall"
         href
         @click.prevent="showAll(viewItem.value,viewItem.label,viewItem.objectName)"
-      >(See {{viewItem.value.length &gt; 1 ? 'All' : 'List'}})</a>
+      >(See {{ viewItem.value.length &gt; 1 ? 'All' : 'List' }})</a>
     </div>
-    <div class="copy" v-if="viewItem.copy && !isArray(viewItem.value)">
-      <jf-clip-copy :text-to-copy="viewItem.value"></jf-clip-copy>
+    <div
+      v-if="viewItem.copy && !isArray(viewItem.value)"
+      class="copy"
+    >
+      <jf-clip-copy :text-to-copy="viewItem.value" />
     </div>
   </div>
 </template>
@@ -42,7 +63,7 @@
 import _ from 'lodash'
 import { JfDataListModal } from "@/components/JfDataListModal/index.js";
 export default {
-    name: 'jf-datalist-item-component',
+    name: 'JfDatalistItemComponent',
     props: ['item', 'index'],
     'jf@inject': [
         'JFrogModal',
@@ -53,6 +74,44 @@ export default {
     data() {
         return {
             showAllValue: false
+        }
+    },
+    computed: {
+        itemIsPlainText() {
+            const { value, isUrl, template } = this.item;
+            return (!isUrl && !this.isArray(value) && !template);
+        },
+        itemIsLink() {
+            const { value, isUrl, template } = this.item;
+            return (value && !this.isArray(value) && isUrl && !template);
+        },
+        itemIsLinkWithUrl() {
+            const { value, isUrl, url } = this.item;
+            return (isUrl && url != undefined && !url.length) || (!value);
+        },
+        itemIsTagsArray() {
+            const { value, template } = this.item;
+            return (this.isArray(value) && !template);
+        },
+        viewItem() {
+            const res = { ...this.item };
+            const { value } = this.item;
+            if(this.itemIsLink) {
+                res.value = this.$sanitize(value);
+            }
+            if (this.itemIsLinkWithUrl || this.itemIsPlainText) {
+                res.value = this.$sanitize(value) || '&nbsp';
+            }
+            if(this.itemIsTagsArray) {
+                res.value = value.map(tag => {
+                    return {
+                        ...tag,
+                        label: this.$sanitize(tag.label)
+                    }
+                });
+            }
+
+            return res;
         }
     },
     mounted() {
@@ -140,9 +199,9 @@ export default {
                       };
             let template = `${mixin.template}`
             let ComponentClass = Vue.extend({
-                name: 'template-component',
-                template: template,
+                name: 'TemplateComponent',
                 mixins: [mixin],
+                template: template,
                 props: ['item', ...Object.keys(item.scope || {})],
             })
             let component = new ComponentClass({
@@ -158,44 +217,6 @@ export default {
         },
         isHtml(value) {
             return /<[a-z/][\s\S]*>/i.test(value);
-        }
-    },
-    computed: {
-        itemIsPlainText() {
-            const { value, isUrl, template } = this.item;
-            return (!isUrl && !this.isArray(value) && !template);
-        },
-        itemIsLink() {
-            const { value, isUrl, template } = this.item;
-            return (value && !this.isArray(value) && isUrl && !template);
-        },
-        itemIsLinkWithUrl() {
-            const { value, isUrl, url } = this.item;
-            return (isUrl && url != undefined && !url.length) || (!value);
-        },
-        itemIsTagsArray() {
-            const { value, template } = this.item;
-            return (this.isArray(value) && !template);
-        },
-        viewItem() {
-            const res = { ...this.item };
-            const { value } = this.item;
-            if(this.itemIsLink) {
-                res.value = this.$sanitize(value);
-            }
-            if (this.itemIsLinkWithUrl || this.itemIsPlainText) {
-                res.value = this.$sanitize(value) || '&nbsp';
-            }
-            if(this.itemIsTagsArray) {
-                res.value = value.map(tag => {
-                    return {
-                        ...tag,
-                        label: this.$sanitize(tag.label)
-                    }
-                });
-            }
-
-            return res;
         }
     }
 }

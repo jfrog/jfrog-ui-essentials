@@ -1,93 +1,208 @@
 <template>
-
-    <div>
-        <div class="dnd-panel" @keydown="onKeyDown($event)" tabindex="0">
-            <div class="row dnd-filter-wrapper">
-                <div class="col-lg-5 col-md-5 col-sm-5">
-                    <input type="text" :style="{color:noMatches ? 'red' : 'black'}" v-model="filterExcludeList" @input="updateExcludeFilter(true)" ng-model-options="{debounce: 200}" placeholder="Filter..." :disabled="disabled" class="input-text dnd-filter">
-                </div>
-                <div class="col-lg-2 col-md-2 col-sm-2"></div>
-                <div class="col-lg-5 col-md-5 col-sm-5">
-                    <input type="text" :style="{color:noIncludeMatches ? 'red' : 'black'}" v-model="filterIncludeList" @input="updateIncludeFilter(true)" ng-model-options="{debounce: 200}" placeholder="Filter..." :disabled="disabled" class="input-text dnd-filter">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-5 col-md-5 col-sm-5">
-                    <h5 class="text-primary" v-if="headers.leftTitle">
-                        {{headers.leftTitle}}
-                    </h5>
-                    <div :id="excludeListId" class="dnd-list-wrapper" @mouseenter="mouseIsInExclude(true)" @mouseleave="mouseIsInExclude(false)">
-                        <ul class="dnd-list">
-                            <li v-for="(item, $index) in getViewableExcludes()" class="drag-item" :class="{'drag-placeholder':item===PLACEHOLDER, 'active' : isSelected(item)}" :data-index="'exc-' + $index" @click="toggleSelection(item)" @dblclick="includeSpecific(item)" @mouseenter="mouseOver(item)" @mouseleave="mouseOver(null)">
-                                <div class="drag-item-text" v-if="item !== PLACEHOLDER && !customTemplate">
-                                    <i v-if="item._iconClass" :class="item._iconClass"></i>
-                                    {{excludeDisplayField &amp;&amp; item[excludeDisplayField] ? item[excludeDisplayField] : item}}
-                                </div>
-                                <div class="drag-item-text" v-if="item !== PLACEHOLDER && customTemplate">
-                                    <i v-if="item._iconClass" :class="item._iconClass"></i>
-                                    <div v-if="customTemplate" class="custom-template" v-init="compileCustomTemplate(item,'exc')"></div>
-                                </div>
-                                <div class="drag-item-text" v-if="item === PLACEHOLDER"></div>
-                            </li>
-                        </ul>
-                    </div>
-                    <jf-drag-drop-pagination :pagination-api="excludesPaginationApi"></jf-drag-drop-pagination>
-                </div>
-
-                <div class="col-lg-2 col-md-2 col-sm-2">
-                    <h5 class="text-primary" v-if="headers.leftTitle || headers.rightTitle">&nbsp;</h5>
-                    <ul class="dnd-actions">
-                        <li>
-                            <span @click="excludeAll()" :disabled="isIncludeListEmpty() || isIncludeListFixed() || disabled">«
-                        </span>
-                        </li>
-                        <li>
-                            <span @click="excludeSelected()" :disabled="!isIncludeListItemSelected() || disabled">‹
-                        </span>
-                        </li>
-                        <li>
-                            <span @click="includeSelected()" :disabled="!isExcludeListItemSelected() || disabled">›
-                        </span>
-                        </li>
-                        <li>
-                            <span @click="includeAll()" :disabled="isExcludeListEmpty() || disabled">»
-                        </span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-5 col-md-5 col-sm-5">
-                    <h5 class="text-primary" v-if="headers.rightTitle">{{headers.rightTitle}}
-                    </h5>
-                    <div :id="includeListId" class="dnd-list-wrapper" @mouseenter="mouseIsInInclude(true)" @mouseleave="mouseIsInInclude(false)">
-                        <ul class="dnd-list dnd-list-fullheight">
-                            <li v-for="(item, $index) in getViewableIncludes()" class="drag-item dropped-item" :class="{'drag-placeholder':item===PLACEHOLDER, 'active' : isSelected(item)}" :data-index="'inc-' + $index" @click="!$event.defaultPrevented ? (toggleSelection(item)) : ''" @dblclick="excludeSpecific(item)" @mouseenter="mouseOver(item)" @mouseleave="mouseOver(null)">
-                                <div class="drag-item-text" v-if="item !== PLACEHOLDER && !customTemplate">
-                                    <i v-if="item._iconClass" :class="item._iconClass"></i>
-                                    {{includeDisplayField &amp;&amp; item[includeDisplayField] ? item[includeDisplayField] : item}}
-                                </div>
-                                <div class="drag-item-text" v-if="item !== PLACEHOLDER && customTemplate">
-                                    <i v-if="item._iconClass" :class="item._iconClass"></i>
-                                    <div v-if="customTemplate" class="custom-template" v-init="compileCustomTemplate(item,'inc')"></div>
-                                </div>
-                                <div class="drag-item-text" v-if="item === PLACEHOLDER"></div>
-                                <a v-if="item && item !== PLACEHOLDER && !item['__fixed__'] && !disabled" href="" class="delete-drop-item" @click.prevent="excludeSpecific(item);$event.stopPropagation();$event.preventDefault();">✕</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <jf-drag-drop-pagination :pagination-api="includesPaginationApi"></jf-drag-drop-pagination>
-                </div>
-            </div>
-            <div class="clearfix"></div>
+  <div>
+    <div
+      class="dnd-panel"
+      tabindex="0"
+      @keydown="onKeyDown($event)"
+    >
+      <div class="row dnd-filter-wrapper">
+        <div class="col-lg-5 col-md-5 col-sm-5">
+          <input
+            v-model="filterExcludeList"
+            type="text"
+            :style="{color:noMatches ? 'red' : 'black'}"
+            ng-model-options="{debounce: 200}"
+            placeholder="Filter..."
+            :disabled="disabled"
+            class="input-text dnd-filter"
+            @input="updateExcludeFilter(true)"
+          >
         </div>
-    </div>
+        <div class="col-lg-2 col-md-2 col-sm-2" />
+        <div class="col-lg-5 col-md-5 col-sm-5">
+          <input
+            v-model="filterIncludeList"
+            type="text"
+            :style="{color:noIncludeMatches ? 'red' : 'black'}"
+            ng-model-options="{debounce: 200}"
+            placeholder="Filter..."
+            :disabled="disabled"
+            class="input-text dnd-filter"
+            @input="updateIncludeFilter(true)"
+          >
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-5 col-md-5 col-sm-5">
+          <h5
+            v-if="headers.leftTitle"
+            class="text-primary"
+          >
+            {{ headers.leftTitle }}
+          </h5>
+          <div
+            :id="excludeListId"
+            class="dnd-list-wrapper"
+            @mouseenter="mouseIsInExclude(true)"
+            @mouseleave="mouseIsInExclude(false)"
+          >
+            <ul class="dnd-list">
+              <li
+                v-for="(item, $index) in getViewableExcludes()"
+                class="drag-item"
+                :class="{'drag-placeholder':item===PLACEHOLDER, 'active' : isSelected(item)}"
+                :data-index="'exc-' + $index"
+                @click="toggleSelection(item)"
+                @dblclick="includeSpecific(item)"
+                @mouseenter="mouseOver(item)"
+                @mouseleave="mouseOver(null)"
+              >
+                <div
+                  v-if="item !== PLACEHOLDER && !customTemplate"
+                  class="drag-item-text"
+                >
+                  <i
+                    v-if="item._iconClass"
+                    :class="item._iconClass"
+                  />
+                  {{ excludeDisplayField &amp;&amp; item[excludeDisplayField] ? item[excludeDisplayField] : item }}
+                </div>
+                <div
+                  v-if="item !== PLACEHOLDER && customTemplate"
+                  class="drag-item-text"
+                >
+                  <i
+                    v-if="item._iconClass"
+                    :class="item._iconClass"
+                  />
+                  <div
+                    v-if="customTemplate"
+                    v-init="compileCustomTemplate(item,'exc')"
+                    class="custom-template"
+                  />
+                </div>
+                <div
+                  v-if="item === PLACEHOLDER"
+                  class="drag-item-text"
+                />
+              </li>
+            </ul>
+          </div>
+          <jf-drag-drop-pagination :pagination-api="excludesPaginationApi" />
+        </div>
 
+        <div class="col-lg-2 col-md-2 col-sm-2">
+          <h5
+            v-if="headers.leftTitle || headers.rightTitle"
+            class="text-primary"
+          >
+&nbsp;
+          </h5>
+          <ul class="dnd-actions">
+            <li>
+              <span
+                :disabled="isIncludeListEmpty() || isIncludeListFixed() || disabled"
+                @click="excludeAll()"
+              >«
+              </span>
+            </li>
+            <li>
+              <span
+                :disabled="!isIncludeListItemSelected() || disabled"
+                @click="excludeSelected()"
+              >‹
+              </span>
+            </li>
+            <li>
+              <span
+                :disabled="!isExcludeListItemSelected() || disabled"
+                @click="includeSelected()"
+              >›
+              </span>
+            </li>
+            <li>
+              <span
+                :disabled="isExcludeListEmpty() || disabled"
+                @click="includeAll()"
+              >»
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-lg-5 col-md-5 col-sm-5">
+          <h5
+            v-if="headers.rightTitle"
+            class="text-primary"
+          >
+            {{ headers.rightTitle }}
+          </h5>
+          <div
+            :id="includeListId"
+            class="dnd-list-wrapper"
+            @mouseenter="mouseIsInInclude(true)"
+            @mouseleave="mouseIsInInclude(false)"
+          >
+            <ul class="dnd-list dnd-list-fullheight">
+              <li
+                v-for="(item, $index) in getViewableIncludes()"
+                class="drag-item dropped-item"
+                :class="{'drag-placeholder':item===PLACEHOLDER, 'active' : isSelected(item)}"
+                :data-index="'inc-' + $index"
+                @click="!$event.defaultPrevented ? (toggleSelection(item)) : ''"
+                @dblclick="excludeSpecific(item)"
+                @mouseenter="mouseOver(item)"
+                @mouseleave="mouseOver(null)"
+              >
+                <div
+                  v-if="item !== PLACEHOLDER && !customTemplate"
+                  class="drag-item-text"
+                >
+                  <i
+                    v-if="item._iconClass"
+                    :class="item._iconClass"
+                  />
+                  {{ includeDisplayField &amp;&amp; item[includeDisplayField] ? item[includeDisplayField] : item }}
+                </div>
+                <div
+                  v-if="item !== PLACEHOLDER && customTemplate"
+                  class="drag-item-text"
+                >
+                  <i
+                    v-if="item._iconClass"
+                    :class="item._iconClass"
+                  />
+                  <div
+                    v-if="customTemplate"
+                    v-init="compileCustomTemplate(item,'inc')"
+                    class="custom-template"
+                  />
+                </div>
+                <div
+                  v-if="item === PLACEHOLDER"
+                  class="drag-item-text"
+                />
+                <a
+                  v-if="item && item !== PLACEHOLDER && !item['__fixed__'] && !disabled"
+                  href=""
+                  class="delete-drop-item"
+                  @click.prevent="excludeSpecific(item);$event.stopPropagation();$event.preventDefault();"
+                >✕</a>
+              </li>
+            </ul>
+          </div>
+          <jf-drag-drop-pagination :pagination-api="includesPaginationApi" />
+        </div>
+      </div>
+      <div class="clearfix" />
+    </div>
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-drag-drop',
+        name: 'JfDragDrop',
         props: [
             'includeList',
             'excludeList',

@@ -1,35 +1,44 @@
 <template>
-    <b-modal
-        v-bind="modalProps"
-        :ok-only="okOnly"
-        ok-title="Close"
-        @ok="$ok"
-        ok-variant="secondary"
-        @hide="_handleHide"
-        @hidden="_afterModalHidden"
-        >
-        <template slot="modal-title">
-            <div id="popup-header" v-html="sanitizedTitle"></div>
-        </template>
+  <b-modal
+    v-bind="modalProps"
+    :ok-only="okOnly"
+    ok-title="Close"
+    ok-variant="secondary"
+    @ok="$ok"
+    @hide="_handleHide"
+    @hidden="_afterModalHidden"
+  >
+    <template slot="modal-title">
+      <div
+        id="popup-header"
+        v-html="sanitizedTitle"
+      />
+    </template>
 
-        <p v-if="beforeMessage" v-html="sanitizedBeforeMessage"></p>
+    <p
+      v-if="beforeMessage"
+      v-html="sanitizedBeforeMessage"
+    />
 
-        <div class="codemirror-wrapper">
-            <jf-clip-copy :text-to-copy="content || ''"
-                        class="code-mirror-copy"
-                        show-copy-text="true"
-                        :object-name="objectName || 'Content'"></jf-clip-copy>
-            <jf-code-mirror
-                    :mode="int_mode.name || ''"
-                    v-model="content">
-            </jf-code-mirror>
-        </div>
-    </b-modal>
+    <div class="codemirror-wrapper">
+      <jf-clip-copy
+        :text-to-copy="content || ''"
+        class="code-mirror-copy"
+        show-copy-text="true"
+        :object-name="objectName || 'Content'"
+      />
+      <jf-code-mirror
+        v-model="content"
+        :mode="int_mode.name || ''"
+      />
+    </div>
+  </b-modal>
 </template>
 <script>
     import ModalMixins from "@/mixins/ModalMixins/index.js";
     export default {
-        name: 'jf-modal',
+        name: 'JfModal',
+        mixins: [ModalMixins],
         props: [
             "title",
             "content",
@@ -40,7 +49,6 @@
         'jf@inject': [
             '$sanitize'
         ],
-        mixins:[ModalMixins],
         data() {
             return {
                 okOnly: true,

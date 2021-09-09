@@ -1,7 +1,5 @@
 <template>
-
-    <div></div>
-
+  <div />
 </template>
 
 <script>
@@ -23,7 +21,7 @@
 
     import KEYS from '@/constants/keys.constants.js';
     export default {
-        name: 'jf-enter-press',
+        name: 'JfEnterPress',
         'jf@inject': [
             '$element',
             '$scope'

@@ -1,17 +1,27 @@
 <template>
-
-    <div>
-        <div :class="{'codemirror-with-clip-copy' : enableCopyToClipboard}">
-            <jf-clip-copy v-if="enableCopyToClipboard && formattedModel && !clipboardCopyModel" :text-to-copy="formattedModel" class="code-mirror-copy pull-right" :class="{'scrollbar-margin':codeMirrorIsWithScroll()}" :object-name="clipboardCopyEntityName || 'text'">
-            </jf-clip-copy>
-            <jf-clip-copy v-if="enableCopyToClipboard && clipboardCopyModel" :text-to-copy="clipboardCopyModel" class="code-mirror-copy pull-right" :class="{'scrollbar-margin':codeMirrorIsWithScroll()}" :object-name="clipboardCopyEntityName || 'text'">
-            </jf-clip-copy>
-            <codemirror v-model="formattedModel"
-                        :options="editorOptions"
-                        @ready="codeMirrorLoaded"></codemirror>
-        </div>
+  <div>
+    <div :class="{'codemirror-with-clip-copy' : enableCopyToClipboard}">
+      <jf-clip-copy
+        v-if="enableCopyToClipboard && formattedModel && !clipboardCopyModel"
+        :text-to-copy="formattedModel"
+        class="code-mirror-copy pull-right"
+        :class="{'scrollbar-margin':codeMirrorIsWithScroll()}"
+        :object-name="clipboardCopyEntityName || 'text'"
+      />
+      <jf-clip-copy
+        v-if="enableCopyToClipboard && clipboardCopyModel"
+        :text-to-copy="clipboardCopyModel"
+        class="code-mirror-copy pull-right"
+        :class="{'scrollbar-margin':codeMirrorIsWithScroll()}"
+        :object-name="clipboardCopyEntityName || 'text'"
+      />
+      <codemirror
+        v-model="formattedModel"
+        :options="editorOptions"
+        @ready="codeMirrorLoaded"
+      />
     </div>
-
+  </div>
 </template>
 
 <script>
@@ -21,7 +31,7 @@
 //    import { search } from '@/directives/jf_codemirror/search/search.js'
     ;
     export default {
-        name: 'jf-code-mirror',
+        name: 'JfCodeMirror',
         props: [
             'mimeType',
             'mode',

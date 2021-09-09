@@ -1,20 +1,47 @@
 <template>
-    <div class="jf-list-selection">
-        <input type="text" v-model="filterList" placeholder="Filter..." @input="onFilterChange()" class="input-text dnd-filter">
-        <div class="group-list-wrapper">
-            <ul class="group-list">
-                <li class="group-list-item" style="display: none">*</li>
-                <li class="group-list-item cursor-pointer" v-for="(item, index) in getPageItems()" :key="index" :class="{'not-clickable': !item.clickable, 'highlighted': item.highlighted && highlightSelected}" @dblclick="onItemClick(item)" @click="allowSingleClick ? onItemSelection(item) : null" v-bind="addToolTip(item)">
-                    <i v-if="item.icon_class" :class="item.icon_class" v-bind="addToolTip(item)" class="icon pull-left"></i>
-                    {{item.name}}
-                    <i class="icon icon-arrow pull-right cursor-pointer" @click="onItemSelection(item)"></i>
-                </li>
-            </ul>
-        </div>
-        <div>
-            <jf-drag-drop-pagination :pagination-api="paginationApi"></jf-drag-drop-pagination>
-        </div>
+  <div class="jf-list-selection">
+    <input
+      v-model="filterList"
+      type="text"
+      placeholder="Filter..."
+      class="input-text dnd-filter"
+      @input="onFilterChange()"
+    >
+    <div class="group-list-wrapper">
+      <ul class="group-list">
+        <li
+          class="group-list-item"
+          style="display: none"
+        >
+          *
+        </li>
+        <li
+          v-for="(item, index) in getPageItems()"
+          :key="index"
+          class="group-list-item cursor-pointer"
+          :class="{'not-clickable': !item.clickable, 'highlighted': item.highlighted && highlightSelected}"
+          v-bind="addToolTip(item)"
+          @dblclick="onItemClick(item)"
+          @click="allowSingleClick ? onItemSelection(item) : null"
+        >
+          <i
+            v-if="item.icon_class"
+            :class="item.icon_class"
+            v-bind="addToolTip(item)"
+            class="icon pull-left"
+          />
+          {{ item.name }}
+          <i
+            class="icon icon-arrow pull-right cursor-pointer"
+            @click="onItemSelection(item)"
+          />
+        </li>
+      </ul>
     </div>
+    <div>
+      <jf-drag-drop-pagination :pagination-api="paginationApi" />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -75,7 +102,7 @@
     }
 
     export default {
-        name: 'jf-list-selection',
+        name: 'JfListSelection',
 
         props: [
             'items',
@@ -98,7 +125,7 @@
             this.paginationApi = new PaginationApi(this);
         },
          mounted() {
-            this.$nextTick(()=>{
+            this.$nextTick(() => {
                 if( !this.$element ) {
                     return;
                 }
@@ -118,7 +145,7 @@
                 let prop = {};
                 if( item.icon_tooltip ) {
                     prop = {
-                        "jf-tooltip":item.icon_tooltip
+                        "jf-tooltip": item.icon_tooltip
                     }
                 }
                 return prop;

@@ -128,5 +128,5 @@ components.forEach(comp => {
     Vue.component(comp.name, comp);
 });
 
-Vue.component('v-select', vSelect)
-Vue.component('multiSelect', Multiselect)
+Vue.component('VSelect', vSelect)
+Vue.component('MultiSelect', Multiselect)

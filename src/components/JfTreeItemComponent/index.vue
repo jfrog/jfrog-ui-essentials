@@ -1,31 +1,64 @@
 <template>
-
-    <div :class="refreshHack.count && getClasses().concat(getCustomClasses())" @click="onItemClick($event)" @dblclick="onItemDoubleClick()" :style="{height: tree.viewPane.itemHeight, 'line-height': tree.viewPane.itemHeight}">
-
-        <div class="jf-tree-item-container" :style="{height: tree.viewPane.itemHeight, 'line-height': tree.viewPane.itemHeight}">
-            <jf-tree-indentation :visible="tree.api.linesVisible" :height="tree.viewPane.itemHeight" :lines-backgrounds="tree.viewPane.linesBackgrounds" :indentation="getIndentation()"></jf-tree-indentation>
-            <div class="no-children-line-extension" v-if="data.level >= 1 && tree.api.linesVisible && !shouldShowExpander() && !data.$pending" :style="{height: tree.viewPane.itemHeight, 'background-image': 'url(\'' + tree.viewPane.linesBackgrounds['horizontal-line'] + '\')'}">
-            </div>
-            <span class="drill-back" v-if="data.data === tree.api.GO_UP_NODE">&nbsp;&nbsp;..</span>
-            <div class="node-expander" @click="shouldShowExpander() && toggleExpansion(); $event.stopPropagation();" v-init="initExpander()" :style="{height: tree.viewPane.itemHeight}" v-if="data.data !== tree.api.GO_UP_NODE && (shouldShowExpander() || data.$pending || data.level === 0)">
-                <div class="action-icon icon icon-addons-arrow-right" v-if="shouldShowExpander()"></div>
-                <div class="spinner-msg-local" v-if="data.$pending">
-                    <div class="icon-hourglass-local"></div>
-                </div>
-            </div>
-            <div class="jf-tree-item-content" v-if="data.data !== tree.api.GO_UP_NODE">
-                <jf-tree-compiled-cell :item-id="itemId" :tree-item="jfTreeItem">
-                </jf-tree-compiled-cell>
-            </div>
+  <div
+    :class="refreshHack.count && getClasses().concat(getCustomClasses())"
+    :style="{height: tree.viewPane.itemHeight, 'line-height': tree.viewPane.itemHeight}"
+    @click="onItemClick($event)"
+    @dblclick="onItemDoubleClick()"
+  >
+    <div
+      class="jf-tree-item-container"
+      :style="{height: tree.viewPane.itemHeight, 'line-height': tree.viewPane.itemHeight}"
+    >
+      <jf-tree-indentation
+        :visible="tree.api.linesVisible"
+        :height="tree.viewPane.itemHeight"
+        :lines-backgrounds="tree.viewPane.linesBackgrounds"
+        :indentation="getIndentation()"
+      />
+      <div
+        v-if="data.level >= 1 && tree.api.linesVisible && !shouldShowExpander() && !data.$pending"
+        class="no-children-line-extension"
+        :style="{height: tree.viewPane.itemHeight, 'background-image': 'url(\'' + tree.viewPane.linesBackgrounds['horizontal-line'] + '\')'}"
+      />
+      <span
+        v-if="data.data === tree.api.GO_UP_NODE"
+        class="drill-back"
+      >&nbsp;&nbsp;..</span>
+      <div
+        v-if="data.data !== tree.api.GO_UP_NODE && (shouldShowExpander() || data.$pending || data.level === 0)"
+        v-init="initExpander()"
+        class="node-expander"
+        :style="{height: tree.viewPane.itemHeight}"
+        @click="shouldShowExpander() && toggleExpansion(); $event.stopPropagation();"
+      >
+        <div
+          v-if="shouldShowExpander()"
+          class="action-icon icon icon-addons-arrow-right"
+        />
+        <div
+          v-if="data.$pending"
+          class="spinner-msg-local"
+        >
+          <div class="icon-hourglass-local" />
         </div>
+      </div>
+      <div
+        v-if="data.data !== tree.api.GO_UP_NODE"
+        class="jf-tree-item-content"
+      >
+        <jf-tree-compiled-cell
+          :item-id="itemId"
+          :tree-item="jfTreeItem"
+        />
+      </div>
     </div>
-
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-tree-item',
+        name: 'JfTreeItem',
         props: [
             'data',
             'itemId',

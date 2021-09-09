@@ -1,24 +1,26 @@
 <template>
-
-    <div :class="containerClass">
-        <span class="panel-heading" v-if="jfPanelHeading">
-            {{jfPanelHeading}} <jf-help-tooltip :html="jfPanelHelpTooltip" v-if="jfPanelHelpTooltip"></jf-help-tooltip>
-        </span>
-        <div class="panel-body">
-            <div class="panel panel-default clearfix">
-                <slot></slot>
-            </div>
-        </div>
-
+  <div :class="containerClass">
+    <span
+      v-if="jfPanelHeading"
+      class="panel-heading"
+    >
+      {{ jfPanelHeading }} <jf-help-tooltip
+        v-if="jfPanelHelpTooltip"
+        :html="jfPanelHelpTooltip"
+      />
+    </span>
+    <div class="panel-body">
+      <div class="panel panel-default clearfix">
+        <slot />
+      </div>
     </div>
-
-
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-panel',
+        name: 'JfPanel',
         props: [
             'jfPanelHeading',
             'jfPanelHelpTooltip',
@@ -37,6 +39,9 @@
                 return `panel-container${this.jfPanelClasses ? ' ' + this.jfPanelClasses : '' } ${this.bordered || this.hasNested ? 'bordered' : ''}`;
             }
         },
+        mounted() {
+            this.hasNested = this.hasNestedJfPanel();
+        },
         methods: {
             hasNestedJfPanel() {
                 if (!this.$element) {
@@ -44,9 +49,6 @@
                 }
                 return this.$element[0].getElementsByClassName('panel-body').length > 1;
             }
-        },
-        mounted() {
-            this.hasNested = this.hasNestedJfPanel();
         },
         ng1_legacy: {'controllerAs': '$ctrl'}
     };

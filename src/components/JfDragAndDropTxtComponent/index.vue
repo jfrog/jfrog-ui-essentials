@@ -1,24 +1,37 @@
 <template>
-
-    <div>
-        <div class="drag-and-drop-txt-wrapper" :class="{'ready-for-upload':shouldDisplayUploadIcon()}">
-            <label v-if="dndHeadingHtml" v-html="sanitizedHeaderHtml"></label>
-            <jf-field :autofocus="autofocus">
-                <textarea name="dndtext" class="input-text monospaced" v-model="dndContent" @input="dndChange()" :style="dndStyle" :required="dndRequired" spellcheck="false"></textarea>
-                <label class="call-to-action-label"
-                       v-html="sanitizedCallToAction"
-                       :class="{'icon-upload':shouldDisplayUploadIcon()}">
-                </label>
-            </jf-field>
-        </div>
+  <div>
+    <div
+      class="drag-and-drop-txt-wrapper"
+      :class="{'ready-for-upload':shouldDisplayUploadIcon()}"
+    >
+      <label
+        v-if="dndHeadingHtml"
+        v-html="sanitizedHeaderHtml"
+      />
+      <jf-field :autofocus="autofocus">
+        <textarea
+          v-model="dndContent"
+          name="dndtext"
+          class="input-text monospaced"
+          :style="dndStyle"
+          :required="dndRequired"
+          spellcheck="false"
+          @input="dndChange()"
+        />
+        <label
+          class="call-to-action-label"
+          :class="{'icon-upload':shouldDisplayUploadIcon()}"
+          v-html="sanitizedCallToAction"
+        />
+      </jf-field>
     </div>
-
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-drag-and-drop-txt',
+        name: 'JfDragAndDropTxt',
         props: [
             'dndContent',
             'dndHeadingHtml',
@@ -36,6 +49,18 @@
         ],
         data() {
             return {};
+        },
+        computed: {
+            autofocus() {
+                return this.dndAutoFocus === undefined ? true : this.dndAutoFocus;
+            },
+            sanitizedHeaderHtml() {
+                return this.text ? this.$sanitize(this.dndHeadingHtml) : '';
+            },
+            sanitizedCallToAction() {
+                return this.text ? this.$sanitize(this.dndCallToAction) : `Copy your text or
+    <b>drop a file</b>`;
+            }
         },
         created() {
             this.draggedFileSizeLimit = 400;
@@ -172,18 +197,6 @@
                 let dndWrapper = $(this.$element).find('.drag-and-drop-txt-wrapper');
                 // dndWrapper.removeClass('icon-upload');
                 dndWrapper.toggleClass('over');
-            }
-        },
-        computed: {
-            autofocus() {
-                return this.dndAutoFocus === undefined ? true : this.dndAutoFocus;
-            },
-            sanitizedHeaderHtml() {
-                return this.text ? this.$sanitize(this.dndHeadingHtml) : '';
-            },
-            sanitizedCallToAction() {
-                return this.text ? this.$sanitize(this.dndCallToAction) : `Copy your text or
-    <b>drop a file</b>`;
             }
         }
     }

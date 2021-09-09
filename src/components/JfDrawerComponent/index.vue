@@ -1,28 +1,37 @@
 <template>
-
-    <div>
-        <div class="jf-drawer">
-            <div class="drawer-header" @click="onClickHeader()" v-jf-tooltip.bind="headerTooltip">
-                <div class="drawer-header-title">
-                    {{ header }}
-                </div>
-                <div class="drawer-header-description">
-                    {{ description }}
-                </div>
-                <i class="icon-small-arrow-down" :class="{'drawer-arrow-close' : !opened}"></i>
-            </div>
-            <b-collapse class="drawer-content" v-model="opened" id="collapse">
-                <slot></slot>
-            </b-collapse>
+  <div>
+    <div class="jf-drawer">
+      <div
+        v-jf-tooltip.bind="headerTooltip"
+        class="drawer-header"
+        @click="onClickHeader()"
+      >
+        <div class="drawer-header-title">
+          {{ header }}
         </div>
+        <div class="drawer-header-description">
+          {{ description }}
+        </div>
+        <i
+          class="icon-small-arrow-down"
+          :class="{'drawer-arrow-close' : !opened}"
+        />
+      </div>
+      <b-collapse
+        id="collapse"
+        v-model="opened"
+        class="drawer-content"
+      >
+        <slot />
+      </b-collapse>
     </div>
-
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-drawer',
+        name: 'JfDrawer',
         props: [
             'header',
             'description',

@@ -1,20 +1,25 @@
 <template>
-
-    <div :v-jf-tooltip="html" class="jf-help-tooltip">
-        <div>
-            <span class="tooltip-icon jf-tooltipster" @click="tooltipClick($event)">
-            <span><slot></slot></span>
-            </span>
-        </div>
+  <div
+    :v-jf-tooltip="html"
+    class="jf-help-tooltip"
+  >
+    <div>
+      <span
+        class="tooltip-icon jf-tooltipster"
+        @click="tooltipClick($event)"
+      >
+        <span><slot /></span>
+      </span>
     </div>
-
+  </div>
 </template>
 
 <script>
 import sanitizeMixin from '../../mixins/Sanitize'
 
     export default {
-        name: 'jf-help-tooltip',
+        name: 'JfHelpTooltip',
+        mixins: [sanitizeMixin],
         props: [
             'placement',
             'text',
@@ -24,7 +29,6 @@ import sanitizeMixin from '../../mixins/Sanitize'
         'jf@inject': [
             '$transclude',
         ],
-        mixins: [sanitizeMixin],
         data() {
             return {};
         },

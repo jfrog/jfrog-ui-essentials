@@ -1,12 +1,12 @@
 <template>
-    <div v-if="name === currentTabName">
-        <slot></slot>
-    </div>
+  <div v-if="name === currentTabName">
+    <slot />
+  </div>
 </template>
 
 <script>
     export default {
-        name: 'jf-tab',
+        name: 'JfTab',
         props: ['name'],
         data() {
             return {};

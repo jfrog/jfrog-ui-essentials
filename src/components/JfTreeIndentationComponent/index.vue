@@ -1,18 +1,22 @@
 <template>
-
-    <div class="jf-tree-indentation">
-        <div class="indentation-wrap" :style="{width: (indentation ? indentation.length * 26 : 0) + 'px'}">
-            <div class="indentation-flex-wrap" v-html="indentationHtml" v-if="visible">
-            </div>
-        </div>
+  <div class="jf-tree-indentation">
+    <div
+      class="indentation-wrap"
+      :style="{width: (indentation ? indentation.length * 26 : 0) + 'px'}"
+    >
+      <div
+        v-if="visible"
+        class="indentation-flex-wrap"
+        v-html="indentationHtml"
+      />
     </div>
-
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-tree-indentation',
+        name: 'JfTreeIndentation',
         props: [
             'indentation',
             'height',

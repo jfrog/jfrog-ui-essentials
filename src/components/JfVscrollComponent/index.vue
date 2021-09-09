@@ -1,27 +1,47 @@
 <template>
-
-    <div>
-        <div class="v-scroll-container">
-            <div class="v-scroll-inner-container" :style="{transform: 'translate(0, ' + (-getTranslate()) + 'px)', height: containerHeight + 'px', opacity: ready ? 1 : 0}">
-                <div class="scroll-faker-container" :style="{transform: 'translate(0, ' + (getTranslate()) + 'px)', right: 0, height: getPageHeight() + 'px'}">
-                    <div class="scroll-faker" v-init="initScrollFaker()" :style="{height: (getTotalScrollHeight() > maxFakeScrollHeight ? maxFakeScrollHeight : getTotalScrollHeight()) + 'px'}">
-                    </div>
-                </div>
-                <div class="h-scroll-wrapper" :style="{height: (getPageHeight() + getTranslate()) + 'px'}" @wheel="onMouseWheel">
-                    <div class="h-scroll-content">
-                        <jf-vscroll-element v-for="(item, $index) in getPage()" :vscroll="jfVScroll" :data="item" :index="$index" :template="childComponent" :variable="withEach" :last="$index === getPage().length - 1"></jf-vscroll-element>
-                    </div>
-                </div>
-            </div>
+  <div>
+    <div class="v-scroll-container">
+      <div
+        class="v-scroll-inner-container"
+        :style="{transform: 'translate(0, ' + (-getTranslate()) + 'px)', height: containerHeight + 'px', opacity: ready ? 1 : 0}"
+      >
+        <div
+          class="scroll-faker-container"
+          :style="{transform: 'translate(0, ' + (getTranslate()) + 'px)', right: 0, height: getPageHeight() + 'px'}"
+        >
+          <div
+            v-init="initScrollFaker()"
+            class="scroll-faker"
+            :style="{height: (getTotalScrollHeight() > maxFakeScrollHeight ? maxFakeScrollHeight : getTotalScrollHeight()) + 'px'}"
+          />
         </div>
+        <div
+          class="h-scroll-wrapper"
+          :style="{height: (getPageHeight() + getTranslate()) + 'px'}"
+          @wheel="onMouseWheel"
+        >
+          <div class="h-scroll-content">
+            <jf-vscroll-element
+              v-for="(item, $index) in getPage()"
+              :key="$index"
+              :vscroll="jfVScroll"
+              :data="item"
+              :index="$index"
+              :template="childComponent"
+              :variable="withEach"
+              :last="$index === getPage().length - 1"
+            />
+          </div>
+        </div>
+      </div>
     </div>
-
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-vscroll',
+        name: 'JfVscroll',
         props: [
             'withEach',
             'api',
@@ -49,6 +69,14 @@
                 itemsPerPage: 1,
                 childComponent: null
             };
+        },
+        computed: {
+/*
+            containerHeight() {
+                return $(this.$element).parent().height();
+            }
+*/
+
         },
         watch: {
             in() {
@@ -89,14 +117,6 @@
                 }
             },
             'controllerAs': 'jfVScroll'
-        },
-        computed: {
-/*
-            containerHeight() {
-                return $(this.$element).parent().height();
-            }
-*/
-
         },
         methods: {
             setItemHeight(itemHeight) {

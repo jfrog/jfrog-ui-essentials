@@ -1,26 +1,37 @@
 <template>
-
-    <div>
-        <table class="data-list">
-            <tbody>
-                <tr class="data-list-item" v-for="(item,index) in formattedItems" :key="index" >
-                    <td v-if="!item.hideLabel" class="data-list-item-label">{{item.label}}:</td>
-                    <td class="data-list-item-value">
-                        <jf-datalist-item-component :item="item" :index="index" v-on:item-updated="updateList"></jf-datalist-item-component>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
+  <div>
+    <table class="data-list">
+      <tbody>
+        <tr
+          v-for="(item,index) in formattedItems"
+          :key="index"
+          class="data-list-item"
+        >
+          <td
+            v-if="!item.hideLabel"
+            class="data-list-item-label"
+          >
+            {{ item.label }}:
+          </td>
+          <td class="data-list-item-value">
+            <jf-datalist-item-component
+              :item="item"
+              :index="index"
+              @item-updated="updateList"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script>
     import JfDatalistItemComponent from './JfDatalistItemComponent/index.vue'
     export default {
-        name: 'jf-data-list',
-        props: ['items'],
+        name: 'JfDataList',
         components: { JfDatalistItemComponent },
+        props: ['items'],
         data() {
             return { formattedItems: [],isMounted: false };
         },

@@ -1,30 +1,40 @@
 <template>
-
-    <div>
-        <div :class="{'sticky-errors': dontPushDownErrors}" class="jf-field">
-            <div :class="{'input-label': animated}">
-                <validation-provider :rules="inferredRules" :events="['input', 'focus']" :name="validationDomain">
-                    <div slot-scope="{ errors }">
-                        <div :class="{invalid: errors.length && !focused}">
-                            <slot></slot>
-                        </div>
-                        <div class="field-validation-error"
-                             v-if="errors.length && !focused">
-                            <div v-for="error in errors" class="jf-validation">
-                                {{ error }}
-                            </div>
-                        </div>
-                    </div>
-                </validation-provider>
+  <div>
+    <div
+      :class="{'sticky-errors': dontPushDownErrors}"
+      class="jf-field"
+    >
+      <div :class="{'input-label': animated}">
+        <validation-provider
+          :rules="inferredRules"
+          :events="['input', 'focus']"
+          :name="validationDomain"
+        >
+          <div slot-scope="{ errors }">
+            <div :class="{invalid: errors.length && !focused}">
+              <slot />
             </div>
+            <div
+              v-if="errors.length && !focused"
+              class="field-validation-error"
+            >
+              <div
+                v-for="error in errors"
+                class="jf-validation"
+              >
+                {{ error }}
+              </div>
+            </div>
+          </div>
+        </validation-provider>
+      </div>
 
-            <!--
+      <!--
                         <jf-validation v-if="(formField.showErrors || alwaysShowErrors || (formField.initialValue && !formField.$error.required)) && !formField.isAutoFocused" :field="formField" :validations-params="validationsParams" :dont-push-down="dontPushDownErrors" :dictionary="validations">
                         </jf-validation>
             -->
-        </div>
     </div>
-
+  </div>
 </template>
 
 <script>
@@ -32,7 +42,7 @@
     import { ValidationProvider } from 'vee-validate';
 
     export default {
-        name: 'jf-field',
+        name: 'JfField',
         components: {
             ValidationProvider
         },
@@ -88,9 +98,9 @@
 
                 let EVENTS = this.JFrogEventBus.getEventsDefinition();
 
-                let init = ()=>{
+                let init = () => {
                     if (this.formField) this.formField.initialValue = true;
-                    this.$scope.$watch(()=>this.autofocus, () => this.focusInput());
+                    this.$scope.$watch(() => this.autofocus, () => this.focusInput());
                     this.JFrogEventBus.registerOnScope(this.$scope, EVENTS.FORM_SUBMITTED, this._onFormSubmitted);
                     this.JFrogEventBus.registerOnScope(this.$scope, EVENTS.FORM_CLEAR_FIELD_VALIDATION, force => {
                         this._onBlur(force);
@@ -121,7 +131,7 @@
                 };
 
                 if (this.delayedInit) {
-                    this.$timeout(()=>init());
+                    this.$timeout(() => init());
                 }
                 else {
                     init();
@@ -214,7 +224,7 @@
                     if (attrs.type.value === 'email') rules.email = true;
                     else if (attrs.type.value === 'url') rules.url = true;
                     else if (attrs.type.value === 'number') rules.decimal = true;
-                    else if (attrs.type.value === 'date') rules.date_format= 'YYYY-MM-DD';
+                    else if (attrs.type.value === 'date') rules.date_format = 'YYYY-MM-DD';
                     else if (attrs.type.value === 'datetime-local') rules.date_format = 'YYYY-MM-DDThh:mm';
                     else if (attrs.type.value === 'time') rules.date_format = 'YYYY-Www';
                     else if (attrs.type.value === 'week') rules.date_format = 'hh:mm';

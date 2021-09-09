@@ -1,5 +1,5 @@
-const Vue = window.Vue;
 import {Ng1AttributeDirectiveAdapter} from '@/plugins/JFrogUI/Ng1AttributeDirectiveAdapter';
+const Vue = window.Vue;
 
 Vue.directive('jf-reveal-input', {
     bind: function (el, binding, vnode) {
@@ -12,10 +12,6 @@ Vue.directive('jf-reveal-input', {
 function ng1LinkFunction($scope, $element, $attrs) {
 
     let revealInputComponent = new Vue({
-        template: `<i class="icon icon-view jf-reveal-input"
-                  v-jf-tooltip.bind="tooltipText"
-                  v-if="hasData()"
-                  @click="updateInput()"></i>`,
         data() {
             return {
                 elementIcon: null,
@@ -52,7 +48,11 @@ function ng1LinkFunction($scope, $element, $attrs) {
 
             }
 
-        }
+        },
+        template: `<i class="icon icon-view jf-reveal-input"
+                  v-jf-tooltip.bind="tooltipText"
+                  v-if="hasData()"
+                  @click="updateInput()"></i>`
 
     })
 

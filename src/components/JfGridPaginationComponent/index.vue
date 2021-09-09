@@ -1,23 +1,40 @@
 <template>
-
-    <div>
-        <div class="grid-pagination text-right" v-if="gridApi.pagination.getTotalPages()">
-            <p>
-                <input type="text" class="grid-page-box" :style="{'width': (CONSTANTS.PAGINATION_DIGIT_WIDTH_PX + getTotalPages().toString().length * CONSTANTS.PAGINATION_DIGIT_WIDTH_PX) + 'px'}" v-jf-tooltip="'Jump to Page'" @blur="onBlur()" v-model="pageViewModel" @input="pageChanged()">
-                out of {{ getTotalPages() }}
-                <a href="" @click.prevent="prevPage()" :class="{disabled: currentPage === 1}">‹</a>
-                <a href="" @click.prevent="nextPage()" :class="{disabled: currentPage === gridApi.pagination.getTotalPages()}">›</a>
-            </p>
-        </div>
+  <div>
+    <div
+      v-if="gridApi.pagination.getTotalPages()"
+      class="grid-pagination text-right"
+    >
+      <p>
+        <input
+          v-model="pageViewModel"
+          v-jf-tooltip="'Jump to Page'"
+          type="text"
+          class="grid-page-box"
+          :style="{'width': (CONSTANTS.PAGINATION_DIGIT_WIDTH_PX + getTotalPages().toString().length * CONSTANTS.PAGINATION_DIGIT_WIDTH_PX) + 'px'}"
+          @blur="onBlur()"
+          @input="pageChanged()"
+        >
+        out of {{ getTotalPages() }}
+        <a
+          href=""
+          :class="{disabled: currentPage === 1}"
+          @click.prevent="prevPage()"
+        >‹</a>
+        <a
+          href=""
+          :class="{disabled: currentPage === gridApi.pagination.getTotalPages()}"
+          @click.prevent="nextPage()"
+        >›</a>
+      </p>
     </div>
-
+  </div>
 </template>
 
 <script>
 
     import { GENERAL_CONSTANTS } from '@/constants/general.constants.js';
     export default {
-        name: 'jf-grid-pagination',
+        name: 'JfGridPagination',
         props: ['gridApi'],
         'jf@inject': [
             '$scope',

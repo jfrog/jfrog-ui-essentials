@@ -1,5 +1,5 @@
-const Vue = window.Vue;
 import {Ng1AttributeDirectiveAdapter} from '@/plugins/JFrogUI/Ng1AttributeDirectiveAdapter';
+const Vue = window.Vue;
 
 Vue.directive('jf-dynamic-template', {
     bind: function (el, binding, vnode) {

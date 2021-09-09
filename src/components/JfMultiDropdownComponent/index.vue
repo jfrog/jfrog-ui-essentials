@@ -1,94 +1,161 @@
 <template>
-
-    <div>
-        <div :class="{'disabled':disabled,'with-text-inputs':textInputs,'borderless':borderless}"
-             class="jf-multi-dropdown">
-
-            <label v-if="label">{{label}} <span v-if="showLabelCounter && selectedItems().length">({{selectedItems().length}})</span></label>
-
-
-            <div class="main-box" :class="{'selected-view' : selectedItems().length,
-                        'no-items': !items.length && noItemsMessage,
-                        'no-label': !label}" @click="onClick()">
+  <div>
+    <div
+      :class="{'disabled':disabled,'with-text-inputs':textInputs,'borderless':borderless}"
+      class="jf-multi-dropdown"
+    >
+      <label v-if="label">{{ label }} <span v-if="showLabelCounter && selectedItems().length">({{ selectedItems().length }})</span></label>
 
 
-                <!--Default-->
-                <span v-if="showSelected && !selectedItems().length">{{title}}</span>
+      <div
+        class="main-box"
+        :class="{'selected-view' : selectedItems().length,
+                 'no-items': !items.length && noItemsMessage,
+                 'no-label': !label}"
+        @click="onClick()"
+      >
+        <!--Default-->
+        <span v-if="showSelected && !selectedItems().length">{{ title }}</span>
 
-                <!--SHOW SELECTED COUNTER-->
-                <span v-if="!showSelected" class="title-wrapper">
-                {{title}}
-                <span class="selected-counter">({{getSelectedCount()}})</span>
-                </span>
+        <!--SHOW SELECTED COUNTER-->
+        <span
+          v-if="!showSelected"
+          class="title-wrapper"
+        >
+          {{ title }}
+          <span class="selected-counter">({{ getSelectedCount() }})</span>
+        </span>
 
-                <!--Something selected and shown-->
-                <span v-if="showSelected && selectedItems().length">
-                {{getSelectedForTitle()}}
-            </span>
-
-
-                <!--ACTIONS-->
-                <span class="actions">
-                <i v-if="showSelected && selectedItems().length" @click.stop="unSelectAll()" class="clear-field">×</i>
-                <i class="icon-small-arrow-down"></i>
-            </span>
-
-            </div>
+        <!--Something selected and shown-->
+        <span v-if="showSelected && selectedItems().length">
+          {{ getSelectedForTitle() }}
+        </span>
 
 
-            <div v-if="opened" class="drop-down-container">
-                <div class="filter-container" v-if="!noFilter">
-                    <form>
-                        <jf-field :autofocus="true">
-                            <input type="text" autocomplete="off" name="items-filter" class="input-text"
-                                   v-model="filterText" :placeholder="filterPlaceholder">
-                        </jf-field>
-                    </form>
-                </div>
-                <div v-if="items.length" class="list-container">
-                    <div class="drop-down-item" v-for="(item, $index) in $filterArray(items, {text: filterText})" :key="$index + filterText"
-                         :class="{'last-selected': $index === lastSelectedIndex && !filterText, 'disabled': item.disabled}">
+        <!--ACTIONS-->
+        <span class="actions">
+          <i
+            v-if="showSelected && selectedItems().length"
+            class="clear-field"
+            @click.stop="unSelectAll()"
+          >×</i>
+          <i class="icon-small-arrow-down" />
+        </span>
+      </div>
 
-                        <label class="jf-checkbox" v-if="!singleSelection">
-                            <input type="checkbox" :disabled="item.disabled" @change="onSelection()"
-                                   v-model="item.isSelected">
-                            <span></span> <i v-if="item.iconClass" class="item-icon" :class="item.iconClass"></i>
-                            {{ item.text }}
-                        </label>
-                        <jf-radio-button :key="item.isSelected" v-if="singleSelection" :text="item.text">
-                            <input type="radio" v-model="singleSelectionIndex" :value="item.$id"
-                                   @change="onSingleSelection()" :disabled="item.disabled">
-                        </jf-radio-button>
-                        <span class="text-input-wrapper" v-if="textInputs">
-                        <input type="text" name="items-filter" class="input-text" v-model="item.inputTextValue"
-                               :placeholder="item.inputPlaceholder || 'Free text'">
-                    </span>
-                    </div>
-                </div>
-                <div class="batch-action-buttons" v-if="items.length">
-                    <button type="button" class="btn btn-default pull-right" @click="clearSelection()">
-                        {{ singleSelection ? 'Clear selection' : 'Clear All' }}
-                    </button>
-                    <button type="button" class="btn btn-default pull-right" v-if="!singleSelection"
-                            @click="selectAll()">
-                        Select All
-                    </button>
-                </div>
-                <div v-if="!items.length && noItemsMessage" class="list-container">
-                    <div class="no-items-message">
-                        {{noItemsMessage}}
-                    </div>
-                </div>
-            </div>
+
+      <div
+        v-if="opened"
+        class="drop-down-container"
+      >
+        <div
+          v-if="!noFilter"
+          class="filter-container"
+        >
+          <form>
+            <jf-field :autofocus="true">
+              <input
+                v-model="filterText"
+                type="text"
+                autocomplete="off"
+                name="items-filter"
+                class="input-text"
+                :placeholder="filterPlaceholder"
+              >
+            </jf-field>
+          </form>
         </div>
+        <div
+          v-if="items.length"
+          class="list-container"
+        >
+          <div
+            v-for="(item, $index) in $filterArray(items, {text: filterText})"
+            :key="$index + filterText"
+            class="drop-down-item"
+            :class="{'last-selected': $index === lastSelectedIndex && !filterText, 'disabled': item.disabled}"
+          >
+            <label
+              v-if="!singleSelection"
+              class="jf-checkbox"
+            >
+              <input
+                v-model="item.isSelected"
+                type="checkbox"
+                :disabled="item.disabled"
+                @change="onSelection()"
+              >
+              <span /> <i
+                v-if="item.iconClass"
+                class="item-icon"
+                :class="item.iconClass"
+              />
+              {{ item.text }}
+            </label>
+            <jf-radio-button
+              v-if="singleSelection"
+              :key="item.isSelected"
+              :text="item.text"
+            >
+              <input
+                v-model="singleSelectionIndex"
+                type="radio"
+                :value="item.$id"
+                :disabled="item.disabled"
+                @change="onSingleSelection()"
+              >
+            </jf-radio-button>
+            <span
+              v-if="textInputs"
+              class="text-input-wrapper"
+            >
+              <input
+                v-model="item.inputTextValue"
+                type="text"
+                name="items-filter"
+                class="input-text"
+                :placeholder="item.inputPlaceholder || 'Free text'"
+              >
+            </span>
+          </div>
+        </div>
+        <div
+          v-if="items.length"
+          class="batch-action-buttons"
+        >
+          <button
+            type="button"
+            class="btn btn-default pull-right"
+            @click="clearSelection()"
+          >
+            {{ singleSelection ? 'Clear selection' : 'Clear All' }}
+          </button>
+          <button
+            v-if="!singleSelection"
+            type="button"
+            class="btn btn-default pull-right"
+            @click="selectAll()"
+          >
+            Select All
+          </button>
+        </div>
+        <div
+          v-if="!items.length && noItemsMessage"
+          class="list-container"
+        >
+          <div class="no-items-message">
+            {{ noItemsMessage }}
+          </div>
+        </div>
+      </div>
     </div>
-
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-multi-dropdown',
+        name: 'JfMultiDropdown',
         props: [
             'title',
             'label',

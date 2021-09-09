@@ -1,25 +1,25 @@
 <template>
-
-    <div>
-        <div class="jf-text-box-container">
-            <div class="jf-text-box-content-current">{{ content }} <span v-if="ready && isOverflowing"
-                      class="jf-text-box-show-all"
-                      :style="{'white-space': wrapSeeAll ? 'inherit' : 'nowrap'}"
-                      @click="seeAll()"
-                      v-html="seeAllCustomText">
-                </span>
-            </div>
-            <div class="jf-text-box-content-full"></div>
-            <div class="jf-text-box-content-stage"></div>
-        </div>
+  <div>
+    <div class="jf-text-box-container">
+      <div class="jf-text-box-content-current">
+        {{ content }} <span
+          v-if="ready && isOverflowing"
+          class="jf-text-box-show-all"
+          :style="{'white-space': wrapSeeAll ? 'inherit' : 'nowrap'}"
+          @click="seeAll()"
+          v-html="seeAllCustomText"
+        />
+      </div>
+      <div class="jf-text-box-content-full" />
+      <div class="jf-text-box-content-stage" />
     </div>
-
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-text-box',
+        name: 'JfTextBox',
         props: [
             'text',
             'modalTitle',
@@ -45,11 +45,93 @@
                 wrapSeeAll: null
             };
         },
+        computed: {
+            seeAllCustomText() {
+                return this.seeAllText ? this.$sanitize(this.seeAllText) : '(Show All ...)'
+            },
+            sanitizedText() {
+                return this.$sanitize(this.text);
+            },
+            containerElement: {
+                get: function(){
+                    if (!this.cachedContainerElement) {
+                        this.cachedContainerElement = $(this.$element).find('.jf-text-box-container');
+                    }
+                    return this.cachedContainerElement
+                }
+            },
+            fullTextElement: {
+                get: function() {
+                    if (!this.cachedFullTextElement) {
+                        this.cachedFullTextElement = $(this.$element).find('.jf-text-box-content-full')
+                    }
+                    return this.cachedFullTextElement;
+                }
+            },
+
+            currentTextElement: {
+                get: function() {
+                    if (!this.cachedCurrentTextElement) {
+                        this.cachedCurrentTextElement = $(this.$element).find('.jf-text-box-content-current')
+                    }
+                    return this.cachedCurrentTextElement;
+                }
+            },
+
+            stageElement: {
+                get: function() {
+                    if (!this.cachedStageElement) {
+                        this.cachedStageElement = $(this.$element).find('.jf-text-box-content-stage')
+                    }
+                    return this.cachedStageElement;
+                }
+            },
+
+            containerHeight: {
+                get: function() {
+                    return this.containerElement.height();
+                }
+            },
+
+            containerWidth: {
+                get: function() {
+                    return this.containerElement.width();
+                }
+            },
+
+            numOfWholeRows: {
+                get: function() {
+                    let auto = Math.floor(this.containerHeight / this.lineHeight + 0.1);
+                    return this.maxLines ? Math.min(parseInt(this.maxLines), auto) : auto;
+                }
+            },
+
+            numOfActualRows: {
+                get: function() {
+                    let contentHeight = this.fullTextElement.height();
+                    return Math.ceil(contentHeight / this.lineHeight - 0.1);
+                }
+            },
+
+            numOfVisibleRows: {
+                get: function() {
+                    let contentHeight = this.currentTextElement.height();
+                    return Math.ceil(contentHeight / this.lineHeight - 0.1);
+                }
+            },
+
+            isOverflowing: {
+                get: function() {
+                    return this.numOfActualRows > this.numOfWholeRows;
+
+                }
+            }
+        },
         mounted() {
             this.fullTextElement.text(this.sanitizedText);
             this.registerResize();
             setTimeout(() => this.refreshText());
-            this.fullTextModal= this.JfFullTextService
+            this.fullTextModal = this.JfFullTextService
         },
         beforeDestroy() {
             this.deregisterResize();
@@ -188,88 +270,6 @@
             }
 
             /* Getter Elements */
-        },
-        computed: {
-            seeAllCustomText() {
-                return this.seeAllText ? this.$sanitize(this.seeAllText) : '(Show All ...)'
-            },
-            sanitizedText() {
-                return this.$sanitize(this.text);
-            },
-            containerElement: {
-                get: function(){
-                    if (!this.cachedContainerElement) {
-                        this.cachedContainerElement = $(this.$element).find('.jf-text-box-container');
-                    }
-                    return this.cachedContainerElement
-                }
-            },
-            fullTextElement: {
-                get: function() {
-                    if (!this.cachedFullTextElement) {
-                        this.cachedFullTextElement = $(this.$element).find('.jf-text-box-content-full')
-                    }
-                    return this.cachedFullTextElement;
-                }
-            },
-
-            currentTextElement: {
-                get: function() {
-                    if (!this.cachedCurrentTextElement) {
-                        this.cachedCurrentTextElement = $(this.$element).find('.jf-text-box-content-current')
-                    }
-                    return this.cachedCurrentTextElement;
-                }
-            },
-
-            stageElement: {
-                get: function() {
-                    if (!this.cachedStageElement) {
-                        this.cachedStageElement = $(this.$element).find('.jf-text-box-content-stage')
-                    }
-                    return this.cachedStageElement;
-                }
-            },
-
-            containerHeight: {
-                get: function() {
-                    return this.containerElement.height();
-                }
-            },
-
-            containerWidth: {
-                get: function() {
-                    return this.containerElement.width();
-                }
-            },
-
-            numOfWholeRows: {
-                get: function() {
-                    let auto = Math.floor(this.containerHeight / this.lineHeight + 0.1);
-                    return this.maxLines ? Math.min(parseInt(this.maxLines), auto) : auto;
-                }
-            },
-
-            numOfActualRows: {
-                get: function() {
-                    let contentHeight = this.fullTextElement.height();
-                    return Math.ceil(contentHeight / this.lineHeight - 0.1);
-                }
-            },
-
-            numOfVisibleRows: {
-                get: function() {
-                    let contentHeight = this.currentTextElement.height();
-                    return Math.ceil(contentHeight / this.lineHeight - 0.1);
-                }
-            },
-
-            isOverflowing: {
-                get: function() {
-                    return this.numOfActualRows > this.numOfWholeRows;
-
-                }
-            }
         }
     }
 

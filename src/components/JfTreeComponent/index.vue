@@ -1,39 +1,77 @@
 <template>
-
-    <div>
-        <div class="jf-tree" :class="viewPaneName + '-pane'" tabindex="0" style="clear: both">
-            <div class="jf-tree-container" :style="{height: getPageHeight() + 'px', overflow: isEmpty() || !api.dataGettersSet ? 'visible' : 'hidden'}" v-if="viewPane">
-                <div class="tree-items-container" :style="{transform: 'translate(0, ' + (-getTranslate()) + 'px)'}">
-                    <div class="scroll-faker-container" :style="{transform: 'translate(0, ' + (getTranslate()) + 'px)', right: 0, height: getPageHeight() + 'px'}">
-                        <div class="scroll-faker" v-init="initScrollFaker()" :style="{height: (getTotalScrollHeight() > maxFakeScrollHeight ? maxFakeScrollHeight : getTotalScrollHeight()) + 'px'}">
-                        </div>
-                    </div>
-                    <div class="h-scroll-wrapper" :style="{height: (getPageHeight() + getTranslate()) + 'px'}" @mousewheel.prevent="onMouseWheel">
-                        <div class="h-scroll-content">
-                            <jf-tree-item v-for="(item, $index) in viewPane._getPageData()" :key="$index" :tree="jfTree" :item-id="$index" :data="item"></jf-tree-item>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="missing-data-setters" v-if="!api.dataGettersSet">
-                    {{'jf-tree: Data getters was not set (call setDataDriver())'}}
-                </div>
-                <div class="empty-tree-placeholder" v-if="isEmpty()">
-                    {{api.emptyTreeText || 'This tree is empty !'}}
-                </div>
-                <div class="empty-tree-placeholder filter-no-results" v-if="noFilterResults">
-                    Current filter has no results. <a href="" @click.prevent="clearFilter()">Clear filter</a>
-                </div>
+  <div>
+    <div
+      class="jf-tree"
+      :class="viewPaneName + '-pane'"
+      tabindex="0"
+      style="clear: both"
+    >
+      <div
+        v-if="viewPane"
+        class="jf-tree-container"
+        :style="{height: getPageHeight() + 'px', overflow: isEmpty() || !api.dataGettersSet ? 'visible' : 'hidden'}"
+      >
+        <div
+          class="tree-items-container"
+          :style="{transform: 'translate(0, ' + (-getTranslate()) + 'px)'}"
+        >
+          <div
+            class="scroll-faker-container"
+            :style="{transform: 'translate(0, ' + (getTranslate()) + 'px)', right: 0, height: getPageHeight() + 'px'}"
+          >
+            <div
+              v-init="initScrollFaker()"
+              class="scroll-faker"
+              :style="{height: (getTotalScrollHeight() > maxFakeScrollHeight ? maxFakeScrollHeight : getTotalScrollHeight()) + 'px'}"
+            />
+          </div>
+          <div
+            class="h-scroll-wrapper"
+            :style="{height: (getPageHeight() + getTranslate()) + 'px'}"
+            @mousewheel.prevent="onMouseWheel"
+          >
+            <div class="h-scroll-content">
+              <jf-tree-item
+                v-for="(item, $index) in viewPane._getPageData()"
+                :key="$index"
+                :tree="jfTree"
+                :item-id="$index"
+                :data="item"
+              />
             </div>
+          </div>
         </div>
-    </div>
 
+        <div
+          v-if="!api.dataGettersSet"
+          class="missing-data-setters"
+        >
+          {{ 'jf-tree: Data getters was not set (call setDataDriver())' }}
+        </div>
+        <div
+          v-if="isEmpty()"
+          class="empty-tree-placeholder"
+        >
+          {{ api.emptyTreeText || 'This tree is empty !' }}
+        </div>
+        <div
+          v-if="noFilterResults"
+          class="empty-tree-placeholder filter-no-results"
+        >
+          Current filter has no results. <a
+            href=""
+            @click.prevent="clearFilter()"
+          >Clear filter</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-tree',
+        name: 'JfTree',
         props: {
             api: {},
             viewPaneName: { default: 'default'}
@@ -412,7 +450,7 @@
                 this.setPage(this.getTotalPages());
             }
 
-            if (this.listeners) this.listeners.forEach(listener=>listener(this.getCurrentPage()));
+            if (this.listeners) this.listeners.forEach(listener => listener(this.getCurrentPage()));
         }
 
         registerChangeListener(listener) {
@@ -421,7 +459,7 @@
         }
 
         syncVirtualScroll() {
-            this.treeCtrl.virtualScrollIndex = this.treeCtrl.currentPage*this.treeCtrl.viewPane.itemsPerPage;
+            this.treeCtrl.virtualScrollIndex = this.treeCtrl.currentPage * this.treeCtrl.viewPane.itemsPerPage;
             this.treeCtrl.syncFakeScroller();
         }
 

@@ -1,76 +1,151 @@
 <template>
+  <div>
+    <div
+      :id="options.tableId"
+      class="jf-table-view"
+      style="clear: both"
+    >
+      <div class="new-entity-wrapper">
+        <a
+          v-if="options && options.newEntityCallback"
+          href=""
+          class="new-entity"
+          @click.prevent="createNewEntity()"
+        >
+          <i class="icon icon-new" /> <span v-if="options && !options.newEntityCustomText">Add {{ options.useAnWithObjectName ? 'an' : 'a' }} {{ objectName ? objectName.split('/')[0] : options.objectName ? options.objectName.split('/')[0] : 'Item' }}</span>
+          <span v-if="options && options.newEntityCustomText">{{ options.newEntityCustomText }}</span>
+        </a>
+      </div>
 
-    <div>
-        <div class="jf-table-view" style="clear: both" :id="options.tableId">
-            <div class="new-entity-wrapper">
-                <a href="" class="new-entity" @click.prevent="createNewEntity()" v-if="options && options.newEntityCallback">
-                    <i class="icon icon-new"></i> <span v-if="options && !options.newEntityCustomText">Add {{options.useAnWithObjectName ? 'an' : 'a'}} {{objectName ? objectName.split('/')[0] : options.objectName ? options.objectName.split('/')[0] : 'Item'}}</span>
-                    <span v-if="options && options.newEntityCustomText">{{options.newEntityCustomText}}</span>
-                </a>
-            </div>
+      <jf-table-top
+        ref="top"
+        :total-records="getTotalRecords()"
+        :table-view="jfTableView"
+      >
+        <slot
+          slot="external-filters"
+          name="external-filters"
+        />
+      </jf-table-top>
 
-            <jf-table-top ref="top" :total-records="getTotalRecords()" :table-view="jfTableView">
-                <slot name="external-filters" slot="external-filters"></slot>
-            </jf-table-top>
-
-            <div class="columns-customization-wrap" v-if="options && options.columnsCustomization">
-                <div class="columns-customization pull-right">
-                    <jf-multi-dropdown title="Columns" no-filter="true" filter-placeholder="Filter Columns" :items="options.availableColumns" on-change="options.updateCustomizedColumns()"></jf-multi-dropdown>
-                </div>
-            </div>
-
-            <div class="jf-table-view-container" v-if="options">
-                <div class="jf-table-view-header" v-if="options && options.headersVisible">
-                    <jf-table-row :table-view="jfTableView" :row-id="'headers'" :data="options.headersRow"></jf-table-row>
-                </div>
-
-
-                <div v-if="options && (options.paginationMode === options.VIRTUAL_SCROLL || options.paginationMode === options.INFINITE_VIRTUAL_SCROLL)"
-                     :style="{height: getActualPageHeight() + 'px'}"
-                     class="table-rows-container">
-                    <jf-vscroll with-each="entity"
-                                :prevent-default-scroll="this.options.pendingInfiniteScroll"
-                                :in="options.getPrePagedData()"
-                                :api="vsApi">
-                        <div v-pre>
-                            <div v-if="is_last() && options && options.pendingInfiniteScroll && options.paginationMode === options.INFINITE_VIRTUAL_SCROLL" :style="{height: options.rowHeight}" class="loading-more">
-                                <div class="spinner-msg-local">
-                                    <div class="icon-hourglass-local"></div>
-                                </div>
-                            </div>
-                            <jf-table-row v-else :table-view="jfTableView" :row-id="v_index()" :data="entity"></jf-table-row>
-                        </div>
-                    </jf-vscroll>
-                </div>
-
-                <div v-if="options && options.paginationMode !== options.VIRTUAL_SCROLL && options.paginationMode !== options.INFINITE_VIRTUAL_SCROLL" class="table-rows-container">
-                    <jf-table-row :key="$index" v-for="(entity, $index) in options.getPageData()" :table-view="jfTableView" :row-id="$index" :data="entity"></jf-table-row>
-                </div>
-
-                <div class="empty-table-placeholder" :style="options.registeredTabularDnd ? options.registeredTabularDnd.emptyTableStyle : {}" v-if="options && options.dataWasSet && !options.getRawData().length && !options.pendingExternalPaging && (!options.externalTotalCount || options.externalTotalCount.total === 0)">
-                    <p><span>{{ emptyTableText }}</span> <a href="" class="jf-link" v-if="options.emptyTableAction && options.emptyTableCallActionText" @click.prevent="options.emptyTableAction()">{{options.emptyTableCallActionText}}</a></p>
-                </div>
-                <div class="empty-table-placeholder filter-no-results" v-if="options && noFilterResults">
-                    <div>{{ noFilterResultsText }}</div><a href="" class="jf-link" v-if="tableFilter" @click.prevent="clearFilter()">Clear filter</a>
-                </div>
-                <div v-if="options && options.pendingInfiniteScroll && options.paginationMode !== options.INFINITE_VIRTUAL_SCROLL" :style="{height: options.rowHeight}" class="loading-more">
-                    <div class="spinner-msg-local">
-                        <div class="icon-hourglass-local"></div>
-                    </div>
-                </div>
-
-            </div>
-
-
+      <div
+        v-if="options && options.columnsCustomization"
+        class="columns-customization-wrap"
+      >
+        <div class="columns-customization pull-right">
+          <jf-multi-dropdown
+            title="Columns"
+            no-filter="true"
+            filter-placeholder="Filter Columns"
+            :items="options.availableColumns"
+            on-change="options.updateCustomizedColumns()"
+          />
         </div>
-    </div>
+      </div>
 
+      <div
+        v-if="options"
+        class="jf-table-view-container"
+      >
+        <div
+          v-if="options && options.headersVisible"
+          class="jf-table-view-header"
+        >
+          <jf-table-row
+            :table-view="jfTableView"
+            :row-id="'headers'"
+            :data="options.headersRow"
+          />
+        </div>
+
+
+        <div
+          v-if="options && (options.paginationMode === options.VIRTUAL_SCROLL || options.paginationMode === options.INFINITE_VIRTUAL_SCROLL)"
+          :style="{height: getActualPageHeight() + 'px'}"
+          class="table-rows-container"
+        >
+          <jf-vscroll
+            with-each="entity"
+            :prevent-default-scroll="options.pendingInfiniteScroll"
+            :in="options.getPrePagedData()"
+            :api="vsApi"
+          >
+            <div v-pre>
+              <div
+                v-if="is_last() && options && options.pendingInfiniteScroll && options.paginationMode === options.INFINITE_VIRTUAL_SCROLL"
+                :style="{height: options.rowHeight}"
+                class="loading-more"
+              >
+                <div class="spinner-msg-local">
+                  <div class="icon-hourglass-local" />
+                </div>
+              </div>
+              <jf-table-row
+                v-else
+                :table-view="jfTableView"
+                :row-id="v_index()"
+                :data="entity"
+              />
+            </div>
+          </jf-vscroll>
+        </div>
+
+        <div
+          v-if="options && options.paginationMode !== options.VIRTUAL_SCROLL && options.paginationMode !== options.INFINITE_VIRTUAL_SCROLL"
+          class="table-rows-container"
+        >
+          <jf-table-row
+            v-for="(entity, $index) in options.getPageData()"
+            :key="$index"
+            :table-view="jfTableView"
+            :row-id="$index"
+            :data="entity"
+          />
+        </div>
+
+        <div
+          v-if="options && options.dataWasSet && !options.getRawData().length && !options.pendingExternalPaging && (!options.externalTotalCount || options.externalTotalCount.total === 0)"
+          class="empty-table-placeholder"
+          :style="options.registeredTabularDnd ? options.registeredTabularDnd.emptyTableStyle : {}"
+        >
+          <p>
+            <span>{{ emptyTableText }}</span> <a
+              v-if="options.emptyTableAction && options.emptyTableCallActionText"
+              href=""
+              class="jf-link"
+              @click.prevent="options.emptyTableAction()"
+            >{{ options.emptyTableCallActionText }}</a>
+          </p>
+        </div>
+        <div
+          v-if="options && noFilterResults"
+          class="empty-table-placeholder filter-no-results"
+        >
+          <div>{{ noFilterResultsText }}</div><a
+            v-if="tableFilter"
+            href=""
+            class="jf-link"
+            @click.prevent="clearFilter()"
+          >Clear filter</a>
+        </div>
+        <div
+          v-if="options && options.pendingInfiniteScroll && options.paginationMode !== options.INFINITE_VIRTUAL_SCROLL"
+          :style="{height: options.rowHeight}"
+          class="loading-more"
+        >
+          <div class="spinner-msg-local">
+            <div class="icon-hourglass-local" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-table-view',
+        name: 'JfTableView',
         props: [
             'options',
             'objectName'
@@ -98,6 +173,14 @@
                 cellScopes: [],
                 cellComponents: []
             };
+        },
+        computed: {
+            emptyTableText() {
+                return this.options.emptyTableText || 'There is no data to display';
+            },
+            noFilterResultsText() {
+                return this.options.noFilterResultsText || 'Current filter has no results.';
+            }
         },
         created() {
             this.EVENTS = this.JFrogEventBus.getEventsDefinition();
@@ -405,14 +488,6 @@
             },
 
 
-        },
-        computed: {
-            emptyTableText() {
-                return this.options.emptyTableText || 'There is no data to display';
-            },
-            noFilterResultsText() {
-                return this.options.noFilterResultsText || 'Current filter has no results.';
-            }
         }
     }
     class PaginationApi {

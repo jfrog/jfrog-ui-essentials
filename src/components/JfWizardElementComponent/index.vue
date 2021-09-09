@@ -1,15 +1,22 @@
 <template>
-    <div class="wizard-element-container" v-if="config.enableNgShow" v-show="title && title === selectedTitle">
-        <slot></slot>
-    </div>
-    <div class="wizard-element-container" v-else-if="!config.enableNgShow && title && title === selectedTitle">
-        <slot></slot>
-    </div>
+  <div
+    v-if="config.enableNgShow"
+    v-show="title && title === selectedTitle"
+    class="wizard-element-container"
+  >
+    <slot />
+  </div>
+  <div
+    v-else-if="!config.enableNgShow && title && title === selectedTitle"
+    class="wizard-element-container"
+  >
+    <slot />
+  </div>
 </template>
 
 <script>
     export default {
-        name: 'jf-wizard-element',
+        name: 'JfWizardElement',
         props: [
             'dataTitle',
             'isSelectedTab',
@@ -21,7 +28,7 @@
                 config: { enableNgShow: null }
             };
         },
-        computed:{
+        computed: {
             selectedTitle: function () {
                 return this.$parent.active.title;
             }

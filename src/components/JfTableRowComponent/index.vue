@@ -1,147 +1,247 @@
 <template>
-
-    <div class="jf-table-row"
-         v-if="data"
-         @mousemove="rowId === 'headers' && tableView.options.resizableColumns && onMouseMove($event)"
-         @mousedown="rowId === 'headers' && tableView.options.resizableColumns && onMouseDown($event)"
-         @mouseup="rowId === 'headers' && tableView.options.resizableColumns && onMouseUp($event)"
-         @mouseleave="rowId === 'headers' && tableView.options.resizableColumns && onMouseUp($event)"
-         @click="onRowClick($event)"
-         :class="{
-            headers: rowId === 'headers',
-            'group-header': data && data.$groupHeader,
-            'expanded': data && data.$groupHeader && data.$groupHeader.$expanded,
-            'sub-row': data && data.$parentRow,
-            sticky: data && data.$sticky,
-            selected: data && data.$selected,
-            'drag-mark': rowId !== 'headers' && tableView.options.draggableRows && !(tableView.options.registeredTabularDnd && tableView.options.registeredTabularDnd.dndCtrl.disabled) && isRowDraggable(),
-            [data[tableView.options.rowClassAttr]]: tableView.options.rowClassAttr && data[tableView.options.rowClassAttr]
-          }"
-         :style="{height: rowId === 'headers' ? '' : tableView.options.rowHeight, opacity: tableView.options.ready ? 1 : 0}">
-        <div class="jf-table-cell selection" :class="{'single-selection' : tableView.options.selectionMode === tableView.options.SINGLE_SELECTION}" :style="{height: tableView.options.rowHeight, width: tableView.options.selectionColumnWidth + 'px'}" v-if="tableView.options.hasSelection()">
-            <div class="jf-table-cell-content">
-                <div class="selection-button" v-if="(!data.$groupHeader && rowId !== 'headers') || (tableView.options.selectionMode === tableView.options.MULTI_SELECTION && tableView.options.getRawData().length && !tableView.options.noSelectAll)" :style="{height: tableView.options.rowHeight, width: tableView.options.selectionColumnWidth +'px'}">
-                    <div class="selection-icon icon icon-datagrid-v" :class="{selected: data.$selected || (rowId === 'headers' && tableView.allSelected)}" @click="toggleSelection(rowId === 'headers');$event.stopPropagation();">
-                    </div>
-                </div>
-            </div>
+  <div
+    v-if="data"
+    class="jf-table-row"
+    :class="{
+      headers: rowId === 'headers',
+      'group-header': data && data.$groupHeader,
+      'expanded': data && data.$groupHeader && data.$groupHeader.$expanded,
+      'sub-row': data && data.$parentRow,
+      sticky: data && data.$sticky,
+      selected: data && data.$selected,
+      'drag-mark': rowId !== 'headers' && tableView.options.draggableRows && !(tableView.options.registeredTabularDnd && tableView.options.registeredTabularDnd.dndCtrl.disabled) && isRowDraggable(),
+      [data[tableView.options.rowClassAttr]]: tableView.options.rowClassAttr && data[tableView.options.rowClassAttr]
+    }"
+    :style="{height: rowId === 'headers' ? '' : tableView.options.rowHeight, opacity: tableView.options.ready ? 1 : 0}"
+    @mousemove="rowId === 'headers' && tableView.options.resizableColumns && onMouseMove($event)"
+    @mousedown="rowId === 'headers' && tableView.options.resizableColumns && onMouseDown($event)"
+    @mouseup="rowId === 'headers' && tableView.options.resizableColumns && onMouseUp($event)"
+    @mouseleave="rowId === 'headers' && tableView.options.resizableColumns && onMouseUp($event)"
+    @click="onRowClick($event)"
+  >
+    <div
+      v-if="tableView.options.hasSelection()"
+      class="jf-table-cell selection"
+      :class="{'single-selection' : tableView.options.selectionMode === tableView.options.SINGLE_SELECTION}"
+      :style="{height: tableView.options.rowHeight, width: tableView.options.selectionColumnWidth + 'px'}"
+    >
+      <div class="jf-table-cell-content">
+        <div
+          v-if="(!data.$groupHeader && rowId !== 'headers') || (tableView.options.selectionMode === tableView.options.MULTI_SELECTION && tableView.options.getRawData().length && !tableView.options.noSelectAll)"
+          class="selection-button"
+          :style="{height: tableView.options.rowHeight, width: tableView.options.selectionColumnWidth +'px'}"
+        >
+          <div
+            class="selection-icon icon icon-datagrid-v"
+            :class="{selected: data.$selected || (rowId === 'headers' && tableView.allSelected)}"
+            @click="toggleSelection(rowId === 'headers');$event.stopPropagation();"
+          />
         </div>
+      </div>
+    </div>
 
 
-        <!-- GROUP HEADER -->
-        <div class="jf-table-cell group-header"
-             v-if="data.$groupHeader"
-             :style="{height: rowId === 'headers' ? '' : tableView.options.rowHeight,
-                      lineHeight: rowId === 'headers' ? '' : tableView.options.rowHeight}">
+    <!-- GROUP HEADER -->
+    <div
+      v-if="data.$groupHeader"
+      class="jf-table-cell group-header"
+      :style="{height: rowId === 'headers' ? '' : tableView.options.rowHeight,
+               lineHeight: rowId === 'headers' ? '' : tableView.options.rowHeight}"
+    >
+      <i
+        class="icon icon-small-arrow-down"
+        :class="{'expanded': data.$groupHeader.$expanded}"
+      />
+      <span
+        v-if="data.$groupHeader.col && !data.$groupHeader.col.cellTemplate"
+        class="jf-table-cell-content group-header"
+      >
+        {{ data.$groupHeader.value }}
+      </span>
 
-
-            <i class="icon icon-small-arrow-down"
-               :class="{'expanded': data.$groupHeader.$expanded}"></i>
-            <span class="jf-table-cell-content group-header" v-if="data.$groupHeader.col && !data.$groupHeader.col.cellTemplate">
-                {{data.$groupHeader.value}}
-            </span>
-
-            <!--<i class="action-icon icon icon-small-arrow-down"
+      <!--<i class="action-icon icon icon-small-arrow-down"
                  ng-class="{'expanded': data.$groupHeader.$expanded}"></i>
             <span class="jf-table-cell-content group-header"
                  ng-if="!data.$groupHeader.col.cellTemplate">
                 {{data.$groupHeader.value}}
             </span>-->
 
-            <div class="jf-table-cell-content group-header" v-if="data.$groupHeader.col && data.$groupHeader.col.cellTemplate">
-                <jf-table-compiled-cell :field="data.$groupHeader.field" :row-id="rowId" :table-row="jfTableRow">
-                </jf-table-compiled-cell>
-            </div>
-            <div class="group-header-count">({{data.$groupHeader.count}})</div>
-
-
-
-
-
-        </div>
-
-        <div class="jf-table-cell"
-             v-if="!data.$groupHeader"
-             :class="{header: rowId === 'headers' && col.header, sortable: rowId === 'headers' && tableView.options.sortable && tableView.options.getRawData().length && col.sortable && !hoveringResize, 'column-resizer': hoveringResize, ['drag-right']: col.$dragRightBorder, ['drag-left']: col.$dragLeftBorder, ['field-id-' + kebab(col.field)]: true, ['row-expander-cell']: $index === 0 && tableView.options.subRowsEnabled}"
-             @click="onClickCell(col,$event)"
-             :style="{height: rowId === 'headers' ? tableView.options.headerRowHeight : tableView.options.rowHeight, width: col.width}"
-             v-for="(col, $index) in tableView.options.columns">
-            <div class="row-expander"  :class="{placeholder: (!data.$subRows && !data.$parentRow) || (data.$subRows && data.$subRows.length === 0) || (data.$parentRow)}" v-if="$index === 0 && tableView.options.subRowsEnabled" :style="{height: tableView.options.rowHeight}" @click="toggleExpansion($event)">
-                <i v-if="data.$subRows && data.$subRows.length && !data.$parentRow && !data.$pendingSubRows" class="action-icon icon icon-small-arrow-down" :class="{'expanded': data.$expanded}"></i>
-                <div class="spinner-msg-local" v-if="data.$pendingSubRows">
-                    <div class="icon-hourglass-local"></div>
-                </div>
-            </div>
-            <div class="jf-table-cell-content"
-                 v-jf-tooltip-on-overflow
-                 :class="{'row-expander-content': $index === 0 && tableView.options.subRowsEnabled,
-                            'sortable-aligned-center' : col.sortable && col.textAlign === 'center'}" :style="{'text-align': col.textAlign || 'auto'}" v-if="(!col.cellTemplate && rowId !== 'headers') || (!col.headerCellTemplate && rowId === 'headers')">
-                {{getField(col.field)}}
-                <i class="icon sorting-icon icon-small-arrow-down" :class="{'rotate180': !tableView.options.revSort || (tableView.options.sortByField !== col.field && tableView.options.showSortingArrowsAlways),
-                              active: tableView.options.sortByField === col.field,
-                              'invisible' : !(rowId === 'headers' && tableView.options.sortable && (tableView.options.sortByField === col.field || tableView.options.showSortingArrowsAlways) && col.sortable && tableView.options.getRawData().length && (col.header || col.headerCellTemplate))}"></i>
-
-
-
-                <div class="group-button-wrapper" v-if="rowId === 'headers' && col.allowGrouping">
-                    <div class="group-button icon-grouping-off" :class="{'icon-grouping-on': tableView.options.groupedBy === col.field}" @click="tableView.options.groupBy(col.field); $event.stopPropagation();"></div>
-                </div>
-            </div>
-            <div class="jf-table-cell-content" :class="{'drag-mark': $index === 0 && rowId !== 'headers' && tableView.options.draggableRows}" :style="{'text-align': col.textAlign || 'auto'}" v-if="(col.cellTemplate && rowId !== 'headers') || (col.headerCellTemplate && rowId === 'headers')">
-                <jf-table-compiled-cell :key="rowId" :field="col.field" :row-id="rowId" :table-row="jfTableRow">
-                </jf-table-compiled-cell>
-                <i v-if="rowId === 'headers' && tableView.options.sortable && (tableView.options.sortByField === col.field || tableView.options.showSortingArrowsAlways) && col.sortable && tableView.options.getRawData().length && (col.header || col.headerCellTemplate)" class="icon sorting-icon" :class="{'icon-down-arrow': tableView.options.revSort && tableView.options.sortByField === col.field, 'icon-up-arrow': !tableView.options.revSort || (tableView.options.sortByField !== col.field && tableView.options.showSortingArrowsAlways), active: tableView.options.sortByField === col.field}"></i>
-                <div class="group-button-wrapper" v-if="rowId === 'headers' && col.allowGrouping">
-                    <div class="group-button icon-grouping-off" :class="{'icon-grouping-on': tableView.options.groupedBy === col.field}" @click="tableView.options.groupBy(col.field); $event.stopPropagation();"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="jf-table-cell actions"
-             :style="{height: rowId === 'headers' ? '' : tableView.options.rowHeight, width: _getRowActionsWidth()}"
-             v-if="rowId !== 'headers' && tableView.options.actions.length && !data.$groupHeader">
-            <div class="jf-table-cell-content">
-                <div class="action-button"
-                     :style="{height: tableView.options.rowHeight, width: tableView.options.actionButtonSize + 'px', visibility: !action.visibleWhen || action.visibleWhen(data) ? 'visible' : 'hidden'}"
-                     v-if="tableView.options.actions.length <= 3 || tableView.options.isRowActionGroupingDisabled"
-                     v-for="action in tableView.options.actions">
-                    <row-action :action="action"
-                                :data="data"
-                                :on-action-click="fireAction">
-                    </row-action>
-                </div>
-                <div class="action-button" :style="{height: tableView.options.rowHeight, width: tableView.options.actionButtonSize + 'px', visibility: tableView.options.hasVisibleActionsFor(data) ? 'visible' : 'hidden'}" v-if="tableView.options && !tableView.options.isRowActionGroupingDisabled && tableView.options.actions.length > 3 ">
-                    <div class="action-icon icon-more" @click="toggleActionsDropdown($event)" v-jf-tooltip.bind="actionsTooltip"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="columns-customization-icon" @click="tableView.options.toggleColumnsCustomizationDropdown()" v-if="rowId === 'headers' && tableView.options.columnsCustomization">
-            <i class="icon-menu-arrow"></i>
-        </div>
-
-        <div class="jf-table-row-actions-dropdown" ref="jfTableRowActionsDropdown" :class="outOfViewport"
-             v-if="actionsDropdownOpen">
-            <div v-for="action in tableView.options.actions" v-if="!action.visibleWhen || action.visibleWhen(data)"
-                 @click="fireAction(action);$event.stopPropagation();actionsDropdownOpen=false;" class="action-item"
-                 :icon-name="action.icon || ''">
-                <i class="action-icon" :class="action.icon"></i>
-                <span v-if="!action.href">{{action.tooltip}}</span>
-                <a v-if="action.href" :href="action.href(data)" :download="data.name">{{action.tooltip}}</a>
-            </div>
-        </div>
-
+      <div
+        v-if="data.$groupHeader.col && data.$groupHeader.col.cellTemplate"
+        class="jf-table-cell-content group-header"
+      >
+        <jf-table-compiled-cell
+          :field="data.$groupHeader.field"
+          :row-id="rowId"
+          :table-row="jfTableRow"
+        />
+      </div>
+      <div class="group-header-count">
+        ({{ data.$groupHeader.count }})
+      </div>
     </div>
 
+    <div
+      v-for="(col, $index) in tableView.options.columns"
+      v-if="!data.$groupHeader"
+      class="jf-table-cell"
+      :class="{header: rowId === 'headers' && col.header, sortable: rowId === 'headers' && tableView.options.sortable && tableView.options.getRawData().length && col.sortable && !hoveringResize, 'column-resizer': hoveringResize, ['drag-right']: col.$dragRightBorder, ['drag-left']: col.$dragLeftBorder, ['field-id-' + kebab(col.field)]: true, ['row-expander-cell']: $index === 0 && tableView.options.subRowsEnabled}"
+      :style="{height: rowId === 'headers' ? tableView.options.headerRowHeight : tableView.options.rowHeight, width: col.width}"
+      @click="onClickCell(col,$event)"
+    >
+      <div
+        v-if="$index === 0 && tableView.options.subRowsEnabled"
+        class="row-expander"
+        :class="{placeholder: (!data.$subRows && !data.$parentRow) || (data.$subRows && data.$subRows.length === 0) || (data.$parentRow)}"
+        :style="{height: tableView.options.rowHeight}"
+        @click="toggleExpansion($event)"
+      >
+        <i
+          v-if="data.$subRows && data.$subRows.length && !data.$parentRow && !data.$pendingSubRows"
+          class="action-icon icon icon-small-arrow-down"
+          :class="{'expanded': data.$expanded}"
+        />
+        <div
+          v-if="data.$pendingSubRows"
+          class="spinner-msg-local"
+        >
+          <div class="icon-hourglass-local" />
+        </div>
+      </div>
+      <div
+        v-if="(!col.cellTemplate && rowId !== 'headers') || (!col.headerCellTemplate && rowId === 'headers')"
+        v-jf-tooltip-on-overflow
+        class="jf-table-cell-content"
+        :class="{'row-expander-content': $index === 0 && tableView.options.subRowsEnabled,
+                 'sortable-aligned-center' : col.sortable && col.textAlign === 'center'}"
+        :style="{'text-align': col.textAlign || 'auto'}"
+      >
+        {{ getField(col.field) }}
+        <i
+          class="icon sorting-icon icon-small-arrow-down"
+          :class="{'rotate180': !tableView.options.revSort || (tableView.options.sortByField !== col.field && tableView.options.showSortingArrowsAlways),
+                   active: tableView.options.sortByField === col.field,
+                   'invisible' : !(rowId === 'headers' && tableView.options.sortable && (tableView.options.sortByField === col.field || tableView.options.showSortingArrowsAlways) && col.sortable && tableView.options.getRawData().length && (col.header || col.headerCellTemplate))}"
+        />
+
+
+
+        <div
+          v-if="rowId === 'headers' && col.allowGrouping"
+          class="group-button-wrapper"
+        >
+          <div
+            class="group-button icon-grouping-off"
+            :class="{'icon-grouping-on': tableView.options.groupedBy === col.field}"
+            @click="tableView.options.groupBy(col.field); $event.stopPropagation();"
+          />
+        </div>
+      </div>
+      <div
+        v-if="(col.cellTemplate && rowId !== 'headers') || (col.headerCellTemplate && rowId === 'headers')"
+        class="jf-table-cell-content"
+        :class="{'drag-mark': $index === 0 && rowId !== 'headers' && tableView.options.draggableRows}"
+        :style="{'text-align': col.textAlign || 'auto'}"
+      >
+        <jf-table-compiled-cell
+          :key="rowId"
+          :field="col.field"
+          :row-id="rowId"
+          :table-row="jfTableRow"
+        />
+        <i
+          v-if="rowId === 'headers' && tableView.options.sortable && (tableView.options.sortByField === col.field || tableView.options.showSortingArrowsAlways) && col.sortable && tableView.options.getRawData().length && (col.header || col.headerCellTemplate)"
+          class="icon sorting-icon"
+          :class="{'icon-down-arrow': tableView.options.revSort && tableView.options.sortByField === col.field, 'icon-up-arrow': !tableView.options.revSort || (tableView.options.sortByField !== col.field && tableView.options.showSortingArrowsAlways), active: tableView.options.sortByField === col.field}"
+        />
+        <div
+          v-if="rowId === 'headers' && col.allowGrouping"
+          class="group-button-wrapper"
+        >
+          <div
+            class="group-button icon-grouping-off"
+            :class="{'icon-grouping-on': tableView.options.groupedBy === col.field}"
+            @click="tableView.options.groupBy(col.field); $event.stopPropagation();"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div
+      v-if="rowId !== 'headers' && tableView.options.actions.length && !data.$groupHeader"
+      class="jf-table-cell actions"
+      :style="{height: rowId === 'headers' ? '' : tableView.options.rowHeight, width: _getRowActionsWidth()}"
+    >
+      <div class="jf-table-cell-content">
+        <div
+          v-for="action in tableView.options.actions"
+          v-if="tableView.options.actions.length <= 3 || tableView.options.isRowActionGroupingDisabled"
+          class="action-button"
+          :style="{height: tableView.options.rowHeight, width: tableView.options.actionButtonSize + 'px', visibility: !action.visibleWhen || action.visibleWhen(data) ? 'visible' : 'hidden'}"
+        >
+          <row-action
+            :action="action"
+            :data="data"
+            :on-action-click="fireAction"
+          />
+        </div>
+        <div
+          v-if="tableView.options && !tableView.options.isRowActionGroupingDisabled && tableView.options.actions.length > 3 "
+          class="action-button"
+          :style="{height: tableView.options.rowHeight, width: tableView.options.actionButtonSize + 'px', visibility: tableView.options.hasVisibleActionsFor(data) ? 'visible' : 'hidden'}"
+        >
+          <div
+            v-jf-tooltip.bind="actionsTooltip"
+            class="action-icon icon-more"
+            @click="toggleActionsDropdown($event)"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div
+      v-if="rowId === 'headers' && tableView.options.columnsCustomization"
+      class="columns-customization-icon"
+      @click="tableView.options.toggleColumnsCustomizationDropdown()"
+    >
+      <i class="icon-menu-arrow" />
+    </div>
+
+    <div
+      v-if="actionsDropdownOpen"
+      ref="jfTableRowActionsDropdown"
+      class="jf-table-row-actions-dropdown"
+      :class="outOfViewport"
+    >
+      <div
+        v-for="action in tableView.options.actions"
+        v-if="!action.visibleWhen || action.visibleWhen(data)"
+        class="action-item"
+        :icon-name="action.icon || ''"
+        @click="fireAction(action);$event.stopPropagation();actionsDropdownOpen=false;"
+      >
+        <i
+          class="action-icon"
+          :class="action.icon"
+        />
+        <span v-if="!action.href">{{ action.tooltip }}</span>
+        <a
+          v-if="action.href"
+          :href="action.href(data)"
+          :download="data.name"
+        >{{ action.tooltip }}</a>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
     import RowAction from './components/RowAction';
     export default {
+        name: 'JfTableRow',
         components: {
             RowAction
         },
-        name: 'jf-table-row',
         props: [
             'data',
             'rowId',

@@ -1,18 +1,19 @@
 <template>
-
-    <div>
-        <div class="spinner-msg-local" v-if="!waitFor && (!delaySpinner || showSpinner)">
-            <div class="icon-hourglass-local"></div>
-        </div>
-        <slot v-if="waitFor"></slot>
+  <div>
+    <div
+      v-if="!waitFor && (!delaySpinner || showSpinner)"
+      class="spinner-msg-local"
+    >
+      <div class="icon-hourglass-local" />
     </div>
-
+    <slot v-if="waitFor" />
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-pending-data',
+        name: 'JfPendingData',
         props: [
             'waitFor',
             'delaySpinner'

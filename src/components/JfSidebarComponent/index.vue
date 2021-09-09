@@ -1,61 +1,153 @@
 <template>
+  <div>
+    <div
+      id="jf-main-nav"
+      :style="menu"
+      @mouseleave="mouseLeaveMenu($event)"
+      @mouseover="mouseOverMenu()"
+    >
+      <span
+        class="pin-menu"
+        @click="pinMenu()"
+      ><i
+        class="icon-menu-arrow"
+        :class="{'menu-arrow-close' : pinMenuStatus}"
+      /></span>
+      <ul
+        class="sidebar-wrapper-inner"
+        @click="closeSubMenu(0,true,true)"
+      >
+        <li
+          v-for="item in menuItems"
+          v-if="!item.isHidden"
+          :jf-disable-feature=" item.feature "
+          :class="{disabled: item.isDisabled, active: (item.stateParent | includedByState) || isCurrentItem(item) || highLightOnState(item.stateRelated), 'icon-arrow-left':item.children }"
+          @click="$event.stopPropagation(); itemClick(item)"
+        >
+          <a
+            v-if="item.isDisabled"
+            :id="item.id"
+            class="menu-item disabled"
+            :class="item.customClasses"
+          ><i :class="item.icon" /><span>{{ item.label }}</span></a>
 
-    <div>
-        <div id="jf-main-nav" :style="menu" @mouseleave="mouseLeaveMenu($event)" @mouseover="mouseOverMenu()">
-            <span class="pin-menu" @click="pinMenu()"><i class="icon-menu-arrow" :class="{'menu-arrow-close' : pinMenuStatus}"></i></span>
-            <ul class="sidebar-wrapper-inner" @click="closeSubMenu(0,true,true)">
-                <li v-for="item in menuItems" :jf-disable-feature=" item.feature " v-if="!item.isHidden" @click="$event.stopPropagation(); itemClick(item)" :class="{disabled: item.isDisabled, active: (item.stateParent | includedByState) || isCurrentItem(item) || highLightOnState(item.stateRelated), 'icon-arrow-left':item.children }">
+          <a
+            v-if="!item.isDisabled && !item.children && !item.template"
+            :id="item.id"
+            class="menu-item"
+            :class="item.customClasses"
+            @mouseover="onMouseOverSimpleItem(item)"
+          ><i :class="item.icon" /><span>{{ item.label }}</span></a>
 
-                    <a v-if="item.isDisabled" class="menu-item disabled" :class="item.customClasses" :id="item.id"><i :class="item.icon"></i><span>{{item.label}}</span></a>
+          <a
+            v-if="!item.isDisabled && !item.children && item.template"
+            :id="item.id"
+            v-jf-dynamic-template="'item.template'"
+            class="menu-item"
+            :class="item.customClasses"
+            @mouseover="onMouseOverSimpleItem(item)"
+          />
 
-                    <a class="menu-item" :id="item.id" :class="item.customClasses" @mouseover="onMouseOverSimpleItem(item)" v-if="!item.isDisabled && !item.children && !item.template"><i :class="item.icon"></i><span>{{item.label}}</span></a>
+          <a
+            v-if="!item.isDisabled && item.children"
+            :id="item.id"
+            href=""
+            class="menu-item extended-item"
+            @mouseover="onMouseOverExtendedItem(item)"
+            @mouseleave="onMouseLeaveExtendedItem(item)"
+          ><i :class="item.icon" /><span>{{ item.label }}</span>
+          </a>
 
-                    <a class="menu-item" :id="item.id" :class="item.customClasses" @mouseover="onMouseOverSimpleItem(item)" v-if="!item.isDisabled && !item.children && item.template" v-jf-dynamic-template="'item.template'"></a>
 
-                    <a href="" class="menu-item extended-item" :id="item.id" @mouseover="onMouseOverExtendedItem(item)" @mouseleave="onMouseLeaveExtendedItem(item)" v-if="!item.isDisabled && item.children"><i :class="item.icon"></i><span>{{item.label}}</span>
+          <div
+            v-show="openSub === item"
+            v-if="item.children && !item.isDisabled"
+            class="sub-menu"
+            @mouseover="subMenuOver()"
+            @click="$event.stopPropagation()"
+          >
+            <div
+              v-if="noSearchBox === undefined && !openSub.noSearchBox"
+              class="searchbox-wrapper"
+            >
+              <input
+                id="menuSearchQuery"
+                v-model="menuSearchQuery"
+                type="text"
+                class="input-text"
+                placeholder="Filter Menu..."
+                autocomplete="off"
+                jf-enter-press="chooseSingleChoice()"
+                @focus="openSubMenu()"
+                @input="checkForSingleChoice()"
+                @keydown="navigateInMenu($event)"
+              >
+              <span
+                class="clear-input"
+                :class="{'disabled': !menuSearchQuery}"
+                @click="menuSearchQuery = ''"
+              >×</span>
+            </div>
+
+            <div
+              class="masonry"
+              :class="{'no-search-box': noSearchBox !== undefined || openSub.noSearchBox}"
+              tabindex="-1"
+            >
+              <div>
+                <div
+                  v-for="item in subMenuItems"
+                  v-if="!item.isHidden"
+                  class="section"
+                >
+                  <h3>{{ item.label }}</h3>
+                  <span
+                    v-for="subItem in item.subItems"
+                    v-if="!subItem.isHidden"
+                    :jf-disable-feature=" subItem.feature "
+                  >
+                    <a
+                      v-if="subItem.isDisabled"
+                      :class="{'blocked': subItem.isDisabled}"
+                    >
+                      {{ subItem.label }}
                     </a>
+                    <router-link :to="{name: ' subItem.state  ({{ subItem.stateParams }})'}"><a
+                      v-if="!subItem.isDisabled"
+                      :id="'item-' + subItem.id"
+                      :class="{'highlight' : searchHighlightCheck(subItem.label),
+                               'not-active' : !searchHighlightCheck(subItem.label) && menuSearchQuery.length,
+                               'current' : isCurrentItem(subItem)}"
+                      :data-state=" subItem.state "
+                      :data-params=" subItem.stateParams "
+                      @click.prevent="subMenuItemClick(subItem)"
+                      @keydown="navigateInMenu($event)"
+                    >
+                      {{ subItem.label }}
+                    </a></router-link>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
 
-
-                    <div class="sub-menu" v-show="openSub === item" v-if="item.children && !item.isDisabled" @mouseover="subMenuOver()" @click="$event.stopPropagation()">
-
-                        <div class="searchbox-wrapper" v-if="noSearchBox === undefined && !openSub.noSearchBox">
-                            <input type="text" class="input-text" id="menuSearchQuery" placeholder="Filter Menu..." autocomplete="off" v-model="menuSearchQuery" @focus="openSubMenu()" @input="checkForSingleChoice()" @keydown="navigateInMenu($event)" jf-enter-press="chooseSingleChoice()">
-                            <span class="clear-input" @click="menuSearchQuery = ''" :class="{'disabled': !menuSearchQuery}">×</span>
-                        </div>
-
-                        <div class="masonry" :class="{'no-search-box': noSearchBox !== undefined || openSub.noSearchBox}" tabindex="-1">
-                            <div>
-                                <div v-for="item in subMenuItems" class="section" v-if="!item.isHidden">
-                                    <h3>{{item.label}}</h3>
-                                    <span v-for="subItem in item.subItems" :jf-disable-feature=" subItem.feature " v-if="!subItem.isHidden">
-                                    <a :class="{'blocked': subItem.isDisabled}" v-if="subItem.isDisabled">
-                                        {{subItem.label}}
-                                    </a>
-                                    <router-link :to="{name: ' subItem.state  ({{ subItem.stateParams }})'}"><a :class="{'highlight' : searchHighlightCheck(subItem.label),
-                                                  'not-active' : !searchHighlightCheck(subItem.label) && menuSearchQuery.length,
-                                                  'current' : isCurrentItem(subItem)}" v-if="!subItem.isDisabled" @click.prevent="subMenuItemClick(subItem)" @keydown="navigateInMenu($event)" :data-state=" subItem.state " :data-params=" subItem.stateParams " :id="'item-' + subItem.id">
-                                        {{subItem.label}}
-                                    </a></router-link>
-                                </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </li>
-            </ul>
-
-            <ng2vue-include v-if="footerTemplate" src="footerTemplate"></ng2vue-include>
-            <div v-if="footerTemplateHtml" v-html="footerTemplateHtml"></div>
-
-        </div>
+      <ng2vue-include
+        v-if="footerTemplate"
+        src="footerTemplate"
+      />
+      <div
+        v-if="footerTemplateHtml"
+        v-html="footerTemplateHtml"
+      />
     </div>
-
+  </div>
 </template>
 
 <script>
     export default {
-        name: 'jf-sidebar',
+        name: 'JfSidebar',
         props: [
             'driver',
             'footerTemplate',
@@ -81,7 +173,7 @@
                 openSub: { noSearchBox: null },
                 menuSearchQuery: '',
                 subMenuItems: null,
-                footerTemplateHtml:'<div class="img-wrapper"><img  src="/images/jfrog.svg" alt=""></div>'
+                footerTemplateHtml: '<div class="img-wrapper"><img  src="/images/jfrog.svg" alt=""></div>'
             };
         },
         created() {

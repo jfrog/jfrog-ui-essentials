@@ -1,54 +1,72 @@
 <template>
+  <div>
+    <div
+      class="jf-tabular-dnd"
+      tabindex="0"
+      :disabled="disabled"
+    >
+      <div
+        class="tabular-dnd-table-container available-table"
+        :class="{'no-data': !availableItems.length && (!availableItemsTableOptions || (!availableItemsTableOptions.draggedRow && !availableItemsTableOptions.draggedRows)) && !selectedItems.length && (!selectedItemsTableOptions || (!selectedItemsTableOptions.draggedRow && !selectedItemsTableOptions.draggedRows))}"
+      >
+        <jf-table-view-wrapper
+          :options="availableItemsTableOptions"
+          :data="availableItems"
+        />
+      </div>
 
-    <div>
-        <div class="jf-tabular-dnd" tabindex="0" :disabled="disabled">
-            <div class="tabular-dnd-table-container available-table"
-                 :class="{'no-data': !availableItems.length && (!availableItemsTableOptions || (!availableItemsTableOptions.draggedRow && !availableItemsTableOptions.draggedRows)) && !selectedItems.length && (!selectedItemsTableOptions || (!selectedItemsTableOptions.draggedRow && !selectedItemsTableOptions.draggedRows))}">
-                <jf-table-view-wrapper :options="availableItemsTableOptions"
-                                       :data="availableItems">
-                </jf-table-view-wrapper>
-            </div>
+      <div class="dnd-actions-wrap">
+        <ul class="dnd-actions">
+          <li>
+            <span
+              class="dnd-exclude-all"
+              :disabled="isIncludeListEmpty() || areAllRowsDisabled(selectedItemsTableOptions.getFilteredData()) || disabled"
+              @click="excludeAll()"
+            >«
+            </span>
+          </li>
+          <li>
+            <span
+              class="dnd-exclude-selected"
+              :disabled="!isIncludeListItemSelected() || disabled"
+              @click="excludeSelected()"
+            >‹
+            </span>
+          </li>
+          <li>
+            <span
+              class="dnd-include-selected"
+              :disabled="!isExcludeListItemSelected() || disabled"
+              @click="includeSelected()"
+            >›
+            </span>
+          </li>
+          <li>
+            <span
+              class="dnd-include-all"
+              :disabled="isExcludeListEmpty() || areAllRowsDisabled(availableItemsTableOptions.getFilteredData()) || disabled"
+              @click="includeAll()"
+            >»
+            </span>
+          </li>
+        </ul>
+      </div>
 
-            <div class="dnd-actions-wrap">
-                <ul class="dnd-actions">
-                    <li>
-                        <span @click="excludeAll()" class="dnd-exclude-all"
-                              :disabled="isIncludeListEmpty() || areAllRowsDisabled(selectedItemsTableOptions.getFilteredData()) || disabled">«
-                    </span>
-                    </li>
-                    <li>
-                        <span @click="excludeSelected()" class="dnd-exclude-selected"
-                              :disabled="!isIncludeListItemSelected() || disabled">‹
-                    </span>
-                    </li>
-                    <li>
-                        <span @click="includeSelected()" class="dnd-include-selected"
-                              :disabled="!isExcludeListItemSelected() || disabled">›
-                    </span>
-                    </li>
-                    <li>
-                        <span @click="includeAll()" class="dnd-include-all"
-                              :disabled="isExcludeListEmpty() || areAllRowsDisabled(availableItemsTableOptions.getFilteredData()) || disabled">»
-                    </span>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="tabular-dnd-table-container selected-table">
-                <jf-table-view-wrapper :options="selectedItemsTableOptions"
-                                       :data="selectedItems">
-                </jf-table-view-wrapper>
-            </div>
-        </div>
+      <div class="tabular-dnd-table-container selected-table">
+        <jf-table-view-wrapper
+          :options="selectedItemsTableOptions"
+          :data="selectedItems"
+        />
+      </div>
     </div>
-
+  </div>
 </template>
 
 <script>
 
     import JfTableViewWrapper from '../JfTableViewWrapper/index';
     export default {
-        name: 'jf-tabular-dnd',
+        name: 'JfTabularDnd',
         components: {JfTableViewWrapper},
         props: [
             'availableItems',
@@ -78,14 +96,6 @@
                 currNumberOfRows: this.numberOfRows || 8
             };
         },
-        created() {
-            if (this.columns) {
-                this.availableItemsColumnsVar = _.cloneDeep(this.columns);
-                this.selectedItemsColumnsVar = _.cloneDeep(this.columns);
-            }
-
-            this.createTables();
-        },
         watch: {
             availableItems: val => {
                 return this && this.watchListChanges && this.watchListChanges(val);
@@ -93,6 +103,14 @@
             selectedItems: val => {
                 return this && this.watchListChanges && this.watchListChanges(val);
             }
+        },
+        created() {
+            if (this.columns) {
+                this.availableItemsColumnsVar = _.cloneDeep(this.columns);
+                this.selectedItemsColumnsVar = _.cloneDeep(this.columns);
+            }
+
+            this.createTables();
         },
         ng1_legacy: {'controllerAs': 'jfTabularDnD'},
         methods: {

@@ -271,8 +271,8 @@ export function codeMirrorAsciidocConfig() {
                             rule.token = rule.token[0];
                         } else if (matchcount - 1 != rule.token.length) {
                             throw new Error("number of classes and regexp groups in '" +
-                                rule.token + "'\n'" + rule.regex + "' doesn't match\n"
-                                + (matchcount - 1) + "!=" + rule.token.length);
+                                rule.token + "'\n'" + rule.regex + "' doesn't match\n" +
+                                (matchcount - 1) + "!=" + rule.token.length);
                         } else {
                             rule.tokenArray = rule.token;
                             rule.token = null;

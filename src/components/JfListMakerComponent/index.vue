@@ -1,53 +1,90 @@
 <template>
-    <div class="jf-list-maker" >
-        <div class="list-new-value" :class="{dropdown: predefinedValues}" v-if="!hideAddNewFields">
-            <div>
-                <jf-field validations="common" :dont-push-down-errors="true" :delayed-init="true">
-                    <label v-if="label">{{label}}</label>
-                    <jf-help-tooltip v-if="helpTooltip" :html="helpTooltip"></jf-help-tooltip>
-                    <input v-if="!predefinedValues"
-                           :type="inputType || 'text'"
-                           class="input-text"
-                           :placeholder="derivedPlaceHolder"
-                           v-model="newValue"
-                           :id="'newValueField-' + int_listId"
-                           name="newValueField"
-                           @keyup.enter.prevent="addValue"
-                           @input="errorMessage=null"
-                           :disabled="disabled">
-                    <jf-ui-select v-if="predefinedValues"
-                                  v-model="newValue"
-                                  :jf-select-placeholder="derivedPlaceHolder"
-                                  :jf-select-disabled="disabled"
-                                  :jf-select-options="predefinedValues">
-                    </jf-ui-select>
-                </jf-field>
-            </div>
-            <div class="list-new-value-button">
-                <i class="icon icon-plus-sign" @click="addValue" :disabled="addingNotAllowed"></i>
-            </div>
-        </div>
-        <div class="jf-validation" v-if="errorMessage">{{errorMessage}}</div>
-
-        <div :id="int_listId" class="list-maker-list" v-if="int_values.length">
-            <div class="list-maker-list-row" v-for="(value, index) in int_values" :key="index">
-                <div class="list-maker-row-value" v-jf-tooltip-on-overflow>{{value}}</div>
-                <div class="list-maker-list-buttons">
-                    <a href=""
-                       class="icon icon-close"
-                       @click.prevent="removeValue(index)"
-                       v-if="int_values.length > int_minLength && !disabled"
-                       :disabled="disabled">
-                    </a>
-                </div>
-            </div>
-        </div>
+  <div class="jf-list-maker">
+    <div
+      v-if="!hideAddNewFields"
+      class="list-new-value"
+      :class="{dropdown: predefinedValues}"
+    >
+      <div>
+        <jf-field
+          validations="common"
+          :dont-push-down-errors="true"
+          :delayed-init="true"
+        >
+          <label v-if="label">{{ label }}</label>
+          <jf-help-tooltip
+            v-if="helpTooltip"
+            :html="helpTooltip"
+          />
+          <input
+            v-if="!predefinedValues"
+            :id="'newValueField-' + int_listId"
+            v-model="newValue"
+            :type="inputType || 'text'"
+            class="input-text"
+            :placeholder="derivedPlaceHolder"
+            name="newValueField"
+            :disabled="disabled"
+            @keyup.enter.prevent="addValue"
+            @input="errorMessage=null"
+          >
+          <jf-ui-select
+            v-if="predefinedValues"
+            v-model="newValue"
+            :jf-select-placeholder="derivedPlaceHolder"
+            :jf-select-disabled="disabled"
+            :jf-select-options="predefinedValues"
+          />
+        </jf-field>
+      </div>
+      <div class="list-new-value-button">
+        <i
+          class="icon icon-plus-sign"
+          :disabled="addingNotAllowed"
+          @click="addValue"
+        />
+      </div>
     </div>
+    <div
+      v-if="errorMessage"
+      class="jf-validation"
+    >
+      {{ errorMessage }}
+    </div>
+
+    <div
+      v-if="int_values.length"
+      :id="int_listId"
+      class="list-maker-list"
+    >
+      <div
+        v-for="(value, index) in int_values"
+        :key="index"
+        class="list-maker-list-row"
+      >
+        <div
+          v-jf-tooltip-on-overflow
+          class="list-maker-row-value"
+        >
+          {{ value }}
+        </div>
+        <div class="list-maker-list-buttons">
+          <a
+            v-if="int_values.length > int_minLength && !disabled"
+            href=""
+            class="icon icon-close"
+            :disabled="disabled"
+            @click.prevent="removeValue(index)"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
     import _ from "lodash";
     export default {
-        name: 'jf-list-maker',
+        name: 'JfListMaker',
         props: [
             'value',
             'label',
@@ -76,15 +113,7 @@
                 int_minLength: this.minLength || 0
             };
         },
-        watch: {
-            listId(changedValue) {
-                this.int_listId = changedValue;
-            },
-            noSort(changedValue) {
-                this.int_noSort = changedValue;
-            }
-        },
-        computed:{
+        computed: {
             addingNotAllowed() {
                 return this.disabled || !this.newValue || !this.newValue.length;
             },
@@ -95,6 +124,14 @@
                     int_values = _.sortBy(int_values);
                 }
                 return int_values;
+            }
+        },
+        watch: {
+            listId(changedValue) {
+                this.int_listId = changedValue;
+            },
+            noSort(changedValue) {
+                this.int_noSort = changedValue;
             }
         },
         mounted() {

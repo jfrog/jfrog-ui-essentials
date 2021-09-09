@@ -47,7 +47,7 @@ describe('JfListSelectionComponent', () => {
         })
 
         it('should display an icon if a "icon_class" was passed', function() {
-            let iconClass="someClass";
+            let iconClass = "someClass";
             let wrapper = mountComponent({
                 items: [
                     {

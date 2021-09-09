@@ -1,19 +1,36 @@
 <template>
-    <div class="jf-switch" :class="jfSwitchClass" >
-        <span v-if="jfSwitchTitle" class="jf-switch-title">{{jfSwitchTitle}}</span>
-        <jf-help-tooltip v-if="helpTooltip" :html="helpTooltip"></jf-help-tooltip>
-        <ul class="jf-switch-options">
-            <li v-for="(option, index) in optionObjects" :key="index">
-                <a class="jf-switch-option" href="" @click.prevent="selectOption(option)" :class="{active: isSelected(option), disabled: disabled}">{{option.text}}</a>
-            </li>
-        </ul>
-    </div>
+  <div
+    class="jf-switch"
+    :class="jfSwitchClass"
+  >
+    <span
+      v-if="jfSwitchTitle"
+      class="jf-switch-title"
+    >{{ jfSwitchTitle }}</span>
+    <jf-help-tooltip
+      v-if="helpTooltip"
+      :html="helpTooltip"
+    />
+    <ul class="jf-switch-options">
+      <li
+        v-for="(option, index) in optionObjects"
+        :key="index"
+      >
+        <a
+          class="jf-switch-option"
+          href=""
+          :class="{active: isSelected(option), disabled: disabled}"
+          @click.prevent="selectOption(option)"
+        >{{ option.text }}</a>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-switch',
+        name: 'JfSwitch',
         props: [
             'jfSwitchTitle',
             'options',

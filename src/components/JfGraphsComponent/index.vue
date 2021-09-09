@@ -1,13 +1,11 @@
 <template>
-
-    <div ref="chart"></div>
-
+  <div ref="chart" />
 </template>
 
 <script>
 import { bb } from 'billboard.js';
     export default {
-        name: 'jf-graphs',
+        name: 'JfGraphs',
         props: [
             'hideSearch',
             'options'
@@ -17,6 +15,16 @@ import { bb } from 'billboard.js';
         },
         mounted() {
             this._generate();
+        },
+        updated() {
+            if (this.chart) {
+                this._generate();
+            }
+        },
+        beforeDestroy() {
+            if (this.chart) {
+                this.chart.destroy();
+            }
         },
         methods: {
             _generate() {
@@ -66,16 +74,6 @@ import { bb } from 'billboard.js';
                     this.chart.resize();
                 });
             },
-        },
-        updated() {
-            if (this.chart) {
-                this._generate();
-            }
-        },
-        beforeDestroy() {
-            if (this.chart) {
-                this.chart.destroy();
-            }
         }
     }
 

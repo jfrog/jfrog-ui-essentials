@@ -1,6 +1,6 @@
-const Vue = window.Vue;
 import {Ng1AttributeDirectiveAdapter} from '@/plugins/JFrogUI/Ng1AttributeDirectiveAdapter';
 import sanitizeMixin from '../mixins/Sanitize';
+const Vue = window.Vue;
 
 const { $sanitize } = sanitizeMixin.methods;
 

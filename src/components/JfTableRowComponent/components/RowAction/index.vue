@@ -1,20 +1,24 @@
 <template>
-    <div>
-        <div class="action-icon"
-             @click="actionHandler(action,$event)"
-             v-if="!action.href"
-             v-jf-tooltip.bind="action.tooltip"
-             :class="action.icon">
-        </div>
-        <a @click="actionHandler(action,$event)"
-           v-if="action.href"
-           :href="action.href(data)">
-            <div class="action-icon"
-                 :class="action.icon"
-                 v-jf-tooltip.bind="action.tooltip">
-            </div>
-        </a>
-    </div>
+  <div>
+    <div
+      v-if="!action.href"
+      v-jf-tooltip.bind="action.tooltip"
+      class="action-icon"
+      :class="action.icon"
+      @click="actionHandler(action,$event)"
+    />
+    <a
+      v-if="action.href"
+      :href="action.href(data)"
+      @click="actionHandler(action,$event)"
+    >
+      <div
+        v-jf-tooltip.bind="action.tooltip"
+        class="action-icon"
+        :class="action.icon"
+      />
+    </a>
+  </div>
 </template>
 
 <script>

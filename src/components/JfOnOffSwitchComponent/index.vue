@@ -1,21 +1,21 @@
 <template>
-
-    <div>
-        <div class="jf-on-off-toggler" :class="{'on-selected' : isOn,
-                    'off-selected' : !isOn}">
-            <jf-toggler v-model="isOn">
-            </jf-toggler>
-            <span class="on-option-text jf-toggler-text">{{ on }}</span>
-            <span class="off-option-text jf-toggler-text">{{ off }}</span>
-        </div>
+  <div>
+    <div
+      class="jf-on-off-toggler"
+      :class="{'on-selected' : isOn,
+               'off-selected' : !isOn}"
+    >
+      <jf-toggler v-model="isOn" />
+      <span class="on-option-text jf-toggler-text">{{ on }}</span>
+      <span class="off-option-text jf-toggler-text">{{ off }}</span>
     </div>
-
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-on-off-switch',
+        name: 'JfOnOffSwitch',
         props: [
             'selected',
             'options'

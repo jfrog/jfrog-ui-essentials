@@ -1,31 +1,63 @@
 <template>
-    <div class="jf-tabs">
-        <ul class="nav nav-tabs">
-            <li v-for="(tab,index) in tabsVisible" :key="index" :class="{active:isActiveTab(tab), disabled:tab.isDisabled, [tab.class] : hasClass(tab)}" class="jf-tabs-tab-header" :style="{width: getTabWidthForStyle()}" :jf-disable-feature=" tab.feature ">
-                <a @click.prevent="onClickTab(tab, true)" style="z-index: 999999">
-                    <div class="jf-tab-header-container" v-jf-tooltip-on-overflow><span>{{dictionary[tab.name]}}</span>
-                    </div>
-                </a>
+  <div class="jf-tabs">
+    <ul class="nav nav-tabs">
+      <li
+        v-for="(tab,index) in tabsVisible"
+        :key="index"
+        :class="{active:isActiveTab(tab), disabled:tab.isDisabled, [tab.class] : hasClass(tab)}"
+        class="jf-tabs-tab-header"
+        :style="{width: getTabWidthForStyle()}"
+        :jf-disable-feature=" tab.feature "
+      >
+        <a
+          style="z-index: 999999"
+          @click.prevent="onClickTab(tab, true)"
+        >
+          <div
+            v-jf-tooltip-on-overflow
+            class="jf-tab-header-container"
+          ><span>{{ dictionary[tab.name] }}</span>
+          </div>
+        </a>
+      </li>
+      <li
+        v-show="tabsCollapsed.length"
+        class="action-expand"
+      >
+        <span
+          v-click-outside="closeDropdown"
+          class="dropdown"
+          :class="{ open: isDropdownOpen }"
+        >
+          <a
+            href="#"
+            class="dropdown-toggle nav-tabs-more"
+            @click.prevent="isDropdownOpen = !isDropdownOpen"
+          ><i class="icon-arrow" /></a>
+          <ul class="dropdown-menu dropdown-menu-right dropdown-container text-left">
+            <li
+              v-for="(tab, index) in tabsCollapsed"
+              :key="index"
+              class="dropdown-item"
+              :class="{[tab.class] : hasClass(tab)}"
+              :jf-disable-feature=" tab.feature "
+            >
+              <a
+                v-jf-tooltip-on-overflow
+                @click.prevent="onClickTab(tab, true)"
+              ><span>{{ dictionary[tab.name] }}</span></a>
             </li>
-            <li class="action-expand" v-show="tabsCollapsed.length">
-                <span class="dropdown" :class="{ open: isDropdownOpen }"  v-click-outside="closeDropdown">
-                    <a href="#" @click.prevent="isDropdownOpen = !isDropdownOpen" class="dropdown-toggle nav-tabs-more"><i class="icon-arrow"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-right dropdown-container text-left">
-                        <li class="dropdown-item" v-for="(tab, index) in tabsCollapsed" :key="index" :class="{[tab.class] : hasClass(tab)}" :jf-disable-feature=" tab.feature ">
-                            <a @click.prevent="onClickTab(tab, true)" v-jf-tooltip-on-overflow><span>{{dictionary[tab.name]}}</span></a>
-                        </li>
-                    </ul>
-                </span>
-            </li>
-        </ul>
-        <slot></slot>
-    </div>
-
+          </ul>
+        </span>
+      </li>
+    </ul>
+    <slot />
+  </div>
 </template>
 
 <script>
     export default {
-        name: 'jf-tabs',
+        name: 'JfTabs',
         props: [
             'tabs',
             'dictionary',

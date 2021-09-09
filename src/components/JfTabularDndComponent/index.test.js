@@ -61,9 +61,9 @@ function setData() {
     selectedItems = [];
     for (let i = 0; i < 4; i++) {
         availableItems.push({
-            name: 'Item ' + (i+1),
-            numeric: Math.round(100*Math.random()),
-            active: Math.random() < .4
+            name: 'Item ' + (i + 1),
+            numeric: Math.round(100 * Math.random()),
+            active: Math.random() < 0.4
         })
     }
     columns = [
@@ -127,7 +127,7 @@ describe('JfTabularDndComponent', () => {
         await wait();
         elems = getElements(wrapper);
 
-        console.log(wrapper.findAll({name: 'jf-vscroll'}).wrappers.map(wr => wr.vm.ready).join (', '));
+        console.log(wrapper.findAll({name: 'jf-vscroll'}).wrappers.map(wr => wr.vm.ready).join(', '));
         elems.includeAllButton.at(0).trigger('click');
 
         await wait();

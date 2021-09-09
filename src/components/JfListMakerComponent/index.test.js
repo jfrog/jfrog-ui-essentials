@@ -282,7 +282,7 @@ describe('JfListMakerComponent', () => {
             let errorMessage = "Exercitation cillum adipisicing mollit";
             const wrapper = mountComponent({
                 validationRegex: '^[A-Za-z]*$',
-                validationRegexMessage:errorMessage,
+                validationRegexMessage: errorMessage,
             })
 
             wrapper.find(INPUT_TEXT).setValue("1");
@@ -332,7 +332,7 @@ describe('JfListMakerComponent', () => {
         it('if predefined values are passed a dropdown should be displayed instead of text input', function() {
             const wrapper = mountComponent({
                 value: ['a'],
-                predefinedValues:['a','b'],
+                predefinedValues: ['a','b'],
             })
 
             expect(wrapper.find(INPUT_TEXT).exists()).toBe(false)

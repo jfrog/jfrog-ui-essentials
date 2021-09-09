@@ -22,7 +22,7 @@ module.exports = {
     '**/src/**/*.(spec|test).(js)'
   ],
   testURL: 'http://localhost/',
-  setupFiles:["./src/jest-setup.js"],
+  setupFiles: ["./src/jest-setup.js"],
   collectCoverage: false,
   collectCoverageFrom: ["**/src/**/*.{js,vue}", "!**/node_modules/**"],
     "transformIgnorePatterns": [

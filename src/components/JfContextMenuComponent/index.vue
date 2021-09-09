@@ -1,13 +1,24 @@
 <template>
-    <div class="jf-context-menu" :style="position" v-if="isOpen">
-        <a v-for="(action,index) in actions" :key="index"
-            @click.prevent="_onActionClick($event, action)"
-            :href="action.link" class="action-item"
-            :icon-name="action.icon || ''">
-            <i class="action-icon" :class="action.icon"></i>
-            <span>{{action.name}}</span>
-        </a>
-    </div>
+  <div
+    v-if="isOpen"
+    class="jf-context-menu"
+    :style="position"
+  >
+    <a
+      v-for="(action,index) in actions"
+      :key="index"
+      :href="action.link"
+      class="action-item"
+      :icon-name="action.icon || ''"
+      @click.prevent="_onActionClick($event, action)"
+    >
+      <i
+        class="action-icon"
+        :class="action.icon"
+      />
+      <span>{{ action.name }}</span>
+    </a>
+  </div>
 </template>
 
 <script>
@@ -16,7 +27,7 @@
     const ERROR_MARGIN = 15;
 
     export default {
-        name: 'jf-context-menu',
+        name: 'JfContextMenu',
         'jf@inject': [
             '$timeout',
             'JFrogEventBus'
@@ -24,8 +35,8 @@
         data() {
             return {
                 position: {
-                    top:0,
-                    left:0
+                    top: 0,
+                    left: 0
                 },
                 isOpen: false,
                 actions: []
@@ -70,7 +81,7 @@
                     left: `${left}px`,
                     top: `${top}px`
                 };
-                this.$nextTick(()=>{
+                this.$nextTick(() => {
                     this.$forceUpdate();
                 })
             },

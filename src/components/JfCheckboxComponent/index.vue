@@ -1,21 +1,20 @@
 <template>
-
-    <div class="jf-checkbox">
-        <label>
-            <span></span> {{ text }}
-        </label>
-        <jf-help-tooltip v-if="helpTooltip && helpTooltip.length"
-                         class="help-tooltip"
-                         :text="helpTooltip">
-        </jf-help-tooltip>
-    </div>
-
+  <div class="jf-checkbox">
+    <label>
+      <span /> {{ text }}
+    </label>
+    <jf-help-tooltip
+      v-if="helpTooltip && helpTooltip.length"
+      class="help-tooltip"
+      :text="helpTooltip"
+    />
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-checkbox',
+        name: 'JfCheckbox',
         props: {
             text: String,
             helpTooltip: String

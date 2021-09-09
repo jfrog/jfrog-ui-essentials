@@ -1,25 +1,31 @@
 <template>
-
-    <div>
-        <div v-show="hasData()" class="jf-js-tree-wrap-container">
-            <div class="tree-browser-header" v-if="treeHeader">
-                <div class="tree-browser-header-tabs" v-html="treeHeader">
-                </div>
-            </div>
-            <div class="tree-element-container">
-                <div>
-                    <div class="tree-element"></div>
-                </div>
-            </div>
+  <div>
+    <div
+      v-show="hasData()"
+      class="jf-js-tree-wrap-container"
+    >
+      <div
+        v-if="treeHeader"
+        class="tree-browser-header"
+      >
+        <div
+          class="tree-browser-header-tabs"
+          v-html="treeHeader"
+        />
+      </div>
+      <div class="tree-element-container">
+        <div>
+          <div class="tree-element" />
         </div>
+      </div>
     </div>
-
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-js-tree-wrap',
+        name: 'JfJsTreeWrap',
         props: [
             'treeData',
             'treeHeader',

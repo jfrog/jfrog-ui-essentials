@@ -1,14 +1,16 @@
 <template>
-    <div class="summary-row jf-content-section"
-         :style="$ctrl.inlineStyle">
-        <slot></slot>
-    </div>
+  <div
+    class="summary-row jf-content-section"
+    :style="$ctrl.inlineStyle"
+  >
+    <slot />
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-summary-row',
+        name: 'JfSummaryRow',
         props: [],
         'jf@inject': [
             '$element'
@@ -33,8 +35,8 @@
                     layout += `${ $(col).attr('width') || '1fr' } `;
                 });
                 this.inlineStyle = {
-                    gridTemplateColumns:layout,
-                    "-ms-grid-columns":layout
+                    gridTemplateColumns: layout,
+                    "-ms-grid-columns": layout
                 };
             }
         },

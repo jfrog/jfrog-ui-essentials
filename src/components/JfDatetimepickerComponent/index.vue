@@ -1,28 +1,35 @@
 <template>
-    <div class="jf-datetimepicker">
-        <div class="input-group"
-             :class="{disabled: !isEnabled, error: error}"
-             ref="pickerElement">
-            <date-picker v-model="datetime"
-                         :config="dpOpitons"
-                         :wrap="wrap"></date-picker>
-            <span class="input-group-addon calendar">
-                <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-        </div>
-        <div class="field-validation-error" v-if="error">
-            <div class="jf-validation">
-                this field is required
-            </div>
-        </div>
+  <div class="jf-datetimepicker">
+    <div
+      ref="pickerElement"
+      class="input-group"
+      :class="{disabled: !isEnabled, error: error}"
+    >
+      <date-picker
+        v-model="datetime"
+        :config="dpOpitons"
+        :wrap="wrap"
+      />
+      <span class="input-group-addon calendar">
+        <span class="glyphicon glyphicon-calendar" />
+      </span>
     </div>
+    <div
+      v-if="error"
+      class="field-validation-error"
+    >
+      <div class="jf-validation">
+        this field is required
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
     import datePicker from 'vue-bootstrap-datetimepicker';
 
     export default {
-        name: 'jf-datetimepicker',
+        name: 'JfDatetimepicker',
         components: {
             datePicker
         },
@@ -76,6 +83,15 @@
                 return this.isRequired && !this.model
             }
         },
+        watch: {
+            isDatepickerOpen(val) {
+                if (val) {
+                    this.show();
+                } else {
+                    this.$emit('update:isDatepickerOpen', val);
+                }
+            }
+        },
         created() {
             this.setDatepickerOptions();
         },
@@ -98,15 +114,6 @@
             },
             show() {
                 this.dateTimePickerObj.data('DateTimePicker').show();
-            }
-        },
-        watch: {
-            isDatepickerOpen(val) {
-                if (val) {
-                    this.show();
-                } else {
-                    this.$emit('update:isDatepickerOpen', val);
-                }
             }
         }
     };

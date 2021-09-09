@@ -1,18 +1,34 @@
 <template>
-
-    <div>
-        <div class="password-strength-container">
-            <div class="password-strength-meter" :class="this.strength.class">
-                <div class="password-strength-section" :class="{ 'show-section': this.strength.sections > 0}"></div>
-                <div class="password-strength-section" :class="{ 'show-section': this.strength.sections > 1}"></div>
-                <div class="password-strength-section" :class="{ 'show-section': this.strength.sections > 2}"></div>
-                <div class="password-strength-section" :class="{ 'show-section': this.strength.sections > 3}"></div>
-                <div class="password-strength-section" :class="{ 'show-section': this.strength.sections > 4}"></div>
-            </div>
-            <label class="password-strength-label">{{this.strength.label}}</label>
-        </div>
+  <div>
+    <div class="password-strength-container">
+      <div
+        class="password-strength-meter"
+        :class="strength.class"
+      >
+        <div
+          class="password-strength-section"
+          :class="{ 'show-section': strength.sections > 0}"
+        />
+        <div
+          class="password-strength-section"
+          :class="{ 'show-section': strength.sections > 1}"
+        />
+        <div
+          class="password-strength-section"
+          :class="{ 'show-section': strength.sections > 2}"
+        />
+        <div
+          class="password-strength-section"
+          :class="{ 'show-section': strength.sections > 3}"
+        />
+        <div
+          class="password-strength-section"
+          :class="{ 'show-section': strength.sections > 4}"
+        />
+      </div>
+      <label class="password-strength-label">{{ strength.label }}</label>
     </div>
-
+  </div>
 </template>
 
 <script>
@@ -53,7 +69,7 @@
     };
 
     export default {
-        name: 'jf-password-strength',
+        name: 'JfPasswordStrength',
         props: {
             password: {
                 type: String

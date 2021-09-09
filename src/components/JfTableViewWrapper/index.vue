@@ -1,16 +1,20 @@
 <template>
-
-    <jf-table-view :options="tableOptions" ref="tableView">
-        <slot name="external-filters" slot="external-filters"></slot>
-    </jf-table-view>
-
+  <jf-table-view
+    ref="tableView"
+    :options="tableOptions"
+  >
+    <slot
+      slot="external-filters"
+      name="external-filters"
+    />
+  </jf-table-view>
 </template>
 
 <script>
 
     import JfTableView from '../JfTableViewComponent/index';
     export default {
-        name: 'jf-table-view-wrapper',
+        name: 'JfTableViewWrapper',
         components: {JfTableView},
         props: [
             'options',
@@ -64,8 +68,8 @@
             },
             externalSearchFields(newVal) {
                 this.tableOptions.externalSearchFields = newVal;
-                if (this.tableOptions.paginationMode ===  this.tableOptions.INFINITE_SCROLL
-                || this.tableOptions.paginationMode ===  this.tableOptions.INFINITE_VIRTUAL_SCROLL) {
+                if (this.tableOptions.paginationMode ===  this.tableOptions.INFINITE_SCROLL ||
+                this.tableOptions.paginationMode ===  this.tableOptions.INFINITE_VIRTUAL_SCROLL) {
                     this.tableOptions.sendInfiniteScrollRequest(true);
                 }
                 if (this.tableOptions.paginationMode ===  this.tableOptions.EXTERNAL_PAGINATION) {
@@ -171,8 +175,8 @@
                     cellTemplateGenerators: this.JFrogTableViewOptions.cellTemplateGenerators
                 })
             }
-            if ((_.isUndefined(this.disableNewEntity) || !this.disableNewEntity)
-                && this.$listeners['new-entity']) {
+            if ((_.isUndefined(this.disableNewEntity) || !this.disableNewEntity) &&
+                this.$listeners['new-entity']) {
                 this.tableOptions.setNewEntityAction(() => {
                     this.$emit('new-entity');
                 })

@@ -1,20 +1,27 @@
 <template>
-    <div class="summery-labeled-item"
-         v-if="summaryItemIsActive">
-        <div class="summary-item-label">{{summaryItemLabel}}</div>
-        <div class="jf-summary-row-item">
-            <span class="summary-item-wrapper" v-if="!summaryItemUnwrap">
-                <slot></slot>
-            </span>
-            <slot v-if="summaryItemUnwrap"></slot>
-        </div>
+  <div
+    v-if="summaryItemIsActive"
+    class="summery-labeled-item"
+  >
+    <div class="summary-item-label">
+      {{ summaryItemLabel }}
     </div>
+    <div class="jf-summary-row-item">
+      <span
+        v-if="!summaryItemUnwrap"
+        class="summary-item-wrapper"
+      >
+        <slot />
+      </span>
+      <slot v-if="summaryItemUnwrap" />
+    </div>
+  </div>
 </template>
 
 <script>
 
     export default {
-        name: 'jf-summary-row-item',
+        name: 'JfSummaryRowItem',
         props: [
             'summaryItemLabel',
             'summaryItemUnwrap',

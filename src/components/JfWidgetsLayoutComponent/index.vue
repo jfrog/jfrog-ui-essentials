@@ -43,25 +43,13 @@
     </div>
     `;
     export default {
-        template: TEMPLATE,
-        name: 'jf-widgets-layout',
+        name: 'JfWidgetsLayout',
         props: [
             'widgets',
             'layout',
             'options',
             'parentCell',
             'footerText'
-        ],
-        'jf@inject': [
-            '$scope',
-            '$rootScope',
-            '$compile',
-            '$timeout',
-            '$q',
-            '$templateRequest',
-            '$sce',
-            '$injector',
-            '$element'
         ],
         data() {
             return {
@@ -140,12 +128,6 @@
                 if (this.scopes)
                     this.scopes.forEach(s => s.$destroy());
             });
-        },
-        ng1_legacy: {
-            ng1compileFn(element) {
-                return recursiveDirective.compile(element);
-            },
-            'controllerAs': 'jfWidgetsLayout'
         },
         methods: {
             setDefaultOptions() {
@@ -1031,6 +1013,24 @@
 
             }
 
+        },
+        template: TEMPLATE,
+        'jf@inject': [
+            '$scope',
+            '$rootScope',
+            '$compile',
+            '$timeout',
+            '$q',
+            '$templateRequest',
+            '$sce',
+            '$injector',
+            '$element'
+        ],
+        ng1_legacy: {
+            ng1compileFn(element) {
+                return recursiveDirective.compile(element);
+            },
+            'controllerAs': 'jfWidgetsLayout'
         }
     };
 

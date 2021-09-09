@@ -24,8 +24,7 @@
 
     </div>`;
     export default {
-        template: TEMPLATE,
-        name: 'jf-ui-select',
+        name: 'JfUiSelect',
         props: [
             'jfSelectOptions',
             'jfSelectDisplayFunc',
@@ -40,11 +39,6 @@
             'jfSelectHelpTooltips',
             'value'
         ],
-        watch:{
-            jfSelectOptions(){
-                this.manipulatedList = _.cloneDeep(this.jfSelectOptions);
-            }
-        },
         data() {
             return {
                 manipulatedList: _.cloneDeep(this.jfSelectOptions),
@@ -54,8 +48,13 @@
 
             };
         },
-        computed:{
+        computed: {
 
+        },
+        watch: {
+            jfSelectOptions(){
+                this.manipulatedList = _.cloneDeep(this.jfSelectOptions);
+            }
         },
         beforeMount() {
             parseInt(this.jfSelectLoadChunks)
@@ -86,7 +85,6 @@
                 this.jfSelectOptionsView = [];
             }
         },
-        ng1_legacy: {'controllerAs': 'jfUiSelect'},
         methods: {
             opened() {
                 console.log("checking if excceded limit")
@@ -146,7 +144,9 @@
                     $event.stopPropagation();
                 }
             }
-        }
+        },
+        template: TEMPLATE,
+        ng1_legacy: {'controllerAs': 'jfUiSelect'}
     };
 
 </script>
