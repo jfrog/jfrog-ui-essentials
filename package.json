@@ -1,6 +1,6 @@
 {
   "name": "jfrog-ui-essentials",
-  "version": "2.7.4-beta.10",
+  "version": "2.7.4-beta.11",
   "license": "Apache-2.0",
   "description": "JFrog UI Essentials",
   "scripts": {
@@ -26,7 +26,7 @@
     "babelify": "^6.1.2",
     "bluebird": "~3.3.4",
     "brfs": "^1.4.0",
-    "browser-sync": "^2.5.3",
+    "browser-sync": "2.18.13",
     "gulp-preprocess": "~2.0.0",
     "gulp-rev-all": "^0.8.21",
     "gulp-rev-napkin": "~0.1.0",
