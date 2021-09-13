@@ -65,15 +65,27 @@ echo -e "${YELLOW}Creating and pushing a new tag:${NC}"
 git tag $1
 git push --tags
 
+NPMTMP=~/.NPMTMP
+NPMRC=~/.npmrc
+
 function stash_npmrc {
     echo -e "${YELLOW}Stashing your .npmrc file${NC}"
-    mv ~/.npmrc ~/.NPMTMP
+    if test -f "$NPMRC"; then
+        mv "$NPMRC" "$NPMTMP"
+    else
+        echo -e "${YELLOW}$NPMRC file does not exist${NC}"
+    fi
 }
 
 function un_stash_npmrc {
     # Un-stash the .npmrc file
     echo -e "${YELLOW}Un-stashing your .npmrc file${NC}"
-    mv ~/.NPMTMP ~/.npmrc
+    if test -f "$NPMTMP"; then
+        rm -f "$NPMRC"
+        mv "$NPMTMP" "$NPMRC"
+    else
+        echo -e "${YELLOW}$NPMTMP file does not exist${NC}"
+    fi
     return 0
 }
 
@@ -85,7 +97,7 @@ echo -e "${YELLOW}Log in to npm using your credentials${NC}"
 npm login || { un_stash_npmrc ; return 1; }
 
 # If the second arg $2 is set to "beta" or $1 ends with "-beta" - assume a beta version is being published
-if [ -n $2 -a "$2" =~ ^.*beta$ ] || [[ $1 =~ ^.*-.*$ ]]; then
+if [[ $1 =~ ^.*-.*$ ]]; then
     echo -e "${YELLOW}Publishing a beta version ${GREEN}$1${YELLOW}:${NC}"
     npm publish --tag beta || { un_stash_npmrc ; return 1; }
 else
@@ -93,20 +105,5 @@ else
     npm publish || { un_stash_npmrc ; return 1; }
 fi
 
-# TODO: check if ~/.npmrc exists, if so don't move this back
-# TODO: unstash .npmrc on failure
 # Un-stash the .npmrc file
 un_stash_npmrc
-
-# Clear Artifctory cache
-echo -e "${YELLOW}Do you wish to clear ${GREEN}Artifactory npm cache ${YELLOW}as well?${NC}"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) echo -e "${YELLOW}Enter AUTH:${NC}"
-            read authKey
-            curl -H "X-JFrog-Art-Api:${authKey}" 'https://repo.jfrog.io/artifactory/ui/artifactactions/delete' --data-binary '{"repoKey":"npmjs-cache","path":"jfrog-ui-essentials/-"}' -H 'Content-Type:application/json'
-        break;;
-        No )
-        break;;
-    esac
-done
