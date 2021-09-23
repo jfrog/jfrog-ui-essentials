@@ -1,6 +1,6 @@
 {
   "name": "jfrog-ui-essentials",
-  "version": "2.7.4-beta.12",
+  "version": "2.7.4-beta.13",
   "license": "Apache-2.0",
   "description": "JFrog UI Essentials",
   "scripts": {
@@ -82,6 +82,7 @@
     "clipboard": "1.5.5",
     "codemirror": "5.0.0",
     "components-jqueryui": "1.12.1",
+    "debug": "^4.3.2",
     "html-loader": "^0.5.5",
     "jf-angular-ui-codemirror": "0.2.3",
     "jf-angular-ui-grid": "^1.0.0",
