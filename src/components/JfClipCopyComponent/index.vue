@@ -49,11 +49,15 @@
                 }
 
                 const clipboard = new ClipboardJS('.copy-to-clip', configObj );
-                clipboard.on('success', function (e) {
-                    window.store.dispatch('CREATE_NOTIFICATION', {info: 'Text copied'});
+                clipboard.on('success', (e) => {
+                    e.clearSelection();
+                    clipboard.destroy();
+                    return window.store.dispatch('CREATE_NOTIFICATION', {info: 'Text copied'});
                 });
-                clipboard.on('error', function (e) {
+                clipboard.on('error', (e) => {
                     console.log(e);
+                    e.clearSelection();
+                    clipboard.destroy();
                 });
             },
         }
