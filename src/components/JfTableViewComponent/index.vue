@@ -979,12 +979,13 @@
         .jf-table-row-actions-dropdown {
             background: white;
             position: absolute;
-            top: ~"calc(100% - 21px)";
-            right: 26px;
+            top: 30%;
+            right: 8px;
             z-index: 9999999;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, .25);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
             &.out-of-viewport{
-                top: ~"calc(100% - 165px)";
+                top: auto;
+                bottom: 30%;
             }
             .action-item {
                 cursor: pointer;
