@@ -4,7 +4,8 @@
   "license": "Apache-2.0",
   "description": "JFrog UI Essentials",
   "scripts": {
-    "reset": "rm -rf node_modules/; rm -f package-lock.json; npm install --package-lock"
+    "reset": "rm -rf node_modules/; rm -f package-lock.json; npm install --package-lock",
+    "build": "gulp build"
   },
   "repository": {
     "type": "git",
