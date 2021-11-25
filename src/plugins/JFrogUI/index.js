@@ -17,10 +17,12 @@ import _ from 'lodash';
 import $ from 'jquery';
 import {AngularTranscludeServiceMock} from './angularjs-mocks/transclude';
 import {DependencyInjectionManager} from './DependencyInjectionManager';
+import {VueFactory} from "@/services/VueFactory";
 let $jfrog;
 let dim = new DependencyInjectionManager();
 const JFrogUI = {
-    install(Vue, options) {
+    async install(Vue, options) {
+        VueFactory.getInstance().register(Vue);
         let plugin = this;
 
         this.dim = dim;

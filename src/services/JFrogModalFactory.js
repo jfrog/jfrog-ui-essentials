@@ -5,7 +5,7 @@ import JFrogCodeModalComponent from '@/components/JfCodeModalComponent/index.vue
 import JfFullTextModalComponent from '@/components/JfFullTextModalComponent/index.vue'
 import JfDynamicModalComponent from '@/components/JfDynamicModalComponent/index.js'
 import JfWizardModalComponent from '@/components/JfWizardModalComponent/index.vue'
-
+import {VueFactory} from "./VueFactory";
 
 export default class JFrogModalFactory {
     constructor() {
@@ -46,6 +46,7 @@ export default class JFrogModalFactory {
                     ]
                 }
         }
+        const { Vue } = VueFactory.getInstance();
         let ComponentClass = Vue.extend(ModalComponent)
         let modalInstance = new ComponentClass({
             propsData: modalObj

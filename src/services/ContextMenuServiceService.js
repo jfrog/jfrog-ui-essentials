@@ -1,4 +1,6 @@
 import ContextMenuComponent from '@/components/JfContextMenuComponent/index.vue'
+import {VueFactory} from "./VueFactory";
+
 export class ContextMenuService {
     /* @ngInject */
     constructor() {
@@ -17,6 +19,7 @@ export class ContextMenuService {
     _compileContextMenu() {
         this.$body = $(document).find('body:eq(0)')
         if (!this.$body.find('.jf-context-menu').length) {
+            const { Vue } = VueFactory.getInstance();
             let ComponentClass = Vue.extend(ContextMenuComponent)
             let componentInstance = new ComponentClass();
             this.$body.append(componentInstance.$mount().$el);

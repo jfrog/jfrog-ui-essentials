@@ -1,14 +1,19 @@
-const Vue = window.Vue;
+import {VueFactory} from "../services/VueFactory";
 
-Vue.directive('jf-fake-readonly', {
-    bind: function(el) {
-        $(el).attr('readonly', true);
+export const install = () => {
+    const { Vue } = VueFactory.getInstance();
 
-        let removeAttr = () => {
-            $(el).attr('readonly', false);
-            $(el).off('focus', removeAttr);
+    Vue.directive('jf-fake-readonly', {
+        bind: function(el) {
+            $(el).attr('readonly', true);
+
+            let removeAttr = () => {
+                $(el).attr('readonly', false);
+                $(el).off('focus', removeAttr);
+            }
+
+            $(el).on('focus', removeAttr);
         }
+    })
 
-        $(el).on('focus', removeAttr);
-    }
-})
+}

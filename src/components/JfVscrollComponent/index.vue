@@ -19,6 +19,7 @@
 </template>
 
 <script>
+    import {VueFactory} from "../../services/VueFactory";
 
     export default {
         name: 'jf-vscroll',
@@ -453,6 +454,7 @@
                 this.bottomReachedListener = listener;
             },
             refresh() {
+                const { Vue } = VueFactory.getInstance();
                 Vue.nextTick(() => {
                     this.containerHeight = $(this.$element).parent().height() + 1;
                     this._setAutoItemsPerPage();

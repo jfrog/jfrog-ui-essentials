@@ -1,5 +1,6 @@
 import cellTemplateGenerators from '@/ui_components/jf_table_view/cell_template_generators';
 import { JfDataListModal } from "@/components/JfDataListModal/index.js";
+import { VueFactory } from "../VueFactory";
 const COMMON_ACTIONS = {
 	delete: {
 		icon: 'icon icon-clear',
@@ -14,7 +15,10 @@ const COMMON_ACTIONS = {
 	}
 };
 let defaultAppOptions;
+
 export function JFrogTableViewOptions() {
+    const { Vue } = VueFactory.getInstance();
+
     let injections = $jfrog.get(['$timeout', '$rootScope', '$modal', '$state', 'JFrogDownload', 'JFrogModal', 'JFrogUIUtils']);
     createContextMenu();
     class JFrogTableViewOptionsClass {

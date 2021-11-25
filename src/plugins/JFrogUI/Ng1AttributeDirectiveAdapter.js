@@ -1,9 +1,10 @@
 import $ from 'jquery';
 import _ from 'lodash';
-const Vue = window.Vue;
+import {VueFactory} from "../../services/VueFactory";
 
 export class Ng1AttributeDirectiveAdapter {
     static patchLinkFunction(linkFn, scopeDef) {
+        const { Vue } = VueFactory.getInstance();
 
         return function(el, binding, vnode) {
             let scope;

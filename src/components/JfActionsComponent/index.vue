@@ -39,6 +39,7 @@
 </template>
 
 <script>
+    import {VueFactory} from "../../services/VueFactory";
 
     export default {
         name: 'jf-actions',
@@ -220,6 +221,7 @@
                         console.log('Unrecognized action', actionObj.name);
                         return true;
                     }
+                    const { Vue } = VueFactory.getInstance();
                     Vue.util.extend(actionObj, this.actionsDictionary[actionObj.name]);
                 });
                 // Divide actions to fixed and dynamic (dropdown)

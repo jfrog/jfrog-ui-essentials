@@ -1,4 +1,5 @@
 import {AngularScopeServiceMock} from './scope';
+import {VueFactory} from "@/services/VueFactory";
 export class AngularRootScopeServiceMock {
     constructor() {
     }
@@ -21,6 +22,7 @@ export class AngularRootScopeServiceMock {
         }
     }
     $new(data = {}) {
+        const { Vue } = VueFactory.getInstance();
         let v = new Vue({data() { return data; }});
         return new AngularScopeServiceMock(v);
     }

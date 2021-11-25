@@ -5,43 +5,26 @@ import 'codemirror/mode/markdown/markdown.js';
 import 'codemirror/mode/gfm/gfm.js';
 import 'codemirror/addon/mode/overlay.js';
 import 'codemirror/addon/edit/matchbrackets.js';
-
 import 'codemirror/addon/selection/mark-selection.js';
 import 'codemirror/addon/search/searchcursor.js';
 import 'codemirror/addon/dialog/dialog.js';
 import 'codemirror/addon/dialog/dialog.css';
 import 'codemirror/addon/search/search.js';
-//import 'codemirror/theme/monokai.css'
-//import 'codemirror/addon/selection/active-line.js'
-//import 'codemirror/addon/hint/show-hint.js'
-//import 'codemirror/addon/hint/show-hint.css'
-//import 'codemirror/addon/hint/javascript-hint.js'
-//import 'codemirror/addon/scroll/annotatescrollbar.js'
-//import 'codemirror/addon/search/matchesonscrollbar.js'
-//import 'codemirror/addon/search/match-highlighter.js'
-//import 'codemirror/mode/clike/clike.js'
-//import 'codemirror/addon/comment/comment.js'
-//import 'codemirror/keymap/sublime.js'
-//import'codemirror/addon/fold/foldgutter.css'
-//import'codemirror/addon/fold/brace-fold.js'
-//import'codemirror/addon/fold/comment-fold.js'
-//import'codemirror/addon/fold/foldcode.js'
-//import'codemirror/addon/fold/foldgutter.js'
-//import'codemirror/addon/fold/indent-fold.js'
-//import'codemirror/addon/fold/markdown-fold.js'
-//import'codemirror/addon/fold/xml-fold.js'
 
-import {servicesRegistration} from './servicesRegistration';
-import './importDirectives';
-import './importFilters';
-import './registerGlobalComponents';
+import { servicesRegistration } from './servicesRegistration';
+import { installDirectives } from './importDirectives';
+import { installFilters } from './importFilters';
+import { registerGlobalComponents } from './registerGlobalComponents';
+
 import BootstrapVue from 'bootstrap-vue';
+
 import 'bootstrap/dist/css/bootstrap.css';
 import VueVirtualScroller from 'vue-virtual-scroller';
 import './assets/stylesheets/main.less';
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
 import '../node_modules/jf-tooltipster/css/tooltipster.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+
 import $ from 'jquery';
 import 'jquery-contextmenu';
 import 'components-jqueryui';
@@ -55,11 +38,16 @@ import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css';
 import '@fortawesome/fontawesome-free/css/fontawesome.css';
 import '@fortawesome/fontawesome-free/css/regular.css';
 import '@fortawesome/fontawesome-free/css/solid.css';
-
+import { VueFactory } from "./services/VueFactory";
 
 window.$ = $;
 window.moment = moment;
 window.jQuery = $;
+// const importBootstrapVue = () => import('bootstrap-vue');
+// const importJquery = () => import(/* webpackChunkName: "jquery" */'jquery');
+// const importJqueryCtxMenu = () => import(/* webpackChunkName: "jquery" */'jquery-contextmenu');
+// const importJqueryUi = () => import(/* webpackChunkName: "jquery" */'components-jqueryui');
+// const importMoment = () => import(/* webpackChunkName: "jquery" */'moment');
 
 require('./misc/jquery.highlight');
 
@@ -71,11 +59,45 @@ window.CodeMirror = require('codemirror');
 const VueCodemirror = require('vue-codemirror');
 const VueMoment = require('vue-moment');
 
+const registerDateTimePickerIcons = ($) => {
+    if(!$.fn) return;
+    $.extend(true, $.fn.datetimepicker.defaults, {
+        icons: {
+            time: 'far fa-clock',
+            date: 'far fa-calendar',
+            up: 'fas fa-arrow-up',
+            down: 'fas fa-arrow-down',
+            previous: 'fas fa-chevron-left',
+            next: 'fas fa-chevron-right',
+            today: 'fas fa-calendar-check',
+            clear: 'far fa-trash-alt',
+            close: 'far fa-times-circle'
+        }
+    });
+}
+
 export default {
     install(Vue, options) {
+        VueFactory.getInstance().register(Vue)
+
+        installDirectives();
+        installFilters();
+        registerGlobalComponents();
+        // const BootstrapVue = await importBootstrapVue();
+        // const $ = await importJquery();
+        // await importJqueryCtxMenu();
+        // await importJqueryUi();
+        // const moment = await importMoment();
+        // window.$ = $;
+        // window.moment = moment;
+        // window.jQuery = $;
+
+        registerDateTimePickerIcons($);
+
         if (options && options.config) {
             window.$$$$jfuieConfig = options.config;
         }
+
         servicesRegistration.registerAll();
         Vue.use(BootstrapVue);
         Vue.use(VueVirtualScroller);
@@ -86,21 +108,6 @@ export default {
         Vue.use(VueMoment);
     }
 };
-
-// date-time picker TODO use a different date time picker
-$.extend(true, $.fn.datetimepicker.defaults, {
-    icons: {
-        time: 'far fa-clock',
-        date: 'far fa-calendar',
-        up: 'fas fa-arrow-up',
-        down: 'fas fa-arrow-down',
-        previous: 'fas fa-chevron-left',
-        next: 'fas fa-chevron-right',
-        today: 'fas fa-calendar-check',
-        clear: 'far fa-trash-alt',
-        close: 'far fa-times-circle'
-    }
-});
 
 // Fix for toasted library. It is injecting its css to the end of the head tag, which makes it difficult to override.
 // This will move the library styling to the beginning of the head tag

@@ -41,6 +41,8 @@
 <script>
 import _ from 'lodash'
 import { JfDataListModal } from "@/components/JfDataListModal/index.js";
+import {VueFactory} from "../../../services/VueFactory";
+
 export default {
     name: 'jf-datalist-item-component',
     props: ['item', 'index'],
@@ -65,7 +67,7 @@ export default {
     },
     methods: {
         deleteTag(tag){
-            /* 
+            /*
                 Invoked when user deletes a value in a data list item
                 Updates the value object by removing the entry for the item
                 Emits event with the updated data list item object and the index in the data list
@@ -138,7 +140,9 @@ export default {
                     : {
                           template: item.template,
                       };
-            let template = `${mixin.template}`
+            let template = `${mixin.template}`;
+
+            const { Vue } = VueFactory.getInstance();
             let ComponentClass = Vue.extend({
                 name: 'template-component',
                 template: template,
