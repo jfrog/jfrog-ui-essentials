@@ -1,3 +1,5 @@
+import {VueFactory} from "./VueFactory";
+
 export class JFrogNotifications {
 
     constructor() {
@@ -63,6 +65,7 @@ export class JFrogNotifications {
     }
 
     createToastedObject(timeout) {
+        const { Vue } = VueFactory.getInstance();
         return Vue.toasted.show('WILL BE DELETED', {
             position: 'top-center',
             containerClass: 'toast-top-center',
@@ -138,6 +141,7 @@ export class JFrogNotifications {
     }
 
     clear() {
+        const { Vue } = VueFactory.getInstance();
         Vue.toasted.clear();
     }
 

@@ -1,5 +1,9 @@
 import {TreeViewPane} from '@/ui_components/jf_tree/tree_view_pane';
+import {VueFactory} from "../VueFactory";
+
 export function JFTreeApi() {
+    const { Vue } = VueFactory.getInstance();
+
     let injections = $jfrog.get(['$q', '$timeout', 'AdvancedStringMatch', 'ContextMenuService', 'JFrogEventBus']);
     class JFTreeApiClass {
         constructor(appScope) {

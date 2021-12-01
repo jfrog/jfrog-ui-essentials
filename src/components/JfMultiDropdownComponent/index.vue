@@ -86,6 +86,7 @@
 </template>
 
 <script>
+    import {VueFactory} from "../../services/VueFactory";
 
     export default {
         name: 'jf-multi-dropdown',
@@ -203,6 +204,7 @@
 
             },
             onSingleSelection() {
+                const { Vue } = VueFactory.getInstance();
                 Vue.nextTick(() => {
                     this.items.forEach((item, index) => {
                         if (!item.disabled) {
@@ -219,6 +221,7 @@
                 return selected.length;
             },
             applyChanges() {
+                const { Vue } = VueFactory.getInstance();
                 Vue.nextTick(() => {
                     let selected = _.filter(this.items, item => item.isSelected);
                     this.$emit('on-change', selected);

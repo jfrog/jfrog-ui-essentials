@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import $ from 'jquery';
-const Vue = window.Vue;
+import {VueFactory} from "../../../services/VueFactory";
+
 export class AngularTranscludeServiceMock {
     constructor() {
     }
@@ -22,7 +23,7 @@ export class AngularTranscludeServiceMock {
                 if (scope && scope.$comp !== component.$parent) {
                     console.error('Passing a scope to $transclude is not currently supported!')
                 }
-
+                const { Vue } = VueFactory.getInstance();
                 let v = new Vue({
                     el,
                     render(h, context) {

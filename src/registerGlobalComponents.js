@@ -59,74 +59,80 @@ import jfWizard from './components/JfWizardComponent/index.vue';
 import jfWizardElement from './components/JfWizardElementComponent/index.vue';
 import vSelect from './../node_modules/vue-select/src/components/Select.vue'
 import Multiselect from './../node_modules/vue-multiselect/src/index.js'
+import {VueFactory} from "./services/VueFactory";
+import datePicker from 'vue-bootstrap-datetimepicker';
 
+export function registerGlobalComponents() {
+    const {Vue} = VueFactory.getInstance();
 
-const Vue = window.Vue;
-let components = [
-    jfWizardElement,
-    jfWizard,
-    jfTabularDnd,
-    jfDragDrop,
-    jfDragDropPagination,
-    jfActions,
-    jfHelpTooltip,
-    jfListMaker,
-    jfCheckbox,
-    jfSwitch,
-    jfGrid,
-    jfGridPagination,
-    jfGridBatchActions,
-    jfValidation,
-    jfField,
-    jfCodeMirror,
-    jfGridFilter,
-    jfTabs,
-    jfTab,
-    jfDrawer,
-    jfPanel,
-    jfUiSelect,
-    jfEnterPress,
-    jfClipCopy,
-    jfSidebar,
-    jfMultiDropdown,
-    jfWidgetsLayout,
-    jfMarquee,
-    jfPasswordStrength,
-    jfDatetimepicker,
-    jfListSelection,
-    jfMarkupEditor,
-    jfJsTreeWrap,
-    jfRadioButton,
-    jfDragAndDropTxt,
-    jfContextMenu,
-    jfVscroll,
-    jfVscrollElement,
-    jfDataList,
-    jfToggler,
-    jfSwitchToggler,
-    jfOnOffSwitch,
-    jfTextBox,
-    jfPendingData,
-    jfGraphs,
-    jfFileDrop,
-    jfTableView,
-    jfTableViewWrapper,
-    jfTableRow,
-    jfTableViewBatchActions,
-    jfTableCompiledCell,
-    jfTableTop,
-    jfTree,
-    jfTreeItem,
-    jfTreeCompiledCell,
-    jfTreeIndentation,
-    jfDivider,
-    jfSummaryRow,
-    jfSummaryRowItem
-];
+    Vue.use(datePicker);
 
-components.forEach(comp => {
-    Vue.component(comp.name, comp);
-});
+    let components = [
+        jfWizardElement,
+        jfWizard,
+        jfTabularDnd,
+        jfDragDrop,
+        jfDragDropPagination,
+        jfActions,
+        jfHelpTooltip,
+        jfListMaker,
+        jfCheckbox,
+        jfSwitch,
+        jfGrid,
+        jfGridPagination,
+        jfGridBatchActions,
+        jfValidation,
+        jfField,
+        jfCodeMirror,
+        jfGridFilter,
+        jfTabs,
+        jfTab,
+        jfDrawer,
+        jfPanel,
+        jfUiSelect,
+        jfEnterPress,
+        jfClipCopy,
+        jfSidebar,
+        jfMultiDropdown,
+        jfWidgetsLayout,
+        jfMarquee,
+        jfPasswordStrength,
+        jfDatetimepicker,
+        jfListSelection,
+        jfMarkupEditor,
+        jfJsTreeWrap,
+        jfRadioButton,
+        jfDragAndDropTxt,
+        jfContextMenu,
+        jfVscroll,
+        jfVscrollElement,
+        jfDataList,
+        jfToggler,
+        jfSwitchToggler,
+        jfOnOffSwitch,
+        jfTextBox,
+        jfPendingData,
+        jfGraphs,
+        jfFileDrop,
+        jfTableView,
+        jfTableViewWrapper,
+        jfTableRow,
+        jfTableViewBatchActions,
+        jfTableCompiledCell,
+        jfTableTop,
+        jfTree,
+        jfTreeItem,
+        jfTreeCompiledCell,
+        jfTreeIndentation,
+        jfDivider,
+        jfSummaryRow,
+        jfSummaryRowItem
+    ];
 
-Vue.component('v-select', vSelect)
-Vue.component('multiSelect', Multiselect)
+    components.forEach(comp => {
+        Vue.component(comp.name, comp);
+    });
+
+    Vue.component('v-select', vSelect)
+    Vue.component('multiSelect', Multiselect)
+}

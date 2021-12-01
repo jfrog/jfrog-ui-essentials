@@ -1,6 +1,4 @@
 import _ from 'lodash';
-const Vue = window.Vue;
-window.Vue = Vue
 export function AngularCompileCompServiceMock(template, data = {}, parentComp = null) {
     let props = {};
     let copiedFromParent = {};

@@ -1,7 +1,9 @@
 import _ from 'lodash';
-const Vue = window.Vue;
-window.Vue = Vue
+import {VueFactory} from "../../../services/VueFactory";
+
 export function AngularCompileServiceMock(element) {
+    const { Vue } = VueFactory.getInstance();
+
     return function(scope) {
         let template = element.outerHTML;
         let controllerAs = scope.$comp.$options.ng1_legacy && scope.$comp.$options.ng1_legacy['controllerAs'];

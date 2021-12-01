@@ -15,11 +15,9 @@
 </template>
 
 <script>
-
     import CodeMirror from 'codemirror';
-//    const CodeMirror = window.CodeMirror;
-//    import { search } from '@/directives/jf_codemirror/search/search.js'
-    ;
+    import {VueFactory} from "../../services/VueFactory";
+
     export default {
         name: 'jf-code-mirror',
         props: [
@@ -75,6 +73,7 @@
         ng1_legacy: { 'controllerAs': 'jfCodeMirror' },
         methods: {
             codeMirrorLoaded(_editor) {
+                const { Vue } = VueFactory.getInstance();
                 Vue.nextTick(() => {
                     this.cmApi = _editor;
                     if (this.height) {

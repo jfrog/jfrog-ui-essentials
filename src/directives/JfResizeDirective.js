@@ -1,10 +1,9 @@
-const Vue = window.Vue;
+import {VueFactory} from "../services/VueFactory";
 import _ from "lodash";
 
 /*
 Reference: http://www.backalleycoder.com/2013/03/18/cross-browser-event-based-element-resize-detection/
 */
-
 const attachEvent = document.attachEvent;
 const isIE = navigator.userAgent.match(/Trident/);
 const requestFrame = (function () {
@@ -57,13 +56,17 @@ const addResizeListener = function (element, fn) {
     element.__resizeListeners__.push(fn);
 };
 
-Vue.directive('jf-resize', {
-    inserted: function(el, binding) {
-        addResizeListener(el,_.debounce(() => {
-                if ( typeof binding.value == 'function') {
-                    binding.value()
-                }
-            },1000,{"leading":false, trailing:true})
-        )
-    }
-})
+export const install = () => {
+    const { Vue } = VueFactory.getInstance();
+
+    Vue.directive('jf-resize', {
+        inserted: function (el, binding) {
+            addResizeListener(el, _.debounce(() => {
+                    if (typeof binding.value == 'function') {
+                        binding.value()
+                    }
+                }, 1000, {"leading": false, trailing: true})
+            )
+        }
+    })
+}

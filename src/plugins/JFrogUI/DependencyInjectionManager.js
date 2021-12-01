@@ -1,5 +1,6 @@
 import _ from 'lodash';
-const Vue = window.Vue;
+import {VueFactory} from "../../services/VueFactory";
+
 export class DependencyInjectionManager {
 
     constructor() {
@@ -220,6 +221,7 @@ export class DependencyInjectionManager {
                         if (injectee.$provider && injectee.$provider.prototype) injectee = injectee.$provider.prototype;
                         if (!injectee) console.log(injection)
                         if (!injectee.$jfrog) {
+                            const { Vue } = VueFactory.getInstance();
                             injectee.$jfrog = Vue.prototype.$jfrog;
                             let router = this.router;
                             injectee.$router = router;
@@ -366,6 +368,7 @@ export class DependencyInjectionManager {
     _injectDefaultInjections(injectee) {
         let dim = this;
         if (!injectee.$jfrog) {
+            const { Vue } = VueFactory.getInstance();
             injectee.$jfrog = Vue.prototype.$jfrog;
             injectee.$inject = function(...injections) {
                 dim.injectOn(this, ...injections);
@@ -388,6 +391,7 @@ export class DependencyInjectionManager {
         if (!serviceInstance.$reactive) return;
 
         let dim = this;
+        const { Vue } = VueFactory.getInstance();
         let vue = new Vue({
             data() {
                 return {

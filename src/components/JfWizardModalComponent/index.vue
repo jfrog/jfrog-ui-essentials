@@ -109,6 +109,7 @@
 </template>
 <script>
     import ModalMixins from '@/mixins/ModalMixins/index.js'
+    import {VueFactory} from "../../services/VueFactory";
 
     export default {
         name:'jf-wizard-modal',
@@ -175,6 +176,7 @@
                 let currentStep = this.currentStepDefinition;
                 let modifiers = typeof currentStep.template == 'object' ? currentStep.template :
                 this.JFrogUILibConfig.getConfig().customModalTemplates[currentStep.template];
+                const { Vue } = VueFactory.getInstance();
                 let ComponentClass = Vue.extend({
                     name: "wizard-page",
                     template: modifiers.template,

@@ -7,6 +7,7 @@
 </template>
 
 <script>
+    import {VueFactory} from "../../services/VueFactory";
 
     export default {
         name: 'jf-vscroll-element',
@@ -54,6 +55,7 @@
 
 //            this.compiledTemplate = this.$compileComp(this.template, {});
             this.compiledProps = elementScope;
+            const { Vue } = VueFactory.getInstance();
             Vue.nextTick(() => {
                 this.vscroll.setItemHeight(this.childrenHeight());
                 this.$scope.$watch('jfVScrollElement.data', () => {
