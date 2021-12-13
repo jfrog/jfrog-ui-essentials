@@ -15,7 +15,6 @@ export const VueFactory = (() => {
     return {
         getInstance: () => {
             if (instance == null) {
-                console.log('Instantiating VueSingleton');
                 instance = new VueSingleton();
                 // Hide the constructor so the returned object can't be new'd...
                 instance.constructor = null;
