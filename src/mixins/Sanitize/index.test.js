@@ -1,5 +1,5 @@
-import sanitizeMixin from '@cmp/Mixins/Sanitize';
-import { BASE64_TEST_PNG_IMAGE, TEST_EVENTS, TEST_SIMPLE_TAGS } from '@cmp/Mixins/Sanitize/constants';
+import sanitizeMixin from './index';
+import { BASE64_TEST_PNG_IMAGE, TEST_EVENTS, TEST_SIMPLE_TAGS } from './constants';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vue from 'vue';
 
