@@ -60,12 +60,9 @@ import jfWizardElement from './components/JfWizardElementComponent/index.vue';
 import vSelect from './../node_modules/vue-select/src/components/Select.vue'
 import Multiselect from './../node_modules/vue-multiselect/src/index.js'
 import {VueFactory} from "./services/VueFactory";
-import datePicker from 'vue-bootstrap-datetimepicker';
 
 export function registerGlobalComponents() {
     const {Vue} = VueFactory.getInstance();
-
-    Vue.use(datePicker);
 
     let components = [
         jfWizardElement,

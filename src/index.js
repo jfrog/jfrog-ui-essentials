@@ -57,7 +57,6 @@ require('billboard.js/dist/billboard.min.css');
 window.CodeMirror = require('codemirror');
 
 const VueCodemirror = require('vue-codemirror');
-const VueMoment = require('vue-moment');
 
 const registerDateTimePickerIcons = ($) => {
     if(!$.fn) return;
@@ -105,7 +104,6 @@ export default {
         Vue.use(Toasted);
         Vue.use(VueCodemirror);
         Vue.use(vClickOutside);
-        Vue.use(VueMoment);
     }
 };
 
