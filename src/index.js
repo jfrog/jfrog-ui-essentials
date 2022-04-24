@@ -33,8 +33,6 @@ import JFrogUI from './plugins/JFrogUI';
 import VueClipboard from 'vue-clipboard2';
 import Toasted from 'vue-toasted';
 import vClickOutside from 'v-click-outside';
-// date-time picker TODO use a different date time picker
-import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css';
 import '@fortawesome/fontawesome-free/css/fontawesome.css';
 import '@fortawesome/fontawesome-free/css/regular.css';
 import '@fortawesome/fontawesome-free/css/solid.css';
@@ -57,24 +55,7 @@ require('billboard.js/dist/billboard.min.css');
 window.CodeMirror = require('codemirror');
 
 const VueCodemirror = require('vue-codemirror');
-const VueMoment = require('vue-moment');
 
-const registerDateTimePickerIcons = ($) => {
-    if(!$.fn) return;
-    $.extend(true, $.fn.datetimepicker.defaults, {
-        icons: {
-            time: 'far fa-clock',
-            date: 'far fa-calendar',
-            up: 'fas fa-arrow-up',
-            down: 'fas fa-arrow-down',
-            previous: 'fas fa-chevron-left',
-            next: 'fas fa-chevron-right',
-            today: 'fas fa-calendar-check',
-            clear: 'far fa-trash-alt',
-            close: 'far fa-times-circle'
-        }
-    });
-}
 
 export default {
     install(Vue, options) {
@@ -92,8 +73,6 @@ export default {
         // window.moment = moment;
         // window.jQuery = $;
 
-        registerDateTimePickerIcons($);
-
         if (options && options.config) {
             window.$$$$jfuieConfig = options.config;
         }
@@ -105,7 +84,6 @@ export default {
         Vue.use(Toasted);
         Vue.use(VueCodemirror);
         Vue.use(vClickOutside);
-        Vue.use(VueMoment);
     }
 };
 
