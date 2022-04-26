@@ -16,8 +16,6 @@ import { installDirectives } from './importDirectives';
 import { installFilters } from './importFilters';
 import { registerGlobalComponents } from './registerGlobalComponents';
 
-import BootstrapVue from 'bootstrap-vue';
-
 import 'bootstrap/dist/css/bootstrap.css';
 import VueVirtualScroller from 'vue-virtual-scroller';
 import './assets/stylesheets/main.less';
@@ -78,7 +76,6 @@ export default {
         }
 
         servicesRegistration.registerAll();
-        Vue.use(BootstrapVue);
         Vue.use(VueVirtualScroller);
         Vue.use(VueClipboard);
         Vue.use(Toasted);
