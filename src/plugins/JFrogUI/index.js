@@ -6,6 +6,7 @@ import {AngularInjectorServiceMock} from './angularjs-mocks/injector';
 import {AngularLocationProviderMock} from './angularjs-mocks/location';
 import {AngularResourceServiceMock} from './angularjs-mocks/resource';
 import {AngularRootScopeServiceMock} from './angularjs-mocks/rootScope';
+import VeeValidate from 'vee-validate';
 import { AngularQServiceMock } from './angularjs-mocks/q'
 import { AngularTimeoutServiceMock, AngularIntervalServiceMock } from './angularjs-mocks/timeout_and_interval'
 import { AngularScopeServiceMock } from './angularjs-mocks/scope'
@@ -26,6 +27,11 @@ const JFrogUI = {
 
         this.dim = dim;
         this.dim.setRouter(options.router);
+
+        Vue.use(VeeValidate, {
+            fieldsBagName: 'veeFields',
+            validity: true
+        });
 
         Vue.prototype.$jfrog = window.$jfrog = $jfrog = {
             apiRoot: plugin.$apiRoot,
