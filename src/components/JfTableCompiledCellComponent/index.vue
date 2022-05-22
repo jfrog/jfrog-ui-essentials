@@ -25,12 +25,18 @@
             };
         },
         mounted() {
+            this.setMfeRouter();
             this.$scope.$watch('compiledCell.tableRow.data', () => {
                 this.compile();
             });
         },
         ng1_legacy: { 'controllerAs': 'compiledCell' },
         methods: {
+            setMfeRouter() {
+                const [mfe] = $(this.$element).closest("div[id^=app-]");
+                const mfeName = `${mfe.id || ''}`.replace('app-', '');
+                window.$jfrog.router = mfeName.length > 0 ? window.$jfrog.routersCache[mfeName] : window.$jfrog.router;
+            },
             compile() {
                 if (!this.compiledTemplate) {
                     this.compiledTemplate = this.tableRow.tableView.compileTemplate(this.field, this.rowId);
