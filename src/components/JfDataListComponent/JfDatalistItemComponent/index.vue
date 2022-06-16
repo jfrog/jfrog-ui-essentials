@@ -5,6 +5,7 @@
       :href="viewItem.url ? viewItem.url : viewItem.value"
       v-html="viewItem.value"
       target="_blank"
+      rel="noopener noreferrer"
       class="jf-link"
       v-jf-tooltip-on-overflow
     ></a>
@@ -20,6 +21,7 @@
           v-if="tag.url"
           :href="tag.url"
           target="_blank"
+          rel="noopener noreferrer"
           v-html="tag.label"
         ></a>
         <span class="gridcell-content-text" v-if="!tag.url" v-html="tag.label"></span>

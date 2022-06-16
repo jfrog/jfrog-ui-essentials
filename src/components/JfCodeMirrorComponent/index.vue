@@ -91,7 +91,7 @@
                     $(_editor.display.wrapper).on('click', '.cm-link', e => {
                         let url = $(this).text();
                         if (url) {
-                            window.open(url, '_blank');
+                            window.open(url, '_blank', 'noopener noreferrer');
                         }
                     });
                     this.$scope.$on('$destroy', () => {

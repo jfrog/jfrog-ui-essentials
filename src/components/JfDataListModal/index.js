@@ -1,7 +1,7 @@
 export const JfDataListModal = {
     template: `
             <template slot="modal-header">
-                <button type="button" class="close" data-dismiss="close" aria-label="Close" @click="close()"><span aria-hidden="_true"><i class="icon-close" style="color: #909399;font-size: 16px;"></i></span></button>               
+                <button type="button" class="close" data-dismiss="close" aria-label="Close" @click="close()"><span aria-hidden="_true"><i class="icon-close" style="color: #909399;font-size: 16px;"></i></span></button>
                 <h4 class="modal-title" id="popup-header">{{items.length}} {{colName}} For {{objectName}} '{{rowName}}'</h4>
             </template>
             <template slot="modal-footer">
@@ -15,7 +15,7 @@ export const JfDataListModal = {
                 <ul class="group-list">
                     <li class="group-list-item" v-jf-tooltip-on-overflow v-for="(item, $index) in items" v-if="filterItem(item)">
                         <div v-if="!item.url" v-html="$sanitize(item.label || item)"></div>
-                        <a v-if="item.url" class="jf-link" :href="item.url" v-html="$sanitize(item.label)" target="_blank"></a>
+                        <a v-if="item.url" class="jf-link" :href="item.url" v-html="$sanitize(item.label)" target="_blank" rel="noopener noreferrer"></a>
                     </li>
                 </ul>
             </div>
