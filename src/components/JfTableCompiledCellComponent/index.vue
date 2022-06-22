@@ -33,7 +33,7 @@
         ng1_legacy: { 'controllerAs': 'compiledCell' },
         methods: {
             setMfeRouter() {
-                const [mfe] = $(this.$element).closest("div[id^=app-]");
+                const [mfe = { id: '' }] = $(this.$element).closest("div[id^=app-]");
                 const mfeName = `${mfe.id || ''}`.replace('app-', '');
                 window.$jfrog.router = mfeName.length > 0 ? window.$jfrog.routersCache[mfeName] : window.$jfrog.router;
             },

@@ -1,7 +1,8 @@
+import SanitizeMixin from '../mixins/Sanitize/index.js';
+
 export class AdvancedStringMatch {
     constructor() {
-        this.$inject('$sanitize');
-        this.$sanitize = this.$sanitize;
+        this.$sanitize = SanitizeMixin.methods.$sanitize;
         this.match = (str, match) => this.doMatch(str, match);
         this.highlight = (elem, segments, hlElemType, hlClass) => this.doHighlight(elem, segments, hlElemType, hlClass);
     }

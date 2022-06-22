@@ -503,7 +503,7 @@ describe('JfTreeComponent', () => {
 
 
         await wait();
-        wrapper.vm.$forceUpdate();
+        await wrapper.vm.$forceUpdate();
         elems = getElements(wrapper);
 
         expect(elems.nodeTexts.at(0).text()).toEqual('Item 1');
@@ -543,7 +543,7 @@ describe('JfTreeComponent', () => {
         treeApi.unFreeze();
 
         await wait();
-        wrapper.vm.$forceUpdate();
+        await wrapper.vm.$forceUpdate();
         elems = getElements(wrapper);
 
         expect(treeApi.isNodeOpen(simpleTestData[0])).toEqual(true);

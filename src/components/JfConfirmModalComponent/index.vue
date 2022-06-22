@@ -19,6 +19,8 @@
 </template>
 <script>
     import ModalMixins from "@/mixins/ModalMixins/index.js";
+    import SanitizeMixin from '../../mixins/Sanitize/index.js';
+
     export default {
         name: 'jf-modal',
         props: [
@@ -29,9 +31,6 @@
             "checkboxLabel",
             "checkBoxChangeListener"
         ],
-        'jf@inject': [
-            '$sanitize'
-        ],
         methods:{
             onCheckboxStateChange(state) {
                 if (typeof this.checkBoxChangeListener == "function"){
@@ -39,7 +38,7 @@
                 }
             }
         },
-        mixins:[ModalMixins],
+        mixins:[ModalMixins,SanitizeMixin],
         data() {
             let int_buttons = this.buttons || {};
             int_buttons.cancel = int_buttons.cancel || "Cancel";

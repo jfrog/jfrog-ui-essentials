@@ -1,4 +1,5 @@
 import {shallowMount} from '@vue/test-utils';
+import moment from 'moment';
 import {mount} from '@vue/test-utils';
 import {createLocalVue} from '@vue/test-utils';
 import {testsBootstrap} from '@/testsBootstrap';
@@ -69,6 +70,8 @@ describe('JfSummaryRowComponent', () => {
 
     it('Should compile date format', () => {
         let columnClassName = 'creation-date';
+        const now = Date.now();
+        const formatted = moment(1548677035290).utc().format("DD MMMM YYYY, HH:mm:ss")
         let summaryRowCmp = mount(JfSummaryRowComponent, {
             localVue,
             propsData: {},
@@ -76,7 +79,7 @@ describe('JfSummaryRowComponent', () => {
                 default: `<jf-summary-row-item :class="'${columnClassName}'"
                                                 :summary-item-is-active="true"
                                                 :summary-item-label="'Creation Date'">
-                                            {{ 1548677035290 | moment("DD MMMM YYYY, HH:mm:ss") }}
+                                            ${formatted}
                          </jf-summary-row-item>`,
             }
         });
@@ -86,7 +89,7 @@ describe('JfSummaryRowComponent', () => {
         expect(summaryRowCmp.find(labeledItem).exists()).toBe(true);
         expect(summaryRowCmp.find(`.${columnClassName}`).exists()).toBe(true);
         expect(summaryRowCmp.find(labeledItem).is(`.${columnClassName}`)).toBe(true);
-        expect(summaryRowCmp.find(`.${columnClassName}`).find('span').text()).toBe('28 January 2019, 14:03:55');
+        expect(summaryRowCmp.find(`.${columnClassName}`).find('span').text()).toBe('28 January 2019, 12:03:55');
     });
 
     it('Should compile image', () => {

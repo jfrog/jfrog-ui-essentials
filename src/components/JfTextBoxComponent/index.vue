@@ -17,6 +17,7 @@
 </template>
 
 <script>
+    import SanitizeMixin from "../../mixins/Sanitize";
 
     export default {
         name: 'jf-text-box',
@@ -35,9 +36,9 @@
             '$interval',
             '$compile',
             '$q',
-            'JfFullTextService',
-            '$sanitize'
+            'JfFullTextService'
         ],
+        mixins:[SanitizeMixin],
         data() {
             return {
                 content: null,
@@ -308,6 +309,6 @@
             word-wrap: break-word;
         }
     }
-}    
+}
 
 </style>

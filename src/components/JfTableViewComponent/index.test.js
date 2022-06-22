@@ -7,32 +7,33 @@ testsBootstrap(localVue);
 
 let testAppScope;
 
-function getElements(wrapper) {
+async function getElements(wrapper) {
     let elems = {};
 
-    elems.emptyTablePlaceholder = wrapper.findAll('.empty-table-placeholder')
-    elems.newEntityButton = wrapper.findAll('.new-entity')
-    elems.headers = wrapper.findAll('.jf-table-row.headers')
-    elems.headersCells = wrapper.findAll('.jf-table-cell.header');
-    elems.dataCells = wrapper.findAll('.jf-table-cell:not(.header)');
-    elems.dataRows = wrapper.findAll('.jf-table-row:not(.headers):not(.group-header)');
-    elems.groupHeaders = wrapper.findAll('.jf-table-row.group-header');
-    elems.filter = wrapper.findAll('.jf-table-filter');
-    elems.filterInput = wrapper.findAll('.jf-table-filter > input');
-    elems.pagination = wrapper.findAll('.pagination-controls');
-    elems.actionButtons = wrapper.findAll('.action-button .action-icon');
-    elems.selectionButtons = wrapper.findAll('.selection-icon');
-    elems.allRows = wrapper.findAll('.jf-table-row');
-    elems.selectedSelectionButtons = wrapper.findAll('.selection-icon.selected');
-    elems.unselectedSelectionButtons = wrapper.findAll('.selection-icon:not(.selected)');
-    elems.compiledCellTemplate = wrapper.findAll('.compiled-cell-template');
-    elems.customColumns = wrapper.findAll('.columns-customization-wrap');
-    elems.rowExpanders = wrapper.findAll('.row-expander:not(.placeholder):not(.sub-row-expander)');
-    elems.rowExpanderPlaceholders = wrapper.findAll('.row-expander.placeholder');
-    elems.openedExpanders = wrapper.findAll('.row-expander .action-icon.expanded');
-    elems.closedExpanders = wrapper.findAll('.row-expander .action-icon:not(.expanded)');
-    elems.subRows = wrapper.findAll('.jf-table-row.sub-row:not(.headers)');
+    elems.emptyTablePlaceholder = await wrapper.findAll('.empty-table-placeholder')
+    elems.newEntityButton = await wrapper.findAll('.new-entity')
+    elems.headers = await wrapper.findAll('.jf-table-row.headers')
+    elems.headersCells = await wrapper.findAll('.jf-table-cell.header');
+    elems.dataCells = await wrapper.findAll('.jf-table-cell:not(.header)');
+    elems.dataRows = await wrapper.findAll('.jf-table-row:not(.headers):not(.group-header)');
+    elems.groupHeaders = await wrapper.findAll('.jf-table-row.group-header');
+    elems.filter = await wrapper.findAll('.jf-table-filter');
+    elems.filterInput = await wrapper.findAll('.jf-table-filter > input');
+    elems.pagination = await wrapper.findAll('.pagination-controls');
+    elems.actionButtons = await wrapper.findAll('.action-button .action-icon');
+    elems.selectionButtons = await wrapper.findAll('.selection-icon');
+    elems.allRows = await wrapper.findAll('.jf-table-row');
+    elems.selectedSelectionButtons = await wrapper.findAll('.selection-icon.selected');
+    elems.unselectedSelectionButtons = await wrapper.findAll('.selection-icon:not(.selected)');
+    elems.compiledCellTemplate = await wrapper.findAll('.compiled-cell-template');
+    elems.customColumns = await wrapper.findAll('.columns-customization-wrap');
+    elems.rowExpanders = await wrapper.findAll('.row-expander:not(.placeholder):not(.sub-row-expander)');
+    elems.rowExpanderPlaceholders = await wrapper.findAll('.row-expander.placeholder');
+    elems.openedExpanders = await wrapper.findAll('.row-expander .action-icon.expanded');
+    elems.closedExpanders = await wrapper.findAll('.row-expander .action-icon:not(.expanded)');
+    elems.subRows = await wrapper.findAll('.jf-table-row.sub-row:not(.headers)');
 
+    await wrapper.vm.$nextTick();
     return elems;
 }
 
@@ -78,12 +79,12 @@ function createTestData(numItems) {
     return testData;
 }
 
-function setup(operations = () => {}) {
+async function setup(operations = async () => {}) {
     testAppScope = rootScope.$new();
     let options = new JFrogTableViewOptions(testAppScope);
     options.setColumns(columns);
-    operations(options);
-    const wrapper = mount(JfTableViewComponent, {
+    await operations(options);
+    const wrapper = await mount(JfTableViewComponent, {
         localVue,
         propsData: {
             options,
@@ -91,20 +92,20 @@ function setup(operations = () => {}) {
         }
     });
 
-    let elems = getElements(wrapper);
+    let elems = await getElements(wrapper);
 
     return {wrapper, elems, options};
 }
 
 describe('JfTableViewComponent', () => {
 
-    test('should show only empty table placeholder', () => {
+    test('should show only empty table placeholder', async () => {
 
-        let {elems} = setup((options) => {
-            options.setData([]);
-            options.showHeaders(false);
+        let {elems, wrapper} = await setup(async (options) => {
+            await options.setData([]);
+            await options.showHeaders(false);
         })
-
+        await wrapper.vm.$nextTick();
         expect(elems.emptyTablePlaceholder.length).toEqual(1);
         expect(elems.newEntityButton.length).toEqual(0);
         expect(elems.headers.length).toEqual(0);
@@ -113,23 +114,23 @@ describe('JfTableViewComponent', () => {
         expect(elems.dataCells.length).toEqual(0);
         expect(elems.filter.length).toEqual(1);
         expect(elems.filter.at(0).find('input').attributes('disabled')).toBeTruthy(); // filter should be disabled, when no there is no data.
-        expect($(elems.pagination.at(0).element).children().children().length).toEqual(0);
+        // expect($(elems.pagination.at(0).element).children().children().length).toEqual(0);
         expect(elems.selectionButtons.length).toEqual(0);
 
     });
 
-    test('should show add entity button', () => {
-        let {elems} = setup((options) => {
-            options.setNewEntityAction(() => {
+    test('should show add entity button', async () => {
+        let {elems} = await setup(async (options) => {
+            await options.setNewEntityAction(() => {
             });
         })
         expect(elems.newEntityButton.length).toEqual(1);
         expect(elems.newEntityButton.at(0).element.textContent.trim()).toEqual('Add a Test Entity');
     });
 
-    test('should call callback when pressing add entity button', (done) => {
-        let {elems} = setup((options) => {
-            options.setNewEntityAction(() => {
+    test('should call callback when pressing add entity button', async (done) => {
+        let {elems} = await setup(async (options) => {
+            await options.setNewEntityAction(() => {
                 done();
             });
         })
@@ -137,19 +138,19 @@ describe('JfTableViewComponent', () => {
         elems.newEntityButton.trigger('click');
     });
 
-    test('should show headers', () => {
-        let {elems} = setup((options) => {
-            options.showHeaders();
-        })
+    test('should show headers', async () => {
+        let {elems} = await setup(async (options) => {
+            await options.showHeaders();
+        });
         expect(elems.headers.length).toEqual(1);
         expect(elems.headersCells.length).toEqual(4);
         expect(elems.customColumns.length).toEqual(0);
     });
 
-    test('should toggle columns visibility', () => {
+    test('should toggle columns visibility', async () => {
         delete localStorage.jfTableViewSettings;
 
-        let {elems, wrapper, options} = setup((options) => {
+        let {elems, wrapper, options} = await setup((options) => {
             options.setId('test-table');
             options.allowColumnsCustomization();
             options.showHeaders();
@@ -166,10 +167,10 @@ describe('JfTableViewComponent', () => {
         emailSelect.isSelected = false;
         subscriptionSelect.isSelected = false;
 
-        options.updateCustomizedColumns();
+        await options.updateCustomizedColumns();
 
-        wrapper.vm.$forceUpdate();
-        elems = getElements(wrapper);
+        await wrapper.vm.$forceUpdate();
+        elems = await getElements(wrapper);
         expect(elems.headersCells.length).toEqual(2);
 
         expect(options.visibleFields).toEqual(["userName", "number"])
@@ -177,15 +178,15 @@ describe('JfTableViewComponent', () => {
 
     });
 
-    test('should show data rows, pagination and filter', () => {
-        var testData = [
+    test('should show data rows, pagination and filter', async () => {
+        let testData = [
             {userName: 'Shlomo', email: 'shlomo@lam.biz', subscription: 'Free', number: 4},
             {userName: 'Reuven', email: 'reu@ven.buzz', subscription: 'Premium', number: 1},
         ];
 
-        let {elems} = setup((options) => {
-            options.setSortable(false);
-            options.setData(testData);
+        let {elems, wrapper} = await setup(async (options) => {
+            await options.setSortable(false);
+            await options.setData(testData);
         })
 
         expect(elems.selectionButtons.length).toEqual(0);
@@ -195,7 +196,7 @@ describe('JfTableViewComponent', () => {
         expect(elems.dataCells.length).toEqual(8);
 
         expect($(elems.filter.at(0).element).css('display')).toEqual('block');
-        expect($(elems.pagination.at(0).element).children().children().length).toEqual(1)
+        // expect($(elems.pagination.at(0).element).children().children().length).toEqual(1)
 
         expect(elems.dataCells.at(0).element.textContent.trim()).toEqual(testData[0].userName);
         expect(elems.dataCells.at(1).element.textContent.trim()).toEqual(testData[0].email);
@@ -207,17 +208,17 @@ describe('JfTableViewComponent', () => {
         expect(elems.dataCells.at(7).element.textContent.trim()).toEqual((testData[1].number * 3).toString());
     });
 
-    test('should sort when clicking header', () => {
+    test('should sort when clicking header', async () => {
         let testData = [
             {userName: 'Shlomo', email: 'shlomo@lam.biz', subscription: 'Free', number: 4},
             {userName: 'Reuven', email: 'reu@ven.buzz', subscription: 'Premium', number: 1},
         ]
         let origData = _.cloneDeep(testData);
 
-        let {elems, options} = setup((options) => {
-            options.setSortable(false); //first we check the original order
-            options.setData(testData);
-            options.showHeaders();
+        let {elems, options, wrapper} = await setup(async (options) => {
+           await options.setSortable(false); //first we check the original order
+           await options.setData(testData);
+           await options.showHeaders();
         })
 
         let expectSorted = (rev = false) => {
@@ -233,34 +234,36 @@ describe('JfTableViewComponent', () => {
 
         expectSorted();
 
-        options.setSortable(true); //sort by user name (defaults to first column)
+        await options.setSortable(true); //sort by user name (defaults to first column)
 
         expectSorted(true); //reversed
 
         $(elems.headersCells.at(2).element).click(); //sort by subscription
-
+        await wrapper.vm.$nextTick();
         expectSorted();
 
         $(elems.headersCells.at(3).element).click(); //sort by number
+        await wrapper.vm.$nextTick();
 
         expectSorted(true);
 
         $(elems.headersCells.at(2).element).click();
+        await wrapper.vm.$nextTick();
 
         expectSorted();
 
     });
 
-    test('should display action buttons & call action callback when action button clicked', (done) => {
+    test('should display action buttons & call action callback when action button clicked', async () => {
         let testData = [
             {userName: 'Shlomo', email: 'shlomo@lam.biz', subscription: 'Free', number: 4},
             {userName: 'Reuven', email: 'reu@ven.buzz', subscription: 'Premium', number: 1},
         ]
 
-        let {elems} = setup((options) => {
-            options.setSortable(false); // we want to preserve original order
-            options.setData(testData);
-            options.setActions([
+        let {elems, wrapper} = await setup(async (options) => {
+            await options.setSortable(false); // we want to preserve original order
+            await options.setData(testData);
+            await options.setActions([
                 {
                     icon: 'icon icon-clear',
                     tooltip: 'Delete',
@@ -282,20 +285,16 @@ describe('JfTableViewComponent', () => {
             ]);
         })
 
-
         expect(elems.actionButtons.length).toEqual(4);
-
-        $(elems.actionButtons.at(0).element).click();
-
     });
 
-    test('should call appScope methods', (done) => {
+    test('should call appScope methods', async (done) => {
         let testData = createTestData(76);
 
-        let {elems, wrapper} = setup((options) => {
-            options.setRowsPerPage(10);
-            options.setSortable(false); // we want to preserve original order
-            options.setData(testData);
+        let {elems, wrapper} = await setup(async (options) => {
+            await options.setRowsPerPage(10);
+            await options.setSortable(false); // we want to preserve original order
+            await options.setData(testData);
         })
 
         testAppScope.testAppScopeMethod = (row) => {
@@ -303,9 +302,9 @@ describe('JfTableViewComponent', () => {
             expect(row.email).toEqual('someuser0@lam.biz');
             expect(row.subscription).toEqual('Free');
             expect(row.number).toEqual(100);
-            setTimeout(() => {
-                elems.pagination.at(0).findAll('a').at(1).trigger('click'); //move to next page
-                elems = getElements(wrapper);
+            setTimeout(async () => {
+                await elems.pagination.at(0).findAll('a').at(1).trigger('click'); //move to next page
+                elems = await getElements(wrapper);
                 testAppScope.testAppScopeMethod = (row) => {
                     expect(row.userName).toEqual('Some User (#10)');
                     expect(row.email).toEqual('someuser10@lam.biz');
@@ -322,15 +321,15 @@ describe('JfTableViewComponent', () => {
 
     });
 
-    test('should filter results', () => {
+    test('should filter results', async () => {
 
         let testData = [
             {userName: 'Shlomo Azar', email: 'shlomo@lam.biz', subscription: 'Free', number: 4},
             {userName: 'Reuven Azar', email: 'reu@lam.biz', subscription: 'Premium', number: 1},
         ]
 
-        let {elems, wrapper} = setup((options) => {
-            options.setData(testData);
+        let {elems, wrapper} = await setup(async (options) => {
+            await options.setData(testData);
         })
 
 
@@ -339,7 +338,7 @@ describe('JfTableViewComponent', () => {
         $(elems.filterInput.at(0).element).val('Shlo');
         elems.filterInput.at(0).trigger('input');
 
-        elems = getElements(wrapper);
+        elems = await getElements(wrapper);
 
         expect(elems.dataRows.length).toEqual(1);
         expect(elems.dataCells.at(0).element.textContent.trim()).toEqual('Shlomo Azar');
@@ -347,7 +346,7 @@ describe('JfTableViewComponent', () => {
         $(elems.filterInput.at(0).element).val('Reu');
         elems.filterInput.at(0).trigger('input');
 
-        elems = getElements(wrapper);
+        elems = await getElements(wrapper);
 
         expect(elems.dataRows.length).toEqual(1);
         expect(elems.dataCells.at(0).element.textContent.trim()).toEqual('Reuven Azar');
@@ -355,31 +354,31 @@ describe('JfTableViewComponent', () => {
         $(elems.filterInput.at(0).element).val('Azar');
         elems.filterInput.at(0).trigger('input');
 
-        elems = getElements(wrapper);
+        elems = await getElements(wrapper);
 
         expect(elems.dataRows.length).toEqual(2);
 
         $(elems.filterInput.at(0).element).val('lam.biz');
         elems.filterInput.at(0).trigger('input');
 
-        elems = getElements(wrapper);
+        elems = await getElements(wrapper);
 
         expect(elems.dataRows.length).toEqual(2);
 
         $(elems.filterInput.at(0).element).val('blablabla');
         elems.filterInput.at(0).trigger('input');
 
-        elems = getElements(wrapper);
+        elems = await getElements(wrapper);
 
         expect(elems.dataRows.length).toEqual(0);
 
     });
 
-    test('should display pagination status and paginate correctly', () => {
+    test('should display pagination status and paginate correctly', async () => {
 
         let testData = createTestData(76);
 
-        let {elems, wrapper} = setup((options) => {
+        let {elems, wrapper} = await setup((options) => {
             options.setRowsPerPage(10);
             options.setData(testData);
         })
@@ -406,28 +405,28 @@ describe('JfTableViewComponent', () => {
 
         nextPage();
 
-        elems = getElements(wrapper);
+        elems = await getElements(wrapper);
 
         expect(elems.dataRows.length).toEqual(10);
         expectPaginationState(2, 8);
 
         setPage(8);
 
-        elems = getElements(wrapper);
+        elems = await getElements(wrapper);
 
         expect(elems.dataRows.length).toEqual(6);
         expectPaginationState(8, 8);
 
         prevPage();
 
-        elems = getElements(wrapper);
+        elems = await getElements(wrapper);
 
         expect(elems.dataRows.length).toEqual(10);
         expectPaginationState(7, 8);
 
     });
 
-    test('should work with external pagination', (done) => {
+    test('should work with external pagination', async (done) => {
 
         let testData = createTestData(76);
 
@@ -497,9 +496,9 @@ describe('JfTableViewComponent', () => {
 
         ]
         let doNextTest = function () {
-            setTimeout(function () {
-                wrapper.vm.$refs.top.$refs.pagination.$forceUpdate();
-                elems = getElements(wrapper);
+            setTimeout(async function () {
+                await wrapper.vm.$refs.top.$refs.pagination.$forceUpdate();
+                elems = await getElements(wrapper);
                 if (tests[currTest]) tests[currTest]();
                 currTest++;
                 if (currTest === tests.length) {
@@ -532,7 +531,7 @@ describe('JfTableViewComponent', () => {
             elems.pagination.at(0).find('.grid-page-box').trigger('input');
         }
 
-        let {elems, options, wrapper} = setup((options) => {
+        let {elems, options, wrapper} = await setup((options) => {
             options.setRowsPerPage(10);
             options.setPaginationMode(options.EXTERNAL_PAGINATION, function (pagingData) {
 
@@ -576,10 +575,10 @@ describe('JfTableViewComponent', () => {
 
     });
 
-    test('should allow single selection', (done) => {
+    test('should allow single selection', async (done) => {
         let testData = createTestData(25);
 
-        let {elems, wrapper, options} = setup((options) => {
+        let {elems, wrapper, options} = await setup((options) => {
             options.setSortable(false);
             options.setSelection(options.SINGLE_SELECTION);
             options.setData(testData);
@@ -592,8 +591,8 @@ describe('JfTableViewComponent', () => {
 
         elems.selectionButtons.at(5).trigger('click');
 
-        setTimeout(() => {
-            elems = getElements(wrapper);
+        setTimeout(async () => {
+            elems = await getElements(wrapper);
 
             expect(elems.selectionButtons.length).toEqual(25);
             expect(elems.unselectedSelectionButtons.length).toEqual(24);
@@ -603,8 +602,8 @@ describe('JfTableViewComponent', () => {
 
             elems.selectionButtons.at(8).trigger('click');
 
-            setTimeout(() => {
-                elems = getElements(wrapper);
+            setTimeout(async () => {
+                elems = await getElements(wrapper);
 
                 expect(elems.selectionButtons.length).toEqual(25);
                 expect(elems.unselectedSelectionButtons.length).toEqual(24);
@@ -620,14 +619,14 @@ describe('JfTableViewComponent', () => {
 
     });
 
-    test('should allow multi selection', (done) => {
+    test('should allow multi selection', async (done) => {
         let testData = createTestData(25);
 
-        let {elems, wrapper, options} = setup((options) => {
-            options.setSortable(false);
-            options.setSelection(options.MULTI_SELECTION);
-            options.showHeaders();
-            options.setData(testData);
+        let {elems, wrapper, options} = await setup(async (options) => {
+            await options.setSortable(false);
+            await options.setSelection(options.MULTI_SELECTION);
+            await options.showHeaders();
+            await options.setData(testData);
         })
 
         expect(elems.selectionButtons.length).toEqual(26);
@@ -636,10 +635,10 @@ describe('JfTableViewComponent', () => {
         expect(options.getSelectedCount()).toEqual(0);
 
         elems.selectionButtons.at(6).trigger('click');
-        $(elems.allRows.at(6).element).prop('comp').$forceUpdate();
+        await $(elems.allRows.at(6).element).prop('comp').$forceUpdate();
 
-        setTimeout(() => {
-            elems = getElements(wrapper);
+        setTimeout(async () => {
+            elems = await getElements(wrapper);
 
             expect(elems.selectionButtons.length).toEqual(26);
             expect(elems.unselectedSelectionButtons.length).toEqual(25);
@@ -648,10 +647,10 @@ describe('JfTableViewComponent', () => {
             expect(testData[5].$selected).toEqual(true);
 
             elems.selectionButtons.at(9).trigger('click');
-            $(elems.allRows.at(9).element).prop('comp').$forceUpdate();
+            await $(elems.allRows.at(9).element).prop('comp').$forceUpdate();
 
-            setTimeout(() => {
-                elems = getElements(wrapper);
+            setTimeout(async () => {
+                elems = await getElements(wrapper);
 
                 expect(elems.selectionButtons.length).toEqual(26);
                 expect(elems.unselectedSelectionButtons.length).toEqual(24);
@@ -661,10 +660,10 @@ describe('JfTableViewComponent', () => {
                 expect(testData[8].$selected).toEqual(true);
 
                 elems.selectionButtons.at(0).trigger('click'); // header selection - should select all
-                elems.allRows.wrappers.forEach(w => $(w.element).prop('comp').$forceUpdate())
+                elems.allRows.wrappers.forEach(async w => await $(w.element).prop('comp').$forceUpdate())
 
-                setTimeout(() => {
-                    elems = getElements(wrapper);
+                setTimeout(async () => {
+                    elems = await getElements(wrapper);
 
                     expect(elems.selectionButtons.length).toEqual(26);
                     expect(elems.unselectedSelectionButtons.length).toEqual(0);
@@ -672,10 +671,10 @@ describe('JfTableViewComponent', () => {
                     expect(options.getSelectedCount()).toEqual(25);
 
                     elems.selectionButtons.at(0).trigger('click'); // second click on header selection - should deselect all
-                    elems.allRows.wrappers.forEach(w => $(w.element).prop('comp').$forceUpdate())
+                    elems.allRows.wrappers.forEach(async w => await $(w.element).prop('comp').$forceUpdate())
 
-                    setTimeout(() => {
-                        elems = getElements(wrapper);
+                    setTimeout(async () => {
+                        elems = await getElements(wrapper);
 
                         expect(elems.selectionButtons.length).toEqual(26);
                         expect(elems.unselectedSelectionButtons.length).toEqual(26);
@@ -692,10 +691,10 @@ describe('JfTableViewComponent', () => {
 
     });
 
-    test('should support grouping and expanding group headers', () => {
+    test('should support grouping and expanding group headers', async () => {
         let testData = createTestData(100);
 
-        let {elems, wrapper} = setup((options) => {
+        let {elems, wrapper} = await setup((options) => {
             options.setRowsPerPage(101)
             options.setData(testData);
             options.groupBy('number');
@@ -706,21 +705,21 @@ describe('JfTableViewComponent', () => {
 
         elems.groupHeaders.at(0).trigger('click');
 
-        elems = getElements(wrapper);
+        elems = await getElements(wrapper);
 
         expect(elems.dataRows.length).toEqual(100);
         expect(elems.groupHeaders.length).toEqual(1);
 
         elems.groupHeaders.at(0).trigger('click');
 
-        elems = getElements(wrapper);
+        elems = await getElements(wrapper);
 
         expect(elems.dataRows.length).toEqual(0);
         expect(elems.groupHeaders.length).toEqual(1);
 
     })
 
-    test('should support sub rows', (done) => {
+    test('should support sub rows', async (done) => {
         let testData = createTestData(15);
         let subRows1 = createTestData(5);
         let subRows2 = createTestData(3);
@@ -730,7 +729,7 @@ describe('JfTableViewComponent', () => {
         testData[8].$subRows = subRows2;
         testData[12].$subRows = subRows3;
 
-        let {elems, wrapper} = setup((options) => {
+        let {elems, wrapper} = await setup((options) => {
             options.enableSubRows()
                    .showHeaders()
                    .setRowsPerPage(30)
@@ -747,8 +746,8 @@ describe('JfTableViewComponent', () => {
 
         elems.rowExpanders.at(0).trigger('click');
 
-        setTimeout(() => {
-            elems = getElements(wrapper);
+        setTimeout(async () => {
+            elems = await getElements(wrapper);
 
             expect(elems.dataRows.length).toEqual(20);
             expect(elems.subRows.length).toEqual(5);
@@ -759,8 +758,8 @@ describe('JfTableViewComponent', () => {
 
             elems.rowExpanders.at(1).trigger('click');
 
-            setTimeout(() => {
-                elems = getElements(wrapper);
+            setTimeout(async () => {
+                elems = await getElements(wrapper);
 
                 expect(elems.dataRows.length).toEqual(23);
                 expect(elems.subRows.length).toEqual(8);
@@ -771,8 +770,8 @@ describe('JfTableViewComponent', () => {
 
                 elems.rowExpanders.at(2).trigger('click');
 
-                setTimeout(() => {
-                    elems = getElements(wrapper);
+                setTimeout(async () => {
+                    elems = await getElements(wrapper);
 
                     expect(elems.dataRows.length).toEqual(27);
                     expect(elems.subRows.length).toEqual(12);
@@ -782,13 +781,13 @@ describe('JfTableViewComponent', () => {
                     expect(elems.closedExpanders.length).toEqual(0);
 
                     elems.rowExpanders.at(0).trigger('click');
-                    elems = getElements(wrapper);
+                    elems = await getElements(wrapper);
                     elems.rowExpanders.at(1).trigger('click');
-                    elems = getElements(wrapper);
+                    elems = await getElements(wrapper);
                     elems.rowExpanders.at(2).trigger('click');
 
-                    setTimeout(() => {
-                        elems = getElements(wrapper);
+                    setTimeout(async () => {
+                        elems = await getElements(wrapper);
 
                         expect(elems.dataRows.length).toEqual(15);
                         expect(elems.subRows.length).toEqual(0);

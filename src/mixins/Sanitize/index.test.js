@@ -1,5 +1,5 @@
-import sanitizeMixin from '@cmp/Mixins/Sanitize';
-import { BASE64_TEST_PNG_IMAGE, TEST_EVENTS, TEST_SIMPLE_TAGS } from '@cmp/Mixins/Sanitize/constants';
+import sanitizeMixin from '../Sanitize';
+import { BASE64_TEST_PNG_IMAGE, TEST_EVENTS, TEST_SIMPLE_TAGS } from './constants';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vue from 'vue';
 
@@ -46,9 +46,15 @@ const getHtml = (wrapper) => {
 
 
 const allTagEventCombinations = [];
-TEST_SIMPLE_TAGS.forEach(({ tag, isSelfClosing, parentTags = [] }) => {
+TEST_SIMPLE_TAGS.forEach(({ tag, isSelfClosing, parentTags = [], allowedAttributes = []}) => {
     TEST_EVENTS.forEach(event => {
-        allTagEventCombinations.push([tag, event, isSelfClosing, parentTags]);
+        if(allowedAttributes.length > 0) {
+            allowedAttributes.forEach(attr => {
+                allTagEventCombinations.push([tag, event, attr, isSelfClosing, parentTags]);
+            })
+        } else {
+            allTagEventCombinations.push([tag, event, '', isSelfClosing, parentTags]);
+        }
     });
 });
 
@@ -72,7 +78,7 @@ describe('Sanitize Html Mixin', () => {
             await Vue.nextTick();
             const { unsafeHtml, safeHtml } = getHtml(wrapper);
             expect(unsafeHtml).toContain(xss);
-            expect(safeHtml).toContain('&lt;script&gt;&lt;/script&gt;');
+            expect(safeHtml).not.toContain('script');
             expect(wrapper.element).toMatchSnapshot();
         });
 
@@ -83,7 +89,7 @@ describe('Sanitize Html Mixin', () => {
             const { unsafeHtml, safeHtml } = getHtml(wrapper);
             expect(unsafeHtml).toContain(`<script>`);
             expect(unsafeHtml).toContain(`alert('xss')`);
-            expect(safeHtml).toContain(`&lt;script&gt;alert('xss')&lt;/script&gt;`);
+            expect(safeHtml).not.toContain(`<script>`);
             expect(wrapper.element).toMatchSnapshot();
         });
 
@@ -94,7 +100,7 @@ describe('Sanitize Html Mixin', () => {
             await Vue.nextTick();
             const { unsafeHtml, safeHtml } = getHtml(wrapper);
             expect(unsafeHtml).toContain(xss);
-            expect(safeHtml).toContain('&lt;object&gt;&lt;/object&gt;');
+            expect(safeHtml).not.toContain('object');
             expect(wrapper.element).toMatchSnapshot();
         });
 
@@ -111,9 +117,11 @@ describe('Sanitize Html Mixin', () => {
         it('Should not sanitize custom configured tags', async () => {
             const mockHtml = `<ul><li><input checked="" disabled="" type="checkbox" /> foo<ul><li><input disabled="" type="checkbox" /> bar</li><li><input checked="" disabled="" type="checkbox" /> baz</li></ul><li><input disabled="" type="checkbox" /> bim</li></ul>`;
             const { DEFAULT_CONFIG } = sanitizeMixin;
-            const releaseNotesSanitizerConfig = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
-            releaseNotesSanitizerConfig.allowedTags.push('input');
-            releaseNotesSanitizerConfig.allowedAttributes.input = ['checked', 'disabled', 'type'];
+            const releaseNotesSanitizerConfig = {
+                ...DEFAULT_CONFIG,
+                ALLOWED_TAGS: [...DEFAULT_CONFIG.ALLOWED_TAGS, 'input'],
+                ADD_ATTR: [...DEFAULT_CONFIG.ADD_ATTR, 'checked', 'disabled', 'type']
+            };
             wrapper.setProps({ dynamicContentUnsafe: mockHtml, config: releaseNotesSanitizerConfig });
             await Vue.nextTick();
             expect(wrapper.element).toMatchSnapshot();
@@ -137,6 +145,15 @@ describe('Sanitize Html Mixin', () => {
             expect(safeHtml).toContain('<a href="http://google.com"></a>');
             expect(wrapper.element).toMatchSnapshot();
         });
+        it('Should sanitize and keep name, target, rel attributes in anchor tag', async () => {
+            const xss = `<a target="_blank" rel="noreferrer noopener" name="moshe" href="http://google.com" onerror="alert('xss');"></a>`;
+            wrapper.setProps({ dynamicContentUnsafe: xss });
+            await Vue.nextTick();
+            const { unsafeHtml, safeHtml } = getHtml(wrapper);
+            expect(unsafeHtml).toContain(xss);
+            expect(safeHtml).toContain('<a href="http://google.com" name="moshe" rel="noreferrer noopener" target="_blank"></a>');
+            expect(wrapper.element).toMatchSnapshot();
+        });
         it('Should sanitize javascript scheme from anchor tag', async () => {
             const xss = `<a href="javascript:alert('xss');"></a>`;
             wrapper.setProps({ dynamicContentUnsafe: xss });
@@ -158,10 +175,11 @@ describe('Sanitize Html Mixin', () => {
             });
         });
 
-        test.each(allTagEventCombinations)(`Should sanitize %s tag with %s event XSS`,
-            async (tag, event, isSelfClosing, parentTags) => {
+        test.each(allTagEventCombinations)(`Should sanitize XSS for <%s> tag with: @%s event with attributes: [%s]`,
+            async (tag, event, allowedAttribute, isSelfClosing, parentTags) => {
+                const attribute = allowedAttribute.length ? ' ' + allowedAttribute : '';
                 const closingTag = isSelfClosing ? '' : `</${tag}>`;
-                let xss = `<${tag} on${event}="eventHandler">${closingTag}`;
+                let xss = `<${tag}${attribute} on${event}="eventHandler">${closingTag}`;
                 if (parentTags && parentTags.length) {
                     parentTags.forEach(parentTag => {
                         xss = `<${parentTag}>${xss}</${parentTag}>`;
@@ -172,7 +190,7 @@ describe('Sanitize Html Mixin', () => {
                 const { unsafeHtml, safeHtml } = getHtml(wrapper);
                 expect(unsafeHtml).toContain(`${tag}`);
                 expect(unsafeHtml).toContain(`on${event}="eventHandler"`);
-                expect(safeHtml).toContain(`<${tag}>${closingTag}`);
+                expect(safeHtml).toContain(`<${tag}${attribute}>${closingTag}`);
                 expect(!safeHtml.includes(`on${event}="eventHandler"`));
             });
     });

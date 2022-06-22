@@ -12,6 +12,7 @@
 </template>
 
 <script>
+    import SanitizeMixin from '../../mixins/Sanitize/index.js';
 
     export default {
         name: 'jf-marquee',
@@ -21,9 +22,9 @@
             '$timeout',
             '$interval',
             '$scope',
-            '$transclude',
-            '$sanitize'
+            '$transclude'
         ],
+        mixins:[SanitizeMixin],
         data() {
             return {};
         },

@@ -13,7 +13,7 @@ localVue.directive('jf-tooltip-on-overflow', {
     bind: jest.fn()
 })
 
-// Props data 
+// Props data
 const tabArray = [
     { name: 'tab1' },
     { name: 'tab2' },
@@ -42,7 +42,7 @@ const JFrogEventBus =  {
         }
     }),
     registerOnScope: jest.fn()
-}             
+}
 
 // Mocking route
 const $router = {
@@ -76,21 +76,22 @@ const mountComponent = function ({ stubs, slots, routeValue }){
 
 describe('JfTabsComponent', () => {
 
-    let wrapper;    
-    it('All the tabs being rendered', () => {
+    let wrapper;
+    it('All the tabs being rendered', async () => {
         jest.useFakeTimers();
         wrapper = mountComponent({});
         jest.runAllTimers();
-        expect(wrapper.findAll('li').length).toBe(tabArray.length + 1)
+        await wrapper.vm.$nextTick();
+        expect(await wrapper.findAll('li').length).toBe(tabArray.length + 1)
     });
-    
+
     it('active tab is pulled from route params', () => {
         jest.useFakeTimers();
         wrapper = mountComponent({});
         jest.runAllTimers();
         expect(wrapper.vm.currentTab.name).toBe(wrapper.vm.$route.query.activeTab);
     });
-    
+
     it('when route doesnt have params active tab is set from propsData', () => {
         jest.useFakeTimers();
         wrapper = mountComponent({
@@ -99,7 +100,7 @@ describe('JfTabsComponent', () => {
         jest.runAllTimers();
         expect(wrapper.vm.currentTab.name).toBe(wrapper.vm.activeTab);
     });
-    
+
     it('Renders jf-tab from slot', () => {
         jest.useFakeTimers();
         wrapper = mountComponent({

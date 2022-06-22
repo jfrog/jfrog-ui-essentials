@@ -2,6 +2,10 @@ import {mount, createLocalVue} from '@vue/test-utils';
 import JfTabularDndComponent from './index.vue';
 import {testsBootstrap} from '@/testsBootstrap';
 
+window.store = {
+    subscribeAction: jest.fn()
+};
+
 const localVue = createLocalVue();
 testsBootstrap(localVue);
 
@@ -42,7 +46,6 @@ function setup(propsData = {}, listeners = {}, operations = () => {}) {
 
 
     let elems = getElements(wrapper);
-
     return {wrapper, elems};
 }
 
