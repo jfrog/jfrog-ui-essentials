@@ -43,7 +43,8 @@
 <script>
 import _ from 'lodash'
 import { JfDataListModal } from "@/components/JfDataListModal/index.js";
-import {VueFactory} from "../../../services/VueFactory";
+import {VueFactory} from '../../../services/VueFactory';
+import SanitizeMixin from '../../../mixins/Sanitize/index.js';
 
 export default {
     name: 'jf-datalist-item-component',
@@ -51,9 +52,9 @@ export default {
     'jf@inject': [
         'JFrogModal',
         'JFrogUIUtils',
-        'JFrogUILibConfig',
-        '$sanitize'
+        'JFrogUILibConfig'
     ],
+    mixins:[SanitizeMixin],
     data() {
         return {
             showAllValue: false

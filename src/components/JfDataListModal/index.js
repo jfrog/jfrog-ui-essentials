@@ -1,3 +1,5 @@
+import SanitizeMixin from '../../mixins/Sanitize/index.js';
+
 export const JfDataListModal = {
     template: `
             <template slot="modal-header">
@@ -26,7 +28,8 @@ export const JfDataListModal = {
 
             <!-- modal-body content -->
     `,
-    'jf@inject': ['JFrogUIUtils', '$sanitize'],
+    'jf@inject': ['JFrogUIUtils'],
+    mixins:[SanitizeMixin],
     methods: {
         filterItem(item) {
             if (this.filter.text) {

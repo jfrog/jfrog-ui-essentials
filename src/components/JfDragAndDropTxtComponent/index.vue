@@ -16,6 +16,7 @@
 </template>
 
 <script>
+    import SanitizeMixin from '../../mixins/Sanitize/index.js';
 
     export default {
         name: 'jf-drag-and-drop-txt',
@@ -31,9 +32,9 @@
             '$scope',
             '$element',
             '$attrs',
-            'JFrogNotifications',
-            '$sanitize'
+            'JFrogNotifications'
         ],
+        mixins: [SanitizeMixin],
         data() {
             return {};
         },
@@ -45,15 +46,15 @@
         mounted() {
             /* (NG2VUE) This was moved from created() to mounted() */
             /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
-    
+
             // Binding dragenter,dragleave,drop to <jf_drang_and_drop_text> element
             // since these events are not natively supported by Angular
             this.$element.bind('dragover', this.handleDragEnter.bind(this));
-    
+
             /* (NG2VUE) This was moved from created() to mounted() */
             /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
             this.$element.bind('dragleave', this.handleDragLeave.bind(this));
-    
+
             /* (NG2VUE) This was moved from created() to mounted() */
             /* (NG2VUE) Todo: If any other code in created() depends on this, it should also be moved here. */
             this.$element.bind('drop', this.handleDropEvent.bind(this));
@@ -66,7 +67,7 @@
             onFileLoadSuccess(event) {
                 this.dndContent = event.target.result;
                 $(this.$element).find('textarea').focus();
-    
+
                 /* Todo: check the following condition. It may contain some undefined references: this.dndChange */
                 if (this.dndChange !== null)
                     this.$emit('dnd-change');
@@ -76,7 +77,7 @@
                 if (event.target.error.name === 'SecurityError') {
                     errorMessage += '<br> The file is either unsafe or being used by another application.';
                 }
-    
+
                 if (this.dndOnError !== null) {
                     this.$emit('dnd-on-error', { msg: errorMessage });
                 } else {
@@ -88,11 +89,11 @@
                 this.toggleDragEffect();
                 event.preventDefault();
                 event.stopPropagation();
-    
+
                 // Initialize a file reader and get file path
                 let reader = new FileReader();
                 let file = event.originalEvent.dataTransfer.files[0];
-    
+
                 // Bind to reader events
                 reader.onload = event => {
                     this.onFileLoadSuccess(event);
@@ -100,21 +101,21 @@
                 reader.onerror = event => {
                     this.onFileLoadFailure(event);
                 };
-    
+
                 // Limit the read file size
                 let fileSize = Math.round(file.size / 1000);
                 if (fileSize > this.draggedFileSizeLimit) {
                     let errorMessage = 'File exceeds the maximum size of ' + this.draggedFileSizeLimit + ' KB';
-    
+
                     if (this.dndOnError !== null) {
                         this.$emit('dnd-on-error', { msg: errorMessage });
                     } else {
                         this.JFrogNotifications.create({ error: errorMessage });
                     }
-    
+
                     return false;
                 }
-    
+
                 // Read the file if not exceeds size limit
                 reader.readAsText(file);
             },
@@ -123,29 +124,29 @@
                 // firing the dragover/dragenter and dragleve events again and again
                 // when dragging a file over the textarea
                 let theCallingCodeShouldEnd = false;
-    
+
                 try {
                     if (event.relatedTarget.nodeType == 3) {
                         theCallingCodeShouldEnd = true;
                     }
                 } catch (err) {
                 }
-    
+
                 if (event.target === event.relatedTarget) {
                     theCallingCodeShouldEnd = true;
                 }
-    
+
                 return theCallingCodeShouldEnd;
             },
             handleDragEnter(event) {
                 event.preventDefault();
                 event.stopPropagation();
                 // cancel the event on FF
-    
+
                 if (this.callingCodeShouldEnd(event)) {
                     return;
                 }
-    
+
                 if (!this.entered) {
                     this.entered = true;
                     this.toggleDragEffect();
@@ -157,11 +158,11 @@
                 event.preventDefault();
                 event.stopPropagation();
                 // cancel the event on FF
-    
+
                 if (this.callingCodeShouldEnd(event)) {
                     return;
                 }
-    
+
                 if (this.entered) {
                     this.entered = false;
                     this.toggleDragEffect();
@@ -192,6 +193,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

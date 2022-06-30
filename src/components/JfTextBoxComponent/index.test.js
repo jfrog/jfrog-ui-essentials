@@ -11,16 +11,16 @@ describe('JfTextBoxComponent', () => {
     const sampleText = 'This is a testing sample data for text box';
     const displayText = '.jf-text-box-content-current';
 
-    it('contains the element text box container', () => {
-        const wrapper = shallowMount(JfTextBoxComponent, {
+    it('contains the element text box container', async () => {
+        const wrapper = await shallowMount(JfTextBoxComponent, {
             propsData: {}
         });
         expect(wrapper.contains('.jf-text-box-container')).toBe(true);
     });
 
-    it('When text overflows show-all element renders', () => {
+    it('When text overflows show-all element renders', async () => {
         jest.useFakeTimers();
-        const wrapper = shallowMount(JfTextBoxComponent, {
+        const wrapper = await shallowMount(JfTextBoxComponent, {
             propsData: {
                 text: sampleText,
                 seeAllText: showAllLinkText
@@ -32,13 +32,14 @@ describe('JfTextBoxComponent', () => {
             }
         });
         jest.runAllTimers();
-        expect(wrapper.find(showAllLink).exists()).toBe(true);
-        expect(wrapper.find(showAllLink).text()).toBe(showAllLinkText);
+        await wrapper.vm.$nextTick();
+        expect(await wrapper.find(showAllLink).exists()).toBe(true);
+        expect(await wrapper.find(showAllLink).text()).toBe(showAllLinkText);
     });
 
-    it('When text overflows onclicking show-all element opens modal', () => {
+    it('When text overflows onclicking show-all element opens modal', async () => {
         jest.useFakeTimers();
-        const wrapper = shallowMount(JfTextBoxComponent, {
+        const wrapper = await shallowMount(JfTextBoxComponent, {
             propsData: {
                 text: sampleText,
                 seeAllText: showAllLinkText
@@ -60,12 +61,13 @@ describe('JfTextBoxComponent', () => {
             }
         });
         jest.runAllTimers();
-        wrapper.find(showAllLink).trigger('click');
+        await wrapper.vm.$nextTick();
+        await wrapper.find(showAllLink).trigger('click');
         expect(wrapper.vm.JfFullTextService.showFullTextModal).toHaveBeenCalled();
 
     });
 
-    it('text props is displayed while rendering', () => {
+    it('text props is displayed while rendering', async () => {
         jest.useFakeTimers();
         const wrapper = shallowMount(JfTextBoxComponent, {
             propsData: {
@@ -78,7 +80,8 @@ describe('JfTextBoxComponent', () => {
             },
         });
         jest.runAllTimers();
-        expect(wrapper.find(displayText).text()).toBe(sampleText);
+        await wrapper.vm.$nextTick();
+        expect(await wrapper.find(displayText).text()).toBe(sampleText);
     });
 
 

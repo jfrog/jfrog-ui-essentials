@@ -31,7 +31,7 @@ describe('JfPendingDataComponent', () => {
         expect(wrapper.props().waitFor).toBe(true);
     });
 
-    it('check showSpinner value change on time out', () => {
+    it('check showSpinner value change on time out', async () => {
         jest.useFakeTimers();
         const wrapper = shallowMount(JfPendingDataComponent, {
             propsData: {
@@ -40,6 +40,7 @@ describe('JfPendingDataComponent', () => {
         })
         expect(wrapper.find('.icon-hourglass-local').exists()).toBe(false);
         jest.runAllTimers();
+        await wrapper.vm.$nextTick();
         expect(wrapper.find('.icon-hourglass-local').exists()).toBe(true);
     });
 });

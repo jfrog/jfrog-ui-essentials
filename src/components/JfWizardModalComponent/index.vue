@@ -109,15 +109,15 @@
 </template>
 <script>
     import ModalMixins from '@/mixins/ModalMixins/index.js'
+    import SanitizeMixin from '../../mixins/Sanitize/index.js';
     import {VueFactory} from "../../services/VueFactory";
 
     export default {
         name:'jf-wizard-modal',
-        mixins: [ModalMixins],
+        mixins: [ModalMixins, SanitizeMixin],
             "jf@inject": [
             'JFrogUILibConfig',
             'JFrogNotifications',
-            '$sanitize'
         ],
         props:[
             'wizardDefinitionObject',

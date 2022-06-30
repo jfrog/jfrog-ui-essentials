@@ -86,6 +86,7 @@
     </div>
 </template>
 <script>
+    import SanitizeMixin from '../../mixins/Sanitize/index.js';
 
     const PREVIEW_MODE  = 'Preview';
     const EDIT_MODE = 'Edit';
@@ -106,9 +107,9 @@
         'jf@inject': [
             '$timeout',
             '$scope',
-            'JFrogUIWebWorker',
-            '$sanitize'
+            'JFrogUIWebWorker'
         ],
+        mixins:[SanitizeMixin],
         data() {
             return {
                 webworkerOk: null,

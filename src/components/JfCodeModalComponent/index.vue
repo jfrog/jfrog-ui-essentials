@@ -28,6 +28,7 @@
 </template>
 <script>
     import ModalMixins from "@/mixins/ModalMixins/index.js";
+    import SanitizeMixin from "../../mixins/Sanitize";
     export default {
         name: 'jf-modal',
         props: [
@@ -37,10 +38,7 @@
             "mode",
             "beforeMessage"
         ],
-        'jf@inject': [
-            '$sanitize'
-        ],
-        mixins:[ModalMixins],
+        mixins:[ModalMixins, SanitizeMixin],
         data() {
             return {
                 okOnly: true,

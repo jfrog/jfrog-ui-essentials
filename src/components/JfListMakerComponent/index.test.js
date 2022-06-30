@@ -41,8 +41,8 @@ describe('JfListMakerComponent', () => {
     describe("display", function() {
         let wrapper;
 
-        beforeEach(function() {
-            wrapper = mountComponent();
+        beforeEach(async function() {
+            wrapper = await mountComponent();
         });
 
         it('should render a + button to add new elements to the list', () => {
@@ -53,10 +53,10 @@ describe('JfListMakerComponent', () => {
                 wrapper.find(BUTTON_ADD).attributes('disabled')
             ).toBe('disabled')
         })
-        it('The + button should be enabled when any text is typed in', () => {
-            wrapper.find(INPUT_TEXT).setValue('a')
+        it('The + button should be enabled when any text is typed in', async () => {
+            await wrapper.find(INPUT_TEXT).setValue('a')
             expect(
-                wrapper.find(BUTTON_ADD).attributes('disabled')
+                await wrapper.find(BUTTON_ADD).attributes('disabled')
             ).not.toBe('disabled')
         })
         it('If "disabled" prop is passed, the + button is disabled even if content is typed in', () => {
@@ -82,18 +82,18 @@ describe('JfListMakerComponent', () => {
             ).toBe(true)
         })
 
-        it('should display new values in the list', function () {
+        it('should display new values in the list', async function () {
 
-            wrapper = mountComponent({
+            wrapper = await mountComponent({
                 value: ['a'],
             });
 
             //Set some data
-            wrapper.find(INPUT_TEXT).setValue('b');
+            await wrapper.find(INPUT_TEXT).setValue('b');
             //Click on the + button
-            wrapper.find(BUTTON_ADD).trigger("click");
-            expect(wrapper.findAll(SELECTOR_A_LIST_ROW).at(0).text()).toEqual("a")
-            expect(wrapper.findAll(SELECTOR_A_LIST_ROW).at(1).text()).toEqual("b")
+            await wrapper.find(BUTTON_ADD).trigger("click");
+            expect(await wrapper.findAll(SELECTOR_A_LIST_ROW).at(0).text()).toEqual("a")
+            expect(await wrapper.findAll(SELECTOR_A_LIST_ROW).at(1).text()).toEqual("b")
         })
 
         it('should display new values in the list', function () {
@@ -135,25 +135,25 @@ describe('JfListMakerComponent', () => {
                 ).toBeTruthy()
             })
 
-            it('if the text entered is already in the passed-in list, no event must be emitted', function () {
+            it('if the text entered is already in the passed-in list, no event must be emitted', async function () {
                 //Set some data
-                wrapper.find(INPUT_TEXT).setValue("a");
+                await wrapper.find(INPUT_TEXT).setValue("a");
                 //Click on the + button
-                wrapper.find(BUTTON_ADD).trigger("click");
+                await wrapper.find(BUTTON_ADD).trigger("click");
                 //Validations
-                expect(wrapper.find(SELECTOR_ERROR_MESSAGE).text()).toEqual(MSG_VALUE_ALREADY_EXISTS);
-                expect(wrapper.emitted()[EVENT_ON_ADD_VALUE]).toBeFalsy();
-                expect(wrapper.emitted()[EVENT_ON_AFTER_ADD_VALUE]).toBeFalsy();
+                expect(await wrapper.find(SELECTOR_ERROR_MESSAGE).text()).toEqual(MSG_VALUE_ALREADY_EXISTS);
+                expect(await wrapper.emitted()[EVENT_ON_ADD_VALUE]).toBeFalsy();
+                expect(await wrapper.emitted()[EVENT_ON_AFTER_ADD_VALUE]).toBeFalsy();
             });
 
-            it('Empty strings (with padding) must not be accepted', function () {
+            it('Empty strings (with padding) must not be accepted', async function () {
 
                 //Set an empty string as the data
-                wrapper.find(INPUT_TEXT).setValue(" ");
+                await wrapper.find(INPUT_TEXT).setValue(" ");
                 //Click on the + button
-                wrapper.find(BUTTON_ADD).trigger("click");
+                await wrapper.find(BUTTON_ADD).trigger("click");
                 //Validations
-                expect(wrapper.find(SELECTOR_ERROR_MESSAGE).text()).toEqual(
+                expect(await wrapper.find(SELECTOR_ERROR_MESSAGE).text()).toEqual(
                     MSG_MUST_INPUT_VALUE
                 )
                 expect(wrapper.emitted()[EVENT_ON_ADD_VALUE]).toBeFalsy();
@@ -259,36 +259,36 @@ describe('JfListMakerComponent', () => {
 
     describe('regex functionality', function() {
 
-        it('if a regex is provided user inputs should be validated against the regex', function() {
+        it('if a regex is provided user inputs should be validated against the regex', async function() {
             const wrapper = mountComponent({
                 validationRegex: "^[A-Za-z]*$",
             })
-            wrapper.find(INPUT_TEXT).setValue("a");
+            await wrapper.find(INPUT_TEXT).setValue("a");
 
-            wrapper.find(BUTTON_ADD).trigger('click')
+            await wrapper.find(BUTTON_ADD).trigger('click')
             expect(wrapper.emitted()[EVENT_INPUT][0]).toEqual([
                 ['a'],
             ])
-            wrapper.find(INPUT_TEXT).setValue("1");
+            await wrapper.find(INPUT_TEXT).setValue("1");
 
-            wrapper.find(BUTTON_ADD).trigger('click')
-            expect(wrapper.find(SELECTOR_ERROR_MESSAGE).text()).toEqual(
+            await wrapper.find(BUTTON_ADD).trigger('click')
+            expect(await wrapper.find(SELECTOR_ERROR_MESSAGE).text()).toEqual(
                 'Value not valid'
             )
             expect(wrapper.emitted()[EVENT_INPUT][0]).toEqual([['a']])
         });
 
-        it('if a regex message is provided it should be displayed if the input fails validation', function() {
+        it('if a regex message is provided it should be displayed if the input fails validation', async function() {
             let errorMessage = "Exercitation cillum adipisicing mollit";
             const wrapper = mountComponent({
                 validationRegex: '^[A-Za-z]*$',
                 validationRegexMessage:errorMessage,
             })
 
-            wrapper.find(INPUT_TEXT).setValue("1");
+            await wrapper.find(INPUT_TEXT).setValue("1");
 
-            wrapper.find(BUTTON_ADD).trigger('click')
-            expect(wrapper.find(SELECTOR_ERROR_MESSAGE).text()).toEqual(
+            await wrapper.find(BUTTON_ADD).trigger('click')
+            expect(await wrapper.find(SELECTOR_ERROR_MESSAGE).text()).toEqual(
                 errorMessage
             )
         });

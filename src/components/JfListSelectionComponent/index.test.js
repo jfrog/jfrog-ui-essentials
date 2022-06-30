@@ -208,7 +208,7 @@ describe('JfListSelectionComponent', () => {
 
     describe('filter', function () {
 
-        it('should only display items which match the filter', function () {
+        it('should only display items which match the filter', async () => {
             let wrapper = mountComponent({
                 items: [
                     {
@@ -225,22 +225,22 @@ describe('JfListSelectionComponent', () => {
 
             //Initially the 2nd row is visible
             expect(
-                wrapper.findAll(`${SELECTOR_LIST_ITEM}`).length
+                await wrapper.findAll(`${SELECTOR_LIST_ITEM}`).length
             ).toBe(3)
 
-            wrapper.find(SELECTOR_INPUT).setValue("aliquip");
+            await wrapper.find(SELECTOR_INPUT).setValue("aliquip");
 
             //After entering the filter criteria, only one row should be visible
             expect(
-                wrapper.findAll(`${SELECTOR_LIST_ITEM}`)
+                await wrapper.findAll(`${SELECTOR_LIST_ITEM}`)
                     .length
             ).toBe(2)
 
-            wrapper.find(SELECTOR_INPUT).setValue('')
+            await wrapper.find(SELECTOR_INPUT).setValue('')
 
             //If filter is cleared, all rows must be displayed
             expect(
-                wrapper.findAll(`${SELECTOR_LIST_ITEM}`)
+                await wrapper.findAll(`${SELECTOR_LIST_ITEM}`)
                     .length
             ).toBe(3)
 
