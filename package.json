@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@braintree/sanitize-url": "^6.0.0",
-    "axios": "^0.21.4",
+    "axios": "^0.26.1",
     "billboard.js": "1.9.5",
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "2.3.0",
@@ -29,7 +29,7 @@
     "jquery": "^3.5.1",
     "jquery-contextmenu": "1.8.1",
     "js-beautify": "^1.14.4",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "tooltipster": "^4.2.6",
     "v-click-outside": "^2.0.2",
