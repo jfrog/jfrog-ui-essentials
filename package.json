@@ -30,7 +30,7 @@
     "jquery-contextmenu": "1.8.1",
     "js-beautify": "^1.14.4",
     "lodash": "^4.17.11",
-    "moment": "^2.29.2",
+    "moment": "^2.29.4",
     "tooltipster": "^4.2.6",
     "v-click-outside": "^2.0.2",
     "vee-validate": "2.1.5",
