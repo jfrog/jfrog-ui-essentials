@@ -25,7 +25,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 import $ from 'jquery';
 import 'jquery-contextmenu';
-import 'components-jqueryui';
+import 'jquery-ui/dist/jquery-ui.min';
 import moment from 'moment';
 import JFrogUI from './plugins/JFrogUI';
 import VueClipboard from 'vue-clipboard2';
@@ -39,11 +39,6 @@ import { VueFactory } from "./services/VueFactory";
 window.$ = $;
 window.moment = moment;
 window.jQuery = $;
-// const importBootstrapVue = () => import('bootstrap-vue');
-// const importJquery = () => import(/* webpackChunkName: "jquery" */'jquery');
-// const importJqueryCtxMenu = () => import(/* webpackChunkName: "jquery" */'jquery-contextmenu');
-// const importJqueryUi = () => import(/* webpackChunkName: "jquery" */'components-jqueryui');
-// const importMoment = () => import(/* webpackChunkName: "jquery" */'moment');
 
 require('./misc/jquery.highlight');
 
@@ -62,14 +57,6 @@ export default {
         installDirectives();
         installFilters();
         registerGlobalComponents();
-        // const BootstrapVue = await importBootstrapVue();
-        // const $ = await importJquery();
-        // await importJqueryCtxMenu();
-        // await importJqueryUi();
-        // const moment = await importMoment();
-        // window.$ = $;
-        // window.moment = moment;
-        // window.jQuery = $;
 
         if (options && options.config) {
             window.$$$$jfuieConfig = options.config;
