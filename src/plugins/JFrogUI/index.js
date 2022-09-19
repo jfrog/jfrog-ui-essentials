@@ -38,7 +38,7 @@ const JFrogUI = {
             get: injectable => this.dim.get(injectable),
             getProvider: injectable => this.dim.getProvider(injectable),
             injectOn: (obj, ...injections) => this.dim.injectOn(obj, ...injections),
-            routersCache: {},
+            routersCache: window.$jfrog.routersCache || {},
             router: JFrogUI.dim.router
         }
 
