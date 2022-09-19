@@ -33,12 +33,14 @@ const JFrogUI = {
             validity: true
         });
 
+        const routersCache = window.$jfrog && window.$jfrog.routersCache ? window.$jfrog.routersCache : {};
+
         Vue.prototype.$jfrog = window.$jfrog = $jfrog = {
             apiRoot: plugin.$apiRoot,
             get: injectable => this.dim.get(injectable),
             getProvider: injectable => this.dim.getProvider(injectable),
             injectOn: (obj, ...injections) => this.dim.injectOn(obj, ...injections),
-            routersCache: window.$jfrog.routersCache || {},
+            routersCache,
             router: JFrogUI.dim.router
         }
 
