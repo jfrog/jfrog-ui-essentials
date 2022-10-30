@@ -1,0 +1,2 @@
+(("undefined"!==typeof self?self:this)["webpackJsonpjfrog_ui_essentials"]=("undefined"!==typeof self?self:this)["webpackJsonpjfrog_ui_essentials"]||[]).push([[4],{"877b":function(e,s,f){"use strict";f.r(s),s["default"]={bind:function(e){$(e).attr("readonly",!0);var s=function s(){$(e).attr("readonly",!1),$(e).off("focus",s)};$(e).on("focus",s)}}}}]);
+//# sourceMappingURL=jfrog-ui-essentials.umd.min.JfFakeReadonlyDirective.js.map

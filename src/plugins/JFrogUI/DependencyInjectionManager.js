@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { filter, remove, isString, includes, values, isArray } from 'lodash';
 import {VueFactory} from "../../services/VueFactory";
 
 export class DependencyInjectionManager {
@@ -109,7 +109,7 @@ export class DependencyInjectionManager {
     }
 
     registerInjectable(descriptor) {
-        if (!descriptor.type || !_.includes(_.values(this.InjectableTypes), descriptor.type)) {
+        if (!descriptor.type || !includes(values(this.InjectableTypes), descriptor.type)) {
             console.error('DI: Wrong or missing injectable type', descriptor.type);
             return;
         }
@@ -125,7 +125,7 @@ export class DependencyInjectionManager {
     }
 
     get(injectable) {
-        if (_.isArray(injectable)) {
+        if (isArray(injectable)) {
             let injections = {}
             injectable.forEach(injectable => {
                 injections[injectable] = this.get(injectable)
@@ -208,7 +208,7 @@ export class DependencyInjectionManager {
     injectServicesToComponent(component) {
         if (component.$options['jf@inject']) {
             let injections = component.$options['jf@inject'];
-            if (_.isString(injections)) injections = injections.split(',');
+            if (isString(injections)) injections = injections.split(',');
             injections.forEach(injection => {
                 injection = injection.trim();
                 if (this.injectables[injection]) {
@@ -249,7 +249,7 @@ export class DependencyInjectionManager {
                     }
 
                     if (!this.servicesClientsMap[injection]) this.servicesClientsMap[injection] = [];
-                    if (!_.includes(this.servicesClientsMap[injection], component)) {
+                    if (!includes(this.servicesClientsMap[injection], component)) {
                         this.servicesClientsMap[injection].push(component);
                     }
                 }
@@ -268,7 +268,7 @@ export class DependencyInjectionManager {
         if (injections.length === 1) {
             injections = injections[0]
         }
-        if (_.isString(injections)) injections = injections.split(',');
+        if (isString(injections)) injections = injections.split(',');
 
         injections.forEach(injection => {
             obj[injection] = this.get(injection);
@@ -279,7 +279,7 @@ export class DependencyInjectionManager {
         if (injections.length === 1) {
             injections = injections[0]
         }
-        if (_.isString(injections)) injections = injections.split(',');
+        if (isString(injections)) injections = injections.split(',');
 
         injections.forEach(injection => {
             obj[injection] = this.getProvider(injection);
@@ -289,7 +289,7 @@ export class DependencyInjectionManager {
     prepareInjectables() {
         let dim = this;
 
-        let services = _.filter(this.registeredInjectables, {type: this.InjectableTypes.SERVICE});
+        let services = filter(this.registeredInjectables, {type: this.InjectableTypes.SERVICE});
         services.forEach(serviceDescriptor => {
             if (serviceDescriptor.name === '$stateParams') {
                 this.injectables[serviceDescriptor.name] = {};
@@ -314,12 +314,12 @@ export class DependencyInjectionManager {
         })
 
 
-        let constructors = _.filter(this.registeredInjectables, {type: this.InjectableTypes.CONSTRUCTOR});
+        let constructors = filter(this.registeredInjectables, {type: this.InjectableTypes.CONSTRUCTOR});
         constructors.forEach(constructorDescriptor => {
             this.injectables[constructorDescriptor.name] = constructorDescriptor.class;
         })
 
-        let autoConstructors = _.filter(this.registeredInjectables, {type: this.InjectableTypes.AUTO_CONSTRUCTOR});
+        let autoConstructors = filter(this.registeredInjectables, {type: this.InjectableTypes.AUTO_CONSTRUCTOR});
         autoConstructors.forEach(autoConstructorDescriptor => {
             let AutoConstructor = autoConstructorDescriptor.class;
             this.injectables[autoConstructorDescriptor.name] = {
@@ -327,26 +327,26 @@ export class DependencyInjectionManager {
             };
         })
 
-        let factories = _.filter(this.registeredInjectables, {type: this.InjectableTypes.FACTORY});
+        let factories = filter(this.registeredInjectables, {type: this.InjectableTypes.FACTORY});
         factories.forEach(factoryDescriptor => {
             this.injectables[factoryDescriptor.name] = {
                 $factoryFunc: factoryDescriptor.function
             }
         })
 
-        let providers = _.filter(this.registeredInjectables, {type: this.InjectableTypes.PROVIDER});
+        let providers = filter(this.registeredInjectables, {type: this.InjectableTypes.PROVIDER});
         providers.forEach(providerDescriptor => {
             this.injectables[providerDescriptor.name] = {
                 $provider: providerDescriptor.function
             }
         })
 
-        let functions = _.filter(this.registeredInjectables, {type: this.InjectableTypes.FUNCTION});
+        let functions = filter(this.registeredInjectables, {type: this.InjectableTypes.FUNCTION});
         functions.forEach(functionDescriptor => {
             this.injectables[functionDescriptor.name] = functionDescriptor.function;
         })
 
-        let constants = _.filter(this.registeredInjectables, {type: this.InjectableTypes.CONSTANT});
+        let constants = filter(this.registeredInjectables, {type: this.InjectableTypes.CONSTANT});
         constants.forEach(constantDescriptor => {
             this.injectables[constantDescriptor.name] = constantDescriptor.constant;
         })
@@ -355,12 +355,12 @@ export class DependencyInjectionManager {
     onComponentDestruction(comp) {
         Object.keys(this.servicesClientsMap).forEach(injectable => {
             let comps = this.servicesClientsMap[injectable];
-            _.remove(comps, c => c === comp);
+            remove(comps, c => c === comp);
         })
     }
 
     runConfigs() {
-        _.values(this.configs).forEach(func => {
+        values(this.configs).forEach(func => {
             func();
         })
     }

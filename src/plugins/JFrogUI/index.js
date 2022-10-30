@@ -13,7 +13,7 @@ import { AngularScopeServiceMock } from './angularjs-mocks/scope'
 import { AngularStateServiceMock } from './angularjs-mocks/state'
 import {AngularUrlMatcherFactoryMock} from './angularjs-mocks/urlMatcherFactory';
 import { AngularCompileServiceMock } from './angularjs-mocks/compile'
-import _ from 'lodash';
+import { filter, isString, isObject, isArray, values, forEach, entries, get, has, camelCase, trim, kebabCase, isFunction } from 'lodash';
 import $ from 'jquery';
 import {AngularTranscludeServiceMock} from './angularjs-mocks/transclude';
 import {DependencyInjectionManager} from './DependencyInjectionManager';
@@ -45,27 +45,27 @@ const JFrogUI = {
         }
 
         Vue.prototype.$filterArray = (array, filterBy) => {
-            return _.filter(array, item => {
-                if (_.isString(filterBy) && _.isString(item)) {
+            return filter(array, item => {
+                if (isString(filterBy) && isString(item)) {
                     return item.toLowerCase().indexOf(filterBy.toLowerCase()) !== -1;
                 }
-                else if (_.isString(filterBy) && _.isObject(item)) {
+                else if (isString(filterBy) && isObject(item)) {
                     let match = false;
-                    _.forEach(_.values(item), val => {
-                        if (_.isString(val) && val.toLowerCase().indexOf(filterBy.toLowerCase()) !== -1) {
+                    forEach(values(item), val => {
+                        if (isString(val) && val.toLowerCase().indexOf(filterBy.toLowerCase()) !== -1) {
                             match = true;
                             return false;
                         }
                     });
                     return match;
                 }
-                else if (_.isObject(filterBy) && _.isObject(item)) {
+                else if (isObject(filterBy) && isObject(item)) {
 
                     let recursiveMatchFinder = (obj, filterObj) => {
                         let match = true;
-                        _.forEach(_.entries(obj), ([key, val]) => {
+                        forEach(entries(obj), ([key, val]) => {
                             if (filterObj[key]) {
-                                if (!_.isObject(filterObj[key]) && !_.isObject(val)) {
+                                if (!isObject(filterObj[key]) && !isObject(val)) {
                                     if ((val + '').toLowerCase().indexOf(filterObj[key].toLowerCase()) === -1) {
                                         match = false;
                                         return false;
@@ -109,8 +109,8 @@ const JFrogUI = {
                     if (this.$options.ng1_legacy && this.$options.ng1_legacy.ng1preLinkFn) {
                         let attrs = {};
                         [this.$props, this.$listeners].forEach(obj => {
-                            _.entries(obj).forEach(entry => {
-                                Object.defineProperty(attrs, _.camelCase(entry[0]), {
+                            entries(obj).forEach(entry => {
+                                Object.defineProperty(attrs, camelCase(entry[0]), {
                                     get() {
                                         return entry[1];
                                     }
@@ -138,8 +138,8 @@ const JFrogUI = {
                     if (this.$options.ng1_legacy && this.$options.ng1_legacy.ng1postLinkFn) {
                         let attrs = {};
                         [this.$props, this.$listeners].forEach(obj => {
-                            _.entries(obj).forEach(entry => {
-                                Object.defineProperty(attrs, _.camelCase(entry[0]), {
+                            entries(obj).forEach(entry => {
+                                Object.defineProperty(attrs, camelCase(entry[0]), {
                                     get() {
                                         return entry[1];
                                     }
@@ -161,8 +161,8 @@ const JFrogUI = {
             let linkCtrlParam = this;
 
             let perString = require => {
-                let clean = _.trim(require, '^');
-                let kebab = _.kebabCase(clean);
+                let clean = trim(require, '^');
+                let kebab = kebabCase(clean);
                 let ret;
                 if (require.startsWith('^^')) {
                     if (kebab !== this.$parent.$options.name) {
@@ -191,14 +191,14 @@ const JFrogUI = {
                 return ret;
             }
 
-            if (_.isString(require)) {
+            if (isString(require)) {
                 linkCtrlParam = perString(require) || this;
             }
-            else if (_.isArray(require)) {
+            else if (isArray(require)) {
                 linkCtrlParam = [];
                 require.forEach(r => linkCtrlParam.push(perString(r)));
             }
-            else if (_.isObject(require)) {
+            else if (isObject(require)) {
                 linkCtrlParam = {};
                 Object.keys(require).forEach(k => {
                     let ctrl = perString(require[k]);
@@ -213,16 +213,16 @@ const JFrogUI = {
         function handleCompileFunction() {
             let ngCompile = this.$options.ng1_legacy['ng1compileFn'];
             let attrs = {};
-            let tElem = $(`<div>${_.trim(this.$options.template)}</div>`);
+            let tElem = $(`<div>${trim(this.$options.template)}</div>`);
 
             if (this.$parent && this.$parent.$options.template) {
-                let tParent = $(`<div>${_.trim(this.$parent.$options.template)}</div>`);
+                let tParent = $(`<div>${trim(this.$parent.$options.template)}</div>`);
 
                 let selfs = tParent.find(this.$options.name);
-                let thisInstanceIndex = _.filter(this.$parent.$children, {$options: {name: this.$options.name}}).indexOf(this);
-                _.forEach(selfs[thisInstanceIndex].attributes, attr => {
+                let thisInstanceIndex = filter(this.$parent.$children, {$options: {name: this.$options.name}}).indexOf(this);
+                forEach(selfs[thisInstanceIndex].attributes, attr => {
                     let THIS = this;
-                    let propName = _.camelCase(_.trim(attr.name,':@'));
+                    let propName = camelCase(trim(attr.name,':@'));
                     Object.defineProperty(attrs, propName, {
                         get() {
                             return attr.value;
@@ -230,7 +230,7 @@ const JFrogUI = {
                         set(newExpression) {
                             Object.defineProperty(THIS, propName, {
                                 get() {
-                                    return _.get(THIS.$parent, newExpression);
+                                    return get(THIS.$parent, newExpression);
                                 }
                             })
                         }
@@ -244,11 +244,11 @@ const JFrogUI = {
                 transcludeFn(this, ...args);
             });
 
-            if (_.isFunction(response)) {
+            if (isFunction(response)) {
                 this.$options.ng1_legacy = this.$options.ng1_legacy || {};
                 this.$options.ng1_legacy.ng1postLinkFn = response;
             }
-            else if (_.isObject(response)) {
+            else if (isObject(response)) {
                 this.$options.ng1_legacy = this.$options.ng1_legacy || {};
                 this.$options.ng1_legacy.ng1preLinkFn = response.pre;
                 this.$options.ng1_legacy.ng1postLinkFn = response.post;
@@ -293,11 +293,11 @@ const JFrogUI = {
             Vue.directive('init', {
                 bind: function (el, binding, vnode) {
                     let functionName = binding.expression.split('(')[0].trim();
-                    if (!_.has(vnode.context, functionName) && !_.get(vnode.context, functionName)) {
+                    if (!has(vnode.context, functionName) && !get(vnode.context, functionName)) {
                         console.error('v-init: Method does not exist: ' + functionName)
                     }
                     else {
-                        _.get(vnode.context, functionName)()
+                        get(vnode.context, functionName)()
                     }
                 }
             })
@@ -306,47 +306,47 @@ const JFrogUI = {
 
     // Main plugin object interface
     registerServices(services) {
-        _.entries(services).forEach(entry => {
+        entries(services).forEach(entry => {
             dim.registerService(entry[0], entry[1]);
         })
     },
     registerConstructors(constructors) {
-        _.entries(constructors).forEach(entry => {
+        entries(constructors).forEach(entry => {
             dim.registerConstructor(entry[0], entry[1]);
         })
     },
     registerAutoConstructors(autoConstructors) {
-        _.entries(autoConstructors).forEach(entry => {
+        entries(autoConstructors).forEach(entry => {
             dim.registerAutoConstructor(entry[0], entry[1]);
         })
     },
     registerFactories(factories) {
-        _.entries(factories).forEach(entry => {
+        entries(factories).forEach(entry => {
             dim.registerFactory(entry[0], entry[1]);
         })
     },
     registerConfigs(configs) {
-        _.entries(configs).forEach(entry => {
+        entries(configs).forEach(entry => {
             dim.registerConfig(entry[0], entry[1]);
         })
     },
     registerRunBlocks(runs) {
-        _.entries(runs).forEach(entry => {
+        entries(runs).forEach(entry => {
             dim.registerRunBlock(entry[0], entry[1]);
         })
     },
     registerProviders(providers) {
-        _.entries(providers).forEach(entry => {
+        entries(providers).forEach(entry => {
             dim.registerProvider(entry[0], entry[1]);
         })
     },
     registerFunctions(functions) {
-        _.entries(functions).forEach(entry => {
+        entries(functions).forEach(entry => {
             dim.registerFunction(entry[0], entry[1]);
         })
     },
     registerConstants(constants) {
-        _.entries(constants).forEach(entry => {
+        entries(constants).forEach(entry => {
             dim.registerConstant(entry[0], entry[1]);
         })
     },

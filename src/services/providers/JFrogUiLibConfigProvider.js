@@ -1,4 +1,6 @@
 import bowerJSON     from '../../../package.json';
+import { extend } from 'lodash';
+
 export class JFrogUILibConfig {
     constructor() {
         let buildVersion = bowerJSON.version;
@@ -10,7 +12,7 @@ export class JFrogUILibConfig {
         return this;
     }
     setConfig(config) {
-        _.extend(this.config,config);
+        extend(this.config,config);
     }
     getConfig() {
         return this.config;

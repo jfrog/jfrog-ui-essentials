@@ -1,14 +1,14 @@
-import _ from 'lodash';
+import { extend } from 'lodash';
 import {VueFactory} from "@/services/VueFactory";
 export class AngularScopeServiceMock {
     constructor(vueComp) {
         if (vueComp.$options.ng1_legacy && vueComp.$options.ng1_legacy['controllerAs']) {
-            _.extend(this, {
+            extend(this, {
                 [vueComp.$options.ng1_legacy['controllerAs']]: vueComp
             });
         }
         else {
-            _.extend(this, vueComp.$data);
+            extend(this, vueComp.$data);
         }
         this.$comp = vueComp;
         this.$on = (msg, callback) => {
@@ -29,7 +29,7 @@ export class AngularScopeServiceMock {
 
         this.$new = (data = {}) => {
             const { Vue } = VueFactory.getInstance();
-            let v = new Vue({data() { return _.extend({}, data, vueComp.$data); }});
+            let v = new Vue({data() { return extend({}, data, vueComp.$data); }});
             return new AngularScopeServiceMock(v);
         }
 

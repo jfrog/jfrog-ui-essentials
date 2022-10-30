@@ -1,19 +1,23 @@
-import { install as installJfDynamicTemplateDirective } from './directives/JfDynamicTemplateDirective.js';
-import { install as installJfIncludeReplaceDirective } from'./directives/JfIncludeReplaceDirective.js';
-import { install as installJfTooltipDirective } from'./directives/JfTooltipDirective.js';
-import { install as installJfClearErrorsDirective } from'./directives/JfClearErrorsDirective.js';
-import { install as installJfFakeReadonlyDirective } from'./directives/JfFakeReadonlyDirective.js';
-import { install as installJfTooltipOnOverflowDirective } from'./directives/JfTooltipOnOverflowDirective.js';
-import { install as installJfRevealInputDirective } from'./directives/JfRevealInputDirective.js';
-import { install as installJfResizeDirective } from'./directives/JfResizeDirective.js';
+import { VueFactory } from "./services/VueFactory";
+import { lazyDirective } from './services/factories/LazyDirectiveLoader';
+
+const JfDynamicTemplateDirective = lazyDirective(() => import(/* webpackChunkName: "JfDynamicTemplateDirective" */'./directives/JfDynamicTemplateDirective.js'));
+const JfIncludeReplaceDirective = lazyDirective(() => import(/* webpackChunkName: "JfIncludeReplaceDirective" */'./directives/JfIncludeReplaceDirective.js'));
+const JfTooltipDirective = lazyDirective(() => import(/* webpackChunkName: "JfTooltipDirective" */'./directives/JfTooltipDirective.js'));
+const JfClearErrorsDirective = lazyDirective(() => import(/* webpackChunkName: "JfClearErrorsDirective" */'./directives/JfClearErrorsDirective.js'));
+const JfFakeReadonlyDirective = lazyDirective(() => import(/* webpackChunkName: "JfFakeReadonlyDirective" */'./directives/JfFakeReadonlyDirective.js'));
+const JfTooltipOnOverflowDirective = lazyDirective(() => import(/* webpackChunkName: "JfTooltipOnOverflowDirective" */'./directives/JfTooltipOnOverflowDirective.js'));
+const JfRevealInputDirective = lazyDirective(() => import(/* webpackChunkName: "JfRevealInputDirective" */'./directives/JfRevealInputDirective.js'));
+const JfResizeDirective = lazyDirective(() => import(/* webpackChunkName: "JfResizeDirective" */'./directives/JfResizeDirective.js'));
 
 export const installDirectives = () => {
-    installJfDynamicTemplateDirective();
-    installJfIncludeReplaceDirective();
-    installJfTooltipDirective();
-    installJfClearErrorsDirective();
-    installJfFakeReadonlyDirective();
-    installJfTooltipOnOverflowDirective();
-    installJfRevealInputDirective();
-    installJfResizeDirective();
-}
+    const { Vue } = VueFactory.getInstance();
+    Vue.directive('jf-dynamic-template', JfDynamicTemplateDirective)
+    Vue.directive('jf-include-replace', JfIncludeReplaceDirective)
+    Vue.directive('jf-tooltip', JfTooltipDirective);
+    Vue.directive('jf-clear-errors', JfClearErrorsDirective);
+    Vue.directive('jf-fake-readonly', JfFakeReadonlyDirective);
+    Vue.directive('jf-tooltip-on-overflow', JfTooltipOnOverflowDirective);
+    Vue.directive('jf-reveal-input', JfRevealInputDirective);
+    Vue.directive('jf-resize', JfResizeDirective);
+};

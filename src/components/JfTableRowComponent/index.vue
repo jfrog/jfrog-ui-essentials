@@ -136,6 +136,7 @@
 </template>
 
 <script>
+    import 'components-jqueryui';
     import RowAction from './components/RowAction';
     export default {
         components: {

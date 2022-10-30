@@ -1,3 +1,4 @@
+import { trimStart, trimEnd, isObject, isString, isNumber  } from 'lodash';
 export class AngularLocationProviderMock {
     constructor() {
         this.location = window.location
@@ -18,7 +19,7 @@ export class AngularLocationProviderMock {
 
     url(newUrl) {
         if (!newUrl) {
-            return _.trimStart(this.location.hash, '#');
+            return trimStart(this.location.hash, '#');
         }
         else {
             this._update(() => {
@@ -32,7 +33,7 @@ export class AngularLocationProviderMock {
     }
 
     protocol() {
-        return _.trimEnd(this.location.protocol, ':');
+        return trimEnd(this.location.protocol, ':');
     }
 
     host() {
@@ -85,10 +86,10 @@ export class AngularLocationProviderMock {
                 })
             }
 
-            if (_.isObject(newSearch[0])) {
+            if (isObject(newSearch[0])) {
                 update(newSearch[0]);
             }
-            else if (_.isString(newSearch[0]) && (_.isString(newSearch[1]) || _.isNumber(newSearch[1]))){
+            else if (isString(newSearch[0]) && (isString(newSearch[1]) || isNumber(newSearch[1]))){
                 let searchObj = this.search();
                 searchObj[newSearch[0]] = newSearch[1];
                 update(searchObj);

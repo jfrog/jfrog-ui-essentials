@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { pick, extend} from 'lodash';
 export function AngularCompileCompServiceMock(template, data = {}, parentComp = null) {
     let props = {};
     let copiedFromParent = {};
@@ -7,19 +7,19 @@ export function AngularCompileCompServiceMock(template, data = {}, parentComp = 
         Object.keys(parentComp.$options.props || {}).forEach(prop => {
             props[prop] = parentComp[prop];
         })
-        copiedFromParent = _.pick(parentComp.$options, 'methods', 'components')
+        copiedFromParent = pick(parentComp.$options, 'methods', 'components')
     }
-    let options = _.extend({}, copiedFromParent, {
+    let options = extend({}, copiedFromParent, {
         template,
         router: $jfrog.router,
         data() {
-            return _.extend({}, props, data);
+            return extend({}, props, data);
         }
     });
 
     let parent = (parentComp || {}).$parent;
     while (parent) {
-        _.extend(options.components, parent.$options.components);
+        extend(options.components, parent.$options.components);
         parent = parent.$parent;
     }
 

@@ -1,4 +1,7 @@
-import LIBRARY_EVENTS from '../constants/jfrog_ui_lib_events.constants';    /**
+import LIBRARY_EVENTS from '../constants/jfrog_ui_lib_events.constants';
+import { extend, isArray, find, remove } from 'lodash';
+
+/**
  * Service for components communication
  */
 export class JFrogEventBus {
@@ -10,7 +13,7 @@ export class JFrogEventBus {
         this.$inject('$timeout', 'JFrogUILibConfig');
         this._listeners = Object.create(null);
         let events = LIBRARY_EVENTS;
-        _.extend(events, this.JFrogUILibConfig.getConfig().customEventsDefinition);
+        extend(events, this.JFrogUILibConfig.getConfig().customEventsDefinition);
         this.eventDef = events;
 
         let eventNames = {};
@@ -35,7 +38,7 @@ export class JFrogEventBus {
      * @returns {Deregister} the deregistration function
      */
     register(eventNames, callback) {
-        if (_.isArray(eventNames)) {
+        if (isArray(eventNames)) {
             return eventNames.map(eventName => this._registerSingleEvent(eventName, callback));
         } else {
             return this._registerSingleEvent(eventNames, callback);
@@ -58,7 +61,7 @@ export class JFrogEventBus {
      */
     registerOnScope(scope, eventNames, callback) {
         let deregisters = this.register(eventNames, callback);
-        if (!_.isArray(deregisters))
+        if (!isArray(deregisters))
             deregisters = [deregisters];
         scope.$on('$destroy', () => {
             deregisters.forEach(deregister => deregister());
@@ -95,10 +98,10 @@ export class JFrogEventBus {
         if (this._listeners[eventName] == 'undefined') {
             throw new Error('This event does not exist');
         }
-        if (!_.find(this._listeners[eventName], { _id: id })) {
+        if (!find(this._listeners[eventName], { _id: id })) {
             throw new Error('This callback is not registered under this event name');
         }
-        _.remove(this._listeners[eventName], listener => {
+        remove(this._listeners[eventName], listener => {
             return listener._id == id;
         });
     }

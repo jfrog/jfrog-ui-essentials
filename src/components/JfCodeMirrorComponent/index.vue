@@ -15,8 +15,24 @@
 </template>
 
 <script>
-    import CodeMirror from 'codemirror';
     import {VueFactory} from "../../services/VueFactory";
+    import { codemirror } from 'vue-codemirror'
+    import 'codemirror/lib/codemirror.css';
+    import 'codemirror/mode/javascript/javascript.js';
+    import 'codemirror/mode/xml/xml.js';
+    import 'codemirror/mode/markdown/markdown.js';
+    import 'codemirror/mode/gfm/gfm.js';
+    import 'codemirror/addon/mode/overlay.js';
+    import 'codemirror/addon/edit/matchbrackets.js';
+    import 'codemirror/addon/selection/mark-selection.js';
+    import 'codemirror/addon/search/searchcursor.js';
+    import 'codemirror/addon/dialog/dialog.js';
+    import 'codemirror/addon/dialog/dialog.css';
+    import 'codemirror/addon/search/search.js';
+    import CodeMirror from 'codemirror';
+    import { initCodemirrorConfig } from './config.js';
+
+    window.CodeMirror = CodeMirror;
 
     export default {
         name: 'jf-code-mirror',
@@ -41,6 +57,9 @@
             '$timeout',
             'JFrogUIUtils'
         ],
+        components: {
+            codemirror
+        },
         data() {
             return {
                 formattedModel: null,
@@ -48,6 +67,7 @@
             };
         },
         created() {
+            initCodemirrorConfig(CodeMirror);
             this.defineExtensions();
         },
         mounted() {

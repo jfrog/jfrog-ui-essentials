@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { isFunction, kebabCase } from 'lodash';
 import $ from 'jquery';
 import {VueFactory} from "../../../services/VueFactory";
 
@@ -9,10 +9,9 @@ export class AngularTranscludeServiceMock {
     $get() {
         let transcludeFn = function AngularTranscludeServiceMock(component, ...args) {
             let cb, scope;
-            if (_.isFunction(args[0])) {
+            if (isFunction(args[0])) {
                 cb = args[0];
-            }
-            else if (_.isFunction(args[1])) {
+            } else if (isFunction(args[1])) {
                 scope = args[0];
                 cb = args[1]
             }
@@ -35,7 +34,7 @@ export class AngularTranscludeServiceMock {
         };
 
         transcludeFn.isSlotFilled = (slotName) => {
-            return !!transcludeFn.$comp.$slots[_.kebabCase(slotName)];
+            return !!transcludeFn.$comp.$slots[kebabCase(slotName)];
         }
 
         return transcludeFn;

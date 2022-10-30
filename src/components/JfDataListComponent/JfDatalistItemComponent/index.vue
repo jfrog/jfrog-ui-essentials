@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import _ from 'lodash'
+import { filter, extend, omit } from 'lodash'
 import { JfDataListModal } from "@/components/JfDataListModal/index.js";
 import {VueFactory} from '../../../services/VueFactory';
 import SanitizeMixin from '../../../mixins/Sanitize/index.js';
@@ -75,7 +75,7 @@ export default {
                 Updates the value object by removing the entry for the item
                 Emits event with the updated data list item object and the index in the data list
             */
-            this.item.value = _.filter(this.item.value, valueItem => valueItem.label !== tag.label)
+            this.item.value = filter(this.item.value, valueItem => valueItem.label !== tag.label)
             this.$emit('item-updated', {
                 index: this.index,
                 item: this.item,
@@ -153,9 +153,9 @@ export default {
                 props: ['item', ...Object.keys(item.scope || {})],
             })
             let component = new ComponentClass({
-                propsData: _.extend(
+                propsData: extend(
                     {
-                        item: _.omit(item, ['scope']),
+                        item: omit(item, ['scope']),
                     },
                     item.scope
                 ),

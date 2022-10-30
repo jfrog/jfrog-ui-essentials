@@ -181,7 +181,13 @@ export function JFrogTableViewOptions() {
             this.dataWasSet = true;
 
             if (this.paginationMode === this.VIRTUAL_SCROLL && this.dirCtrl) {
-                this.dirCtrl.vsApi.reset();
+                if (this.dirCtrl.vsApi.reset) {
+                    this.dirCtrl.vsApi.reset();
+                } else {
+                    setTimeout(() => {
+                        this.dirCtrl.vsApi.reset();
+                    });
+                }
             }
             if (this.dirCtrl) {
                 this.dirCtrl._fireDebouncedRowsInView();

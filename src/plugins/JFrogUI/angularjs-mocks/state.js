@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { extend } from 'lodash';
 export class AngularStateServiceMock {
   constructor() {
     this.$stateParams = this.$jfrog.get('$stateParams');
@@ -13,7 +13,7 @@ export class AngularStateServiceMock {
   _update() {
     this.params = this._getFullParams();
     Object.keys(this.$stateParams).forEach(key => delete this.$stateParams[key]);
-    _.extend(this.$stateParams, this.params);
+    extend(this.$stateParams, this.params);
     this.current = this.$router.currentRoute;
   }
 
@@ -27,7 +27,7 @@ export class AngularStateServiceMock {
         }
       })
     }
-    return _.extend({}, params, queryParams);
+    return extend({}, params, queryParams);
   }
 
   go(stateName, stateParams) {

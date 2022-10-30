@@ -1,5 +1,4 @@
-import {VueFactory} from "../services/VueFactory";
-import _ from "lodash";
+import { debounce } from "lodash";
 
 /*
 Reference: http://www.backalleycoder.com/2013/03/18/cross-browser-event-based-element-resize-detection/
@@ -56,17 +55,13 @@ const addResizeListener = function (element, fn) {
     element.__resizeListeners__.push(fn);
 };
 
-export const install = () => {
-    const { Vue } = VueFactory.getInstance();
-
-    Vue.directive('jf-resize', {
-        inserted: function (el, binding) {
-            addResizeListener(el, _.debounce(() => {
-                    if (typeof binding.value == 'function') {
-                        binding.value()
-                    }
-                }, 1000, {"leading": false, trailing: true})
-            )
-        }
-    })
-}
+export default {
+    inserted: function (el, binding) {
+        addResizeListener(el, debounce(() => {
+                if (typeof binding.value == 'function') {
+                    binding.value()
+                }
+            }, 1000, {"leading": false, trailing: true})
+        )
+    }
+};
