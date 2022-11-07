@@ -1,4 +1,4 @@
-import contains from 'lodash/contains';
+import includes from 'lodash/includes';
 import cloneDeep from 'lodash/cloneDeep';
 import filter from 'lodash/filter';
 import find from 'lodash/find';
@@ -558,7 +558,7 @@ describe('JfTableViewComponent', () => {
                         let columns = columns;
                         for (let i in columns) {
                             let col = columns[i];
-                            if (row.$groupHeader || (get(row, col.field) && contains(get(row, col.field).toString().toLowerCase(), pagingData.filter.toLowerCase()))) return true;
+                            if (row.$groupHeader || (get(row, col.field) && includes(get(row, col.field).toString().toLowerCase(), pagingData.filter.toLowerCase()))) return true;
                         }
                         return false;
                     })
