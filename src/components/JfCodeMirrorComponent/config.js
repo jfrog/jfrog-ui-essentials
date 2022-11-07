@@ -1,3 +1,5 @@
+import isUndefined from 'lodash/isUndefined';
+
 function aliasMime(newMime, existingMime, CodeMirror) {
     CodeMirror.defineMIME(newMime, CodeMirror.mimeModes[existingMime]);
 }
@@ -725,7 +727,7 @@ function codeMirrorAsciidocConfig(CodeMirror) {
 }
 
 export function initCodemirrorConfig(CodeMirror) {
-    if (typeof CodeMirror === 'undefined' || _.isUndefined(CodeMirror)) return;
+    if (typeof CodeMirror === 'undefined' || isUndefined(CodeMirror)) return;
     codeMirrorAsciidocConfig(CodeMirror);
     defineCodeMirrorMimes(CodeMirror);
     defineCodeMirrorLinkOverlay(CodeMirror);

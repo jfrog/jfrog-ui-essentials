@@ -1,5 +1,11 @@
 import $ from 'jquery';
-import { entries, values, camelCase, kebabCase, get, isFunction, trim } from 'lodash';
+import entries from 'lodash/toPairs';
+import values from 'lodash/values';
+import camelCase from 'lodash/camelCase';
+import kebabCase from 'lodash/kebabCase';
+import get from 'lodash/get';
+import isFunction from 'lodash/isFunction';
+import trim from 'lodash/trim';
 import {VueFactory} from "../../services/VueFactory";
 
 export class Ng1AttributeDirectiveAdapter {

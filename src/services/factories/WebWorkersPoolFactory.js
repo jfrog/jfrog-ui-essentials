@@ -1,10 +1,15 @@
+import extend from 'lodash/extend';
+import filter from 'lodash/filter';
+import isEmpty from 'lodash/isEmpty';
+import find from 'lodash/find';
+
 export function WebWorkersPool() {
     let injections = $jfrog.get(['$q']);
     'ngInject';
     return class WebWorkersPool {
 
         constructor(webworkerPath, poolSize = 10) {
-            _.extend(this, injections)
+            extend(this, injections)
             this.webworkerPath = webworkerPath;
             this.poolSize = poolSize;    //           this.debug();
         }
@@ -15,7 +20,7 @@ export function WebWorkersPool() {
                 if (!this.pool)
                     return;
                 let size = this.pool.length;
-                let free = _.filter(this.pool, { busy: false }).length;
+                let free = filter(this.pool, { busy: false }).length;
                 console.log(`Pool size: ${ size }   |   Free workers: ${ free }`);
             }, 200);
         }
@@ -42,8 +47,8 @@ export function WebWorkersPool() {
         }
 
         kill(msgMatch = {}) {
-            let busySpots = _.filter(this.pool, { busy: true });
-            let matchedSpots = _.filter(busySpots, _.isEmpty(msgMatch) ? {} : { msg: msgMatch });
+            let busySpots = filter(this.pool, { busy: true });
+            let matchedSpots = filter(busySpots, isEmpty(msgMatch) ? {} : { msg: msgMatch });
             matchedSpots.forEach(spot => {
                 if (this.debugEnabled)
                     console.log('Terminating worker: #' + this.pool.indexOf(spot));
@@ -57,7 +62,7 @@ export function WebWorkersPool() {
 
         normalizePool() {
             while (this.pool.length > this.poolSize) {
-                let freeSpot = _.find(this.pool, { busy: false });
+                let freeSpot = find(this.pool, { busy: false });
                 if (freeSpot)
                     this.pool.splice(this.pool.indexOf(freeSpot), 1);
                 else
@@ -84,7 +89,7 @@ export function WebWorkersPool() {
 
             let defer = this.$q.defer();
 
-            let freeSpot = _.find(this.pool, { busy: false });
+            let freeSpot = find(this.pool, { busy: false });
 
             if (!freeSpot) {
                 freeSpot = this.addWorker();

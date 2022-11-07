@@ -45,7 +45,9 @@
     </div>
 </template>
 <script>
-    import { find, isEmpty, sortBy } from "lodash";
+    import sortBy from 'lodash/sortBy';
+    import isEmpty from 'lodash/isEmpty';
+    import find from 'lodash/find';
     export default {
         name: 'jf-list-maker',
         props: [

@@ -1,4 +1,9 @@
-import { trimStart, trimEnd, isObject, isString, isNumber  } from 'lodash';
+import trimStart from 'lodash/trimStart';
+import trimEnd from 'lodash/trimEnd';
+import isObject from 'lodash/isObject';
+import isString from 'lodash/isString';
+import isNumber from 'lodash/isNumber';
+
 export class AngularLocationProviderMock {
     constructor() {
         this.location = window.location

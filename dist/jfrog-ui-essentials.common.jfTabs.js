@@ -1,9 +1,92 @@
 ((typeof self !== 'undefined' ? self : this)["webpackJsonpjfrog_ui_essentials"] = (typeof self !== 'undefined' ? self : this)["webpackJsonpjfrog_ui_essentials"] || []).push([[47],{
 
-/***/ "6f77":
+/***/ "1ad9":
 /***/ (function(module, exports, __webpack_require__) {
 
-// extracted by mini-css-extract-plugin
+var baseSlice = __webpack_require__("2b10"),
+    toInteger = __webpack_require__("4b17");
+
+/**
+ * Creates a slice of `array` with `n` elements taken from the end.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category Array
+ * @param {Array} array The array to query.
+ * @param {number} [n=1] The number of elements to take.
+ * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
+ * @returns {Array} Returns the slice of `array`.
+ * @example
+ *
+ * _.takeRight([1, 2, 3]);
+ * // => [3]
+ *
+ * _.takeRight([1, 2, 3], 2);
+ * // => [2, 3]
+ *
+ * _.takeRight([1, 2, 3], 5);
+ * // => [1, 2, 3]
+ *
+ * _.takeRight([1, 2, 3], 0);
+ * // => []
+ */
+function takeRight(array, n, guard) {
+  var length = array == null ? 0 : array.length;
+  if (!length) {
+    return [];
+  }
+  n = (guard || n === undefined) ? 1 : toInteger(n);
+  n = length - n;
+  return baseSlice(array, n < 0 ? 0 : n, length);
+}
+
+module.exports = takeRight;
+
+
+/***/ }),
+
+/***/ "5e9e":
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseSlice = __webpack_require__("2b10"),
+    toInteger = __webpack_require__("4b17");
+
+/**
+ * Creates a slice of `array` with `n` elements taken from the beginning.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Array
+ * @param {Array} array The array to query.
+ * @param {number} [n=1] The number of elements to take.
+ * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
+ * @returns {Array} Returns the slice of `array`.
+ * @example
+ *
+ * _.take([1, 2, 3]);
+ * // => [1]
+ *
+ * _.take([1, 2, 3], 2);
+ * // => [1, 2]
+ *
+ * _.take([1, 2, 3], 5);
+ * // => [1, 2, 3]
+ *
+ * _.take([1, 2, 3], 0);
+ * // => []
+ */
+function take(array, n, guard) {
+  if (!(array && array.length)) {
+    return [];
+  }
+  n = (guard || n === undefined) ? 1 : toInteger(n);
+  return baseSlice(array, 0, n < 0 ? 0 : n);
+}
+
+module.exports = take;
+
 
 /***/ }),
 
@@ -14,7 +97,7 @@
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2dee9595-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTabsComponent/index.vue?vue&type=template&id=4ba2684f&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2dee9595-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTabsComponent/index.vue?vue&type=template&id=8b5f8fea&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"jf-tabs"},[_c('ul',{staticClass:"nav nav-tabs"},[_vm._l((_vm.tabsVisible),function(tab,index){
 var _obj;
 return _c('li',{key:index,staticClass:"jf-tabs-tab-header",class:( _obj = {active:_vm.isActiveTab(tab), disabled:tab.isDisabled}, _obj[tab.class] = _vm.hasClass(tab), _obj ),style:({width: _vm.getTabWidthForStyle()}),attrs:{"jf-disable-feature":tab.feature}},[_c('a',{staticStyle:{"z-index":"999999"},on:{"click":function($event){$event.preventDefault();return _vm.onClickTab(tab, true)}}},[_c('div',{directives:[{name:"jf-tooltip-on-overflow",rawName:"v-jf-tooltip-on-overflow"}],staticClass:"jf-tab-header-container"},[_c('span',[_vm._v(_vm._s(_vm.dictionary[tab.name]))])])])])}),_c('li',{directives:[{name:"show",rawName:"v-show",value:(_vm.tabsCollapsed.length),expression:"tabsCollapsed.length"}],staticClass:"action-expand"},[_c('span',{directives:[{name:"click-outside",rawName:"v-click-outside",value:(_vm.closeDropdown),expression:"closeDropdown"}],staticClass:"dropdown",class:{ open: _vm.isDropdownOpen }},[_c('a',{staticClass:"dropdown-toggle nav-tabs-more",attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();_vm.isDropdownOpen = !_vm.isDropdownOpen}}},[_c('i',{staticClass:"icon-arrow"})]),_c('ul',{staticClass:"dropdown-menu dropdown-menu-right dropdown-container text-left"},_vm._l((_vm.tabsCollapsed),function(tab,index){
@@ -23,7 +106,7 @@ return _c('li',{key:index,staticClass:"dropdown-item",class:( _obj = {}, _obj[ta
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/JfTabsComponent/index.vue?vue&type=template&id=4ba2684f&scoped=true&
+// CONCATENATED MODULE: ./src/components/JfTabsComponent/index.vue?vue&type=template&id=8b5f8fea&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es7.object.get-own-property-descriptors.js
 var es7_object_get_own_property_descriptors = __webpack_require__("8e6e");
@@ -37,9 +120,6 @@ var es6_array_iterator = __webpack_require__("cadf");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.object.keys.js
 var es6_object_keys = __webpack_require__("456d");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.find.js
-var es6_array_find = __webpack_require__("7514");
-
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.function.name.js
 var es6_function_name = __webpack_require__("7f7f");
 
@@ -52,12 +132,27 @@ var es6_regexp_replace = __webpack_require__("a481");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.string.ends-with.js
 var es6_string_ends_with = __webpack_require__("aef6");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.find-index.js
-var es6_array_find_index = __webpack_require__("20d6");
+// EXTERNAL MODULE: ./node_modules/lodash/filter.js
+var filter = __webpack_require__("9380");
+var filter_default = /*#__PURE__*/__webpack_require__.n(filter);
+
+// EXTERNAL MODULE: ./node_modules/lodash/find.js
+var find = __webpack_require__("2769");
+var find_default = /*#__PURE__*/__webpack_require__.n(find);
+
+// EXTERNAL MODULE: ./node_modules/lodash/findIndex.js
+var findIndex = __webpack_require__("51f5");
+var findIndex_default = /*#__PURE__*/__webpack_require__.n(findIndex);
+
+// EXTERNAL MODULE: ./node_modules/lodash/takeRight.js
+var takeRight = __webpack_require__("1ad9");
+var takeRight_default = /*#__PURE__*/__webpack_require__.n(takeRight);
+
+// EXTERNAL MODULE: ./node_modules/lodash/take.js
+var take = __webpack_require__("5e9e");
+var take_default = /*#__PURE__*/__webpack_require__.n(take);
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTabsComponent/index.vue?vue&type=script&lang=js&
-
-
 
 
 
@@ -96,6 +191,11 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 //
 //
 //
+
+
+
+
+
 /* harmony default export */ var JfTabsComponentvue_type_script_lang_js_ = ({
   name: 'jf-tabs',
   props: ['tabs', 'dictionary', 'tabWidth', 'containerMargin', 'activeTab'],
@@ -143,10 +243,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
         if (!tab || tab.isVisible === false || tab.isDisabled) {
           // If current tab doesn't exist on the tabs list at all - select the first tab
-          var firstValidTab = _.findIndex(_this.tabs, function (tab) {
+          var firstValidTab = findIndex_default()(_this.tabs, function (tab) {
             return tab.isVisible !== false && !tab.isDisabled;
           });
-
           if (firstValidTab !== -1) _this.onClickTab(_this.tabs[firstValidTab], false);
         } else {
           // Otherwise - make sure it's visible
@@ -156,18 +255,17 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
     },
     _calculateTabsSize: function _calculateTabsSize() {
       // wait for the element to render and calculate how many tabs should display
-      var visibleTabs = _.filter(this.tabs, function (tab) {
+      var visibleTabs = filter_default()(this.tabs, function (tab) {
         return tab.isVisible !== false;
       });
-
       var container = $(this.$el).children().eq(0);
       var containerWidth = container.width();
       var tabWidth = this.getTabWidthForStyle().endsWith('px') ? parseInt(this.tabwidth) : containerWidth * parseInt(this.tabwidth) / 100;
       var containerMargin = parseInt(this.containerMargin);
       var expanderWidth = $('.action-expand').eq(0).outerWidth(true);
       var tabsToTake = Math.floor((containerWidth - expanderWidth - containerMargin) / tabWidth);
-      this.tabsCollapsed = _.takeRight(visibleTabs, visibleTabs.length - tabsToTake);
-      this.tabsVisible = _.take(visibleTabs, tabsToTake);
+      this.tabsCollapsed = takeRight_default()(visibleTabs, visibleTabs.length - tabsToTake);
+      this.tabsVisible = take_default()(visibleTabs, tabsToTake);
     },
     _registerEvents: function _registerEvents() {
       var _this2 = this;
@@ -228,14 +326,13 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
       return tab.name === this.currentTab.name;
     },
     _getTab: function _getTab(tab) {
-      var currentTab = _.find(this.tabs, {
+      var currentTab = find_default()(this.tabs, {
         name: tab.name
       });
-
       return currentTab;
     },
     _getCollapsedTab: function _getCollapsedTab(tab) {
-      return _.find(this.tabsCollapsed, {
+      return find_default()(this.tabsCollapsed, {
         name: tab.name
       });
     },
@@ -252,8 +349,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 });
 // CONCATENATED MODULE: ./src/components/JfTabsComponent/index.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_JfTabsComponentvue_type_script_lang_js_ = (JfTabsComponentvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/JfTabsComponent/index.vue?vue&type=style&index=0&id=4ba2684f&scoped=true&lang=less&
-var JfTabsComponentvue_type_style_index_0_id_4ba2684f_scoped_true_lang_less_ = __webpack_require__("d6d4");
+// EXTERNAL MODULE: ./src/components/JfTabsComponent/index.vue?vue&type=style&index=0&id=8b5f8fea&scoped=true&lang=less&
+var JfTabsComponentvue_type_style_index_0_id_8b5f8fea_scoped_true_lang_less_ = __webpack_require__("cd1e");
 
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
@@ -273,7 +370,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   null,
-  "4ba2684f",
+  "8b5f8fea",
   null
   
 )
@@ -282,14 +379,21 @@ var component = Object(componentNormalizer["a" /* default */])(
 
 /***/ }),
 
-/***/ "d6d4":
+/***/ "cd1e":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_4ba2684f_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("6f77");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_4ba2684f_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_4ba2684f_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_8b5f8fea_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("f677");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_8b5f8fea_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_8b5f8fea_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
 
+
+/***/ }),
+
+/***/ "f677":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ })
 

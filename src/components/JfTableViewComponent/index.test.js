@@ -1,3 +1,8 @@
+import contains from 'lodash/contains';
+import cloneDeep from 'lodash/cloneDeep';
+import filter from 'lodash/filter';
+import find from 'lodash/find';
+import get from 'lodash/get';
 import {mount, createLocalVue} from '@vue/test-utils';
 import JfTableViewComponent from './index.vue';
 import {testsBootstrap} from '@/testsBootstrap';
@@ -162,8 +167,8 @@ describe('JfTableViewComponent', () => {
 
         expect(options.visibleFields).toEqual(["userName", "email", "subscription", "number"])
 
-        let emailSelect = _.find(options.availableColumns, {id: 'email'});
-        let subscriptionSelect = _.find(options.availableColumns, {id: 'subscription'});
+        let emailSelect = find(options.availableColumns, {id: 'email'});
+        let subscriptionSelect = find(options.availableColumns, {id: 'subscription'});
         emailSelect.isSelected = false;
         subscriptionSelect.isSelected = false;
 
@@ -213,7 +218,7 @@ describe('JfTableViewComponent', () => {
             {userName: 'Shlomo', email: 'shlomo@lam.biz', subscription: 'Free', number: 4},
             {userName: 'Reuven', email: 'reu@ven.buzz', subscription: 'Premium', number: 1},
         ]
-        let origData = _.cloneDeep(testData);
+        let origData = cloneDeep(testData);
 
         let {elems, options, wrapper} = await setup(async (options) => {
            await options.setSortable(false); //first we check the original order
@@ -542,18 +547,18 @@ describe('JfTableViewComponent', () => {
                 setTimeout(function () {
 
                     let sortedData = testData.sort((a, b) => {
-                        let field = pagingData.orderBy || _.find(columns, c => !!c.header).field;
-                        let valA = _.get(a, field);
-                        let valB = _.get(b, field);
+                        let field = pagingData.orderBy || find(columns, c => !!c.header).field;
+                        let valA = get(a, field);
+                        let valB = get(b, field);
                         return (pagingData.direction === 'desc' ? -1 : 1) * (valA > valB ? 1 : (valA < valB ? -1 : 0));
                     });
 
-                    let filteredData = _.filter(sortedData, row => {
+                    let filteredData = filter(sortedData, row => {
                         if (!pagingData.filter) return true;
                         let columns = columns;
                         for (let i in columns) {
                             let col = columns[i];
-                            if (row.$groupHeader || (_.get(row, col.field) && _.contains(_.get(row, col.field).toString().toLowerCase(), pagingData.filter.toLowerCase()))) return true;
+                            if (row.$groupHeader || (get(row, col.field) && contains(get(row, col.field).toString().toLowerCase(), pagingData.filter.toLowerCase()))) return true;
                         }
                         return false;
                     })

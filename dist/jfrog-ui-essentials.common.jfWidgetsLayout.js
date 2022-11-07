@@ -13,17 +13,11 @@ var es6_string_starts_with = __webpack_require__("f559");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.function.name.js
 var es6_function_name = __webpack_require__("7f7f");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es7.array.includes.js
-var es7_array_includes = __webpack_require__("6762");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.string.includes.js
-var es6_string_includes = __webpack_require__("2fdb");
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.find.js
+var es6_array_find = __webpack_require__("7514");
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/classCallCheck.js
 var classCallCheck = __webpack_require__("d225");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.find.js
-var es6_array_find = __webpack_require__("7514");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es7.promise.finally.js
 var es7_promise_finally = __webpack_require__("097d");
@@ -37,6 +31,34 @@ var es6_object_keys = __webpack_require__("456d");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
 var web_dom_iterable = __webpack_require__("ac6a");
 
+// EXTERNAL MODULE: ./node_modules/lodash/extend.js
+var extend = __webpack_require__("cdd8");
+var extend_default = /*#__PURE__*/__webpack_require__.n(extend);
+
+// EXTERNAL MODULE: ./node_modules/lodash/includes.js
+var includes = __webpack_require__("8a30");
+var includes_default = /*#__PURE__*/__webpack_require__.n(includes);
+
+// EXTERNAL MODULE: ./node_modules/lodash/map.js
+var map = __webpack_require__("dd61");
+var map_default = /*#__PURE__*/__webpack_require__.n(map);
+
+// EXTERNAL MODULE: ./node_modules/lodash/cloneDeep.js
+var cloneDeep = __webpack_require__("0644");
+var cloneDeep_default = /*#__PURE__*/__webpack_require__.n(cloneDeep);
+
+// EXTERNAL MODULE: ./node_modules/lodash/indexOf.js
+var indexOf = __webpack_require__("ba84");
+var indexOf_default = /*#__PURE__*/__webpack_require__.n(indexOf);
+
+// EXTERNAL MODULE: ./node_modules/lodash/filter.js
+var filter = __webpack_require__("9380");
+var filter_default = /*#__PURE__*/__webpack_require__.n(filter);
+
+// EXTERNAL MODULE: ./node_modules/lodash/find.js
+var find = __webpack_require__("2769");
+var find_default = /*#__PURE__*/__webpack_require__.n(find);
+
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfWidgetsLayoutComponent/index.vue?vue&type=script&lang=js&
 
 
@@ -46,9 +68,14 @@ var web_dom_iterable = __webpack_require__("ac6a");
 
 
 
-
-
 var TEMPLATE = "\n<div>\n    <div class=\"jf-widgets-layout-container\"  :style=\"containerCss\" @mouseleave=\"onMouseLeave($event)\" @mousemove=\"onMouseMove($event)\" @mousedown=\"onMouseDown($event)\" @mouseup=\"onMouseUp($event)\">\n        <div class=\"widgets-padder\" :style=\"padderCss\">\n            <div v-for=\"rowOrColumn in transformedLayout\" class=\"widgets-row\">\n                <div v-for=\"layoutObj in rowOrColumn\" :style=\"cssRules[layoutObj.cssId]\" class=\"widget-wrapper\" :class=\"{['widget-wrapper-' + widgets[layoutObj.widget].id.toLowerCase()]: true, 'atom': !layoutObj.subLayout}\">\n                    <div v-if=\"!layoutObj.subLayout && editMode\" class=\"edit-mode-actions\" @mousemove=\"onWidgetMouseMove($event)\">\n                        <i class=\"glyphicon glyphicon-asterisk\" v-jf-tooltip=\"'Change'\" @click=\"changeWidget(layoutObj)\"></i>\n                        <i class=\"glyphicon glyphicon-remove-circle\" v-jf-tooltip=\"'Remove'\" v-if=\"getWidgetsCount() > 1\" @click=\"removeWidget(layoutObj)\"></i>\n                        <i class=\"glyphicon glyphicon-resize-vertical\" v-jf-tooltip=\"'Vertical Split'\" @click=\"splitCell(layoutObj,'v')\"></i>\n                        <i class=\"glyphicon glyphicon-resize-horizontal\" v-jf-tooltip=\"'Horizontal Split'\" @click=\"splitCell(layoutObj,'h')\"></i>\n                    </div>\n                    <div v-if=\"!layoutObj.subLayout && editMode && layoutObj.selectWidgetMode\" class=\"select-widget-mode\" @mousemove=\"onWidgetMouseMove($event)\">\n                        <div class=\"widget-selector\">\n                            <jf-ui-select :jf-select-model=\"layoutObj.widget\" jf-select-display-func=\"getWidgetName($item)\" jf-select-placeholder=\"Select A Widget\" jf-select-change=\"onWidgetChange(layoutObj)\" :jf-select-options=\"widgetKeys\"></jf-ui-select>\n                        </div>\n                    </div>\n                    <div v-if=\"!layoutObj.subLayout && (_getRootDirective().transformedLayout.length > 1 || _getRootDirective().transformedLayout[0].length > 1) && options.expandablePanes\" :style=\"{top: top, left: left}\" class=\"expansion-corner-mask\">\n                        <div class=\"expansion-corner-fill\" @click=\"expandPane(layoutObj)\">\n                            <div class=\"icon icon-thin-arrow\" :class=\"{expanded: layoutObj.expanded}\"></div>\n                        </div>\n                    </div>\n                    <div class=\"widget-container\" @mousemove=\"onWidgetMouseMove($event)\" v-if=\"!layoutObj.subLayout\" :style=\"{overflow: widgets[layoutObj.widget].scroll ? 'auto' : 'hidden'}\">\n                        <div v-if=\"widgets[layoutObj.widget] && widgets[layoutObj.widget].showSpinner\" class=\"widget-spinner\">\n                            <div class=\"spinner-msg\">\n                                <div class=\"icon-hourglass\"></div>\n                            </div>\n                        </div>\n                        <div v-if=\"widgets[layoutObj.widget] && widgets[layoutObj.widget].template\" v-show=\"widgets[layoutObj.widget].$compiled || (!widgets[layoutObj.widget].model && !widgets[layoutObj.widget].controller)\">\n                            <div class=\"compile-children\" v-show=\"widgets[layoutObj.widget].$compiled\" :id=\"layoutObj.widget\" v-html=\"widgets[layoutObj.widget].template\"></div>\n                        </div>\n                    </div>\n                    <div v-if=\"layoutObj.subLayout\">\n                        <jf-widgets-layout :layout=\"layoutObj.subLayout\" :widgets=\"widgets\" :options=\"subOptions\" parent-cell=\"layoutObj\"></jf-widgets-layout>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div id=\"home-disclaimer\" v-html=\"footerText\" v-if=\"footerText\"></div>\n    </div>\n</div>\n";
+
+
+
+
+
+
+
 /* harmony default export */ var JfWidgetsLayoutComponentvue_type_script_lang_js_ = ({
   template: TEMPLATE,
   name: 'jf-widgets-layout',
@@ -162,7 +189,7 @@ var TEMPLATE = "\n<div>\n    <div class=\"jf-widgets-layout-container\"  :style=
       if (this.options.allowResize === undefined) this.$set(this.options, 'allowResize', false);
       if (this.options.outerPadding === undefined) this.$set(this.options, 'outerPadding', true);
       if (this.options.editMode === undefined) this.$set(this.options, 'editMode', false);
-      this.subOptions = _.cloneDeep(this.options);
+      this.subOptions = cloneDeep_default()(this.options);
       this.$set(this.subOptions, 'minHeight', 'initial');
       this.$set(this.subOptions, 'isSub', true);
       this.$set(this.subOptions, 'parent', this);
@@ -286,8 +313,7 @@ var TEMPLATE = "\n<div>\n    <div class=\"jf-widgets-layout-container\"  :style=
     updateCss: function updateCss() {
       var _this5 = this;
 
-      var oldRules = _.cloneDeep(this.cssRules);
-
+      var oldRules = cloneDeep_default()(this.cssRules);
       this.cssRules = {};
       var currentX = 0,
           currentY = 0;
@@ -346,11 +372,9 @@ var TEMPLATE = "\n<div>\n    <div class=\"jf-widgets-layout-container\"  :style=
         var bottom = parseFloat(rules.bottom);
         var left = parseFloat(rules.left);
         var right = parseFloat(rules.right);
-
-        var cell = _.find(this.flatCells, {
+        var cell = find_default()(this.flatCells, {
           cssId: parseInt(key)
         });
-
         this.addLinesFromRect({
           x1: left,
           y1: top,
@@ -387,11 +411,11 @@ var TEMPLATE = "\n<div>\n    <div class=\"jf-widgets-layout-container\"  :style=
             var children = elem.children();
 
             if (widget.model) {
-              _.extend(scope, widget.model);
+              extend_default()(scope, widget.model);
             }
 
             if (_this6.options.sharedModel) {
-              _.extend(scope, _this6.options.sharedModel);
+              extend_default()(scope, _this6.options.sharedModel);
             }
 
             if (!widget.controller) {
@@ -410,9 +434,7 @@ var TEMPLATE = "\n<div>\n    <div class=\"jf-widgets-layout-container\"  :style=
             controllerInstance.$widgetObject = widget;
             var controllerObject = {};
             controllerObject[widget.controllerAs || 'ctrl'] = controllerInstance;
-
-            _.extend(scope, controllerObject);
-
+            extend_default()(scope, controllerObject);
             if (controllerInstance.$onInit) controllerInstance.$onInit(); //We compile only first child, templates should have only one root element!
 
             var rootChild = $(children[0]);
@@ -439,7 +461,7 @@ var TEMPLATE = "\n<div>\n    <div class=\"jf-widgets-layout-container\"  :style=
 
       for (var i in this.transformedLayout) {
         var rowOrColumn = this.transformedLayout[i];
-        layout = _.find(rowOrColumn, {
+        layout = find_default()(rowOrColumn, {
           widget: id
         });
         if (layout) break;
@@ -448,7 +470,7 @@ var TEMPLATE = "\n<div>\n    <div class=\"jf-widgets-layout-container\"  :style=
       return layout;
     },
     _isWidgetInUse: function _isWidgetInUse(widgetId) {
-      return !!_.find(this.flatCells, {
+      return !!find_default()(this.flatCells, {
         widget: widgetId
       });
     },
@@ -479,17 +501,16 @@ var TEMPLATE = "\n<div>\n    <div class=\"jf-widgets-layout-container\"  :style=
         this.closestLines = this.getClosestLines(prec.x, prec.y);
 
         if (this.closestLines.length) {
-          var directions = _.map(this.closestLines, 'cssRelevantRule');
-
+          var directions = map_default()(this.closestLines, 'cssRelevantRule');
           var cursor;
 
-          if (_.includes(directions, 'right') && _.includes(directions, 'left') && _.includes(directions, 'top') && _.includes(directions, 'bottom')) {
+          if (includes_default()(directions, 'right') && includes_default()(directions, 'left') && includes_default()(directions, 'top') && includes_default()(directions, 'bottom')) {
             cursor = 'all-scroll';
             this.setSubIsOnEdge(true);
-          } else if (_.includes(directions, 'top') && _.includes(directions, 'bottom')) {
+          } else if (includes_default()(directions, 'top') && includes_default()(directions, 'bottom')) {
             cursor = 'row-resize';
             this.setSubIsOnEdge(true);
-          } else if (_.includes(directions, 'right') && _.includes(directions, 'left')) {
+          } else if (includes_default()(directions, 'right') && includes_default()(directions, 'left')) {
             cursor = 'col-resize';
             this.setSubIsOnEdge(true);
           } else {
@@ -619,8 +640,8 @@ var TEMPLATE = "\n<div>\n    <div class=\"jf-widgets-layout-container\"  :style=
 
       if (this.closestLines && this.closestLines.length) {
         this.draggingLines = true;
-        this.dragStartPt = _.cloneDeep(this._getPrecPoint(e));
-        this.dragStartLines = _.cloneDeep(this.closestLines);
+        this.dragStartPt = cloneDeep_default()(this._getPrecPoint(e));
+        this.dragStartLines = cloneDeep_default()(this.closestLines);
 
         this._setTransitions(false);
 
@@ -702,27 +723,22 @@ var TEMPLATE = "\n<div>\n    <div class=\"jf-widgets-layout-container\"  :style=
         if (dist <= 1) closest.push(line);
       });
       var filtered = [];
-
-      var top = _.filter(closest, {
+      var top = filter_default()(closest, {
         cssRelevantRule: 'top'
       });
-
-      var bottom = _.filter(closest, {
+      var bottom = filter_default()(closest, {
         cssRelevantRule: 'bottom'
       });
-
-      var left = _.filter(closest, {
+      var left = filter_default()(closest, {
         cssRelevantRule: 'left'
       });
-
-      var right = _.filter(closest, {
+      var right = filter_default()(closest, {
         cssRelevantRule: 'right'
       });
-
       top.forEach(function (line) {
-        var matches = _this7.mainAxis === 'rows' ? _.filter(bottom, {
+        var matches = _this7.mainAxis === 'rows' ? filter_default()(bottom, {
           y1: line.y1
-        }) : _.filter(bottom, {
+        }) : filter_default()(bottom, {
           x1: line.x1,
           x2: line.x2
         });
@@ -735,9 +751,9 @@ var TEMPLATE = "\n<div>\n    <div class=\"jf-widgets-layout-container\"  :style=
         }
       });
       left.forEach(function (line) {
-        var matches = _this7.mainAxis === 'columns' ? _.filter(right, {
+        var matches = _this7.mainAxis === 'columns' ? filter_default()(right, {
           x1: line.x1
-        }) : _.filter(right, {
+        }) : filter_default()(right, {
           y1: line.y1,
           y2: line.y2
         });
@@ -792,7 +808,7 @@ var TEMPLATE = "\n<div>\n    <div class=\"jf-widgets-layout-container\"  :style=
 
       var rowOrColumnToRemove = null;
       this.transformedLayout.forEach(function (rowOrColumn) {
-        var index = _.indexOf(rowOrColumn, layoutObj);
+        var index = indexOf_default()(rowOrColumn, layoutObj);
 
         if (index !== -1) {
           rowOrColumn.splice(index, 1);
@@ -804,17 +820,15 @@ var TEMPLATE = "\n<div>\n    <div class=\"jf-widgets-layout-container\"  :style=
       });
 
       if (rowOrColumnToRemove) {
-        var index = _.indexOf(this.transformedLayout, rowOrColumnToRemove);
-
+        var index = indexOf_default()(this.transformedLayout, rowOrColumnToRemove);
         this.transformedLayout.splice(index, 1);
       }
 
       if (this.transformedLayout.length === 0) {
         if (this.options.isSub) {
-          var parentLayoutObj = _.find(this.options.parent.flatCells, {
+          var parentLayoutObj = find_default()(this.options.parent.flatCells, {
             subLayout: this.layout
           });
-
           this.options.parent.removeWidget(parentLayoutObj);
         }
       }
@@ -864,7 +878,7 @@ var TEMPLATE = "\n<div>\n    <div class=\"jf-widgets-layout-container\"  :style=
       this._setTransitions(true);
 
       this.transformedLayout.forEach(function (rowOrColumn) {
-        var index = _.indexOf(rowOrColumn, layoutObj);
+        var index = indexOf_default()(rowOrColumn, layoutObj);
 
         if (index !== -1) {
           var clone = angular.copy(layoutObj);
@@ -962,14 +976,13 @@ var TEMPLATE = "\n<div>\n    <div class=\"jf-widgets-layout-container\"  :style=
       if (!this.transformedLayout) return; // Remove empty layout directives from parent
 
       if (!this.transformedLayout.length && this.options.parent) {
-        var parentLayoutObj = _.find(this.options.parent.flatCells, {
+        var parentLayoutObj = find_default()(this.options.parent.flatCells, {
           subLayout: this.layout
         });
-
         this.options.parent.removeWidget(parentLayoutObj);
       } // In case this directive is a sub and only has one widget in one cell, we move the widget to parent
       else if (this.transformedLayout.length === 1 && this.transformedLayout[0].length === 1 && this.transformedLayout[0][0].percentHeight === 100 && this.transformedLayout[0][0].percentWidth === 100 && this.options.parent) {
-        var _parentLayoutObj = _.find(this.options.parent.flatCells, {
+        var _parentLayoutObj = find_default()(this.options.parent.flatCells, {
           subLayout: this.layout
         });
 
@@ -1071,7 +1084,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   null,
-  "92e4184e",
+  "1e79feea",
   null
   
 )

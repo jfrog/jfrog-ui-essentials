@@ -1,4 +1,5 @@
-import { pick, extend} from 'lodash';
+import pick from 'lodash/pick';
+import extend from 'lodash/extend';
 export function AngularCompileCompServiceMock(template, data = {}, parentComp = null) {
     let props = {};
     let copiedFromParent = {};

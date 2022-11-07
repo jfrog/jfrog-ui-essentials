@@ -1,4 +1,4 @@
-import { extend } from 'lodash';
+import extend from 'lodash/extend';
 import {VueFactory} from "@/services/VueFactory";
 export class AngularScopeServiceMock {
     constructor(vueComp) {

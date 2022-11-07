@@ -1,3 +1,8 @@
+import pluck from 'lodash/map';
+import find from 'lodash/find';
+import filter from 'lodash/filter';
+import get from 'lodash/get';
+
 let headerCellTemplate = require('@/ui_components/jfrog_grid/templates/headerCellDefaultTemplate.html');
 let globals = {};
 export class JFrogGridFactory {
@@ -30,7 +35,7 @@ export class JFrogGridFactory {
                     return;
                 let grid = uiGrid.grid;
                 let rowActions = grid.appScope.grids[grid.id].buttons;
-                let customActionsRaw = _.pluck(grid.columns, 'colDef.customActions');
+                let customActionsRaw = pluck(grid.columns, 'colDef.customActions');
                 let allActions = [];
                 if (customActionsRaw) {
                     customActionsRaw.forEach(acts => {
@@ -46,7 +51,7 @@ export class JFrogGridFactory {
                         allActions.push(act);
                     });
                 }
-                allActions = _.filter(allActions, act => {
+                allActions = filter(allActions, act => {
                     return row && (!act.visibleWhen || grid.options.checkVisibleWhen(act, row));
                 });
                 let editAction = this._getEditAction($trigger, row, grid);
@@ -106,10 +111,10 @@ export class JFrogGridFactory {
                                     editAction.do();
                                 } else if (key.startsWith('@')) {
                                     let actionName = key.substr(1);
-                                    let action = _.find(additionalActions, { name: actionName });
+                                    let action = find(additionalActions, { name: actionName });
                                     action.do();
                                 } else {
-                                    let act = _.find(allActions, { key: key });
+                                    let act = find(allActions, { key: key });
                                     grid.options.callActionCallback(act, row);
                                     if (act.href) {
                                         let url = grid.options.getActionHref(act, row);
@@ -147,9 +152,9 @@ export class JFrogGridFactory {
                 let key = keyVal[0].trim();
                 let val = keyVal[1].trim();
                 if (val.startsWith('row.') || val.startsWith('grid.'))
-                    val = _.get(objScope, val);
+                    val = get(objScope, val);
                 else if (val.startsWith('!row.') || val.startsWith('!grid.'))
-                    val = !_.get(objScope, val);
+                    val = !get(objScope, val);
                 else if (val.startsWith('\''))
                     val = val.split('\'').join('');
                 else if (val.startsWith('"'))
@@ -175,9 +180,9 @@ export class JFrogGridFactory {
                 let parenthesesOpenIndex = clickCommand.indexOf('(');
                 let funcName = clickCommand.substr(0, parenthesesOpenIndex);
                 let paramsString = clickCommand.substr(parenthesesOpenIndex).split('(').join('').split(')').join('').trim();
-                let param = _.get(objScope, paramsString);
-                let funcThis = _.get(objScope, funcName.substr(0, funcName.lastIndexOf('.')));
-                let func = _.get(objScope, funcName).bind(funcThis);
+                let param = get(objScope, paramsString);
+                let funcThis = get(objScope, funcName.substr(0, funcName.lastIndexOf('.')));
+                let func = get(objScope, funcName).bind(funcThis);
                 return {
                     do: () => {
                         func(param);
@@ -203,9 +208,9 @@ export class JFrogGridFactory {
                 let parenthesesOpenIndex = clickCommand.indexOf('(');
                 let funcName = clickCommand.substr(0, parenthesesOpenIndex);
                 let paramsString = clickCommand.substr(parenthesesOpenIndex).split('(').join('').split(')').join('').trim();
-                let param = _.get(objScope, paramsString);
-                let funcThis = _.get(objScope, funcName.substr(0, funcName.lastIndexOf('.')));
-                let func = _.get(objScope, funcName).bind(funcThis);
+                let param = get(objScope, paramsString);
+                let funcThis = get(objScope, funcName.substr(0, funcName.lastIndexOf('.')));
+                let func = get(objScope, funcName).bind(funcThis);
                 additionalCommands.push({
                     name: commandName,
                     icon: icon,

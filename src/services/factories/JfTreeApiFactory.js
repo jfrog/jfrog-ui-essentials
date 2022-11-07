@@ -1,5 +1,13 @@
 import {TreeViewPane} from '@/ui_components/jf_tree/tree_view_pane';
 import {VueFactory} from "../VueFactory";
+import extend from 'lodash/extend';
+import isArray from 'lodash/isArray';
+import map from 'lodash/map';
+import find from 'lodash/find';
+import findIndex from 'lodash/findIndex';
+import includes from 'lodash/includes';
+import remove from 'lodash/remove';
+import filter from 'lodash/filter';
 
 export function JFTreeApi() {
     const { Vue } = VueFactory.getInstance();
@@ -7,7 +15,7 @@ export function JFTreeApi() {
     let injections = $jfrog.get(['$q', '$timeout', 'AdvancedStringMatch', 'ContextMenuService', 'JFrogEventBus']);
     class JFTreeApiClass {
         constructor(appScope) {
-            _.extend(this, injections);
+            extend(this, injections);
             this.dataWasSet = false;
             this.$root = [];
             this.$viewPanes = [];
@@ -123,7 +131,7 @@ export function JFTreeApi() {
         _getRoot() {
             let defer = this.$q.defer();
             this.getChildren(null).then(rootData => {
-                if (rootData && _.isArray(rootData)) {
+                if (rootData && isArray(rootData)) {
                     this.setTreeData(rootData);
                     defer.resolve();
                 }
@@ -168,11 +176,11 @@ export function JFTreeApi() {
         }
 
         getQuickFindMatches() {
-            return _.map(this._getQuickFindFlatMatches(), 'data');
+            return map(this._getQuickFindFlatMatches(), 'data');
         }
 
         _getViewPaneForNode(node) {
-            let viewPane = _.find(this.$viewPanes, vp => {
+            let viewPane = find(this.$viewPanes, vp => {
                 return vp.findNode(n => n === node);
             });
             return viewPane;
@@ -245,7 +253,7 @@ export function JFTreeApi() {
                 });
             });
 
-            this.$openedNodes = _.filter(this.$openedNodes, node => {
+            this.$openedNodes = filter(this.$openedNodes, node => {
                 let fi = this._flatFromNode(node);
                 return !!fi;
             });
@@ -253,11 +261,11 @@ export function JFTreeApi() {
         }
 
         isNodeOpen(node, ignoreFreeze = false) {
-            return !!_.find(this.$viewPanes, vp => vp.isNodeOpen(node, ignoreFreeze));
+            return !!find(this.$viewPanes, vp => vp.isNodeOpen(node, ignoreFreeze));
         }
 
         findNode(findFunction) {
-            let viewPane = _.find(this.$viewPanes, vp => {
+            let viewPane = find(this.$viewPanes, vp => {
                 return !!vp.findNode(findFunction);
             });
 
@@ -267,7 +275,7 @@ export function JFTreeApi() {
         }
 
         findNodeByUniqueId(uniqueId) {
-            let viewPane = _.find(this.$viewPanes, vp => {
+            let viewPane = find(this.$viewPanes, vp => {
                 return !!vp.findNodeByUniqueId(uniqueId);
             });
 
@@ -307,7 +315,7 @@ export function JFTreeApi() {
                 if (this.$preSelectedNode === undefined) {
                     selectedItem = items[down ? 0 : items.length - 1];
                 } else {
-                    let currIndex = _.findIndex(items, fi => fi.data === this.$preSelectedNode);
+                    let currIndex = findIndex(items, fi => fi.data === this.$preSelectedNode);
                     if (down && items[currIndex + 1] || !down && currIndex - 1 >= 0) {
                         selectedItem = items[currIndex + (down ? 1 : -1)];
                     } else {
@@ -353,7 +361,7 @@ export function JFTreeApi() {
 
 
         handleKeyEvent(e) {
-            if (_.includes([
+            if (includes([
                     'ArrowDown',
                     'Down',
                     'ArrowUp',
@@ -371,7 +379,7 @@ export function JFTreeApi() {
         }
 
         _flatFromNode(node) {
-            let pane = _.find(this.$viewPanes, vp => !!vp._flatFromNode(node));
+            let pane = find(this.$viewPanes, vp => !!vp._flatFromNode(node));
             if (pane)
                 return pane._flatFromNode(node);
         }
@@ -407,7 +415,7 @@ export function JFTreeApi() {
             let flat = this._flatFromNode(node);
 
             if (flat && flat.hasChildren !== false && !flat.data.$noChildren && !flat.$pending) {
-                if (!_.includes(this.$openedNodes, node)) {
+                if (!includes(this.$openedNodes, node)) {
                     this.$openedNodes.push(node);
                     flat.$pending = true;
                     this.getChildren(node).then(children => {
@@ -463,8 +471,8 @@ export function JFTreeApi() {
         }
 
         closeNode(node) {
-            if (_.includes(this.$openedNodes, node)) {
-                _.remove(this.$openedNodes, n => n === node);
+            if (includes(this.$openedNodes, node)) {
+                remove(this.$openedNodes, n => n === node);
                 let flat = this._flatFromNode(node);
                 if (flat)
                     flat.pane._removeChildren(flat);
@@ -709,7 +717,7 @@ export function JFTreeApi() {
         }
 
         on(event, listener) {
-            if (!_.includes(this.supportedEvents, event)) {
+            if (!includes(this.supportedEvents, event)) {
                 console.error('jf-tree: Unsupported Event: ' + event);
                 return;
             }
@@ -720,13 +728,13 @@ export function JFTreeApi() {
         }
 
         off(event, listener) {
-            if (!_.includes(this.supportedEvents, event)) {
+            if (!includes(this.supportedEvents, event)) {
                 console.error('jf-tree: Unsupported Event: ' + event);
                 return;
             }
             if (this.listeners[event]) {
                 if (listener) {
-                    _.remove(this.listeners[event], l => l === listener);
+                    remove(this.listeners[event], l => l === listener);
                 } else {
                     this.listeners[event] = [];
                 }
@@ -775,7 +783,7 @@ export function JFTreeApi() {
 
         getViewPane(viewPaneName) {
             viewPaneName = viewPaneName || 'default';
-            return _.find(this.$viewPanes, vp => vp.viewPaneName === viewPaneName);
+            return find(this.$viewPanes, vp => vp.viewPaneName === viewPaneName);
         }
 
         _setDirectiveController(ctrl) {

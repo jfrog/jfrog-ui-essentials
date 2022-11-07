@@ -24,6 +24,12 @@
 </template>
 
 <script>
+    import filter from 'lodash/filter';
+    import find from 'lodash/find';
+    import findIndex from 'lodash/findIndex';
+    import takeRight from 'lodash/takeRight';
+    import take from 'lodash/take';
+
     export default {
         name: 'jf-tabs',
         props: [
@@ -76,7 +82,7 @@
                     let tab = this._getTab(this.currentTab);
                     if (!tab || tab.isVisible === false || tab.isDisabled) {
                         // If current tab doesn't exist on the tabs list at all - select the first tab
-                        let firstValidTab = _.findIndex(this.tabs, tab => {
+                        let firstValidTab = findIndex(this.tabs, tab => {
                             return tab.isVisible !== false && !tab.isDisabled;
                         });
 
@@ -90,7 +96,7 @@
             },
             _calculateTabsSize() {
                 // wait for the element to render and calculate how many tabs should display
-                let visibleTabs = _.filter(this.tabs, tab => {
+                let visibleTabs = filter(this.tabs, tab => {
                     return tab.isVisible !== false;
                 });
                 let container = $(this.$el).children().eq(0);
@@ -101,8 +107,8 @@
                 let expanderWidth = $('.action-expand').eq(0).outerWidth(true);
                 let tabsToTake = Math.floor((containerWidth - expanderWidth - containerMargin) / tabWidth);
 
-                this.tabsCollapsed = _.takeRight(visibleTabs, visibleTabs.length - tabsToTake);
-                this.tabsVisible = _.take(visibleTabs, tabsToTake);
+                this.tabsCollapsed = takeRight(visibleTabs, visibleTabs.length - tabsToTake);
+                this.tabsVisible = take(visibleTabs, tabsToTake);
             },
             _registerEvents() {
                 this.JFrogEventBus.registerOnScope(this, this.EVENTS.TABS_REFRESH, () => this.initTabs());
@@ -158,11 +164,11 @@
                 return tab.name === this.currentTab.name;
             },
             _getTab(tab) {
-                let currentTab = _.find(this.tabs, { name: tab.name });
+                let currentTab = find(this.tabs, { name: tab.name });
                 return currentTab;
             },
             _getCollapsedTab(tab) {
-                return _.find(this.tabsCollapsed, { name: tab.name });
+                return find(this.tabsCollapsed, { name: tab.name });
             },
             getTabWidthForStyle() {
                 return this.tabwidth.endsWith('%') ? this.tabwidth : this.tabwidth.endsWith('px') ? this.tabwidth : this.tabwidth + 'px';

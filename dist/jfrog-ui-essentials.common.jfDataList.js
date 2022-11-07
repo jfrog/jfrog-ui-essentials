@@ -7,12 +7,83 @@
 
 /***/ }),
 
-/***/ "5b0d":
+/***/ "3eea":
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayMap = __webpack_require__("7948"),
+    baseClone = __webpack_require__("3818"),
+    baseUnset = __webpack_require__("4bb5"),
+    castPath = __webpack_require__("e2e4"),
+    copyObject = __webpack_require__("8eeb"),
+    customOmitClone = __webpack_require__("e0e7"),
+    flatRest = __webpack_require__("c6cf"),
+    getAllKeysIn = __webpack_require__("1bac");
+
+/** Used to compose bitmasks for cloning. */
+var CLONE_DEEP_FLAG = 1,
+    CLONE_FLAT_FLAG = 2,
+    CLONE_SYMBOLS_FLAG = 4;
+
+/**
+ * The opposite of `_.pick`; this method creates an object composed of the
+ * own and inherited enumerable property paths of `object` that are not omitted.
+ *
+ * **Note:** This method is considerably slower than `_.pick`.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The source object.
+ * @param {...(string|string[])} [paths] The property paths to omit.
+ * @returns {Object} Returns the new object.
+ * @example
+ *
+ * var object = { 'a': 1, 'b': '2', 'c': 3 };
+ *
+ * _.omit(object, ['a', 'c']);
+ * // => { 'b': '2' }
+ */
+var omit = flatRest(function(object, paths) {
+  var result = {};
+  if (object == null) {
+    return result;
+  }
+  var isDeep = false;
+  paths = arrayMap(paths, function(path) {
+    path = castPath(path, object);
+    isDeep || (isDeep = path.length > 1);
+    return path;
+  });
+  copyObject(object, getAllKeysIn(object), result);
+  if (isDeep) {
+    result = baseClone(result, CLONE_DEEP_FLAG | CLONE_FLAT_FLAG | CLONE_SYMBOLS_FLAG, customOmitClone);
+  }
+  var length = paths.length;
+  while (length--) {
+    baseUnset(result, paths[length]);
+  }
+  return result;
+});
+
+module.exports = omit;
+
+
+/***/ }),
+
+/***/ "405d":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "4863":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7032d9d2_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("ceb4");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7032d9d2_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7032d9d2_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_c2ccc300_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("405d");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_c2ccc300_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_c2ccc300_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
 
 
@@ -25,19 +96,23 @@
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2dee9595-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfDataListComponent/index.vue?vue&type=template&id=7032d9d2&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2dee9595-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfDataListComponent/index.vue?vue&type=template&id=c2ccc300&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('table',{staticClass:"data-list"},[_c('tbody',_vm._l((_vm.formattedItems),function(item,index){return _c('tr',{key:index,staticClass:"data-list-item"},[(!item.hideLabel)?_c('td',{staticClass:"data-list-item-label"},[_vm._v(_vm._s(item.label)+":")]):_vm._e(),_c('td',{staticClass:"data-list-item-value"},[_c('jf-datalist-item-component',{attrs:{"item":item,"index":index},on:{"item-updated":_vm.updateList}})],1)])}),0)])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/JfDataListComponent/index.vue?vue&type=template&id=7032d9d2&scoped=true&
+// CONCATENATED MODULE: ./src/components/JfDataListComponent/index.vue?vue&type=template&id=c2ccc300&scoped=true&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2dee9595-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfDataListComponent/JfDatalistItemComponent/index.vue?vue&type=template&id=cf653b22&
-var JfDatalistItemComponentvue_type_template_id_cf653b22_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"templateValue",staticClass:"value"},[(_vm.itemIsLink)?_c('a',{directives:[{name:"jf-tooltip-on-overflow",rawName:"v-jf-tooltip-on-overflow"}],staticClass:"jf-link",attrs:{"href":_vm.viewItem.url ? _vm.viewItem.url : _vm.viewItem.value,"target":"_blank","rel":"noopener noreferrer"},domProps:{"innerHTML":_vm._s(_vm.viewItem.value)}}):_vm._e(),(_vm.itemIsLinkWithUrl || _vm.itemIsPlainText)?_c('div',{directives:[{name:"jf-tooltip-on-overflow",rawName:"v-jf-tooltip-on-overflow"}],domProps:{"innerHTML":_vm._s(_vm.viewItem.value)}}):_vm._e(),(_vm.itemIsTagsArray)?_c('div',{attrs:{"id":'data-list-row-' + _vm.index}},[_vm._l((_vm.viewItem.value),function(tag,index2){return _c('div',{key:index2,staticClass:"tag"},[(tag.url)?_c('a',{staticClass:"gridcell-content-text jf-link",attrs:{"href":tag.url,"target":"_blank","rel":"noopener noreferrer"},domProps:{"innerHTML":_vm._s(tag.label)}}):_vm._e(),(!tag.url)?_c('span',{staticClass:"gridcell-content-text",domProps:{"innerHTML":_vm._s(tag.label)}}):_vm._e(),(_vm.viewItem.delete)?_c('i',{staticClass:"icon icon-close delete-tag",on:{"click":function($event){return _vm.deleteTag(tag)}}}):_vm._e()])}),(_vm.showAllValue)?_c('a',{staticClass:"jf-link gridcell-showall",attrs:{"href":""},on:{"click":function($event){$event.preventDefault();return _vm.showAll(_vm.viewItem.value,_vm.viewItem.label,_vm.viewItem.objectName)}}},[_vm._v("(See "+_vm._s(_vm.viewItem.value.length > 1 ? 'All' : 'List')+")")]):_vm._e()],2):_vm._e(),(_vm.viewItem.copy && !_vm.isArray(_vm.viewItem.value))?_c('div',{staticClass:"copy"},[_c('jf-clip-copy',{attrs:{"text-to-copy":_vm.viewItem.value}})],1):_vm._e()])}
-var JfDatalistItemComponentvue_type_template_id_cf653b22_staticRenderFns = []
+// EXTERNAL MODULE: ./node_modules/lodash/filter.js
+var filter = __webpack_require__("9380");
+var filter_default = /*#__PURE__*/__webpack_require__.n(filter);
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2dee9595-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfDataListComponent/JfDatalistItemComponent/index.vue?vue&type=template&id=fb077ad0&
+var JfDatalistItemComponentvue_type_template_id_fb077ad0_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"templateValue",staticClass:"value"},[(_vm.itemIsLink)?_c('a',{directives:[{name:"jf-tooltip-on-overflow",rawName:"v-jf-tooltip-on-overflow"}],staticClass:"jf-link",attrs:{"href":_vm.viewItem.url ? _vm.viewItem.url : _vm.viewItem.value,"target":"_blank","rel":"noopener noreferrer"},domProps:{"innerHTML":_vm._s(_vm.viewItem.value)}}):_vm._e(),(_vm.itemIsLinkWithUrl || _vm.itemIsPlainText)?_c('div',{directives:[{name:"jf-tooltip-on-overflow",rawName:"v-jf-tooltip-on-overflow"}],domProps:{"innerHTML":_vm._s(_vm.viewItem.value)}}):_vm._e(),(_vm.itemIsTagsArray)?_c('div',{attrs:{"id":'data-list-row-' + _vm.index}},[_vm._l((_vm.viewItem.value),function(tag,index2){return _c('div',{key:index2,staticClass:"tag"},[(tag.url)?_c('a',{staticClass:"gridcell-content-text jf-link",attrs:{"href":tag.url,"target":"_blank","rel":"noopener noreferrer"},domProps:{"innerHTML":_vm._s(tag.label)}}):_vm._e(),(!tag.url)?_c('span',{staticClass:"gridcell-content-text",domProps:{"innerHTML":_vm._s(tag.label)}}):_vm._e(),(_vm.viewItem.delete)?_c('i',{staticClass:"icon icon-close delete-tag",on:{"click":function($event){return _vm.deleteTag(tag)}}}):_vm._e()])}),(_vm.showAllValue)?_c('a',{staticClass:"jf-link gridcell-showall",attrs:{"href":""},on:{"click":function($event){$event.preventDefault();return _vm.showAll(_vm.viewItem.value,_vm.viewItem.label,_vm.viewItem.objectName)}}},[_vm._v("(See "+_vm._s(_vm.viewItem.value.length > 1 ? 'All' : 'List')+")")]):_vm._e()],2):_vm._e(),(_vm.viewItem.copy && !_vm.isArray(_vm.viewItem.value))?_c('div',{staticClass:"copy"},[_c('jf-clip-copy',{attrs:{"text-to-copy":_vm.viewItem.value}})],1):_vm._e()])}
+var JfDatalistItemComponentvue_type_template_id_fb077ad0_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/JfDataListComponent/JfDatalistItemComponent/index.vue?vue&type=template&id=cf653b22&
+// CONCATENATED MODULE: ./src/components/JfDataListComponent/JfDatalistItemComponent/index.vue?vue&type=template&id=fb077ad0&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es7.object.get-own-property-descriptors.js
 var es7_object_get_own_property_descriptors = __webpack_require__("8e6e");
@@ -60,8 +135,13 @@ var toConsumableArray = __webpack_require__("75fc");
 // EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/typeof.js
 var esm_typeof = __webpack_require__("7618");
 
-// EXTERNAL MODULE: ./node_modules/lodash/lodash.js
-var lodash = __webpack_require__("2ef0");
+// EXTERNAL MODULE: ./node_modules/lodash/omit.js
+var omit = __webpack_require__("3eea");
+var omit_default = /*#__PURE__*/__webpack_require__.n(omit);
+
+// EXTERNAL MODULE: ./node_modules/lodash/extend.js
+var extend = __webpack_require__("cdd8");
+var extend_default = /*#__PURE__*/__webpack_require__.n(extend);
 
 // EXTERNAL MODULE: ./src/components/JfDataListModal/index.js
 var JfDataListModal = __webpack_require__("72d8");
@@ -131,6 +211,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 
+
+
 /* harmony default export */ var JfDatalistItemComponentvue_type_script_lang_js_ = ({
   name: 'jf-datalist-item-component',
   props: ['item', 'index'],
@@ -160,7 +242,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
           Updates the value object by removing the entry for the item
           Emits event with the updated data list item object and the index in the data list
       */
-      this.item.value = Object(lodash["filter"])(this.item.value, function (valueItem) {
+      this.item.value = filter_default()(this.item.value, function (valueItem) {
         return valueItem.label !== tag.label;
       });
       this.$emit('item-updated', {
@@ -229,8 +311,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
         props: ['item'].concat(Object(toConsumableArray["a" /* default */])(Object.keys(item.scope || {})))
       });
       var component = new ComponentClass({
-        propsData: Object(lodash["extend"])({
-          item: Object(lodash["omit"])(item, ['scope'])
+        propsData: extend_default()({
+          item: omit_default()(item, ['scope'])
         }, item.scope)
       });
       component.$mount();
@@ -314,8 +396,8 @@ var componentNormalizer = __webpack_require__("2877");
 
 var JfDatalistItemComponent_component = Object(componentNormalizer["a" /* default */])(
   JfDataListComponent_JfDatalistItemComponentvue_type_script_lang_js_,
-  JfDatalistItemComponentvue_type_template_id_cf653b22_render,
-  JfDatalistItemComponentvue_type_template_id_cf653b22_staticRenderFns,
+  JfDatalistItemComponentvue_type_template_id_fb077ad0_render,
+  JfDatalistItemComponentvue_type_template_id_fb077ad0_staticRenderFns,
   false,
   null,
   null,
@@ -342,6 +424,7 @@ var JfDatalistItemComponent_component = Object(componentNormalizer["a" /* defaul
 //
 //
 //
+
 
 /* harmony default export */ var JfDataListComponentvue_type_script_lang_js_ = ({
   name: 'jf-data-list',
@@ -371,13 +454,13 @@ var JfDatalistItemComponent_component = Object(componentNormalizer["a" /* defaul
   methods: {
     filterItems: function filterItems(items) {
       if (items) {
-        this.formattedItems = _.filter(items, function (item) {
+        this.formattedItems = filter_default()(items, function (item) {
           return item.label != '' && !item.isHidden;
         });
       }
     },
     updateList: function updateList(updatedItem) {
-      /* 
+      /*
           Invoked when a value in the data list is deleted
           Updates the "items" array with the received data list item
           Emits event with the updated data list
@@ -389,8 +472,8 @@ var JfDatalistItemComponent_component = Object(componentNormalizer["a" /* defaul
 });
 // CONCATENATED MODULE: ./src/components/JfDataListComponent/index.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_JfDataListComponentvue_type_script_lang_js_ = (JfDataListComponentvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/JfDataListComponent/index.vue?vue&type=style&index=0&id=7032d9d2&scoped=true&lang=less&
-var JfDataListComponentvue_type_style_index_0_id_7032d9d2_scoped_true_lang_less_ = __webpack_require__("5b0d");
+// EXTERNAL MODULE: ./src/components/JfDataListComponent/index.vue?vue&type=style&index=0&id=c2ccc300&scoped=true&lang=less&
+var JfDataListComponentvue_type_style_index_0_id_c2ccc300_scoped_true_lang_less_ = __webpack_require__("4863");
 
 // CONCATENATED MODULE: ./src/components/JfDataListComponent/index.vue
 
@@ -407,7 +490,7 @@ var JfDataListComponent_component = Object(componentNormalizer["a" /* default */
   staticRenderFns,
   false,
   null,
-  "7032d9d2",
+  "c2ccc300",
   null
   
 )
@@ -416,10 +499,26 @@ var JfDataListComponent_component = Object(componentNormalizer["a" /* default */
 
 /***/ }),
 
-/***/ "ceb4":
+/***/ "e0e7":
 /***/ (function(module, exports, __webpack_require__) {
 
-// extracted by mini-css-extract-plugin
+var isPlainObject = __webpack_require__("60ed");
+
+/**
+ * Used by `_.omit` to customize its `_.cloneDeep` use to only clone plain
+ * objects.
+ *
+ * @private
+ * @param {*} value The value to inspect.
+ * @param {string} key The key of the property to inspect.
+ * @returns {*} Returns the uncloned value or `undefined` to defer cloning to `_.cloneDeep`.
+ */
+function customOmitClone(value) {
+  return isPlainObject(value) ? undefined : value;
+}
+
+module.exports = customOmitClone;
+
 
 /***/ }),
 

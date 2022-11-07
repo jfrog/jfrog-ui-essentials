@@ -1,4 +1,4 @@
-import { extend } from 'lodash';
+import extend from 'lodash/extend';
 export class AngularStateServiceMock {
   constructor() {
     this.$stateParams = this.$jfrog.get('$stateParams');

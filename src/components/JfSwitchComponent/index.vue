@@ -11,7 +11,7 @@
 </template>
 
 <script>
-
+    import isEmpty from 'lodash/isEmpty';
     export default {
         name: 'jf-switch',
         props: [
@@ -35,7 +35,7 @@
 
             this.updateOptionObjects();
 
-            if (_.isEmpty(this.value))
+            if (isEmpty(this.value))
                 this.$emit('input', this.optionObjects[0].value);
         },
         methods: {

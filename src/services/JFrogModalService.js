@@ -1,4 +1,6 @@
 import JFrogModalFactory from "./JFrogModalFactory.js"
+import extend from 'lodash/extend';
+import isObject from 'lodash/isObject';
 
 export class JFrogModal {
     constructor() {
@@ -31,8 +33,8 @@ export class JFrogModal {
 
         let result = modalObj.uiEssModalPromise.promise;
 
-        if (options && _.isObject(options)) {
-            _.extend(modalObj, options);
+        if (options && isObject(options)) {
+            extend(modalObj, options);
         }
 
         let focused = $(':focus');
@@ -205,7 +207,7 @@ export class JFrogModal {
             wizardDefinitionObject,
             wizardHooks
         };
-        _.extend(options, wizardDefinitionObject.modalOptions);
+        extend(options, wizardDefinitionObject.modalOptions);
         let modalInstance = this.launchModal('@wizard_modal', null, wizardDefinitionObject.size,
                             wizardDefinitionObject.cancelable,
                             options);

@@ -54,6 +54,13 @@
 </template>
 
 <script>
+    import includes from 'lodash/includes';
+    import isUndefined from 'lodash/isUndefined';
+    import isEqual from 'lodash/isEqual';
+    import find from 'lodash/find';
+    import trim from 'lodash/trim';
+    import pick from 'lodash/pick';
+
     export default {
         name: 'jf-sidebar',
         props: [
@@ -85,8 +92,7 @@
             };
         },
         created() {
-console.log("CREATED!±!#@@!#@!#@!#@!#!@WQ");
-            this.trim = _.trim;
+            this.trim = trim;
 
             this.currentTab = 'Home';
             this.EVENTS = this.JFrogEventBus.getEventsDefinition();
@@ -150,7 +156,7 @@ console.log("CREATED!±!#@@!#@!#@!#@!#!@WQ");
                     // Ctrl + right arrow to open the default sub menu
                     if (e.keyCode === 39 && e.ctrlKey && e.altKey && $('.sub-menu').length) {
                         this.$timeout(() => {
-                            let defaultItem = _.find(this.menuItems, { id: this.defaultSubMenuId });
+                            let defaultItem = find(this.menuItems, { id: this.defaultSubMenuId });
                             if (defaultItem) {
                                 this._setExtendedMenu(defaultItem);
                             }
@@ -182,7 +188,7 @@ console.log("CREATED!±!#@@!#@!#@!#@!#!@WQ");
                 this.mouseIsOver = true;
 
                 if (this.menu.width === this.subMenuWidth && $('.menu-item:hover').length && $('a.menu-item.extended-item:hover').length < 1) {
-                    if (_.isUndefined(this.closeSubMenuDelay) && !$('.sub-menu:hover').length) {
+                    if (isUndefined(this.closeSubMenuDelay) && !$('.sub-menu:hover').length) {
                         this.closeSubMenuDelay = this.$timeout(() => {
                             this.closeSubMenu();
                             delete this.closeSubMenuDelay;
@@ -191,10 +197,10 @@ console.log("CREATED!±!#@@!#@!#@!#@!#!@WQ");
 
                 } else if (this.menu.width != '200px' && !$('.pin-menu:hover').length && $('.sub-menu:hover').length < 1) {
                     // if menu isn't open
-                    if (_.isUndefined(this.openMenu)) {
+                    if (isUndefined(this.openMenu)) {
                         this.openMenu = this.$timeout(() => {
                             let widthToOpen = $('.sub-menu').length > 0 && $('a.menu-item.extended-item:hover').length ? this.subMenuWidth : '200px';
-                            if (($('.sub-menu:hover').length || $('.menu-item.extended-item:hover').length) && !_.isUndefined(this.openMenu)) {
+                            if (($('.sub-menu:hover').length || $('.menu-item.extended-item:hover').length) && !isUndefined(this.openMenu)) {
                                 this.$timeout.cancel(this.openMenu);
                                 delete this.openMenu;
                                 return;
@@ -222,12 +228,12 @@ console.log("CREATED!±!#@@!#@!#@!#@!#!@WQ");
                 this._subMenuDelayStop();
             },
             subMenuOver() {
-                if (!_.isUndefined(this.subMenuItemDelayTimer)) {
+                if (!isUndefined(this.subMenuItemDelayTimer)) {
                     this.$timeout.cancel(this.subMenuItemDelayTimer);
                     delete this.subMenuItemDelayTimer;
                 }
 
-                if (!_.isUndefined(this.closeSubMenuDelay)) {
+                if (!isUndefined(this.closeSubMenuDelay)) {
                     this.$timeout.cancel(this.closeSubMenuDelay);
                     delete this.closeSubMenuDelay;
                 }
@@ -268,7 +274,7 @@ console.log("CREATED!±!#@@!#@!#@!#@!#!@WQ");
                 this.pinMenuStatus = !this.pinMenuStatus;
                 console.log('Pinning!',this.pinMenuStatus)
                 localStorage.pinMenu = this.pinMenuStatus;
-                if (!_.isUndefined(this.openMenu)) {
+                if (!isUndefined(this.openMenu)) {
                     this._openMenuStop();
                 }
                 this.$set(this.menu, 'transitionDelay', '0s');
@@ -371,7 +377,7 @@ console.log("CREATED!±!#@@!#@!#@!#@!#!@WQ");
                         this.currentFocus = $(':focus');
                     }
 
-                    if (delay && _.isUndefined(this.subMenuDelay)) {
+                    if (delay && isUndefined(this.subMenuDelay)) {
                         this.subMenuDelay = this.$timeout(() => {
                             this.openSubMenu();
                             this._setSubMenuFocus();
@@ -382,7 +388,7 @@ console.log("CREATED!±!#@@!#@!#@!#@!#!@WQ");
                         if (!this.skip && this.menu.width !== this.subMenuWidth) {
                             this._updateMenuObject('50px', '0.3s', '0s');
                             this.$timeout(() => this._setSubMenuFocus());
-                            if (!_.isUndefined(this.subMenuDelay)) {
+                            if (!isUndefined(this.subMenuDelay)) {
                                 this._subMenuDelayStop();
                             }
                         }
@@ -511,7 +517,7 @@ console.log("CREATED!±!#@@!#@!#@!#@!#!@WQ");
                     let string = menuItem.toLowerCase().replace(/ /g, '');
                     let searchstring = this.menuSearchQuery.toLowerCase().replace(/ /g, '');
 
-                    if (_.includes(string, searchstring)) {
+                    if (includes(string, searchstring)) {
                         return true;
                     } else {
                         return false;
@@ -626,11 +632,11 @@ console.log("CREATED!±!#@@!#@!#@!#@!#!@WQ");
 
             },
             isCurrentItem(subItem) {
-                let result = _.includes(this.$state.current.name, subItem.state);
+                let result = includes(this.$state.current.name, subItem.state);
                 if (result && subItem.stateParams) {
-                    let relevantParams = _.pick(this.$state.params, Object.keys(subItem.stateParams));
+                    let relevantParams = pick(this.$state.params, Object.keys(subItem.stateParams));
 
-                        result = _.isEqual(relevantParams, subItem.stateParams);
+                        result = isEqual(relevantParams, subItem.stateParams);
 
 
                 }

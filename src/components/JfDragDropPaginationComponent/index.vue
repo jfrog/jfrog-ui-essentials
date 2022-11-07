@@ -17,7 +17,9 @@
 </template>
 
 <script>
+    import extend from 'lodash/extend';
     import { GENERAL_CONSTANTS } from '@/constants/general.constants.js';
+
     export default {
         name: 'jf-drag-drop-pagination',
         props: ['paginationApi'],
@@ -28,7 +30,7 @@
             };
         },
         created() {
-            this.CONSTANTS = _.extend({ PAGINATION_DIGIT_WIDTH_PX: null}, GENERAL_CONSTANTS );
+            this.CONSTANTS = extend({ PAGINATION_DIGIT_WIDTH_PX: null}, GENERAL_CONSTANTS );
         },
         mounted() {
             if (this.paginationApi) {

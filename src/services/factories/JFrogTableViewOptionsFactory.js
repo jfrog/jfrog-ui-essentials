@@ -1,6 +1,30 @@
 import cellTemplateGenerators from '@/ui_components/jf_table_view/cell_template_generators';
 import { JfDataListModal } from "@/components/JfDataListModal/index.js";
 import { VueFactory } from "../VueFactory";
+import extend from 'lodash/extend';
+import includes from 'lodash/includes';
+import remove from 'lodash/remove';
+import sortBy from 'lodash/sortBy';
+import map from 'lodash/map';
+import cloneDeep from 'lodash/cloneDeep';
+import isUndefined from 'lodash/isUndefined';
+import indexOf from 'lodash/indexOf';
+import startCase from 'lodash/startCase';
+import difference from 'lodash/difference';
+import isEqual from 'lodash/isEqual';
+import isNull from 'lodash/isNull';
+import isString from 'lodash/isString';
+import isFunction from 'lodash/isFunction';
+import isArray from 'lodash/isArray';
+import forEach from 'lodash/forEach';
+import filter from 'lodash/filter';
+import find from 'lodash/find';
+import findIndex from 'lodash/findIndex';
+import groupBy from 'lodash/groupBy';
+import get from 'lodash/get';
+import set from 'lodash/set';
+import trim from 'lodash/trim';
+
 const COMMON_ACTIONS = {
 	delete: {
 		icon: 'icon icon-clear',
@@ -23,7 +47,7 @@ export function JFrogTableViewOptions() {
     createContextMenu();
     class JFrogTableViewOptionsClass {
         constructor(appScope) {
-            _.extend(this, injections);
+            extend(this, injections);
             this.data = [];
             this.actions = [];
             this.columns = [];
@@ -104,7 +128,7 @@ export function JFrogTableViewOptions() {
         }
 
         on(event, listener) {
-            if (!_.includes(this.supportedEvents, event)) {
+            if (!includes(this.supportedEvents, event)) {
                 console.error('jf-table-view: Unsupported Event: ' + event);
                 return;
             }
@@ -114,13 +138,13 @@ export function JFrogTableViewOptions() {
         }
 
         off(event, listener) {
-            if (!_.includes(this.supportedEvents, event)) {
+            if (!includes(this.supportedEvents, event)) {
                 console.error('jf-table-view: Unsupported Event: ' + event);
                 return;
             }
             if (this.listeners[event]) {
                 if (listener) {
-                    _.remove(this.listeners[event], l => l === listener);
+                    remove(this.listeners[event], l => l === listener);
                 } else {
                     this.listeners[event] = [];
                 }
@@ -167,7 +191,7 @@ export function JFrogTableViewOptions() {
                 console.error('When using infinite scroll, you should not call setData directly !');
             }
             else {
-                this.origData = _.sortBy(data, '');
+                this.origData = sortBy(data, '');
                 if (this.subRowsEnabled) {
                     this.data = this._transformDataForSubRowsSupport(data, true);
                 } else {
@@ -205,7 +229,7 @@ export function JFrogTableViewOptions() {
             data.forEach(row => {
                 if (row.$subRows) {
                     row.$expandable = true;
-                    if (_.isArray(row.$subRows)) {
+                    if (isArray(row.$subRows)) {
                         row.$subRows.forEach(sub => {
                             sub.$parentRow = row;
                         });
@@ -213,7 +237,7 @@ export function JFrogTableViewOptions() {
                             rowsToExpand.push(row);
                         }
                     }
-                    else if (_.isFunction(row.$subRows)) {
+                    else if (isFunction(row.$subRows)) {
                         let origFunc = row.$subRows;
                         row.$subRows = () => {
                             let promise = origFunc();
@@ -241,7 +265,7 @@ export function JFrogTableViewOptions() {
         }
 
         toggleExpansion(row) {
-            if (_.isFunction(row.$subRows)) {
+            if (isFunction(row.$subRows)) {
                 row.$subRows().then(() => this.toggleExpansion(row));
             } else {
                 if (row.$expandable) {
@@ -259,8 +283,8 @@ export function JFrogTableViewOptions() {
 
         _addSubRows(row, addTo = null) {
             addTo = addTo || this.data;
-            let index = _.indexOf(addTo, row) + 1;
-            let newSubRows = _.filter(row.$subRows, subRow => {
+            let index = indexOf(addTo, row) + 1;
+            let newSubRows = filter(row.$subRows, subRow => {
                 return addTo.indexOf(subRow) === -1;
             });
             newSubRows.forEach((sr, i) => {
@@ -322,7 +346,7 @@ export function JFrogTableViewOptions() {
                 if (!noGrouping) {
                     this.refreshGrouping();
                 }
-                this.origData = _.sortBy(this.data, '');
+                this.origData = sortBy(this.data, '');
                 if (!noSort) {
                     this.sortBy(this.sortByField, true);
                 } else {
@@ -331,7 +355,7 @@ export function JFrogTableViewOptions() {
                 this._normalizeWidths();
 
                 //This is for updating header cell templates
-                let temp = _.cloneDeep(this.headersRow);
+                let temp = cloneDeep(this.headersRow);
                 this.headersRow = temp;
 
                 this.refreshFilter(true);
@@ -360,7 +384,7 @@ export function JFrogTableViewOptions() {
         }
 
         filterColumns(columns) {
-            return _.filter(columns, col => {
+            return filter(columns, col => {
                 return (!col.isVisible || col.isVisible()) && (!this.visibleFields || this.visibleFields.indexOf(col.field) !== -1);
             });
         }
@@ -371,10 +395,10 @@ export function JFrogTableViewOptions() {
 
         setColumns(columns) {
 
-            this.defaultFilterByAll = !_.filter(columns, c => c.filterable === true).length;
+            this.defaultFilterByAll = !filter(columns, c => c.filterable === true).length;
 
             if (!this.origColumnDefs) {
-                this.origColumnDefs = _.cloneDeep(columns);
+                this.origColumnDefs = cloneDeep(columns);
             }
             if (this.columnsCustomization && !this.availableColumns) {
                 this.loadCustomizedColumnsState();
@@ -388,7 +412,7 @@ export function JFrogTableViewOptions() {
             this.columns.forEach(col => {
                 if (col.actions) {
                     col.customActions = col.customActions || [];
-                    _.forEach(col.actions, (callback, key) => {
+                    forEach(col.actions, (callback, key) => {
                         let action;
                         if (callback.visibleWhen) {
                             action = this._getCommonAction(key, callback.callback, callback.visibleWhen);
@@ -411,7 +435,7 @@ export function JFrogTableViewOptions() {
                 }
                 this.setActions(this.origActions.length ? this.origActions.concat(actions) : actions);
             }
-            this._sortableFields = _.map(_.filter(this.columns, c => !_.isUndefined(c.header)), 'field');
+            this._sortableFields = map(filter(this.columns, c => !isUndefined(c.header)), 'field');
             if (this.sortable && !this.sortByField) {
                 this.sortByField = this._sortableFields ? this._sortableFields[0] : undefined;
             }
@@ -425,7 +449,7 @@ export function JFrogTableViewOptions() {
         }
 
         _checkGroupingSupport() {
-            let groupables = _.filter(this.columns, c => !!c.allowGrouping);
+            let groupables = filter(this.columns, c => !!c.allowGrouping);
             if (this.subRowsEnabled && groupables.length) {
                 console.error('jf-table-view: Grouping is not supported with sub rows !');
                 groupables.forEach(c => c.allowGrouping = false);
@@ -446,7 +470,7 @@ export function JFrogTableViewOptions() {
             this.headersRow = {};
             this.columns.forEach(column => {
                 if (column.header) {
-                    _.set(this.headersRow, column.field, column.header);
+                    set(this.headersRow, column.field, column.header);
                 }
             });
             return this;
@@ -500,14 +524,14 @@ export function JFrogTableViewOptions() {
         }
 
         hasSelection() {
-            return _.includes([
+            return includes([
                 this.SINGLE_SELECTION,
                 this.MULTI_SELECTION
             ], this.selectionMode);
         }
 
         getSelected() {
-            return _.filter(this.data, { $selected: true });
+            return filter(this.data, { $selected: true });
         }
 
         getSelectedCount() {
@@ -740,7 +764,7 @@ export function JFrogTableViewOptions() {
         }
 
         getDisplayNameForField(field) {
-            let col = _.find(this.columns, { field });
+            let col = find(this.columns, { field });
             if (col) {
                 return col.header;
             }
@@ -767,7 +791,7 @@ export function JFrogTableViewOptions() {
         }
 
         getSelectedRows() {
-            return _.filter(this.data, { $selected: true });
+            return filter(this.data, { $selected: true });
         }
 
         clearSelection() {
@@ -790,7 +814,7 @@ export function JFrogTableViewOptions() {
 
         refreshGrouping() {
             if (this.groupedData) {
-                this.openedGroupHeaders = _.filter(this.groupedData, { $groupHeader: { $expanded: true } });
+                this.openedGroupHeaders = filter(this.groupedData, { $groupHeader: { $expanded: true } });
             }
             delete this.groupedData;
             this.refreshSorting();
@@ -817,13 +841,13 @@ export function JFrogTableViewOptions() {
         updateGroupExpansionState(groupHeaderRow, doUpdate = true) {
             let field = groupHeaderRow.$groupHeader.field;
             let value = groupHeaderRow.$groupHeader.value;
-            let toRemove = _.filter(this.groupedData, row => {
-                return !row.$groupHeader && _.get(row, field) == value;
+            let toRemove = filter(this.groupedData, row => {
+                return !row.$groupHeader && get(row, field) == value;
             });
-            this.groupedData = _.difference(this.groupedData, toRemove);
+            this.groupedData = difference(this.groupedData, toRemove);
 
             if (groupHeaderRow.$groupHeader.$expanded) {
-                let index = _.indexOf(this.groupedData, groupHeaderRow);
+                let index = indexOf(this.groupedData, groupHeaderRow);
                 this.groupedData.splice(index + 1, 0, ...this.fullGroupedData[value]);
             }
             if (doUpdate) this.update(false, true);
@@ -831,7 +855,7 @@ export function JFrogTableViewOptions() {
 
         setFirstColumn(field) {
             this.restoreColumnOrder();
-            let column = _.find(this.columns, { field });
+            let column = find(this.columns, { field });
             if (column) {
                 let index = this.columns.indexOf(column);
                 column.$originalIndex = index;
@@ -862,7 +886,7 @@ export function JFrogTableViewOptions() {
         }
 
         sendExternalPageRequest() {
-            if (!this.dirCtrl || _.isUndefined(this.dirCtrl.currentPage)) {
+            if (!this.dirCtrl || isUndefined(this.dirCtrl.currentPage)) {
                 return;
             }
             let paginationParams = {
@@ -870,11 +894,11 @@ export function JFrogTableViewOptions() {
                 numOfRows: this.rowsPerPage,
                 direction: !this.sortByField ? null : this.revSort ? 'desc' : 'asc',
                 orderBy: this.sortByField,
-                filter: !_.isNull(this.externalSearchFields) ? null : (this.dirCtrl.tableFilter || null),
-                filterBy: !_.isNull(this.externalSearchFields) ? null : _.map(this.getFilterables(), 'field'),
+                filter: !isNull(this.externalSearchFields) ? null : (this.dirCtrl.tableFilter || null),
+                filterBy: !isNull(this.externalSearchFields) ? null : map(this.getFilterables(), 'field'),
                 externalSearchFields: this.externalSearchFields || null
             };
-            if (_.isEqual(this.lastPaginationParams, paginationParams)) {
+            if (isEqual(this.lastPaginationParams, paginationParams)) {
                 return;
             }
             this.lastPaginationParams = paginationParams;
@@ -954,9 +978,9 @@ export function JFrogTableViewOptions() {
         getFilterables() {
             let filterables;
             if (this.defaultFilterByAll) {
-                filterables = _.filter(this.columns, col => col.filterable !== false);
+                filterables = filter(this.columns, col => col.filterable !== false);
             } else {
-                filterables = _.filter(this.columns, col => col.filterable === true);
+                filterables = filter(this.columns, col => col.filterable === true);
             }
             return filterables;
         }
@@ -969,14 +993,14 @@ export function JFrogTableViewOptions() {
                 if (filterables.length === this.columns.length && this.columns.length > 1) {
                     return 'Filter by any column';
                 } else {
-                    return 'Filter by ' + _.map(filterables, c => c.header || _.startCase(c.field)).join(', ');
+                    return 'Filter by ' + map(filterables, c => c.header || startCase(c.field)).join(', ');
                 }
 
             }
         }
 
         _reorderStickies(data) {
-            let stickies = _.filter(data, i => i.$sticky);
+            let stickies = filter(data, i => i.$sticky);
             stickies.forEach(sticky => {
                 data.splice(data.indexOf(sticky), 1);
             });
@@ -988,8 +1012,8 @@ export function JFrogTableViewOptions() {
             if (!this.subRowsEnabled) {
                 return data;
             }
-            this.savedSubRowsParents = _.filter(data, d => d.$subRows && d.$expanded);
-            return _.filter(data, d => !d.$parentRow);
+            this.savedSubRowsParents = filter(data, d => d.$subRows && d.$expanded);
+            return filter(data, d => !d.$parentRow);
         }
 
         _reInsertSubRows(data) {
@@ -1018,19 +1042,19 @@ export function JFrogTableViewOptions() {
             else {
                 if (!this.sortedData) {
                     sourceData = this._saveAndRemoveSubRows(sourceData);
-                    let colObj = _.find(this.columns, { field: this.sortByField });
+                    let colObj = find(this.columns, { field: this.sortByField });
                     if (colObj) {
                         if (colObj.sortingAlgorithm) {
                             if (this.groupedData) {
                                 if (this.groupedBy === this.sortByField) {
                                     this.sortedData = sourceData.sort((a, b) => {
-                                        if (a.$groupHeader && !b.$groupHeader && a.$groupHeader.field === this.sortByField && a.$groupHeader.value === _.get(b, this.sortByField)) {
+                                        if (a.$groupHeader && !b.$groupHeader && a.$groupHeader.field === this.sortByField && a.$groupHeader.value === get(b, this.sortByField)) {
                                             return -1;
-                                        } else if (!a.$groupHeader && b.$groupHeader && b.$groupHeader.field === this.sortByField && b.$groupHeader.value === _.get(a, this.sortByField)) {
+                                        } else if (!a.$groupHeader && b.$groupHeader && b.$groupHeader.field === this.sortByField && b.$groupHeader.value === get(a, this.sortByField)) {
                                             return 1;
                                         } else {
-                                            let valA = a.$groupHeader ? a.$groupHeader.value : _.get(a, this.sortByField);
-                                            let valB = b.$groupHeader ? b.$groupHeader.value : _.get(b, this.sortByField);
+                                            let valA = a.$groupHeader ? a.$groupHeader.value : get(a, this.sortByField);
+                                            let valB = b.$groupHeader ? b.$groupHeader.value : get(b, this.sortByField);
                                             return (this.revSort ? -1 : 1) * colObj.sortingAlgorithm(valA, valB, a, b, colObj);
                                         }
                                     });
@@ -1038,8 +1062,8 @@ export function JFrogTableViewOptions() {
                                     for (let key in this.fullGroupedData) {
                                         let groupData = this.fullGroupedData[key];
                                         groupData.sort((a, b) => {
-                                            let valA = _.get(a, this.sortByField);
-                                            let valB = _.get(b, this.sortByField);
+                                            let valA = get(a, this.sortByField);
+                                            let valB = get(b, this.sortByField);
                                             return (this.revSort ? -1 : 1) * colObj.sortingAlgorithm(valA, valB, a, b, colObj);
                                         });
                                     }
@@ -1053,20 +1077,20 @@ export function JFrogTableViewOptions() {
 
                             } else {
                                 this.sortedData = sourceData.sort((a, b) => {
-                                    return (this.revSort ? -1 : 1) * colObj.sortingAlgorithm(_.get(a, this.sortByField), _.get(b, this.sortByField), a, b, colObj);
+                                    return (this.revSort ? -1 : 1) * colObj.sortingAlgorithm(get(a, this.sortByField), get(b, this.sortByField), a, b, colObj);
                                 });
                             }
                         } else {
                             if (colObj.sortBy) {
                                 if (this.groupedData) {
                                     if (this.groupedBy === this.sortByField) {
-                                        this.sortedData = _.sortBy(sourceData, row => {
+                                        this.sortedData = sortBy(sourceData, row => {
                                             return (this.revSort ? -1 : 1) * colObj.sortBy(row.$groupHeader.value, row);
                                         });
                                     } else {
                                         for (let key in this.fullGroupedData) {
-                                            this.fullGroupedData[key] = _.sortBy(this.fullGroupedData[key], row => {
-                                                return (this.revSort ? -1 : 1) * colObj.sortBy(_.get(row, this.sortByField), row);
+                                            this.fullGroupedData[key] = sortBy(this.fullGroupedData[key], row => {
+                                                return (this.revSort ? -1 : 1) * colObj.sortBy(get(row, this.sortByField), row);
                                             });
                                         }
                                         this.groupedData.forEach(row => {
@@ -1077,21 +1101,21 @@ export function JFrogTableViewOptions() {
                                         this.sortedData = sourceData;
                                     }
                                 } else {
-                                    this.sortedData = _.sortBy(sourceData, row => {
-                                        return (this.revSort ? -1 : 1) * colObj.sortBy(_.get(row, this.sortByField), row);
+                                    this.sortedData = sortBy(sourceData, row => {
+                                        return (this.revSort ? -1 : 1) * colObj.sortBy(get(row, this.sortByField), row);
                                     });
                                 }
                             } else {
                                 if (this.groupedData) {
                                     if (this.groupedBy === this.sortByField) {
                                         this.sortedData = sourceData.sort((a, b) => {
-                                            if (a.$groupHeader && !b.$groupHeader && a.$groupHeader.field === this.sortByField && a.$groupHeader.value === _.get(b, this.sortByField)) {
+                                            if (a.$groupHeader && !b.$groupHeader && a.$groupHeader.field === this.sortByField && a.$groupHeader.value === get(b, this.sortByField)) {
                                                 return -1;
-                                            } else if (!a.$groupHeader && b.$groupHeader && b.$groupHeader.field === this.sortByField && b.$groupHeader.value === _.get(a, this.sortByField)) {
+                                            } else if (!a.$groupHeader && b.$groupHeader && b.$groupHeader.field === this.sortByField && b.$groupHeader.value === get(a, this.sortByField)) {
                                                 return 1;
                                             } else {
-                                                let valA = a.$groupHeader ? a.$groupHeader.value : _.get(a, this.sortByField);
-                                                let valB = b.$groupHeader ? b.$groupHeader.value : _.get(b, this.sortByField);
+                                                let valA = a.$groupHeader ? a.$groupHeader.value : get(a, this.sortByField);
+                                                let valB = b.$groupHeader ? b.$groupHeader.value : get(b, this.sortByField);
                                                 return (this.revSort ? -1 : 1) * (valA > valB ? 1 : valA < valB ? -1 : 0);
                                             }
                                         });
@@ -1099,8 +1123,8 @@ export function JFrogTableViewOptions() {
                                         for (let key in this.fullGroupedData) {
                                             let groupData = this.fullGroupedData[key];
                                             groupData.sort((a, b) => {
-                                                let valA = _.get(a, this.sortByField);
-                                                let valB = _.get(b, this.sortByField);
+                                                let valA = get(a, this.sortByField);
+                                                let valB = get(b, this.sortByField);
                                                 return (this.revSort ? -1 : 1) * (valA > valB ? 1 : valA < valB ? -1 : 0);
                                             });
                                         }
@@ -1112,9 +1136,9 @@ export function JFrogTableViewOptions() {
                                         this.sortedData = sourceData;
                                     }
                                 } else {
-                                    let temp = _.sortBy(sourceData, item => {
-                                        let val = _.get(item, this.sortByField);
-                                        return _.isString(val) ? val.toLowerCase() : _.isArray(val) ? val.length : val;
+                                    let temp = sortBy(sourceData, item => {
+                                        let val = get(item, this.sortByField);
+                                        return isString(val) ? val.toLowerCase() : isArray(val) ? val.length : val;
                                     });
                                     if (this.revSort) this.sortedData = temp.reverse();
                                     else this.sortedData = temp;
@@ -1137,15 +1161,15 @@ export function JFrogTableViewOptions() {
             } else {
                 if (!this.groupedData) {
                     this.setFirstColumn(this.groupedBy);
-                    this.fullGroupedData = _.groupBy(sourceData, this.groupedBy);
+                    this.fullGroupedData = groupBy(sourceData, this.groupedBy);
                     let tempData = [];
-                    let column = _.find(this.columns, { field: this.groupedBy });
+                    let column = find(this.columns, { field: this.groupedBy });
                     for (let key in this.fullGroupedData) {
                         let data = this.fullGroupedData[key];
                         tempData.push({
                             $groupHeader: {
                                 field: this.groupedBy,
-                                value: _.get(data[0], this.groupedBy),
+                                value: get(data[0], this.groupedBy),
                                 col: column,
                                 count: data.length
                             }
@@ -1155,7 +1179,7 @@ export function JFrogTableViewOptions() {
 
                     // reopen previously opened group headers
                     this.openedGroupHeaders.forEach(wasOpened => {
-                        let toBeOpened = _.find(this.groupedData, { $groupHeader: { value: wasOpened.$groupHeader.value } });
+                        let toBeOpened = find(this.groupedData, { $groupHeader: { value: wasOpened.$groupHeader.value } });
                         if (toBeOpened) {
                             toBeOpened.$groupHeader.$expanded = true;
                             this.updateGroupExpansionState(toBeOpened, false);
@@ -1179,14 +1203,14 @@ export function JFrogTableViewOptions() {
                 return sourceData || [];
             }
             if (!this.filterCache) {
-                this.filterCache = _.filter(sourceData, row => {
+                this.filterCache = filter(sourceData, row => {
                     for (let i in this.columns) {
                         let col = this.columns[i];
                         if (this.defaultFilterByAll && col.filterable !== false || !this.defaultFilterByAll && col.filterable === true) {
                             if (row.$sticky && !row.$stickyFilterable ||
                                 this._isSubVisible(row, col) || row.$groupHeader ||
-                                _.get(row, col.field) &&
-                                _.includes(_.get(row, col.field).toString().toLowerCase(), this.dirCtrl.tableFilter.toLowerCase())) {
+                                get(row, col.field) &&
+                                includes(get(row, col.field).toString().toLowerCase(), this.dirCtrl.tableFilter.toLowerCase())) {
                                 return true;
                             }
                         }
@@ -1209,7 +1233,7 @@ export function JFrogTableViewOptions() {
                 for (let i = 0; i < row.$subRows.length; i++) {
                     let subRow = row.$subRows[i];
                     if (this.defaultFilterByAll && col.filterable !== false || !this.defaultFilterByAll && col.filterable === true) {
-                        if (_.get(subRow, col.field) && _.includes(_.get(subRow, col.field).toString().toLowerCase(), this.dirCtrl.tableFilter.toLowerCase())) {
+                        if (get(subRow, col.field) && includes(get(subRow, col.field).toString().toLowerCase(), this.dirCtrl.tableFilter.toLowerCase())) {
                             subsVisible = true;
                             break;
                         }
@@ -1239,7 +1263,7 @@ export function JFrogTableViewOptions() {
             this.origColumnDefs.forEach(colDef => {
                 let item = {
                     id: colDef.field,
-                    text: colDef.header || _.startCase(colDef.field),
+                    text: colDef.header || startCase(colDef.field),
                     isSelected: !this.visibleFields && !colDef.optional || this.visibleFields && this.visibleFields.indexOf(colDef.field) !== -1
                 };
                 this.availableColumns.push(item);
@@ -1248,7 +1272,7 @@ export function JFrogTableViewOptions() {
 
         refreshColumns() {
             if (this.origColumnDefs) {
-                this.setColumns(_.cloneDeep(this.origColumnDefs));
+                this.setColumns(cloneDeep(this.origColumnDefs));
             }
         }
 
@@ -1256,7 +1280,7 @@ export function JFrogTableViewOptions() {
             if (!this.availableColumns) {
                 return;
             }
-            this.visibleFields = _.map(_.filter(this.availableColumns, col => col.isSelected), 'id');
+            this.visibleFields = map(filter(this.availableColumns, col => col.isSelected), 'id');
             this.saveCustomizedColumnsState();
             if (refresh) {
                 this.refreshColumns();
@@ -1315,7 +1339,7 @@ export function JFrogTableViewOptions() {
                 let existingRows = [];
                 let doUpdate = false;
                 data.forEach(row => {
-                    let exists = _.find(this.data, r => {
+                    let exists = find(this.data, r => {
                         return this.keyFn(r) === this.keyFn(row);
                     });
                     if (exists) {
@@ -1328,7 +1352,7 @@ export function JFrogTableViewOptions() {
                         if (row.$subRows) {
                             let subRowsToSave = [];
                             row.$subRows.forEach(subRow => {
-                                let existsSub = _.find(exists.$subRows, r => {
+                                let existsSub = find(exists.$subRows, r => {
                                     return this.keyFn(r) === this.keyFn(subRow);
                                 });
                                 if (existsSub) {
@@ -1351,10 +1375,10 @@ export function JFrogTableViewOptions() {
                                 }
                             });
                             if (removeIfMissing) {
-                                let removed = _.difference(exists.$subRows, subRowsToSave);
+                                let removed = difference(exists.$subRows, subRowsToSave);
                                 if (removed.length) {
                                     doUpdate = true;
-                                    _.remove(exists.$subRows, sr => _.includes(removed, sr));
+                                    remove(exists.$subRows, sr => includes(removed, sr));
                                 }
                             }
                         }
@@ -1365,10 +1389,10 @@ export function JFrogTableViewOptions() {
                     }
                 });
                 if (removeIfMissing) {
-                    let removed = _.difference(this.data, existingRows);
+                    let removed = difference(this.data, existingRows);
                     if (removed.length) {
                         doUpdate = true;
-                        _.remove(this.data, row => _.includes(removed, row));
+                        remove(this.data, row => includes(removed, row));
                     }
                 }
                 if (doUpdate)
@@ -1416,7 +1440,7 @@ export function JFrogTableViewOptions() {
         }
 
         showAll(model, rowName, col) {
-            let objectName = _.startCase(this.objectName.indexOf('/') >= 0 ? this.objectName.split('/')[0] : this.objectName);
+            let objectName = startCase(this.objectName.indexOf('/') >= 0 ? this.objectName.split('/')[0] : this.objectName);
 
             let modalScope = {
                 items: model,
@@ -1447,9 +1471,9 @@ export function JFrogTableViewOptions() {
 
         _getCommonAction(key, callback, visibleWhen) {
             let action = COMMON_ACTIONS[key];
-            action = _.extend({ callback: callback }, action);
+            action = extend({ callback: callback }, action);
             if (visibleWhen) {
-                action = _.extend({ visibleWhen: visibleWhen }, action);
+                action = extend({ visibleWhen: visibleWhen }, action);
             }
             return action;
         }
@@ -1463,7 +1487,7 @@ export function JFrogTableViewOptions() {
         }
 
         hasVisibleActionsFor(rowData) {
-            let visible = _.filter(this.actions, act => !act.visibleWhen || act.visibleWhen(rowData));
+            let visible = filter(this.actions, act => !act.visibleWhen || act.visibleWhen(rowData));
             return !!visible.length;
         }
 
@@ -1475,8 +1499,8 @@ export function JFrogTableViewOptions() {
             }
 
             this.draggedRow = row;
-            this.draggedIndex = _.findIndex(this.data, r => r === row);
-            _.remove(this.data, r => r === row);
+            this.draggedIndex = findIndex(this.data, r => r === row);
+            remove(this.data, r => r === row);
             this.update();
             this.refreshFilter();
         }
@@ -1484,21 +1508,21 @@ export function JFrogTableViewOptions() {
         startMultiDrag() {
             let selected = this.getSelectedRows();
             let filtered = this.getFilteredData();
-            selected = _.filter(selected, item => _.includes(filtered, item));
+            selected = filter(selected, item => includes(filtered, item));
 
-            this.draggedRows = _.map(selected, selectedRow => {
+            this.draggedRows = map(selected, selectedRow => {
                 return {
                     row: selectedRow,
-                    index: _.findIndex(this.data, r => r === selectedRow)
+                    index: findIndex(this.data, r => r === selectedRow)
                 };
             });
-            _.remove(this.data, r => _.includes(selected, r));
+            remove(this.data, r => includes(selected, r));
             this.update();
             this.refreshFilter();
         }
 
         dropDraggedRow(targetRow, draggedRow = null, tabularDndDrag = false) {
-            if (this.registeredTabularDnd && (this.draggedRows || _.isArray(draggedRow))) {
+            if (this.registeredTabularDnd && (this.draggedRows || isArray(draggedRow))) {
                 this.dropDraggedRows(targetRow, draggedRow, tabularDndDrag);
                 return;
             }
@@ -1511,7 +1535,7 @@ export function JFrogTableViewOptions() {
             if (!targetRow) {
                 targetIndex = tabularDndDrag ? this.data.length : this.draggedIndex;
             } else {
-                targetIndex = _.findIndex(this.data, r => r === targetRow);
+                targetIndex = findIndex(this.data, r => r === targetRow);
                 if (targetIndex === -1)
                     targetIndex = this.draggedIndex;
             }
@@ -1535,7 +1559,7 @@ export function JFrogTableViewOptions() {
                 if (!targetRow) {
                     targetIndex = tabularDndDrag ? this.data.length : draggedRow.index;
                 } else {
-                    targetIndex = _.findIndex(this.data, r => r === targetRow);
+                    targetIndex = findIndex(this.data, r => r === targetRow);
                     if (targetIndex === -1)
                         targetIndex = draggedRow.index;
                 }
@@ -1614,7 +1638,7 @@ export function JFrogTableViewOptions() {
                 let tableOptions = rowCtrl.tableView.options;
                 let row = rowCtrl.data;
 
-                let allActions = _.filter(tableOptions.actions, act => {
+                let allActions = filter(tableOptions.actions, act => {
                     return row && (!act.visibleWhen || act.visibleWhen(row));
                 });
                 let editAction = getEditAction($trigger, row, tableOptions);
@@ -1683,10 +1707,10 @@ export function JFrogTableViewOptions() {
                                     editAction.do();
                                 } else if (key.startsWith('@')) {
                                     let actionName = key.substr(1);
-                                    let action = _.find(additionalActions, { name: actionName });
+                                    let action = find(additionalActions, { name: actionName });
                                     action.do();
                                 } else {
-                                    let act = _.find(allActions, { key: key });
+                                    let act = find(allActions, { key: key });
                                     act.callback(row);
                                     if (act.href) {
                                         let url = grid.options.getActionHref(act, row);
@@ -1739,10 +1763,10 @@ export function JFrogTableViewOptions() {
                 let funcName = clickCommand.substr(0, parenthesesOpenIndex);
                 let paramsString = clickCommand.substr(parenthesesOpenIndex).split('(').join('').split(')').join('').trim();
 
-                let params = _.map(paramsString.split(','), paramString => _.get(objScope, _.trim(paramString)));
+                let params = map(paramsString.split(','), paramString => get(objScope, trim(paramString)));
 
-                let funcThis = _.get(objScope, funcName.substr(0, funcName.lastIndexOf('.')));
-                let func = _.get(objScope, funcName).bind(funcThis);
+                let funcThis = get(objScope, funcName.substr(0, funcName.lastIndexOf('.')));
+                let func = get(objScope, funcName).bind(funcThis);
 
                 return {
                     do: () => {
@@ -1776,10 +1800,10 @@ export function JFrogTableViewOptions() {
                 let funcName = clickCommand.substr(0, parenthesesOpenIndex);
                 let paramsString = clickCommand.substr(parenthesesOpenIndex).split('(').join('').split(')').join('').trim();
 
-                let params = _.map(paramsString.split(','), paramString => _.get(objScope, _.trim(paramString)));
+                let params = map(paramsString.split(','), paramString => get(objScope, trim(paramString)));
 
-                let funcThis = _.get(objScope, funcName.substr(0, funcName.lastIndexOf('.')));
-                let func = _.get(objScope, funcName).bind(funcThis);
+                let funcThis = get(objScope, funcName.substr(0, funcName.lastIndexOf('.')));
+                let func = get(objScope, funcName).bind(funcThis);
 
                 additionalCommands.push({
                     name: commandName,
@@ -1826,9 +1850,9 @@ export function JFrogTableViewOptions() {
                 let key = keyVal[0].trim();
                 let val = keyVal[1].trim();
                 if (val.startsWith('row.') || val.startsWith('grid.'))
-                    val = _.get(objScope, val);
+                    val = get(objScope, val);
                 else if (val.startsWith('!row.') || val.startsWith('grid.'))
-                    val = !_.get(objScope, val);
+                    val = !get(objScope, val);
 
                 else if (val.startsWith('\''))
                     val = val.split('\'').join('');

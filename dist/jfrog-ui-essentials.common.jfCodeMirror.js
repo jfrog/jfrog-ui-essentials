@@ -78,7 +78,12 @@ var es6_regexp_constructor = __webpack_require__("3b2b");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.match.js
 var es6_regexp_match = __webpack_require__("4917");
 
+// EXTERNAL MODULE: ./node_modules/lodash/isUndefined.js
+var isUndefined = __webpack_require__("4cfe");
+var isUndefined_default = /*#__PURE__*/__webpack_require__.n(isUndefined);
+
 // CONCATENATED MODULE: ./src/components/JfCodeMirrorComponent/config.js
+
 
 
 
@@ -963,7 +968,7 @@ function codeMirrorAsciidocConfig(CodeMirror) {
 }
 
 function initCodemirrorConfig(CodeMirror) {
-  if (typeof CodeMirror === 'undefined' || _.isUndefined(CodeMirror)) return;
+  if (typeof CodeMirror === 'undefined' || isUndefined_default()(CodeMirror)) return;
   codeMirrorAsciidocConfig(CodeMirror);
   defineCodeMirrorMimes(CodeMirror);
   defineCodeMirrorLinkOverlay(CodeMirror);

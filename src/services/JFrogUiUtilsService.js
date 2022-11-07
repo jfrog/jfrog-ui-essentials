@@ -1,3 +1,11 @@
+import map from 'lodash/map';
+import isArray from 'lodash/isArray';
+import forEach from 'lodash/forEach';
+import capitalize from 'lodash/capitalize';
+import escape from 'lodash/escape';
+import unescape from 'lodash/unescape';
+import isNaN from 'lodash/isNaN';
+
 export class JFrogUIUtils {
     constructor() {
         this.$inject('$timeout');
@@ -5,7 +13,7 @@ export class JFrogUIUtils {
     getCapitalizedKeys(object, dictionary) {
         let getCapitalized = str => {
             str = str.split('_').join(' ');
-            str = str.split(' ').map(word => _.capitalize(word)).join(' ');
+            str = str.split(' ').map(word => capitalize(word)).join(' ');
             return str;
         };
         let destObj = {};
@@ -22,8 +30,8 @@ export class JFrogUIUtils {
     getSafeHtml(unsafeHtml) {
         if (!unsafeHtml)
             return unsafeHtml;
-        let decoded = _.unescape(unsafeHtml);
-        let safe = _.escape(decoded);
+        let decoded = unescape(unsafeHtml);
+        let safe = escape(decoded);
         return safe;
     }
     fireResizeEvent() {
@@ -38,11 +46,11 @@ export class JFrogUIUtils {
         });
     }
     stringifyData(value, separator) {
-        if (_.isEmpty(value)) {
+        if (isEmpty(value)) {
             return '';
         }
-        if (_.isArray(value)) {
-            let resultArray = _.map(value, item => {
+        if (isArray(value)) {
+            let resultArray = map(value, item => {
                 if (item.name) {
                     return item.name;
                 }
@@ -58,7 +66,7 @@ export class JFrogUIUtils {
     formatHtmlList(list, maxInRow) {
         let result = ``;
         let temp = [];
-        _.forEach(list, item => {
+        forEach(list, item => {
             if (temp.length === maxInRow) {
                 result += this.stringifyData(temp) + `<br>`;
                 temp = [item];
@@ -117,8 +125,8 @@ export class JFrogUIUtils {
         for (let i = 0; i < minLength; i++) {
             let aNum = parseInt(aArr[i]);
             let bNum = parseInt(bArr[i]);
-            let aIsNum = !_.isNaN(aNum);
-            let bIsNum = !_.isNaN(bNum);
+            let aIsNum = !isNaN(aNum);
+            let bIsNum = !isNaN(bNum);
             if (aIsNum && bIsNum && aNum < bNum) {
                 first = 'a';
                 break;
@@ -154,8 +162,8 @@ export class JFrogUIUtils {
         aText = aText.toLowerCase();
         bText = bText.toLowerCase();
         let aScore = 0, bScore = 0;
-        let aHasNumVal = !_.isNaN(parseInt(aText));
-        let bHasNumVal = !_.isNaN(parseInt(bText));
+        let aHasNumVal = !isNaN(parseInt(aText));
+        let bHasNumVal = !isNaN(parseInt(bText));
         if (aHasNumVal && bHasNumVal) {
             let addTo = this.compareVersions(aText, bText);
             if (addTo === -1)

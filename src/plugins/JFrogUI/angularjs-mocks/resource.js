@@ -1,4 +1,13 @@
-import { extend, includes, pick, filter, trimEnd, merge, isArray, isString, map } from 'lodash';
+import extend from 'lodash/extend';
+import isArray from 'lodash/isArray';
+import map from 'lodash/map';
+import includes from 'lodash/includes';
+import filter from 'lodash/filter';
+import pick from 'lodash/pick';
+import trimEnd from 'lodash/trimEnd';
+import merge from 'lodash/merge';
+import isString from 'lodash/isString';
+
 import rootAxios from 'axios';
 let $jfrog;
 let $q;

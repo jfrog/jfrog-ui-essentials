@@ -17,6 +17,10 @@
 </template>
 
 <script>
+    import map from 'lodash/map';
+    import trimEnd from 'lodash/trimEnd';
+    import debounce from 'lodash/debounce';
+    import flatten from 'lodash/flatten';
     import SanitizeMixin from "../../mixins/Sanitize";
 
     export default {
@@ -62,8 +66,8 @@
                     this.refreshText();
                     this.$forceUpdate();
                 }
-                let debouncedRefresh = _.debounce(appliedRefresh, 0, {leading: true});
-                // let throttledRefresh = _.throttle(appliedRefresh, 150, {/*leading: false*/})
+                let debouncedRefresh = debounce(appliedRefresh, 0, {leading: true});
+                // let throttledRefresh = throttle(appliedRefresh, 150, {/*leading: false*/})
 
                 this.onResize = debouncedRefresh;
 
@@ -87,7 +91,7 @@
                     let words = this.splitText(this.sanitizedText);
                     let i = 1;
                     let getNumOfLinesUntil = (index, withSeeAll = true) => {
-                        this.setStageText(_.trimEnd(words.slice(0, index).join('')) + (withSeeAll ? ' ' : ''))
+                        this.setStageText(trimEnd(words.slice(0, index).join('')) + (withSeeAll ? ' ' : ''))
                         if (withSeeAll) this.stageElement.append($(`  <div class="jf-text-box-show-all">${this.seeAllCustomText}</div>`));
                         return this.numOfStageRows();
                     }
@@ -115,7 +119,7 @@
                     */
                     let fit = words.slice(0, i);
 
-                    this.setStageText(_.trimEnd(fit.join('')) + (this.isOverflowing ? ' ' : ''));
+                    this.setStageText(trimEnd(fit.join('')) + (this.isOverflowing ? ' ' : ''));
                     if (this.isOverflowing) this.stageElement.append($(`<div class="jf-text-box-show-all">${this.seeAllCustomText}</div>`));
 
                     let m = 0;
@@ -123,10 +127,10 @@
                         m++;
 
                         fit = words.slice(0, i - m);
-                        this.setStageText(_.trimEnd(fit.join('')) + (this.isOverflowing ? ' ' : ''));
+                        this.setStageText(trimEnd(fit.join('')) + (this.isOverflowing ? ' ' : ''));
                         if (this.isOverflowing) this.stageElement.append($(`<div class="jf-text-box-show-all">${this.seeAllCustomText}</div>`));
                     }
-                    this.content = _.trimEnd(fit.join(''));
+                    this.content = trimEnd(fit.join(''));
 
                 }
                 this.ready = true;
@@ -152,12 +156,12 @@
                     }
                     parts.push(text.substr(lastIndex, text.length - lastIndex));
 
-                    parts = _.map(parts, part => {
+                    parts = map(parts, part => {
                         if (part.length > 16) return part.split('');
                         else return part;
                     })
 
-                    parts = _.flatten(parts);
+                    parts = flatten(parts);
 
                     this.splitCache = parts;
                     return parts;

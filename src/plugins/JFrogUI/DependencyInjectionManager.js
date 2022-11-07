@@ -1,4 +1,9 @@
-import { filter, remove, isString, includes, values, isArray } from 'lodash';
+import filter from 'lodash/filter';
+import remove from 'lodash/remove';
+import isString from 'lodash/isString';
+import includes from 'lodash/includes';
+import values from 'lodash/values';
+import isArray from 'lodash/isArray';
 import {VueFactory} from "../../services/VueFactory";
 
 export class DependencyInjectionManager {

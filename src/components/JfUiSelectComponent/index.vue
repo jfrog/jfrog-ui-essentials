@@ -23,6 +23,10 @@
      </multi-select>
 
     </div>`;
+    import cloneDeep from 'lodash/cloneDeep';
+    import filter from 'lodash/filter';
+    import isObject from 'lodash/isObject';
+
     export default {
         template: TEMPLATE,
         name: 'jf-ui-select',
@@ -42,12 +46,12 @@
         ],
         watch:{
             jfSelectOptions(){
-                this.manipulatedList = _.cloneDeep(this.jfSelectOptions);
+                this.manipulatedList = cloneDeep(this.jfSelectOptions);
             }
         },
         data() {
             return {
-                manipulatedList: _.cloneDeep(this.jfSelectOptions),
+                manipulatedList: cloneDeep(this.jfSelectOptions),
                 jfSelectOptionsView: null,
                 exccededLimit: null,
                 loadChunks: this.jfSelectLoadChunks
@@ -105,10 +109,10 @@
             onSearch(searchQ, id) {
 
                 this.manipulatedList.splice(0, this.manipulatedList.length)
-                this.manipulatedList.push(..._.filter(this.jfSelectOptions, (o) => {
+                this.manipulatedList.push(...filter(this.jfSelectOptions, (o) => {
 
 
-                    if (_.isObject(o)) {
+                    if (isObject(o)) {
                         return o[this.displayAttr].toLowerCase().indexOf(searchQ.toLowerCase()) > -1
                     } else {
                         return o.toLowerCase().indexOf(searchQ.toLowerCase()) > -1

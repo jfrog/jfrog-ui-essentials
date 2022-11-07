@@ -41,7 +41,9 @@
 </template>
 
 <script>
-import { filter, extend, omit } from 'lodash'
+import omit from 'lodash/omit';
+import extend from 'lodash/extend';
+import filter from 'lodash/filter';
 import { JfDataListModal } from "@/components/JfDataListModal/index.js";
 import {VueFactory} from '../../../services/VueFactory';
 import SanitizeMixin from '../../../mixins/Sanitize/index.js';

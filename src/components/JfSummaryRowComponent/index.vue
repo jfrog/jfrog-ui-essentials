@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import { forEach } from 'lodash';
+    import forEach from 'lodash/forEach';
 
     export default {
         name: 'jf-summary-row',

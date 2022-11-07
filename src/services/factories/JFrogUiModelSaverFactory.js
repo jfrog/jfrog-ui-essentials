@@ -1,4 +1,8 @@
-import { cloneDeep, isEqual, isString, isArray, isObject } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
+import isEqual from 'lodash/isEqual';
+import isString from 'lodash/isString';
+import isArray from 'lodash/isArray';
+import isObject from 'lodash/isObject';
 import { DeepDiff } from 'deep-diff';
 
 class JFrogUIModelSaver {

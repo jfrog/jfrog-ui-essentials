@@ -1,4 +1,6 @@
 import SanitizeMixin from '../mixins/Sanitize/index.js';
+import map from 'lodash/map';
+import find from 'lodash/find';
 
 export class AdvancedStringMatch {
     constructor() {
@@ -70,7 +72,7 @@ export class AdvancedStringMatch {
                         tempParts.push(part);
                     } else {
                         let innerParts = part.split('.');
-                        innerParts = _.map(innerParts, part => {
+                        innerParts = map(innerParts, part => {
                             return '.' + part;
                         });
                         innerParts[0] = innerParts[0].substr(1);
@@ -148,10 +150,10 @@ export class AdvancedStringMatch {
     }
     doHighlight(elem, segments, hlElemType = 'span', hlClass = 'highlight') {
         let contents = elem.contents();
-        let textNode = _.find(contents, { nodeType: 3 });
+        let textNode = find(contents, { nodeType: 3 });
         if (!textNode) {
             for (let i = 0; i < contents.length; i++) {
-                textNode = _.find(contents[i].childNodes, { nodeType: 3 });
+                textNode = find(contents[i].childNodes, { nodeType: 3 });
                 if (textNode)
                     break;
             }

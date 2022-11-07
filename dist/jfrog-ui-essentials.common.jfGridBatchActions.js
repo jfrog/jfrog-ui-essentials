@@ -7,14 +7,14 @@
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2dee9595-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfGridBatchActionsComponent/index.vue?vue&type=template&id=d5129628&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2dee9595-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfGridBatchActionsComponent/index.vue?vue&type=template&id=7d485008&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"grid-batch-actions text-right"},_vm._l((_vm.actions),function(action,$index){
 var _obj;
 return _c('div',{directives:[{name:"jf-tooltip",rawName:"v-jf-tooltip.bind",value:(_vm.isDisabled(action) ? action.getDisabledTooltip() : ''),expression:"isDisabled(action) ? action.getDisabledTooltip() : ''",modifiers:{"bind":true}}],staticClass:"grid-batch-action-wrapper",class:{'more-actions': action === _vm.MORE_ACTIONS},style:({visibility: action === _vm.MORE_ACTIONS || _vm.visibleActions.indexOf(action) !== -1 ? 'inherit' : 'hidden', opacity: action === _vm.MORE_ACTIONS || _vm.visibleActions.indexOf(action) !== -1 ? 1 : 0}),attrs:{"data-action-id":action.name}},[(action !== _vm.MORE_ACTIONS && (!action.visibleWhen || action.visibleWhen()))?_c('a',{class:( _obj = {disabled: _vm.isDisabled(action)}, _obj['btn batch-action-' + action.icon] = true, _obj ),on:{"click":function($event){$event.preventDefault();return _vm.perform(action)}}},[(action.img)?_c('img',{attrs:{"src":'images/' + action.icon + '.png'}}):_vm._e(),(!action.img)?_c('i',{class:'icon icon-' + action.icon}):_vm._e(),_vm._v(" "+_vm._s(action.name)+"\n            ")]):_vm._e(),(action === _vm.MORE_ACTIONS)?_c('div',{staticClass:"more-wrapper"},[_c('jf-actions',{attrs:{"parent-controller":_vm.jfBatchActions,"label":"More Actions","init-method":"initActions","show-drop-down-for-one-item":true}})],1):_vm._e()])}),0)])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/JfGridBatchActionsComponent/index.vue?vue&type=template&id=d5129628&scoped=true&
+// CONCATENATED MODULE: ./src/components/JfGridBatchActionsComponent/index.vue?vue&type=template&id=7d485008&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.function.name.js
 var es6_function_name = __webpack_require__("7f7f");
@@ -24,6 +24,18 @@ var web_dom_iterable = __webpack_require__("ac6a");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.find.js
 var es6_array_find = __webpack_require__("7514");
+
+// EXTERNAL MODULE: ./node_modules/lodash/map.js
+var map = __webpack_require__("dd61");
+var map_default = /*#__PURE__*/__webpack_require__.n(map);
+
+// EXTERNAL MODULE: ./node_modules/lodash/find.js
+var find = __webpack_require__("2769");
+var find_default = /*#__PURE__*/__webpack_require__.n(find);
+
+// EXTERNAL MODULE: ./node_modules/lodash/filter.js
+var filter = __webpack_require__("9380");
+var filter_default = /*#__PURE__*/__webpack_require__.n(filter);
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfGridBatchActionsComponent/index.vue?vue&type=script&lang=js&
 
@@ -47,6 +59,9 @@ var es6_array_find = __webpack_require__("7514");
 //
 //
 //
+
+
+
 /* harmony default export */ var JfGridBatchActionsComponentvue_type_script_lang_js_ = ({
   name: 'jf-grid-batch-actions',
   props: ['actions', 'gridApi', 'gridOptions'],
@@ -147,11 +162,9 @@ var es6_array_find = __webpack_require__("7514");
         var el = $(elems[i]);
         totalWidth += el.width();
         var id = el.attr('data-action-id');
-
-        var act = _.find(this.actions, {
+        var act = find_default()(this.actions, {
           name: id
         });
-
         var index = this.actions.indexOf(act);
 
         if ((totalWidth > containerWidth || this.moreActions && this.moreActions.length && totalWidth - el.width() + moreDropdownWidth > containerWidth) && addTo === visible) {
@@ -170,7 +183,7 @@ var es6_array_find = __webpack_require__("7514");
 
       if (totalWidth < containerWidth) {
         inDropDown = [];
-        visible = _.filter(this.actions, function (act) {
+        visible = filter_default()(this.actions, function (act) {
           return act !== _this3.MORE_ACTIONS;
         });
         moreActionsNewIndex = -1;
@@ -209,8 +222,7 @@ var es6_array_find = __webpack_require__("7514");
       var _this4 = this;
 
       if (!this.moreActionsController) return;
-
-      var actionsCount = _.filter(this.actions, function (act) {
+      var actionsCount = filter_default()(this.actions, function (act) {
         return act !== _this4.MORE_ACTIONS;
       }).length;
 
@@ -229,7 +241,7 @@ var es6_array_find = __webpack_require__("7514");
         };
       });
       this.moreActionsController.setActionsDictionary(dict);
-      this.moreActionsController.setActions(_.map(this.moreActions, function (action) {
+      this.moreActionsController.setActions(map_default()(this.moreActions, function (action) {
         return {
           name: action.name,
           visibleWhen: action.visibleWhen,
@@ -258,7 +270,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   null,
-  "d5129628",
+  "7d485008",
   null
   
 )

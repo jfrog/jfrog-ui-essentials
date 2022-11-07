@@ -1,4 +1,5 @@
-import { isFunction, kebabCase } from 'lodash';
+import isFunction from 'lodash/isFunction';
+import kebabCase from 'lodash/kebabCase';
 import $ from 'jquery';
 import {VueFactory} from "../../../services/VueFactory";
 

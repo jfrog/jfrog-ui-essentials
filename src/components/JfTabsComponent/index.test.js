@@ -3,6 +3,7 @@ import {
     createLocalVue
 } from '@vue/test-utils';
 import JfTabsComponent from './index.vue';
+import take from 'lodash/take';
 
 /* Stubs custom directive */
 const localVue = createLocalVue();
@@ -67,7 +68,7 @@ const mountComponent = function ({ stubs, slots, routeValue }){
         slots: slots,
         methods: {
             _calculateTabsSize: function () {
-                this.tabsVisible = _.take(tabArray, tabArray.length)
+                this.tabsVisible = take(tabArray, tabArray.length)
             }
         }
     }

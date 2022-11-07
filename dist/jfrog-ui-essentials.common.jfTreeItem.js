@@ -7,12 +7,12 @@
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2dee9595-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTreeItemComponent/index.vue?vue&type=template&id=b04c83c8&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2dee9595-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTreeItemComponent/index.vue?vue&type=template&id=12d09ce3&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:_vm.refreshHack.count && _vm.getClasses().concat(_vm.getCustomClasses()),style:({height: _vm.tree.viewPane.itemHeight, 'line-height': _vm.tree.viewPane.itemHeight}),on:{"click":function($event){return _vm.onItemClick($event)},"dblclick":function($event){return _vm.onItemDoubleClick()}}},[_c('div',{staticClass:"jf-tree-item-container",style:({height: _vm.tree.viewPane.itemHeight, 'line-height': _vm.tree.viewPane.itemHeight})},[_c('jf-tree-indentation',{attrs:{"visible":_vm.tree.api.linesVisible,"height":_vm.tree.viewPane.itemHeight,"lines-backgrounds":_vm.tree.viewPane.linesBackgrounds,"indentation":_vm.getIndentation()}}),(_vm.data.level >= 1 && _vm.tree.api.linesVisible && !_vm.shouldShowExpander() && !_vm.data.$pending)?_c('div',{staticClass:"no-children-line-extension",style:({height: _vm.tree.viewPane.itemHeight, 'background-image': 'url(\'' + _vm.tree.viewPane.linesBackgrounds['horizontal-line'] + '\')'})}):_vm._e(),(_vm.data.data === _vm.tree.api.GO_UP_NODE)?_c('span',{staticClass:"drill-back"},[_vm._v("  ..")]):_vm._e(),(_vm.data.data !== _vm.tree.api.GO_UP_NODE && (_vm.shouldShowExpander() || _vm.data.$pending || _vm.data.level === 0))?_c('div',{directives:[{name:"init",rawName:"v-init",value:(_vm.initExpander()),expression:"initExpander()"}],staticClass:"node-expander",style:({height: _vm.tree.viewPane.itemHeight}),on:{"click":function($event){_vm.shouldShowExpander() && _vm.toggleExpansion(); $event.stopPropagation();}}},[(_vm.shouldShowExpander())?_c('div',{staticClass:"action-icon icon icon-addons-arrow-right"}):_vm._e(),(_vm.data.$pending)?_c('div',{staticClass:"spinner-msg-local"},[_c('div',{staticClass:"icon-hourglass-local"})]):_vm._e()]):_vm._e(),(_vm.data.data !== _vm.tree.api.GO_UP_NODE)?_c('div',{staticClass:"jf-tree-item-content"},[_c('jf-tree-compiled-cell',{attrs:{"item-id":_vm.itemId,"tree-item":_vm.jfTreeItem}})],1):_vm._e()],1)])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/JfTreeItemComponent/index.vue?vue&type=template&id=b04c83c8&scoped=true&
+// CONCATENATED MODULE: ./src/components/JfTreeItemComponent/index.vue?vue&type=template&id=12d09ce3&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.match.js
 var es6_regexp_match = __webpack_require__("4917");
@@ -22,6 +22,18 @@ var es6_array_find = __webpack_require__("7514");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
 var web_dom_iterable = __webpack_require__("ac6a");
+
+// EXTERNAL MODULE: ./node_modules/lodash/isArray.js
+var isArray = __webpack_require__("6747");
+var isArray_default = /*#__PURE__*/__webpack_require__.n(isArray);
+
+// EXTERNAL MODULE: ./node_modules/lodash/map.js
+var map = __webpack_require__("dd61");
+var map_default = /*#__PURE__*/__webpack_require__.n(map);
+
+// EXTERNAL MODULE: ./node_modules/lodash/filter.js
+var filter = __webpack_require__("9380");
+var filter_default = /*#__PURE__*/__webpack_require__.n(filter);
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTreeItemComponent/index.vue?vue&type=script&lang=js&
 
@@ -51,6 +63,9 @@ var web_dom_iterable = __webpack_require__("ac6a");
 //
 //
 //
+
+
+
 /* harmony default export */ var JfTreeItemComponentvue_type_script_lang_js_ = ({
   name: 'jf-tree-item',
   props: ['data', 'itemId', 'tree'],
@@ -207,7 +222,7 @@ var web_dom_iterable = __webpack_require__("ac6a");
     getCustomClasses: function getCustomClasses() {
       if (!this.data.data || this.data.data === this.tree.api.GO_UP_NODE || !this.tree.api.classGetter) return [];else {
         var classes = this.tree.api.classGetter(this.data.data);
-        if (!classes) classes = [];else if (!_.isArray(classes)) classes = [classes];
+        if (!classes) classes = [];else if (!isArray_default()(classes)) classes = [classes];
         return classes;
       }
     },
@@ -223,7 +238,7 @@ var web_dom_iterable = __webpack_require__("ac6a");
     },
     createIndentation: function createIndentation() {
       if (!this.tree.api.linesVisible) {
-        this.$set(this.data.data, '$indentation', _.map(new Array(this.data.level), function (i) {
+        this.$set(this.data.data, '$indentation', map_default()(new Array(this.data.level), function (i) {
           return {};
         }));
         return;
@@ -234,11 +249,9 @@ var web_dom_iterable = __webpack_require__("ac6a");
       var isLastChild = function isLastChild(item) {
         if (item.$isLastChild === undefined) {
           var parent = item.parent;
-
-          var children = _.filter(flats, {
+          var children = filter_default()(flats, {
             parent: parent
           });
-
           var index = children.indexOf(item);
           item.$isLastChild = index !== -1 && index === children.length - 1;
         }
@@ -282,7 +295,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   null,
-  "b04c83c8",
+  "12d09ce3",
   null
   
 )

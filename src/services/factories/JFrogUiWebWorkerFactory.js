@@ -1,4 +1,4 @@
-import { extend } from 'lodash';
+import extend from 'lodash/extend';
 
 export function JFrogUIWebWorker() {
     let injections = $jfrog.get(['$q', 'JFrogUILibConfig', 'WebWorkersPool']);

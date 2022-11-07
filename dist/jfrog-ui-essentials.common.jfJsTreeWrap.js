@@ -7,15 +7,19 @@
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2dee9595-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfJsTreeWrapComponent/index.vue?vue&type=template&id=72451b3c&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2dee9595-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfJsTreeWrapComponent/index.vue?vue&type=template&id=371926b1&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.hasData()),expression:"hasData()"}],staticClass:"jf-js-tree-wrap-container"},[(_vm.treeHeader)?_c('div',{staticClass:"tree-browser-header"},[_c('div',{staticClass:"tree-browser-header-tabs",domProps:{"innerHTML":_vm._s(_vm.treeHeader)}})]):_vm._e(),_vm._m(0)])])}
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tree-element-container"},[_c('div',[_c('div',{staticClass:"tree-element"})])])}]
 
 
-// CONCATENATED MODULE: ./src/components/JfJsTreeWrapComponent/index.vue?vue&type=template&id=72451b3c&scoped=true&
+// CONCATENATED MODULE: ./src/components/JfJsTreeWrapComponent/index.vue?vue&type=template&id=371926b1&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.find.js
 var es6_array_find = __webpack_require__("7514");
+
+// EXTERNAL MODULE: ./node_modules/lodash/map.js
+var map = __webpack_require__("dd61");
+var map_default = /*#__PURE__*/__webpack_require__.n(map);
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfJsTreeWrapComponent/index.vue?vue&type=script&lang=js&
 
@@ -37,6 +41,7 @@ var es6_array_find = __webpack_require__("7514");
 //
 //
 //
+
 /* harmony default export */ var JfJsTreeWrapComponentvue_type_script_lang_js_ = ({
   name: 'jf-js-tree-wrap',
   props: ['treeData', 'treeHeader', 'checkboxes'],
@@ -137,7 +142,7 @@ var es6_array_find = __webpack_require__("7514");
       var _this5 = this;
 
       if (!origData || !origData.length) return;
-      return _.map(origData, function (origItem) {
+      return map_default()(origData, function (origItem) {
         var item = {};
         item.data = {
           originalObject: function originalObject() {
@@ -254,7 +259,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   null,
-  "72451b3c",
+  "371926b1",
   null
   
 )

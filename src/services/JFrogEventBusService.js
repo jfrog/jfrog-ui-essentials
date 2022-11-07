@@ -1,6 +1,8 @@
 import LIBRARY_EVENTS from '../constants/jfrog_ui_lib_events.constants';
-import { extend, isArray, find, remove } from 'lodash';
-
+import extend from 'lodash/extend';
+import isArray from 'lodash/isArray';
+import find from 'lodash/find';
+import remove from 'lodash/remove';
 /**
  * Service for components communication
  */

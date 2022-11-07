@@ -1,6 +1,9 @@
 import {mount, createLocalVue} from '@vue/test-utils';
 import JfTreeComponent from './index.vue';
 import {testsBootstrap} from '@/testsBootstrap';
+import map from 'lodash/map';
+import find from 'lodash/find';
+import filter from 'lodash/filter';
 
 const localVue = createLocalVue();
 testsBootstrap(localVue);
@@ -86,12 +89,12 @@ let pane2Node = null;
 function setDataDriver() {
     treeApi.setDataDriver({
         children: node => {
-            return node ? _.filter(simpleTestData, {parentId: node.id}) : _.filter(simpleTestData, item => !item.parentId)
+            return node ? filter(simpleTestData, {parentId: node.id}) : filter(simpleTestData, item => !item.parentId)
         },
         text: node => node.text,
-        parent: node => _.find(simpleTestData, {id: node.parentId}),
+        parent: node => find(simpleTestData, {id: node.parentId}),
         uniqueId: node => node.id,
-        nodeById: id => $q.when(_.find(simpleTestData, {id})),
+        nodeById: id => $q.when(find(simpleTestData, {id})),
         pane: node => !pane2Node || node !== pane2Node ? 'default' : 'pane2'
     });
 }
@@ -348,7 +351,7 @@ describe('JfTreeComponent', () => {
         await wait();
         elems = getElements(wrapper);
 
-        let matches = _.map(treeApi.getQuickFindMatches(),'text');
+        let matches = map(treeApi.getQuickFindMatches(),'text');
         await wait();
         elems = getElements(wrapper);
 
@@ -362,7 +365,7 @@ describe('JfTreeComponent', () => {
         await wait();
         elems = getElements(wrapper);
 
-        matches = _.map(treeApi.getQuickFindMatches(),'text');
+        matches = map(treeApi.getQuickFindMatches(),'text');
         await wait();
         elems = getElements(wrapper);
 

@@ -17,6 +17,9 @@
 </template>
 
 <script>
+    import map from 'lodash/map';
+    import find from 'lodash/find';
+    import filter from 'lodash/filter';
 
     export default {
         name: 'jf-grid-batch-actions',
@@ -108,7 +111,7 @@
                     let el = $(elems[i]);
                     totalWidth += el.width();
                     let id = el.attr('data-action-id');
-                    let act = _.find(this.actions, { name: id });
+                    let act = find(this.actions, { name: id });
                     let index = this.actions.indexOf(act);
 
                     if ((totalWidth > containerWidth || this.moreActions && this.moreActions.length && totalWidth - el.width() + moreDropdownWidth > containerWidth) && addTo === visible) {
@@ -127,7 +130,7 @@
 
                 if (totalWidth < containerWidth) {
                     inDropDown = [];
-                    visible = _.filter(this.actions, act => act !== this.MORE_ACTIONS);
+                    visible = filter(this.actions, act => act !== this.MORE_ACTIONS);
                     moreActionsNewIndex = -1;
                 }
 
@@ -159,7 +162,7 @@
                 if (!this.moreActionsController)
                     return;
 
-                let actionsCount = _.filter(this.actions, act => act !== this.MORE_ACTIONS).length;
+                let actionsCount = filter(this.actions, act => act !== this.MORE_ACTIONS).length;
 
                 if (this.moreActions.length < actionsCount) {
                     this.moreActionsController.label = 'More Actions';
@@ -178,7 +181,7 @@
                 });
 
                 this.moreActionsController.setActionsDictionary(dict);
-                this.moreActionsController.setActions(_.map(this.moreActions, action => {
+                this.moreActionsController.setActions(map(this.moreActions, action => {
                     return {
                         name: action.name,
                         visibleWhen: action.visibleWhen,

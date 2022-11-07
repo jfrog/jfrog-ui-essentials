@@ -13,7 +13,19 @@ import { AngularScopeServiceMock } from './angularjs-mocks/scope'
 import { AngularStateServiceMock } from './angularjs-mocks/state'
 import {AngularUrlMatcherFactoryMock} from './angularjs-mocks/urlMatcherFactory';
 import { AngularCompileServiceMock } from './angularjs-mocks/compile'
-import { filter, isString, isObject, isArray, values, forEach, entries, get, has, camelCase, trim, kebabCase, isFunction } from 'lodash';
+import filter from 'lodash/filter';
+import isString from 'lodash/isString';
+import isObject from 'lodash/isObject';
+import isArray from 'lodash/isArray';
+import values from 'lodash/values';
+import forEach from 'lodash/forEach';
+import entries from 'lodash/toPairs';
+import get from 'lodash/get';
+import has from 'lodash/has';
+import camelCase from 'lodash/camelCase';
+import trim from 'lodash/trim';
+import kebabCase from 'lodash/kebabCase';
+import isFunction from 'lodash/isFunction';
 import $ from 'jquery';
 import {AngularTranscludeServiceMock} from './angularjs-mocks/transclude';
 import {DependencyInjectionManager} from './DependencyInjectionManager';

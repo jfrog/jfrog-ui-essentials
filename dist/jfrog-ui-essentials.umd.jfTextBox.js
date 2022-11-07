@@ -1,9 +1,50 @@
 ((typeof self !== 'undefined' ? self : this)["webpackJsonpjfrog_ui_essentials"] = (typeof self !== 'undefined' ? self : this)["webpackJsonpjfrog_ui_essentials"] || []).push([[49],{
 
-/***/ "506b":
+/***/ "13e5":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_74168780_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("191e");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_74168780_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_74168780_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+
+
+/***/ }),
+
+/***/ "191e":
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "408c":
+/***/ (function(module, exports, __webpack_require__) {
+
+var root = __webpack_require__("2b3e");
+
+/**
+ * Gets the timestamp of the number of milliseconds that have elapsed since
+ * the Unix epoch (1 January 1970 00:00:00 UTC).
+ *
+ * @static
+ * @memberOf _
+ * @since 2.4.0
+ * @category Date
+ * @returns {number} Returns the timestamp.
+ * @example
+ *
+ * _.defer(function(stamp) {
+ *   console.log(_.now() - stamp);
+ * }, _.now());
+ * // => Logs the number of milliseconds it took for the deferred invocation.
+ */
+var now = function() {
+  return root.Date.now();
+};
+
+module.exports = now;
+
 
 /***/ }),
 
@@ -14,12 +55,12 @@
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2dee9595-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTextBoxComponent/index.vue?vue&type=template&id=530a5424&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2dee9595-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/JfTextBoxComponent/index.vue?vue&type=template&id=74168780&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"jf-text-box-container"},[_c('div',{staticClass:"jf-text-box-content-current"},[_vm._v(_vm._s(_vm.content)+" "),(_vm.ready && _vm.isOverflowing)?_c('span',{staticClass:"jf-text-box-show-all",style:({'white-space': _vm.wrapSeeAll ? 'inherit' : 'nowrap'}),domProps:{"innerHTML":_vm._s(_vm.seeAllCustomText)},on:{"click":function($event){return _vm.seeAll()}}}):_vm._e()]),_c('div',{staticClass:"jf-text-box-content-full"}),_c('div',{staticClass:"jf-text-box-content-stage"})])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/JfTextBoxComponent/index.vue?vue&type=template&id=530a5424&scoped=true&
+// CONCATENATED MODULE: ./src/components/JfTextBoxComponent/index.vue?vue&type=template&id=74168780&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.find.js
 var es6_array_find = __webpack_require__("7514");
@@ -29,6 +70,22 @@ var es7_promise_finally = __webpack_require__("097d");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.split.js
 var es6_regexp_split = __webpack_require__("28a5");
+
+// EXTERNAL MODULE: ./node_modules/lodash/map.js
+var map = __webpack_require__("dd61");
+var map_default = /*#__PURE__*/__webpack_require__.n(map);
+
+// EXTERNAL MODULE: ./node_modules/lodash/trimEnd.js
+var trimEnd = __webpack_require__("f942");
+var trimEnd_default = /*#__PURE__*/__webpack_require__.n(trimEnd);
+
+// EXTERNAL MODULE: ./node_modules/lodash/debounce.js
+var debounce = __webpack_require__("b047c");
+var debounce_default = /*#__PURE__*/__webpack_require__.n(debounce);
+
+// EXTERNAL MODULE: ./node_modules/lodash/flatten.js
+var flatten = __webpack_require__("4d8c");
+var flatten_default = /*#__PURE__*/__webpack_require__.n(flatten);
 
 // EXTERNAL MODULE: ./src/mixins/Sanitize/index.js
 var Sanitize = __webpack_require__("0b04");
@@ -55,6 +112,10 @@ var Sanitize = __webpack_require__("0b04");
 //
 //
 //
+
+
+
+
 
 /* harmony default export */ var JfTextBoxComponentvue_type_script_lang_js_ = ({
   name: 'jf-text-box',
@@ -91,10 +152,9 @@ var Sanitize = __webpack_require__("0b04");
         _this2.$forceUpdate();
       };
 
-      var debouncedRefresh = _.debounce(appliedRefresh, 0, {
+      var debouncedRefresh = debounce_default()(appliedRefresh, 0, {
         leading: true
-      }); // let throttledRefresh = _.throttle(appliedRefresh, 150, {/*leading: false*/})
-
+      }); // let throttledRefresh = throttle(appliedRefresh, 150, {/*leading: false*/})
 
       this.onResize = debouncedRefresh;
       $(window).on('resize', this.onResize);
@@ -120,7 +180,7 @@ var Sanitize = __webpack_require__("0b04");
         var getNumOfLinesUntil = function getNumOfLinesUntil(index) {
           var withSeeAll = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
-          _this3.setStageText(_.trimEnd(words.slice(0, index).join('')) + (withSeeAll ? ' ' : ''));
+          _this3.setStageText(trimEnd_default()(words.slice(0, index).join('')) + (withSeeAll ? ' ' : ''));
 
           if (withSeeAll) _this3.stageElement.append($("  <div class=\"jf-text-box-show-all\">".concat(_this3.seeAllCustomText, "</div>")));
           return _this3.numOfStageRows();
@@ -149,18 +209,18 @@ var Sanitize = __webpack_require__("0b04");
 
 
         var fit = words.slice(0, i);
-        this.setStageText(_.trimEnd(fit.join('')) + (this.isOverflowing ? ' ' : ''));
+        this.setStageText(trimEnd_default()(fit.join('')) + (this.isOverflowing ? ' ' : ''));
         if (this.isOverflowing) this.stageElement.append($("<div class=\"jf-text-box-show-all\">".concat(this.seeAllCustomText, "</div>")));
         var m = 0;
 
         while (this.numOfStageRows() > this.numOfWholeRows && i > m) {
           m++;
           fit = words.slice(0, i - m);
-          this.setStageText(_.trimEnd(fit.join('')) + (this.isOverflowing ? ' ' : ''));
+          this.setStageText(trimEnd_default()(fit.join('')) + (this.isOverflowing ? ' ' : ''));
           if (this.isOverflowing) this.stageElement.append($("<div class=\"jf-text-box-show-all\">".concat(this.seeAllCustomText, "</div>")));
         }
 
-        this.content = _.trimEnd(fit.join(''));
+        this.content = trimEnd_default()(fit.join(''));
       }
 
       this.ready = true;
@@ -184,10 +244,10 @@ var Sanitize = __webpack_require__("0b04");
         }
 
         parts.push(text.substr(lastIndex, text.length - lastIndex));
-        parts = _.map(parts, function (part) {
+        parts = map_default()(parts, function (part) {
           if (part.length > 16) return part.split('');else return part;
         });
-        parts = _.flatten(parts);
+        parts = flatten_default()(parts);
         this.splitCache = parts;
         return parts;
       }
@@ -303,8 +363,8 @@ var Sanitize = __webpack_require__("0b04");
 });
 // CONCATENATED MODULE: ./src/components/JfTextBoxComponent/index.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_JfTextBoxComponentvue_type_script_lang_js_ = (JfTextBoxComponentvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/JfTextBoxComponent/index.vue?vue&type=style&index=0&id=530a5424&scoped=true&lang=less&
-var JfTextBoxComponentvue_type_style_index_0_id_530a5424_scoped_true_lang_less_ = __webpack_require__("a2bc");
+// EXTERNAL MODULE: ./src/components/JfTextBoxComponent/index.vue?vue&type=style&index=0&id=74168780&scoped=true&lang=less&
+var JfTextBoxComponentvue_type_style_index_0_id_74168780_scoped_true_lang_less_ = __webpack_require__("13e5");
 
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
@@ -324,7 +384,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   null,
-  "530a5424",
+  "74168780",
   null
   
 )
@@ -333,13 +393,200 @@ var component = Object(componentNormalizer["a" /* default */])(
 
 /***/ }),
 
-/***/ "a2bc":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "b047c":
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_530a5424_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("506b");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_530a5424_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_10_oneOf_1_0_node_modules_css_loader_index_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_530a5424_scoped_true_lang_less___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
+var isObject = __webpack_require__("1a8c"),
+    now = __webpack_require__("408c"),
+    toNumber = __webpack_require__("b4b0");
+
+/** Error message constants. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max,
+    nativeMin = Math.min;
+
+/**
+ * Creates a debounced function that delays invoking `func` until after `wait`
+ * milliseconds have elapsed since the last time the debounced function was
+ * invoked. The debounced function comes with a `cancel` method to cancel
+ * delayed `func` invocations and a `flush` method to immediately invoke them.
+ * Provide `options` to indicate whether `func` should be invoked on the
+ * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
+ * with the last arguments provided to the debounced function. Subsequent
+ * calls to the debounced function return the result of the last `func`
+ * invocation.
+ *
+ * **Note:** If `leading` and `trailing` options are `true`, `func` is
+ * invoked on the trailing edge of the timeout only if the debounced function
+ * is invoked more than once during the `wait` timeout.
+ *
+ * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+ * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+ *
+ * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+ * for details over the differences between `_.debounce` and `_.throttle`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to debounce.
+ * @param {number} [wait=0] The number of milliseconds to delay.
+ * @param {Object} [options={}] The options object.
+ * @param {boolean} [options.leading=false]
+ *  Specify invoking on the leading edge of the timeout.
+ * @param {number} [options.maxWait]
+ *  The maximum time `func` is allowed to be delayed before it's invoked.
+ * @param {boolean} [options.trailing=true]
+ *  Specify invoking on the trailing edge of the timeout.
+ * @returns {Function} Returns the new debounced function.
+ * @example
+ *
+ * // Avoid costly calculations while the window size is in flux.
+ * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
+ *
+ * // Invoke `sendMail` when clicked, debouncing subsequent calls.
+ * jQuery(element).on('click', _.debounce(sendMail, 300, {
+ *   'leading': true,
+ *   'trailing': false
+ * }));
+ *
+ * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
+ * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
+ * var source = new EventSource('/stream');
+ * jQuery(source).on('message', debounced);
+ *
+ * // Cancel the trailing debounced invocation.
+ * jQuery(window).on('popstate', debounced.cancel);
+ */
+function debounce(func, wait, options) {
+  var lastArgs,
+      lastThis,
+      maxWait,
+      result,
+      timerId,
+      lastCallTime,
+      lastInvokeTime = 0,
+      leading = false,
+      maxing = false,
+      trailing = true;
+
+  if (typeof func != 'function') {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  wait = toNumber(wait) || 0;
+  if (isObject(options)) {
+    leading = !!options.leading;
+    maxing = 'maxWait' in options;
+    maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
+    trailing = 'trailing' in options ? !!options.trailing : trailing;
+  }
+
+  function invokeFunc(time) {
+    var args = lastArgs,
+        thisArg = lastThis;
+
+    lastArgs = lastThis = undefined;
+    lastInvokeTime = time;
+    result = func.apply(thisArg, args);
+    return result;
+  }
+
+  function leadingEdge(time) {
+    // Reset any `maxWait` timer.
+    lastInvokeTime = time;
+    // Start the timer for the trailing edge.
+    timerId = setTimeout(timerExpired, wait);
+    // Invoke the leading edge.
+    return leading ? invokeFunc(time) : result;
+  }
+
+  function remainingWait(time) {
+    var timeSinceLastCall = time - lastCallTime,
+        timeSinceLastInvoke = time - lastInvokeTime,
+        timeWaiting = wait - timeSinceLastCall;
+
+    return maxing
+      ? nativeMin(timeWaiting, maxWait - timeSinceLastInvoke)
+      : timeWaiting;
+  }
+
+  function shouldInvoke(time) {
+    var timeSinceLastCall = time - lastCallTime,
+        timeSinceLastInvoke = time - lastInvokeTime;
+
+    // Either this is the first call, activity has stopped and we're at the
+    // trailing edge, the system time has gone backwards and we're treating
+    // it as the trailing edge, or we've hit the `maxWait` limit.
+    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+      (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
+  }
+
+  function timerExpired() {
+    var time = now();
+    if (shouldInvoke(time)) {
+      return trailingEdge(time);
+    }
+    // Restart the timer.
+    timerId = setTimeout(timerExpired, remainingWait(time));
+  }
+
+  function trailingEdge(time) {
+    timerId = undefined;
+
+    // Only invoke if we have `lastArgs` which means `func` has been
+    // debounced at least once.
+    if (trailing && lastArgs) {
+      return invokeFunc(time);
+    }
+    lastArgs = lastThis = undefined;
+    return result;
+  }
+
+  function cancel() {
+    if (timerId !== undefined) {
+      clearTimeout(timerId);
+    }
+    lastInvokeTime = 0;
+    lastArgs = lastCallTime = lastThis = timerId = undefined;
+  }
+
+  function flush() {
+    return timerId === undefined ? result : trailingEdge(now());
+  }
+
+  function debounced() {
+    var time = now(),
+        isInvoking = shouldInvoke(time);
+
+    lastArgs = arguments;
+    lastThis = this;
+    lastCallTime = time;
+
+    if (isInvoking) {
+      if (timerId === undefined) {
+        return leadingEdge(lastCallTime);
+      }
+      if (maxing) {
+        // Handle invocations in a tight loop.
+        clearTimeout(timerId);
+        timerId = setTimeout(timerExpired, wait);
+        return invokeFunc(lastCallTime);
+      }
+    }
+    if (timerId === undefined) {
+      timerId = setTimeout(timerExpired, wait);
+    }
+    return result;
+  }
+  debounced.cancel = cancel;
+  debounced.flush = flush;
+  return debounced;
+}
+
+module.exports = debounce;
 
 
 /***/ })

@@ -1,6 +1,7 @@
 import {mount, createLocalVue} from '@vue/test-utils';
 import JfTabularDndComponent from './index.vue';
 import {testsBootstrap} from '@/testsBootstrap';
+import cloneDeep from 'lodash/cloneDeep';
 
 window.store = {
     subscribeAction: jest.fn()
@@ -91,8 +92,8 @@ describe('JfTabularDndComponent', () => {
 
 
         let {elems, wrapper} = setup({
-            availableItems: _.cloneDeep(availableItems),
-            selectedItems: _.cloneDeep(selectedItems),
+            availableItems: cloneDeep(availableItems),
+            selectedItems: cloneDeep(selectedItems),
             entityName: 'Something',
             columns
         }, {
@@ -119,8 +120,8 @@ describe('JfTabularDndComponent', () => {
     test('should move all items to the selected table', async () => {
 
         let {elems, wrapper} = setup({
-            availableItems: _.cloneDeep(availableItems),
-            selectedItems: _.cloneDeep(selectedItems),
+            availableItems: cloneDeep(availableItems),
+            selectedItems: cloneDeep(selectedItems),
             entityName: 'Something',
             columns
         }, {

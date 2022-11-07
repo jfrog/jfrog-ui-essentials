@@ -1,3 +1,10 @@
+import find from 'lodash/find';
+import findIndex from 'lodash/findIndex';
+import includes from 'lodash/includes';
+import remove from 'lodash/remove';
+import filter from 'lodash/filter';
+import difference from 'lodash/difference';
+
 export class TreeViewPane {
     constructor(viewPaneName, treeApi) {
         this.viewPaneName = viewPaneName;
@@ -159,7 +166,7 @@ export class TreeViewPane {
         if (this.treeApi.filterCallback && sourceData.length) {
             let filterCache;
             if (!this.filterCache || ignoreCache) {
-                filterCache = _.filter(sourceData, item => {
+                filterCache = filter(sourceData, item => {
                     let parentIsFilteredOut = false;
                     let curr = item;
                     while (curr.parent) {
@@ -248,7 +255,7 @@ export class TreeViewPane {
     }
 
     _removeChildren(parent) {
-        this.$flatItems = _.filter(this.$flatItems, flat => {
+        this.$flatItems = filter(this.$flatItems, flat => {
             let remove = false;
             let _parent = flat.parent;
             while (_parent) {
@@ -283,14 +290,14 @@ export class TreeViewPane {
             delete this.$flatItems[index - 1].$isLastChild;
             delete this.$flatItems[index - 1].data.$indentation;
         }
-        _.remove(this.$flatItems, fi => fi === item);
-        _.remove(item.parent.data.$childrenCache, node => node === item.data);
+        remove(this.$flatItems, fi => fi === item);
+        remove(item.parent.data.$childrenCache, node => node === item.data);
         this._removeChildren(item);
     }
 
     _buildFlatItems() {
         this.$flatItems = [];
-        let paneRoot = _.filter(this.treeApi.$root, node => {
+        let paneRoot = filter(this.treeApi.$root, node => {
             return this.treeApi.paneSelector(node) === this.viewPaneName;
         });
         this._addChildren(paneRoot);
@@ -351,13 +358,13 @@ export class TreeViewPane {
         };
 
         let id = this.treeApi.uniqueIdGetter(node);
-        let opened = _.find(this.treeApi.$openedNodes, n => this.treeApi.uniqueIdGetter(n) === id);
+        let opened = find(this.treeApi.$openedNodes, n => this.treeApi.uniqueIdGetter(n) === id);
         if (opened) {
-            _.remove(this.treeApi.$openedNodes, n => n === opened);
+            remove(this.treeApi.$openedNodes, n => n === opened);
             openRestoreNode(node);
         } else {
             if (restoreIfClosed) {
-                let closedRoot = _.find(this.$flatItems, fi => fi.data && fi.data !== this.treeApi.GO_UP_NODE && !_.includes(this.treeApi.$openedNodes, fi.data) && this.treeApi.uniqueIdGetter(fi.data) === id);
+                let closedRoot = find(this.$flatItems, fi => fi.data && fi.data !== this.treeApi.GO_UP_NODE && !includes(this.treeApi.$openedNodes, fi.data) && this.treeApi.uniqueIdGetter(fi.data) === id);
                 if (closedRoot) {
                     defer.promise.then(() => {
                         this.treeApi.closeNode(closedRoot.data);
@@ -393,7 +400,7 @@ export class TreeViewPane {
                     defer.resolve();
                 });
             };
-            if (_.find(this.treeApi.$root, node => node === flat.data)) {
+            if (find(this.treeApi.$root, node => node === flat.data)) {
                 delete this.treeApi.$rootCache;
                 this.treeApi.getChildren().then(() => doRefresh());
             } else
@@ -424,9 +431,9 @@ export class TreeViewPane {
                         resolveCount++;
                         if (resolveCount === itemsCount) {
                             let selectedId = this.treeApi.$selectedNode && this.treeApi.$selectedNode !== this.treeApi.GO_UP_NODE ? this.treeApi.uniqueIdGetter(this.treeApi.$selectedNode) : null;
-                            let newSelected = selectedId !== null ? _.find(this.$flatItems, fi => fi.data !== this.treeApi.GO_UP_NODE && this.treeApi.uniqueIdGetter(fi.data) === selectedId) : null;
+                            let newSelected = selectedId !== null ? find(this.$flatItems, fi => fi.data !== this.treeApi.GO_UP_NODE && this.treeApi.uniqueIdGetter(fi.data) === selectedId) : null;
                             if (this.treeApi.$selectedNode === this.treeApi.GO_UP_NODE)
-                                newSelected = _.find(this.$flatItems, fi => fi.data === this.treeApi.GO_UP_NODE);
+                                newSelected = find(this.$flatItems, fi => fi.data === this.treeApi.GO_UP_NODE);
                             if (newSelected) {
                                 this.treeApi._setSelected(newSelected);
                                 this._unFreeze();
@@ -467,7 +474,7 @@ export class TreeViewPane {
         if (!this.treeApi.quickFindTerm)
             return [];
         else {
-            let matches = _.filter(this.$flatItems, (fi, ind) => {
+            let matches = filter(this.$flatItems, (fi, ind) => {
                 let text = this.treeApi.textGetter(fi.data);
                 let matchObj = this.treeApi.AdvancedStringMatch.match(text, this.treeApi.quickFindTerm);
                 let matched = matchObj ? matchObj.matched : null;
@@ -477,11 +484,11 @@ export class TreeViewPane {
             });
 
             if (this.treeApi.$selectedNode) {
-                let selectedIndex = _.findIndex(this.$flatItems, fi => fi.data === this.treeApi.$selectedNode);
-                let matchesAfterSelection = _.filter(matches, match => {
+                let selectedIndex = findIndex(this.$flatItems, fi => fi.data === this.treeApi.$selectedNode);
+                let matchesAfterSelection = filter(matches, match => {
                     return match.$$index >= selectedIndex;
                 });
-                let matchesBeforeSelection = _.difference(matches, matchesAfterSelection);
+                let matchesBeforeSelection = difference(matches, matchesAfterSelection);
 
                 matches = matchesAfterSelection.concat(matchesBeforeSelection);
             }
@@ -498,12 +505,12 @@ export class TreeViewPane {
 
     _flatFromNode(node) {
         if (node === this.treeApi.GO_UP_NODE)
-            return _.find(this.$flatItems, { $specialNode: 'GO_UP' });
+            return find(this.$flatItems, { $specialNode: 'GO_UP' });
 
-        let refMatch = _.find(this.$flatItems, flat => flat.data === node);
+        let refMatch = find(this.$flatItems, flat => flat.data === node);
         if (!refMatch) {
             let nodeId = this.treeApi.uniqueIdGetter(node);
-            let idMatch = _.find(this.$flatItems, flat => {
+            let idMatch = find(this.$flatItems, flat => {
                 if (flat.data === this.treeApi.GO_UP_NODE)
                     return false;
                 else {
@@ -559,7 +566,7 @@ export class TreeViewPane {
     }
 
     findNode(findFunction) {
-        let item = _.find(this.$flatItems, fi => {
+        let item = find(this.$flatItems, fi => {
             return fi.data !== this.treeApi.GO_UP_NODE && findFunction(fi.data);
         });
         if (item)
@@ -567,7 +574,7 @@ export class TreeViewPane {
     }
 
     findNodeByUniqueId(uniqueId) {
-        let item = _.find(this.$flatItems, fi => {
+        let item = find(this.$flatItems, fi => {
             return fi.data !== this.treeApi.GO_UP_NODE && this.treeApi.uniqueIdGetter(fi.data) === uniqueId;
         });
         if (item)
@@ -575,7 +582,7 @@ export class TreeViewPane {
     }
 
     isNodeOpen(node, ignoreFreeze = false) {
-        return !ignoreFreeze && this.$freezedOpened && _.includes(this.$freezedOpened, node) || !this.$freezedOpened && _.includes(this.treeApi.$openedNodes, node);
+        return !ignoreFreeze && this.$freezedOpened && includes(this.$freezedOpened, node) || !this.$freezedOpened && includes(this.treeApi.$openedNodes, node);
     }
 
     getNodesCount() {
@@ -583,7 +590,7 @@ export class TreeViewPane {
     }
 
     getFilteredNodesCount() {
-        return _.filter(this._getFilteredData(null, true), fi => fi.data !== this.treeApi.GO_UP_NODE).length;
+        return filter(this._getFilteredData(null, true), fi => fi.data !== this.treeApi.GO_UP_NODE).length;
     }
 
     _refreshIndentations() {

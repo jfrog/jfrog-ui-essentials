@@ -1,5 +1,5 @@
 import bowerJSON     from '../../../package.json';
-import { extend } from 'lodash';
+import extend from 'lodash/extend';
 
 export class JFrogUILibConfig {
     constructor() {

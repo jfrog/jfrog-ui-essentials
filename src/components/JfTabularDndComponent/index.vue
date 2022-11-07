@@ -45,8 +45,16 @@
 </template>
 
 <script>
-
+    import includes from 'lodash/includes';
+    import remove from 'lodash/remove';
+    import map from 'lodash/map';
+    import cloneDeep from 'lodash/cloneDeep';
+    import isUndefined from 'lodash/isUndefined';
+    import isString from 'lodash/isString';
+    import isObject from 'lodash/isObject';
+    import filter from 'lodash/filter';
     import JfTableViewWrapper from '../JfTableViewWrapper/index';
+
     export default {
         name: 'jf-tabular-dnd',
         components: {JfTableViewWrapper},
@@ -80,8 +88,8 @@
         },
         created() {
             if (this.columns) {
-                this.availableItemsColumnsVar = _.cloneDeep(this.columns);
-                this.selectedItemsColumnsVar = _.cloneDeep(this.columns);
+                this.availableItemsColumnsVar = cloneDeep(this.columns);
+                this.selectedItemsColumnsVar = cloneDeep(this.columns);
             }
 
             this.createTables();
@@ -102,10 +110,10 @@
             },
             createAutoColumns() {
                 ['availableItemsColumnsVar', 'selectedItemsColumnsVar'].forEach(columnsArrayName => {
-                    let newColumnsArray = _.map(this[columnsArrayName], column => {
-                        if (_.isObject(column)) {
+                    let newColumnsArray = map(this[columnsArrayName], column => {
+                        if (isObject(column)) {
                             return column;
-                        } else if (_.isString(column)) {
+                        } else if (isString(column)) {
                             return {field: column};
                         }
                     });
@@ -224,7 +232,7 @@
                 if (!this.itemDraggableAttr || !itemsList) {
                     return false;
                 }
-                let filtered = _.filter(itemsList, item => item.hasOwnProperty(`${ this.itemDraggableAttr }`) && item[this.itemDraggableAttr] === false);
+                let filtered = filter(itemsList, item => item.hasOwnProperty(`${ this.itemDraggableAttr }`) && item[this.itemDraggableAttr] === false);
                 return filtered.length === itemsList.length;
             },
             isIncludeListEmpty() {
@@ -246,7 +254,7 @@
                 let selected = this.selectedItemsTableOptions.getSelected();
                 let filtered = this.selectedItemsTableOptions.getFilteredData();
                 return !!selected.length;
-                selected = _.filter(selected, item => _.includes(filtered, item));
+                selected = filter(selected, item => includes(filtered, item));
             },
             isExcludeListItemSelected() {
                 if (!this.availableItemsTableOptions || !this.availableItemsTableOptions.dirCtrl) {
@@ -254,7 +262,7 @@
                 }
                 let selected = this.availableItemsTableOptions.getSelected();
                 let filtered = this.availableItemsTableOptions.getFilteredData();
-                selected = _.filter(selected, item => _.includes(filtered, item));
+                selected = filter(selected, item => includes(filtered, item));
                 return !!selected.length;
             },
             excludeAll() {
@@ -268,7 +276,7 @@
                 let filtered = this.selectedItemsTableOptions.getFilteredData();
                 filtered = this._getOnlyDraggables(filtered);
                 this.availableItems.splice(this.availableItems.length, 0, ...filtered);
-                _.remove(this.selectedItems, i => _.includes(filtered, i));
+                remove(this.selectedItems, i => includes(filtered, i));
                 this._refreshBothTables();
                 this._fireOnChange();
             },
@@ -283,7 +291,7 @@
                 let filtered = this.availableItemsTableOptions.getFilteredData();
                 filtered = this._getOnlyDraggables(filtered);
                 this.selectedItems.splice(this.selectedItems.length, 0, ...filtered);
-                _.remove(this.availableItems, i => _.includes(filtered, i));
+                remove(this.availableItems, i => includes(filtered, i));
                 this._refreshBothTables();
                 this._fireOnChange();
             },
@@ -296,10 +304,10 @@
                 selected.forEach(s => delete s.$selected);
                 this.$set(this.selectedItemsTableOptions.dirCtrl, 'allSelected', false);
                 let filtered = this.selectedItemsTableOptions.getFilteredData();
-                _.remove(selected, i => !_.includes(filtered, i));
+                remove(selected, i => !includes(filtered, i));
                 selected = this._getOnlyDraggables(selected);
                 this.availableItems.splice(this.availableItems.length, 0, ...selected);
-                _.remove(this.selectedItems, item => _.includes(selected, item));
+                remove(this.selectedItems, item => includes(selected, item));
                 this._refreshBothTables();
                 this._fireOnChange();
             },
@@ -312,23 +320,23 @@
                 selected.forEach(s => delete s.$selected);
                 this.$set(this.availableItemsTableOptions.dirCtrl, 'allSelected', false);
                 let filtered = this.availableItemsTableOptions.getFilteredData();
-                _.remove(selected, i => !_.includes(filtered, i));
+                remove(selected, i => !includes(filtered, i));
                 selected = this._getOnlyDraggables(selected);
                 this.selectedItems.splice(this.selectedItems.length, 0, ...selected);
-                _.remove(this.availableItems, item => _.includes(selected, item));
+                remove(this.availableItems, item => includes(selected, item));
                 this._refreshBothTables();
                 this._fireOnChange();
             },
             _getOnlyDraggables(array) {
                 if (this.itemDraggableAttr) {
-                    return _.filter(array, item => this._isItemDraggable(item));
+                    return filter(array, item => this._isItemDraggable(item));
                 } else {
                     return array;
                 }
             },
             _isItemDraggable(item) {
                 if (this.itemDraggableAttr) {
-                    return _.isUndefined(item[this.itemDraggableAttr]) || item[this.itemDraggableAttr];
+                    return isUndefined(item[this.itemDraggableAttr]) || item[this.itemDraggableAttr];
                 } else {
                     return true;
                 }

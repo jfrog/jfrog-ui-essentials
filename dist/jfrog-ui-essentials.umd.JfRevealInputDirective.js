@@ -13,9 +13,27 @@
 /* harmony import */ var _Users_tomere_workspace_jfrog_ui_essentials_node_modules_babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("b0b4");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("1157");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("2ef0");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _services_VueFactory__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__("e1f3");
+/* harmony import */ var lodash_toPairs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("f542");
+/* harmony import */ var lodash_toPairs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(lodash_toPairs__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var lodash_values__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__("3ff1");
+/* harmony import */ var lodash_values__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(lodash_values__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var lodash_camelCase__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__("bba4");
+/* harmony import */ var lodash_camelCase__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(lodash_camelCase__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var lodash_kebabCase__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__("375a");
+/* harmony import */ var lodash_kebabCase__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(lodash_kebabCase__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var lodash_get__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__("9b02");
+/* harmony import */ var lodash_get__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(lodash_get__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var lodash_isFunction__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__("9520");
+/* harmony import */ var lodash_isFunction__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(lodash_isFunction__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var lodash_trim__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__("66c7");
+/* harmony import */ var lodash_trim__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(lodash_trim__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _services_VueFactory__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__("e1f3");
+
+
+
+
+
+
 
 
 
@@ -31,7 +49,7 @@ var Ng1AttributeDirectiveAdapter = /*#__PURE__*/function () {
   Object(_Users_tomere_workspace_jfrog_ui_essentials_node_modules_babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(Ng1AttributeDirectiveAdapter, null, [{
     key: "patchLinkFunction",
     value: function patchLinkFunction(linkFn, scopeDef) {
-      var _VueFactory$getInstan = _services_VueFactory__WEBPACK_IMPORTED_MODULE_6__[/* VueFactory */ "a"].getInstance(),
+      var _VueFactory$getInstan = _services_VueFactory__WEBPACK_IMPORTED_MODULE_12__[/* VueFactory */ "a"].getInstance(),
           Vue = _VueFactory$getInstan.Vue;
 
       return function (el, binding, vnode) {
@@ -39,12 +57,12 @@ var Ng1AttributeDirectiveAdapter = /*#__PURE__*/function () {
 
         if (scopeDef) {
           scope = {};
-          Object(lodash__WEBPACK_IMPORTED_MODULE_5__["entries"])(scopeDef).forEach(function (entry) {
-            if (entry[0] === Object(lodash__WEBPACK_IMPORTED_MODULE_5__["camelCase"])(binding.name)) {
+          lodash_toPairs__WEBPACK_IMPORTED_MODULE_5___default()(scopeDef).forEach(function (entry) {
+            if (entry[0] === lodash_camelCase__WEBPACK_IMPORTED_MODULE_7___default()(binding.name)) {
               if (entry[1] === '=' || binding.modifiers.bind) {
                 Object.defineProperty(scope, entry[0], {
                   get: function get() {
-                    return Object(lodash__WEBPACK_IMPORTED_MODULE_5__["get"])(vnode.context, binding.expression);
+                    return lodash_get__WEBPACK_IMPORTED_MODULE_9___default()(vnode.context, binding.expression);
                   }
                 });
               } else {
@@ -54,9 +72,9 @@ var Ng1AttributeDirectiveAdapter = /*#__PURE__*/function () {
               Object.defineProperty(scope, entry[0], {
                 get: function get() {
                   if (entry[1] === '=') {
-                    return Object(lodash__WEBPACK_IMPORTED_MODULE_5__["get"])(vnode.context, el.attributes.getNamedItem(Object(lodash__WEBPACK_IMPORTED_MODULE_5__["kebabCase"])(entry[0])).value);
+                    return lodash_get__WEBPACK_IMPORTED_MODULE_9___default()(vnode.context, el.attributes.getNamedItem(lodash_kebabCase__WEBPACK_IMPORTED_MODULE_8___default()(entry[0])).value);
                   } else {
-                    var ni = el.attributes.getNamedItem(Object(lodash__WEBPACK_IMPORTED_MODULE_5__["kebabCase"])(entry[0]));
+                    var ni = el.attributes.getNamedItem(lodash_kebabCase__WEBPACK_IMPORTED_MODULE_8___default()(entry[0]));
                     return ni ? ni.value : null;
                   }
                 }
@@ -82,21 +100,21 @@ var Ng1AttributeDirectiveAdapter = /*#__PURE__*/function () {
         var attrs = {};
 
         if (binding.modifiers.bind) {
-          Object.defineProperty(attrs, Object(lodash__WEBPACK_IMPORTED_MODULE_5__["camelCase"])(binding.name), {
+          Object.defineProperty(attrs, lodash_camelCase__WEBPACK_IMPORTED_MODULE_7___default()(binding.name), {
             get: function get() {
-              if (!Object(lodash__WEBPACK_IMPORTED_MODULE_5__["isFunction"])(binding.value)) {
-                return Object(lodash__WEBPACK_IMPORTED_MODULE_5__["get"])(vnode.context, Object(lodash__WEBPACK_IMPORTED_MODULE_5__["trim"])(binding.expression, '\''));
+              if (!lodash_isFunction__WEBPACK_IMPORTED_MODULE_10___default()(binding.value)) {
+                return lodash_get__WEBPACK_IMPORTED_MODULE_9___default()(vnode.context, lodash_trim__WEBPACK_IMPORTED_MODULE_11___default()(binding.expression, '\''));
               } else {
                 return binding.value();
               }
             }
           });
         } else {
-          attrs[Object(lodash__WEBPACK_IMPORTED_MODULE_5__["camelCase"])(binding.name)] = Object(lodash__WEBPACK_IMPORTED_MODULE_5__["trim"])(binding.expression, '\'');
+          attrs[lodash_camelCase__WEBPACK_IMPORTED_MODULE_7___default()(binding.name)] = lodash_trim__WEBPACK_IMPORTED_MODULE_11___default()(binding.expression, '\'');
         }
 
-        Object(lodash__WEBPACK_IMPORTED_MODULE_5__["values"])(el.attributes).forEach(function (attr) {
-          Object.defineProperty(attrs, Object(lodash__WEBPACK_IMPORTED_MODULE_5__["camelCase"])(attr.name), {
+        lodash_values__WEBPACK_IMPORTED_MODULE_6___default()(el.attributes).forEach(function (attr) {
+          Object.defineProperty(attrs, lodash_camelCase__WEBPACK_IMPORTED_MODULE_7___default()(attr.name), {
             get: function get() {
               return attr.value;
             }
@@ -104,11 +122,11 @@ var Ng1AttributeDirectiveAdapter = /*#__PURE__*/function () {
         });
 
         attrs.$observe = function (path, cb) {
-          if (path === Object(lodash__WEBPACK_IMPORTED_MODULE_5__["camelCase"])(binding.name)) {
-            vnode.context.$watch(!Object(lodash__WEBPACK_IMPORTED_MODULE_5__["isFunction"])(binding.value) ? binding.expression : binding.value, function () {
-              if (Object(lodash__WEBPACK_IMPORTED_MODULE_5__["get"])(vnode.context, Object(lodash__WEBPACK_IMPORTED_MODULE_5__["trim"])(binding.expression, '\''))) {
-                cb(Object(lodash__WEBPACK_IMPORTED_MODULE_5__["get"])(vnode.context, Object(lodash__WEBPACK_IMPORTED_MODULE_5__["trim"])(binding.expression, '\'')));
-              } else if (Object(lodash__WEBPACK_IMPORTED_MODULE_5__["isFunction"])(binding.value)) {
+          if (path === lodash_camelCase__WEBPACK_IMPORTED_MODULE_7___default()(binding.name)) {
+            vnode.context.$watch(!lodash_isFunction__WEBPACK_IMPORTED_MODULE_10___default()(binding.value) ? binding.expression : binding.value, function () {
+              if (lodash_get__WEBPACK_IMPORTED_MODULE_9___default()(vnode.context, lodash_trim__WEBPACK_IMPORTED_MODULE_11___default()(binding.expression, '\''))) {
+                cb(lodash_get__WEBPACK_IMPORTED_MODULE_9___default()(vnode.context, lodash_trim__WEBPACK_IMPORTED_MODULE_11___default()(binding.expression, '\'')));
+              } else if (lodash_isFunction__WEBPACK_IMPORTED_MODULE_10___default()(binding.value)) {
                 cb(binding.value());
               }
             });
