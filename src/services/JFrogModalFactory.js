@@ -1,5 +1,5 @@
 /* This class's purpose is only to make the JFrogModalService more testable. In tests, this class will be mocked */
-
+import extend from 'lodash/extend';
 import JFrogConfirmModalComponent from '@/components/JfConfirmModalComponent/index.vue'
 import JFrogCodeModalComponent from '@/components/JfCodeModalComponent/index.vue'
 import JfFullTextModalComponent from '@/components/JfFullTextModalComponent/index.vue'
@@ -38,7 +38,7 @@ export default class JFrogModalFactory {
                 ModalComponent.mixins.push(modifiers);
 
                 if (scope) {
-                    _.extend(modalObj, scope);
+                    extend(modalObj, scope);
                     /* Specifically for backward compatibility. If any fields are passed, add them as props */
                     ModalComponent.props = [
                         ...ModalComponent.props,

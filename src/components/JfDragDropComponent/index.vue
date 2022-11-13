@@ -85,6 +85,12 @@
 </template>
 
 <script>
+    import extend from 'lodash/extend';
+    import isObject from 'lodash/isObject';
+    import filter from 'lodash/filter';
+    import find from 'lodash/find';
+    import slice from 'lodash/slice';
+    import isNaN from 'lodash/isNaN';
 
     export default {
         name: 'jf-drag-drop',
@@ -129,8 +135,8 @@
         mounted() {
             if (!this.includeList)
                 this.includeList = [];
-            _.remove(this.excludeList, excludeItem => {
-                return _.find(this.includeList, includeItem => angular.equals(includeItem, excludeItem));
+            remove(this.excludeList, excludeItem => {
+                return find(this.includeList, includeItem => angular.equals(includeItem, excludeItem));
             });
 
             if (this.usePagination) {
@@ -144,7 +150,7 @@
                 this.excludeListId = 'exclude-list-' + randomId;
 
             if (this.commObject) {
-                _.extend(this.commObject, {
+                extend(this.commObject, {
                     updateFilter: () => this.updateFilter(),
                     excludeAll: () => this.excludeAll(),
                     excludeSelected: () => this.excludeSelected(),
@@ -191,10 +197,10 @@
             _initWatchers() {
                 // we don't use this.updateFilter() for performance, we want to update only include list when original include list is update
                 this.$scope.$watch('jfDragDrop.includeList', () => {
-                    this.filterIncludeCache = _.filter(this.includeList, item => !this._isExcludeFilteredOut(item));
+                    this.filterIncludeCache = filter(this.includeList, item => !this._isExcludeFilteredOut(item));
                 }, true);
                 this.$scope.$watch('jfDragDrop.excludeList', () => {
-                    this.filterExcludeCache = _.filter(this.excludeList, item => !this._isIncludeFilteredOut(item));
+                    this.filterExcludeCache = filter(this.excludeList, item => !this._isIncludeFilteredOut(item));
                 }, true);
             },
             excludeAll() {
@@ -203,7 +209,7 @@
 
                 let filteredOut = [];
                 this.includeList.forEach(item => {
-                    if (_.isObject(item)) {
+                    if (isObject(item)) {
                         item['__fixed__'] = undefined;
                     }
 
@@ -233,7 +239,7 @@
                 this._filterSelection('inc');
 
                 this.selectedItems.forEach(item => {
-                    if (!_.isObject(item) || !item['__fixed__']) {
+                    if (!isObject(item) || !item['__fixed__']) {
                         this.includeList.splice(this.includeList.indexOf(item), 1);
 
                         if (this.excludeList.indexOf(item) < 0) {
@@ -277,7 +283,7 @@
                     }
                 }
                 if (picked) {
-                    if (_.isObject(picked)) {
+                    if (isObject(picked)) {
                         picked['__fixed__'] = undefined;
                     }
                     this.includeList.push(picked);
@@ -292,7 +298,7 @@
                     return;
                 let filteredOut = [];
                 this.excludeList.forEach(item => {
-                    if (_.isObject(item)) {
+                    if (isObject(item)) {
                         item['__fixed__'] = undefined;
                     }
                     if (this.filterExcludeList) {
@@ -324,7 +330,7 @@
                 }
                 if (this.excludeList.length) {
                     this.selectedItems.forEach(item => {
-                        if (_.isObject(item)) {
+                        if (isObject(item)) {
                             item['__fixed__'] = undefined;
                         }
                         this.excludeList.splice(this.excludeList.indexOf(item), 1);
@@ -349,7 +355,7 @@
                 if (index > -1) {
                     this.selectedItems.splice(index, 1);
                 } else {
-                    if (!_.isObject(item) || !item['__fixed__'] || this.includeList.indexOf(item) < 0) {
+                    if (!isObject(item) || !item['__fixed__'] || this.includeList.indexOf(item) < 0) {
                         this.selectedItems.push(item);
                     }
                 }
@@ -429,13 +435,13 @@
                     let fixed = true;
                     for (let i in this.includeList) {
                         let item = this.includeList[i];
-                        if (!_.isObject(item) || !item['__fixed__']) {
+                        if (!isObject(item) || !item['__fixed__']) {
                             fixed = false;
                             break;
                         }
                     }
                     ;
-                    //            return _.filter(this.includeList,{'__fixed__':undefined}).length === 0;
+                    //            return filter(this.includeList,{'__fixed__':undefined}).length === 0;
                     return fixed;
                 }
             },
@@ -467,18 +473,18 @@
                 return !regex.test(this.includeDisplayField && item[this.includeDisplayField] ? item[this.includeDisplayField] : item);
             },
             updateExcludeFilter(fromEdit = false) {
-                this.filterExcludeCache = _.filter(this.excludeList, item => !this._isIncludeFilteredOut(item));
+                this.filterExcludeCache = filter(this.excludeList, item => !this._isIncludeFilteredOut(item));
                 if (fromEdit)
                     this._updatePagination();
             },
             updateIncludeFilter(fromEdit = false) {
-                this.filterIncludeCache = _.filter(this.includeList, item => !this._isExcludeFilteredOut(item));
+                this.filterIncludeCache = filter(this.includeList, item => !this._isExcludeFilteredOut(item));
                 if (fromEdit)
                     this._updatePagination();
             },
             updateFilter(fromEdit = false) {
-                this.filterExcludeCache = _.filter(this.excludeList, item => !this._isIncludeFilteredOut(item));
-                this.filterIncludeCache = _.filter(this.includeList, item => !this._isExcludeFilteredOut(item));
+                this.filterExcludeCache = filter(this.excludeList, item => !this._isIncludeFilteredOut(item));
+                this.filterIncludeCache = filter(this.includeList, item => !this._isExcludeFilteredOut(item));
                 if (fromEdit)
                     this._updatePagination();
             },
@@ -494,7 +500,7 @@
             },
             _dragStart(event, ui) {
                 let dragObj = this._objectFromElement(event.target);
-                if (this.disabled || dragObj.draggedFrom === this.includeList && _.isObject(dragObj.dataObject) && dragObj.dataObject['__fixed__']) {
+                if (this.disabled || dragObj.draggedFrom === this.includeList && isObject(dragObj.dataObject) && dragObj.dataObject['__fixed__']) {
                     event.preventDefault();
                     return;
                 }
@@ -571,7 +577,7 @@
                     } else {
                         this.draggedObject.draggedFrom.splice(this.draggedObject.index, 0, this.draggedObject.dataObject);
                     }
-                    if (_.isObject(this.draggedObject.dataObject)) {
+                    if (isObject(this.draggedObject.dataObject)) {
                         this.draggedObject.dataObject['__fixed__'] = undefined;
                     }
 
@@ -634,7 +640,7 @@
                                 this.draggedObject.draggedFrom.splice(next, 0, additional);
                             }
 
-                            if (_.isObject(additional)) {
+                            if (isObject(additional)) {
                                 additional['__fixed__'] = undefined;
                             }
                             //                this.$scope.$apply();
@@ -809,7 +815,7 @@
                     let newElem = $(template);
 
                     let scope = this.$scope.$new();
-                    _.extend(scope, {
+                    extend(scope, {
                         getItemInfo: () => {
                             let theItem = this._objectFromElement(elem).dataObject;
                             return {
@@ -828,7 +834,7 @@
                 }
             },
             _initPagination() {
-                this.itemsPerPage = _.isNaN(parseInt(this.usePagination)) ? 8 : parseInt(this.usePagination);
+                this.itemsPerPage = isNaN(parseInt(this.usePagination)) ? 8 : parseInt(this.usePagination);
                 this.currExcludesPage = 0;
                 this.currIncludesPage = 0;
 
@@ -866,7 +872,7 @@
                     return this.getFilteredExcludeList();
                 } else {
                     let all = this.getFilteredExcludeList();
-                    return _.slice(all, this.currExcludesPage * this.itemsPerPage, (this.currExcludesPage + 1) * this.itemsPerPage);
+                    return slice(all, this.currExcludesPage * this.itemsPerPage, (this.currExcludesPage + 1) * this.itemsPerPage);
                 }
             },
             getViewableIncludes() {
@@ -874,11 +880,11 @@
                     return this.getFilteredIncludeList();
                 } else {
                     let all = this.getFilteredIncludeList();
-                    return _.slice(all, this.currIncludesPage * this.itemsPerPage, (this.currIncludesPage + 1) * this.itemsPerPage);
+                    return slice(all, this.currIncludesPage * this.itemsPerPage, (this.currIncludesPage + 1) * this.itemsPerPage);
                 }
             },
             _filterSelection(leave) {
-                this.selectedItems = _.filter(this.selectedItems, item => {
+                this.selectedItems = filter(this.selectedItems, item => {
                     if (leave === 'inc' && this.includeList && this.includeList.indexOf(item) >= 0)
                         return true;
                     else if (leave === 'exc' && this.excludeList && this.excludeList.indexOf(item) >= 0)

@@ -23,3 +23,5 @@ export const VueFactory = (() => {
         }
     };
 })();
+
+export default VueFactory;

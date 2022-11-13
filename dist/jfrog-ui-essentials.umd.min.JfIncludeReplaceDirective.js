@@ -1,0 +1,2 @@
+(("undefined"!==typeof self?self:this)["webpackJsonpjfrog_ui_essentials"]=("undefined"!==typeof self?self:this)["webpackJsonpjfrog_ui_essentials"]||[]).push([[5],{b24e:function(e,s,i){"use strict";i.r(s),s["default"]={inserted:function(e,s){var i=$(e);i.replaceWith(i.children())}}}}]);
+//# sourceMappingURL=jfrog-ui-essentials.umd.min.JfIncludeReplaceDirective.js.map

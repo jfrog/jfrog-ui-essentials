@@ -19,6 +19,7 @@
 </template>
 
 <script>
+    import isNaN from 'lodash/isNaN';
     import {VueFactory} from "../../services/VueFactory";
 
     export default {
@@ -140,7 +141,7 @@
                     if (len) {
                         let maxScrollTop = scrollParent[0].scrollHeight - scrollParent.outerHeight();
                         let relativePosition = scrollParent.scrollTop() / maxScrollTop;
-                        if (_.isNaN(relativePosition)) {
+                        if (isNaN(relativePosition)) {
                             relativePosition = 1;
                         }
                         let newScrollIndex = relativePosition * (len - this.itemsPerPage);

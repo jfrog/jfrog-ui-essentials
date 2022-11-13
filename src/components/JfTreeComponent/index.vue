@@ -31,6 +31,9 @@
 </template>
 
 <script>
+    import find from 'lodash/find';
+    import isFunction from 'lodash/isFunction';
+    import isNaN from 'lodash/isNaN';
 
     export default {
         name: 'jf-tree',
@@ -155,7 +158,7 @@
                 if (!node)
                     return;
 
-                let existingScope = _.find(this.cellScopes, s => s.node === node.data);
+                let existingScope = find(this.cellScopes, s => s.node === node.data);
                 let itemScope;
                 if (!existingScope) {
                     itemScope = this.$rootScope.$new({
@@ -169,7 +172,7 @@
                 } else
                     itemScope = existingScope;
 
-                let template = _.isFunction(this.api.nodeTemplate) ? this.api.nodeTemplate(node.data) : this.api.nodeTemplate;
+                let template = isFunction(this.api.nodeTemplate) ? this.api.nodeTemplate(node.data) : this.api.nodeTemplate;
 
                 let templateElem = $('<div>' + template + '</div>');
                 this.$compile(templateElem.children()[0])(itemScope);
@@ -307,7 +310,7 @@
                     if (len) {
                         let maxScrollTop = scrollParent[0].scrollHeight - scrollParent.outerHeight();
                         let relativePosition = scrollParent.scrollTop() / maxScrollTop;
-                        if (_.isNaN(relativePosition)) {
+                        if (isNaN(relativePosition)) {
                             relativePosition = 1;
                         }
                         let newScrollIndex = relativePosition * (len - this.viewPane.itemsPerPage);

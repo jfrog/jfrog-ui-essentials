@@ -1,4 +1,5 @@
-import _ from 'lodash';
+import pick from 'lodash/pick';
+import extend from 'lodash/extend';
 import {VueFactory} from "../../../services/VueFactory";
 
 export function AngularCompileServiceMock(element) {
@@ -18,18 +19,18 @@ export function AngularCompileServiceMock(element) {
         if (scope.$comp.$options.props) Object.keys(scope.$comp.$options.props).forEach(prop => {
             props[prop] = scope.$comp[prop];
         })
-        let options = _.extend({}, _.pick(scope.$comp.$options, 'methods', 'components'), {
+        let options = extend({}, pick(scope.$comp.$options, 'methods', 'components'), {
 //            el,
             template,
             router: $jfrog.router,
             data() {
-                return _.extend({}, props, scope.$comp.$data);
+                return extend({}, props, scope.$comp.$data);
             }
         });
 
         let parent = scope.$comp.$parent;
         while (parent) {
-            _.extend(options.components, parent.$options.components);
+            extend(options.components, parent.$options.components);
             parent = parent.$parent;
         }
 

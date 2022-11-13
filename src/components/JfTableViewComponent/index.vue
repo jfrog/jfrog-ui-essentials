@@ -68,6 +68,11 @@
 </template>
 
 <script>
+    import startCase from 'lodash/startCase';
+    import filter from 'lodash/filter';
+    import find from 'lodash/find';
+    import get from 'lodash/get';
+    import set from 'lodash/set';
 
     export default {
         name: 'jf-table-view',
@@ -154,7 +159,7 @@
                 }
             },
             compileTemplate(field, rowId) {
-                let columnObj = _.find(this.options.columns, { field });
+                let columnObj = find(this.options.columns, { field });
                 let rowObj = rowId !== 'headers' ? this.options.getPageData()[rowId] : this.options.headersRow;
 
                 if (!rowObj)
@@ -162,11 +167,11 @@
 
                 if (rowObj.$groupHeader) {
                     let groupRowObj = {};
-                    _.set(groupRowObj, rowObj.$groupHeader.field, rowObj.$groupHeader.value);
+                    set(groupRowObj, rowObj.$groupHeader.field, rowObj.$groupHeader.value);
                     rowObj = groupRowObj;
                 }
 
-                let existingScope = _.find(this.cellScopes, s => s.row.uid === rowId && s.col.field === columnObj.field);
+                let existingScope = find(this.cellScopes, s => s.row.uid === rowId && s.col.field === columnObj.field);
 
                 let rowScope;
                 if (!existingScope) {
@@ -176,8 +181,8 @@
                             uid: rowId
                         },
                         col: columnObj,
-                        MODEL_COL_FIELD: _.get(rowObj, field),
-                        COL_FIELD: _.get(rowObj, field),
+                        MODEL_COL_FIELD: get(rowObj, field),
+                        COL_FIELD: get(rowObj, field),
                         appScope: this.options.appScope,
                         grid: { appScope: this.options.appScope },
                         //Backward compatibility with old grid
@@ -250,7 +255,7 @@
             refresh(updatePagination = true) {
                 let pageData = this.options.getPageData();
 /*
-                let unusedScopes = _.filter(this.cellScopes, scope => pageData.indexOf(scope.row.entity) === -1);
+                let unusedScopes = filter(this.cellScopes, scope => pageData.indexOf(scope.row.entity) === -1);
                 unusedScopes.forEach(s => {
                     this.cellScopes.splice(this.cellScopes.indexOf(s), 1);
 //                    s.$destroy();
@@ -313,7 +318,7 @@
                     let pageData = this.options.paginationMode === this.options.VIRTUAL_SCROLL ? this.vsApi.getPageData() : this.options.getPageData();
                     let lriv = this.lastRowsInView || [];
                     this.lastRowsInView = pageData;
-                    pageData = _.filter(pageData, row => !_.includes(lriv, row));
+                    pageData = filter(pageData, row => !includes(lriv, row));
                     pageData.forEach(row => this.options.fire('row.in.view', row));
                 }, this.options.rowInViewDebounceTime);
 */
@@ -331,8 +336,8 @@
             },
             groupSelection(groupHeader) {
                 let query = {};
-                _.set(query, groupHeader.$groupHeader.field, groupHeader.$groupHeader.value);
-                let group = _.filter(this.options.getFilteredData(), query);
+                set(query, groupHeader.$groupHeader.field, groupHeader.$groupHeader.value);
+                let group = filter(this.options.getFilteredData(), query);
                 group.forEach(row => row.$selected = groupHeader.$selected);
             },
             initFilter() {
@@ -351,7 +356,7 @@
                 if (this.options.paginationMode === this.options.EXTERNAL_PAGINATION) {
                     count = this.options.getTotalLengthOfData();
                 } else {
-                    count = _.filter(this.options.getFilteredData(), record => {
+                    count = filter(this.options.getFilteredData(), record => {
                         return !record.$parentRow;
                     }).length;
                 }
@@ -359,7 +364,7 @@
                    in total records count
                  */
                 if (this.options.data) {
-                    count -= _.filter(this.options.data, {$doNotCount: true}).length
+                    count -= filter(this.options.data, {$doNotCount: true}).length
                 }
 
                 return count + ' ' + this.getObjectNameByCount(count);
@@ -379,7 +384,7 @@
                     recordsName = count !== 1 ? 'records' : 'record';
                 }
 
-                return _.startCase(recordsName);
+                return startCase(recordsName);
             },
             getSelectedRecords() {
 

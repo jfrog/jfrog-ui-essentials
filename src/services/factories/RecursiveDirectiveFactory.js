@@ -1,9 +1,11 @@
+import isFunction from 'lodash/isFunction';
+
 export function recursiveDirective() {
     this.$inject('$compile');
     'ngInject';
     return {
         compile: (elem, link) => {
-            link = _.isFunction(link) ? { post: link } : link;
+            link = isFunction(link) ? { post: link } : link;
             var origContents = elem.contents().remove();
             var compileFunction;
             return {

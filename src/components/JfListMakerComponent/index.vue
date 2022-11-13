@@ -45,7 +45,9 @@
     </div>
 </template>
 <script>
-    import _ from "lodash";
+    import sortBy from 'lodash/sortBy';
+    import isEmpty from 'lodash/isEmpty';
+    import find from 'lodash/find';
     export default {
         name: 'jf-list-maker',
         props: [
@@ -92,7 +94,7 @@
                 let int_values = this.value || [];
                 this.int_noSort = this.noSort || this.$attrs.hasOwnProperty('noSort');
                 if (int_values && !this.int_noSort) {
-                    int_values = _.sortBy(int_values);
+                    int_values = sortBy(int_values);
                 }
                 return int_values;
             }
@@ -110,12 +112,12 @@
                 }
                 this.errorMessage = null;
 
-                if (_.isEmpty(this.newValue.trim())) {
+                if (isEmpty(this.newValue.trim())) {
                     this.errorMessage = 'Must input value';
                 } else if (!this._isValueUnique(this.newValue)) {
                     this.errorMessage = 'Value already exists';
-                } else if (!_.isEmpty(this.validationRegex) && !new RegExp(this.validationRegex).test(this.newValue)) {
-                    this.errorMessage = _.isEmpty(this.validationRegexMessage) ? 'Value not valid' : this.validationRegexMessage;
+                } else if (!isEmpty(this.validationRegex) && !new RegExp(this.validationRegex).test(this.newValue)) {
+                    this.errorMessage = isEmpty(this.validationRegexMessage) ? 'Value not valid' : this.validationRegexMessage;
                 }
                 else {
                     this.$emit('on-add-value', { newValue: this.newValue });
@@ -125,7 +127,7 @@
                 }
                 let returnValue = this.int_values;
                 if (!this.int_noSort) {
-                    returnValue = _.sortBy(returnValue);
+                    returnValue = sortBy(returnValue);
                 }
                 this.$emit('input', returnValue);
             },
@@ -137,7 +139,7 @@
             },
             _isValueUnique(text) {
                 if (this.caseInsensitive) {
-                    return !this.int_values || !_.find(this.int_values, val => val.toLowerCase() === text.toLowerCase());
+                    return !this.int_values || !find(this.int_values, val => val.toLowerCase() === text.toLowerCase());
                 }
                 return !this.int_values || this.int_values.indexOf(text) == -1;
             }

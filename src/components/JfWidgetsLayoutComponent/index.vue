@@ -42,6 +42,15 @@
         </div>
     </div>
     `;
+
+    import extend from 'lodash/extend';
+    import includes from 'lodash/includes';
+    import map from 'lodash/map';
+    import cloneDeep from 'lodash/cloneDeep';
+    import indexOf from 'lodash/indexOf';
+    import filter from 'lodash/filter';
+    import find from 'lodash/find';
+
     export default {
         template: TEMPLATE,
         name: 'jf-widgets-layout',
@@ -164,7 +173,7 @@
                 if (this.options.editMode === undefined)
                     this.$set(this.options, 'editMode', false);
 
-                this.subOptions = _.cloneDeep(this.options);
+                this.subOptions = cloneDeep(this.options);
                 this.$set(this.subOptions, 'minHeight', 'initial');
                 this.$set(this.subOptions, 'isSub', true);
                 this.$set(this.subOptions, 'parent', this);
@@ -280,7 +289,7 @@
                 return defer.promise;
             },
             updateCss() {
-                let oldRules = _.cloneDeep(this.cssRules);
+                let oldRules = cloneDeep(this.cssRules);
                 this.cssRules = {};
 
                 let currentX = 0, currentY = 0;
@@ -351,7 +360,7 @@
                     let bottom = parseFloat(rules.bottom);
                     let left = parseFloat(rules.left);
                     let right = parseFloat(rules.right);
-                    let cell = _.find(this.flatCells, { cssId: parseInt(key) });
+                    let cell = find(this.flatCells, { cssId: parseInt(key) });
                     this.addLinesFromRect({
                         x1: left,
                         y1: top,
@@ -382,10 +391,10 @@
                         let children = elem.children();
 
                         if (widget.model) {
-                            _.extend(scope, widget.model);
+                            extend(scope, widget.model);
                         }
                         if (this.options.sharedModel) {
-                            _.extend(scope, this.options.sharedModel);
+                            extend(scope, this.options.sharedModel);
                         }
                         if (!widget.controller) {
                             widget.controller = class Ctrl {
@@ -404,7 +413,7 @@
                         let controllerObject = {};
                         controllerObject[widget.controllerAs || 'ctrl'] = controllerInstance;
 
-                        _.extend(scope, controllerObject);
+                        extend(scope, controllerObject);
 
 
                         if (controllerInstance.$onInit)
@@ -433,7 +442,7 @@
 
                 for (let i in this.transformedLayout) {
                     let rowOrColumn = this.transformedLayout[i];
-                    layout = _.find(rowOrColumn, { widget: id });
+                    layout = find(rowOrColumn, { widget: id });
                     if (layout)
                         break;
                 }
@@ -441,7 +450,7 @@
                 return layout;
             },
             _isWidgetInUse(widgetId) {
-                return !!_.find(this.flatCells, { widget: widgetId });
+                return !!find(this.flatCells, { widget: widgetId });
             },
             _getPrecPoint(e) {
                 let container = $(this.$element).find('.jf-widgets-layout-container');
@@ -475,16 +484,16 @@
                     let prec = this._getPrecPoint(e);
                     this.closestLines = this.getClosestLines(prec.x, prec.y);
                     if (this.closestLines.length) {
-                        let directions = _.map(this.closestLines, 'cssRelevantRule');
+                        let directions = map(this.closestLines, 'cssRelevantRule');
 
                         let cursor;
-                        if (_.includes(directions, 'right') && _.includes(directions, 'left') && _.includes(directions, 'top') && _.includes(directions, 'bottom')) {
+                        if (includes(directions, 'right') && includes(directions, 'left') && includes(directions, 'top') && includes(directions, 'bottom')) {
                             cursor = 'all-scroll';
                             this.setSubIsOnEdge(true);
-                        } else if (_.includes(directions, 'top') && _.includes(directions, 'bottom')) {
+                        } else if (includes(directions, 'top') && includes(directions, 'bottom')) {
                             cursor = 'row-resize';
                             this.setSubIsOnEdge(true);
-                        } else if (_.includes(directions, 'right') && _.includes(directions, 'left')) {
+                        } else if (includes(directions, 'right') && includes(directions, 'left')) {
                             cursor = 'col-resize';
                             this.setSubIsOnEdge(true);
                         } else {
@@ -609,8 +618,8 @@
 
                 if (this.closestLines && this.closestLines.length) {
                     this.draggingLines = true;
-                    this.dragStartPt = _.cloneDeep(this._getPrecPoint(e));
-                    this.dragStartLines = _.cloneDeep(this.closestLines);
+                    this.dragStartPt = cloneDeep(this._getPrecPoint(e));
+                    this.dragStartLines = cloneDeep(this.closestLines);
                     this._setTransitions(false);
                     e.preventDefault();
                     e.stopPropagation();
@@ -696,13 +705,13 @@
 
                 let filtered = [];
 
-                let top = _.filter(closest, { cssRelevantRule: 'top' });
-                let bottom = _.filter(closest, { cssRelevantRule: 'bottom' });
-                let left = _.filter(closest, { cssRelevantRule: 'left' });
-                let right = _.filter(closest, { cssRelevantRule: 'right' });
+                let top = filter(closest, { cssRelevantRule: 'top' });
+                let bottom = filter(closest, { cssRelevantRule: 'bottom' });
+                let left = filter(closest, { cssRelevantRule: 'left' });
+                let right = filter(closest, { cssRelevantRule: 'right' });
 
                 top.forEach(line => {
-                    let matches = this.mainAxis === 'rows' ? _.filter(bottom, { y1: line.y1 }) : _.filter(bottom, {
+                    let matches = this.mainAxis === 'rows' ? filter(bottom, { y1: line.y1 }) : filter(bottom, {
                         x1: line.x1,
                         x2: line.x2
                     });
@@ -713,7 +722,7 @@
                     }
                 });
                 left.forEach(line => {
-                    let matches = this.mainAxis === 'columns' ? _.filter(right, { x1: line.x1 }) : _.filter(right, {
+                    let matches = this.mainAxis === 'columns' ? filter(right, { x1: line.x1 }) : filter(right, {
                         y1: line.y1,
                         y2: line.y2
                     });
@@ -781,7 +790,7 @@
 
                 let rowOrColumnToRemove = null;
                 this.transformedLayout.forEach(rowOrColumn => {
-                    let index = _.indexOf(rowOrColumn, layoutObj);
+                    let index = indexOf(rowOrColumn, layoutObj);
                     if (index !== -1) {
                         rowOrColumn.splice(index, 1);
                         if (rowOrColumn.length === 0) {
@@ -790,12 +799,12 @@
                     }
                 });
                 if (rowOrColumnToRemove) {
-                    let index = _.indexOf(this.transformedLayout, rowOrColumnToRemove);
+                    let index = indexOf(this.transformedLayout, rowOrColumnToRemove);
                     this.transformedLayout.splice(index, 1);
                 }
                 if (this.transformedLayout.length === 0) {
                     if (this.options.isSub) {
-                        let parentLayoutObj = _.find(this.options.parent.flatCells, { subLayout: this.layout });
+                        let parentLayoutObj = find(this.options.parent.flatCells, { subLayout: this.layout });
                         this.options.parent.removeWidget(parentLayoutObj);
                     }
                 }
@@ -837,7 +846,7 @@
             splitCell(layoutObj, orientation) {
                 this._setTransitions(true);
                 this.transformedLayout.forEach(rowOrColumn => {
-                    let index = _.indexOf(rowOrColumn, layoutObj);
+                    let index = indexOf(rowOrColumn, layoutObj);
                     if (index !== -1) {
                         let clone = angular.copy(layoutObj);
                         if (orientation === 'h' && this.mainAxis === 'rows' || orientation === 'v' && this.mainAxis === 'columns') {
@@ -943,14 +952,14 @@
 
                 // Remove empty layout directives from parent
                 if (!this.transformedLayout.length && this.options.parent) {
-                    let parentLayoutObj = _.find(this.options.parent.flatCells, { subLayout: this.layout });
+                    let parentLayoutObj = find(this.options.parent.flatCells, { subLayout: this.layout });
                     this.options.parent.removeWidget(parentLayoutObj);
                 }
 
                      // In case this directive is a sub and only has one widget in one cell, we move the widget to parent
                 else if (this.transformedLayout.length === 1 && this.transformedLayout[0].length === 1 && this.transformedLayout[0][0].percentHeight === 100 && this.transformedLayout[0][0].percentWidth === 100 && this.options.parent) {
 
-                    let parentLayoutObj = _.find(this.options.parent.flatCells, { subLayout: this.layout });
+                    let parentLayoutObj = find(this.options.parent.flatCells, { subLayout: this.layout });
                     let axis = Object.keys(parentLayoutObj.subLayout)[0];
                     if (!parentLayoutObj.subLayout[axis][0] || parentLayoutObj.subLayout[axis][0] && !parentLayoutObj.subLayout[axis][0].new) {
                         if (this.transformedLayout[0][0].widget) {

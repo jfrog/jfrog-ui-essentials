@@ -86,6 +86,11 @@
 </template>
 
 <script>
+    import sortBy from 'lodash/sortBy';
+    import map from 'lodash/map';
+    import forEach from 'lodash/forEach';
+    import filter from 'lodash/filter';
+    import find from 'lodash/find';
     import {VueFactory} from "../../services/VueFactory";
 
     export default {
@@ -130,9 +135,9 @@
                     //this.sortItems();
                     if (this.singleSelection) {
                         this.items.forEach((item, index) => item.$id = index);
-                        let disabled = _.filter(this.items, item => item.disabled);
+                        let disabled = filter(this.items, item => item.disabled);
                         disabled.forEach(item => item.isSelected = false);
-                        let selected = _.filter(this.items, item => item.isSelected);
+                        let selected = filter(this.items, item => item.isSelected);
                         if (selected.length > 1) {
                             selected.slice(1).forEach(item => item.isSelected = false);
                         }
@@ -187,8 +192,8 @@
                 });
             },
             getSelectedForTitle() {
-                let selected = _.filter(this.items, item => item.isSelected);
-                selected = _.map(selected, s => s.selectedText || s.text);
+                let selected = filter(this.items, item => item.isSelected);
+                selected = map(selected, s => s.selectedText || s.text);
                 return selected.join(', ');
             },
             onClick() {
@@ -211,26 +216,26 @@
                             item.isSelected = false;
                         }
                     });
-                    let selected = _.find(this.items, item => item.$id == this.singleSelectionIndex);
+                    let selected = find(this.items, item => item.$id == this.singleSelectionIndex);
                     selected.isSelected = true;
                     this.applyChanges();
                 })
             },
             getSelectedCount() {
-                let selected = _.filter(this.items, item => item.isSelected && !item.isAllToggleCheckbox);
+                let selected = filter(this.items, item => item.isSelected && !item.isAllToggleCheckbox);
                 return selected.length;
             },
             applyChanges() {
                 const { Vue } = VueFactory.getInstance();
                 Vue.nextTick(() => {
-                    let selected = _.filter(this.items, item => item.isSelected);
+                    let selected = filter(this.items, item => item.isSelected);
                     this.$emit('on-change', selected);
                     this.$forceUpdate()
                 })
             },
             selectedItems() {
-                let selected = _.filter(this.items, item => item.isSelected);
-                selected = _.map(selected, 'text');
+                let selected = filter(this.items, item => item.isSelected);
+                selected = map(selected, 'text');
                 return selected;
             },
             sortItems() {
@@ -241,8 +246,8 @@
                 if (!this.items) {
                     return;
                 }
-                let selected = this.noSort ? _.filter(this.items, item => item.isSelected) : _.sortBy(_.filter(this.items, item => item.isSelected), 'text');
-                let unSelected = this.noSort ? _.filter(this.items, item => !item.isSelected) : _.sortBy(_.filter(this.items, item => !item.isSelected), 'text');
+                let selected = this.noSort ? filter(this.items, item => item.isSelected) : sortBy(filter(this.items, item => item.isSelected), 'text');
+                let unSelected = this.noSort ? filter(this.items, item => !item.isSelected) : sortBy(filter(this.items, item => !item.isSelected), 'text');
                 this.lastSelectedIndex = selected.length - 1;
                 let combined = selected.concat(unSelected);
                 this.items.splice.apply(this.items, [
@@ -278,7 +283,7 @@
                 if (this.disabled)
                     return;
                 if (this.textInputs) {
-                    _.forEach(this.items, item => {
+                    forEach(this.items, item => {
                         item.inputTextValue = '';
                     });
                 }

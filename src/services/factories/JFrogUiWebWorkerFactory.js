@@ -1,9 +1,11 @@
+import extend from 'lodash/extend';
+
 export function JFrogUIWebWorker() {
     let injections = $jfrog.get(['$q', 'JFrogUILibConfig', 'WebWorkersPool']);
     'ngInject';
     return class JFrogUIWebWorker {
         constructor() {
-            _.extend(this, injections)
+            extend(this, injections)
             this.wwPool = new this.WebWorkersPool(this.getPathToWebWorker(), 1);
         }
         getPathToWebWorker() {

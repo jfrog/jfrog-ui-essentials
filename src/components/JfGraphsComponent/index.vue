@@ -5,7 +5,9 @@
 </template>
 
 <script>
-import { bb } from 'billboard.js';
+    import { bb } from 'billboard.js';
+    require('billboard.js/dist/billboard.min.css');
+
     export default {
         name: 'jf-graphs',
         props: [
@@ -61,7 +63,7 @@ import { bb } from 'billboard.js';
                 /* End Polyfill for IE 11 which doesnt support Object.assign */
 
                 this.chart = bb.generate(Object.assign({ bindto: this.$refs.chart }, this.options));
-    
+
                 window.addEventListener('onorientationchange', () => {
                     this.chart.resize();
                 });
@@ -83,5 +85,5 @@ import { bb } from 'billboard.js';
 
 <style scoped lang="less">
 
-    
+
 </style>

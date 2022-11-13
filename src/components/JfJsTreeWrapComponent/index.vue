@@ -17,7 +17,7 @@
 </template>
 
 <script>
-
+    import map from 'lodash/map';
     export default {
         name: 'jf-js-tree-wrap',
         props: [
@@ -109,7 +109,7 @@
             transformData(origData) {
                 if (!origData || !origData.length)
                     return;
-                return _.map(origData, origItem => {
+                return map(origData, origItem => {
                     let item = {};
                     item.data = { originalObject: () => origItem };
                     let children = this.$emit('get-children-func', { node: origItem });

@@ -6,6 +6,7 @@
 </template>
 
 <script>
+    import forEach from 'lodash/forEach';
 
     export default {
         name: 'jf-summary-row',
@@ -29,7 +30,7 @@
             },
             setColumnsLayout() {
                 let layout = '';
-                _.forEach(this.columnsToShow, col => {
+                forEach(this.columnsToShow, col => {
                     layout += `${ $(col).attr('width') || '1fr' } `;
                 });
                 this.inlineStyle = {

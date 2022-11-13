@@ -16,6 +16,7 @@
 </template>
 
 <script>
+    import filter from 'lodash/filter';
     import JfDatalistItemComponent from './JfDatalistItemComponent/index.vue'
     export default {
         name: 'jf-data-list',
@@ -38,13 +39,13 @@
         methods: {
             filterItems(items) {
                 if(items) {
-                    this.formattedItems = _.filter(items, item => {
+                    this.formattedItems = filter(items, item => {
                         return item.label != '' && !item.isHidden;
                     });
                 }
             },
             updateList(updatedItem){
-                /* 
+                /*
                     Invoked when a value in the data list is deleted
                     Updates the "items" array with the received data list item
                     Emits event with the updated data list

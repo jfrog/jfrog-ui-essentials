@@ -18,6 +18,8 @@
 </template>
 
 <script>
+    import find from 'lodash/find';
+
     class PaginationApi {
         constructor(ctrl) {
             this.ctrl = ctrl;
@@ -138,7 +140,7 @@
             },
             onItemSelection(item) {
                 if (this.highlightSelected && !item.highlighted) {
-                    let lastHiglighted = _.find(this.items, i => i.highlighted);
+                    let lastHiglighted = find(this.items, i => i.highlighted);
                     if (lastHiglighted) {
                         lastHiglighted.highlighted = false;
                     }

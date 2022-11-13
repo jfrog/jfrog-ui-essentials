@@ -1,4 +1,8 @@
-import _ from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
+import isEqual from 'lodash/isEqual';
+import isString from 'lodash/isString';
+import isArray from 'lodash/isArray';
+import isObject from 'lodash/isObject';
 import { DeepDiff } from 'deep-diff';
 
 class JFrogUIModelSaver {
@@ -23,7 +27,7 @@ class JFrogUIModelSaver {
 	save(objectName) {
 		this.modelObjects.forEach((objName) => {
 			if (!objectName || objectName === objName) {
-				this.savedModels[objName] = _.cloneDeep(this.controller[objName]);
+				this.savedModels[objName] = cloneDeep(this.controller[objName]);
 			}
 		});
 		this.saved = true;
@@ -32,7 +36,7 @@ class JFrogUIModelSaver {
 		let isSaved = true;
 		for (let objectNameI in this.modelObjects) {
 			let objectName = this.modelObjects[objectNameI];
-			if (!_.isEqual(this.savedModels[objectName], this.controller[objectName])) {
+			if (!isEqual(this.savedModels[objectName], this.controller[objectName])) {
 				let deefObj = DeepDiff(this.savedModels[objectName], this.controller[objectName]);
 				if (this._isDiffReal(deefObj, this.excludePaths[objectNameI])) {
 					isSaved = false;
@@ -47,14 +51,14 @@ class JFrogUIModelSaver {
 		let isReal = false;
 		for (let key in deefObj) {
 			let deef = deefObj[key];
-			if (deef.path && deef.path.length && ((!_.isString(
+			if (deef.path && deef.path.length && ((!isString(
 					deef.path[deef.path.length - 1]) || deef.path[deef.path.length - 1].startsWith(
 					'$$')) || this._isExcluded(deef.path, excludes))) {
 				continue;
 			}
 			if ((deef.lhs === undefined && deef.rhs === '') || (deef.lhs === '' && deef.rhs === undefined) ||
-				(deef.lhs === undefined && _.isArray(deef.rhs) && deef.rhs.length === 0) ||
-				(deef.lhs === undefined && _.isObject(deef.rhs) && Object.keys(deef.rhs).length === 0)) {
+				(deef.lhs === undefined && isArray(deef.rhs) && deef.rhs.length === 0) ||
+				(deef.lhs === undefined && isObject(deef.rhs) && Object.keys(deef.rhs).length === 0)) {
 				// not real
 			}
 			else { //real

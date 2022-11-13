@@ -108,6 +108,8 @@
     </b-modal>
 </template>
 <script>
+    import isFunction from 'lodash/isFunction';
+    import findIndex from 'lodash/findIndex';
     import ModalMixins from '@/mixins/ModalMixins/index.js'
     import SanitizeMixin from '../../mixins/Sanitize/index.js';
     import {VueFactory} from "../../services/VueFactory";
@@ -126,7 +128,7 @@
         ],
         data() {
             return {
-                currentStep: !this.wizardDefinitionObject.initialStep ? 1 : _.findIndex(wizardDefinitionObject.steps, { id: this.wizardDefinitionObject.initialStep }) + 1,
+                currentStep: !this.wizardDefinitionObject.initialStep ? 1 : findIndex(wizardDefinitionObject.steps, { id: this.wizardDefinitionObject.initialStep }) + 1,
                 totalSteps: this.wizardDefinitionObject.steps.length,
                 doNotShowWizardAgain:this.wizardDefinitionObject.doNotShowWizardAgain,
                 pending: false
@@ -258,7 +260,7 @@
             },
 
             isFunction(val) {
-                return _.isFunction(val);
+                return isFunction(val);
             },
 
             preventShowingWizardAgain() {

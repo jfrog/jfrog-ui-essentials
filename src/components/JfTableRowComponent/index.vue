@@ -136,7 +136,16 @@
 </template>
 
 <script>
+    import 'components-jqueryui';
+    import map from 'lodash/map';
+    import isUndefined from 'lodash/isUndefined';
+    import isString from 'lodash/isString';
+    import filter from 'lodash/filter';
+    import find from 'lodash/find';
+    import get from 'lodash/get';
+    import kebabCase from 'lodash/kebabCase';
     import RowAction from './components/RowAction';
+
     export default {
         components: {
             RowAction
@@ -171,7 +180,7 @@
         },
         mounted() {
             $(this.$el).prop('comp', this);
-            this.templatesCount = _.filter(this.tableView.options.columns, col => !!col.cellTemplate).length;
+            this.templatesCount = filter(this.tableView.options.columns, col => !!col.cellTemplate).length;
 
             this.JFrogEventBus.registerOnScope(this.$scope, this.EVENTS.TABLEVIEW_HIDE_ACTIONS_DROPDOWN, tableView => {
                 if (tableView === this.tableView)
@@ -186,10 +195,10 @@
         ng1_legacy: { 'controllerAs': 'jfTableRow' },
         methods: {
             getField(field) {
-                return _.get(this.data, field);
+                return get(this.data, field);
             },
             kebab(str) {
-                return _.kebabCase(str);
+                return kebabCase(str);
             },
             toggleSelection(all) {
                 if (this.tableView.options.isRowSelectable && !this.tableView.options.isRowSelectable({ entity: this.data }))
@@ -201,7 +210,7 @@
                         if (!this.data.$selected) {
                             this.$set(this.tableView, 'allSelected', false);
                             if (this.tableView.options.groupedBy) {
-                                let groupHeader = _.find(this.tableView.options.getPrePagedData(), { $groupHeader: { value: _.get(this.data, this.tableView.options.groupedBy) } });
+                                let groupHeader = find(this.tableView.options.getPrePagedData(), { $groupHeader: { value: get(this.data, this.tableView.options.groupedBy) } });
                                 if (groupHeader)
                                     groupHeader.$selected = false;
                             }
@@ -248,16 +257,16 @@
                 let offset = mouseXPerc - this.resizeDragStart;
 
                 let newLeftWidth, newRightWidth;
-                if (_.isString(this.hoveringResize.origLeftWidth) && this.hoveringResize.origLeftWidth.endsWith('%')) {
+                if (isString(this.hoveringResize.origLeftWidth) && this.hoveringResize.origLeftWidth.endsWith('%')) {
                     newLeftWidth = parseFloat(this.hoveringResize.origLeftWidth) + offset + '%';
-                } else if (_.isString(this.hoveringResize.origLeftWidth) && this.hoveringResize.origLeftWidth.endsWith('px')) {
+                } else if (isString(this.hoveringResize.origLeftWidth) && this.hoveringResize.origLeftWidth.endsWith('px')) {
                     let perc = parseFloat(this.hoveringResize.origLeftWidth) / containerWidth * 100;
                     newLeftWidth = perc + offset + '%';
                 }
                 if (this.hoveringResize.right) {
-                    if (_.isString(this.hoveringResize.origRightWidth) && this.hoveringResize.origRightWidth.endsWith('%')) {
+                    if (isString(this.hoveringResize.origRightWidth) && this.hoveringResize.origRightWidth.endsWith('%')) {
                         newRightWidth = parseFloat(this.hoveringResize.origRightWidth) - offset + '%';
-                    } else if (_.isString(this.hoveringResize.origRightWidth) && this.hoveringResize.origRightWidth.endsWith('px')) {
+                    } else if (isString(this.hoveringResize.origRightWidth) && this.hoveringResize.origRightWidth.endsWith('px')) {
                         let perc = parseFloat(this.hoveringResize.origRightWidth) / containerWidth * 100;
                         newRightWidth = perc - offset + '%';
                     }
@@ -306,9 +315,9 @@
 
                 for (let colI = 0; colI < columns.length; colI++) {
                     let col = columns[colI];
-                    if (_.isString(col.width) && col.width.endsWith('%')) {
+                    if (isString(col.width) && col.width.endsWith('%')) {
                         percCount += parseFloat(col.width);
-                    } else if (_.isString(col.width) && col.width.endsWith('px')) {
+                    } else if (isString(col.width) && col.width.endsWith('px')) {
                         let perc = parseFloat(col.width) / containerWidth * 100;
                         percCount += perc;
                     }
@@ -408,7 +417,7 @@
                 this.initDragHelper(ui.helper);
             },
             isRowDraggable() {
-                if (this.tableView.options.registeredTabularDnd && this.tableView.options.registeredTabularDnd.dndCtrl.itemDraggableAttr && !_.isUndefined(this.data[this.tableView.options.registeredTabularDnd.dndCtrl.itemDraggableAttr]) && !this.data[this.tableView.options.registeredTabularDnd.dndCtrl.itemDraggableAttr]) {
+                if (this.tableView.options.registeredTabularDnd && this.tableView.options.registeredTabularDnd.dndCtrl.itemDraggableAttr && !isUndefined(this.data[this.tableView.options.registeredTabularDnd.dndCtrl.itemDraggableAttr]) && !this.data[this.tableView.options.registeredTabularDnd.dndCtrl.itemDraggableAttr]) {
 
                     return false;
                 } else
@@ -424,7 +433,7 @@
                 }
             },
             dragStop(event, ui) {
-                let draggedRowsArrayForDndEvent = this.tableView.options.draggedRow ? [this.tableView.options.draggedRow] : _.map(this.tableView.options.draggedRows, 'row');
+                let draggedRowsArrayForDndEvent = this.tableView.options.draggedRow ? [this.tableView.options.draggedRow] : map(this.tableView.options.draggedRows, 'row');
                 let target = $(event.originalEvent.target);
                 target = target.is('.jf-table-row') ? target[0] : target.parents('.jf-table-row')[0];
 

@@ -9,6 +9,7 @@
 </template>
 
 <script>
+    import isEmpty from 'lodash/isEmpty';
 
     export default {
         name: 'jf-switch-toggler',
@@ -33,7 +34,7 @@
             // The model is assigned the value, and the text is displayed
 
             this.setOptionObjects();
-            if (_.isEmpty(this.model)) {
+            if (isEmpty(this.model)) {
                 this.model = this.leftOption.value;
             }
             this.isLeftOptionOn = this.model === this.leftOption.value;

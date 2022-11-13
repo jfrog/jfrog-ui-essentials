@@ -1,3 +1,17 @@
+import extend from 'lodash/extend';
+import includes from 'lodash/includes';
+import remove from 'lodash/remove';
+import map from 'lodash/map';
+import cloneDeep from 'lodash/cloneDeep';
+import isEqual from 'lodash/isEqual';
+import isString from 'lodash/isString';
+import isArray from 'lodash/isArray';
+import isObject from 'lodash/isObject';
+import filter from 'lodash/filter';
+import find from 'lodash/find';
+import trim from 'lodash/trim';
+import without from 'lodash/without';
+
 export class JFrogSubRouter {
     constructor() {
         this.$inject('$state', '$location', '$rootScope', '$timeout');
@@ -19,10 +33,10 @@ export class JFrogSubRouter {
         if (this.$config) {
             this._exitState();
         }
-        this.$set(this, '$config', _.cloneDeep(config));
+        this.$set(this, '$config', cloneDeep(config));
         this.$set(this.$config, 'parentScope', config.parentScope);
         this.$set(this.$config, 'baseStateName', this.$state.current.name);
-        this.$set(this.$config, 'basePath', _.trim(this._sharedStartOfString([
+        this.$set(this.$config, 'basePath', trim(this._sharedStartOfString([
             this.$state.current.url,
             this.$location.path()
         ]), '/'));
@@ -69,10 +83,10 @@ export class JFrogSubRouter {
                 THIS._gotoState(stateName, params);
             },
             listenForChanges(watchedParams, states, listener, scope = undefined) {
-                watchedParams = !_.isArray(watchedParams) ? [watchedParams] : watchedParams;
-                states = !_.isArray(states) ? states ? [states] : [] : states;
+                watchedParams = !isArray(watchedParams) ? [watchedParams] : watchedParams;
+                states = !isArray(states) ? states ? [states] : [] : states;
                 this.on('params.change', (oldParams, newParams) => {
-                    if (!states.length || _.includes(states, this.state)) {
+                    if (!states.length || includes(states, this.state)) {
                         let match = watchedParams.reduce((acc, curr) => {
                             return acc || oldParams[curr] !== newParams[curr];
                         }, false);
@@ -82,7 +96,7 @@ export class JFrogSubRouter {
                 }, scope);
             },
             on(event, listener, scope) {
-                if (!_.includes(THIS.supportedEvents, event)) {
+                if (!includes(THIS.supportedEvents, event)) {
                     console.error('JFrogSubRouter: Unsupported Event: ' + event);
                     return;
                 }
@@ -96,13 +110,13 @@ export class JFrogSubRouter {
                 }
             },
             off(event, listener) {
-                if (!_.includes(THIS.supportedEvents, event)) {
+                if (!includes(THIS.supportedEvents, event)) {
                     console.error('JFrogSubRouter: Unsupported Event: ' + event);
                     return;
                 }
                 if (THIS.$listeners[event]) {
                     if (listener) {
-                        _.remove(THIS.$listeners[event], l => l === listener);
+                        remove(THIS.$listeners[event], l => l === listener);
                     } else {
                         THIS.$listeners[event] = [];
                     }
@@ -125,7 +139,7 @@ export class JFrogSubRouter {
         this.$set(this.$config, '$scope', this.$rootScope.$new());
         this.$set(this.$config.$scope, 'config', this.$config);
         this.$set(this.$config.$scope, 'unwatchParams', this.$config.$scope.$watch('config.$params', (newVal, oldVal) => {
-            if (!this.$config.$params || this.$config.baseStateName !== this.$state.current.name || _.isEqual(newVal, oldVal) && _.isEqual(this._getPathAsParams(), this.$config.$params)) {
+            if (!this.$config.$params || this.$config.baseStateName !== this.$state.current.name || isEqual(newVal, oldVal) && isEqual(this._getPathAsParams(), this.$config.$params)) {
                 return;
             }
             if (this.$config.hotSyncUrl)
@@ -177,12 +191,12 @@ export class JFrogSubRouter {
         if (!this.$config.states) {
             console.error(`Trying to go to state ${ stateName }, but no states were defined`);
         } else {
-            let stateDef = _.find(this.$config.states, { name: stateName });
+            let stateDef = find(this.$config.states, { name: stateName });
             if (!stateDef) {
                 console.error(`Trying to go to state ${ stateName }, but no such state were defined`);
             } else {
                 if (params)
-                    _.extend(this.$config.$params, params);
+                    extend(this.$config.$params, params);
                 if (stateDef.params.mandatory) {
                     stateDef.params.mandatory.forEach(mandatoryParam => {
                         if (!this.$config.$params[mandatoryParam]) {
@@ -214,16 +228,16 @@ export class JFrogSubRouter {
             this.$set(this.$masterScope, '$location', this.$location);
         this.$set(this, 'unwatchUrl', this.$masterScope.$watch('$location.absUrl()', (newVal, oldVal) => {
             if (this.$config) {
-                let beforeParams = _.cloneDeep(this.$config.$params);
+                let beforeParams = cloneDeep(this.$config.$params);
                 this._mapPathToParams();
                 if (!this.$config.$initialized) {
                     this.$set(this.$config, '$initialized', true);
                     if (this.$config.onInit) {
                         this.$config.onInit();
-                        beforeParams = _.cloneDeep(this.$config.$params);
+                        beforeParams = cloneDeep(this.$config.$params);
                     }
                 }
-                if (!_.isEqual(beforeParams, this.$config.$params)) {
+                if (!isEqual(beforeParams, this.$config.$params)) {
                     if (this.$config.onChangeFromUrl)
                         this.$config.onChangeFromUrl(beforeParams, this.$config.$params);
                     if (this.$config)
@@ -257,10 +271,10 @@ export class JFrogSubRouter {
     _getParametersFromConfig() {
         let urlStructure = this.$config.urlStructure;
         let [pathParams, searchParams] = urlStructure.split('?');
-        pathParams = _.without(pathParams.split('/'), '');
+        pathParams = without(pathParams.split('/'), '');
         searchParams = searchParams.split('&');
-        pathParams = _.map(pathParams, param => param.substr(1));
-        searchParams = _.map(searchParams, param => param.substr(1));
+        pathParams = map(pathParams, param => param.substr(1));
+        searchParams = map(searchParams, param => param.substr(1));
         return {
             path: pathParams,
             search: searchParams,
@@ -273,7 +287,7 @@ export class JFrogSubRouter {
         let path = this.$location.path();
         let search = this._decodeSearchParams(this.$location.search());
         let basePathParts = this.$config.basePath.split('/');
-        let pathParts = _.filter(path.split('/'), part => part !== '' && !_.includes(basePathParts, part));
+        let pathParts = filter(path.split('/'), part => part !== '' && !includes(basePathParts, part));
         configParams.all.forEach(param => {
             if (params[param]) {
                 params[param] = null;
@@ -302,7 +316,7 @@ export class JFrogSubRouter {
         if (!this.$config)
             return;
         let currentUrlParams = this._getPathAsParams();
-        _.extend(this.$config.$params, currentUrlParams);
+        extend(this.$config.$params, currentUrlParams);
         let configParams = this._getParametersFromConfig();
         let remove = false;
         configParams.path.forEach(pathParam => {
@@ -349,10 +363,10 @@ export class JFrogSubRouter {
         let isEmptyObject = obj => Object.keys(obj).reduce((acc, curr) => acc && (obj[curr] === null || obj[curr] === undefined), true);
         if (this.$config.encodeSearchParamsAsBase64 === true) {
             return isEmptyObject(searchParams) ? {} : { state: btoa(JSON.stringify(searchParams)) };
-        } else if (_.isString(this.$config.encodeSearchParamsAsBase64)) {
+        } else if (isString(this.$config.encodeSearchParamsAsBase64)) {
             return isEmptyObject(searchParams) ? {} : { [this.$config.encodeSearchParamsAsBase64]: btoa(JSON.stringify(searchParams)) };
-        } else if (_.isObject(this.$config.encodeSearchParamsAsBase64)) {
-            let result = _.cloneDeep(searchParams);
+        } else if (isObject(this.$config.encodeSearchParamsAsBase64)) {
+            let result = cloneDeep(searchParams);
             for (let key in this.$config.encodeSearchParamsAsBase64) {
                 let params = this.$config.encodeSearchParamsAsBase64[key];
                 let toEncode = {};
@@ -371,15 +385,15 @@ export class JFrogSubRouter {
     _decodeSearchParams(searchParams) {
         if (this.$config.encodeSearchParamsAsBase64 === true) {
             return searchParams.state ? JSON.parse(atob(decodeURIComponent(searchParams.state))) : {};
-        } else if (_.isString(this.$config.encodeSearchParamsAsBase64)) {
+        } else if (isString(this.$config.encodeSearchParamsAsBase64)) {
             return searchParams[this.$config.encodeSearchParamsAsBase64] ? JSON.parse(atob(decodeURIComponent(searchParams[this.$config.encodeSearchParamsAsBase64]))) : {};
-        } else if (_.isObject(this.$config.encodeSearchParamsAsBase64)) {
-            let result = _.cloneDeep(searchParams);
+        } else if (isObject(this.$config.encodeSearchParamsAsBase64)) {
+            let result = cloneDeep(searchParams);
             for (let key in this.$config.encodeSearchParamsAsBase64) {
                 if (result[key]) {
                     let decoded = JSON.parse(atob(decodeURIComponent(result[key])));
                     delete result[key];
-                    _.extend(result, decoded);
+                    extend(result, decoded);
                 }
             }
             return result;

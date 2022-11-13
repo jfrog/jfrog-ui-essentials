@@ -30,6 +30,10 @@
 <script>
 
     import { ValidationProvider } from 'vee-validate';
+    import isObject from 'lodash/isObject';
+    import isString from 'lodash/isString';
+    import trim from 'lodash/trim';
+    import extend from 'lodash/extend';
 
     export default {
         name: 'jf-field',
@@ -232,12 +236,12 @@
                 }
 
                 if (this.validationRules) {
-                    if (_.isObject(this.validationRules)) {
-                        _.extend(rules,this.validationRules)
+                    if (isObject(this.validationRules)) {
+                        extend(rules,this.validationRules)
                     }
                     else {
-                        if (_.isString(this.validationRules)) {
-                            let strParts = this.validationRules.split('|').map(p => _.trim(p));
+                        if (isString(this.validationRules)) {
+                            let strParts = this.validationRules.split('|').map(p => trim(p));
                             strParts.forEach(part => {
                                 let key = part.split(':')[0];
                                 let val = part.substr(key.length);

@@ -7,7 +7,9 @@
 </template>
 
 <script>
-
+    import isUndefined from 'lodash/isUndefined';
+    import isString from 'lodash/isString';
+    import isFunction from 'lodash/isFunction';
     import JfTableView from '../JfTableViewComponent/index';
     export default {
         name: 'jf-table-view-wrapper',
@@ -76,10 +78,10 @@
         created() {
 
             this.tableOptions = this.options || new this.JFrogTableViewOptions(this.scope || this.$scope);
-            if (!_.isUndefined(this.enableSubrows)) {
+            if (!isUndefined(this.enableSubrows)) {
                 this.tableOptions.enableSubRows();
             }
-            if (!_.isUndefined(this.hideSelectAll)) {
+            if (!isUndefined(this.hideSelectAll)) {
                 this.tableOptions.hideSelectAll();
             }
             if (this.tableId) {
@@ -89,7 +91,7 @@
                 this.tableOptions.setObjectName(this.objectName);
             }
             if (this.rowsPerPage) {
-                if (_.isString(this.rowsPerPage) && this.rowsPerPage !== 'auto') {
+                if (isString(this.rowsPerPage) && this.rowsPerPage !== 'auto') {
                     console.error('Error: rows-per-page should be a number, or the string \'auto\'.')
                 }
                 this.tableOptions.setRowsPerPage(this.rowsPerPage);
@@ -138,31 +140,31 @@
             if (this.singleRowSelection) {
                 this.tableOptions.setSelection(this.tableOptions.SINGLE_SELECTION);
             }
-            if (!_.isUndefined(this.showFilter)) {
+            if (!isUndefined(this.showFilter)) {
                 this.tableOptions.showFilter(this.showFilter)
             }
-            if (!_.isUndefined(this.showPagination)) {
+            if (!isUndefined(this.showPagination)) {
                 this.tableOptions.showPagination(this.showPagination)
             }
-            if (!_.isUndefined(this.showCounter)) {
+            if (!isUndefined(this.showCounter)) {
                 this.tableOptions.showCounter(this.showCounter)
             }
-            if (!_.isUndefined(this.sortable)) {
+            if (!isUndefined(this.sortable)) {
                 this.tableOptions.setSortable(this.sortable)
             }
-            if (!_.isUndefined(this.useVirtualScroll) && !this.$listeners['load-more']) {
+            if (!isUndefined(this.useVirtualScroll) && !this.$listeners['load-more']) {
                 this.tableOptions.setPaginationMode(this.tableOptions.VIRTUAL_SCROLL)
             }
-            if (!_.isUndefined(this.disableFilterTooltip)) {
+            if (!isUndefined(this.disableFilterTooltip)) {
                 this.tableOptions.disableFilterTooltip()
             }
-            if (!_.isUndefined(this.externalSearchFields)) {
+            if (!isUndefined(this.externalSearchFields)) {
                 this.tableOptions.externalSearchFields = this.externalSearchFields;
             }
-            if (!_.isUndefined(this.newEntityCustomText)) {
+            if (!isUndefined(this.newEntityCustomText)) {
                 this.tableOptions.newEntityCustomText = this.newEntityCustomText;
             }
-            if (!_.isUndefined(this.rowClassAttr)) {
+            if (!isUndefined(this.rowClassAttr)) {
                 this.tableOptions.setRowClassAttr(this.rowClassAttr);
             }
             if (!this.options) {
@@ -171,7 +173,7 @@
                     cellTemplateGenerators: this.JFrogTableViewOptions.cellTemplateGenerators
                 })
             }
-            if ((_.isUndefined(this.disableNewEntity) || !this.disableNewEntity)
+            if ((isUndefined(this.disableNewEntity) || !this.disableNewEntity)
                 && this.$listeners['new-entity']) {
                 this.tableOptions.setNewEntityAction(() => {
                     this.$emit('new-entity');
@@ -198,7 +200,7 @@
                 })
             }
             if (this.$listeners['load-more']) {
-                this.tableOptions.setPaginationMode(!_.isUndefined(this.useVirtualScroll) ? this.tableOptions.INFINITE_VIRTUAL_SCROLL : this.tableOptions.INFINITE_SCROLL, (params) => {
+                this.tableOptions.setPaginationMode(!isUndefined(this.useVirtualScroll) ? this.tableOptions.INFINITE_VIRTUAL_SCROLL : this.tableOptions.INFINITE_SCROLL, (params) => {
                     let defer = this.$q.defer();
                     this.$emit('load-more', params);
                     this.pageResolver = defer.resolve;
@@ -234,7 +236,7 @@
         methods: {
             setData(initialSet) {
                 if (!this.$listeners['page-needed'] && !this.$listeners['load-more'] && this.tableOptions.paginationMode !== this.tableOptions.EXTERNAL_PAGINATION) {
-                    if (this.data && !_.isUndefined(this.data.isUpdate) && this.data.data) {
+                    if (this.data && !isUndefined(this.data.isUpdate) && this.data.data) {
                         if (this.data.isUpdate) {
                             this.tableOptions.updateData(this.data.data, this.data.removeIfMissing);
                         } else {
@@ -254,7 +256,7 @@
                 }
             },
             getActualColumns() {
-                if (_.isFunction(this.columns)) {
+                if (isFunction(this.columns)) {
                     if (this.JFrogTableViewOptions) {
                         return this.columns({cellTemplateGenerators: this.JFrogTableViewOptions.cellTemplateGenerators});
                     }

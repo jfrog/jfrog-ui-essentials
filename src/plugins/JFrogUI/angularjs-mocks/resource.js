@@ -1,4 +1,13 @@
-import _ from 'lodash';
+import extend from 'lodash/extend';
+import isArray from 'lodash/isArray';
+import map from 'lodash/map';
+import includes from 'lodash/includes';
+import filter from 'lodash/filter';
+import pick from 'lodash/pick';
+import trimEnd from 'lodash/trimEnd';
+import merge from 'lodash/merge';
+import isString from 'lodash/isString';
+
 import rootAxios from 'axios';
 let $jfrog;
 let $q;
@@ -45,11 +54,11 @@ function createResourceClass(resourceParams) {
         'remove': { method: 'DELETE' },
         'delete': { method: 'DELETE' }
     };
-    let actions = _.extend({}, defaultActions, resourceParams.actions);
+    let actions = extend({}, defaultActions, resourceParams.actions);
 
     class Resource {
         constructor(data = {}) {
-            _.extend(this, data);
+            extend(this, data);
             Object.keys(actions).forEach(actionKey => {
                 let action = actions[actionKey];
                 this.constructor.prototype['$' + actionKey] = (...params) => doAction.bind(this)(action, params);
@@ -71,15 +80,15 @@ function createResourceClass(resourceParams) {
         }
 
 
-        let compilation = compilePath(action.url || resourceParams.url, _.extend({}, resourceParams.paramDefaults, action.params), _.extend({}, action.params, (action.method === 'GET' ? callParams[0] : {}) || {}));
+        let compilation = compilePath(action.url || resourceParams.url, extend({}, resourceParams.paramDefaults, action.params), extend({}, action.params, (action.method === 'GET' ? callParams[0] : {}) || {}));
 
         let compiledPath = compilation.compiledPath;
 
-        let requestHasPayload = !_.includes(['GET'], action.method);
+        let requestHasPayload = !includes(['GET'], action.method);
 
-        let ownPayload = this && requestHasPayload ? _.pick(this, _.filter(Object.keys(this), k => !k.startsWith('$'))) : {};
+        let ownPayload = this && requestHasPayload ? pick(this, filter(Object.keys(this), k => !k.startsWith('$'))) : {};
 
-        let payload = requestHasPayload ? _.merge({}, ownPayload, callParams.length === 2 ? callParams[1] : callParams[0]) : undefined;
+        let payload = requestHasPayload ? merge({}, ownPayload, callParams.length === 2 ? callParams[1] : callParams[0]) : undefined;
 
         let axiosPromise = axios({
             method: action.method,
@@ -94,13 +103,13 @@ function createResourceClass(resourceParams) {
         axiosPromise.then(response => {
             let data = !action.interceptor ? response.data : response;
 
-            if (action.isArray && !_.isArray(data)) {
+            if (action.isArray && !isArray(data)) {
                 defer.reject('Expected response to be array. Url = ', compiledPath);
             }
             else if (action.isArray) {
-                data = _.map(data, d => {
+                data = map(data, d => {
                     let i = new Resource();
-                    _.extend(i, d);
+                    extend(i, d);
                     return i;
                 });
                 defer.resolve(data);
@@ -108,11 +117,11 @@ function createResourceClass(resourceParams) {
             }
             else {
                 let i = new Resource();
-                _.extend(i, data);
+                extend(i, data);
                 if (action.interceptor) i.resource = response.data;
                 defer.resolve(i);
-                _.extend(ret, data);
-                if (this) _.extend(this, data);
+                extend(ret, data);
+                if (this) extend(this, data);
             }
         })
 
@@ -143,7 +152,7 @@ function compilePath(pathLayout, pathParams, paramReplacers = {}) {
     let replacersUsed = [];
     for (let key in pathParams) {
         let replacer = pathParams[key] || '';
-        if (_.isString(replacer) && replacer.startsWith('@')) {
+        if (isString(replacer) && replacer.startsWith('@')) {
             replacer = paramReplacers[replacer.substr(1)] || '';
             replacersUsed.push(replacer.substr(1));
         }
@@ -159,7 +168,7 @@ function compilePath(pathLayout, pathParams, paramReplacers = {}) {
     }
 
     return {
-        compiledPath: _.trimEnd(compiled, '/'),
-        unusedReplacers: _.pick(paramReplacers, ...(_.filter(Object.keys(paramReplacers), k => !_.includes(replacersUsed, k))))
+        compiledPath: trimEnd(compiled, '/'),
+        unusedReplacers: pick(paramReplacers, ...(filter(Object.keys(paramReplacers), k => !includes(replacersUsed, k))))
     }
 }

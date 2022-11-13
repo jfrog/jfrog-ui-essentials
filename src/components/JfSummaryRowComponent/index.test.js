@@ -1,5 +1,4 @@
 import {shallowMount} from '@vue/test-utils';
-import moment from 'moment';
 import {mount} from '@vue/test-utils';
 import {createLocalVue} from '@vue/test-utils';
 import {testsBootstrap} from '@/testsBootstrap';
@@ -11,6 +10,9 @@ describe('JfSummaryRowComponent', () => {
 
     const localVue = createLocalVue();
     testsBootstrap(localVue);
+    // Components still needs to be registered on localVue when using lazy loading
+    localVue.component('jf-summary-row-item', JfSummaryRowItemComponent);
+    localVue.component('jf-summary-row', JfSummaryRowComponent);
 
     // Selectors
     const contentSection = '.summary-row.jf-content-section';
@@ -45,9 +47,9 @@ describe('JfSummaryRowComponent', () => {
     });
 
 
-    it('Should render component with one item', () => {
+    it('Should render component with one item', async () => {
         let columnClassName = 'description';
-        let summaryRowCmp = mount(JfSummaryRowComponent, {
+        let summaryRowCmp = await mount(JfSummaryRowComponent, {
             localVue,
             propsData: {},
             slots: {
@@ -70,8 +72,7 @@ describe('JfSummaryRowComponent', () => {
 
     it('Should compile date format', () => {
         let columnClassName = 'creation-date';
-        const now = Date.now();
-        const formatted = moment(1548677035290).utc().format("DD MMMM YYYY, HH:mm:ss")
+        const formatted = '28 January 2019, 12:03:55'
         let summaryRowCmp = mount(JfSummaryRowComponent, {
             localVue,
             propsData: {},

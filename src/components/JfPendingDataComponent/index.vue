@@ -10,6 +10,7 @@
 </template>
 
 <script>
+    import isNaN from 'lodash/isNaN';
 
     export default {
         name: 'jf-pending-data',
@@ -24,7 +25,7 @@
             if (this.delaySpinner) {
                 setTimeout(() => {
                     this.showSpinner = true;
-                }, !_.isNaN(parseInt(this.delaySpinner)) ? this.delaySpinner : 400);
+                }, !isNaN(parseInt(this.delaySpinner)) ? this.delaySpinner : 400);
             }
         }
     }
@@ -33,6 +34,6 @@
 
 <style scoped lang="less">
 
-    
+
 
 </style>

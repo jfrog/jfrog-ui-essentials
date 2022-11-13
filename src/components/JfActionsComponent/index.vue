@@ -39,6 +39,9 @@
 </template>
 
 <script>
+    import filter from 'lodash/filter';
+    import forEach from 'lodash/forEach';
+    import includes from 'lodash/includes';
     import {VueFactory} from "../../services/VueFactory";
 
     export default {
@@ -204,7 +207,7 @@
             getActiveActionsCount() {
                 if (!this.actionsList.actions || !this.actionsList.actions.length)
                     return 0;
-                return _.filter(this.actionsList.actions, act => !act.visibleWhen || act.visibleWhen()).length;
+                return filter(this.actionsList.actions, act => !act.visibleWhen || act.visibleWhen()).length;
             },
             _toggleDropdown(isOpen) {
                 setTimeout(() => {
@@ -236,8 +239,8 @@
                     return;
                 }
 
-                _.forEach(this.actionsList.actions, actionObj => {
-                    if (_.includes(this.fixedActionsNames, actionObj.name)) {
+                forEach(this.actionsList.actions, actionObj => {
+                    if (includes(this.fixedActionsNames, actionObj.name)) {
                         this.fixedActions.push(actionObj);
                     } else {
                         this.dynamicActions.push(actionObj);

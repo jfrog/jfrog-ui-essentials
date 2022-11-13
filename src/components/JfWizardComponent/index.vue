@@ -16,6 +16,8 @@
 </template>
 
 <script>
+    import find from 'lodash/find';
+
     export default {
         name: 'jf-wizard',
         props: ['config'],
@@ -46,7 +48,7 @@
             },
             _switch(tab) {
                 this.$element.find('.wizard-content').scrollTop(0);
-                this.active = typeof tab === 'string' ? _.find(this.tabs, t => t.title === tab) : tab;
+                this.active = typeof tab === 'string' ? find(this.tabs, t => t.title === tab) : tab;
                 this.$emit('on-tab-switch', { tab: this.active.title });
                 this.JFrogUIUtils.fireResizeEvent();
             },

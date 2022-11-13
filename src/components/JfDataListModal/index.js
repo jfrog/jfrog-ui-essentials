@@ -1,4 +1,5 @@
 import SanitizeMixin from '../../mixins/Sanitize/index.js';
+import filter from 'lodash/filter';
 
 export const JfDataListModal = {
     template: `
@@ -46,7 +47,7 @@ export const JfDataListModal = {
             }
         },
         noResults() {
-            let filteredResults = _.filter(this.items, item => {
+            let filteredResults = filter(this.items, item => {
                 return this.filterItem(item)
             })
             return filteredResults.length === 0

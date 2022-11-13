@@ -23,6 +23,9 @@
 </template>
 
 <script>
+    import isArray from 'lodash/isArray';
+    import map from 'lodash/map';
+    import filter from 'lodash/filter';
 
     export default {
         name: 'jf-tree-item',
@@ -166,7 +169,7 @@
                     let classes = this.tree.api.classGetter(this.data.data);
                     if (!classes)
                         classes = [];
-                    else if (!_.isArray(classes))
+                    else if (!isArray(classes))
                         classes = [classes];
                     return classes;
                 }
@@ -182,7 +185,7 @@
             },
             createIndentation() {
                 if (!this.tree.api.linesVisible) {
-                    this.$set(this.data.data, '$indentation', _.map(new Array(this.data.level), i => ({})));
+                    this.$set(this.data.data, '$indentation', map(new Array(this.data.level), i => ({})));
                     return;
                 }
 
@@ -190,7 +193,7 @@
                 let isLastChild = item => {
                     if (item.$isLastChild === undefined) {
                         let parent = item.parent;
-                        let children = _.filter(flats, { parent });
+                        let children = filter(flats, { parent });
                         let index = children.indexOf(item);
                         item.$isLastChild = index !== -1 && index === children.length - 1;
                     }

@@ -1,5 +1,11 @@
 import $ from 'jquery';
-import _ from 'lodash';
+import entries from 'lodash/toPairs';
+import values from 'lodash/values';
+import camelCase from 'lodash/camelCase';
+import kebabCase from 'lodash/kebabCase';
+import get from 'lodash/get';
+import isFunction from 'lodash/isFunction';
+import trim from 'lodash/trim';
 import {VueFactory} from "../../services/VueFactory";
 
 export class Ng1AttributeDirectiveAdapter {
@@ -10,12 +16,12 @@ export class Ng1AttributeDirectiveAdapter {
             let scope;
             if (scopeDef) {
                 scope = {};
-                _.entries(scopeDef).forEach(entry => {
-                    if (entry[0] === _.camelCase(binding.name)) {
+                entries(scopeDef).forEach(entry => {
+                    if (entry[0] === camelCase(binding.name)) {
                         if (entry[1] === '=' || binding.modifiers.bind) {
                             Object.defineProperty(scope, entry[0], {
                                 get() {
-                                    return _.get(vnode.context, binding.expression);
+                                    return get(vnode.context, binding.expression);
                                 }
                             })
                         }
@@ -27,10 +33,10 @@ export class Ng1AttributeDirectiveAdapter {
                         Object.defineProperty(scope, entry[0], {
                             get() {
                                 if (entry[1] === '=') {
-                                    return _.get(vnode.context, el.attributes.getNamedItem(_.kebabCase(entry[0])).value);
+                                    return get(vnode.context, el.attributes.getNamedItem(kebabCase(entry[0])).value);
                                 }
                                 else {
-                                    let ni = el.attributes.getNamedItem(_.kebabCase(entry[0]));
+                                    let ni = el.attributes.getNamedItem(kebabCase(entry[0]));
                                     return ni ? ni.value : null;
                                 }
                             }
@@ -51,10 +57,10 @@ export class Ng1AttributeDirectiveAdapter {
 
             let attrs = {};
             if (binding.modifiers.bind) {
-                Object.defineProperty(attrs, _.camelCase(binding.name), {
+                Object.defineProperty(attrs, camelCase(binding.name), {
                     get() {
-                        if (!_.isFunction(binding.value)) {
-                            return _.get(vnode.context, _.trim(binding.expression, '\''));
+                        if (!isFunction(binding.value)) {
+                            return get(vnode.context, trim(binding.expression, '\''));
                         }
                         else {
                             return binding.value();
@@ -63,11 +69,11 @@ export class Ng1AttributeDirectiveAdapter {
                 })
             }
             else {
-                attrs[_.camelCase(binding.name)] = _.trim(binding.expression, '\'');
+                attrs[camelCase(binding.name)] = trim(binding.expression, '\'');
             }
 
-            _.values(el.attributes).forEach(attr => {
-                Object.defineProperty(attrs, _.camelCase(attr.name), {
+            values(el.attributes).forEach(attr => {
+                Object.defineProperty(attrs, camelCase(attr.name), {
                     get() {
                         return attr.value;
                     }
@@ -75,12 +81,12 @@ export class Ng1AttributeDirectiveAdapter {
             });
 
             attrs.$observe = (path, cb) => {
-                if (path === _.camelCase(binding.name)) {
-                    vnode.context.$watch(!_.isFunction(binding.value) ? binding.expression : binding.value, () => {
-                        if (_.get(vnode.context, _.trim(binding.expression, '\''))) {
-                            cb(_.get(vnode.context, _.trim(binding.expression, '\'')));
+                if (path === camelCase(binding.name)) {
+                    vnode.context.$watch(!isFunction(binding.value) ? binding.expression : binding.value, () => {
+                        if (get(vnode.context, trim(binding.expression, '\''))) {
+                            cb(get(vnode.context, trim(binding.expression, '\'')));
                         }
-                        else if (_.isFunction(binding.value)) {
+                        else if (isFunction(binding.value)) {
                             cb(binding.value())
                         }
                     })
