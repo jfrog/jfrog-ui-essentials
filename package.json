@@ -31,7 +31,7 @@
     "jf-tooltipster": "3.3.0",
     "jquery": "^3.5.1",
     "jquery-contextmenu": "1.8.1",
-    "js-beautify": "^1.14.4",
+    "js-beautify": "^1.14.9",
     "lodash": "^4.17.21",
     "systemjs-webpack-interop": "^2.3.7",
     "tooltipster": "^4.2.6",
