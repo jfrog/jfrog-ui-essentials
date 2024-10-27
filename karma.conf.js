@@ -1,5 +1,4 @@
 var browserStack = require('./browser_stack.config')
-
 module.exports = function (config) {
     config.set({
         basePath: '',
