@@ -7,7 +7,7 @@
   },
   "scripts": {
     "reset": "rm -rf node_modules; rm package-lock.json; npm install --package-lock; npm run build",
-    "build": "vue-cli-service build --target lib --name jfrog-ui-essentials src/index.js",
+    "build": "node --openssl-legacy-provider  node_modules/.bin/vue-cli-service build --target lib --name jfrog-ui-essentials src/index.js",
     "lint": "vue-cli-service lint",
     "dev": "nodemon --ignore 'src/**/*.spec.js' --ignore 'src/**/*.test.js' -w src/ -e js,html,css,less,vue -x vue-cli-service  -- build --target lib --name jfrog-ui-essentials --formats commonjs src/index.js dev",
     "test": "vue-cli-service test:unit",
