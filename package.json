@@ -1,6 +1,6 @@
 {
   "name": "jfrog-ui-essentials",
-  "version": "3.0.8",
+  "version": "3.8.1",
   "description": "JFrog UI Essentials",
   "engines": {
     "node": ">= 16.16.0"
