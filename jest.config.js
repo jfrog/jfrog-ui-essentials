@@ -26,6 +26,6 @@ module.exports = {
   collectCoverage: false,
   collectCoverageFrom: ["**/src/**/*.{js,vue}", "!**/node_modules/**"],
     "transformIgnorePatterns": [
-        "node_modules/(?!vue-select|vue-multiselect|codemirror|bootstrap|vue-virtual-scroller|jf-tooltipster|pc-bootstrap4-datetimepicker|@fortawesome|billboard.js)"
+        "node_modules/(?!vue-select|vue-multiselect|codemirror|bootstrap|vue-virtual-scroller|jf-tooltipster|pc-bootstrap4-datetimepicker|@fortawesome|billboard.js|internmap|d3-*)"
     ]
 }
